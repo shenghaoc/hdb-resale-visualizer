@@ -30,7 +30,9 @@ export function sortFlatTypes(flatTypes: string[]): string[] {
   });
 }
 
-export function buildFilterOptions(blocks: Array<Pick<BlockSummary, "town" | "flatTypes" | "flatModels">>): FilterOptions {
+export function buildFilterOptions(
+  blocks: Array<Pick<BlockSummary, "town" | "flatTypes" | "flatModels">>,
+): FilterOptions {
   const towns = new Set<string>();
   const flatTypes = new Set<string>();
   const flatModels = new Set<string>();
@@ -42,5 +44,9 @@ export function buildFilterOptions(blocks: Array<Pick<BlockSummary, "town" | "fl
       if (normalized) flatModels.add(normalized);
     }
   }
-  return { towns: [...towns].sort(), flatTypes: sortFlatTypes([...flatTypes]), flatModels: [...flatModels].sort() };
+  return {
+    towns: [...towns].sort(),
+    flatTypes: sortFlatTypes([...flatTypes]),
+    flatModels: [...flatModels].sort(),
+  };
 }

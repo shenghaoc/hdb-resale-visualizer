@@ -10,9 +10,7 @@ import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
 
 export function useSearchProfile() {
   const [profile, setProfile] = useState<SearchProfile>(() => loadSearchProfile());
-  const [wizardDismissed, setWizardDismissed] = useState(() =>
-    loadSearchProfileWizardDismissed(),
-  );
+  const [wizardDismissed, setWizardDismissed] = useState(() => loadSearchProfileWizardDismissed());
 
   const isMountedProfile = useRef(false);
   const isMountedDismissed = useRef(false);
@@ -60,13 +58,6 @@ export function useSearchProfile() {
       replaceProfile,
       dismissWizard,
     }),
-    [
-      profile,
-      completed,
-      shouldShowWizard,
-      patchProfile,
-      replaceProfile,
-      dismissWizard,
-    ],
+    [profile, completed, shouldShowWizard, patchProfile, replaceProfile, dismissWizard],
   );
 }

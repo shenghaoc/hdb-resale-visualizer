@@ -37,11 +37,22 @@ export const apiRouteDefinitions: ApiRouteDefinition[] = [
   { id: "comparisons", pattern: new URLPattern({ pathname: "/api/comparisons/:addressKey{/}?" }) },
   { id: "mrt-stations", pattern: new URLPattern({ pathname: "/api/mrt-stations{/}?" }) },
   { id: "mrt-exits", pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }) },
-  { id: "trends-town-flat-type", pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }) },
+  {
+    id: "trends-town-flat-type",
+    pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }),
+  },
   { id: "search", pattern: new URLPattern({ pathname: "/api/search{/}?" }) },
   { id: "suggest", pattern: new URLPattern({ pathname: "/api/suggest{/}?" }) },
-  { id: "comparable-transactions", pattern: new URLPattern({ pathname: "/api/comparable-transactions{/}?" }), method: "POST" },
-  { id: "shortlist-create", pattern: new URLPattern({ pathname: "/api/shortlist{/}?" }), method: "POST" },
+  {
+    id: "comparable-transactions",
+    pattern: new URLPattern({ pathname: "/api/comparable-transactions{/}?" }),
+    method: "POST",
+  },
+  {
+    id: "shortlist-create",
+    pattern: new URLPattern({ pathname: "/api/shortlist{/}?" }),
+    method: "POST",
+  },
   { id: "shortlist-get", pattern: new URLPattern({ pathname: "/api/shortlist/:syncCode{/}?" }) },
 ];
 

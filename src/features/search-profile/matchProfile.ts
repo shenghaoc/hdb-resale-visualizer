@@ -29,7 +29,11 @@ function walkingDistanceToAnchor(block: BlockSummary, profile: SearchProfile): n
   return block.nearestMrt?.distanceMeters ?? null;
 }
 
-function evaluateFlatType(block: BlockSummary, mainFlatType: string, alternativeFlatTypes: readonly string[]): DimensionMatch {
+function evaluateFlatType(
+  block: BlockSummary,
+  mainFlatType: string,
+  alternativeFlatTypes: readonly string[],
+): DimensionMatch {
   if (!mainFlatType) return "skip";
   if (block.flatTypes.includes(mainFlatType)) return "pass";
   for (const alt of alternativeFlatTypes) {
@@ -45,7 +49,11 @@ export function computeRemainingLeaseYears(
   return MAX_LEASE_DURATION - (currentYear - leaseCommenceRange[1]);
 }
 
-function evaluateLease(block: BlockSummary, profile: SearchProfile, currentYear: number): DimensionMatch {
+function evaluateLease(
+  block: BlockSummary,
+  profile: SearchProfile,
+  currentYear: number,
+): DimensionMatch {
   if (profile.minimumRemainingLeaseYears === null) return "skip";
   const remaining = computeRemainingLeaseYears(block.leaseCommenceRange, currentYear);
   return remaining >= profile.minimumRemainingLeaseYears ? "pass" : "fail";
@@ -124,9 +132,9 @@ export function isProfileVisibilityActive(profile: SearchProfile): boolean {
   if (profile.showAllBlocks) return false;
   return Boolean(
     profile.mainFlatType.trim() ||
-      profile.minimumRemainingLeaseYears !== null ||
-      profile.maxBudget !== null ||
-      profile.maxComfortableCommuteMinutes !== null,
+    profile.minimumRemainingLeaseYears !== null ||
+    profile.maxBudget !== null ||
+    profile.maxComfortableCommuteMinutes !== null,
   );
 }
 

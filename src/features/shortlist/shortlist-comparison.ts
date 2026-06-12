@@ -1,11 +1,9 @@
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
-import { getDataConfidenceLabelKey, type DataConfidenceLabelKey } from "@/features/listing-check/confidence";
-import type {
-  AddressDetailSummary,
-  BlockSummary,
-  NearestMrt,
-  ShortlistItem,
-} from "@/types/data";
+import {
+  getDataConfidenceLabelKey,
+  type DataConfidenceLabelKey,
+} from "@/features/listing-check/confidence";
+import type { AddressDetailSummary, BlockSummary, NearestMrt, ShortlistItem } from "@/types/data";
 
 /**
  * Minimal shape required to build a comparison row. Accepts a subset of the
@@ -28,9 +26,7 @@ export type ShortlistComparisonInputRow = {
     | "decisionStatus"
   >;
   block: BlockSummary;
-  detailSummary:
-    | Pick<AddressDetailSummary, "pricePerSqmMedian" | "pricePerSqftMedian">
-    | null;
+  detailSummary: Pick<AddressDetailSummary, "pricePerSqmMedian" | "pricePerSqftMedian"> | null;
 };
 
 export type ShortlistComparisonGapTone = "below" | "above" | "match";
@@ -93,9 +89,7 @@ function computeTargetGap(
   }
 
   const amount = Math.abs(targetPrice - medianPrice);
-  return targetPrice > medianPrice
-    ? { amount, tone: "below" }
-    : { amount, tone: "above" };
+  return targetPrice > medianPrice ? { amount, tone: "below" } : { amount, tone: "above" };
 }
 
 function clampNonNegative(value: number): number {
@@ -119,12 +113,14 @@ function computeDeltaVsReference(
   }
 
   const amount = Math.abs(candidate - reference);
-  return candidate > reference
-    ? { amount, tone: "above" }
-    : { amount, tone: "below" };
+  return candidate > reference ? { amount, tone: "above" } : { amount, tone: "below" };
 }
 
-function buildCaveats(item: ShortlistComparisonInputRow["item"], nearestMrt: NearestMrt | null, recentTransactionCount: number): ShortlistComparisonCaveatKey[] {
+function buildCaveats(
+  item: ShortlistComparisonInputRow["item"],
+  nearestMrt: NearestMrt | null,
+  recentTransactionCount: number,
+): ShortlistComparisonCaveatKey[] {
   const caveats: ShortlistComparisonCaveatKey[] = [];
   if (item.fairRangeLow == null || item.fairRangeMedian == null || item.fairRangeHigh == null) {
     caveats.push("shortlist.compare.caveat.noFairRange");
@@ -160,13 +156,9 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
     // commenceMax is the most recent commence year => most remaining lease years.
     // Missing lease data yields 0 remaining years rather than an absurd value.
     const remainingMinYears =
-      commenceMin != null
-        ? clampNonNegative(MAX_LEASE_DURATION - (currentYear - commenceMin))
-        : 0;
+      commenceMin != null ? clampNonNegative(MAX_LEASE_DURATION - (currentYear - commenceMin)) : 0;
     const remainingMaxYears =
-      commenceMax != null
-        ? clampNonNegative(MAX_LEASE_DURATION - (currentYear - commenceMax))
-        : 0;
+      commenceMax != null ? clampNonNegative(MAX_LEASE_DURATION - (currentYear - commenceMax)) : 0;
 
     return {
       addressKey: item.addressKey,
@@ -195,7 +187,10 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
         ? item.suggestedOfferCeiling
         : null,
       decisionStatus: item.decisionStatus,
-      deltaVsFairMedian: computeDeltaVsReference(isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null, block.medianPrice),
+      deltaVsFairMedian: computeDeltaVsReference(
+        isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null,
+        block.medianPrice,
+      ),
       confidenceLevelLabel: getDataConfidenceLabelKey(block.transactionCount),
       caveatKeys: buildCaveats(item, block.nearestMrt ?? null, block.transactionCount),
     };

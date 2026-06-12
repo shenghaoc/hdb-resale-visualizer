@@ -26,8 +26,7 @@ type AppHeaderProps = {
   onClearMobileTab?: () => void;
 };
 
-const HEADER_SURFACE_CLASS =
-  "rounded-xl border bg-popover/90 backdrop-blur-[20px] shadow-lg";
+const HEADER_SURFACE_CLASS = "rounded-xl border bg-popover/90 backdrop-blur-[20px] shadow-lg";
 
 export function AppHeader({
   manifest,
@@ -209,7 +208,11 @@ export function AppHeader({
             "px-2 py-1 focus-within:ring-2 focus-within:ring-ring/20",
           )}
         >
-          <Search data-icon="inline-start" className="ml-1 size-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />
+          <Search
+            data-icon="inline-start"
+            className="ml-1 size-3.5 shrink-0 text-muted-foreground"
+            aria-hidden="true"
+          />
           <SearchCombobox
             id={headerSearchId}
             data-testid="header-search-input"
@@ -280,8 +283,17 @@ export function AppHeader({
             onClick={closeMobileSearch}
           />
           <div className="absolute inset-x-3 top-3 flex items-center gap-2">
-            <div className={cn("flex min-w-0 flex-1 items-center gap-2 px-2 py-1 focus-within:ring-2 focus-within:ring-ring/20", HEADER_SURFACE_CLASS)}>
-              <Search data-icon="inline-start" className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+            <div
+              className={cn(
+                "flex min-w-0 flex-1 items-center gap-2 px-2 py-1 focus-within:ring-2 focus-within:ring-ring/20",
+                HEADER_SURFACE_CLASS,
+              )}
+            >
+              <Search
+                data-icon="inline-start"
+                className="size-4 shrink-0 text-muted-foreground"
+                aria-hidden="true"
+              />
               <SearchCombobox
                 ref={overlayInputRef}
                 id={overlaySearchId}

@@ -1,4 +1,11 @@
-import { buildArtifacts, makeAddressKey, type GeocodeEntry, type MrtExit, type PropertyInfo, type ResaleTransaction } from "../../scripts/lib/pipeline";
+import {
+  buildArtifacts,
+  makeAddressKey,
+  type GeocodeEntry,
+  type MrtExit,
+  type PropertyInfo,
+  type ResaleTransaction,
+} from "../../scripts/lib/pipeline";
 
 const alphaKey = makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10");
 const betaKey = makeAddressKey("BEDOK", "101", "BEDOK NTH AVE 4");

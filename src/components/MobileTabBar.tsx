@@ -34,37 +34,34 @@ export function MobileTabBar({
   const [focusedIndex, setFocusedIndex] = useState(2); // Default to Filters
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent, index: number) => {
-      const items = itemRefs.current.filter((b): b is HTMLButtonElement => b !== null);
-      if (items.length === 0) return;
+  const handleKeyDown = useCallback((event: React.KeyboardEvent, index: number) => {
+    const items = itemRefs.current.filter((b): b is HTMLButtonElement => b !== null);
+    if (items.length === 0) return;
 
-      let nextIndex: number | null = null;
-      switch (event.key) {
-        case "ArrowRight":
-        case "ArrowDown":
-          nextIndex = (index + 1) % items.length;
-          break;
-        case "ArrowLeft":
-        case "ArrowUp":
-          nextIndex = (index - 1 + items.length) % items.length;
-          break;
-        case "Home":
-          nextIndex = 0;
-          break;
-        case "End":
-          nextIndex = items.length - 1;
-          break;
-      }
+    let nextIndex: number | null = null;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextIndex = (index + 1) % items.length;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextIndex = (index - 1 + items.length) % items.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = items.length - 1;
+        break;
+    }
 
-      if (nextIndex !== null) {
-        event.preventDefault();
-        setFocusedIndex(nextIndex);
-        items[nextIndex]?.focus();
-      }
-    },
-    [],
-  );
+    if (nextIndex !== null) {
+      event.preventDefault();
+      setFocusedIndex(nextIndex);
+      items[nextIndex]?.focus();
+    }
+  }, []);
 
   const filtersLabel = t("tab.filters");
   const resultsLabel = t("tab.results");
@@ -194,7 +191,10 @@ export function MobileTabBar({
         onKeyDown={(e) => handleKeyDown(e, 5)}
         onFocus={() => setFocusedIndex(5)}
       >
-        <Bookmark data-icon="inline-start" className={mobileTab === "saved" ? "fill-current" : ""} />
+        <Bookmark
+          data-icon="inline-start"
+          className={mobileTab === "saved" ? "fill-current" : ""}
+        />
         <span>{savedLabel}</span>
         {shortlistCount > 0 ? (
           <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">

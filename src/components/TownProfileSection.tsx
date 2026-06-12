@@ -46,7 +46,9 @@ function BlockMicroRow({
         {block.block} {block.streetName}
       </span>
       <span className="shrink-0 whitespace-nowrap text-muted-foreground">
-        <span className="v2-tabular font-semibold text-foreground">{formatCompactCurrency(block.medianPrice, locale)}</span>
+        <span className="v2-tabular font-semibold text-foreground">
+          {formatCompactCurrency(block.medianPrice, locale)}
+        </span>
         {" · "}
         {subtitle}
       </span>
@@ -80,13 +82,17 @@ export function TownProfileSection({
       className="mb-4 rounded-xl border border-border/35 bg-muted/35 p-3 sm:p-3.5"
     >
       <header className="mb-3 flex flex-wrap items-end gap-x-3 gap-y-1">
-        <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[0.95rem]">{localizeTownName(townName, locale)}</h2>
+        <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[0.95rem]">
+          {localizeTownName(townName, locale)}
+        </h2>
         <p className="text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
           {formatMonth(monthRange.start, locale)} – {formatMonth(monthRange.end, locale)}
         </p>
       </header>
 
-      <p className="mb-3 text-[0.62rem] leading-relaxed text-muted-foreground">{t("townProfile.factualNote")}</p>
+      <p className="mb-3 text-[0.62rem] leading-relaxed text-muted-foreground">
+        {t("townProfile.factualNote")}
+      </p>
 
       {trendsLoading ? (
         <p className="mb-3 text-[0.7rem] text-muted-foreground">{t("townProfile.loadingTrends")}</p>
@@ -120,12 +126,18 @@ export function TownProfileSection({
                       {localizeFlatType(row.flatType, locale)}
                     </td>
                     <td className="bg-background/85 px-1 py-1 v2-tabular">
-                      {row.latestMedianPrice === null ? "—" : formatCompactCurrency(row.latestMedianPrice, locale)}
+                      {row.latestMedianPrice === null
+                        ? "—"
+                        : formatCompactCurrency(row.latestMedianPrice, locale)}
                     </td>
                     <td className="bg-background/85 px-1 py-1 v2-tabular">
-                      {row.latestMedianPricePerSqm === null ? "—" : formatCompactCurrency(row.latestMedianPricePerSqm, locale)}
+                      {row.latestMedianPricePerSqm === null
+                        ? "—"
+                        : formatCompactCurrency(row.latestMedianPricePerSqm, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">{formatNumber(row.windowTransactionVolume, 0, locale)}</td>
+                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                      {formatNumber(row.windowTransactionVolume, 0, locale)}
+                    </td>
                     <td className="rounded-r-md bg-background/85 px-1 py-1 text-muted-foreground">
                       {row.latestMonth === null ? "—" : formatMonth(row.latestMonth, locale)}
                     </td>
@@ -137,16 +149,26 @@ export function TownProfileSection({
 
           <div className="mb-3 grid gap-1.5 rounded-lg border border-border/25 bg-background/60 px-2.5 py-2 text-[0.65rem]">
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
-              <span className="font-semibold text-muted-foreground">{t("townProfile.totalTrendVolume")}</span>
-              <span className="v2-tabular font-extrabold">{formatNumber(totalTrendVolume, 0, locale)}</span>
+              <span className="font-semibold text-muted-foreground">
+                {t("townProfile.totalTrendVolume")}
+              </span>
+              <span className="v2-tabular font-extrabold">
+                {formatNumber(totalTrendVolume, 0, locale)}
+              </span>
             </div>
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
-              <span className="font-semibold text-muted-foreground">{t("townProfile.typicalSqm")}</span>
+              <span className="font-semibold text-muted-foreground">
+                {t("townProfile.typicalSqm")}
+              </span>
               <span className="max-w-[16rem] text-right text-[0.62rem] font-medium leading-snug">
                 <span className="v2-tabular font-extrabold text-foreground">
-                  {weightedLatestSqm === null ? "—" : formatCompactCurrency(weightedLatestSqm, locale)}
+                  {weightedLatestSqm === null
+                    ? "—"
+                    : formatCompactCurrency(weightedLatestSqm, locale)}
                 </span>
-                <span className="block text-muted-foreground">{t("townProfile.typicalSqmHint")}</span>
+                <span className="block text-muted-foreground">
+                  {t("townProfile.typicalSqmHint")}
+                </span>
               </span>
             </div>
           </div>
@@ -192,7 +214,9 @@ export function TownProfileSection({
                     key={block.addressKey}
                     block={block}
                     locale={locale}
-                    subtitle={t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
+                    subtitle={t("stats.txns", {
+                      count: formatNumber(block.transactionCount, 0, locale),
+                    })}
                     onSelect={() => onSelectBlock(block.addressKey)}
                   />
                 ))}
@@ -206,7 +230,10 @@ export function TownProfileSection({
               </p>
               <p className="mb-1.5 text-[0.61rem] leading-snug text-muted-foreground">
                 {t("townProfile.townMedianMeta", {
-                  median: belowMedian.townMedian === null ? "—" : formatCompactCurrency(belowMedian.townMedian, locale),
+                  median:
+                    belowMedian.townMedian === null
+                      ? "—"
+                      : formatCompactCurrency(belowMedian.townMedian, locale),
                 })}
               </p>
               <div className="flex flex-col gap-1.5">
@@ -215,7 +242,9 @@ export function TownProfileSection({
                     key={block.addressKey}
                     block={block}
                     locale={locale}
-                    subtitle={t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
+                    subtitle={t("stats.txns", {
+                      count: formatNumber(block.transactionCount, 0, locale),
+                    })}
                     onSelect={() => onSelectBlock(block.addressKey)}
                   />
                 ))}

@@ -32,17 +32,17 @@ Type an address, block number, street name, town, MRT station, or postal code in
 
 Open **Filters** to narrow results by:
 
-| Filter | What it does |
-|--------|-------------|
-| **Town** | Restrict to a single town (e.g. Tampines, Clementi) |
-| **Flat type** | 2-Room, 3-Room, 4-Room, 5-Room, Executive, etc. |
-| **Affordability** | Toggle between "All blocks", "Affordable: comfortable", or "Affordable: comfortable + stretch" (requires a search profile) |
-| **Budget** | Set a minimum and/or maximum resale price |
-| **Remaining lease** | Only show blocks with at least N years of lease left |
-| **MRT proximity** | Filter by walking distance to the nearest MRT station |
-| **Flat model** | Narrow to a specific flat model (e.g. Improved, New Generation, DBSS) |
-| **Floor area** | Set a minimum and/or maximum floor area in square metres |
-| **Date range** | Limit transactions to a specific month window |
+| Filter              | What it does                                                                                                               |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Town**            | Restrict to a single town (e.g. Tampines, Clementi)                                                                        |
+| **Flat type**       | 2-Room, 3-Room, 4-Room, 5-Room, Executive, etc.                                                                            |
+| **Affordability**   | Toggle between "All blocks", "Affordable: comfortable", or "Affordable: comfortable + stretch" (requires a search profile) |
+| **Budget**          | Set a minimum and/or maximum resale price                                                                                  |
+| **Remaining lease** | Only show blocks with at least N years of lease left                                                                       |
+| **MRT proximity**   | Filter by walking distance to the nearest MRT station                                                                      |
+| **Flat model**      | Narrow to a specific flat model (e.g. Improved, New Generation, DBSS)                                                      |
+| **Floor area**      | Set a minimum and/or maximum floor area in square metres                                                                   |
+| **Date range**      | Limit transactions to a specific month window                                                                              |
 
 All filters combine — setting Town to "Tampines" and Flat type to "4-Room" shows only 4-Room blocks in Tampines.
 
@@ -96,6 +96,7 @@ The **Results** tab shows all blocks matching your current filters as a scrollab
 ### Sorting
 
 Sort by:
+
 - **Price** (low → high or high → low)
 - **Remaining lease**
 - **MRT proximity**
@@ -137,12 +138,12 @@ Each result shows a **confidence badge** (High / Medium / Low) indicating how re
 
 A **data quality badge** appears alongside the confidence badge to summarise the comparable set:
 
-| Badge | Meaning |
-|-------|---------|
-| **Strong data** | Recent block-level evidence with a good sample size |
-| **Weak data** | Low sample size or low confidence |
+| Badge                   | Meaning                                                    |
+| ----------------------- | ---------------------------------------------------------- |
+| **Strong data**         | Recent block-level evidence with a good sample size        |
+| **Weak data**           | Low sample size or low confidence                          |
 | **Widened comparables** | Search was expanded beyond the block to the street or town |
-| **Stale data** | The most recent comparable is over 12 months old |
+| **Stale data**          | The most recent comparable is over 12 months old           |
 
 Below the verdict, **caveats** highlight data limitations that may affect reliability — for example, a small sample size, stale data, or a wide geographic search. These help you judge how much weight to put on the result.
 
@@ -154,19 +155,19 @@ The header bar shows the latest transaction month in the dataset and, when avail
 
 Below the verdict, a **comparable evidence table** shows every transaction used to reach the verdict. Each row includes:
 
-| Column | Description |
-|--------|-------------|
-| **Month** | Transaction month |
-| **Block / Street** | Block and street of the comparable unit |
-| **Flat Type** | e.g. 4 ROOM, 5 ROOM |
-| **Storey** | Storey range of the unit |
-| **Area** | Floor area in square metres |
-| **Lease** | Lease commencement year |
-| **Price** | Resale price |
-| **$/sqm** | Price per square metre |
-| **Adj. Price** | Time-adjusted price (shown when adjustment data is available) |
-| **Similarity** | How closely the transaction matches your listing (percentage bar) |
-| **Match Reasons** | Why this transaction was selected (e.g. "Same block", "Same flat type") |
+| Column             | Description                                                             |
+| ------------------ | ----------------------------------------------------------------------- |
+| **Month**          | Transaction month                                                       |
+| **Block / Street** | Block and street of the comparable unit                                 |
+| **Flat Type**      | e.g. 4 ROOM, 5 ROOM                                                     |
+| **Storey**         | Storey range of the unit                                                |
+| **Area**           | Floor area in square metres                                             |
+| **Lease**          | Lease commencement year                                                 |
+| **Price**          | Resale price                                                            |
+| **$/sqm**          | Price per square metre                                                  |
+| **Adj. Price**     | Time-adjusted price (shown when adjustment data is available)           |
+| **Similarity**     | How closely the transaction matches your listing (percentage bar)       |
+| **Match Reasons**  | Why this transaction was selected (e.g. "Same block", "Same flat type") |
 
 Click any sortable column header to re-order the table. The default sort is **similarity descending** — the closest match appears first. Clicking the same header again toggles between ascending and descending.
 

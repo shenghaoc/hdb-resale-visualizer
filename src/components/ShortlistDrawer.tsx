@@ -24,7 +24,12 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, PRIMARY_BLUE, getCurrentYear } from "@/shared/lib/constants";
+import {
+  MAX_LEASE_DURATION,
+  MAX_SHORTLIST_ITEMS,
+  PRIMARY_BLUE,
+  getCurrentYear,
+} from "@/shared/lib/constants";
 import { cn } from "@/shared/lib/utils";
 import { useI18n, type Translator } from "@/shared/lib/i18n";
 import { localizeTownName } from "@/shared/lib/i18n/domain";
@@ -60,7 +65,11 @@ import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
 import { useChecklist } from "@/hooks/useChecklist";
 import type { ChecklistItemId } from "@/features/listing-check/checklist";
-import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
+import {
+  getBlockDataQualityTag,
+  QUALITY_LABEL_KEYS,
+  QUALITY_HINT_KEYS,
+} from "@/shared/lib/listing-quality";
 import type {
   AddressDetailSummary,
   AddressTrendPoint,
@@ -160,10 +169,7 @@ const decisionStatusOptions: Array<{
   { value: "dropped", labelKey: "shortlist.decisionStatus.dropped" },
 ];
 
-const decisionStatusLabelKeys: Record<
-  NonNullable<ShortlistItem["decisionStatus"]>,
-  string
-> = {
+const decisionStatusLabelKeys: Record<NonNullable<ShortlistItem["decisionStatus"]>, string> = {
   considering: "shortlist.decisionStatus.considering",
   "viewing booked": "shortlist.decisionStatus.viewingBooked",
   offered: "shortlist.decisionStatus.offered",
@@ -210,13 +216,17 @@ function ShortlistComparisonTable({
       return t("shortlist.compare.gapMatch");
     }
     const value = formatCompactCurrency(gap.amount, locale);
-    return gap.tone === "below" ? t("shortlist.compare.fairDeltaBelow", { value }) : t("shortlist.compare.fairDeltaAbove", { value });
+    return gap.tone === "below"
+      ? t("shortlist.compare.fairDeltaBelow", { value })
+      : t("shortlist.compare.fairDeltaAbove", { value });
   };
 
   const formatFairRange = (row: ShortlistComparisonRow) => {
     const low = row.fairRangeLow !== null ? formatCompactCurrency(row.fairRangeLow, locale) : "—";
-    const median = row.fairRangeMedian !== null ? formatCompactCurrency(row.fairRangeMedian, locale) : "—";
-    const high = row.fairRangeHigh !== null ? formatCompactCurrency(row.fairRangeHigh, locale) : "—";
+    const median =
+      row.fairRangeMedian !== null ? formatCompactCurrency(row.fairRangeMedian, locale) : "—";
+    const high =
+      row.fairRangeHigh !== null ? formatCompactCurrency(row.fairRangeHigh, locale) : "—";
     if (low === "—" && median === "—" && high === "—") {
       return t("shortlist.compare.cellEmpty");
     }
@@ -243,21 +253,14 @@ function ShortlistComparisonTable({
       data-testid="shortlist-comparison-table"
     >
       <div className="hidden md:block overflow-x-auto">
-        <Table
-          aria-label={t("shortlist.compare.tableLabel")}
-          className="min-w-[60rem] text-xs"
-        >
+        <Table aria-label={t("shortlist.compare.tableLabel")} className="min-w-[60rem] text-xs">
           <TableHeader>
             <TableRow className="bg-muted/30 hover:bg-muted/30">
               <TableHead className="h-9 w-8 px-2 text-right">
                 {t("shortlist.compare.col.rank")}
               </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.address")}
-              </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.town")}
-              </TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.address")}</TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.town")}</TableHead>
               <TableHead className="h-9 px-2 text-right">
                 {t("shortlist.compare.col.medianPrice")}
               </TableHead>
@@ -267,24 +270,14 @@ function ShortlistComparisonTable({
               <TableHead className="h-9 px-2 text-right">
                 {t("shortlist.compare.col.askingPrice")}
               </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.fairRange")}
-              </TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.fairRange")}</TableHead>
               <TableHead className="h-9 px-2">
                 {t("shortlist.compare.col.deltaVsFairMedian")}
               </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.confidence")}
-              </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.lease")}
-              </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.mrt")}
-              </TableHead>
-              <TableHead className="h-9 px-2">
-                {t("shortlist.compare.col.decision")}
-              </TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.confidence")}</TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.lease")}</TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.mrt")}</TableHead>
+              <TableHead className="h-9 px-2">{t("shortlist.compare.col.decision")}</TableHead>
               <TableHead className="h-9 min-w-[10rem] whitespace-normal px-2">
                 {t("shortlist.compare.col.caveats")}
               </TableHead>
@@ -300,10 +293,7 @@ function ShortlistComparisonTable({
             {comparisonRows.map((row, index) => {
               const gap = formatGap(row.targetGap);
               return (
-                <TableRow
-                  key={row.addressKey}
-                  data-testid="shortlist-comparison-row"
-                >
+                <TableRow key={row.addressKey} data-testid="shortlist-comparison-row">
                   <TableCell className="px-2 py-2 text-right font-extrabold tabular-nums text-muted-foreground">
                     {index + 1}
                   </TableCell>
@@ -395,9 +385,7 @@ function ShortlistComparisonTable({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-[0.63rem]">
-                    {formatDecision(row)}
-                  </TableCell>
+                  <TableCell className="px-2 py-2 text-[0.63rem]">{formatDecision(row)}</TableCell>
                   <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground text-[0.64rem]">
                     {formatCaveats(row)}
                   </TableCell>
@@ -444,7 +432,8 @@ function ShortlistComparisonTable({
                 ) : null}
                 <div className="mt-1 flex flex-wrap gap-1.5 text-[0.6rem]">
                   <Badge variant="outline" className="font-bold">
-                    {t("shortlist.compare.col.medianPrice")}: {formatCompactCurrency(row.medianPrice, locale)}
+                    {t("shortlist.compare.col.medianPrice")}:{" "}
+                    {formatCompactCurrency(row.medianPrice, locale)}
                   </Badge>
                   <Badge variant="outline" className="font-bold">
                     {t(row.confidenceLevelLabel)}
@@ -490,13 +479,19 @@ function ShortlistComparisonTable({
               </span>
               <span className="text-muted-foreground">
                 {t("shortlist.compare.col.lease")}:{" "}
-                <strong className="text-foreground">{formatRemainingLease(row.leaseCommenceRange, t)}</strong>
+                <strong className="text-foreground">
+                  {formatRemainingLease(row.leaseCommenceRange, t)}
+                </strong>
               </span>
               <span className="text-muted-foreground">
                 {t("shortlist.compare.col.mrt")}:{" "}
                 <strong
                   className="text-foreground"
-                  title={row.nearestMrt ? formatMeters(row.nearestMrt.distanceMeters, t, locale) : undefined}
+                  title={
+                    row.nearestMrt
+                      ? formatMeters(row.nearestMrt.distanceMeters, t, locale)
+                      : undefined
+                  }
                   aria-label={
                     row.nearestMrt
                       ? `${row.nearestMrt.stationName} · ${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`
@@ -509,9 +504,7 @@ function ShortlistComparisonTable({
                 </strong>
               </span>
             </div>
-            <div className="mt-1.5 text-[0.6rem] text-muted-foreground">
-              {formatCaveats(row)}
-            </div>
+            <div className="mt-1.5 text-[0.6rem] text-muted-foreground">{formatCaveats(row)}</div>
             {row.buyerNotes.trim().length > 0 ? (
               <div className="mt-1.5 text-[0.6rem] text-muted-foreground">
                 <span className="font-semibold">{t("shortlist.compare.col.notes")}:</span>{" "}
@@ -562,13 +555,7 @@ function getLeaseYears(row: ShortlistRow) {
   return Math.max(0, MAX_LEASE_DURATION - (getCurrentYear() - row.block.leaseCommenceRange[1]));
 }
 
-function MiniSpark({
-  color,
-  points,
-}: {
-  color: string;
-  points: AddressTrendPoint[];
-}) {
+function MiniSpark({ color, points }: { color: string; points: AddressTrendPoint[] }) {
   const values: number[] = [];
   let min = Infinity;
   let max = -Infinity;
@@ -657,7 +644,9 @@ function AmenityTile({
       <div className="mt-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
         {label}
       </div>
-      {note ? <div className="mt-1 line-clamp-1 text-[0.62rem] italic text-muted-foreground">{note}</div> : null}
+      {note ? (
+        <div className="mt-1 line-clamp-1 text-[0.62rem] italic text-muted-foreground">{note}</div>
+      ) : null}
     </div>
   );
 }
@@ -703,7 +692,7 @@ function CurrencyEditor({
             inputMode="numeric"
             placeholder={placeholder}
             type="number"
-            value={ime.localValue ?? (value ?? "")}
+            value={ime.localValue ?? value ?? ""}
             className="text-sm font-bold"
             onCompositionStart={ime.onCompositionStart}
             onCompositionEnd={ime.onCompositionEnd}
@@ -810,7 +799,8 @@ function ShortlistRowEditor({
               value={item.decisionStatus ?? "unknown"}
               onValueChange={(value) =>
                 onUpdate(item.addressKey, {
-                  decisionStatus: value === "unknown" ? undefined : (value as ShortlistItem["decisionStatus"]),
+                  decisionStatus:
+                    value === "unknown" ? undefined : (value as ShortlistItem["decisionStatus"]),
                 })
               }
             >
@@ -819,10 +809,7 @@ function ShortlistRowEditor({
               </SelectTrigger>
               <SelectContent>
                 {decisionStatusOptions.map((option) => (
-                  <SelectItem
-                    key={`${item.addressKey}-${option.value}`}
-                    value={option.value}
-                  >
+                  <SelectItem key={`${item.addressKey}-${option.value}`} value={option.value}>
                     {t(option.labelKey)}
                   </SelectItem>
                 ))}
@@ -883,9 +870,7 @@ function ShortlistRowEditor({
           label={t("shortlist.suggestedOfferCeiling")}
           value={item.suggestedOfferCeiling ?? null}
           placeholder={t("shortlist.suggestedOfferCeilingPlaceholder")}
-          onChange={(val) =>
-            onUpdate(item.addressKey, { suggestedOfferCeiling: val ?? undefined })
-          }
+          onChange={(val) => onUpdate(item.addressKey, { suggestedOfferCeiling: val ?? undefined })}
           t={t}
         />
       </div>
@@ -904,9 +889,7 @@ function ShortlistRowEditor({
           label={t("shortlist.fairRangeMedian")}
           value={item.fairRangeMedian ?? null}
           placeholder={t("shortlist.fairRangeMedianPlaceholder")}
-          onChange={(val) =>
-            onUpdate(item.addressKey, { fairRangeMedian: val ?? undefined })
-          }
+          onChange={(val) => onUpdate(item.addressKey, { fairRangeMedian: val ?? undefined })}
           t={t}
         />
         <CurrencyEditor
@@ -914,9 +897,7 @@ function ShortlistRowEditor({
           label={t("shortlist.fairRangeHigh")}
           value={item.fairRangeHigh ?? null}
           placeholder={t("shortlist.fairRangeHighPlaceholder")}
-          onChange={(val) =>
-            onUpdate(item.addressKey, { fairRangeHigh: val ?? undefined })
-          }
+          onChange={(val) => onUpdate(item.addressKey, { fairRangeHigh: val ?? undefined })}
           t={t}
         />
       </div>
@@ -927,9 +908,7 @@ function ShortlistRowEditor({
           label={t("shortlist.buyerOpeningOffer")}
           value={item.buyerOpeningOffer ?? null}
           placeholder={t("shortlist.buyerOpeningOfferPlaceholder")}
-          onChange={(val) =>
-            onUpdate(item.addressKey, { buyerOpeningOffer: val ?? undefined })
-          }
+          onChange={(val) => onUpdate(item.addressKey, { buyerOpeningOffer: val ?? undefined })}
           t={t}
         />
         <CurrencyEditor
@@ -937,9 +916,7 @@ function ShortlistRowEditor({
           label={t("shortlist.valuationReceived")}
           value={item.valuationReceived ?? null}
           placeholder={t("shortlist.valuationReceivedPlaceholder")}
-          onChange={(val) =>
-            onUpdate(item.addressKey, { valuationReceived: val ?? undefined })
-          }
+          onChange={(val) => onUpdate(item.addressKey, { valuationReceived: val ?? undefined })}
           t={t}
         />
       </div>
@@ -1088,17 +1065,14 @@ export function ShortlistDrawer({
       ),
     [currentYear, remainingLeaseMin, rows],
   );
-  const comparisonViewRows = useMemo(
-    () => buildShortlistComparisonRows(rankedRows),
-    [rankedRows],
-  );
+  const comparisonViewRows = useMemo(() => buildShortlistComparisonRows(rankedRows), [rankedRows]);
 
   const effectiveExpandedKey =
     expandedKey === null
       ? null
       : rows.some((row) => row.item.addressKey === expandedKey)
         ? expandedKey
-        : rows[0]?.item.addressKey ?? null;
+        : (rows[0]?.item.addressKey ?? null);
 
   // Adjust expandedKey when rows change (e.g. handle first item added or expanded item removed)
   if (rows.length !== prevRowsCount) {
@@ -1255,9 +1229,18 @@ export function ShortlistDrawer({
   }
 
   function handleExportJson() {
-    const blob = new Blob([JSON.stringify(rankedRows.map((row) => row.item), null, 2)], {
-      type: "application/json",
-    });
+    const blob = new Blob(
+      [
+        JSON.stringify(
+          rankedRows.map((row) => row.item),
+          null,
+          2,
+        ),
+      ],
+      {
+        type: "application/json",
+      },
+    );
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -1267,9 +1250,9 @@ export function ShortlistDrawer({
   }
 
   const highlights = useMemo(() => {
-    let bestValueRow: typeof rows[0] | null = null;
-    let longestLeaseRow: typeof rows[0] | null = null;
-    let closestMrtRow: typeof rows[0] | null = null;
+    let bestValueRow: (typeof rows)[0] | null = null;
+    let longestLeaseRow: (typeof rows)[0] | null = null;
+    let closestMrtRow: (typeof rows)[0] | null = null;
 
     let minPrice = Number.POSITIVE_INFINITY;
     let maxLease = Number.NEGATIVE_INFINITY;
@@ -1299,12 +1282,16 @@ export function ShortlistDrawer({
       {
         label: t("shortlist.bestValue"),
         row: bestValueRow,
-        sub: bestValueRow ? formatCompactCurrency(bestValueRow.block.medianPrice, locale) : t("shortlist.na"),
+        sub: bestValueRow
+          ? formatCompactCurrency(bestValueRow.block.medianPrice, locale)
+          : t("shortlist.na"),
       },
       {
         label: t("shortlist.highlights.longestLease"),
         row: longestLeaseRow,
-        sub: longestLeaseRow ? t("unit.years", { value: getLeaseYears(longestLeaseRow) }) : t("shortlist.na"),
+        sub: longestLeaseRow
+          ? t("unit.years", { value: getLeaseYears(longestLeaseRow) })
+          : t("shortlist.na"),
       },
       {
         label: t("shortlist.closestMrt"),
@@ -1354,9 +1341,8 @@ export function ShortlistDrawer({
       }
       return row;
     });
-    const priceAxisWidth = maxPrice > 0
-      ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4)
-      : 48;
+    const priceAxisWidth =
+      maxPrice > 0 ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4) : 48;
 
     const palette = isDark
       ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6"]
@@ -1451,14 +1437,24 @@ export function ShortlistDrawer({
                       aria-labelledby={sortLabelId}
                       className="h-8 min-w-0 rounded-lg border-border/50 bg-card/80 px-2 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
                     >
-                      <ArrowUpDown data-icon="inline-start" className="size-3.5" aria-hidden="true" />
+                      <ArrowUpDown
+                        data-icon="inline-start"
+                        className="size-3.5"
+                        aria-hidden="true"
+                      />
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        <SelectItem value="target-gap">{t(compareModeLabels["target-gap"])}</SelectItem>
-                        <SelectItem value="median-asc">{t(compareModeLabels["median-asc"])}</SelectItem>
-                        <SelectItem value="median-desc">{t(compareModeLabels["median-desc"])}</SelectItem>
+                        <SelectItem value="target-gap">
+                          {t(compareModeLabels["target-gap"])}
+                        </SelectItem>
+                        <SelectItem value="median-asc">
+                          {t(compareModeLabels["median-asc"])}
+                        </SelectItem>
+                        <SelectItem value="median-desc">
+                          {t(compareModeLabels["median-desc"])}
+                        </SelectItem>
                         <SelectItem value="lease">{t(compareModeLabels.lease)}</SelectItem>
                         <SelectItem value="mrt">{t(compareModeLabels.mrt)}</SelectItem>
                       </SelectGroup>
@@ -1484,7 +1480,10 @@ export function ShortlistDrawer({
               </div>
 
               {shareError && (
-                <div role="alert" className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive">
+                <div
+                  role="alert"
+                  className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive"
+                >
                   {shareError}
                 </div>
               )}
@@ -1507,7 +1506,9 @@ export function ShortlistDrawer({
                     ) : (
                       <Copy data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     )}
-                    {copiedKey === "summary" ? t("shortlist.summaryCopiedShort") : t("shortlist.copySummary")}
+                    {copiedKey === "summary"
+                      ? t("shortlist.summaryCopiedShort")
+                      : t("shortlist.copySummary")}
                   </Button>
                 </ButtonGroup>
               </div>
@@ -1562,7 +1563,10 @@ export function ShortlistDrawer({
                           role="img"
                         >
                           <ResponsiveContainer width="100%" height="100%">
-                            <RechartsLineChart data={compareChart.data} margin={{ top: 8, right: 12, bottom: 0, left: 8 }}>
+                            <RechartsLineChart
+                              data={compareChart.data}
+                              margin={{ top: 8, right: 12, bottom: 0, left: 8 }}
+                            >
                               <XAxis
                                 dataKey="month"
                                 tickFormatter={(v: string) => v.slice(2)}
@@ -1587,7 +1591,11 @@ export function ShortlistDrawer({
                                 }}
                                 labelFormatter={(label) => String(label)}
                                 formatter={(value) => {
-                                  if (value == null || typeof value !== "number" || Number.isNaN(value)) {
+                                  if (
+                                    value == null ||
+                                    typeof value !== "number" ||
+                                    Number.isNaN(value)
+                                  ) {
                                     return t("shortlist.na");
                                   }
                                   return formatCompactCurrency(value);
@@ -1595,7 +1603,11 @@ export function ShortlistDrawer({
                               />
                               <Legend
                                 verticalAlign="top"
-                                wrapperStyle={{ fontSize: 10, fontWeight: 700, color: compareChart.colors.mutedForeground }}
+                                wrapperStyle={{
+                                  fontSize: 10,
+                                  fontWeight: 700,
+                                  color: compareChart.colors.mutedForeground,
+                                }}
                               />
                               {compareChart.seriesKeys.map((key, i) => (
                                 <Line
@@ -1628,381 +1640,426 @@ export function ShortlistDrawer({
                   ) : null}
 
                   {viewMode === "list" ? (
-                  <div className="flex flex-col gap-3" role="list">
-                    {rankedRows.map((row, index) => {
-                      const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
-                      const isExpanded = effectiveExpandedKey === row.item.addressKey;
-                      const accentColor =
-                        index % 4 === 0
-                          ? "var(--primary)"
-                          : index % 4 === 1
-                            ? "var(--success)"
-                            : index % 4 === 2
-                              ? "#d97706"
-                              : "#c026d3";
-                      const nearestSchool = row.comparison?.amenities.nearestPrimarySchools?.[0];
+                    <div className="flex flex-col gap-3" role="list">
+                      {rankedRows.map((row, index) => {
+                        const gapInfo = getGapInfo(row.item.targetPrice, row.block.medianPrice);
+                        const isExpanded = effectiveExpandedKey === row.item.addressKey;
+                        const accentColor =
+                          index % 4 === 0
+                            ? "var(--primary)"
+                            : index % 4 === 1
+                              ? "var(--success)"
+                              : index % 4 === 2
+                                ? "#d97706"
+                                : "#c026d3";
+                        const nearestSchool = row.comparison?.amenities.nearestPrimarySchools?.[0];
 
-                      return (
-                        <Card
-                          key={row.item.addressKey}
-                          role="listitem"
-                          data-state={isExpanded ? "expanded" : "collapsed"}
-                          className={cn(
-                            "v2-card ss-fade-in gap-0 rounded-xl py-0 transition-all cv-auto",
-                            isExpanded && "shadow-[0_12px_32px_rgba(23,28,31,0.10)]",
-                          )}
-                        >
-                          <CardHeader className="gap-0 px-0">
-                            <div className="flex items-start gap-2 p-3">
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  setExpandedKey((current) =>
-                                    current === row.item.addressKey ? null : row.item.addressKey,
-                                  )
-                                }
-                                className="flex min-w-0 flex-1 flex-col rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                                aria-expanded={isExpanded}
-                                aria-label={t(
-                                  isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
-                                  { address: `${row.block.block} ${row.block.streetName}` },
-                                )}
-                              >
-                                <div className="flex min-w-0 items-start gap-2">
-                                  <span
-                                    className="flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-extrabold text-white"
-                                    style={{ backgroundColor: accentColor }}
-                                  >
-                                    {index + 1}
-                                  </span>
-                                  <span className="min-w-0 flex-1">
-                                    <strong className="block truncate text-sm font-extrabold leading-tight tracking-tight">
-                                      {row.block.block} {row.block.streetName}
-                                    </strong>
-                                    <span className="block truncate text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-                                      {localizeTownName(row.block.town, locale)}
-                                      {row.block.flatTypes[0] ? ` - ${row.block.flatTypes[0]}` : ""}
-                                    </span>
-                                    <span className="sr-only">{getRankingMetricLabel(row)}</span>
-                                  </span>
-                                  <span className="shrink-0 text-right">
-                                    <strong className="block text-base font-extrabold leading-tight tracking-tight v2-tabular">
-                                      {formatCompactCurrency(row.block.medianPrice, locale)}
-                                    </strong>
-                                    <BudgetMatchBadge
-                                      medianPrice={row.block.medianPrice}
-                                      budgetMin={budgetMin ?? null}
-                                      budgetMax={budgetMax ?? null}
-                                      t={t}
-                                      locale={locale}
-                                      variant="compact"
-                                      className="block text-[0.58rem] font-bold"
-                                    />
-                                    <span className="block text-[0.6rem] font-semibold text-muted-foreground">
-                                      {row.detailSummary?.pricePerSqftMedian
-                                        ? t("unit.psf", {
-                                            value: formatNumber(row.detailSummary.pricePerSqftMedian, 0, locale),
-                                          })
-                                        : t("shortlist.na")}
-                                    </span>
-                                  </span>
-                                </div>
-
-                                <div className="mt-2 flex min-w-0 items-center gap-3 text-[0.65rem] font-semibold text-muted-foreground">
-                                  <MiniSpark color={accentColor} points={row.monthlyTrend} />
-                                  <span>{t("unit.years", { value: getLeaseYears(row) })}</span>
-                                  {row.block.nearestMrt ? (
+                        return (
+                          <Card
+                            key={row.item.addressKey}
+                            role="listitem"
+                            data-state={isExpanded ? "expanded" : "collapsed"}
+                            className={cn(
+                              "v2-card ss-fade-in gap-0 rounded-xl py-0 transition-all cv-auto",
+                              isExpanded && "shadow-[0_12px_32px_rgba(23,28,31,0.10)]",
+                            )}
+                          >
+                            <CardHeader className="gap-0 px-0">
+                              <div className="flex items-start gap-2 p-3">
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setExpandedKey((current) =>
+                                      current === row.item.addressKey ? null : row.item.addressKey,
+                                    )
+                                  }
+                                  className="flex min-w-0 flex-1 flex-col rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                                  aria-expanded={isExpanded}
+                                  aria-label={t(
+                                    isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
+                                    { address: `${row.block.block} ${row.block.streetName}` },
+                                  )}
+                                >
+                                  <div className="flex min-w-0 items-start gap-2">
                                     <span
-                                      title={formatMeters(row.block.nearestMrt.distanceMeters, t, locale)}
-                                      aria-label={`${formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.block.nearestMrt.distanceMeters, t, locale)})`}
+                                      className="flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-extrabold text-white"
+                                      style={{ backgroundColor: accentColor }}
                                     >
-                                      {formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)}
+                                      {index + 1}
                                     </span>
-                                  ) : null}
-                                  <span>{t("stats.txns", { count: formatNumber(row.block.transactionCount, 0, locale) })}</span>
-                                  {(() => {
-                                    const qualityTag = getBlockDataQualityTag({
-                                      transactionCount: row.block.transactionCount,
-                                      latestMonth: row.block.latestMonth,
-                                      referenceMonth,
-                                    });
-                                    return (
-                                      <>
-                                        <Badge variant="outline" className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                                          {t(QUALITY_LABEL_KEYS[qualityTag])}
-                                        </Badge>
-                                        <span className="text-[0.58rem] font-semibold uppercase tracking-[0.08em]">
-                                          {t(QUALITY_HINT_KEYS[qualityTag])}
-                                        </span>
-                                      </>
-                                    );
-                                  })()}
-                                  <span
-                                    className={cn(
-                                      "ml-auto text-right text-[0.62rem] font-extrabold uppercase tracking-[0.08em]",
-                                      gapInfo?.tone === "positive" && "text-success",
-                                      gapInfo?.tone === "negative" && "text-destructive",
-                                      gapInfo?.tone === "match" && "text-primary",
-                                      !gapInfo && "text-muted-foreground",
-                                    )}
-                                  >
-                                    {gapInfo
-                                      ? gapInfo.tone === "match"
-                                        ? t(gapInfo.compactLabelKey)
-                                        : `${formatCompactCurrency(gapInfo.amount, locale)} ${t(gapInfo.compactLabelKey)}`
-                                      : t("shortlist.noTargetSet")}
-                                  </span>
-                                </div>
-                              </button>
-
-                              <Button
-                                size="icon-xs"
-                                variant="ghost"
-                                onClick={() => onRemove(row.item.addressKey)}
-                                type="button"
-                                className="rounded-lg text-muted-foreground hover:text-destructive"
-                                aria-label={t("shortlist.remove")}
-                                title={t("shortlist.remove")}
-                              >
-                                <X data-icon="inline-start" className="size-4" aria-hidden="true" />
-                              </Button>
-                            </div>
-                          </CardHeader>
-
-                          {isExpanded ? (
-                            <CardContent className="flex flex-col gap-4 border-t border-border/40 px-3 py-3">
-                              {row.comparison ? (
-                                <div>
-                                  <div className="v2-section-title mb-2">{t("shortlist.marketPosition")}</div>
-                                  <div className="flex flex-col gap-1.5">
-                                    <PercentileBar
-                                      label={t("detail.rank.price")}
-                                      value={row.comparison.percentileRanks.pricePercentile}
-                                    />
-                                    <PercentileBar
-                                      invert
-                                      label={t("detail.rank.lease")}
-                                      value={row.comparison.percentileRanks.leasePercentile}
-                                    />
-                                    <PercentileBar
-                                      invert
-                                      label={t("detail.rank.mrt")}
-                                      value={row.comparison.percentileRanks.mrtDistancePercentile}
-                                    />
-                                    <PercentileBar
-                                      invert
-                                      label={t("detail.rank.liquidity")}
-                                      value={row.comparison.percentileRanks.transactionCountPercentile}
-                                    />
-                                  </div>
-                                  <div className="sr-only">
-                                    <span>{t("shortlist.pricePercentile")}</span>
-                                    <span>
-                                      {t("shortlist.percentileValue", {
-                                        value: Math.round(row.comparison.percentileRanks.pricePercentile),
-                                      })}
+                                    <span className="min-w-0 flex-1">
+                                      <strong className="block truncate text-sm font-extrabold leading-tight tracking-tight">
+                                        {row.block.block} {row.block.streetName}
+                                      </strong>
+                                      <span className="block truncate text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+                                        {localizeTownName(row.block.town, locale)}
+                                        {row.block.flatTypes[0]
+                                          ? ` - ${row.block.flatTypes[0]}`
+                                          : ""}
+                                      </span>
+                                      <span className="sr-only">{getRankingMetricLabel(row)}</span>
                                     </span>
-                                    <span>{t("shortlist.locationPercentiles")}</span>
-                                    <span>
-                                      {t("shortlist.locationPercentileValues", {
-                                        mrt: Math.round(row.comparison.percentileRanks.mrtDistancePercentile),
-                                        lease: Math.round(row.comparison.percentileRanks.leasePercentile),
-                                      })}
-                                    </span>
-                                  </div>
-                                </div>
-                              ) : null}
-
-                              {row.comparison ? (
-                                <div>
-                                  <div className="v2-section-title mb-2">
-                                    {t("shortlist.nearbyAmenities1km")}
-                                  </div>
-                                  <div className="grid grid-cols-2 gap-2">
-                                    <AmenityTile
-                                      icon={GraduationCap}
-                                      label={t("shortlist.primarySchools")}
-                                      count={row.comparison.amenities.primarySchoolsWithin1km}
-                                      note={
-                                        nearestSchool
-                                          ? t("shortlist.nearestNamedDistance", {
-                                              name: nearestSchool.name,
-                                              distance: formatMeters(nearestSchool.distanceMeters, t, locale),
+                                    <span className="shrink-0 text-right">
+                                      <strong className="block text-base font-extrabold leading-tight tracking-tight v2-tabular">
+                                        {formatCompactCurrency(row.block.medianPrice, locale)}
+                                      </strong>
+                                      <BudgetMatchBadge
+                                        medianPrice={row.block.medianPrice}
+                                        budgetMin={budgetMin ?? null}
+                                        budgetMax={budgetMax ?? null}
+                                        t={t}
+                                        locale={locale}
+                                        variant="compact"
+                                        className="block text-[0.58rem] font-bold"
+                                      />
+                                      <span className="block text-[0.6rem] font-semibold text-muted-foreground">
+                                        {row.detailSummary?.pricePerSqftMedian
+                                          ? t("unit.psf", {
+                                              value: formatNumber(
+                                                row.detailSummary.pricePerSqftMedian,
+                                                0,
+                                                locale,
+                                              ),
                                             })
-                                          : null
-                                      }
-                                    />
-                                    <AmenityTile
-                                      icon={UtensilsCrossed}
-                                      label={t("detail.amenity.hawkers")}
-                                      count={row.comparison.amenities.hawkerCentresWithin1km}
-                                    />
-                                    <AmenityTile
-                                      icon={ShoppingCart}
-                                      label={t("detail.amenity.supermarkets")}
-                                      count={row.comparison.amenities.supermarketsWithin1km}
-                                    />
-                                    <AmenityTile
-                                      icon={Trees}
-                                      label={t("detail.amenity.parks")}
-                                      count={row.comparison.amenities.parksWithin1km}
-                                    />
-                                  </div>
-                                  <div className="sr-only">
-                                    <span>
-                                      {t("shortlist.schoolsWithin", {
-                                        count1km: row.comparison.amenities.primarySchoolsWithin1km,
-                                        count2km: row.comparison.amenities.primarySchoolsWithin2km,
-                                      })}
-                                    </span>
-                                    <span>{t("shortlist.amenities")}</span>
-                                    <span>
-                                      {t("shortlist.amenityCounts", {
-                                        hawkers: row.comparison.amenities.hawkerCentresWithin1km,
-                                        supermarkets: row.comparison.amenities.supermarketsWithin1km,
-                                        parks: row.comparison.amenities.parksWithin1km,
-                                      })}
+                                          : t("shortlist.na")}
+                                      </span>
                                     </span>
                                   </div>
-                                </div>
-                              ) : null}
 
-                              <div>
-                                <div className="v2-section-title mb-1.5">{t("shortlist.mrtConnectivity")}</div>
-                                <div className="flex flex-col">
-                                  {(row.block.nearbyMrts ?? (row.block.nearestMrt ? [row.block.nearestMrt] : []))
-                                    .slice(0, 3)
-                                    .map((mrt, idx, list) => (
-                                      <div
-                                        key={`${mrt.stationName}-${idx}`}
-                                        className={cn(
-                                          "flex items-center justify-between py-1.5",
-                                          idx < list.length - 1 && "border-b border-border/30",
+                                  <div className="mt-2 flex min-w-0 items-center gap-3 text-[0.65rem] font-semibold text-muted-foreground">
+                                    <MiniSpark color={accentColor} points={row.monthlyTrend} />
+                                    <span>{t("unit.years", { value: getLeaseYears(row) })}</span>
+                                    {row.block.nearestMrt ? (
+                                      <span
+                                        title={formatMeters(
+                                          row.block.nearestMrt.distanceMeters,
+                                          t,
+                                          locale,
                                         )}
+                                        aria-label={`${formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.block.nearestMrt.distanceMeters, t, locale)})`}
                                       >
-                                        <span className="flex min-w-0 items-center gap-2">
-                                          <MrtLineDots stationName={mrt.stationName} />
-                                          <span className="truncate text-xs font-bold">{mrt.stationName}</span>
-                                        </span>
-                                        <Badge
-                                          variant={idx === 0 ? "default" : "secondary"}
-                                          className="h-5 shrink-0 text-[0.58rem] font-extrabold v2-tabular"
-                                          title={formatMeters(mrt.distanceMeters, t, locale)}
-                                          aria-label={`${formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)} (${formatMeters(mrt.distanceMeters, t, locale)})`}
-                                        >
-                                          {formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)}
-                                        </Badge>
-                                      </div>
-                                    ))}
-                                </div>
-                              </div>
+                                        {formatMinutesWalk(
+                                          row.block.nearestMrt.walkingTimeSeconds,
+                                          t,
+                                          locale,
+                                        )}
+                                      </span>
+                                    ) : null}
+                                    <span>
+                                      {t("stats.txns", {
+                                        count: formatNumber(row.block.transactionCount, 0, locale),
+                                      })}
+                                    </span>
+                                    {(() => {
+                                      const qualityTag = getBlockDataQualityTag({
+                                        transactionCount: row.block.transactionCount,
+                                        latestMonth: row.block.latestMonth,
+                                        referenceMonth,
+                                      });
+                                      return (
+                                        <>
+                                          <Badge
+                                            variant="outline"
+                                            className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                                          >
+                                            {t(QUALITY_LABEL_KEYS[qualityTag])}
+                                          </Badge>
+                                          <span className="text-[0.58rem] font-semibold uppercase tracking-[0.08em]">
+                                            {t(QUALITY_HINT_KEYS[qualityTag])}
+                                          </span>
+                                        </>
+                                      );
+                                    })()}
+                                    <span
+                                      className={cn(
+                                        "ml-auto text-right text-[0.62rem] font-extrabold uppercase tracking-[0.08em]",
+                                        gapInfo?.tone === "positive" && "text-success",
+                                        gapInfo?.tone === "negative" && "text-destructive",
+                                        gapInfo?.tone === "match" && "text-primary",
+                                        !gapInfo && "text-muted-foreground",
+                                      )}
+                                    >
+                                      {gapInfo
+                                        ? gapInfo.tone === "match"
+                                          ? t(gapInfo.compactLabelKey)
+                                          : `${formatCompactCurrency(gapInfo.amount, locale)} ${t(gapInfo.compactLabelKey)}`
+                                        : t("shortlist.noTargetSet")}
+                                    </span>
+                                  </div>
+                                </button>
 
-                              <LeaseWarningPanel
-                                signals={leaseSignalsByAddressKey.get(row.item.addressKey) ?? []}
-                                t={t}
-                              />
-
-                              <ShortlistRowEditor
-                                item={row.item}
-                                gapInfo={gapInfo}
-                                onUpdate={onUpdate}
-                                checkedItems={checklistState[row.item.addressKey] ?? []}
-                                onToggleChecklist={toggleChecklist}
-                              />
-
-                              <ButtonGroup
-                                aria-label={t("shortlist.openInPortal.group")}
-                                className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
-                              >
                                 <Button
-                                  asChild
-                                  variant="outline"
-                                  size="xs"
-                                >
-                                  <a
-                                    href={propertyGuruUrl(row.block)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={t("shortlist.openInPropertyGuru")}
-                                    title={t("shortlist.openInPropertyGuru")}
-                                  >
-                                    <ExternalLink
-                                      data-icon="inline-start"
-                                      className="size-3.5"
-                                      aria-hidden="true"
-                                    />
-                                    PropertyGuru
-                                  </a>
-                                </Button>
-                                <Button
-                                  asChild
-                                  variant="outline"
-                                  size="xs"
-                                >
-                                  <a
-                                    href={ninetyNineCoUrl(row.block)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={t("shortlist.openInNinetyNineCo")}
-                                    title={t("shortlist.openInNinetyNineCo")}
-                                  >
-                                    <ExternalLink
-                                      data-icon="inline-start"
-                                      className="size-3.5"
-                                      aria-hidden="true"
-                                    />
-                                    99.co
-                                  </a>
-                                </Button>
-                                <Button
-                                  asChild
-                                  variant="outline"
-                                  size="xs"
-                                >
-                                  <a
-                                    href={srxUrl(row.block)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={t("shortlist.openInSrx")}
-                                    title={t("shortlist.openInSrx")}
-                                  >
-                                    <ExternalLink
-                                      data-icon="inline-start"
-                                      className="size-3.5"
-                                      aria-hidden="true"
-                                    />
-                                    SRX
-                                  </a>
-                                </Button>
-                              </ButtonGroup>
-
-                              <div className="grid grid-cols-2 gap-2">
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  size="sm"
-                                  className="rounded-lg border-border/50"
+                                  size="icon-xs"
+                                  variant="ghost"
                                   onClick={() => onRemove(row.item.addressKey)}
-                                >
-                                  <X data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                                  {t("shortlist.remove")}
-                                </Button>
-                                <Button
                                   type="button"
-                                  size="sm"
-                                  className="rounded-lg"
-                                  onClick={() => onSelectAddress(row.item.addressKey)}
+                                  className="rounded-lg text-muted-foreground hover:text-destructive"
+                                  aria-label={t("shortlist.remove")}
+                                  title={t("shortlist.remove")}
                                 >
-                                  <MapPin data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                                  {t("shortlist.viewOnMap")}
+                                  <X
+                                    data-icon="inline-start"
+                                    className="size-4"
+                                    aria-hidden="true"
+                                  />
                                 </Button>
                               </div>
-                            </CardContent>
-                          ) : null}
-                        </Card>
-                      );
-                    })}
-                  </div>
+                            </CardHeader>
+
+                            {isExpanded ? (
+                              <CardContent className="flex flex-col gap-4 border-t border-border/40 px-3 py-3">
+                                {row.comparison ? (
+                                  <div>
+                                    <div className="v2-section-title mb-2">
+                                      {t("shortlist.marketPosition")}
+                                    </div>
+                                    <div className="flex flex-col gap-1.5">
+                                      <PercentileBar
+                                        label={t("detail.rank.price")}
+                                        value={row.comparison.percentileRanks.pricePercentile}
+                                      />
+                                      <PercentileBar
+                                        invert
+                                        label={t("detail.rank.lease")}
+                                        value={row.comparison.percentileRanks.leasePercentile}
+                                      />
+                                      <PercentileBar
+                                        invert
+                                        label={t("detail.rank.mrt")}
+                                        value={row.comparison.percentileRanks.mrtDistancePercentile}
+                                      />
+                                      <PercentileBar
+                                        invert
+                                        label={t("detail.rank.liquidity")}
+                                        value={
+                                          row.comparison.percentileRanks.transactionCountPercentile
+                                        }
+                                      />
+                                    </div>
+                                    <div className="sr-only">
+                                      <span>{t("shortlist.pricePercentile")}</span>
+                                      <span>
+                                        {t("shortlist.percentileValue", {
+                                          value: Math.round(
+                                            row.comparison.percentileRanks.pricePercentile,
+                                          ),
+                                        })}
+                                      </span>
+                                      <span>{t("shortlist.locationPercentiles")}</span>
+                                      <span>
+                                        {t("shortlist.locationPercentileValues", {
+                                          mrt: Math.round(
+                                            row.comparison.percentileRanks.mrtDistancePercentile,
+                                          ),
+                                          lease: Math.round(
+                                            row.comparison.percentileRanks.leasePercentile,
+                                          ),
+                                        })}
+                                      </span>
+                                    </div>
+                                  </div>
+                                ) : null}
+
+                                {row.comparison ? (
+                                  <div>
+                                    <div className="v2-section-title mb-2">
+                                      {t("shortlist.nearbyAmenities1km")}
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <AmenityTile
+                                        icon={GraduationCap}
+                                        label={t("shortlist.primarySchools")}
+                                        count={row.comparison.amenities.primarySchoolsWithin1km}
+                                        note={
+                                          nearestSchool
+                                            ? t("shortlist.nearestNamedDistance", {
+                                                name: nearestSchool.name,
+                                                distance: formatMeters(
+                                                  nearestSchool.distanceMeters,
+                                                  t,
+                                                  locale,
+                                                ),
+                                              })
+                                            : null
+                                        }
+                                      />
+                                      <AmenityTile
+                                        icon={UtensilsCrossed}
+                                        label={t("detail.amenity.hawkers")}
+                                        count={row.comparison.amenities.hawkerCentresWithin1km}
+                                      />
+                                      <AmenityTile
+                                        icon={ShoppingCart}
+                                        label={t("detail.amenity.supermarkets")}
+                                        count={row.comparison.amenities.supermarketsWithin1km}
+                                      />
+                                      <AmenityTile
+                                        icon={Trees}
+                                        label={t("detail.amenity.parks")}
+                                        count={row.comparison.amenities.parksWithin1km}
+                                      />
+                                    </div>
+                                    <div className="sr-only">
+                                      <span>
+                                        {t("shortlist.schoolsWithin", {
+                                          count1km:
+                                            row.comparison.amenities.primarySchoolsWithin1km,
+                                          count2km:
+                                            row.comparison.amenities.primarySchoolsWithin2km,
+                                        })}
+                                      </span>
+                                      <span>{t("shortlist.amenities")}</span>
+                                      <span>
+                                        {t("shortlist.amenityCounts", {
+                                          hawkers: row.comparison.amenities.hawkerCentresWithin1km,
+                                          supermarkets:
+                                            row.comparison.amenities.supermarketsWithin1km,
+                                          parks: row.comparison.amenities.parksWithin1km,
+                                        })}
+                                      </span>
+                                    </div>
+                                  </div>
+                                ) : null}
+
+                                <div>
+                                  <div className="v2-section-title mb-1.5">
+                                    {t("shortlist.mrtConnectivity")}
+                                  </div>
+                                  <div className="flex flex-col">
+                                    {(
+                                      row.block.nearbyMrts ??
+                                      (row.block.nearestMrt ? [row.block.nearestMrt] : [])
+                                    )
+                                      .slice(0, 3)
+                                      .map((mrt, idx, list) => (
+                                        <div
+                                          key={`${mrt.stationName}-${idx}`}
+                                          className={cn(
+                                            "flex items-center justify-between py-1.5",
+                                            idx < list.length - 1 && "border-b border-border/30",
+                                          )}
+                                        >
+                                          <span className="flex min-w-0 items-center gap-2">
+                                            <MrtLineDots stationName={mrt.stationName} />
+                                            <span className="truncate text-xs font-bold">
+                                              {mrt.stationName}
+                                            </span>
+                                          </span>
+                                          <Badge
+                                            variant={idx === 0 ? "default" : "secondary"}
+                                            className="h-5 shrink-0 text-[0.58rem] font-extrabold v2-tabular"
+                                            title={formatMeters(mrt.distanceMeters, t, locale)}
+                                            aria-label={`${formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)} (${formatMeters(mrt.distanceMeters, t, locale)})`}
+                                          >
+                                            {formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)}
+                                          </Badge>
+                                        </div>
+                                      ))}
+                                  </div>
+                                </div>
+
+                                <LeaseWarningPanel
+                                  signals={leaseSignalsByAddressKey.get(row.item.addressKey) ?? []}
+                                  t={t}
+                                />
+
+                                <ShortlistRowEditor
+                                  item={row.item}
+                                  gapInfo={gapInfo}
+                                  onUpdate={onUpdate}
+                                  checkedItems={checklistState[row.item.addressKey] ?? []}
+                                  onToggleChecklist={toggleChecklist}
+                                />
+
+                                <ButtonGroup
+                                  aria-label={t("shortlist.openInPortal.group")}
+                                  className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
+                                >
+                                  <Button asChild variant="outline" size="xs">
+                                    <a
+                                      href={propertyGuruUrl(row.block)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={t("shortlist.openInPropertyGuru")}
+                                      title={t("shortlist.openInPropertyGuru")}
+                                    >
+                                      <ExternalLink
+                                        data-icon="inline-start"
+                                        className="size-3.5"
+                                        aria-hidden="true"
+                                      />
+                                      PropertyGuru
+                                    </a>
+                                  </Button>
+                                  <Button asChild variant="outline" size="xs">
+                                    <a
+                                      href={ninetyNineCoUrl(row.block)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={t("shortlist.openInNinetyNineCo")}
+                                      title={t("shortlist.openInNinetyNineCo")}
+                                    >
+                                      <ExternalLink
+                                        data-icon="inline-start"
+                                        className="size-3.5"
+                                        aria-hidden="true"
+                                      />
+                                      99.co
+                                    </a>
+                                  </Button>
+                                  <Button asChild variant="outline" size="xs">
+                                    <a
+                                      href={srxUrl(row.block)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      aria-label={t("shortlist.openInSrx")}
+                                      title={t("shortlist.openInSrx")}
+                                    >
+                                      <ExternalLink
+                                        data-icon="inline-start"
+                                        className="size-3.5"
+                                        aria-hidden="true"
+                                      />
+                                      SRX
+                                    </a>
+                                  </Button>
+                                </ButtonGroup>
+
+                                <div className="grid grid-cols-2 gap-2">
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    size="sm"
+                                    className="rounded-lg border-border/50"
+                                    onClick={() => onRemove(row.item.addressKey)}
+                                  >
+                                    <X
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    {t("shortlist.remove")}
+                                  </Button>
+                                  <Button
+                                    type="button"
+                                    size="sm"
+                                    className="rounded-lg"
+                                    onClick={() => onSelectAddress(row.item.addressKey)}
+                                  >
+                                    <MapPin
+                                      data-icon="inline-start"
+                                      className="size-3.5"
+                                      aria-hidden="true"
+                                    />
+                                    {t("shortlist.viewOnMap")}
+                                  </Button>
+                                </div>
+                              </CardContent>
+                            ) : null}
+                          </Card>
+                        );
+                      })}
+                    </div>
                   ) : null}
                 </div>
               </div>

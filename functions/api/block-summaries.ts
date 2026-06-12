@@ -1,9 +1,4 @@
-import {
-  type BlockRow,
-  jsonResponse,
-  rowToBlockSummary,
-  serverError,
-} from "../_lib/d1";
+import { type BlockRow, jsonResponse, rowToBlockSummary, serverError } from "../_lib/d1";
 
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   try {

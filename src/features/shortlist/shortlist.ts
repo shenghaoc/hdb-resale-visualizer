@@ -21,36 +21,39 @@ const shortlistDecisionStatuses = [
 const note = z.string().transform((s) => s.slice(0, MAX_NOTE_LENGTH));
 
 const shortlistItemSchema = z.object({
-    addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
-    notes: note.catch(""),
-    pros: note.optional().catch(undefined),
-    cons: note.optional().catch(undefined),
-    renovation: note.optional().catch(undefined),
-    noise: note.optional().catch(undefined),
-    transport: note.optional().catch(undefined),
-    offerCeiling: z.number().finite().optional().catch(undefined),
-    suggestedOfferCeiling: z.number().finite().optional().catch(undefined),
-    askingPrice: z.number().finite().optional().catch(undefined),
-    fairRangeLow: z.number().finite().optional().catch(undefined),
-    fairRangeMedian: z.number().finite().optional().catch(undefined),
-    fairRangeHigh: z.number().finite().optional().catch(undefined),
-    buyerOpeningOffer: z.number().finite().optional().catch(undefined),
-    valuationReceived: z.number().finite().optional().catch(undefined),
-    estimatedCov: z.number().finite().optional().catch(undefined),
-    viewingDate: z.string().optional().catch(undefined),
-    decisionStatus: z
-      .enum(shortlistDecisionStatuses)
-      .optional()
-      .catch(undefined),
-    noiseNotes: note.optional().catch(undefined),
-    transportNotes: note.optional().catch(undefined),
-    buyerNotes: note.optional().catch(undefined),
-    agentRemarks: note.optional().catch(undefined),
-    targetPrice: z.number().finite().nullable().catch(null),
-    addedAt: z.string().min(1).catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
+  addressKey: z.string().min(1).max(MAX_ADDRESS_KEY_LENGTH),
+  notes: note.catch(""),
+  pros: note.optional().catch(undefined),
+  cons: note.optional().catch(undefined),
+  renovation: note.optional().catch(undefined),
+  noise: note.optional().catch(undefined),
+  transport: note.optional().catch(undefined),
+  offerCeiling: z.number().finite().optional().catch(undefined),
+  suggestedOfferCeiling: z.number().finite().optional().catch(undefined),
+  askingPrice: z.number().finite().optional().catch(undefined),
+  fairRangeLow: z.number().finite().optional().catch(undefined),
+  fairRangeMedian: z.number().finite().optional().catch(undefined),
+  fairRangeHigh: z.number().finite().optional().catch(undefined),
+  buyerOpeningOffer: z.number().finite().optional().catch(undefined),
+  valuationReceived: z.number().finite().optional().catch(undefined),
+  estimatedCov: z.number().finite().optional().catch(undefined),
+  viewingDate: z.string().optional().catch(undefined),
+  decisionStatus: z.enum(shortlistDecisionStatuses).optional().catch(undefined),
+  noiseNotes: note.optional().catch(undefined),
+  transportNotes: note.optional().catch(undefined),
+  buyerNotes: note.optional().catch(undefined),
+  agentRemarks: note.optional().catch(undefined),
+  targetPrice: z.number().finite().nullable().catch(null),
+  addedAt: z
+    .string()
+    .min(1)
+    .catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
 });
 
-function normalizeNumber(value: number | undefined, fallback: number | null | undefined): number | undefined {
+function normalizeNumber(
+  value: number | undefined,
+  fallback: number | null | undefined,
+): number | undefined {
   if (Number.isFinite(value)) {
     return value;
   }

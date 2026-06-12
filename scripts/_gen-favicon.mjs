@@ -56,9 +56,15 @@ for (let y = H - 1; y >= 0; y--) {
     if (!inRoundedRect(x, y)) {
       pixelBuf.writeUInt32LE(0, i);
     } else if (isH(x, y)) {
-      pixelBuf[i] = FG[2]; pixelBuf[i + 1] = FG[1]; pixelBuf[i + 2] = FG[0]; pixelBuf[i + 3] = 0xff;
+      pixelBuf[i] = FG[2];
+      pixelBuf[i + 1] = FG[1];
+      pixelBuf[i + 2] = FG[0];
+      pixelBuf[i + 3] = 0xff;
     } else {
-      pixelBuf[i] = BG[2]; pixelBuf[i + 1] = BG[1]; pixelBuf[i + 2] = BG[0]; pixelBuf[i + 3] = 0xff;
+      pixelBuf[i] = BG[2];
+      pixelBuf[i + 1] = BG[1];
+      pixelBuf[i + 2] = BG[0];
+      pixelBuf[i + 3] = 0xff;
     }
   }
 }

@@ -15,7 +15,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "app.loadingDescription": "Preparing block summaries, detail files, and the market map.",
     "app.skipToContent": "Skip to main content",
     "app.missingData": "Static data missing",
-    "app.devFunctionsHint": "Run `npm run dev:functions` to start the full-stack dev server with API routes.",
+    "app.devFunctionsHint":
+      "Run `pnpm dev:functions` to start the full-stack dev server with API routes.",
     "app.mapTitle": "Singapore resale map",
     "app.lowerMedian": "Lower median",
     "app.higherMedian": "Higher median",
@@ -31,7 +32,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "header.openSearch": "Open search",
     "header.closeSearch": "Close location search",
     "app.scopePromptTitle": "Start with location",
-    "app.scopePromptDescription": "Use current location or choose a town before browsing resale blocks.",
+    "app.scopePromptDescription":
+      "Use current location or choose a town before browsing resale blocks.",
     "app.useCurrentLocation": "Use location",
     "app.locating": "Locating",
     "app.chooseTown": "Choose town",
@@ -107,7 +109,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "results.sort.recentActivity": "Most recent activity",
     "results.selectTown": "Choose a location scope first",
     "results.useTownFilter": "Use Town or Location search before browsing block results.",
-    "results.noMatchFilters": "No blocks match your current filters. Try broadening your search or resetting filters.",
+    "results.noMatchFilters":
+      "No blocks match your current filters. Try broadening your search or resetting filters.",
     "results.view.label": "Results view",
     "results.view.blocks": "Blocks",
     "results.view.town": "Town overview",
@@ -115,19 +118,25 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "results.view.townAria": "Show town overview charts and highlights",
     "searchProfile.wizard.title": "Set up your search profile",
     "searchProfile.wizard.kicker": "Buyer setup",
-    "searchProfile.wizard.subtitle": "Set your core preferences first. You can edit everything later.",
+    "searchProfile.wizard.subtitle":
+      "Set your core preferences first. You can edit everything later.",
     "searchProfile.wizard.question.flatType": "What type of flat?",
     "searchProfile.wizard.hint.flatType": "Choose your main target flat type.",
     "searchProfile.wizard.question.budget": "What's your budget?",
-    "searchProfile.wizard.hint.budget": "Maximum price you're comfortable with. Leave blank if you want to browse first.",
+    "searchProfile.wizard.hint.budget":
+      "Maximum price you're comfortable with. Leave blank if you want to browse first.",
     "searchProfile.wizard.question.commute": "Where do you commute?",
-    "searchProfile.wizard.hint.commute": "Set the destination, preferred MRT anchor, and your comfortable commute time.",
+    "searchProfile.wizard.hint.commute":
+      "Set the destination, preferred MRT anchor, and your comfortable commute time.",
     "searchProfile.wizard.question.lease": "Minimum remaining lease?",
-    "searchProfile.wizard.hint.lease": "Hide older lease stock by default and focus the search on viable options.",
+    "searchProfile.wizard.hint.lease":
+      "Hide older lease stock by default and focus the search on viable options.",
     "searchProfile.wizard.question.affordability": "Age and affordability?",
-    "searchProfile.wizard.hint.affordability": "Optional. Used later to gauge CPF down-payment headroom, HDB loan eligibility, and the lease-to-95 rule. Leave anything blank to skip.",
+    "searchProfile.wizard.hint.affordability":
+      "Optional. Used later to gauge CPF down-payment headroom, HDB loan eligibility, and the lease-to-95 rule. Leave anything blank to skip.",
     "searchProfile.wizard.question.review": "Profile ready",
-    "searchProfile.wizard.hint.review": "These preferences will show up as editable profile chips once you enter the map.",
+    "searchProfile.wizard.hint.review":
+      "These preferences will show up as editable profile chips once you enter the map.",
     "searchProfile.mainFlatType": "Main target flat type",
     "searchProfile.selectFlatType": "Select flat type",
     "searchProfile.maxBudget": "Max budget (SGD)",
@@ -168,7 +177,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "searchProfile.chip.cpfOABalance": "CPF OA: S${amount}",
     "searchProfile.chip.monthlyIncome": "Income: S${amount}",
     "townProfile.sectionLabel": "{town} overview",
-    "townProfile.factualNote": "Flat-type rows come from the town × flat-type monthly resale series; busiest and below-median blocks use precomputed block summaries (median price + transaction counts). No forecasts.",
+    "townProfile.factualNote":
+      "Flat-type rows come from the town × flat-type monthly resale series; busiest and below-median blocks use precomputed block summaries (median price + transaction counts). No forecasts.",
     "townProfile.loadingTrends": "Loading town trend file…",
     "townProfile.trendLoadFailed": "Town trend file could not be loaded.",
     "townProfile.noTrendRows": "No town × flat-type rows in this month window.",
@@ -179,7 +189,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "townProfile.latest": "Latest",
     "townProfile.totalTrendVolume": "Resale volume (sum in window)",
     "townProfile.typicalSqm": "Typical $/sqm",
-    "townProfile.typicalSqmHint": "Volume-weighted mean of each flat type’s newest monthly median $/sqm in this window.",
+    "townProfile.typicalSqmHint":
+      "Volume-weighted mean of each flat type’s newest monthly median $/sqm in this window.",
     "townProfile.leaseBucketsTitle": "Lease commence (upper bound, blocks)",
     "townProfile.busyBlocks": "High transaction blocks",
     "townProfile.valueBlocks": "Median below town benchmark",
@@ -233,7 +244,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.export.csvLabel": "Export as CSV",
     "shortlist.shareLinkLabel": "Copy share link",
     "shortlist.copySummaryLabel": "Copy Markdown summary",
-    "shortlist.shareErrorTooLarge": "Too many blocks or notes to share via URL. Try removing some notes or blocks.",
+    "shortlist.shareErrorTooLarge":
+      "Too many blocks or notes to share via URL. Try removing some notes or blocks.",
 
     "shortlist.emptyState": "Save up to {count} blocks to compare.",
     "shortlist.savedProperties": "Saved properties",
@@ -338,7 +350,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.export.parks1km": "Parks (1km)",
     "shortlist.export.mrtDistance": "MRT Distance (m)",
     "sync.title": "Sync across devices",
-    "sync.intro": "Back up your shortlist to the cloud and pick it up on another device. No account, email, or password — just a private code.",
+    "sync.intro":
+      "Back up your shortlist to the cloud and pick it up on another device. No account, email, or password — just a private code.",
     "sync.enable": "Enable sync",
     "sync.linkExisting": "Link an existing code",
     "sync.codePlaceholder": "Paste your sync code",
@@ -354,13 +367,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "sync.error.generic": "Something went wrong. Your shortlist is still saved on this device.",
     "sync.error.notFound": "That sync code wasn't found.",
     "shortlist.compareTrendsTitle": "Price trend overlay",
-    "shortlist.compareTrendsHint": "Compare monthly median resale prices across shortlisted blocks.",
+    "shortlist.compareTrendsHint":
+      "Compare monthly median resale prices across shortlisted blocks.",
     "shortlist.lowestMedian": "Lowest median",
     "shortlist.bestValue": "Best value",
     "shortlist.closestMrt": "Closest MRT",
     "shortlist.sortBy": "Sort by",
     "shortlist.compare.targetFit": "Target fit",
-    "shortlist.compare.targetFit.help": "Sort by how close each block's median price is to your target price.",
+    "shortlist.compare.targetFit.help":
+      "Sort by how close each block's median price is to your target price.",
     "shortlist.compare.price": "Price",
     "shortlist.compare.priceLow": "Lowest price",
     "shortlist.compare.priceHigh": "Highest price",
@@ -508,8 +523,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "map.legend.heading": "Median S$",
     "map.legend.priceLow": "400K",
     "map.legend.priceHigh": "1.3M",
-    "map.legend.ariaLabel": "Map legend: median price colour ramp from S$400K (low) to S$1.3M+ (high)",
-    "heatmap.ariaLabelSqm": "Map legend: median price per sqm colour ramp from S$4K/sqm (low) to S$13K/sqm+ (high)",
+    "map.legend.ariaLabel":
+      "Map legend: median price colour ramp from S$400K (low) to S$1.3M+ (high)",
+    "heatmap.ariaLabelSqm":
+      "Map legend: median price per sqm colour ramp from S$4K/sqm (low) to S$13K/sqm+ (high)",
     "unit.km": "{value} km",
 
     "unit.m": "{value} m",
@@ -528,7 +545,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.unitAttributes": "Unit Attributes",
     "detail.availableLayouts": "Available Layouts",
     "detail.priceLadder": "Price by flat type",
-    "detail.priceLadderHint": "Median resale from recent transactions in this block (unavailable types have no sales in the loaded window).",
+    "detail.priceLadderHint":
+      "Median resale from recent transactions in this block (unavailable types have no sales in the loaded window).",
     "detail.unavailable": "unavailable",
     "detail.orientation": "Orientation",
     "detail.eipQuota": "EIP Quota Status",
@@ -539,11 +557,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.marketRank": "Market Rank",
     "detail.topPercentile": "Top {value}%",
     "detail.townAverage": "{town} Average",
-    "detail.marketRankDescription": "This block ranks in the affordable range of units within {town} based on recent data.",
+    "detail.marketRankDescription":
+      "This block ranks in the affordable range of units within {town} based on recent data.",
     "detail.recentTransactions": "Recent Transactions",
     "detail.totalCount": "{count} total",
     "detail.outlierCount": "{count} flagged",
-    "detail.outlierRule": "Outlier rule: for each flat type with at least {minCount} recent transactions, a sale is flagged only when it is both outside the {iqrMult}x IQR price band and at least {pctThreshold}% above or below that flat type's median price.",
+    "detail.outlierRule":
+      "Outlier rule: for each flat type with at least {minCount} recent transactions, a sale is flagged only when it is both outside the {iqrMult}x IQR price band and at least {pctThreshold}% above or below that flat type's median price.",
     "detail.outlier.high": "High outlier",
     "detail.outlier.low": "Low outlier",
     "detail.saved": "Saved to Shortlist",
@@ -554,8 +574,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.nearbyAmenities": "Nearby Amenities",
     "detail.marketPercentiles": "Market Percentiles",
     "detail.whyThisBlock": "Block highlights",
-    "detail.why.high-transaction-volume": "Enough recent transactions to make the median more reliable.",
-    "detail.why.below-town-median-price": "Median price is below the town median for this flat type.",
+    "detail.why.high-transaction-volume":
+      "Enough recent transactions to make the median more reliable.",
+    "detail.why.below-town-median-price":
+      "Median price is below the town median for this flat type.",
     "detail.why.within-mrt-threshold": "MRT distance is within your selected threshold.",
     "detail.why.above-lease-threshold": "Remaining lease is above your selected threshold.",
     "detail.why.within-budget": "This block matches your current budget filter.",
@@ -594,7 +616,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "schoolOverlay.disable": "Hide nearby primary school markers",
     "schoolOverlay.unavailable": "Select a block to show nearby primary school markers.",
     "schoolOverlay.loading": "Loading nearby schools for the selected block.",
-    "schoolOverlay.noSchoolsNearby": "No primary schools within 2km with map coordinates for this block.",
+    "schoolOverlay.noSchoolsNearby":
+      "No primary schools within 2km with map coordinates for this block.",
     "amenity.label": "Amenities",
     "amenity.mrtStations": "MRT Stations",
     "amenity.mrtExits": "MRT Exits",
@@ -620,7 +643,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.negotiate": "Negotiate",
     "detail.priceTrendFull": "Price History",
     "askingCheck.title": "Asking Price Reality Check",
-    "askingCheck.description": "Compare a seller's asking price against actual recent transactions for similar units in this block.",
+    "askingCheck.description":
+      "Compare a seller's asking price against actual recent transactions for similar units in this block.",
     "askingCheck.askingPrice": "Asking price (SGD)",
     "askingCheck.askingPricePlaceholder": "e.g. 750000",
     "askingCheck.floorArea": "Floor area (sqm)",
@@ -646,17 +670,21 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "askingCheck.percentileValue": "P{value}",
     "askingCheck.range": "Transaction range",
     "askingCheck.p75": "75th percentile",
-    "askingCheck.enterPriceHint": "Enter the seller's asking price above to see how it compares with recent actual transactions in this block.",
-    "askingCheck.noComparables": "No comparable transactions found with these filters. Try relaxing the storey or flat type criteria.",
+    "askingCheck.enterPriceHint":
+      "Enter the seller's asking price above to see how it compares with recent actual transactions in this block.",
+    "askingCheck.noComparables":
+      "No comparable transactions found with these filters. Try relaxing the storey or flat type criteria.",
     "askingCheck.comparablesTitle": "Matched comparable transactions",
     "askingCheck.toggleComparablesShow": "Show matched comparable transactions",
     "askingCheck.toggleComparablesHide": "Hide matched comparable transactions",
     "check.title": "Check a Listing",
-    "check.description": "Enter a listing's details to see how the asking price compares with actual recent transactions for similar units in this block.",
+    "check.description":
+      "Enter a listing's details to see how the asking price compares with actual recent transactions for similar units in this block.",
     "check.primaryAction": "Check a listing price",
     "check.findCandidates": "Find candidate blocks",
     "check.compareShortlist": "Compare my shortlist",
-    "check.valueStatement": "Check whether an asking price is fair using historical HDB resale transactions.",
+    "check.valueStatement":
+      "Check whether an asking price is fair using historical HDB resale transactions.",
     "check.trustStatement": "Deterministic historical comparisons. No AI valuation API.",
     "check.sampleListingCheck": "Try sample listing check",
     "check.blockPlaceholder": "Search for a block (e.g. 123 Ang Mo Kio Ave 3)",
@@ -666,10 +694,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.loading": "Checking…",
     "check.analyzingComparables": "Searching comparable transactions across all blocks…",
     "check.apiError": "Unable to load comparable transactions",
-    "check.apiErrorDetail": "The comparable engine is temporarily unavailable. Your inputs have been preserved — try again.",
+    "check.apiErrorDetail":
+      "The comparable engine is temporarily unavailable. Your inputs have been preserved — try again.",
     "check.widenedSearch": "Search widened",
-    "check.selectBlockHint": "Search and select a block above to begin. The historical transaction data for that block will be used to evaluate the asking price.",
-    "check.noDetail": "Unable to load transaction data for this block. Please try a different block.",
+    "check.selectBlockHint":
+      "Search and select a block above to begin. The historical transaction data for that block will be used to evaluate the asking price.",
+    "check.noDetail":
+      "Unable to load transaction data for this block. Please try a different block.",
     "check.confidence.label": "Confidence: {level}",
     "check.confidence.high": "High",
     "check.confidence.medium": "Medium",
@@ -689,15 +720,19 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.p75": "P75",
     "check.psmDelta": "$/sqm diff",
     "check.adjustmentToggle": "Show time-adjusted prices",
-    "check.adjustmentToggleDescription": "Prices adjusted using observed historical resale medians. This is not a price forecast.",
+    "check.adjustmentToggleDescription":
+      "Prices adjusted using observed historical resale medians. This is not a price forecast.",
     "check.noAdjustmentData": "No adjustment data",
     "check.adjustmentLabel.atLatest": "Already at latest period",
     "check.adjustmentLabel.adjustedFrom": "Adjusted from {month} median",
     "evidence.empty": "No comparable transactions found for this listing.",
     "evidence.whyTitle": "Why these comparables?",
-    "evidence.whyNormal": "These are the most similar recent transactions in the same block, ranked by how closely they match your listing's flat type, storey, floor area, and lease. Price is never used to select comparables — only to display them.",
-    "evidence.whyWidened": "Not enough transactions were found in the same block, so the search was widened to the same street or town. The similarity score reflects how closely each transaction matches your listing.",
-    "evidence.whyLowSample": "Very few comparable transactions were found. Treat this as directional only.",
+    "evidence.whyNormal":
+      "These are the most similar recent transactions in the same block, ranked by how closely they match your listing's flat type, storey, floor area, and lease. Price is never used to select comparables — only to display them.",
+    "evidence.whyWidened":
+      "Not enough transactions were found in the same block, so the search was widened to the same street or town. The similarity score reflects how closely each transaction matches your listing.",
+    "evidence.whyLowSample":
+      "Very few comparable transactions were found. Treat this as directional only.",
     "evidence.referenceDate": "Data as of {month}.",
     "evidence.leasePrefix": "Lease ",
     "evidence.col.month": "Month",
@@ -715,35 +750,45 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "lease.signal.veryShort": "Very short remaining lease — under 30 years.",
     "lease.signal.short": "Short remaining lease — under 60 years.",
     "lease.signal.oldCommence": "Lease commenced before 1975.",
-    "lease.signal.belowFilter": "Some units may have less remaining lease than your minimum lease filter.",
+    "lease.signal.belowFilter":
+      "Some units may have less remaining lease than your minimum lease filter.",
     "leaseFinancing.title": "Lease, CPF & loan fit",
     "leaseFinancing.coversTo95": "Lease covers the youngest buyer to age 95",
-    "leaseFinancing.coversTo95Detail": "You can tap CPF up to the full Valuation Limit and borrow up to {ltv}% of the price.",
+    "leaseFinancing.coversTo95Detail":
+      "You can tap CPF up to the full Valuation Limit and borrow up to {ltv}% of the price.",
     "leaseFinancing.prorated": "Lease falls {years} years short of covering you to 95",
-    "leaseFinancing.proratedDetail": "Your CPF usage and loan are pro-rated to about {factor}% — indicative max loan {ltv}% of price. The rest comes from cash.",
+    "leaseFinancing.proratedDetail":
+      "Your CPF usage and loan are pro-rated to about {factor}% — indicative max loan {ltv}% of price. The rest comes from cash.",
     "leaseFinancing.belowFloor": "Under 20 years remaining lease",
-    "leaseFinancing.belowFloorDetail": "CPF cannot be used and HDB/bank financing is generally unavailable — expect a cash purchase.",
-    "leaseFinancing.unknownAge": "Add your age to your buyer profile to see how this lease affects your CPF and loan.",
+    "leaseFinancing.belowFloorDetail":
+      "CPF cannot be used and HDB/bank financing is generally unavailable — expect a cash purchase.",
+    "leaseFinancing.unknownAge":
+      "Add your age to your buyer profile to see how this lease affects your CPF and loan.",
     "leaseFinancing.remainingNow": "Remaining lease today",
     "leaseFinancing.requiredTo95": "Needed to cover you to 95",
     "leaseFinancing.loanTenure": "Max HDB loan tenure",
     "leaseFinancing.loanTenureAgeCapped": "(capped by your age)",
     "leaseFinancing.loanTenureLeaseCapped": "(capped by this lease)",
     "leaseFinancing.decayAfterHold": "In {hold} years the remaining lease drops to {years} years.",
-    "leaseFinancing.decayAfterHoldExhausted": "Within {hold} years the lease would be all but gone.",
-    "leaseFinancing.disclaimer": "Indicative only, based on published CPF/HDB rules — confirm with HDB and CPF before you commit.",
+    "leaseFinancing.decayAfterHoldExhausted":
+      "Within {hold} years the lease would be all but gone.",
+    "leaseFinancing.disclaimer":
+      "Indicative only, based on published CPF/HDB rules — confirm with HDB and CPF before you commit.",
     "leaseFinancing.cpfLink": "CPF home-ownership rules",
     "detail.similarBlocks": "Similar Blocks",
-    "detail.similarBlocks.hint": "Nearby or comparable alternatives based on flat type, price, lease, and MRT access.",
+    "detail.similarBlocks.hint":
+      "Nearby or comparable alternatives based on flat type, price, lease, and MRT access.",
     "detail.similarBlocks.empty": "No similar blocks found.",
     "detail.similarBlocks.viewBlock": "View block {address}",
     "detail.comparableRange.title": "Comparable range",
-    "detail.comparableRange.summary": "{min} – {max} (median {median}) across {count} similar blocks",
+    "detail.comparableRange.summary":
+      "{min} – {max} (median {median}) across {count} similar blocks",
     "detail.comparableRange.inline": "This block sits at the comparable median.",
     "detail.comparableRange.above": "This block sits {value}% above the comparable median.",
     "detail.comparableRange.below": "This block sits {value}% below the comparable median.",
     "townRecommendations.title": "Towns matching your profile",
-    "townRecommendations.subtitle": "Sorted by how many blocks match your flat type, budget, lease and commute.",
+    "townRecommendations.subtitle":
+      "Sorted by how many blocks match your flat type, budget, lease and commute.",
     "townRecommendations.matchCount": "{matched} of {total} blocks match",
     "townRecommendations.townMedian": "Town median",
     "townRecommendations.explore": "Explore",
@@ -751,7 +796,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "townRecommendations.loading": "Scanning towns that fit your profile…",
     "affordability.title": "Affordability",
     "affordability.ceiling": "Max affordable: {price}",
-    "affordability.summary": "Based on {cpf} CPF OA, {income}/mo income, age {age} → you can afford up to {price}",
+    "affordability.summary":
+      "Based on {cpf} CPF OA, {income}/mo income, age {age} → you can afford up to {price}",
     "affordability.comfortable": "Comfortable",
     "affordability.stretch": "Stretch",
     "affordability.over": "Over budget",
@@ -762,22 +808,28 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "affordability.loanAmount": "Loan amount",
     "affordability.monthlyRepayment": "Monthly repayment",
     "affordability.breakdownTitle": "Affordability breakdown",
-    "affordability.setProfileHint": "Set CPF, income & age in your search profile to see affordability.",
+    "affordability.setProfileHint":
+      "Set CPF, income & age in your search profile to see affordability.",
     "affordability.filter.legend": "Affordability filter",
     "affordability.filter.all": "All blocks",
     "affordability.filter.comfortable": "Affordable: comfortable",
     "affordability.filter.stretch": "Affordable: comfortable + stretch",
     "affordability.filter.allAria": "Show all blocks regardless of affordability",
-    "affordability.filter.comfortableAria": "Show only blocks comfortably within your affordability ceiling",
-    "affordability.filter.stretchAria": "Show comfortable and stretch blocks within your affordability ceiling",
-    "affordability.filter.disabledTooltip": "Set CPF, income & age in your search profile to filter by affordability.",
+    "affordability.filter.comfortableAria":
+      "Show only blocks comfortably within your affordability ceiling",
+    "affordability.filter.stretchAria":
+      "Show comfortable and stretch blocks within your affordability ceiling",
+    "affordability.filter.disabledTooltip":
+      "Set CPF, income & age in your search profile to filter by affordability.",
     "affordability.filter.chip.comfortable": "Affordable: comfortable",
     "affordability.filter.chip.stretch": "Affordable: + stretch",
     "affordability.filter.empty.title": "No blocks match your affordability + filters",
-    "affordability.filter.empty.hint": "Try lowering the minimum lease, broadening flat type, or set a higher monthly income in your profile.",
+    "affordability.filter.empty.hint":
+      "Try lowering the minimum lease, broadening flat type, or set a higher monthly income in your profile.",
     "affordability.filter.empty.clear": "Clear affordability filter",
     "affordability.sort.bestFit": "Best affordability fit",
-    "affordability.sort.disabledTooltip": "Set CPF, income & age in your search profile to sort by affordability.",
+    "affordability.sort.disabledTooltip":
+      "Set CPF, income & age in your search profile to sort by affordability.",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -791,7 +843,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "app.loadingDescription": "正在准备组屋摘要、详细信息与市场地图。",
     "app.skipToContent": "跳至主要内容",
     "app.missingData": "数据缺失",
-    "app.devFunctionsHint": "运行 `npm run dev:functions` 启动全栈开发服务器。",
+    "app.devFunctionsHint": "运行 `pnpm dev:functions` 启动全栈开发服务器。",
     "app.mapTitle": "新加坡转售地图",
     "app.lowerMedian": "价格较低",
     "app.higherMedian": "价格较高",
@@ -900,7 +952,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "searchProfile.wizard.question.lease": "最低剩余地契要求？",
     "searchProfile.wizard.hint.lease": "默认隐藏较旧的地契存量，把搜索集中在更合适的选项。",
     "searchProfile.wizard.question.affordability": "年龄与可负担能力？",
-    "searchProfile.wizard.hint.affordability": "选填。后续将用于估算CPF首付余额、HDB贷款额度，以及“地契覆盖至95岁”规则。任意字段可留空。",
+    "searchProfile.wizard.hint.affordability":
+      "选填。后续将用于估算CPF首付余额、HDB贷款额度，以及“地契覆盖至95岁”规则。任意字段可留空。",
     "searchProfile.wizard.question.review": "资料已准备好",
     "searchProfile.wizard.hint.review": "进入地图后，这些偏好会以可编辑的资料标签显示。",
     "searchProfile.mainFlatType": "主要目标户型",
@@ -943,7 +996,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "searchProfile.chip.cpfOABalance": "CPF OA：S${amount}",
     "searchProfile.chip.monthlyIncome": "月入：S${amount}",
     "townProfile.sectionLabel": "{town} 概览",
-    "townProfile.factualNote": "户型明细来自镇上“户型×月份”的官方转售月度序列；“交易活跃 / 低于镇基准”沿用预计算的组屋概要（成交中位数与交易量）。不包含预测。",
+    "townProfile.factualNote":
+      "户型明细来自镇上“户型×月份”的官方转售月度序列；“交易活跃 / 低于镇基准”沿用预计算的组屋概要（成交中位数与交易量）。不包含预测。",
     "townProfile.loadingTrends": "正在载入镇区级趋势文件…",
     "townProfile.trendLoadFailed": "镇区级趋势文件无法加载。",
     "townProfile.noTrendRows": "该月份区间内没有镇上户型级记录。",
@@ -954,7 +1008,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "townProfile.latest": "最新月份",
     "townProfile.totalTrendVolume": "窗口内交易量合计",
     "townProfile.typicalSqm": "典型 $/㎡",
-    "townProfile.typicalSqmHint": "按下述窗口内每种户型在该窗口最新一个月的成交中位数 $/㎡ 做交易量加权均值。",
+    "townProfile.typicalSqmHint":
+      "按下述窗口内每种户型在该窗口最新一个月的成交中位数 $/㎡ 做交易量加权均值。",
     "townProfile.leaseBucketsTitle": "地契始年分布（每组屋区段上沿）",
     "townProfile.busyBlocks": "交易量较高的组屋",
     "townProfile.valueBlocks": "中位低于镇基准",
@@ -1008,7 +1063,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.export.csvLabel": "导出为 CSV",
     "shortlist.shareLinkLabel": "复制分享链接",
     "shortlist.copySummaryLabel": "复制 Markdown 摘要",
-    "shortlist.shareErrorTooLarge": "由于组屋数量或备注过多，无法生成分享链接。请尝试精简备注或减少组屋。",
+    "shortlist.shareErrorTooLarge":
+      "由于组屋数量或备注过多，无法生成分享链接。请尝试精简备注或减少组屋。",
     "shortlist.emptyState": "最多可选{count}个组屋进行比较。",
     "shortlist.savedProperties": "已保存组屋",
     "shortlist.remove": "移除",
@@ -1112,7 +1168,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.export.parks1km": "1公里内公园",
     "shortlist.export.mrtDistance": "地铁距离 (米)",
     "sync.title": "跨设备同步",
-    "sync.intro": "将收藏夹备份到云端，在其他设备上继续使用。无需账号、电邮或密码，只需一个私密代码。",
+    "sync.intro":
+      "将收藏夹备份到云端，在其他设备上继续使用。无需账号、电邮或密码，只需一个私密代码。",
     "sync.enable": "启用同步",
     "sync.linkExisting": "关联现有代码",
     "sync.codePlaceholder": "粘贴你的同步代码",
@@ -1281,8 +1338,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "map.legend.heading": "中位价（新元）",
     "map.legend.priceLow": "40万",
     "map.legend.priceHigh": "130万",
-    "map.legend.ariaLabel": "地图图例：组屋转售中位价色带，由低（约40万新元）至高（约130万新元以上）",
-    "heatmap.ariaLabelSqm": "地图图例：每平方米中位价色带，由低（约每平方米4000新元）至高（约每平方米13000新元以上）",
+    "map.legend.ariaLabel":
+      "地图图例：组屋转售中位价色带，由低（约40万新元）至高（约130万新元以上）",
+    "heatmap.ariaLabelSqm":
+      "地图图例：每平方米中位价色带，由低（约每平方米4000新元）至高（约每平方米13000新元以上）",
     "unit.km": "{value} 公里",
     "unit.m": "{value} 米",
     "unit.minutesWalk": "步行 {value} 分钟",
@@ -1315,7 +1374,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.recentTransactions": "近期交易",
     "detail.totalCount": "共 {count} 笔",
     "detail.outlierCount": "标记 {count} 笔",
-    "detail.outlierRule": "异常值规则：按户型分别计算；仅当该户型至少有 {minCount} 笔近期交易，且某笔成交价同时落在 {iqrMult}x IQR 区间外，并且相对该户型中位价高/低至少 {pctThreshold}% 时，才会被标记。",
+    "detail.outlierRule":
+      "异常值规则：按户型分别计算；仅当该户型至少有 {minCount} 笔近期交易，且某笔成交价同时落在 {iqrMult}x IQR 区间外，并且相对该户型中位价高/低至少 {pctThreshold}% 时，才会被标记。",
     "detail.outlier.high": "高价异常",
     "detail.outlier.low": "低价异常",
     "detail.saved": "已加入候选",
@@ -1462,8 +1522,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.adjustmentLabel.adjustedFrom": "从 {month} 中位数调整",
     "evidence.empty": "未找到该房源的可比交易。",
     "evidence.whyTitle": "为什么选择这些可比交易？",
-    "evidence.whyNormal": "这些是同一栋楼中最相似的近期交易，按房型、楼层、面积和地契的匹配程度排名。价格不参与可比交易的筛选——仅用于展示。",
-    "evidence.whyWidened": "同一栋楼的交易数量不足，因此搜索范围已扩大到同一街道或同一市镇。相似度分数反映每笔交易与您的房源的匹配程度。",
+    "evidence.whyNormal":
+      "这些是同一栋楼中最相似的近期交易，按房型、楼层、面积和地契的匹配程度排名。价格不参与可比交易的筛选——仅用于展示。",
+    "evidence.whyWidened":
+      "同一栋楼的交易数量不足，因此搜索范围已扩大到同一街道或同一市镇。相似度分数反映每笔交易与您的房源的匹配程度。",
     "evidence.whyLowSample": "可比交易数量极少，仅供参考。",
     "evidence.referenceDate": "数据截至{month}。",
     "evidence.leasePrefix": "地契 ",
@@ -1487,9 +1549,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "leaseFinancing.coversTo95": "剩余地契可覆盖最年轻买家至95岁",
     "leaseFinancing.coversTo95Detail": "您可动用公积金至全额估值上限，并可贷款至房价的{ltv}%。",
     "leaseFinancing.prorated": "剩余地契距覆盖您至95岁尚差{years}年",
-    "leaseFinancing.proratedDetail": "您的公积金动用额与贷款将按约{factor}%比例折算——指示性最高贷款为房价的{ltv}%，其余需以现金支付。",
+    "leaseFinancing.proratedDetail":
+      "您的公积金动用额与贷款将按约{factor}%比例折算——指示性最高贷款为房价的{ltv}%，其余需以现金支付。",
     "leaseFinancing.belowFloor": "剩余地契不足20年",
-    "leaseFinancing.belowFloorDetail": "无法动用公积金，建屋局／银行贷款通常也不获批——预计需全额现金购买。",
+    "leaseFinancing.belowFloorDetail":
+      "无法动用公积金，建屋局／银行贷款通常也不获批——预计需全额现金购买。",
     "leaseFinancing.unknownAge": "在买家资料中填写年龄，即可查看此地契对您的公积金和贷款的影响。",
     "leaseFinancing.remainingNow": "目前剩余地契",
     "leaseFinancing.requiredTo95": "覆盖您至95岁所需",
@@ -1498,7 +1562,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "leaseFinancing.loanTenureLeaseCapped": "（受此地契限制）",
     "leaseFinancing.decayAfterHold": "{hold}年后，剩余地契将降至{years}年。",
     "leaseFinancing.decayAfterHoldExhausted": "{hold}年内地契将几乎耗尽。",
-    "leaseFinancing.disclaimer": "仅供参考，依据公开的公积金／建屋局规定——决定前请向建屋局和公积金局核实。",
+    "leaseFinancing.disclaimer":
+      "仅供参考，依据公开的公积金／建屋局规定——决定前请向建屋局和公积金局核实。",
     "leaseFinancing.cpfLink": "公积金购房规定",
     "detail.similarBlocks": "相似组屋",
     "detail.similarBlocks.hint": "根据户型、价格、租约及地铁距离筛选出的相近备选组屋。",
@@ -1537,13 +1602,15 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "affordability.filter.allAria": "显示全部组屋，不按可负担能力筛选",
     "affordability.filter.comfortableAria": "只显示可轻松负担的组屋",
     "affordability.filter.stretchAria": "显示可轻松负担与略显吃力的组屋",
-    "affordability.filter.disabledTooltip": "请先在搜索资料中设置CPF、月收入与年龄，才能按可负担能力筛选。",
+    "affordability.filter.disabledTooltip":
+      "请先在搜索资料中设置CPF、月收入与年龄，才能按可负担能力筛选。",
     "affordability.filter.chip.comfortable": "可负担：轻松",
     "affordability.filter.chip.stretch": "可负担：+吃力",
     "affordability.filter.empty.title": "没有同时符合可负担能力与筛选条件的组屋",
     "affordability.filter.empty.hint": "可尝试降低最短地契、放宽房型，或在资料中调高家庭月收入。",
     "affordability.filter.empty.clear": "清除可负担筛选",
     "affordability.sort.bestFit": "可负担余裕最大优先",
-    "affordability.sort.disabledTooltip": "请先在搜索资料中设置CPF、月收入与年龄，才能按可负担能力排序。",
+    "affordability.sort.disabledTooltip":
+      "请先在搜索资料中设置CPF、月收入与年龄，才能按可负担能力排序。",
   },
 };

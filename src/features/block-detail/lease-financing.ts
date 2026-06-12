@@ -112,8 +112,7 @@ export function assessLeaseFinancing(params: {
   const remainingLeaseAfterHold = Math.max(0, remaining - TYPICAL_HOLD_YEARS);
   const youngest = youngestAge(params.applicantAge, params.coApplicantAge ?? null);
 
-  const requiredLeaseYears =
-    youngest !== null ? Math.max(0, HDB_MAX_BUYER_AGE - youngest) : null;
+  const requiredLeaseYears = youngest !== null ? Math.max(0, HDB_MAX_BUYER_AGE - youngest) : null;
 
   // Loan tenure is the lower of the age cap (min(25, 65 − age)) and the lease
   // cap (remaining − 20, so ≥ 20 years of lease survive the loan). HDB applies
@@ -137,8 +136,7 @@ export function assessLeaseFinancing(params: {
       remainingLeaseYears: remaining,
       youngestApplicantAge: youngest,
       requiredLeaseYears,
-      shortfallYears:
-        requiredLeaseYears !== null ? Math.max(0, requiredLeaseYears - remaining) : 0,
+      shortfallYears: requiredLeaseYears !== null ? Math.max(0, requiredLeaseYears - remaining) : 0,
       prorationFactor: 0,
       proratedLtvRatio: 0,
       loanTenureYears,

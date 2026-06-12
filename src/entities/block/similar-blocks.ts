@@ -52,8 +52,7 @@ export function scoreSimilarity(
 
   // ── Lease-commence similarity ─────────────────────────────────────────────
   const sourceMidLease = (source.leaseCommenceRange[0] + source.leaseCommenceRange[1]) / 2;
-  const candidateMidLease =
-    (candidate.leaseCommenceRange[0] + candidate.leaseCommenceRange[1]) / 2;
+  const candidateMidLease = (candidate.leaseCommenceRange[0] + candidate.leaseCommenceRange[1]) / 2;
   const leaseDiffYears = Math.abs(candidateMidLease - sourceMidLease);
   const leaseScore = Math.exp(-leaseDiffYears / 5) * 0.05;
 

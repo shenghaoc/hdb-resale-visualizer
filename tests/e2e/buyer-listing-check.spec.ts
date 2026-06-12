@@ -39,10 +39,7 @@ async function horizontalOverflow(page: Page): Promise<number> {
   return page.evaluate(() => {
     const html = document.documentElement;
     const { body } = document;
-    return Math.max(
-      html.scrollWidth - html.clientWidth,
-      body.scrollWidth - body.clientWidth,
-    );
+    return Math.max(html.scrollWidth - html.clientWidth, body.scrollWidth - body.clientWidth);
   });
 }
 
@@ -139,7 +136,9 @@ test("a buyer sees a low-confidence verdict and a caveat when only a few compara
   const check = desktopCheckPanel(page);
   // The count also appears inside the "Only N comparable transactions" caveat
   // (rendered in both the verdict and the evidence banner), so scope to first.
-  await expect(check.getByText(/2 comparable transactions/i).first()).toBeVisible({ timeout: 15_000 });
+  await expect(check.getByText(/2 comparable transactions/i).first()).toBeVisible({
+    timeout: 15_000,
+  });
   await expect(check.getByText(/confidence: low/i).first()).toBeVisible();
   // The low-sample caveat copy is standardised by the data-quality system.
   await expect(check.getByText(/this assessment is unreliable/i).first()).toBeVisible();

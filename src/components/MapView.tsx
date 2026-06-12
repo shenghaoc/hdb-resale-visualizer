@@ -14,7 +14,10 @@ import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
 import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
 import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
-import { primarySchoolsToGeoJson, type PrimarySchoolWithBand } from "@/features/map-explorer/school-proximity";
+import {
+  primarySchoolsToGeoJson,
+  type PrimarySchoolWithBand,
+} from "@/features/map-explorer/school-proximity";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import type { GeographicSearchIntent } from "@/shared/lib/filtering";

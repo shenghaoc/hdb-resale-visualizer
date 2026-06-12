@@ -5,9 +5,7 @@ import {
   computeConfidence as computeConfidenceV2,
   type ConfidenceInput,
 } from "@shared/confidence-system";
-import {
-  generateCaveats as generateCaveatsV2,
-} from "@shared/caveat-codes";
+import { generateCaveats as generateCaveatsV2 } from "@shared/caveat-codes";
 
 export type Caveat = {
   severity: "info" | "warning";
@@ -23,7 +21,8 @@ export type GenerateCaveatsParams = {
 };
 
 export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
-  const { assessment, confidence, leaseCommenceYear, comparableLeaseYears, referenceMonth } = params;
+  const { assessment, confidence, leaseCommenceYear, comparableLeaseYears, referenceMonth } =
+    params;
 
   let ageMonths: number | null = null;
   if (referenceMonth && confidence.newestComparableMonth) {
@@ -53,7 +52,7 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
   });
 
   return v2Caveats.map((c) => ({
-    severity: c.severity === "critical" ? "warning" as const : c.severity,
+    severity: c.severity === "critical" ? ("warning" as const) : c.severity,
     message: c.message,
   }));
 }

@@ -12,11 +12,7 @@ import {
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
 import { fetchCsvRows, fetchGeoJson, fetchJson } from "./lib/sync/fetchers";
-import {
-  geocodeAddress,
-  loadGeocodeCache,
-  saveGeocodeCacheEntries,
-} from "./lib/sync/geocode";
+import { geocodeAddress, loadGeocodeCache, saveGeocodeCacheEntries } from "./lib/sync/geocode";
 import {
   buildRoutingCacheKey,
   loadRoutingCache,
@@ -325,7 +321,10 @@ export async function computeWalkingTimes(
   for (const pair of pairs) {
     const cached = options.routingCache.entries[pair.key];
     if (cached) {
-      walkingTimes.set(walkingTimeLookupKey(pair.addressKey, pair.stationName), cached.walkingTimeSeconds);
+      walkingTimes.set(
+        walkingTimeLookupKey(pair.addressKey, pair.stationName),
+        cached.walkingTimeSeconds,
+      );
     } else {
       fallbackCount += 1;
       if (!options.skipRouting) {
@@ -358,7 +357,9 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   if (!force) {
     const previousLastUpdatedAt = await readManifestUpdatedAt(db);
     if (previousLastUpdatedAt && previousLastUpdatedAt === resaleCollection.lastUpdatedAt) {
-      console.log(`No upstream resale collection change detected (${resaleCollection.lastUpdatedAt}).`);
+      console.log(
+        `No upstream resale collection change detected (${resaleCollection.lastUpdatedAt}).`,
+      );
       return;
     }
   }
@@ -424,15 +425,14 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   });
 
   if (geocodeFailureCount > 0) {
-    console.warn(`Geocoding failed for ${geocodeFailureCount} addresses. Sample: ${geocodeFailureSamples.join(" | ")}`);
+    console.warn(
+      `Geocoding failed for ${geocodeFailureCount} addresses. Sample: ${geocodeFailureSamples.join(" | ")}`,
+    );
   }
 
   const routingCache = await loadRoutingCache(db);
   console.log(`Loaded ${Object.keys(routingCache.entries).length} cached walking times from D1.`);
-  const routingConcurrency = Math.max(
-    1,
-    Number(process.env.ROUTING_CONCURRENCY ?? "4"),
-  );
+  const routingConcurrency = Math.max(1, Number(process.env.ROUTING_CONCURRENCY ?? "4"));
   const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes({
     geocodes: geocodeCache.entries,
     addressKeys: uniqueAddresses.keys(),

@@ -24,7 +24,14 @@ const chipFocusClass =
 const chipLayoutClass =
   "filter-chip flex shrink-0 items-center justify-center gap-1 rounded-full px-3 py-1.5 text-[0.65rem] font-semibold leading-none shadow-sm backdrop-blur-[16px] transition-all min-h-11 min-w-11 sm:min-h-min sm:min-w-min text-box-trim";
 
-export function FilterChipsBar({ chips, isDesktop, t, onOpenFilters, onShare, hidden }: FilterChipsBarProps) {
+export function FilterChipsBar({
+  chips,
+  isDesktop,
+  t,
+  onOpenFilters,
+  onShare,
+  hidden,
+}: FilterChipsBarProps) {
   const itemCount = chips.length + (onShare ? 2 : 1);
   const [focusedIndex, setFocusedIndex] = useState(0);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);

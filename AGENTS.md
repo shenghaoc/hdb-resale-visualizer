@@ -50,24 +50,27 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 ## ⚙️ Useful local commands
 
 ```bash
+pnpm ci                # Clean install from the lockfile (what CI runs)
 pnpm install           # Install dependencies
 pnpm dev               # Start development server (localhost:5173)
 pnpm sync-data         # Refresh precomputed artifacts (public/data/)
-pnpm typecheck         # Strict TypeScript verification
-pnpm lint              # Oxlint with type-aware rules (default)
-pnpm lint:fast         # Oxlint syntax-focused pass (faster local fallback)
-pnpm test              # Run Vitest unit/integration tests
+pnpm run format        # Write formatting fixes (vp fmt)
+pnpm run format:check  # Check formatting only
+pnpm run typecheck     # Strict TypeScript verification
+pnpm run lint          # Oxlint with type-aware rules
+pnpm run test          # Run Vitest unit/integration tests
 pnpm test:e2e          # Run Playwright end-to-end tests
-pnpm build             # Production build
+pnpm run build         # Production build
+pnpm run check         # Full quality gate: format check + lint + typecheck + tests + build
 ```
 
 The targeted `test:*` scripts reuse the existing Vitest config (filename
 filters, no new runner) for fast feedback on buyer-critical listing-check and
 comparable-engine work. `check:pr` is the single documented pre-PR command and
-is a plain npm script with no Kiro-specific behaviour. CI does not call
-`check:pr` directly — it runs the same underlying scripts (`typecheck`,
-`lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
-parallel jobs — but any of these scripts can be invoked identically in CI.
+is a plain package script with no Kiro-specific behaviour. Base CI
+(`.github/workflows/ci.yml`) runs `pnpm ci` followed by `pnpm run check`; the
+Playwright smoke subset runs in a separate workflow
+(`.github/workflows/e2e.yml`) when UI-affecting paths change.
 
 ## 🏗️ Architectural Boundary
 
@@ -185,5 +188,5 @@ The app loads all data from `/api/*` Pages Functions backed by Cloudflare D1. Fo
 All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright requires WebKit, which can be installed with:
 
 ```bash
-npx playwright install --with-deps webkit
+pnpm exec playwright install --with-deps webkit
 ```

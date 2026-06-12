@@ -27,7 +27,10 @@ function roundCoord(value: number): string {
   return value.toFixed(COORD_PRECISION);
 }
 
-export function buildRoutingCacheKey(start: RoutingCoordinate, end: RoutingCoordinate): RoutingCacheKey {
+export function buildRoutingCacheKey(
+  start: RoutingCoordinate,
+  end: RoutingCoordinate,
+): RoutingCacheKey {
   return `${roundCoord(start.lat)},${roundCoord(start.lng)}|${roundCoord(end.lat)},${roundCoord(end.lng)}`;
 }
 
@@ -69,12 +72,7 @@ export async function saveRoutingCacheEntries(
   }
   await db.batchInsert({
     table: "walking_time_cache",
-    columns: [
-      "cache_key",
-      "walking_time_seconds",
-      "walking_distance_meters",
-      "updated_at",
-    ],
+    columns: ["cache_key", "walking_time_seconds", "walking_distance_meters", "updated_at"],
     rows,
     upsert: true,
     mapRow: ({ key, entry }) => [

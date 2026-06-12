@@ -1,6 +1,22 @@
 import { makeSupermarketCacheKey } from "../amenity";
-import { geoJsonFeatureSchema, mrtFeatureSchema, propertyRowSchema, resaleCsvRowSchema, schoolRowSchema, supermarketRowSchema } from "../schemas";
-import { makeAddressKey, normalizeText, parseRemainingLease, type GeocodeCacheFile, type MrtExit, type PropertyInfo, type ResaleTransaction, type SchoolLocation } from "../pipeline";
+import {
+  geoJsonFeatureSchema,
+  mrtFeatureSchema,
+  propertyRowSchema,
+  resaleCsvRowSchema,
+  schoolRowSchema,
+  supermarketRowSchema,
+} from "../schemas";
+import {
+  makeAddressKey,
+  normalizeText,
+  parseRemainingLease,
+  type GeocodeCacheFile,
+  type MrtExit,
+  type PropertyInfo,
+  type ResaleTransaction,
+  type SchoolLocation,
+} from "../pipeline";
 import { geocodeAddress } from "./geocode";
 
 /** Conversion factor from square meters to square feet. */
@@ -20,7 +36,12 @@ export function normalizeResaleRows(rows: Record<string, string>[]) {
     const floorAreaSqm = Number(parsed.data.floor_area_sqm);
     const resalePrice = Number(parsed.data.resale_price);
     const leaseCommenceDate = Number(parsed.data.lease_commence_date);
-    if (!Number.isFinite(floorAreaSqm) || !Number.isFinite(resalePrice) || !Number.isFinite(leaseCommenceDate)) continue;
+    if (
+      !Number.isFinite(floorAreaSqm) ||
+      !Number.isFinite(resalePrice) ||
+      !Number.isFinite(leaseCommenceDate)
+    )
+      continue;
     const addressKey = makeAddressKey(town, block, streetName);
     const pricePerSqm = resalePrice / floorAreaSqm;
     transactions.push({
@@ -37,7 +58,9 @@ export function normalizeResaleRows(rows: Record<string, string>[]) {
       remainingLease: parseRemainingLease(parsed.data.remaining_lease, leaseCommenceDate),
       resalePrice,
       pricePerSqm: Number(pricePerSqm.toFixed(2)),
-      pricePerSqft: Number.isFinite(pricePerSqm) ? Number((pricePerSqm / SQM_TO_SQFT).toFixed(2)) : null,
+      pricePerSqft: Number.isFinite(pricePerSqm)
+        ? Number((pricePerSqm / SQM_TO_SQFT).toFixed(2))
+        : null,
       addressKey,
     });
   }
@@ -72,8 +95,12 @@ export function normalizePropertyRows(rows: Record<string, string>[]) {
 
 export function rekeyPropertyInfo(propertyRows: PropertyInfo[], transactions: ResaleTransaction[]) {
   const knownAddresses = new Map<string, string>();
-  for (const transaction of transactions) knownAddresses.set(`${transaction.block}__${transaction.streetName}`, transaction.addressKey);
-  return propertyRows.map((row) => ({ ...row, addressKey: knownAddresses.get(`${row.block}__${row.streetName}`) ?? row.addressKey }));
+  for (const transaction of transactions)
+    knownAddresses.set(`${transaction.block}__${transaction.streetName}`, transaction.addressKey);
+  return propertyRows.map((row) => ({
+    ...row,
+    addressKey: knownAddresses.get(`${row.block}__${row.streetName}`) ?? row.addressKey,
+  }));
 }
 
 export function normalizeMrtFeatures(geoJson: RawGeoJson): MrtExit[] {
@@ -101,7 +128,11 @@ export function normalizeAmenityGeoJson(
   });
 }
 
-export async function normalizeSchoolRows(rows: Record<string, string>[], geocodeCache: GeocodeCacheFile, options: { skipGeocoding: boolean; geocodeEndpoint: URL }) {
+export async function normalizeSchoolRows(
+  rows: Record<string, string>[],
+  geocodeCache: GeocodeCacheFile,
+  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+) {
   const schools: SchoolLocation[] = [];
   let primaryCount = 0;
   let skippedNoCoords = 0;
@@ -121,7 +152,10 @@ export async function normalizeSchoolRows(rows: Record<string, string>[], geocod
       continue;
     }
     const address = parsed.data.address?.trim();
-    const postalCode = parsed.data.postal_code && /^\d{6}$/.test(parsed.data.postal_code) ? parsed.data.postal_code : undefined;
+    const postalCode =
+      parsed.data.postal_code && /^\d{6}$/.test(parsed.data.postal_code)
+        ? parsed.data.postal_code
+        : undefined;
     const cacheKey = `school:${normalizeText(schoolName)}${postalCode ? `:${postalCode}` : address ? `:${normalizeText(address)}` : ""}`;
     const cached = geocodeCache.entries[cacheKey];
     if (cached) {
@@ -132,11 +166,17 @@ export async function normalizeSchoolRows(rows: Record<string, string>[], geocod
       skippedNoCoords += 1;
       continue;
     }
-    const searchValue = postalCode ? `${postalCode} SINGAPORE` : address ? `${address} SINGAPORE` : `${schoolName} SINGAPORE`;
+    const searchValue = postalCode
+      ? `${postalCode} SINGAPORE`
+      : address
+        ? `${address} SINGAPORE`
+        : `${schoolName} SINGAPORE`;
     try {
       const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
       if (!geocode) {
-        console.warn(`School geocode returned no result for ${schoolName} (search: ${searchValue})`);
+        console.warn(
+          `School geocode returned no result for ${schoolName} (search: ${searchValue})`,
+        );
         skippedNoCoords += 1;
         continue;
       }
@@ -144,15 +184,24 @@ export async function normalizeSchoolRows(rows: Record<string, string>[], geocod
       geocodedCount += 1;
       schools.push({ name: schoolName, lat: geocode.lat, lng: geocode.lng, mainLevelCode });
     } catch (error) {
-      console.warn(`School geocode failed for ${schoolName}: ${error instanceof Error ? error.message : "unknown error"}`);
+      console.warn(
+        `School geocode failed for ${schoolName}: ${error instanceof Error ? error.message : "unknown error"}`,
+      );
       skippedNoCoords += 1;
     }
   }
-  if (skippedNoCoords > 0) console.warn(`⚠ ${skippedNoCoords}/${primaryCount} primary schools skipped (no coordinates and ${options.skipGeocoding ? "geocoding disabled" : "geocoding failed"}). Run without --skip-geocoding to resolve.`);
+  if (skippedNoCoords > 0)
+    console.warn(
+      `⚠ ${skippedNoCoords}/${primaryCount} primary schools skipped (no coordinates and ${options.skipGeocoding ? "geocoding disabled" : "geocoding failed"}). Run without --skip-geocoding to resolve.`,
+    );
   return { schools, geocodedCount };
 }
 
-export async function normalizeSupermarketRows(rows: Record<string, string>[], geocodeCache: GeocodeCacheFile, options: { skipGeocoding: boolean; geocodeEndpoint: URL }) {
+export async function normalizeSupermarketRows(
+  rows: Record<string, string>[],
+  geocodeCache: GeocodeCacheFile,
+  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+) {
   const supermarkets: Array<{ name: string; lat: number; lng: number }> = [];
   let skippedNoCoords = 0;
   let geocodedCount = 0;
@@ -161,7 +210,10 @@ export async function normalizeSupermarketRows(rows: Record<string, string>[], g
     if (!parsed.success) continue;
     const name = parsed.data.licensee_name.trim();
     if (!name) continue;
-    const postalCode = parsed.data.postal_code && /^\d{6}$/.test(parsed.data.postal_code) ? parsed.data.postal_code : undefined;
+    const postalCode =
+      parsed.data.postal_code && /^\d{6}$/.test(parsed.data.postal_code)
+        ? parsed.data.postal_code
+        : undefined;
     const street = parsed.data.street_name?.trim();
     const block = parsed.data.block_house_num?.trim();
     const address = [block, street].filter(Boolean).join(" ");
@@ -175,7 +227,11 @@ export async function normalizeSupermarketRows(rows: Record<string, string>[], g
       skippedNoCoords += 1;
       continue;
     }
-    const searchValue = postalCode ? `${postalCode} SINGAPORE` : address ? `${address} SINGAPORE` : `${name} SINGAPORE`;
+    const searchValue = postalCode
+      ? `${postalCode} SINGAPORE`
+      : address
+        ? `${address} SINGAPORE`
+        : `${name} SINGAPORE`;
     try {
       const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
       if (!geocode) {
@@ -189,6 +245,9 @@ export async function normalizeSupermarketRows(rows: Record<string, string>[], g
       skippedNoCoords += 1;
     }
   }
-  if (skippedNoCoords > 0) console.warn(`⚠ ${skippedNoCoords}/${rows.length} supermarkets skipped (${options.skipGeocoding ? "geocoding disabled" : "geocoding failed"}).`);
+  if (skippedNoCoords > 0)
+    console.warn(
+      `⚠ ${skippedNoCoords}/${rows.length} supermarkets skipped (${options.skipGeocoding ? "geocoding disabled" : "geocoding failed"}).`,
+    );
   return { supermarkets, geocodedCount };
 }

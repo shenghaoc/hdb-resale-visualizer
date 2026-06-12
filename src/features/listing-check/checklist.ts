@@ -14,18 +14,22 @@ export const CHECKLIST_ITEMS = [
 export type ChecklistItemId = (typeof CHECKLIST_ITEMS)[number];
 export type ChecklistState = Record<string, ChecklistItemId[]>;
 
-const checklistStateSchema = z.record(
-  z.string(),
-  z.array(z.string()).catch([]).transform((arr) => {
-    return arr.filter((item): item is ChecklistItemId =>
-      CHECKLIST_ITEMS.includes(item as ChecklistItemId),
-    );
-  }),
-).transform((state): ChecklistState => {
-  return Object.fromEntries(
-    Object.entries(state).filter(([, items]) => items.length > 0),
-  );
-}).catch({});
+const checklistStateSchema = z
+  .record(
+    z.string(),
+    z
+      .array(z.string())
+      .catch([])
+      .transform((arr) => {
+        return arr.filter((item): item is ChecklistItemId =>
+          CHECKLIST_ITEMS.includes(item as ChecklistItemId),
+        );
+      }),
+  )
+  .transform((state): ChecklistState => {
+    return Object.fromEntries(Object.entries(state).filter(([, items]) => items.length > 0));
+  })
+  .catch({});
 
 export function parseChecklistState(raw: unknown): ChecklistState {
   const parsed = checklistStateSchema.safeParse(raw);
@@ -46,10 +50,7 @@ export function loadChecklistState(storage: Pick<Storage, "getItem">): Checklist
   }
 }
 
-export function saveChecklistState(
-  storage: Pick<Storage, "setItem">,
-  state: ChecklistState,
-) {
+export function saveChecklistState(storage: Pick<Storage, "setItem">, state: ChecklistState) {
   try {
     storage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(state));
   } catch {

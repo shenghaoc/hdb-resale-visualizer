@@ -42,37 +42,34 @@ export function DesktopTabBar({
   const [focusedIndex, setFocusedIndex] = useState(0);
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent, index: number) => {
-      const items = itemRefs.current.filter((b): b is HTMLButtonElement => b !== null);
-      if (items.length === 0) return;
+  const handleKeyDown = useCallback((event: React.KeyboardEvent, index: number) => {
+    const items = itemRefs.current.filter((b): b is HTMLButtonElement => b !== null);
+    if (items.length === 0) return;
 
-      let nextIndex: number | null = null;
-      switch (event.key) {
-        case "ArrowRight":
-        case "ArrowDown":
-          nextIndex = (index + 1) % items.length;
-          break;
-        case "ArrowLeft":
-        case "ArrowUp":
-          nextIndex = (index - 1 + items.length) % items.length;
-          break;
-        case "Home":
-          nextIndex = 0;
-          break;
-        case "End":
-          nextIndex = items.length - 1;
-          break;
-      }
+    let nextIndex: number | null = null;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextIndex = (index + 1) % items.length;
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextIndex = (index - 1 + items.length) % items.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = items.length - 1;
+        break;
+    }
 
-      if (nextIndex !== null) {
-        event.preventDefault();
-        setFocusedIndex(nextIndex);
-        items[nextIndex]?.focus();
-      }
-    },
-    [],
-  );
+    if (nextIndex !== null) {
+      event.preventDefault();
+      setFocusedIndex(nextIndex);
+      items[nextIndex]?.focus();
+    }
+  }, []);
 
   const filtersLabel = t("tab.filters");
   const resultsLabel = t("tab.results");

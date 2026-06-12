@@ -14,17 +14,17 @@
     "build:deploy": "pnpm prepare:temporal-polyfill && pnpm check:boundaries && tsc -b && vp build && pnpm check:bundle",
     "check:bundle": "tsx scripts/check-bundle.ts",
     "check:boundaries": "tsx scripts/check-boundaries.ts",
-    "check": "pnpm check:boundaries && pnpm typecheck && pnpm lint && pnpm test",
-    "check:pr": "pnpm check && pnpm test:e2e",
+    "check": "pnpm run format:check && pnpm run lint && pnpm run typecheck && pnpm run test && pnpm run build",
+    "check:pr": "pnpm run check && pnpm test:e2e",
     "db:migrate:local": "wrangler d1 migrations apply hdb-resale --local",
     "db:migrate:remote": "wrangler d1 migrations apply hdb-resale --remote",
     "preview": "vp preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc -b",
     "typecheck:libs": "tsc --noEmit -p tsconfig.lib-check.json",
     "setup:fixtures": "tsx scripts/setup-api-fixtures.ts",
-    "lint": "ESLINT_TYPED=1 vp lint .",
-    "lint:fast": "vp lint .",
-    "lint:typed": "pnpm lint",
+    "format": "vp fmt .",
+    "format:check": "vp fmt --check .",
+    "lint": "vp lint .",
     "test": "NODE_OPTIONS=--no-experimental-webstorage vp test run",
     "test:watch": "NODE_OPTIONS=--no-experimental-webstorage vp test",
     "test:listing-check": "NODE_OPTIONS=--no-experimental-webstorage vp test run listing AskingPriceCheck",
@@ -92,5 +92,5 @@
   "engines": {
     "node": ">=26.0.0"
   },
-  "packageManager": "pnpm@10.12.1"
+  "packageManager": "pnpm@11.6.0+sha512.9a36518224080c6fe5165afdcfe79bfa118c29be703f3f462b1e32efe1e98e47e8750b148e08286250aad4113cc7993ca413c4e2cd447752708c2ee5751bc95f"
 }

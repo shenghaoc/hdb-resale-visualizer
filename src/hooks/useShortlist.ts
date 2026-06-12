@@ -120,9 +120,7 @@ export function useShortlist() {
   const [syncCode, setSyncCode] = useState<string | null>(() =>
     safeStorage.getItem(SYNC_CODE_STORAGE_KEY),
   );
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>(() =>
-    syncCode ? "syncing" : "local",
-  );
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>(() => (syncCode ? "syncing" : "local"));
   const debouncedItems = useDebouncedValue(items, SYNC_DEBOUNCE_MS);
   // JSON of the last successfully pushed set — skips redundant pushes.
   const lastPushedRef = useRef<string | null>(null);
@@ -151,7 +149,9 @@ export function useShortlist() {
 
     const newParams = new URLSearchParams(window.location.search);
     newParams.delete("shortlist");
-    const newUrl = newParams.size ? `${window.location.pathname}?${newParams.toString()}` : window.location.pathname;
+    const newUrl = newParams.size
+      ? `${window.location.pathname}?${newParams.toString()}`
+      : window.location.pathname;
     window.history.replaceState({}, "", newUrl);
   }, [initialState.shouldClearUrlParam]);
 
@@ -397,9 +397,12 @@ export function useShortlist() {
     );
   }, []);
 
-  const has = useCallback((addressKey: string) => {
-    return items.some((item) => item.addressKey === addressKey);
-  }, [items]);
+  const has = useCallback(
+    (addressKey: string) => {
+      return items.some((item) => item.addressKey === addressKey);
+    },
+    [items],
+  );
 
   const enable = useCallback(async () => {
     setSyncStatus("syncing");
@@ -429,57 +432,60 @@ export function useShortlist() {
     }
   }, [scheduleRateLimitRetry]);
 
-  const link = useCallback(async (code: string) => {
-    setSyncStatus("syncing");
-    let pushPayload: ShortlistItem[] | null = null;
-    try {
-      const cloud = await pullShortlist(code);
-      const mergedItems = mergeFromCloud(itemsRef.current, cloud);
-      const mergedSnapshot = JSON.stringify(mergedItems);
-      pushPayload = mergeShortlists(itemsRef.current, cloud);
-      applyItems(itemsRef, setItems, mergedItems);
-      const result = await pushShortlist(code, pushPayload);
-      readyRef.current = true;
-      clearPendingShortlistPush();
-      lastPushedRef.current = JSON.stringify(result.items);
-      if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
-        const nextItems = mergeFromCloud(itemsRef.current, result.items);
-        if (nextItems !== itemsRef.current) {
-          applyItems(itemsRef, setItems, nextItems);
+  const link = useCallback(
+    async (code: string) => {
+      setSyncStatus("syncing");
+      let pushPayload: ShortlistItem[] | null = null;
+      try {
+        const cloud = await pullShortlist(code);
+        const mergedItems = mergeFromCloud(itemsRef.current, cloud);
+        const mergedSnapshot = JSON.stringify(mergedItems);
+        pushPayload = mergeShortlists(itemsRef.current, cloud);
+        applyItems(itemsRef, setItems, mergedItems);
+        const result = await pushShortlist(code, pushPayload);
+        readyRef.current = true;
+        clearPendingShortlistPush();
+        lastPushedRef.current = JSON.stringify(result.items);
+        if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
+          const nextItems = mergeFromCloud(itemsRef.current, result.items);
+          if (nextItems !== itemsRef.current) {
+            applyItems(itemsRef, setItems, nextItems);
+          }
         }
+        safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
+        setSyncCode(code);
+        setSyncStatus("synced");
+      } catch (error) {
+        if (pushPayload !== null) {
+          if (error instanceof SyncRateLimitedError) {
+            enqueuePendingShortlistPush(code, pushPayload);
+            readyRef.current = true;
+            safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
+            setSyncCode(code);
+            scheduleRateLimitRetry(error.retryAfterSec);
+            setSyncStatus("synced");
+            return;
+          }
+          if (isRetriableSyncError(error)) {
+            enqueuePendingShortlistPush(code, pushPayload);
+            readyRef.current = true;
+            safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
+            setSyncCode(code);
+            setSyncStatus("synced");
+            return;
+          }
+        }
+        // pushPayload === null means the pull failed before we could establish the
+        // link (e.g. offline). Unlike a push failure, there is nothing to queue —
+        // we never confirmed the code exists and have no merged payload — so
+        // surface the failure to the caller (ShortlistSyncSection shows an error)
+        // instead of resolving as if the link succeeded.
+        setSyncStatus("error");
+        throw error;
       }
-      safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
-      setSyncCode(code);
-      setSyncStatus("synced");
-    } catch (error) {
-      if (pushPayload !== null) {
-        if (error instanceof SyncRateLimitedError) {
-          enqueuePendingShortlistPush(code, pushPayload);
-          readyRef.current = true;
-          safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
-          setSyncCode(code);
-          scheduleRateLimitRetry(error.retryAfterSec);
-          setSyncStatus("synced");
-          return;
-        }
-        if (isRetriableSyncError(error)) {
-          enqueuePendingShortlistPush(code, pushPayload);
-          readyRef.current = true;
-          safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
-          setSyncCode(code);
-          setSyncStatus("synced");
-          return;
-        }
-      }
-      // pushPayload === null means the pull failed before we could establish the
-      // link (e.g. offline). Unlike a push failure, there is nothing to queue —
-      // we never confirmed the code exists and have no merged payload — so
-      // surface the failure to the caller (ShortlistSyncSection shows an error)
-      // instead of resolving as if the link succeeded.
-      setSyncStatus("error");
-      throw error;
-    }
-  }, [scheduleRateLimitRetry]);
+    },
+    [scheduleRateLimitRetry],
+  );
 
   const disable = useCallback(() => {
     dropSyncCode("local");

@@ -1,12 +1,12 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib/utils";
 
 type DrawerProps = React.ComponentProps<"div"> & {
-  open: boolean
-  onClose?: () => void
-  dismissible?: boolean
-}
+  open: boolean;
+  onClose?: () => void;
+  dismissible?: boolean;
+};
 
 function Drawer({
   open,
@@ -17,34 +17,34 @@ function Drawer({
   onKeyDown,
   ...props
 }: DrawerProps) {
-  const rootRef = React.useRef<HTMLDivElement>(null)
-  const onCloseRef = React.useRef(onClose)
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const onCloseRef = React.useRef(onClose);
 
   React.useLayoutEffect(() => {
-    onCloseRef.current = onClose
-  }, [onClose])
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
   React.useEffect(() => {
     if (!open || !dismissible) {
-      return
+      return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        onCloseRef.current?.()
+        onCloseRef.current?.();
       }
-    }
+    };
 
-    document.addEventListener("keydown", handleKeyDown)
-    rootRef.current?.focus()
+    document.addEventListener("keydown", handleKeyDown);
+    rootRef.current?.focus();
 
     return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [dismissible, open])
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [dismissible, open]);
 
   if (!open) {
-    return null
+    return null;
   }
 
   return (
@@ -59,12 +59,12 @@ function Drawer({
     >
       {children}
     </div>
-  )
+  );
 }
 
 type DrawerContentProps = React.ComponentProps<"div"> & {
-  hideHandle?: boolean
-}
+  hideHandle?: boolean;
+};
 
 function DrawerContent({ className, hideHandle = false, children, ...props }: DrawerContentProps) {
   return (
@@ -84,7 +84,7 @@ function DrawerContent({ className, hideHandle = false, children, ...props }: Dr
       )}
       {children}
     </div>
-  )
+  );
 }
 
 function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -94,7 +94,7 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("relative flex flex-col gap-2 px-4 pt-4 sm:px-6", className)}
       {...props}
     />
-  )
+  );
 }
 
 function DrawerTitle({ className, ...props }: React.ComponentProps<"h2">) {
@@ -104,7 +104,7 @@ function DrawerTitle({ className, ...props }: React.ComponentProps<"h2">) {
       className={cn("font-heading text-lg font-semibold tracking-tight", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Drawer, DrawerContent, DrawerHeader, DrawerTitle }
+export { Drawer, DrawerContent, DrawerHeader, DrawerTitle };

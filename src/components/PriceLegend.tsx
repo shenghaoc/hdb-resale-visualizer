@@ -16,7 +16,14 @@ type PriceLegendProps = {
   style?: React.CSSProperties;
 };
 
-export function PriceLegend({ isDesktop, isVisible, mode = "price", t, className, style }: PriceLegendProps) {
+export function PriceLegend({
+  isDesktop,
+  isVisible,
+  mode = "price",
+  t,
+  className,
+  style,
+}: PriceLegendProps) {
   if (!isVisible) return null;
 
   const perSqmLowLabel = `${PRICE_PER_SQM_COLOR_STOPS[0].price / 1000}k`;
@@ -28,7 +35,7 @@ export function PriceLegend({ isDesktop, isVisible, mode = "price", t, className
       aria-label={mode === "perSqm" ? t("heatmap.ariaLabelSqm") : t("map.legend.ariaLabel")}
       className={cn(
         "pointer-events-none absolute z-25 rounded-lg border bg-popover/90 p-2 backdrop-blur-[20px] shadow-lg",
-        className
+        className,
       )}
       style={{
         bottom: isDesktop ? "4rem" : "8rem",
@@ -42,7 +49,10 @@ export function PriceLegend({ isDesktop, isVisible, mode = "price", t, className
       <div
         aria-hidden="true"
         className="h-1.5 w-20 rounded-full"
-        style={{ background: mode === "perSqm" ? PRICE_PER_SQM_LEGEND_GRADIENT : MEDIAN_PRICE_LEGEND_GRADIENT }}
+        style={{
+          background:
+            mode === "perSqm" ? PRICE_PER_SQM_LEGEND_GRADIENT : MEDIAN_PRICE_LEGEND_GRADIENT,
+        }}
       />
       <div
         aria-hidden="true"

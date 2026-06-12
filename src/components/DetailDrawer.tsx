@@ -1,4 +1,13 @@
-import { type CSSProperties, lazy, startTransition, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  lazy,
+  startTransition,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { flushSync } from "react-dom";
 import {
@@ -68,10 +77,17 @@ import {
   type TrendRangeKey,
 } from "@/entities/transaction/transaction-analysis";
 import { buildLeaseSignals } from "@/features/block-detail/leaseSignals";
-import { assessLeaseFinancing, computeRemainingLeaseYears } from "@/features/block-detail/lease-financing";
+import {
+  assessLeaseFinancing,
+  computeRemainingLeaseYears,
+} from "@/features/block-detail/lease-financing";
 import { DEFAULT_FILTERS, getCurrentYear } from "@/shared/lib/constants";
 import { buildBlockShareUrl } from "@/shared/lib/shareUrls";
-import { getBlockDataQualityTag, QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
+import {
+  getBlockDataQualityTag,
+  QUALITY_LABEL_KEYS,
+  QUALITY_HINT_KEYS,
+} from "@/shared/lib/listing-quality";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
@@ -164,9 +180,7 @@ function TrajectoryBadge({
           {badgeContent}
         </Badge>
       )}
-      <span className="text-[0.58rem] text-muted-foreground/70 font-medium">
-        {peakLabel}
-      </span>
+      <span className="text-[0.58rem] text-muted-foreground/70 font-medium">{peakLabel}</span>
     </div>
   );
 }
@@ -246,63 +260,73 @@ function AmenityCard({
         </div>
       )}
       <div className="flex flex-col gap-1">
-          {count1km !== undefined && (
-            <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
-          )}
-          {count2km !== undefined && (
-            <div className="text-xs text-muted-foreground">
-              {t("detail.within2km", { count: count2km })}
-            </div>
-          )}
-          {nearbyItems && nearbyItems.length > 0 ? (
-            <ul className={showLabel ? "mt-1 flex flex-col gap-0.5" : "flex flex-col gap-0.5"}>
-              {nearbyItems.map((item) => {
-                const distanceBand = showDistanceBands
-                  ? classifyPrimarySchoolDistance(item.distanceMeters)
-                  : null;
+        {count1km !== undefined && (
+          <div className="text-sm font-extrabold">{t("detail.within1km", { count: count1km })}</div>
+        )}
+        {count2km !== undefined && (
+          <div className="text-xs text-muted-foreground">
+            {t("detail.within2km", { count: count2km })}
+          </div>
+        )}
+        {nearbyItems && nearbyItems.length > 0 ? (
+          <ul className={showLabel ? "mt-1 flex flex-col gap-0.5" : "flex flex-col gap-0.5"}>
+            {nearbyItems.map((item) => {
+              const distanceBand = showDistanceBands
+                ? classifyPrimarySchoolDistance(item.distanceMeters)
+                : null;
 
-                return (
-                  <li key={`${item.name}-${item.distanceMeters}`} className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground">
-                    <div className="flex min-w-0 items-center gap-1.5">
-                      {showMrtLineColors ? (
-                        <MrtLineDots stationName={item.name} />
-                      ) : (
-                        <div className="size-1 shrink-0 rounded-full bg-muted-foreground/30" aria-hidden="true" />
-                      )}
-                      <span className="truncate">{item.name}</span>
-                    </div>
-                    <div className="flex shrink-0 items-center gap-1.5">
-                      {distanceBand ? (
-                        <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-[0.08em] text-primary">
-                          {t(`detail.schoolBand.${distanceBand}`)}
-                        </span>
-                      ) : null}
-                      <span
-                        className="font-mono text-[0.65rem] tabular-nums"
-                        title={item.walkingTimeSeconds !== undefined ? formatMeters(item.distanceMeters, t, locale) : undefined}
-                        aria-label={
-                          item.walkingTimeSeconds !== undefined
-                            ? `${formatMinutesWalk(item.walkingTimeSeconds, t, locale)} (${formatMeters(item.distanceMeters, t, locale)})`
-                            : undefined
-                        }
-                      >
-                        {item.walkingTimeSeconds !== undefined
-                          ? formatMinutesWalk(item.walkingTimeSeconds, t, locale)
-                          : formatMeters(item.distanceMeters, t, locale)}
+              return (
+                <li
+                  key={`${item.name}-${item.distanceMeters}`}
+                  className="flex items-baseline justify-between gap-1 text-xs text-muted-foreground"
+                >
+                  <div className="flex min-w-0 items-center gap-1.5">
+                    {showMrtLineColors ? (
+                      <MrtLineDots stationName={item.name} />
+                    ) : (
+                      <div
+                        className="size-1 shrink-0 rounded-full bg-muted-foreground/30"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span className="truncate">{item.name}</span>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    {distanceBand ? (
+                      <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-[0.08em] text-primary">
+                        {t(`detail.schoolBand.${distanceBand}`)}
                       </span>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : nearestDistance != null ? (
-            <div className="text-xs text-muted-foreground">
-              {t("detail.nearest", {
-                distance: formatMeters(nearestDistance, t, locale),
-              })}
-            </div>
-          ) : null}
-        </div>
+                    ) : null}
+                    <span
+                      className="font-mono text-[0.65rem] tabular-nums"
+                      title={
+                        item.walkingTimeSeconds !== undefined
+                          ? formatMeters(item.distanceMeters, t, locale)
+                          : undefined
+                      }
+                      aria-label={
+                        item.walkingTimeSeconds !== undefined
+                          ? `${formatMinutesWalk(item.walkingTimeSeconds, t, locale)} (${formatMeters(item.distanceMeters, t, locale)})`
+                          : undefined
+                      }
+                    >
+                      {item.walkingTimeSeconds !== undefined
+                        ? formatMinutesWalk(item.walkingTimeSeconds, t, locale)
+                        : formatMeters(item.distanceMeters, t, locale)}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : nearestDistance != null ? (
+          <div className="text-xs text-muted-foreground">
+            {t("detail.nearest", {
+              distance: formatMeters(nearestDistance, t, locale),
+            })}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -338,17 +362,12 @@ export function DetailDrawer({
       ...filters,
       selectedAddressKey: currentSummary.addressKey,
     };
-    return buildBlockShareUrl(
-      shareFilters,
-      `${window.location.origin}${window.location.pathname}`,
-    );
+    return buildBlockShareUrl(shareFilters, `${window.location.origin}${window.location.pathname}`);
   }, [currentSummary, filters]);
   const isDrawerOpen = Boolean(currentSummary || filters?.selectedAddressKey);
   const explanationCodes = useMemo(
     () =>
-      currentSummary
-        ? buildBlockExplanation({ block: currentSummary, comparison, filters })
-        : [],
+      currentSummary ? buildBlockExplanation({ block: currentSummary, comparison, filters }) : [],
     [comparison, currentSummary, filters],
   );
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
@@ -502,13 +521,15 @@ export function DetailDrawer({
                     title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                     aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
                   >
-                    {isCopied ? <Check data-icon="inline-start" className="size-4" aria-hidden="true" /> : <Copy data-icon="inline-start" className="size-4" aria-hidden="true" />}
+                    {isCopied ? (
+                      <Check data-icon="inline-start" className="size-4" aria-hidden="true" />
+                    ) : (
+                      <Copy data-icon="inline-start" className="size-4" aria-hidden="true" />
+                    )}
                   </Button>
                 )}
               </div>
-              {trajectory && (
-                <TrajectoryBadge trajectory={trajectory} t={t} locale={locale} />
-              )}
+              {trajectory && <TrajectoryBadge trajectory={trajectory} t={t} locale={locale} />}
             </div>
             <Button
               variant="ghost"
@@ -573,721 +594,775 @@ export function DetailDrawer({
               </TabsList>
 
               <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar drawer-body-vt">
-              {/* ── OVERVIEW ── */}
-              <TabsContent
-                value="overview"
-                className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
-              >
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex flex-col rounded-xl bg-muted/30 p-3">
-                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                      {t("results.medianResale")}
-                    </div>
-                    <div className="flex flex-col">
-                      <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
-                        {currentSummary
-                          ? formatCurrency(currentSummary.medianPrice, locale)
-                          : "…"}
+                {/* ── OVERVIEW ── */}
+                <TabsContent
+                  value="overview"
+                  className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
+                >
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                      <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                        <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                        {t("results.medianResale")}
                       </div>
-                      {currentSummary ? (() => {
-                        const qualityTag = getBlockDataQualityTag({
-                          transactionCount: currentSummary.transactionCount,
-                          latestMonth: currentSummary.latestMonth,
-                          referenceMonth,
-                        });
-                        return (
-                          <>
-                            <Badge variant="outline" className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]">
-                              {t(QUALITY_LABEL_KEYS[qualityTag])}
-                            </Badge>
-                            <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
-                              {t(QUALITY_HINT_KEYS[qualityTag])}
-                            </div>
-                          </>
-                        );
-                      })() : null}
-                      {currentSummary && (filters.budgetMin != null || filters.budgetMax != null) ? (
-                        <BudgetMatchBadge
-                          medianPrice={currentSummary.medianPrice}
-                          budgetMin={filters.budgetMin}
-                          budgetMax={filters.budgetMax}
-                          t={t}
-                          locale={locale}
-                          className="mt-2"
-                        />
-                      ) : null}
-                      {detail?.summary.pricePerSqftMedian ? (
-                        <div className="mt-1 text-xs font-medium text-muted-foreground">
-                          {t("unit.psf", {
-                            value: formatNumber(detail.summary.pricePerSqftMedian, 0, locale),
-                          })}
+                      <div className="flex flex-col">
+                        <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
+                          {currentSummary
+                            ? formatCurrency(currentSummary.medianPrice, locale)
+                            : "…"}
                         </div>
-                      ) : null}
+                        {currentSummary
+                          ? (() => {
+                              const qualityTag = getBlockDataQualityTag({
+                                transactionCount: currentSummary.transactionCount,
+                                latestMonth: currentSummary.latestMonth,
+                                referenceMonth,
+                              });
+                              return (
+                                <>
+                                  <Badge
+                                    variant="outline"
+                                    className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                                  >
+                                    {t(QUALITY_LABEL_KEYS[qualityTag])}
+                                  </Badge>
+                                  <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
+                                    {t(QUALITY_HINT_KEYS[qualityTag])}
+                                  </div>
+                                </>
+                              );
+                            })()
+                          : null}
+                        {currentSummary &&
+                        (filters.budgetMin != null || filters.budgetMax != null) ? (
+                          <BudgetMatchBadge
+                            medianPrice={currentSummary.medianPrice}
+                            budgetMin={filters.budgetMin}
+                            budgetMax={filters.budgetMax}
+                            t={t}
+                            locale={locale}
+                            className="mt-2"
+                          />
+                        ) : null}
+                        {detail?.summary.pricePerSqftMedian ? (
+                          <div className="mt-1 text-xs font-medium text-muted-foreground">
+                            {t("unit.psf", {
+                              value: formatNumber(detail.summary.pricePerSqftMedian, 0, locale),
+                            })}
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-col rounded-xl bg-muted/30 p-3">
-                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                      {t("results.remainingLease")}
-                    </div>
-                    <div className="font-heading text-sm font-extrabold tracking-tight">
+                    <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                      <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                        <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                        {t("results.remainingLease")}
+                      </div>
+                      <div className="font-heading text-sm font-extrabold tracking-tight">
                         {currentSummary
                           ? formatRemainingLease(currentSummary.leaseCommenceRange, t)
                           : "…"}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {comparableRange ? (
-                  <section
-                    aria-labelledby="comparable-range-title"
-                    data-testid="comparable-range-headline"
-                    className="rounded-xl border border-border/40 bg-muted/20 p-3"
-                  >
-                    <div
-                      id="comparable-range-title"
-                      className="mb-1 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+                  {comparableRange ? (
+                    <section
+                      aria-labelledby="comparable-range-title"
+                      data-testid="comparable-range-headline"
+                      className="rounded-xl border border-border/40 bg-muted/20 p-3"
                     >
-                      <Scale data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                      {t("detail.comparableRange.title")}
-                    </div>
-                    <p className="font-heading text-sm font-extrabold tracking-tight v2-tabular">
-                      {t("detail.comparableRange.summary", {
-                        min: formatCurrency(comparableRange.minPrice, locale),
-                        max: formatCurrency(comparableRange.maxPrice, locale),
-                        median: formatCurrency(comparableRange.medianPrice, locale),
-                        count: formatNumber(comparableRange.sampleSize, 0, locale),
-                      })}
-                    </p>
-                    <p className="mt-1 text-[0.65rem] font-medium text-muted-foreground">
-                      {Math.abs(comparableRange.deltaFromMedianPct) < 0.5
-                        ? t("detail.comparableRange.inline")
-                        : comparableRange.deltaFromMedianPct >= 0
-                          ? t("detail.comparableRange.above", {
-                              value: formatNumber(comparableRange.deltaFromMedianPct, 1, locale),
-                            })
-                          : t("detail.comparableRange.below", {
-                              value: formatNumber(Math.abs(comparableRange.deltaFromMedianPct), 1, locale),
-                            })}
-                    </p>
-                  </section>
-                ) : null}
-
-                {affordabilityVerdict && affordabilityVerdict.status !== "unknown" ? (
-                  <section
-                    aria-labelledby="affordability-title"
-                    data-testid="affordability-section"
-                    className="rounded-xl border border-border/40 bg-muted/20 p-3"
-                  >
-                    <div
-                      id="affordability-title"
-                      className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
-                    >
-                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                      {t("affordability.breakdownTitle")}
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <span className="text-[0.58rem] font-medium text-muted-foreground">
-                          {t("affordability.loanAmount")}
-                        </span>
-                        <div className="font-heading text-sm font-extrabold tabular-nums">
-                          {formatCurrency(affordabilityVerdict.loanAmount, locale)}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-[0.58rem] font-medium text-muted-foreground">
-                          {t("affordability.monthlyRepayment")}
-                        </span>
-                        <div className="font-heading text-sm font-extrabold tabular-nums">
-                          {formatCurrency(affordabilityVerdict.monthlyRepayment, locale)}
-                          <span className="text-[0.58rem] font-normal text-muted-foreground">{t("unit.perMonth")}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-[0.58rem] font-medium text-muted-foreground">
-                          {t("affordability.downPayment")}
-                        </span>
-                        <div className="font-heading text-sm font-extrabold tabular-nums">
-                          {formatCurrency(affordabilityVerdict.downPaymentFromCpf + affordabilityVerdict.cashOutlay, locale)}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="text-[0.58rem] font-medium text-muted-foreground">
-                          {t("affordability.fromCpf")}
-                        </span>
-                        <div className="font-heading text-sm font-extrabold tabular-nums">
-                          {formatCurrency(affordabilityVerdict.downPaymentFromCpf, locale)}
-                        </div>
-                      </div>
-                      <div className="col-span-2">
-                        <span className="text-[0.58rem] font-medium text-muted-foreground">
-                          {t("affordability.cashRequired")}
-                        </span>
-                        <div className="font-heading text-sm font-extrabold tabular-nums">
-                          {formatCurrency(affordabilityVerdict.cashOutlay, locale)}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="mt-2 flex items-center gap-1.5 text-[0.6rem] font-bold">
-                      <span
-                        className={cn(
-                          "h-1.5 w-1.5 rounded-full",
-                          affordabilityVerdict.status === "comfortable" && "bg-success",
-                          affordabilityVerdict.status === "stretch" && "bg-warning",
-                          affordabilityVerdict.status === "over" && "bg-destructive",
-                        )}
-                      />
-                      <span className="uppercase tracking-[0.08em] text-muted-foreground">
-                        {t("affordability.ceiling", { price: formatCurrency(affordabilityVerdict.maxAffordablePrice, locale) })}
-                      </span>
-                      <span
-                        className={cn(
-                          "ml-auto rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
-                          affordabilityVerdict.status === "comfortable" &&
-                            "bg-success/10 text-success",
-                          affordabilityVerdict.status === "stretch" &&
-                            "bg-warning/10 text-warning",
-                          affordabilityVerdict.status === "over" &&
-                            "bg-destructive/10 text-destructive",
-                        )}
+                      <div
+                        id="comparable-range-title"
+                        className="mb-1 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
                       >
-                        {affordabilityVerdict.status === "comfortable"
-                          ? t("affordability.comfortable")
-                          : affordabilityVerdict.status === "stretch"
-                            ? t("affordability.stretch")
-                            : t("affordability.over")}
-                      </span>
-                    </div>
-                  </section>
-                ) : searchProfile && searchProfile.monthlyIncome === null ? (
-                  <section className="rounded-xl border border-border/40 bg-muted/20 p-3">
-                    <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                      <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
-                      {t("affordability.title")}
-                    </div>
-                    <p className="text-xs text-muted-foreground italic">
-                      {t("affordability.setProfileHint")}
-                    </p>
-                  </section>
-                ) : null}
+                        <Scale data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                        {t("detail.comparableRange.title")}
+                      </div>
+                      <p className="font-heading text-sm font-extrabold tracking-tight v2-tabular">
+                        {t("detail.comparableRange.summary", {
+                          min: formatCurrency(comparableRange.minPrice, locale),
+                          max: formatCurrency(comparableRange.maxPrice, locale),
+                          median: formatCurrency(comparableRange.medianPrice, locale),
+                          count: formatNumber(comparableRange.sampleSize, 0, locale),
+                        })}
+                      </p>
+                      <p className="mt-1 text-[0.65rem] font-medium text-muted-foreground">
+                        {Math.abs(comparableRange.deltaFromMedianPct) < 0.5
+                          ? t("detail.comparableRange.inline")
+                          : comparableRange.deltaFromMedianPct >= 0
+                            ? t("detail.comparableRange.above", {
+                                value: formatNumber(comparableRange.deltaFromMedianPct, 1, locale),
+                              })
+                            : t("detail.comparableRange.below", {
+                                value: formatNumber(
+                                  Math.abs(comparableRange.deltaFromMedianPct),
+                                  1,
+                                  locale,
+                                ),
+                              })}
+                      </p>
+                    </section>
+                  ) : null}
 
-                <LeaseWarningPanel signals={leaseSignals} t={t} />
-
-                {leaseFinancing ? (
-                  <LeaseFinancingPanel assessment={leaseFinancing} t={t} />
-                ) : null}
-
-                {flatTypeLadder.length > 0 && (
-                  <section>
-                    <h3 className="v2-section-title mb-2 flex items-center gap-2 text-[0.72rem]">
-                      <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
-                      {t("detail.priceLadder")}
-                    </h3>
-                    <FlatTypePriceLadder entries={flatTypeLadder} />
-                    <p className="mt-1 text-[0.58rem] text-muted-foreground">{t("detail.priceLadderHint")}</p>
-                  </section>
-                )}
-
-                <section>
-                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <Table data-icon className="size-4" aria-hidden="true" />
-                    {t("detail.unitAttributes")}
-                  </h3>
-                  <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
-                    <CardContent className="divide-y divide-border/40 p-0">
-                      <div className="flex items-center justify-between p-3">
-                        <span className="text-sm font-medium text-muted-foreground">
-                          {t("detail.availableLayouts")}
-                        </span>
-                        <div className="flex flex-wrap justify-end gap-1.5 max-w-[60%]">
-                          {currentSummary?.flatTypes.map((type) => (
-                            <Badge
-                              key={type}
-                              variant="outline"
-                              className="h-5 text-[0.6rem] font-bold uppercase"
-                            >
-                              {localizeFlatType(type, locale)}
-                            </Badge>
-                          ))}
+                  {affordabilityVerdict && affordabilityVerdict.status !== "unknown" ? (
+                    <section
+                      aria-labelledby="affordability-title"
+                      data-testid="affordability-section"
+                      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                    >
+                      <div
+                        id="affordability-title"
+                        className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+                      >
+                        <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                        {t("affordability.breakdownTitle")}
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                            {t("affordability.loanAmount")}
+                          </span>
+                          <div className="font-heading text-sm font-extrabold tabular-nums">
+                            {formatCurrency(affordabilityVerdict.loanAmount, locale)}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                            {t("affordability.monthlyRepayment")}
+                          </span>
+                          <div className="font-heading text-sm font-extrabold tabular-nums">
+                            {formatCurrency(affordabilityVerdict.monthlyRepayment, locale)}
+                            <span className="text-[0.58rem] font-normal text-muted-foreground">
+                              {t("unit.perMonth")}
+                            </span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                            {t("affordability.downPayment")}
+                          </span>
+                          <div className="font-heading text-sm font-extrabold tabular-nums">
+                            {formatCurrency(
+                              affordabilityVerdict.downPaymentFromCpf +
+                                affordabilityVerdict.cashOutlay,
+                              locale,
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                            {t("affordability.fromCpf")}
+                          </span>
+                          <div className="font-heading text-sm font-extrabold tabular-nums">
+                            {formatCurrency(affordabilityVerdict.downPaymentFromCpf, locale)}
+                          </div>
+                        </div>
+                        <div className="col-span-2">
+                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                            {t("affordability.cashRequired")}
+                          </span>
+                          <div className="font-heading text-sm font-extrabold tabular-nums">
+                            {formatCurrency(affordabilityVerdict.cashOutlay, locale)}
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center justify-between p-3">
-                        <span className="text-sm font-medium text-muted-foreground">
-                          {t("filters.flatModel")}
+                      <div className="mt-2 flex items-center gap-1.5 text-[0.6rem] font-bold">
+                        <span
+                          className={cn(
+                            "h-1.5 w-1.5 rounded-full",
+                            affordabilityVerdict.status === "comfortable" && "bg-success",
+                            affordabilityVerdict.status === "stretch" && "bg-warning",
+                            affordabilityVerdict.status === "over" && "bg-destructive",
+                          )}
+                        />
+                        <span className="uppercase tracking-[0.08em] text-muted-foreground">
+                          {t("affordability.ceiling", {
+                            price: formatCurrency(affordabilityVerdict.maxAffordablePrice, locale),
+                          })}
                         </span>
-                        <div className="flex flex-wrap justify-end gap-1.5 max-w-[60%]">
-                          {currentSummary?.flatModels.map((model) => (
-                            <Badge
-                              key={model}
-                              variant="secondary"
-                              className="h-5 text-[0.6rem] font-bold uppercase tracking-tight"
-                            >
-                              {model}
-                            </Badge>
-                          ))}
-                        </div>
+                        <span
+                          className={cn(
+                            "ml-auto rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
+                            affordabilityVerdict.status === "comfortable" &&
+                              "bg-success/10 text-success",
+                            affordabilityVerdict.status === "stretch" &&
+                              "bg-warning/10 text-warning",
+                            affordabilityVerdict.status === "over" &&
+                              "bg-destructive/10 text-destructive",
+                          )}
+                        >
+                          {affordabilityVerdict.status === "comfortable"
+                            ? t("affordability.comfortable")
+                            : affordabilityVerdict.status === "stretch"
+                              ? t("affordability.stretch")
+                              : t("affordability.over")}
+                        </span>
                       </div>
-                      <div className="flex items-center justify-between p-3">
-                        <span className="text-sm font-medium text-muted-foreground">
-                          {t("filters.floorAreaRange")}
-                        </span>
-                        <span className="font-heading text-sm font-bold">
-                          {currentSummary
-                            ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
-                                currentSummary.floorAreaRange[1],
-                              )} ${t("unit.sqm", { value: "" }).trim()}`
-                            : "…"}
-                        </span>
+                    </section>
+                  ) : searchProfile && searchProfile.monthlyIncome === null ? (
+                    <section className="rounded-xl border border-border/40 bg-muted/20 p-3">
+                      <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                        <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
+                        {t("affordability.title")}
                       </div>
-                    </CardContent>
-                  </Card>
-                </section>
+                      <p className="text-xs text-muted-foreground italic">
+                        {t("affordability.setProfileHint")}
+                      </p>
+                    </section>
+                  ) : null}
 
-                {nearbyStations.length > 0 && (
+                  <LeaseWarningPanel signals={leaseSignals} t={t} />
+
+                  {leaseFinancing ? (
+                    <LeaseFinancingPanel assessment={leaseFinancing} t={t} />
+                  ) : null}
+
+                  {flatTypeLadder.length > 0 && (
+                    <section>
+                      <h3 className="v2-section-title mb-2 flex items-center gap-2 text-[0.72rem]">
+                        <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
+                        {t("detail.priceLadder")}
+                      </h3>
+                      <FlatTypePriceLadder entries={flatTypeLadder} />
+                      <p className="mt-1 text-[0.58rem] text-muted-foreground">
+                        {t("detail.priceLadderHint")}
+                      </p>
+                    </section>
+                  )}
+
                   <section>
                     <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                      <TrainFront data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.connectivity")}
+                      <Table data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.unitAttributes")}
                     </h3>
-                    <AmenityCard
-                      nearbyItems={nearbyStations.map((mrt) => ({
-                        name: mrt.stationName,
-                        distanceMeters: mrt.distanceMeters,
-                        walkingTimeSeconds: mrt.walkingTimeSeconds,
-                      }))}
-                      showLabel={false}
-                      showMrtLineColors
-                      t={t}
-                      locale={locale}
-                    />
-                  </section>
-                )}
-
-                <section>
-                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <Info data-icon className="size-4" aria-hidden="true" />
-                    {t("detail.whyThisBlock")}
-                  </h3>
-                  <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
-                    <CardContent className="p-3">
-                      {isComparisonLoading ? (
-                        <div className="flex flex-col gap-2">
-                          {Array.from({ length: 3 }).map((_, i) => (
-                            <div key={i} className="h-3 w-full animate-pulse rounded-full bg-muted/40" />
-                          ))}
+                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                      <CardContent className="divide-y divide-border/40 p-0">
+                        <div className="flex items-center justify-between p-3">
+                          <span className="text-sm font-medium text-muted-foreground">
+                            {t("detail.availableLayouts")}
+                          </span>
+                          <div className="flex flex-wrap justify-end gap-1.5 max-w-[60%]">
+                            {currentSummary?.flatTypes.map((type) => (
+                              <Badge
+                                key={type}
+                                variant="outline"
+                                className="h-5 text-[0.6rem] font-bold uppercase"
+                              >
+                                {localizeFlatType(type, locale)}
+                              </Badge>
+                            ))}
+                          </div>
                         </div>
-                      ) : explanationCodes.length > 0 ? (
-                        <ul className="flex flex-col gap-1.5">
-                          {explanationCodes.map((code) => (
-                            <li key={code} className="text-xs text-muted-foreground leading-relaxed">
-                              • {t(`detail.why.${code}`)}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p className="text-xs text-muted-foreground italic">{t("detail.why.none")}</p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </section>
+                        <div className="flex items-center justify-between p-3">
+                          <span className="text-sm font-medium text-muted-foreground">
+                            {t("filters.flatModel")}
+                          </span>
+                          <div className="flex flex-wrap justify-end gap-1.5 max-w-[60%]">
+                            {currentSummary?.flatModels.map((model) => (
+                              <Badge
+                                key={model}
+                                variant="secondary"
+                                className="h-5 text-[0.6rem] font-bold uppercase tracking-tight"
+                              >
+                                {model}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between p-3">
+                          <span className="text-sm font-medium text-muted-foreground">
+                            {t("filters.floorAreaRange")}
+                          </span>
+                          <span className="font-heading text-sm font-bold">
+                            {currentSummary
+                              ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
+                                  currentSummary.floorAreaRange[1],
+                                )} ${t("unit.sqm", { value: "" }).trim()}`
+                              : "…"}
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </section>
 
-                <section>
-                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <Trees data-icon className="size-4" aria-hidden="true" />
-                    {t("detail.nearbyAmenities")}
-                  </h3>
-                  {isComparisonLoading ? (
-                    <div className="grid grid-cols-2 gap-3">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
-                      ))}
-                    </div>
-                  ) : comparison ? (
-                    <div className="grid grid-cols-2 gap-3">
+                  {nearbyStations.length > 0 && (
+                    <section>
+                      <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                        <TrainFront data-icon className="size-4" aria-hidden="true" />
+                        {t("detail.connectivity")}
+                      </h3>
                       <AmenityCard
-                        icon={GraduationCap}
-                        label={t("detail.amenity.schools")}
-                        count1km={comparison.amenities.primarySchoolsWithin1km}
-                        count2km={comparison.amenities.primarySchoolsWithin2km}
-                        nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
-                        nearbyItems={comparison.amenities.nearestPrimarySchools?.slice(0, 3)}
-                        showDistanceBands
+                        nearbyItems={nearbyStations.map((mrt) => ({
+                          name: mrt.stationName,
+                          distanceMeters: mrt.distanceMeters,
+                          walkingTimeSeconds: mrt.walkingTimeSeconds,
+                        }))}
+                        showLabel={false}
+                        showMrtLineColors
                         t={t}
                         locale={locale}
                       />
-                      <AmenityCard
-                        icon={UtensilsCrossed}
-                        label={t("detail.amenity.hawkers")}
-                        count1km={comparison.amenities.hawkerCentresWithin1km}
-                        nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
-                        t={t}
-                        locale={locale}
-                      />
-                      <AmenityCard
-                        icon={ShoppingCart}
-                        label={t("detail.amenity.supermarkets")}
-                        count1km={comparison.amenities.supermarketsWithin1km}
-                        nearestDistance={comparison.amenities.nearestSupermarketMeters}
-                        t={t}
-                        locale={locale}
-                      />
-                      <AmenityCard
-                        icon={Trees}
-                        label={t("detail.amenity.parks")}
-                        count1km={comparison.amenities.parksWithin1km}
-                        nearestDistance={comparison.amenities.nearestParkMeters}
-                        t={t}
-                        locale={locale}
-                      />
-                    </div>
-                  ) : null}
-                  {!isComparisonLoading && !comparison && (
-                    <p className="py-4 text-sm text-muted-foreground italic">
-                      {t("detail.noComparisonData")}
-                    </p>
+                    </section>
                   )}
-                </section>
 
-                <section>
-                  <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                    <TrendingUp data-icon className="size-4" aria-hidden="true" />
-                    {t("detail.marketPercentiles")}
-                  </h3>
-                  {isComparisonLoading ? (
-                    <div className="grid grid-cols-2 gap-3">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <div key={i} className="h-16 w-full animate-pulse rounded-lg bg-muted/40" />
-                      ))}
-                    </div>
-                  ) : comparison ? (
-                    <div className="grid grid-cols-2 gap-3">
-                      <PercentileBadge
-                        label={t("detail.rank.price")}
-                        percentile={comparison.percentileRanks.pricePercentile}
-                      />
-                      <PercentileBadge
-                        label={t("detail.rank.pricePerSqm")}
-                        percentile={comparison.percentileRanks.pricePerSqmPercentile}
-                      />
-                      <PercentileBadge
-                        label={t("detail.rank.lease")}
-                        percentile={comparison.percentileRanks.leasePercentile}
-                        invert
-                      />
-                      <PercentileBadge
-                        label={t("detail.rank.mrt")}
-                        percentile={comparison.percentileRanks.mrtDistancePercentile}
-                        invert
-                      />
-                      <PercentileBadge
-                        label={t("detail.rank.liquidity")}
-                        percentile={comparison.percentileRanks.transactionCountPercentile}
-                        invert
-                      />
-                      <PercentileBadge
-                        label={t("detail.rank.recency")}
-                        percentile={comparison.percentileRanks.recencyPercentile}
-                        invert
-                      />
-                    </div>
-                  ) : (
-                    <p className="py-4 text-sm text-muted-foreground italic">
-                      {t("detail.noPercentileData")}
-                    </p>
-                  )}
-                </section>
-
-                <section>
-                  <div className="mb-3">
-                    <h3 className="v2-section-title flex items-center gap-2">
-                      <LayoutGrid data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.similarBlocks")}
+                  <section>
+                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                      <Info data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.whyThisBlock")}
                     </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                      {t("detail.similarBlocks.hint")}
-                    </p>
-                  </div>
-                  {similarBlocks.length > 0 ? (
-                    <div className="flex flex-col gap-2">
-                      {similarBlocks.map((block) => (
-                        <SimilarBlockCard
-                          key={block.addressKey}
-                          block={block}
-                          onSelect={onSelectBlock}
+                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                      <CardContent className="p-3">
+                        {isComparisonLoading ? (
+                          <div className="flex flex-col gap-2">
+                            {Array.from({ length: 3 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className="h-3 w-full animate-pulse rounded-full bg-muted/40"
+                              />
+                            ))}
+                          </div>
+                        ) : explanationCodes.length > 0 ? (
+                          <ul className="flex flex-col gap-1.5">
+                            {explanationCodes.map((code) => (
+                              <li
+                                key={code}
+                                className="text-xs text-muted-foreground leading-relaxed"
+                              >
+                                • {t(`detail.why.${code}`)}
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-xs text-muted-foreground italic">
+                            {t("detail.why.none")}
+                          </p>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </section>
+
+                  <section>
+                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                      <Trees data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.nearbyAmenities")}
+                    </h3>
+                    {isComparisonLoading ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                          />
+                        ))}
+                      </div>
+                    ) : comparison ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        <AmenityCard
+                          icon={GraduationCap}
+                          label={t("detail.amenity.schools")}
+                          count1km={comparison.amenities.primarySchoolsWithin1km}
+                          count2km={comparison.amenities.primarySchoolsWithin2km}
+                          nearestDistance={comparison.amenities.nearestPrimarySchoolMeters}
+                          nearbyItems={comparison.amenities.nearestPrimarySchools?.slice(0, 3)}
+                          showDistanceBands
                           t={t}
                           locale={locale}
                         />
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="py-4 text-sm text-muted-foreground italic">
-                      {t("detail.similarBlocks.empty")}
-                    </p>
-                  )}
-                </section>
-              </TabsContent>
-
-              {/* ── TRENDS ── */}
-              <TabsContent
-                value="trends"
-                className="mt-0 flex flex-col gap-6 pb-8 focus-visible:outline-none"
-              >
-                <section>
-                  <div className="mb-3 flex items-center justify-between gap-2">
-                    <h3 className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
-                      <TrendingUp data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.priceTrendFull")}
-                    </h3>
-                    <div className="flex items-center gap-1">
-                      {RANGE_KEYS.map((key) => (
-                        <button
-                          key={key}
-                          onClick={() => setTrendRange(key)}
-                          className={cn(
-                            "rounded px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider transition-colors",
-                            trendRange === key
-                              ? "bg-primary text-primary-foreground"
-                              : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
-                          )}
-                          aria-pressed={trendRange === key}
-                        >
-                          {t(`trend.range.${key}`)}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <Card className="overflow-hidden border-border/40 bg-muted/10 shadow-none">
-                    <CardContent className="p-0">
-                      <div className="flex h-[280px] items-center justify-center pt-4">
-                        {detail ? (
-                          <ErrorBoundary
-                            fill
-                            className="h-full w-full"
-                            reloadOnRecovery={false}
-                            fallbackText={t("error.trendFallback")}
-                            actionText={t("error.retry")}
-                          >
-                            <Suspense fallback={
-                              <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
-                                <TrendingUp data-icon className="size-8 stroke-[1px] animate-pulse" aria-hidden="true" />
-                                <p className="text-xs font-medium tracking-widest uppercase">
-                                  {t("detail.calculatingTrends")}
-                                </p>
-                              </div>
-                            }>
-                              <TrendChart
-                                points={trendPoints}
-                                t={t}
-                                peakMonth={peakMonthInView}
-                                height={260}
-                              />
-                            </Suspense>
-                          </ErrorBoundary>
-                        ) : (
-                          <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
-                            <TrendingUp data-icon className="size-8 stroke-[1px]" aria-hidden="true" />
-                            <p className="text-xs font-medium tracking-widest uppercase">
-                              {t("detail.calculatingTrends")}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {trajectory && (
-                    <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                      <StatPill
-                        label={t("results.medianResale")}
-                        value={formatCurrency(trajectory.currentMedian, locale)}
-                      />
-                      <StatPill
-                        label={t("trend.peak")}
-                        value={formatCurrency(trajectory.peakPrice, locale)}
-                        sub={formatMonth(trajectory.peakMonth, locale)}
-                      />
-                      {trajectory.yoyDeltaPct != null && (
-                        <StatPill
-                          label={t("trend.yoyChange")}
-                          value={`${trajectory.yoyDeltaPct >= 0 ? "+" : ""}${trajectory.yoyDeltaPct.toFixed(1)}%`}
-                          tone={trajectory.yoyDeltaPct >= 0 ? "positive" : "negative"}
+                        <AmenityCard
+                          icon={UtensilsCrossed}
+                          label={t("detail.amenity.hawkers")}
+                          count1km={comparison.amenities.hawkerCentresWithin1km}
+                          nearestDistance={comparison.amenities.nearestHawkerCentreMeters}
+                          t={t}
+                          locale={locale}
                         />
-                      )}
-                      {trajectory.peakToCurrentPct < FROM_PEAK_DISPLAY_THRESHOLD_PCT && (
-                        <StatPill
-                          label={t("trend.fromPeak")}
-                          value={`${trajectory.peakToCurrentPct.toFixed(1)}%`}
-                          tone="negative"
+                        <AmenityCard
+                          icon={ShoppingCart}
+                          label={t("detail.amenity.supermarkets")}
+                          count1km={comparison.amenities.supermarketsWithin1km}
+                          nearestDistance={comparison.amenities.nearestSupermarketMeters}
+                          t={t}
+                          locale={locale}
                         />
-                      )}
-                    </div>
-                  )}
-                </section>
-
-                <div className="grid grid-cols-1 gap-4">
-                  <Card className="border-border/40 bg-card shadow-sm transition-all hover:border-primary/20">
-                    <CardHeader className="p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-col gap-1">
-                          <CardDescription className="text-[0.6rem] font-bold uppercase tracking-[0.16em]">
-                            {t("detail.marketRank")}
-                          </CardDescription>
-                          <CardTitle className="text-xl font-bold tracking-tight">
-                            {t("detail.townAverage", {
-                              town: currentSummary
-                                ? localizeTownName(currentSummary.town, locale)
-                                : "",
-                            })}
-                          </CardTitle>
-                        </div>
-                        <div className="rounded-full bg-primary/5 p-2 text-primary">
-                          <TrendingUp data-icon className="size-5" aria-hidden="true" />
-                        </div>
+                        <AmenityCard
+                          icon={Trees}
+                          label={t("detail.amenity.parks")}
+                          count1km={comparison.amenities.parksWithin1km}
+                          nearestDistance={comparison.amenities.nearestParkMeters}
+                          t={t}
+                          locale={locale}
+                        />
                       </div>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4 pt-0">
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {t("detail.marketRankDescription", {
-                          town: currentSummary
-                            ? localizeTownName(currentSummary.town, locale)
-                            : "",
-                        })}
+                    ) : null}
+                    {!isComparisonLoading && !comparison && (
+                      <p className="py-4 text-sm text-muted-foreground italic">
+                        {t("detail.noComparisonData")}
                       </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </TabsContent>
+                    )}
+                  </section>
 
-              {/* ── HISTORY ── */}
-              <TabsContent value="history" className="mt-0 pb-8 focus-visible:outline-none">
-                <section>
-                  <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
-                    <span className="flex items-center gap-2">
-                      <History data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.recentTransactions")}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      {recentTransactionOutliers.size > 0 && (
-                        <Badge
-                          variant="outline"
-                          className="h-5 gap-1 border-warning/40 bg-warning/10 text-[0.6rem] font-bold text-warning"
-                        >
-                          <AlertTriangle data-icon className="size-3" aria-hidden="true" />
-                          {t("detail.outlierCount", { count: recentTransactionOutliers.size })}
-                        </Badge>
-                      )}
-                      <Badge variant="outline" className="font-mono text-[0.65rem]">
-                        {t("detail.totalCount", { count: detail?.recentTransactions.length ?? 0 })}
-                      </Badge>
-                    </div>
-                  </h3>
-                  {recentTransactionOutliers.size > 0 && (
-                    <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
-                      {t("detail.outlierRule", {
-                        minCount: RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
-                        iqrMult: RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER,
-                        pctThreshold: RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD,
-                      })}
-                    </p>
-                  )}
-                  <ItemGroup
-                    className="flex flex-col gap-3 pb-8"
-                    style={{ "--cv-intrinsic-height": "72px" } as CSSProperties}
-                  >
-                    {detail?.recentTransactions.map((tx) => {
-                      const outlier = recentTransactionOutliers.get(tx.id);
-                      return (
-                        <Item
-                          key={tx.id}
-                          variant="outline"
-                          className="bg-card px-4 py-3 transition-colors hover:bg-muted/30 cv-auto"
-                        >
-                          <ItemHeader>
-                            <ItemContent>
-                              <div className="flex flex-col gap-0.5">
-                                <strong className="text-sm font-bold tracking-tight">
-                                  {formatCurrency(tx.resalePrice, locale)}
-                                </strong>
-                                <ItemDescription className="text-[0.65rem] font-bold uppercase tracking-wider">
-                                  {tx.flatType} • {tx.storeyRange}
-                                </ItemDescription>
-                                {outlier?.direction === "high" && (
-                                  <Badge
-                                    variant="outline"
-                                    className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-warning"
-                                  >
-                                    {t("detail.outlier.high")}
-                                  </Badge>
-                                )}
-                                {outlier?.direction === "low" && (
-                                  <Badge
-                                    variant="outline"
-                                    className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-primary"
-                                  >
-                                    {t("detail.outlier.low")}
-                                  </Badge>
-                                )}
-                              </div>
-                            </ItemContent>
-                            <ItemActions>
-                              <div className="flex flex-col items-end gap-1">
-                                <Badge
-                                  variant="secondary"
-                                  className="h-5 text-[0.6rem] font-mono tracking-tighter"
-                                >
-                                  {formatMonth(tx.month, locale)}
-                                </Badge>
-                                <span className="text-[0.6rem] font-medium text-muted-foreground/60 tracking-tight">
-                                  {t("unit.sqm", { value: tx.floorAreaSqm })}
-                                </span>
-                              </div>
-                            </ItemActions>
-                          </ItemHeader>
-                        </Item>
-                      );
-                    })}
-                    {!detail && (
-                      <div className="flex flex-col gap-3 py-12">
-                        {Array.from({ length: 5 }).map((_, i) => (
+                  <section>
+                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
+                      <TrendingUp data-icon className="size-4" aria-hidden="true" />
+                      {t("detail.marketPercentiles")}
+                    </h3>
+                    {isComparisonLoading ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        {Array.from({ length: 6 }).map((_, i) => (
                           <div
                             key={i}
                             className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
                           />
                         ))}
                       </div>
+                    ) : comparison ? (
+                      <div className="grid grid-cols-2 gap-3">
+                        <PercentileBadge
+                          label={t("detail.rank.price")}
+                          percentile={comparison.percentileRanks.pricePercentile}
+                        />
+                        <PercentileBadge
+                          label={t("detail.rank.pricePerSqm")}
+                          percentile={comparison.percentileRanks.pricePerSqmPercentile}
+                        />
+                        <PercentileBadge
+                          label={t("detail.rank.lease")}
+                          percentile={comparison.percentileRanks.leasePercentile}
+                          invert
+                        />
+                        <PercentileBadge
+                          label={t("detail.rank.mrt")}
+                          percentile={comparison.percentileRanks.mrtDistancePercentile}
+                          invert
+                        />
+                        <PercentileBadge
+                          label={t("detail.rank.liquidity")}
+                          percentile={comparison.percentileRanks.transactionCountPercentile}
+                          invert
+                        />
+                        <PercentileBadge
+                          label={t("detail.rank.recency")}
+                          percentile={comparison.percentileRanks.recencyPercentile}
+                          invert
+                        />
+                      </div>
+                    ) : (
+                      <p className="py-4 text-sm text-muted-foreground italic">
+                        {t("detail.noPercentileData")}
+                      </p>
                     )}
-                  </ItemGroup>
-                </section>
-              </TabsContent>
+                  </section>
 
-              {/* ── NEGOTIATE ── */}
-              <TabsContent value="negotiate" className="mt-0 pb-8 focus-visible:outline-none">
-                {detail ? (
-                  <ErrorBoundary
-                    reloadOnRecovery={false}
-                    fallbackText={t("error.askingPriceFallback")}
-                    actionText={t("error.retry")}
-                  >
-                    <Suspense fallback={
-                      <div className="flex flex-col gap-3 py-12">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                          <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                  <section>
+                    <div className="mb-3">
+                      <h3 className="v2-section-title flex items-center gap-2">
+                        <LayoutGrid data-icon className="size-4" aria-hidden="true" />
+                        {t("detail.similarBlocks")}
+                      </h3>
+                      <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                        {t("detail.similarBlocks.hint")}
+                      </p>
+                    </div>
+                    {similarBlocks.length > 0 ? (
+                      <div className="flex flex-col gap-2">
+                        {similarBlocks.map((block) => (
+                          <SimilarBlockCard
+                            key={block.addressKey}
+                            block={block}
+                            onSelect={onSelectBlock}
+                            t={t}
+                            locale={locale}
+                          />
                         ))}
                       </div>
-                    }>
-                      <AskingPriceCheck key={`${detail.summary.block}-${detail.summary.streetName}`} detail={detail} />
-                    </Suspense>
-                  </ErrorBoundary>
-                ) : (
-                  <div className="flex flex-col gap-3 py-12">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
-                    ))}
+                    ) : (
+                      <p className="py-4 text-sm text-muted-foreground italic">
+                        {t("detail.similarBlocks.empty")}
+                      </p>
+                    )}
+                  </section>
+                </TabsContent>
+
+                {/* ── TRENDS ── */}
+                <TabsContent
+                  value="trends"
+                  className="mt-0 flex flex-col gap-6 pb-8 focus-visible:outline-none"
+                >
+                  <section>
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h3 className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                        <TrendingUp data-icon className="size-4" aria-hidden="true" />
+                        {t("detail.priceTrendFull")}
+                      </h3>
+                      <div className="flex items-center gap-1">
+                        {RANGE_KEYS.map((key) => (
+                          <button
+                            key={key}
+                            onClick={() => setTrendRange(key)}
+                            className={cn(
+                              "rounded px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider transition-colors",
+                              trendRange === key
+                                ? "bg-primary text-primary-foreground"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+                            )}
+                            aria-pressed={trendRange === key}
+                          >
+                            {t(`trend.range.${key}`)}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <Card className="overflow-hidden border-border/40 bg-muted/10 shadow-none">
+                      <CardContent className="p-0">
+                        <div className="flex h-[280px] items-center justify-center pt-4">
+                          {detail ? (
+                            <ErrorBoundary
+                              fill
+                              className="h-full w-full"
+                              reloadOnRecovery={false}
+                              fallbackText={t("error.trendFallback")}
+                              actionText={t("error.retry")}
+                            >
+                              <Suspense
+                                fallback={
+                                  <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
+                                    <TrendingUp
+                                      data-icon
+                                      className="size-8 stroke-[1px] animate-pulse"
+                                      aria-hidden="true"
+                                    />
+                                    <p className="text-xs font-medium tracking-widest uppercase">
+                                      {t("detail.calculatingTrends")}
+                                    </p>
+                                  </div>
+                                }
+                              >
+                                <TrendChart
+                                  points={trendPoints}
+                                  t={t}
+                                  peakMonth={peakMonthInView}
+                                  height={260}
+                                />
+                              </Suspense>
+                            </ErrorBoundary>
+                          ) : (
+                            <div className="flex flex-col items-center gap-3 text-muted-foreground opacity-40">
+                              <TrendingUp
+                                data-icon
+                                className="size-8 stroke-[1px]"
+                                aria-hidden="true"
+                              />
+                              <p className="text-xs font-medium tracking-widest uppercase">
+                                {t("detail.calculatingTrends")}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {trajectory && (
+                      <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                        <StatPill
+                          label={t("results.medianResale")}
+                          value={formatCurrency(trajectory.currentMedian, locale)}
+                        />
+                        <StatPill
+                          label={t("trend.peak")}
+                          value={formatCurrency(trajectory.peakPrice, locale)}
+                          sub={formatMonth(trajectory.peakMonth, locale)}
+                        />
+                        {trajectory.yoyDeltaPct != null && (
+                          <StatPill
+                            label={t("trend.yoyChange")}
+                            value={`${trajectory.yoyDeltaPct >= 0 ? "+" : ""}${trajectory.yoyDeltaPct.toFixed(1)}%`}
+                            tone={trajectory.yoyDeltaPct >= 0 ? "positive" : "negative"}
+                          />
+                        )}
+                        {trajectory.peakToCurrentPct < FROM_PEAK_DISPLAY_THRESHOLD_PCT && (
+                          <StatPill
+                            label={t("trend.fromPeak")}
+                            value={`${trajectory.peakToCurrentPct.toFixed(1)}%`}
+                            tone="negative"
+                          />
+                        )}
+                      </div>
+                    )}
+                  </section>
+
+                  <div className="grid grid-cols-1 gap-4">
+                    <Card className="border-border/40 bg-card shadow-sm transition-all hover:border-primary/20">
+                      <CardHeader className="p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex flex-col gap-1">
+                            <CardDescription className="text-[0.6rem] font-bold uppercase tracking-[0.16em]">
+                              {t("detail.marketRank")}
+                            </CardDescription>
+                            <CardTitle className="text-xl font-bold tracking-tight">
+                              {t("detail.townAverage", {
+                                town: currentSummary
+                                  ? localizeTownName(currentSummary.town, locale)
+                                  : "",
+                              })}
+                            </CardTitle>
+                          </div>
+                          <div className="rounded-full bg-primary/5 p-2 text-primary">
+                            <TrendingUp data-icon className="size-5" aria-hidden="true" />
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="px-4 pb-4 pt-0">
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {t("detail.marketRankDescription", {
+                            town: currentSummary
+                              ? localizeTownName(currentSummary.town, locale)
+                              : "",
+                          })}
+                        </p>
+                      </CardContent>
+                    </Card>
                   </div>
-                )}
-              </TabsContent>
+                </TabsContent>
+
+                {/* ── HISTORY ── */}
+                <TabsContent value="history" className="mt-0 pb-8 focus-visible:outline-none">
+                  <section>
+                    <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                      <span className="flex items-center gap-2">
+                        <History data-icon className="size-4" aria-hidden="true" />
+                        {t("detail.recentTransactions")}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {recentTransactionOutliers.size > 0 && (
+                          <Badge
+                            variant="outline"
+                            className="h-5 gap-1 border-warning/40 bg-warning/10 text-[0.6rem] font-bold text-warning"
+                          >
+                            <AlertTriangle data-icon className="size-3" aria-hidden="true" />
+                            {t("detail.outlierCount", { count: recentTransactionOutliers.size })}
+                          </Badge>
+                        )}
+                        <Badge variant="outline" className="font-mono text-[0.65rem]">
+                          {t("detail.totalCount", {
+                            count: detail?.recentTransactions.length ?? 0,
+                          })}
+                        </Badge>
+                      </div>
+                    </h3>
+                    {recentTransactionOutliers.size > 0 && (
+                      <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+                        {t("detail.outlierRule", {
+                          minCount: RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
+                          iqrMult: RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER,
+                          pctThreshold: RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD,
+                        })}
+                      </p>
+                    )}
+                    <ItemGroup
+                      className="flex flex-col gap-3 pb-8"
+                      style={{ "--cv-intrinsic-height": "72px" } as CSSProperties}
+                    >
+                      {detail?.recentTransactions.map((tx) => {
+                        const outlier = recentTransactionOutliers.get(tx.id);
+                        return (
+                          <Item
+                            key={tx.id}
+                            variant="outline"
+                            className="bg-card px-4 py-3 transition-colors hover:bg-muted/30 cv-auto"
+                          >
+                            <ItemHeader>
+                              <ItemContent>
+                                <div className="flex flex-col gap-0.5">
+                                  <strong className="text-sm font-bold tracking-tight">
+                                    {formatCurrency(tx.resalePrice, locale)}
+                                  </strong>
+                                  <ItemDescription className="text-[0.65rem] font-bold uppercase tracking-wider">
+                                    {tx.flatType} • {tx.storeyRange}
+                                  </ItemDescription>
+                                  {outlier?.direction === "high" && (
+                                    <Badge
+                                      variant="outline"
+                                      className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-warning"
+                                    >
+                                      {t("detail.outlier.high")}
+                                    </Badge>
+                                  )}
+                                  {outlier?.direction === "low" && (
+                                    <Badge
+                                      variant="outline"
+                                      className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-primary"
+                                    >
+                                      {t("detail.outlier.low")}
+                                    </Badge>
+                                  )}
+                                </div>
+                              </ItemContent>
+                              <ItemActions>
+                                <div className="flex flex-col items-end gap-1">
+                                  <Badge
+                                    variant="secondary"
+                                    className="h-5 text-[0.6rem] font-mono tracking-tighter"
+                                  >
+                                    {formatMonth(tx.month, locale)}
+                                  </Badge>
+                                  <span className="text-[0.6rem] font-medium text-muted-foreground/60 tracking-tight">
+                                    {t("unit.sqm", { value: tx.floorAreaSqm })}
+                                  </span>
+                                </div>
+                              </ItemActions>
+                            </ItemHeader>
+                          </Item>
+                        );
+                      })}
+                      {!detail && (
+                        <div className="flex flex-col gap-3 py-12">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div
+                              key={i}
+                              className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </ItemGroup>
+                  </section>
+                </TabsContent>
+
+                {/* ── NEGOTIATE ── */}
+                <TabsContent value="negotiate" className="mt-0 pb-8 focus-visible:outline-none">
+                  {detail ? (
+                    <ErrorBoundary
+                      reloadOnRecovery={false}
+                      fallbackText={t("error.askingPriceFallback")}
+                      actionText={t("error.retry")}
+                    >
+                      <Suspense
+                        fallback={
+                          <div className="flex flex-col gap-3 py-12">
+                            {Array.from({ length: 3 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                              />
+                            ))}
+                          </div>
+                        }
+                      >
+                        <AskingPriceCheck
+                          key={`${detail.summary.block}-${detail.summary.streetName}`}
+                          detail={detail}
+                        />
+                      </Suspense>
+                    </ErrorBoundary>
+                  ) : (
+                    <div className="flex flex-col gap-3 py-12">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                      ))}
+                    </div>
+                  )}
+                </TabsContent>
               </div>
             </Tabs>
           </div>
@@ -1302,7 +1377,11 @@ export function DetailDrawer({
                 aria-label={isSaved ? t("detail.saved") : t("detail.save")}
                 disabled={!currentSummary}
               >
-                <Bookmark data-icon="inline-start" className={cn("size-4", isSaved && "fill-current")} aria-hidden="true" />
+                <Bookmark
+                  data-icon="inline-start"
+                  className={cn("size-4", isSaved && "fill-current")}
+                  aria-hidden="true"
+                />
                 <span className="truncate">
                   <span className="sm:hidden">
                     {isSaved ? t("results.saved") : t("results.save")}

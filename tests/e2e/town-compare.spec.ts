@@ -11,9 +11,7 @@ test("deep-links into the side-by-side town compare view", async ({ page }) => {
   await expect(page.getByTestId("global-header")).toBeVisible({ timeout: 15_000 });
 
   // Open the Results pane.
-  const resultsTab = page
-    .locator(".desktop-tab-bar")
-    .getByRole("button", { name: "Results" });
+  const resultsTab = page.locator(".desktop-tab-bar").getByRole("button", { name: "Results" });
   await resultsTab.click();
   await expect(page.getByTestId("results-pane")).toBeVisible();
 

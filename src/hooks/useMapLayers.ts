@@ -93,7 +93,17 @@ export function useMapLayers(map: MapLibreMap | null) {
         filter: ["!", ["has", "point_count"]],
         paint: {
           "circle-color": MEDIAN_PRICE_COLOR_EXPRESSION,
-          "circle-radius": ["interpolate", ["linear"], ["get", "transaction_count"], 1, 6, 10, 10, 25, 16],
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["get", "transaction_count"],
+            1,
+            6,
+            10,
+            10,
+            25,
+            16,
+          ],
           "circle-stroke-width": 1.5,
           "circle-stroke-color": "rgba(255,255,255,0.9)",
           "circle-opacity": 0.92,
@@ -150,7 +160,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         id: "mrt-exits-points",
         type: "circle",
         source: "mrt-exits",
-        minzoom: getAmenityMinZoom('mrt-exit'),
+        minzoom: getAmenityMinZoom("mrt-exit"),
         layout: { visibility: "none" },
         paint: {
           "circle-color": ["coalesce", ["get", "color"], MRT_LINE_FALLBACK_COLOR],
@@ -164,7 +174,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         id: "mrt-stations-points",
         type: "circle",
         source: "mrt-stations",
-        minzoom: getAmenityMinZoom('mrt-station'),
+        minzoom: getAmenityMinZoom("mrt-station"),
         layout: { visibility: "none" },
         paint: {
           "circle-color": ["coalesce", ["get", "color"], MRT_LINE_FALLBACK_COLOR],
@@ -178,7 +188,7 @@ export function useMapLayers(map: MapLibreMap | null) {
         id: "mrt-stations-labels",
         type: "symbol",
         source: "mrt-stations",
-        minzoom: getAmenityMinZoom('mrt-station'),
+        minzoom: getAmenityMinZoom("mrt-station"),
         layout: {
           visibility: "none",
           "text-field": ["get", "stationName"],

@@ -127,7 +127,10 @@ export function SearchCombobox({
         setActiveIndex(-1);
       })
       .catch((error: unknown) => {
-        if ((error instanceof DOMException && error.name === "AbortError") || fetchSequenceRef.current !== sequence) {
+        if (
+          (error instanceof DOMException && error.name === "AbortError") ||
+          fetchSequenceRef.current !== sequence
+        ) {
           return;
         }
         console.error("Suggest fetch failed:", error);
@@ -184,9 +187,7 @@ export function SearchCombobox({
 
       if (event.key === "ArrowUp") {
         event.preventDefault();
-        setActiveIndex((current) =>
-          current <= 0 ? flatGroupedItems.length - 1 : current - 1,
-        );
+        setActiveIndex((current) => (current <= 0 ? flatGroupedItems.length - 1 : current - 1));
         return;
       }
 
@@ -260,47 +261,47 @@ export function SearchCombobox({
             {t("filters.suggestLoading")}
           </p>
         ) : (
-        <div
-          id={listboxId}
-          role="listbox"
-          aria-label={t("filters.suggestListLabel")}
-          className="max-h-64 overflow-y-auto py-1"
-          data-testid="search-suggest-listbox"
-        >
-          {grouped.map((section) => (
-            <div key={section.group} role="presentation">
-              <p className="px-3 pb-1 pt-2 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
-                {groupLabel(t, section.group)}
-              </p>
-              {section.items.map((suggestion) => {
-                const index = flatGroupedItems.indexOf(suggestion);
-                const active = index === activeIndex;
-                return (
-                  <button
-                    key={suggestionKey(suggestion)}
-                    id={`${listboxId}-option-${index}`}
-                    type="button"
-                    role="option"
-                    tabIndex={-1}
-                    aria-selected={active}
-                    data-testid={`search-suggest-option-${suggestion.group}`}
-                    className={cn(
-                      "flex w-full items-center justify-between px-3 py-2 text-left text-[0.72rem] transition-colors hover:bg-muted/60",
-                      active && "bg-primary/10 text-primary",
-                    )}
-                    onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => selectSuggestion(suggestion)}
-                  >
-                    <span>{suggestion.label}</span>
-                    <span className="text-[0.58rem] font-semibold uppercase tracking-wide text-muted-foreground">
-                      {groupLabel(t, suggestion.group)}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          ))}
-        </div>
+          <div
+            id={listboxId}
+            role="listbox"
+            aria-label={t("filters.suggestListLabel")}
+            className="max-h-64 overflow-y-auto py-1"
+            data-testid="search-suggest-listbox"
+          >
+            {grouped.map((section) => (
+              <div key={section.group} role="presentation">
+                <p className="px-3 pb-1 pt-2 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                  {groupLabel(t, section.group)}
+                </p>
+                {section.items.map((suggestion) => {
+                  const index = flatGroupedItems.indexOf(suggestion);
+                  const active = index === activeIndex;
+                  return (
+                    <button
+                      key={suggestionKey(suggestion)}
+                      id={`${listboxId}-option-${index}`}
+                      type="button"
+                      role="option"
+                      tabIndex={-1}
+                      aria-selected={active}
+                      data-testid={`search-suggest-option-${suggestion.group}`}
+                      className={cn(
+                        "flex w-full items-center justify-between px-3 py-2 text-left text-[0.72rem] transition-colors hover:bg-muted/60",
+                        active && "bg-primary/10 text-primary",
+                      )}
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => selectSuggestion(suggestion)}
+                    >
+                      <span>{suggestion.label}</span>
+                      <span className="text-[0.58rem] font-semibold uppercase tracking-wide text-muted-foreground">
+                        {groupLabel(t, suggestion.group)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         )}
       </PopoverContent>
     </Popover>

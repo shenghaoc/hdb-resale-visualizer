@@ -8,7 +8,10 @@ test.describe.configure({
 // desktop left panel — it is hidden until that tab is opened. Reveal it after
 // driving the header search so the filtered list (and its items) are present.
 async function openResultsTab(page: Page) {
-  await page.locator(".desktop-tab-bar").getByRole("button", { name: /results/i }).click();
+  await page
+    .locator(".desktop-tab-bar")
+    .getByRole("button", { name: /results/i })
+    .click();
   await expect(page.getByTestId("results-pane")).toBeVisible({ timeout: 5_000 });
 }
 
@@ -67,9 +70,7 @@ test.describe("performance traces", () => {
     await expect(mapContainer).toBeVisible();
   });
 
-  test("listing check verdict appears within acceptable latency", async ({
-    page,
-  }) => {
+  test("listing check verdict appears within acceptable latency", async ({ page }) => {
     // Navigate to a block and trigger listing check
     await page.getByTestId("header-search-input").fill("BEDOK");
     await openResultsTab(page);
@@ -122,17 +123,13 @@ test.describe("performance traces", () => {
   });
 });
 
-async function measureFilterLatency(
-  page: Page,
-  query: string,
-): Promise<number> {
+async function measureFilterLatency(page: Page, query: string): Promise<number> {
   const searchInput = page.getByTestId("header-search-input");
   await searchInput.fill("");
   const start = Date.now();
   await searchInput.fill(query);
-  await expect(
-    page.locator("[data-testid='results-pane'] [data-slot='item']").first(),
-  ).toBeVisible({ timeout: 5_000 });
+  await expect(page.locator("[data-testid='results-pane'] [data-slot='item']").first()).toBeVisible(
+    { timeout: 5_000 },
+  );
   return Date.now() - start;
 }
-

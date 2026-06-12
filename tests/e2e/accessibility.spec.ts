@@ -22,10 +22,7 @@ async function expectNoSeriousOrCriticalViolations(page: Page) {
     BLOCKING_IMPACTS.has(violation.impact ?? ""),
   );
 
-  expect(
-    blocking,
-    formatAxeViolations(blocking),
-  ).toEqual([]);
+  expect(blocking, formatAxeViolations(blocking)).toEqual([]);
 }
 
 function formatAxeViolations(violations: Result[]): string {
@@ -36,7 +33,9 @@ function formatAxeViolations(violations: Result[]): string {
   return violations
     .map((violation) => {
       const nodes = violation.nodes
-        .map((node) => `  - ${node.html}${node.failureSummary ? `\n    ${node.failureSummary}` : ""}`)
+        .map(
+          (node) => `  - ${node.html}${node.failureSummary ? `\n    ${node.failureSummary}` : ""}`,
+        )
         .join("\n");
       return `[${violation.impact}] ${violation.id}: ${violation.help}\n${nodes}`;
     })

@@ -34,10 +34,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-proximity";
 import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
-import {
-  useListingCheckUrlState,
-  buildCheckShareUrl,
-} from "@/hooks/useListingCheckUrlState";
+import { useListingCheckUrlState, buildCheckShareUrl } from "@/hooks/useListingCheckUrlState";
 
 const GuideDialog = lazy(() =>
   import("@/components/GuideDialog").then((m) => ({ default: m.GuideDialog })),
@@ -85,8 +82,9 @@ function App() {
 
   const { setUseDefaultStartMonth } = pipeline;
 
-  const { detail, comparison, isDetailLoading, isComparisonLoading } =
-    useSelectedBlockArtifacts(filters.selectedAddressKey);
+  const { detail, comparison, isDetailLoading, isComparisonLoading } = useSelectedBlockArtifacts(
+    filters.selectedAddressKey,
+  );
 
   const { shortlistRows } = useShortlistArtifacts({
     blocks: pipeline.blocks,
@@ -136,11 +134,13 @@ function App() {
       label: chip.label,
       onRemove: () => patchFilters(chip.clearPatch),
     }));
-    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile, locale, t).map((chip) => ({
-      key: chip.key,
-      label: chip.label,
-      onRemove: () => searchProfile.patchProfile(chip.clearPatch),
-    }));
+    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile, locale, t).map(
+      (chip) => ({
+        key: chip.key,
+        label: chip.label,
+        onRemove: () => searchProfile.patchProfile(chip.clearPatch),
+      }),
+    );
     return [...profileChips, ...filterChips];
   }, [filters, locale, patchFilters, searchProfile, t]);
 
@@ -206,23 +206,26 @@ function App() {
   // Hardcoded sample for the "Try sample listing check" CTA at cold start.
   // This address key must exist in the D1 dataset; if it's ever dropped during
   // a data refresh, the detail fetch will gracefully return an error state.
-  const FALLBACK_SAMPLE = useMemo(() => ({
-    addressKey: "406-ANG MO KIO AVE 10",
-    medianPrice: 450000,
-    floorAreaRange: [68, 68] as [number, number],
-    leaseCommenceRange: [1980, 1980] as [number, number],
-    flatTypes: ["4 ROOM"],
-  }), []);
+  const FALLBACK_SAMPLE = useMemo(
+    () => ({
+      addressKey: "406-ANG MO KIO AVE 10",
+      medianPrice: 450000,
+      floorAreaRange: [68, 68] as [number, number],
+      leaseCommenceRange: [1980, 1980] as [number, number],
+      flatTypes: ["4 ROOM"],
+    }),
+    [],
+  );
 
   const sampleCheckBlock = useMemo(() => {
     if (pipeline.blocks.length === 0) {
       return FALLBACK_SAMPLE;
     }
-    const candidates = pipeline.blocks.filter((block) => block.medianPrice > 0 && block.transactionCount > 0);
+    const candidates = pipeline.blocks.filter(
+      (block) => block.medianPrice > 0 && block.transactionCount > 0,
+    );
     if (candidates.length === 0) return FALLBACK_SAMPLE;
-    return candidates
-      .slice()
-      .sort((a, b) => a.addressKey.localeCompare(b.addressKey))[0];
+    return candidates.slice().sort((a, b) => a.addressKey.localeCompare(b.addressKey))[0];
   }, [pipeline.blocks, FALLBACK_SAMPLE]);
 
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
@@ -237,7 +240,8 @@ function App() {
     const fallbackFlatType = sampleCheckBlock.flatTypes?.length
       ? [...sampleCheckBlock.flatTypes].sort((a, b) => a.localeCompare(b))[0]
       : null;
-    const floorAreaSqm = minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
+    const floorAreaSqm =
+      minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
     const leaseCommenceYear =
       minLease != null && maxLease != null && minLease > 0 && maxLease > 0
         ? Math.round((minLease + maxLease) / 2)
@@ -306,7 +310,15 @@ function App() {
       targetPrice: checkAskingPrice,
     });
     setCheckSavedToShortlist(true);
-  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, shortlist]);
+  }, [
+    checkAddressKey,
+    checkAskingPrice,
+    checkFloorAreaSqm,
+    checkFlatType,
+    checkStoreyRange,
+    checkLeaseYear,
+    shortlist,
+  ]);
 
   const handleCheckShare = useCallback(async () => {
     const url = buildCheckShareUrl({
@@ -322,14 +334,24 @@ function App() {
     } catch {
       return null;
     }
-  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, t]);
+  }, [
+    checkAddressKey,
+    checkAskingPrice,
+    checkFloorAreaSqm,
+    checkFlatType,
+    checkStoreyRange,
+    checkLeaseYear,
+    t,
+  ]);
 
   // Reset saved-to-shortlist flag when form inputs change
-  if (checkAskingPrice !== prevCheckAskingPrice
-    || checkFloorAreaSqm !== prevCheckFloorAreaSqm
-    || checkFlatType !== prevCheckFlatType
-    || checkStoreyRange !== prevCheckStoreyRange
-    || checkLeaseYear !== prevCheckLeaseYear) {
+  if (
+    checkAskingPrice !== prevCheckAskingPrice ||
+    checkFloorAreaSqm !== prevCheckFloorAreaSqm ||
+    checkFlatType !== prevCheckFlatType ||
+    checkStoreyRange !== prevCheckStoreyRange ||
+    checkLeaseYear !== prevCheckLeaseYear
+  ) {
     setCheckSavedToShortlist(false);
   }
 
@@ -357,7 +379,15 @@ function App() {
       storeyRange: checkStoreyRange,
       leaseCommenceYear: checkLeaseYear,
     });
-  }, [checkAddressKey, checkAskingPrice, checkFloorAreaSqm, checkFlatType, checkStoreyRange, checkLeaseYear, syncToUrl]);
+  }, [
+    checkAddressKey,
+    checkAskingPrice,
+    checkFloorAreaSqm,
+    checkFlatType,
+    checkStoreyRange,
+    checkLeaseYear,
+    syncToUrl,
+  ]);
 
   const {
     patchUserFilters,
@@ -486,34 +516,34 @@ function App() {
     >
       <Suspense fallback={<MapSkeleton />}>
         <MapView
-        blocks={pipeline.mapFilteredBlocks}
-        onSelect={handleSelectAddress}
-        selectedAddressKey={filters.selectedAddressKey}
-        townFilter={pipeline.mapFilters.town}
-        flatType={filters.flatType}
-        autoFitKey={
-          pipeline.effectiveMapGeographicIntent?.type === "coordinates"
-            ? `coordinates:${pipeline.effectiveMapGeographicIntent.coordinates.lat},${pipeline.effectiveMapGeographicIntent.coordinates.lng}`
-            : pipeline.effectiveMapGeographicIntent?.type === "station"
-              ? `station:${pipeline.effectiveMapGeographicIntent.stationName.toLowerCase()}`
-              : pipeline.mapFilters.search.trim()
-                ? `search:${pipeline.mapFilters.search.trim().toLowerCase()}`
-                : null
-        }
-        showBlockMarkers={pipeline.hasMapMarkerScope}
-        isDarkMode={theme === "dark"}
-        priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
-        priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
-        mrtStationsEnabled={mrtStationsEnabled}
-        mrtExitsEnabled={mrtExitsEnabled}
-        heatmapMode={heatmap.heatmapMode}
-        primarySchools={primarySchoolsForOverlay}
-        schoolOverlayEnabled={schoolOverlayEnabled && canShowSchoolOverlay}
-        geographicIntent={pipeline.effectiveMapGeographicIntent}
-        onMapInteract={handleMapInteract}
-        onGeolocate={handleGeolocate}
-        locale={locale}
-        t={t}
+          blocks={pipeline.mapFilteredBlocks}
+          onSelect={handleSelectAddress}
+          selectedAddressKey={filters.selectedAddressKey}
+          townFilter={pipeline.mapFilters.town}
+          flatType={filters.flatType}
+          autoFitKey={
+            pipeline.effectiveMapGeographicIntent?.type === "coordinates"
+              ? `coordinates:${pipeline.effectiveMapGeographicIntent.coordinates.lat},${pipeline.effectiveMapGeographicIntent.coordinates.lng}`
+              : pipeline.effectiveMapGeographicIntent?.type === "station"
+                ? `station:${pipeline.effectiveMapGeographicIntent.stationName.toLowerCase()}`
+                : pipeline.mapFilters.search.trim()
+                  ? `search:${pipeline.mapFilters.search.trim().toLowerCase()}`
+                  : null
+          }
+          showBlockMarkers={pipeline.hasMapMarkerScope}
+          isDarkMode={theme === "dark"}
+          priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
+          priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
+          mrtStationsEnabled={mrtStationsEnabled}
+          mrtExitsEnabled={mrtExitsEnabled}
+          heatmapMode={heatmap.heatmapMode}
+          primarySchools={primarySchoolsForOverlay}
+          schoolOverlayEnabled={schoolOverlayEnabled && canShowSchoolOverlay}
+          geographicIntent={pipeline.effectiveMapGeographicIntent}
+          onMapInteract={handleMapInteract}
+          onGeolocate={handleGeolocate}
+          locale={locale}
+          t={t}
         />
       </Suspense>
     </ErrorBoundary>
@@ -529,22 +559,22 @@ function App() {
       >
         <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
           <DetailDrawer
-          detail={detail}
-          comparison={comparison}
-          selectedBlock={selectedBlock}
-          filters={filters}
-          allBlocks={pipeline.blocks}
-          isLoading={detailLoading}
-          isComparisonLoading={comparisonLoading}
-          isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-          remainingLeaseMin={filters.remainingLeaseMin}
-          referenceMonth={manifest.dataWindow.maxMonth}
-          searchProfile={searchProfile.profile}
-          onClose={() => patchFilters({ selectedAddressKey: null })}
-          onToggleShortlist={() => {
-            if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
-          }}
-          onSelectBlock={handleSelectAddress}
+            detail={detail}
+            comparison={comparison}
+            selectedBlock={selectedBlock}
+            filters={filters}
+            allBlocks={pipeline.blocks}
+            isLoading={detailLoading}
+            isComparisonLoading={comparisonLoading}
+            isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+            remainingLeaseMin={filters.remainingLeaseMin}
+            referenceMonth={manifest.dataWindow.maxMonth}
+            searchProfile={searchProfile.profile}
+            onClose={() => patchFilters({ selectedAddressKey: null })}
+            onToggleShortlist={() => {
+              if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
+            }}
+            onSelectBlock={handleSelectAddress}
           />
         </Suspense>
       </ErrorBoundary>
@@ -563,33 +593,35 @@ function App() {
       >
         <Suspense fallback={<DrawerSkeleton label={t("app.loadingResults")} />}>
           <ResultsPane
-          blocks={pipeline.filteredBlocks}
-          hasResultScope={pipeline.hasResultScope}
-          onSelect={handleSelectAddress}
-          onToggleShortlist={handleToggleShortlist}
-          selectedAddressKey={filters.selectedAddressKey}
-          shortlistKeys={shortlistKeySet}
-          isCompact
-          budgetMin={filters.budgetMin}
-          budgetMax={filters.budgetMax}
-          searchProfile={searchProfile.profile}
-          affordabilityMode={filters.affordable}
-          onClearAffordabilityFilter={() => patchUserFilters({ affordable: "" })}
-          sortMode={filters.sort}
-          onSortChange={(sort) => patchUserFilters({ sort })}
-          profileTown={pipeline.effectiveFilters.town || null}
-          profileTownBlocks={townProfileBlocks}
-          profileDataWindow={manifest.dataWindow}
-          profileStartMonth={pipeline.effectiveFilters.startMonth}
-          profileEndMonth={pipeline.effectiveFilters.endMonth}
-          compareTown={filters.compareTown || null}
-          availableTowns={manifest.filterOptions.towns}
-          onChangeCompareTown={(compareTown) => patchFilters({ compareTown })}
-          townRecommendations={townRecommendations}
-          townRecommendationsLoading={townRecommendationsLoading}
-          onSelectTown={(town) => patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })}
-          searchTruncated={pipeline.searchTruncated}
-          shareUrl={resultsShareUrl}
+            blocks={pipeline.filteredBlocks}
+            hasResultScope={pipeline.hasResultScope}
+            onSelect={handleSelectAddress}
+            onToggleShortlist={handleToggleShortlist}
+            selectedAddressKey={filters.selectedAddressKey}
+            shortlistKeys={shortlistKeySet}
+            isCompact
+            budgetMin={filters.budgetMin}
+            budgetMax={filters.budgetMax}
+            searchProfile={searchProfile.profile}
+            affordabilityMode={filters.affordable}
+            onClearAffordabilityFilter={() => patchUserFilters({ affordable: "" })}
+            sortMode={filters.sort}
+            onSortChange={(sort) => patchUserFilters({ sort })}
+            profileTown={pipeline.effectiveFilters.town || null}
+            profileTownBlocks={townProfileBlocks}
+            profileDataWindow={manifest.dataWindow}
+            profileStartMonth={pipeline.effectiveFilters.startMonth}
+            profileEndMonth={pipeline.effectiveFilters.endMonth}
+            compareTown={filters.compareTown || null}
+            availableTowns={manifest.filterOptions.towns}
+            onChangeCompareTown={(compareTown) => patchFilters({ compareTown })}
+            townRecommendations={townRecommendations}
+            townRecommendationsLoading={townRecommendationsLoading}
+            onSelectTown={(town) =>
+              patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })
+            }
+            searchTruncated={pipeline.searchTruncated}
+            shareUrl={resultsShareUrl}
           />
         </Suspense>
       </ErrorBoundary>
@@ -625,7 +657,7 @@ function App() {
   const checkContent = (
     <Suspense fallback={<DrawerSkeleton label={t("app.loadingDetails")} />}>
       <ListingCheckPanel
-        key={checkAddressKey ?? '__none__'}
+        key={checkAddressKey ?? "__none__"}
         selectedAddressKey={checkAddressKey}
         askingPrice={checkAskingPrice}
         floorAreaSqm={checkFloorAreaSqm}
@@ -655,8 +687,7 @@ function App() {
 
   const showFloatingHeader = header.isHeaderVisible;
   const showScopePrompt = Boolean(
-    !pipeline.hasResultScope &&
-      (panel.isDesktop || panel.mobileTab === null),
+    !pipeline.hasResultScope && (panel.isDesktop || panel.mobileTab === null),
   );
 
   // ── Render ───────────────────────────────────────────────────────────────
@@ -669,7 +700,11 @@ function App() {
       >
         {t("app.skipToContent")}
       </a>
-      <main id="main-content" tabIndex={-1} className="fixed inset-0 w-full overflow-hidden focus:outline-none">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="fixed inset-0 w-full overflow-hidden focus:outline-none"
+      >
         <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
         <a

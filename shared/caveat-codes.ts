@@ -88,10 +88,7 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
   }
 
   // --- Recency ---
-  if (
-    inp.newestComparableAgeMonths != null &&
-    inp.newestComparableAgeMonths > 12
-  ) {
+  if (inp.newestComparableAgeMonths != null && inp.newestComparableAgeMonths > 12) {
     add(
       "STALE_DATA",
       "warning",

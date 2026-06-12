@@ -83,10 +83,7 @@ export type ShortlistCsvRowInput = {
   notes: string;
 };
 
-export function buildShortlistCsvContent(
-  headers: string[],
-  rows: ShortlistCsvRowInput[],
-): string {
+export function buildShortlistCsvContent(headers: string[], rows: ShortlistCsvRowInput[]): string {
   const dataRows = rows.map((row) => [
     row.address,
     row.medianPrice,
@@ -129,10 +126,7 @@ export type ResultsCsvRowInput = {
   flatTypes: string;
 };
 
-export function buildResultsCsvContent(
-  headers: string[],
-  rows: ResultsCsvRowInput[],
-): string {
+export function buildResultsCsvContent(headers: string[], rows: ResultsCsvRowInput[]): string {
   const dataRows = rows.map((row) => [
     row.address,
     row.town,

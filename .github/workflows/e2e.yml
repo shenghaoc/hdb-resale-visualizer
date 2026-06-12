@@ -1,0 +1,157 @@
+name: E2E
+
+# Repo-specific Playwright smoke gate, kept separate from the universal base
+# CI (.github/workflows/ci.yml), which runs `pnpm ci` + `pnpm run check` on
+# every PR with no path filters.
+#
+# On PR / push: runs the smoke subset (production-bootstrap + app + a11y) when
+# UI-affecting paths changed. On workflow_dispatch: runs the full suite.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      run_e2e: ${{ steps.filter.outputs.e2e }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          token: ${{ github.token }}
+          filters: |
+            e2e:
+              # App shell / entry points
+              - 'src/App.tsx'
+              - 'src/main.tsx'
+              - 'src/styles.css'
+              # Feature-first layout (target architecture)
+              - 'src/features/**'
+              - 'src/entities/**'
+              - 'src/shared/**'
+              - 'src/shared-ui/**'
+              # Legacy layout (still present during the restructure)
+              - 'src/components/**'
+              - 'src/hooks/**'
+              - 'src/types/**'
+              # Shared domain logic that drives listing-check results
+              - 'shared/**'
+              # E2E harness, fixtures, and workflow self-change
+              # (functions/** omitted on purpose: E2E mocks /api/*)
+              - 'tests/e2e/**'
+              - 'tests/fixtures/**'
+              - 'playwright.config.*'
+              - '.github/workflows/e2e.yml'
+
+  # Builds the dist artifact consumed by e2e-smoke. Fixtures must be staged
+  # before the build so they are copied into dist/ and served by vite preview
+  # without a second staging step in e2e-smoke.
+  build:
+    runs-on: ubuntu-latest
+    needs: [changes]
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      needs.changes.outputs.run_e2e == 'true'
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm ci
+
+      - name: Stage E2E fixtures into public/api
+        run: pnpm setup:fixtures
+
+      - name: Production build
+        run: pnpm build:deploy
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist
+          path: dist/
+          retention-days: 1
+
+  # Uses the official Playwright Docker image so browser binaries and system
+  # dependencies for WebKit are pre-installed; no `playwright install` step
+  # needed.  The @playwright/test version is pinned exactly to 1.60.0 in
+  # package.json to match the mcr.microsoft.com/playwright:v1.60.0-noble image.
+  e2e-smoke:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.60.0-noble
+    needs: [changes, build]
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      needs.changes.outputs.run_e2e == 'true'
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v6
+
+      # Install Node 26 inside the Playwright Docker container (which ships a
+      # lower LTS version) so the project's engines requirement is satisfied.
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 26
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm ci
+        env:
+          # Browsers are already in the Docker image; skip the post-install
+          # download that @playwright/test would otherwise trigger.
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - name: Download dist artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: dist
+          path: dist
+
+      - name: End-to-end smoke (PR / push)
+        if: github.event_name != 'workflow_dispatch'
+        run: pnpm test:e2e:smoke
+        env:
+          E2E_DIST_PREBUILT: "1"
+
+      - name: End-to-end full suite (workflow_dispatch)
+        if: github.event_name == 'workflow_dispatch'
+        run: pnpm test:e2e
+        env:
+          E2E_DIST_PREBUILT: "1"
+
+      - name: Upload Playwright Report
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

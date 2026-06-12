@@ -15,9 +15,7 @@ export type ConfidenceResult = {
   reason: string;
 };
 
-function findNewestMonth(
-  comparables: ReadonlyArray<AddressDetailTransaction>,
-): string | null {
+function findNewestMonth(comparables: ReadonlyArray<AddressDetailTransaction>): string | null {
   let newest: string | null = null;
   for (const tx of comparables) {
     if (!newest || tx.month > newest) {

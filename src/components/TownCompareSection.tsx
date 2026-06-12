@@ -89,8 +89,7 @@ function buildMetricRows(t: Translator, locale: Locale): MetricRow[] {
         s.medianPricePerSqm === null
           ? "—"
           : t("unit.sqmCurrency", { value: formatNumber(s.medianPricePerSqm, 0, locale) }),
-      formatDelta: (d) =>
-        t("unit.sqmCurrency", { value: signedNumber(d.delta, locale) }),
+      formatDelta: (d) => t("unit.sqmCurrency", { value: signedNumber(d.delta, locale) }),
     },
     {
       kind: "windowVolume",
@@ -161,14 +160,12 @@ function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
   const isUp = pct >= YOY_FLAT_THRESHOLD_PCT;
   const isDown = pct <= -YOY_FLAT_THRESHOLD_PCT;
   const Icon = isUp ? ArrowUpRight : isDown ? ArrowDownRight : ArrowRight;
-  const color = isUp
-    ? "text-destructive"
-    : isDown
-      ? "text-success"
-      : "text-muted-foreground";
+  const color = isUp ? "text-destructive" : isDown ? "text-success" : "text-muted-foreground";
   const sign = pct > 0 ? "+" : pct < 0 ? "−" : "";
   return (
-    <span className={cn("inline-flex items-center gap-1 text-[0.6rem] font-semibold v2-tabular", color)}>
+    <span
+      className={cn("inline-flex items-center gap-1 text-[0.6rem] font-semibold v2-tabular", color)}
+    >
       <Icon className="size-3" aria-hidden="true" />
       {sign}
       {Math.abs(pct).toFixed(1)}%
@@ -380,7 +377,11 @@ function CompareColumn({
   "data-testid"?: string;
 }) {
   return (
-    <div id={id} data-testid={dataTestId} className="min-w-0 rounded-lg border border-border/30 bg-background/60">
+    <div
+      id={id}
+      data-testid={dataTestId}
+      className="min-w-0 rounded-lg border border-border/30 bg-background/60"
+    >
       <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background/95 px-2.5 py-2 backdrop-blur md:top-0">
         <span className="truncate font-heading text-[0.78rem] font-extrabold uppercase tracking-[0.08em]">
           {localizeTownName(townName, locale)}

@@ -19,13 +19,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - uses: pnpm/action-setup@v6
+
       - uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: npm
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm ci
 
       - name: Sync upstream datasets into D1
         env:
@@ -37,7 +40,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
           GEOCODE_CONCURRENCY: "10"
-        run: npm run sync-data
+        run: pnpm run sync-data
 
       # The Worker reads live data from D1, so no redeploy is needed on
       # data-only refreshes. The UI bundle redeploys only when source code

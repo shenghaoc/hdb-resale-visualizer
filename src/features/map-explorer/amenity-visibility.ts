@@ -1,9 +1,9 @@
-export type AmenityLayerType = 'mrt-station' | 'mrt-exit' | 'school';
+export type AmenityLayerType = "mrt-station" | "mrt-exit" | "school";
 
 const MIN_ZOOM: Record<AmenityLayerType, number> = {
-  'mrt-station': 11,
-  'mrt-exit': 12,
-  'school': 12,
+  "mrt-station": 11,
+  "mrt-exit": 12,
+  school: 12,
 };
 
 export function shouldShowAmenityLayer(zoom: number, layerType: AmenityLayerType): boolean {

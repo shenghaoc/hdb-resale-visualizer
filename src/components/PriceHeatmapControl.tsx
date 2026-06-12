@@ -80,10 +80,9 @@ export function PriceHeatmapControl({
               className={cn(
                 "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300",
                 !hasScope && "cursor-not-allowed opacity-50",
-                hasScope && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-                isEnabled && hasScope
-                  ? "bg-orange-500"
-                  : "bg-muted-foreground/30",
+                hasScope &&
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                isEnabled && hasScope ? "bg-orange-500" : "bg-muted-foreground/30",
               )}
             >
               <span
@@ -102,7 +101,11 @@ export function PriceHeatmapControl({
       {/* Mode toggle and Opacity slider — only shown when heatmap is active */}
       {isEnabled && hasScope && (
         <div className="flex flex-col gap-2">
-          <div role="radiogroup" aria-label={t("heatmap.modeLabel")} className="flex items-center gap-1">
+          <div
+            role="radiogroup"
+            aria-label={t("heatmap.modeLabel")}
+            className="flex items-center gap-1"
+          >
             <button
               type="button"
               role="radio"
@@ -116,7 +119,7 @@ export function PriceHeatmapControl({
                 "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
                 mode === "price"
                   ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
-                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )}
             >
               {t("heatmap.modePrice")}
@@ -134,7 +137,7 @@ export function PriceHeatmapControl({
                 "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
                 mode === "perSqm"
                   ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
-                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )}
             >
               {t("heatmap.modePerSqm")}

@@ -29,7 +29,9 @@ export function median(values: readonly number[]): number {
   return (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
-function groupByFlatType(transactions: readonly Pick<AddressDetailTransaction, "flatType" | "resalePrice">[]) {
+function groupByFlatType(
+  transactions: readonly Pick<AddressDetailTransaction, "flatType" | "resalePrice">[],
+) {
   const map = new Map<string, number[]>();
   for (const tx of transactions) {
     if (!map.has(tx.flatType)) map.set(tx.flatType, []);
@@ -51,7 +53,9 @@ export function deriveFlatTypePriceLadder(
   const relevant = Array.from(new Set(availableFlatTypes));
 
   const ordered = FLAT_TYPE_ORDER.filter((ft) => relevant.includes(ft));
-  const extras = relevant.filter((ft) => !(FLAT_TYPE_ORDER as readonly string[]).includes(ft)).sort();
+  const extras = relevant
+    .filter((ft) => !(FLAT_TYPE_ORDER as readonly string[]).includes(ft))
+    .sort();
 
   return [...ordered, ...extras].map((flatType) => {
     const prices = byType.get(flatType) ?? [];

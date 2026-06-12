@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { fetchBlockSummaries, fetchBlocksBySearch, fetchBlocksByTown, townToFilename } from "@/shared/lib/data";
+import {
+  fetchBlockSummaries,
+  fetchBlocksBySearch,
+  fetchBlocksByTown,
+  townToFilename,
+} from "@/shared/lib/data";
 import type { BlockSummary, Manifest } from "@/types/data";
 
 type UseBlockLoadingArgs = {
@@ -54,15 +59,15 @@ export function useBlockLoading({
     () =>
       Boolean(
         coarseSearchParams.flatType ||
-          coarseSearchParams.flatModel ||
-          coarseSearchParams.budgetMin !== null ||
-          coarseSearchParams.budgetMax !== null ||
-          coarseSearchParams.areaMin !== null ||
-          coarseSearchParams.areaMax !== null ||
-          coarseSearchParams.remainingLeaseMin !== null ||
-          coarseSearchParams.startMonth !== null ||
-          coarseSearchParams.endMonth !== null ||
-          coarseSearchParams.mrtMax !== null,
+        coarseSearchParams.flatModel ||
+        coarseSearchParams.budgetMin !== null ||
+        coarseSearchParams.budgetMax !== null ||
+        coarseSearchParams.areaMin !== null ||
+        coarseSearchParams.areaMax !== null ||
+        coarseSearchParams.remainingLeaseMin !== null ||
+        coarseSearchParams.startMonth !== null ||
+        coarseSearchParams.endMonth !== null ||
+        coarseSearchParams.mrtMax !== null,
       ),
     [coarseSearchParams],
   );
@@ -73,12 +78,11 @@ export function useBlockLoading({
     let isMounted = true;
     const totalBlocks = manifest.counts.blocks;
     const needsAllBlocks =
-      hasGeographic ||
-      (savedVisible && shortlistCount > 0) ||
-      needsAllBlocksForRecommendations;
+      hasGeographic || (savedVisible && shortlistCount > 0) || needsAllBlocksForRecommendations;
     const detectedTownForDeepLink =
       !townFilter && !hasGeographic && selectedAddressKey
-        ? sortedTowns.find((town) => selectedAddressKey.startsWith(`${townToFilename(town)}-`)) ?? null
+        ? (sortedTowns.find((town) => selectedAddressKey.startsWith(`${townToFilename(town)}-`)) ??
+          null)
         : null;
     const effectiveTown = townFilter || detectedTownForDeepLink;
 

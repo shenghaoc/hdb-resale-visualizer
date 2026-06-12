@@ -39,8 +39,10 @@ export function useMapFitBounds({
 
     hasInitialFitRef.current = true;
 
-    let minLng = Infinity, maxLng = -Infinity;
-    let minLat = Infinity, maxLat = -Infinity;
+    let minLng = Infinity,
+      maxLng = -Infinity;
+    let minLat = Infinity,
+      maxLat = -Infinity;
     for (const b of blocks) {
       minLng = Math.min(minLng, b.coordinates.lng);
       maxLng = Math.max(maxLng, b.coordinates.lng);

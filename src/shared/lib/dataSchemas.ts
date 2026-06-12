@@ -34,9 +34,12 @@ export const blockSummarySchema = z.object({
   floorAreaRange: z.tuple([z.number().positive(), z.number().positive()]),
   leaseCommenceRange: z.tuple([
     z.number().int().min(MIN_LEASE_COMMENCE_YEAR),
-    z.number().int().refine((val) => val <= getMaxLeaseCommenceYear(), {
-      message: "Lease commence year cannot be in the future",
-    }),
+    z
+      .number()
+      .int()
+      .refine((val) => val <= getMaxLeaseCommenceYear(), {
+        message: "Lease commence year cannot be in the future",
+      }),
   ]),
   latestMonth: monthSchema,
   availableDateRange: z.tuple([monthSchema, monthSchema]),
@@ -99,17 +102,19 @@ export const manifestSchema = z
     schemaVersion: z.string(),
     generatedAt: z.string().optional(),
     dataWindow: z.object({ minMonth: monthSchema, maxMonth: monthSchema }),
-    sources: z.object({
-      resaleCollectionId: z.string().optional(),
-      resaleDatasetIds: z.array(z.string()).optional(),
-      propertyDatasetId: z.string().optional(),
-      mrtDatasetId: z.string().optional(),
-      moeSchoolDatasetId: z.string().optional(),
-      neaHawkerDatasetId: z.string().optional(),
-      sfaSupermarketDatasetId: z.string().optional(),
-      nparksParksDatasetId: z.string().optional(),
-      lastUpdatedAt: z.string().optional(),
-    }).default({}),
+    sources: z
+      .object({
+        resaleCollectionId: z.string().optional(),
+        resaleDatasetIds: z.array(z.string()).optional(),
+        propertyDatasetId: z.string().optional(),
+        mrtDatasetId: z.string().optional(),
+        moeSchoolDatasetId: z.string().optional(),
+        neaHawkerDatasetId: z.string().optional(),
+        sfaSupermarketDatasetId: z.string().optional(),
+        nparksParksDatasetId: z.string().optional(),
+        lastUpdatedAt: z.string().optional(),
+      })
+      .default({}),
     filterOptions: z.object({
       towns: z.array(z.string()),
       flatTypes: z.array(z.string()),

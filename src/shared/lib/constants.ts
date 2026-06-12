@@ -1,5 +1,8 @@
 import type { FilterState } from "../../types/data";
-import type { ColorSpecification, DataDrivenPropertyValueSpecification } from "@maplibre/maplibre-gl-style-spec";
+import type {
+  ColorSpecification,
+  DataDrivenPropertyValueSpecification,
+} from "@maplibre/maplibre-gl-style-spec";
 
 // Single-sourced from shared/ so the browser and the Worker agree on the cap.
 export { MAX_SHORTLIST_ITEMS } from "@shared/shortlist-limits";
@@ -111,13 +114,18 @@ export const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
  * Map configuration.
  */
 export const PRIMARY_BLUE = "#2563eb";
-export const ONEMAP_DEFAULT_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png";
+export const ONEMAP_DEFAULT_TILE_URL =
+  "https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png";
 export const ONEMAP_NIGHT_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Night/{z}/{x}/{y}.png";
 export const MAP_GLYPHS_URL = "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf";
-export const ONEMAP_ATTRIBUTION = '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" style="height:20px;width:20px;" loading="lazy" decoding="async" alt="OneMap logo"/>&nbsp;<a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a>&nbsp;&copy;&nbsp;contributors&nbsp;&copy;&nbsp;<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>';
+export const ONEMAP_ATTRIBUTION =
+  '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" style="height:20px;width:20px;" loading="lazy" decoding="async" alt="OneMap logo"/>&nbsp;<a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a>&nbsp;&copy;&nbsp;contributors&nbsp;&copy;&nbsp;<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>';
 export const DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS = 1000;
 export const PRIMARY_SCHOOL_SOURCE_ID = "primary-schools";
-export const PRIMARY_SCHOOL_LAYER_IDS = ["primary-school-markers", "primary-school-labels"] as const;
+export const PRIMARY_SCHOOL_LAYER_IDS = [
+  "primary-school-markers",
+  "primary-school-labels",
+] as const;
 export const SCHOOL_MARKER_COLOR = "#f59e0b";
 export const SCHOOL_LABEL_COLOR = "#92400e";
 export const SCHOOL_LABEL_HALO_COLOR = "#fff7ed";
@@ -129,12 +137,13 @@ export const MEDIAN_PRICE_COLOR_STOPS = [
   { price: 1000000, color: "#d97757" },
   { price: 1300000, color: "#a83232" },
 ] as const;
-export const MEDIAN_PRICE_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification<ColorSpecification> = [
-  "interpolate",
-  ["linear"],
-  ["get", "median_price"],
-  ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
-];
+export const MEDIAN_PRICE_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification<ColorSpecification> =
+  [
+    "interpolate",
+    ["linear"],
+    ["get", "median_price"],
+    ...MEDIAN_PRICE_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
+  ];
 export const MEDIAN_PRICE_LEGEND_GRADIENT = `linear-gradient(90deg, ${MEDIAN_PRICE_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
 export const PRICE_PER_SQM_COLOR_STOPS = [
