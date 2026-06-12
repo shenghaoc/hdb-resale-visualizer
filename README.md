@@ -111,6 +111,8 @@ pnpm run test
 pnpm test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
 pnpm test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
 pnpm test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
+pnpm test:browser        # Vitest Browser Mode — real-browser component/integration tests
+pnpm test:browser:watch  # Browser Mode in watch mode (opens Chromium)
 pnpm test:e2e
 pnpm run check           # full quality gate: format check + lint + typecheck + unit tests + build
 pnpm check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
@@ -125,6 +127,16 @@ comparable-engine work. Run `pnpm check:pr` once before opening a pull
 request; it is a plain package script with no Kiro-specific behaviour. Base CI
 runs `pnpm ci` followed by `pnpm run check`, so the local gate matches the
 per-PR CI checks exactly (plus the Playwright suite).
+
+The repo has three testing tiers:
+
+- **`pnpm run test`** — fast Vitest unit/component tests running in jsdom (no real browser).
+- **`pnpm run test:browser`** — Vitest Browser Mode tests running in a real Chromium browser via Playwright. Use for component/integration behavior that benefits from real browser APIs.
+- **`pnpm run test:e2e`** — Playwright end-to-end tests covering full user flows across multiple pages.
+
+Browser Mode tests live in `tests/browser/` and are excluded from the default
+`pnpm run test` run. They are not part of the `pnpm run check` quality gate —
+run them explicitly or via CI.
 
 ## Build and runtime guardrails
 
