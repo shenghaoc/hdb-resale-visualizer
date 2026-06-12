@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { DistributionBar } from "@/components/DistributionBar";
 import { ComparableTransactionsList } from "@/components/ComparableTransactionsList";
+import { DocsLink } from "@/features/docs/DocsLink";
 
 type AskingPriceCheckProps = {
   detail: AddressDetail;
@@ -351,6 +352,10 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
           />
         </div>
       )}
+
+      <div className="text-xs text-muted-foreground">
+        <DocsLink slug="understanding-price-comparisons">{t("docs.linkPriceComparisons")}</DocsLink>
+      </div>
     </section>
   );
 }

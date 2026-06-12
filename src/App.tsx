@@ -35,9 +35,11 @@ import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-prox
 import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
 import { useListingCheckUrlState, buildCheckShareUrl } from "@/hooks/useListingCheckUrlState";
+import { DocsLink } from "@/features/docs/DocsLink";
+import { isDocsPath, navigate, usePathname, DOCS_PATH_PREFIX } from "@/features/docs/docsRouter";
 
-const GuideDialog = lazy(() =>
-  import("@/components/GuideDialog").then((m) => ({ default: m.GuideDialog })),
+const DocsPage = lazy(() =>
+  import("@/features/docs/DocsPage").then((m) => ({ default: m.DocsPage })),
 );
 const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
 const DetailDrawer = lazy(() =>
@@ -65,7 +67,6 @@ function App() {
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
   const searchProfile = useSearchProfile();
-  const [guideOpen, setGuideOpen] = useState(false);
   const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
   const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
@@ -454,8 +455,9 @@ function App() {
               {t("app.missingData")} · {error ?? pipeline.loadError}
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-2 text-sm text-muted-foreground">
-            {t("app.devFunctionsHint")}
+          <CardContent className="flex flex-col gap-2 pt-2 text-sm text-muted-foreground">
+            <span>{t("app.devFunctionsHint")}</span>
+            <DocsLink slug="troubleshooting">{t("docs.linkTroubleshooting")}</DocsLink>
           </CardContent>
         </Card>
       </main>
@@ -861,26 +863,33 @@ function App() {
         onMobileCheckClick={handleMobileCheckClick}
         onMobileSavedClick={handleMobileSavedClick}
         onToggleTheme={toggleTheme}
-        onOpenGuide={() => setGuideOpen(true)}
+        onOpenGuide={() => navigate(DOCS_PATH_PREFIX)}
       />
-
-      {guideOpen && (
-        <Suspense fallback={null}>
-          <GuideDialog open={guideOpen} onClose={() => setGuideOpen(false)} t={t} />
-        </Suspense>
-      )}
     </>
   );
 }
 
 function AppWithErrorBoundary() {
+  // Lightweight path routing: /docs and its subpaths render the in-app user
+  // guide instead of the map shell. All other app state stays in the query
+  // string, so leaving the guide restores the previous view. Deployed refreshes
+  // work via the Worker's single-page-application asset fallback.
+  const pathname = usePathname();
+
   // Root boundary: a crash here means the whole app (including the I18nProvider)
   // is unusable, so recovery falls back to a full reload and the fallback uses
   // the default English copy — translations aren't reachable once the provider
   // tree has failed.
   return (
     <ErrorBoundary fill className="min-h-screen">
-      <App />
+      {isDocsPath(pathname) ? (
+        <Suspense fallback={null}>
+          <DocsPage />
+        </Suspense>
+      ) : null}
+      <div hidden={isDocsPath(pathname)}>
+        <App />
+      </div>
     </ErrorBoundary>
   );
 }

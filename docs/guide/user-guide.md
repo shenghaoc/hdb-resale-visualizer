@@ -2,6 +2,8 @@
 
 HDB Resale Explorer is a free, buyer-first HDB due-diligence tool for Singapore resale transactions. It pulls official data from data.gov.sg and presents it on an interactive map so you can compare blocks, evaluate asking prices, and shortlist properties — all without creating an account.
 
+> **In-app user guide:** this guide also ships inside the app. Tap the **?** (User guide) button in the tab bar, or open `/docs` directly, to browse the same material with section navigation and local search — no need to leave the app. Sections live at `/docs/getting-started`, `/docs/understanding-price-comparisons`, `/docs/filters-and-map`, `/docs/shortlisting`, `/docs/faq`, and `/docs/troubleshooting` (content source: `src/features/docs/content/`).
+
 ## Getting started
 
 When you first open the app, the first screen is a quick buyer-entry flow so you can start value analysis immediately:

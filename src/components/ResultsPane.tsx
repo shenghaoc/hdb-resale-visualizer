@@ -26,6 +26,7 @@ import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
 import { cn } from "@/shared/lib/utils";
 import { getStationDetails } from "@shared/mrt-station-details";
 import { MrtLineDots } from "@/components/MrtLineDots";
+import { DocsLink } from "@/features/docs/DocsLink";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import {
   affordabilityProfileFingerprint,
@@ -1295,7 +1296,10 @@ export function ResultsPane({
                       </CardContent>
                     </Card>
                   ) : (
-                    <div className="empty-state w-full">{t("results.noMatchFilters")}</div>
+                    <div className="empty-state w-full">
+                      {t("results.noMatchFilters")}{" "}
+                      <DocsLink slug="troubleshooting">{t("docs.linkTroubleshooting")}</DocsLink>
+                    </div>
                   )}
                 </div>
               ) : resultsView === "blocks" ? (
