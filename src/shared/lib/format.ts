@@ -179,15 +179,15 @@ export function formatDateTime(value: string, locale?: Locale): string {
   let cached = formattedDateTimeCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  const formatter = getDateTimeFormat(resolvedLocale, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
-
   const date = new Date(value);
   if (isNaN(date.getTime())) {
     return value;
   }
+
+  const formatter = getDateTimeFormat(resolvedLocale, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 
   cached = formatter.format(date);
 

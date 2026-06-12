@@ -142,6 +142,17 @@ describe("format functions", () => {
       expect(typeof formatted).toBe("string");
       expect(formatted.length).toBeGreaterThan(0);
     });
+
+    it("returns raw input for invalid date strings", () => {
+      expect(formatDateTime("not-a-date")).toBe("not-a-date");
+      expect(formatDateTime("")).toBe("");
+    });
+
+    it("returns cached result on repeated calls", () => {
+      const first = formatDateTime("2024-06-15T09:30:00Z");
+      const second = formatDateTime("2024-06-15T09:30:00Z");
+      expect(first).toBe(second);
+    });
   });
 
   describe("cache behavior", () => {

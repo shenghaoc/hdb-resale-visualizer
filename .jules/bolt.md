@@ -89,6 +89,6 @@
 **Learning:** Chaining array operations like `.flatMap().map()` inside `useMemo` hooks (e.g., when aggregating chart data points) creates multiple intermediate arrays. In heavily rendered views like `ShortlistDrawer`, this causes significant memory allocations and GC pressure, leading to UI stutter.
 **Action:** Combine multi-step data extraction operations into a single-pass `for...of` loop, directly appending to pre-allocated sets or arrays.
 
-## 2024-06-12 - Date Format Cache & Temporal Overhead Optimization
+## 2026-06-12 - Date Format Cache & Temporal Overhead Optimization
 **Learning:** `Temporal.Instant.from(value).toLocaleString()` causes huge performance overheads when repeated over thousands of rows (e.g. months, datetimes), and its `toLocaleString` is poorly supported natively in Safari/WebKit environments (leading to crashes/polyfills overhead in Playwright e2e tests).
 **Action:** Avoid inline `.toLocaleString` calls on primitives and bypass Temporal when standard ISO-8601 formatting or standard UTC dates are involved. Cache `Intl.DateTimeFormat` and string outputs instead of reinstantiating them inline, reducing format execution time dramatically.
