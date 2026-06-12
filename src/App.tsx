@@ -886,9 +886,10 @@ function AppWithErrorBoundary() {
         <Suspense fallback={null}>
           <DocsPage />
         </Suspense>
-      ) : (
+      ) : null}
+      <div hidden={isDocsPath(pathname)}>
         <App />
-      )}
+      </div>
     </ErrorBoundary>
   );
 }

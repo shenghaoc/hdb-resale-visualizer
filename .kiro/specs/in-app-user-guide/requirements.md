@@ -39,13 +39,19 @@
 - **R5.4** Click handlers check `event.defaultPrevented` and
   `event.button !== 0` before intercepting navigation.
 
-## R6 — Testing
-- **R6.1** Vitest coverage for the docs manifest (slugs, search entries, section
+## R6 — State preservation
+- **R6.1** Navigating to `/docs` does not unmount the main `App` component;
+  in-memory state (geolocation coordinates, filter pipeline results) is
+  preserved when returning from the guide.
+- **R6.2** The query-string state is preserved across docs navigation.
+
+## R7 — Testing
+- **R7.1** Vitest coverage for the docs manifest (slugs, search entries, section
   structure).
-- **R6.2** Vitest coverage for routing helpers (path recognition, slug
+- **R7.2** Vitest coverage for routing helpers (path recognition, slug
   round-tripping, trailing-slash normalisation).
-- **R6.3** Vitest coverage for `DocsPage` (rendering, navigation, deep-linking,
+- **R7.3** Vitest coverage for `DocsPage` (rendering, navigation, deep-linking,
   search).
 
-## R7 — Documentation
-- **R7.1** `docs/guide/user-guide.md` is updated to reference the in-app guide.
+## R8 — Documentation
+- **R8.1** `docs/guide/user-guide.md` is updated to reference the in-app guide.

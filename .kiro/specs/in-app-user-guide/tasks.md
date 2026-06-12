@@ -51,3 +51,4 @@
 - [x] **T8.3** Cache search entries and filter markdown noise. (R3.2, R3.3)
 - [x] **T8.4** Support `#hash` links in `DocsArticle`. (R5.3)
 - [x] **T8.5** Add `defaultPrevented` and `button` checks to click handlers. (R5.4)
+- [x] **T8.6** Keep `App` mounted (hidden) behind docs view to preserve geolocation state.
