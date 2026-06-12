@@ -23,7 +23,7 @@ export default function globalSetup() {
     monthlyIncome: 9000,
   };
 
-  // Fixtures are staged into `public/api/` by `npm run setup:fixtures` (invoked
+  // Fixtures are staged into `public/api/` by `pnpm run setup:fixtures` (invoked
   // from the playwright webServer command), so no copying happens here.
 
   mkdirSync(join(process.cwd(), "test-results"), { recursive: true });

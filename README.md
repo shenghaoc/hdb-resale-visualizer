@@ -96,21 +96,23 @@ Run `pnpm sync-data` to refresh live data from data.gov.sg and OneMap into **rem
 ## Scripts
 
 ```bash
+pnpm ci                # clean install from the lockfile (what CI runs)
 pnpm dev               # Vite dev server (UI-only)
 pnpm dev:functions     # Wrangler Pages dev (UI + /api/* + local D1)
 pnpm check:boundaries  # script/runtime import boundary check
-pnpm build             # production build (no D1 dependency)
+pnpm run build         # production build (no D1 dependency)
 pnpm build:full        # build + remote D1 sync (maintainers only)
 pnpm preview           # vite preview of the built bundle
-pnpm typecheck
-pnpm lint
-pnpm lint:fast
-pnpm test
+pnpm run format        # write formatting fixes (vp fmt)
+pnpm run format:check  # check formatting only
+pnpm run typecheck
+pnpm run lint
+pnpm run test
 pnpm test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
 pnpm test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
 pnpm test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
 pnpm test:e2e
-pnpm check               # pre-commit gate: boundaries + typecheck + lint + unit tests
+pnpm run check           # full quality gate: format check + lint + typecheck + unit tests + build
 pnpm check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
 pnpm sync-data           # remote D1 sync (requires CF credentials)
 pnpm db:migrate:local
@@ -120,10 +122,9 @@ pnpm db:migrate:remote
 The targeted `test:*` scripts reuse the existing Vitest config and filter by
 filename — they are fast feedback loops for buyer-critical listing-check and
 comparable-engine work. Run `pnpm check:pr` once before opening a pull
-request; it is a plain npm script with no Kiro-specific behaviour. CI does not
-invoke `check:pr` directly — it runs the same underlying scripts (`typecheck`,
-`lint`, `test`, and a Playwright smoke subset via `test:e2e:smoke`) as separate
-parallel jobs — so the local gate is a superset of the per-PR CI checks.
+request; it is a plain package script with no Kiro-specific behaviour. Base CI
+runs `pnpm ci` followed by `pnpm run check`, so the local gate matches the
+per-PR CI checks exactly (plus the Playwright suite).
 
 ## Build and runtime guardrails
 
@@ -167,7 +168,7 @@ CLOUDFLARE_D1_DATABASE_ID=...
 ## Deployment
 
 - **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `pnpm build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
-- **CI** (`.github/workflows/ci.yml`): typecheck, typed lint, unit/integration tests, e2e smoke (fixtures staged to `public/api/` for preview only), and production build verification. No data artifact caching — runtime reads from D1.
+- **CI** (`.github/workflows/ci.yml`): `pnpm ci` then `pnpm run check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
 - **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `pnpm sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
 
 ## Notes

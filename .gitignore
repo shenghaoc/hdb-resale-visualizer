@@ -154,7 +154,7 @@ Thumbs.db
 # Kept ignored so old local clones don't accidentally commit stale outputs.
 public/data/
 
-# Locally-staged API fixtures (`npm run setup:fixtures`) for E2E preview.
+# Locally-staged API fixtures (`pnpm run setup:fixtures`) for E2E preview.
 # Production Pages Functions take priority over any same-path static files.
 public/api/
 

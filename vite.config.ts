@@ -7,7 +7,22 @@ export default defineConfig({
   staged: {
     "*": "vp check --fix",
   },
-  fmt: {},
+  fmt: {
+    // Agent/editor doc packs and generated artifacts stay out of the
+    // formatter, mirroring the lint ignore list below.
+    ignorePatterns: [
+      ".agents",
+      ".claude",
+      ".gemini",
+      ".jules",
+      ".kiro",
+      "docs/archive",
+      "pnpm-lock.yaml",
+      "public/data",
+      "public/temporal-polyfill.js",
+      "tests/fixtures/public-data",
+    ],
+  },
   lint: {
     plugins: ["oxc", "typescript", "unicorn", "react"],
     categories: {

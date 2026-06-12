@@ -4,10 +4,10 @@
 
 ## Test plan
 
-- [ ] `npm run typecheck` passes
-- [ ] `npm run lint` passes
-- [ ] `npm run test` passes
-- [ ] `npm run build` succeeds
+- [ ] `pnpm run typecheck` passes
+- [ ] `pnpm run lint` passes
+- [ ] `pnpm run test` passes
+- [ ] `pnpm run build` succeeds
 
 ## Documentation
 

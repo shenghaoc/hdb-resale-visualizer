@@ -2,28 +2,8 @@ name: CI
 
 on:
   pull_request:
-    paths: &ci_paths
-      - "src/**"
-      - "functions/**"
-      - "worker/**"
-      - "scripts/**"
-      - "shared/**"
-      - "tests/**"
-      - "public/**"
-      - ".github/workflows/**"
-      - "index.html"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "types/**"
-      - "tsconfig*.json"
-      - "vite.config.*"
-      - "playwright.config.*"
-      - "wrangler.*"
   push:
-    branches:
-      - main
-      - master
-    paths: *ci_paths
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -34,213 +14,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── Paths filter ────────────────────────────────────────────────────────────
-  changes:
+  ci:
+    name: pnpm ci + check
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-    outputs:
-      run_e2e: ${{ steps.filter.outputs.e2e }}
-      run_build: ${{ steps.filter.outputs.build }}
+    timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - id: filter
-        uses: dorny/paths-filter@v4
-        with:
-          token: ${{ github.token }}
-          filters: |
-            e2e:
-              # App shell / entry points
-              - 'src/App.tsx'
-              - 'src/main.tsx'
-              - 'src/styles.css'
-              # Feature-first layout (target architecture)
-              - 'src/features/**'
-              - 'src/entities/**'
-              - 'src/shared/**'
-              - 'src/shared-ui/**'
-              # Legacy layout (still present during the restructure)
-              - 'src/components/**'
-              - 'src/hooks/**'
-              - 'src/types/**'
-              # Shared domain logic that drives listing-check results
-              - 'shared/**'
-              # E2E harness, fixtures, and workflow self-change
-              # (functions/** omitted on purpose: E2E mocks /api/*)
-              - 'tests/e2e/**'
-              - 'tests/fixtures/**'
-              - 'playwright.config.*'
-              - '.github/workflows/ci.yml'
-            build:
-              - 'src/**'
-              - 'shared/**'
-              - 'functions/**'
-              - 'worker/**'
-              - 'scripts/**'
-              - 'public/**'
-              - 'index.html'
-              - 'package.json'
-              - 'pnpm-lock.yaml'
-              - 'tsconfig*.json'
-              - 'vite.config.*'
-              - 'wrangler.*'
-              - '.github/workflows/ci.yml'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-  # ── Quality gates (all parallel, all merge-required) ────────────────────────
-  typecheck:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
           node-version: 26
-
-      - uses: pnpm/action-setup@v4
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Typecheck
-        run: pnpm typecheck
-
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 26
-
-      - uses: pnpm/action-setup@v4
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm ci
 
-      - name: Lint
-        run: pnpm lint
-
-  unit-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 26
-
-      - uses: pnpm/action-setup@v4
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Unit and integration tests
-        run: pnpm test
-
-  # ── Build (also gates merge; artifact consumed by e2e-smoke) ────────────────
-  #
-  # Runs when either build or e2e paths changed, so e2e-smoke always has an
-  # artifact to download even when only test files (not src) changed.
-  build:
-    runs-on: ubuntu-latest
-    needs: [changes]
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      needs.changes.outputs.run_build == 'true' ||
-      needs.changes.outputs.run_e2e == 'true'
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 26
-
-      - uses: pnpm/action-setup@v4
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      # Fixtures must be staged before vite build so they are copied into dist/
-      # and served by vite preview without a second staging step in e2e-smoke.
-      - name: Stage E2E fixtures into public/api
-        run: pnpm setup:fixtures
-
-      - name: Production build
-        run: pnpm build:deploy
-
-      - name: Upload dist artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: dist
-          path: dist/
-          retention-days: 1
-
-  # ── E2E smoke (depends only on build artifact, not on lint/typecheck/unit) ──
-  #
-  # Uses the official Playwright Docker image so browser binaries and system
-  # dependencies for WebKit are pre-installed; no `playwright install` step
-  # needed.  The @playwright/test version is pinned exactly to 1.60.0 in
-  # package.json to match the mcr.microsoft.com/playwright:v1.60.0-noble image.
-  #
-  # On PR / push: runs the smoke subset (production-bootstrap + app + a11y).
-  # On workflow_dispatch: runs the full suite.
-  e2e-smoke:
-    runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.60.0-noble
-    needs: [changes, build]
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      needs.changes.outputs.run_e2e == 'true'
-
-    steps:
-      - uses: actions/checkout@v6
-
-      # Install Node 26 inside the Playwright Docker container (which ships a
-      # lower LTS version) so the project's engines requirement is satisfied.
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 26
-
-      - uses: pnpm/action-setup@v4
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        env:
-          # Browsers are already in the Docker image; skip the post-install
-          # download that @playwright/test would otherwise trigger.
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
-
-      - name: Download dist artifact
-        uses: actions/download-artifact@v7
-        with:
-          name: dist
-          path: dist
-
-      - name: End-to-end smoke (PR / push)
-        if: github.event_name != 'workflow_dispatch'
-        run: pnpm test:e2e:smoke
-        env:
-          E2E_DIST_PREBUILT: "1"
-
-      - name: End-to-end full suite (workflow_dispatch)
-        if: github.event_name == 'workflow_dispatch'
-        run: pnpm test:e2e
-        env:
-          E2E_DIST_PREBUILT: "1"
-
-      - name: Upload Playwright Report
-        uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
+      - name: Run checks
+        run: pnpm run check
