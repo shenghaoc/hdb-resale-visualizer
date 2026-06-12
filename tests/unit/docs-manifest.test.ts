@@ -1,8 +1,9 @@
-import { describe, expect, it } from "vite-plus/test";
+import { afterEach, describe, expect, it } from "vite-plus/test";
 import {
   DOCS_SECTIONS,
   buildDocsSearchEntries,
   getDocsSection,
+  resetDocsSearchCacheForTests,
 } from "@/features/docs/docsManifest";
 import {
   DOCS_INDEX_SLUG,
@@ -11,6 +12,10 @@ import {
   isDocsPath,
   slugFromPath,
 } from "@/features/docs/docsRouter";
+
+afterEach(() => {
+  resetDocsSearchCacheForTests();
+});
 
 describe("docs manifest", () => {
   it("has unique kebab-case slugs", () => {

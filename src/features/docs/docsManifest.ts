@@ -32,6 +32,10 @@ export function getDocsSection(slug: string): DocsSection {
   return DOCS_SECTIONS.find((section) => section.slug === slug) ?? DOCS_SECTIONS[0];
 }
 
+export function resetDocsSearchCacheForTests(): void {
+  cachedSearchEntries = null;
+}
+
 export type DocsSearchEntry = {
   slug: string;
   sectionTitle: string;
@@ -40,11 +44,17 @@ export type DocsSearchEntry = {
   body: string;
 };
 
+let cachedSearchEntries: DocsSearchEntry[] | null = null;
+
 /**
  * Splits each guide page into `##`-heading chunks so search can land users on
  * the page that actually answers their query, with a meaningful snippet.
  */
 export function buildDocsSearchEntries(sections: DocsSection[] = DOCS_SECTIONS): DocsSearchEntry[] {
+  if (sections === DOCS_SECTIONS && cachedSearchEntries) {
+    return cachedSearchEntries;
+  }
+
   const entries: DocsSearchEntry[] = [];
   for (const section of sections) {
     const lines = section.content.split("\n");
@@ -71,9 +81,14 @@ export function buildDocsSearchEntries(sections: DocsSection[] = DOCS_SECTIONS):
         continue;
       }
       if (/^#\s/.test(line)) continue;
+      if (/^[|\s:-]+$/.test(line)) continue;
       buffer.push(line);
     }
     flush();
+  }
+
+  if (sections === DOCS_SECTIONS) {
+    cachedSearchEntries = entries;
   }
   return entries;
 }

@@ -12,12 +12,22 @@ export const DOCS_INDEX_SLUG = "index";
 
 const listeners = new Set<() => void>();
 
+function handlePopState() {
+  for (const listener of listeners) {
+    listener();
+  }
+}
+
 function subscribe(listener: () => void): () => void {
   listeners.add(listener);
-  window.addEventListener("popstate", listener);
+  if (listeners.size === 1) {
+    window.addEventListener("popstate", handlePopState);
+  }
   return () => {
     listeners.delete(listener);
-    window.removeEventListener("popstate", listener);
+    if (listeners.size === 0) {
+      window.removeEventListener("popstate", handlePopState);
+    }
   };
 }
 

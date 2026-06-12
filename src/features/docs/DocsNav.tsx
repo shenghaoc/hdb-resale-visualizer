@@ -11,6 +11,8 @@ type DocsNavProps = {
 
 export function DocsNav({ sections, activeSlug, navLabel }: DocsNavProps) {
   const handleClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (event.defaultPrevented) return;
+    if (event.button !== 0) return;
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     navigate(href);

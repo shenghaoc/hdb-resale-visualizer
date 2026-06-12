@@ -1,4 +1,4 @@
-import { useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import Fuse from "fuse.js";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,8 @@ type DocsSearchProps = {
 export function DocsSearch({ t }: DocsSearchProps) {
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listboxId = useId();
 
@@ -41,10 +43,19 @@ export function DocsSearch({ t }: DocsSearchProps) {
     return fuse.search(trimmed, { limit: MAX_RESULTS }).map((match) => match.item);
   }, [fuse, query]);
 
-  const isOpen = query.trim() !== "";
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const select = (entry: DocsSearchEntry) => {
     setQuery("");
+    setIsOpen(false);
     setActiveIndex(-1);
     navigate(docsPath(entry.slug));
   };
@@ -68,12 +79,13 @@ export function DocsSearch({ t }: DocsSearchProps) {
     } else if (event.key === "Escape") {
       event.preventDefault();
       setQuery("");
+      setIsOpen(false);
       setActiveIndex(-1);
     }
   };
 
   return (
-    <div className="relative w-full max-w-xs">
+    <div ref={containerRef} className="relative w-full max-w-xs">
       <Search
         aria-hidden="true"
         className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
@@ -84,8 +96,15 @@ export function DocsSearch({ t }: DocsSearchProps) {
         role="combobox"
         value={query}
         onChange={(event) => {
-          setQuery(event.target.value);
+          const val = event.target.value;
+          setQuery(val);
+          setIsOpen(val.trim() !== "");
           setActiveIndex(-1);
+        }}
+        onFocus={() => {
+          if (query.trim() !== "") {
+            setIsOpen(true);
+          }
         }}
         onKeyDown={handleKeyDown}
         placeholder={t("docs.searchPlaceholder")}

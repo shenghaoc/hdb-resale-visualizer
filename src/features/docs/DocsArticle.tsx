@@ -9,6 +9,8 @@ function MarkdownLink({ href = "", children, ...rest }: AnchorHTMLAttributes<HTM
   // rendered as plain text.
   if (isDocsPath(href)) {
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+      if (event.defaultPrevented) return;
+      if (event.button !== 0) return;
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       navigate(href);
@@ -22,6 +24,13 @@ function MarkdownLink({ href = "", children, ...rest }: AnchorHTMLAttributes<HTM
   if (/^https?:\/\//.test(href)) {
     return (
       <a {...rest} href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    );
+  }
+  if (href.startsWith("#")) {
+    return (
+      <a {...rest} href={href}>
         {children}
       </a>
     );
