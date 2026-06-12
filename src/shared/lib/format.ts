@@ -44,7 +44,10 @@ function getNumberFormat(locale: Locale, options: Intl.NumberFormatOptions): Int
   return formatter;
 }
 
-function getDateTimeFormat(locale: Locale, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
+function getDateTimeFormat(
+  locale: Locale,
+  options: Intl.DateTimeFormatOptions,
+): Intl.DateTimeFormat {
   const key = `${locale}-${JSON.stringify(options)}`;
   let formatter = dateTimeFormatCache.get(key);
   if (!formatter) {
@@ -144,7 +147,7 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  const [year, m] = month.split('-');
+  const [year, m] = month.split("-");
   const date = new Date(Date.UTC(parseInt(year, 10), parseInt(m, 10) - 1, 1));
   const formatter = getDateTimeFormat(resolvedLocale, {
     month: "short",
