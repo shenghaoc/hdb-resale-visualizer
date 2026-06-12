@@ -61,7 +61,14 @@ export function DocsSearch({ t }: DocsSearchProps) {
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      if (event.key === "ArrowDown" && query.trim() !== "") {
+        event.preventDefault();
+        setIsOpen(true);
+        setActiveIndex(0);
+      }
+      return;
+    }
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setActiveIndex((index) => (results.length === 0 ? -1 : (index + 1) % results.length));
@@ -151,7 +158,9 @@ export function DocsSearch({ t }: DocsSearchProps) {
                   ) : null}
                 </div>
                 <div className="truncate text-xs text-muted-foreground">
-                  {entry.body.slice(0, SNIPPET_LENGTH)}
+                  {entry.body.length > SNIPPET_LENGTH
+                    ? entry.body.slice(0, entry.body.lastIndexOf(" ", SNIPPET_LENGTH))
+                    : entry.body}
                 </div>
               </li>
             ))
