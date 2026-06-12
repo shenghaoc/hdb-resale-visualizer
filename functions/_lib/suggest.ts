@@ -298,10 +298,10 @@ async function queryPostalCodes(db: SuggestDb, prefixPattern: string) {
 }
 
 function escapeLikePattern(value: string): string {
-  return value
-    .replace(/\\/g, () => "\\\\")
-    .replace(/%/g, "\\%")
-    .replace(/_/g, "\\_");
+  // Single-pass character-class escape: avoids the ordering hazard of
+  // chained replaces (backslash must go first) that CodeQL flags as
+  // incomplete escaping (js/incomplete-sanitization).
+  return value.replace(/[\\%_]/g, (match) => `\\${match}`);
 }
 
 function buildLikePatterns(normalizedQuery: string): {
