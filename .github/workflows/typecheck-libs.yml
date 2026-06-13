@@ -2,7 +2,7 @@ name: Strict dependency typecheck
 
 # Runs TypeScript with skipLibCheck:false using a CommonJS module target so vendor
 # export= typings (e.g. echarts root) still parse; complements the faster default
-# `pnpm run typecheck` on every PR.
+# `vp run typecheck` on every PR.
 
 on:
   workflow_dispatch:
@@ -20,7 +20,6 @@ jobs:
 
       - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: "26"
           cache: true
 
       - name: Install dependencies

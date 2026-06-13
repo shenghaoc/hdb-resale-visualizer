@@ -7,7 +7,7 @@ Use this file as a **thin router**. Keep task execution focused; treat deeper pr
 Before executing any directive, agents MUST read the authoritative steering files to maintain the project's strict architectural boundaries:
 
 - [**Product Vision**](.kiro/steering/product.md) — Map-first, deterministic facts only.
-- [**Technical Constraints**](.kiro/steering/tech.md) — Cloudflare Pages + D1 backend, Node 26 + pnpm, no runtime geocoding.
+- [**Technical Constraints**](.kiro/steering/tech.md) — Cloudflare Pages + D1 backend, Node 26 + Vite+, no runtime geocoding.
 - [**Data Pipeline**](.kiro/steering/pipeline.md) — `scripts/sync-data.ts` writes D1; `functions/api/*` reads D1.
 - [**Repository Structure**](.kiro/steering/structure.md) — Naming conventions and project layout.
 - [**UI/UX Standards**](.kiro/steering/ui-standards.md) — Shadcn composition and high-density standards.
@@ -50,25 +50,24 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 ## ⚙️ Useful local commands
 
 ```bash
-pnpm ci                # Clean install from the lockfile (what CI runs)
-pnpm install           # Install dependencies
-pnpm dev               # Start development server (localhost:5173)
-pnpm sync-data         # Refresh precomputed artifacts (public/data/)
-pnpm run format        # Write formatting fixes (vp fmt)
-pnpm run format:check  # Check formatting only
-pnpm run typecheck     # Strict TypeScript verification
-pnpm run lint          # Oxlint with type-aware rules
-pnpm run test          # Run Vitest unit/integration tests
-pnpm test:e2e          # Run Playwright end-to-end tests
-pnpm run build         # Production build
-pnpm run check         # Full quality gate: format check + lint + typecheck + tests + build
+vp install             # Clean install from the lockfile (what CI runs)
+vp dev                 # Start development server (localhost:5173)
+vp run sync-data       # Refresh precomputed artifacts (public/data/)
+vp run format          # Write formatting fixes
+vp run format:check    # Check formatting only
+vp run typecheck       # Strict TypeScript verification
+vp run lint            # Oxlint with type-aware rules
+vp run test            # Run Vitest unit/integration tests
+vp run test:e2e        # Run Playwright end-to-end tests
+vp run build           # Production build
+vp run check           # Full quality gate: format check + lint + typecheck + tests + build
 ```
 
 The targeted `test:*` scripts reuse the existing Vitest config (filename
 filters, no new runner) for fast feedback on buyer-critical listing-check and
 comparable-engine work. `check:pr` is the single documented pre-PR command and
 is a plain package script with no Kiro-specific behaviour. Base CI
-(`.github/workflows/ci.yml`) runs `pnpm ci` followed by `pnpm run check`; the
+(`.github/workflows/ci.yml`) runs `vp install` followed by `vp check`; the
 Playwright smoke subset runs in a separate workflow
 (`.github/workflows/e2e.yml`) when UI-affecting paths change.
 
@@ -76,7 +75,7 @@ Playwright smoke subset runs in a separate workflow
 
 1. **Runtime API**: The frontend (`src/`) loads all data from `/api/*` Pages Functions (`functions/api/*`), backed by Cloudflare D1.
 2. **Build-Time Ingestion**: `scripts/sync-data.ts` fetches data.gov.sg / OneMap and writes to D1. Geocoding and walking-time computation are one-time and persisted in `geocode_cache` / `walking_time_cache` D1 tables — they never re-run for an already-cached address or pair.
-3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `pnpm db:migrate:remote` (prod) or `pnpm db:migrate:local` (Wrangler emulator).
+3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `vp run db:migrate:remote` (prod) or `vp run db:migrate:local` (Wrangler emulator).
 4. **Persistence**: User state is browser-local (`localStorage`) by default and works fully offline. The shortlist additionally supports **opt-in** cloud sync via an anonymous sync code (no account, no PII), persisted in the `shortlists` D1 table and written at runtime by `functions/api/shortlist/*`. This is the _only_ runtime D1 write path; every other D1 write stays build-time (`scripts/sync-data.ts`).
 5. **Agent Context**: Agents MUST NOT read, glob, index, summarize, or load `public/data/` into context unless explicitly asked. Respect `.gitignore` by default. Use `tests/fixtures/public-data/` if data schema analysis is required.
 
@@ -166,27 +165,27 @@ P1 (must fix before merge):
 ### Environment
 
 - **Node.js 26** is required (`engines.node >= 26.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
-- **pnpm** is the package manager. `pnpm-lock.yaml` is the lockfile.
+- **Vite+** (`vp`) is the package manager and task runner. `pnpm-lock.yaml` is the lockfile.
 
 ### Local data dev
 
 The app loads all data from `/api/*` Pages Functions backed by Cloudflare D1. For local development:
 
-- **UI-only iteration**: `pnpm dev` (Vite on `localhost:5173`) — useful for component work that doesn't exercise live data.
-- **Full stack with D1**: `pnpm dev:functions` runs `wrangler pages dev` against the local D1 emulator. Seed it once with `pnpm db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
-- **Production sync**: `pnpm sync-data` writes directly to remote D1; requires `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID` env vars. Run from CI normally, not from a local box.
+- **UI-only iteration**: `vp dev` (Vite on `localhost:5173`) — useful for component work that doesn't exercise live data.
+- **Full stack with D1**: `vp run dev:functions` runs `wrangler pages dev` against the local D1 emulator. Seed it once with `vp run db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
+- **Production sync**: `vp run sync-data` writes directly to remote D1; requires `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID` env vars. Run from CI normally, not from a local box.
 
 ### Running services
 
-- `pnpm dev` starts Vite on `localhost:5173` for UI work.
-- `pnpm dev:functions` starts Wrangler Pages dev with the D1 binding.
+- `vp dev` starts Vite on `localhost:5173` for UI work.
+- `vp run dev:functions` starts Wrangler Pages dev with the D1 binding.
 - Playwright E2E tests mock the `/api/*` Pages Functions (see `tests/e2e/fixtures.ts`); they do not require a live D1 binding.
-- Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `pnpm test`).
+- Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `vp run test`).
 
 ### Standard commands
 
 All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright requires WebKit, which can be installed with:
 
 ```bash
-pnpm exec playwright install --with-deps webkit
+vp exec playwright install --with-deps webkit
 ```

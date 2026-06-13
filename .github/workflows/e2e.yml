@@ -1,7 +1,7 @@
 name: E2E
 
 # Repo-specific Playwright smoke gate, kept separate from the universal base
-# CI (.github/workflows/ci.yml), which runs `pnpm ci` + `pnpm run check` on
+# CI (.github/workflows/ci.yml), which runs `vp install` + `vp check` on
 # every PR with no path filters.
 #
 # On PR / push: runs the smoke subset (production-bootstrap + app + a11y) when
@@ -80,7 +80,6 @@ jobs:
 
       - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: "26"
           cache: true
 
       - name: Install dependencies
@@ -117,7 +116,6 @@ jobs:
 
       - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: "26"
           cache: true
 
       - name: Install dependencies
@@ -168,7 +166,6 @@ jobs:
 
       - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: "26"
           cache: true
 
       - name: Install dependencies
