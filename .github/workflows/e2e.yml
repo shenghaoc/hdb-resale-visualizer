@@ -175,6 +175,6 @@ jobs:
         run: vp exec playwright install --with-deps chromium
 
       - name: Browser-mode tests
-        run: vp test run --browser=chromium --browser.headless tests/browser
+        run: vp test run --browser=chromium tests/browser
         env:
           VITEST_BROWSER: "1"
