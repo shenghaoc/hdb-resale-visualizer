@@ -59,6 +59,11 @@ jobs:
               - 'tests/fixtures/**'
               - 'playwright.config.*'
               - '.github/workflows/e2e.yml'
+              # Vitest Browser Mode tests and their config
+              - 'tests/browser/**'
+              - 'vitest.config.ts'
+              - 'package.json'
+              - 'pnpm-lock.yaml'
 
   # Builds the dist artifact consumed by e2e-smoke. Fixtures must be staged
   # before the build so they are copied into dist/ and served by vite preview

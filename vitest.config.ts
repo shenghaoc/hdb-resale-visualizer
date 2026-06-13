@@ -23,12 +23,16 @@ export default defineConfig({
       "src/**/__tests__/**/*.test.tsx",
     ],
     exclude: [
+      "**/node_modules/**",
       "**/*.e2e.*",
       "tests/e2e/**",
       "dist/**",
       "dev-dist/**",
       "playwright-report/**",
       "test-results/**",
+      // Exclude browser tests from the default jsdom run. The test:browser
+      // script sets VITEST_BROWSER=1 to skip this exclusion.
+      ...(process.env.VITEST_BROWSER ? [] : ["tests/browser/**"]),
     ],
     browser: {
       enabled: false,
