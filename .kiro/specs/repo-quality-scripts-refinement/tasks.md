@@ -74,6 +74,6 @@
   → Only `package.json` scripts + docs changed. (R6.1–R6.5)
 
 - [ ] **T5.3** (Reviewer) Run `npm run check:pr` in an environment with
-  Playwright WebKit installed (`npx playwright install --with-deps webkit`) to
+  Playwright Chromium installed (`vp exec playwright install --with-deps chromium`) to
   confirm the full pre-PR gate passes end to end. Targeted unit scripts are
   already verified locally. (R8.3)

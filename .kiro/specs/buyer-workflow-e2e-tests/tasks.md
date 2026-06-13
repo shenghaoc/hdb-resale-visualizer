@@ -1,8 +1,7 @@
 # Tasks: Buyer Workflow E2E Tests
 
 > Execution checklist. Test-only; no product/runtime code changes. Each task
-> names its acceptance check. Run with `npm run test:e2e` (WebKit required —
-> `npx playwright install --with-deps webkit`).
+> names its acceptance check. Run with `vp run test:e2e`.
 
 ## Phase 1 — Fixtures and mocks
 
