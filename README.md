@@ -11,7 +11,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - ECharts for block-level trend charts
-- Node.js 26 + pnpm for package management, scripts, and CI
+- Node.js 26 + Vite+ (`vp`) for package management, scripts, and CI
 
 ## Kiro workflow and repository docs
 
@@ -71,13 +71,13 @@ A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-gui
 Install dependencies:
 
 ```bash
-pnpm install
+vp install
 ```
 
 For pure UI iteration that does not require live data, start Vite:
 
 ```bash
-pnpm dev
+vp dev
 ```
 
 This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404 because no Pages Functions are running — wire mock data per spec or use the full local stack below.
@@ -85,52 +85,64 @@ This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404 becau
 For a full local stack (UI + Pages Functions + local D1 emulator):
 
 ```bash
-pnpm db:migrate:local     # one-time: create the local D1 schema
-pnpm dev:functions        # runs `wrangler pages dev` against the local D1
+vp run db:migrate:local     # one-time: create the local D1 schema
+vp run dev:functions        # runs `wrangler pages dev` against the local D1
 ```
 
 You can seed the local D1 from `tests/fixtures/public-data/` using `wrangler d1 execute hdb-resale --local --file=<sql>` if needed.
 
-Run `pnpm sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
+Run `vp run sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
 
 ## Scripts
 
 ```bash
-pnpm ci                # clean install from the lockfile (what CI runs)
-pnpm dev               # Vite dev server (UI-only)
-pnpm dev:functions     # Wrangler Pages dev (UI + /api/* + local D1)
-pnpm check:boundaries  # script/runtime import boundary check
-pnpm run build         # production build (no D1 dependency)
-pnpm build:full        # build + remote D1 sync (maintainers only)
-pnpm preview           # vite preview of the built bundle
-pnpm run format        # write formatting fixes (vp fmt)
-pnpm run format:check  # check formatting only
-pnpm run typecheck
-pnpm run lint
-pnpm run test
-pnpm test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
-pnpm test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
-pnpm test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
-pnpm test:e2e
-pnpm run check           # full quality gate: format check + lint + typecheck + unit tests + build
-pnpm check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
-pnpm sync-data           # remote D1 sync (requires CF credentials)
-pnpm db:migrate:local
-pnpm db:migrate:remote
+vp install             # clean install from the lockfile (what CI runs)
+vp dev                 # Vite dev server (UI-only)
+vp run dev:functions   # Wrangler Pages dev (UI + /api/* + local D1)
+vp run check:boundaries # script/runtime import boundary check
+vp run build           # production build (no D1 dependency)
+vp run build:full      # build + remote D1 sync (maintainers only)
+vp preview             # vite preview of the built bundle
+vp run format          # write formatting fixes
+vp run format:check    # check formatting only
+vp run typecheck
+vp run lint
+vp run test
+vp run test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
+vp run test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
+vp run test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
+vp run test:browser        # Vitest Browser Mode — real-browser component/integration tests
+vp run test:browser:watch  # Browser Mode in watch mode (opens Chromium)
+vp run test:e2e
+vp run check               # full quality gate: format check + lint + typecheck + unit tests + build
+vp run check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
+vp run sync-data           # remote D1 sync (requires CF credentials)
+vp run db:migrate:local
+vp run db:migrate:remote
 ```
 
 The targeted `test:*` scripts reuse the existing Vitest config and filter by
 filename — they are fast feedback loops for buyer-critical listing-check and
-comparable-engine work. Run `pnpm check:pr` once before opening a pull
+comparable-engine work. Run `vp run check:pr` once before opening a pull
 request; it is a plain package script with no Kiro-specific behaviour. Base CI
-runs `pnpm ci` followed by `pnpm run check`, so the local gate matches the
+runs `vp install` followed by `vp check`, so the local gate matches the
 per-PR CI checks exactly (plus the Playwright suite).
+
+The repo has three testing tiers:
+
+- **`vp run test`** — fast Vitest unit/component tests running in jsdom (no real browser).
+- **`vp run test:browser`** — Vitest Browser Mode tests running in a real Chromium browser via Playwright. Use for component/integration behavior that benefits from real browser APIs.
+- **`vp run test:e2e`** — Playwright end-to-end tests covering full user flows across multiple pages.
+
+Browser Mode tests live in `tests/browser/` and are excluded from the default
+`vp run test` run. They are not part of the `vp run check` quality gate —
+run them explicitly or via CI.
 
 ## Build and runtime guardrails
 
-- `pnpm check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
-- `pnpm build` is the default production build (`check:boundaries` + typecheck + compile + bundle budget check). It has no dependency on D1 — the static UI bundle is rebuilt from source only.
-- `pnpm build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
+- `vp run check:boundaries` validates that any Node-executed code in `scripts/` stays isolated from runtime `src/` modules and does not use runtime-only aliases like `@/` and `@shared/`.
+- `vp run build` is the default production build (`check:boundaries` + typecheck + compile + bundle budget check). It has no dependency on D1 — the static UI bundle is rebuilt from source only.
+- `vp run build:full` is the live-refresh path for maintainers intentionally pulling fresh upstream data (`check:boundaries` + `sync-data` + typecheck + compile + bundle budget check).
 
 ## Data pipeline
 
@@ -167,9 +179,9 @@ CLOUDFLARE_D1_DATABASE_ID=...
 
 ## Deployment
 
-- **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `pnpm build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
-- **CI** (`.github/workflows/ci.yml`): `pnpm ci` then `pnpm run check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
-- **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `pnpm sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
+- **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `vp run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
+- **CI** (`.github/workflows/ci.yml`): `vp install` then `vp check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
+- **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `vp run sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
 
 ## Notes
 
@@ -179,10 +191,10 @@ CLOUDFLARE_D1_DATABASE_ID=...
 
 ## Troubleshooting
 
-### `pnpm build` fails on the boundary check
+### `vp run build` fails on the boundary check
 
-Run `pnpm check:boundaries` to see script/runtime import violations. Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
+Run `vp run check:boundaries` to see script/runtime import violations. Common fix: move shared utilities to `shared/` and import from there instead of `src/`.
 
 ### `/api/*` returns 404 locally
 
-You are running `pnpm dev` (Vite only). Switch to `pnpm dev:functions` to bring up Wrangler Pages dev with the D1 binding, or run the unit tests against fixtures instead.
+You are running `vp dev` (Vite only). Switch to `vp run dev:functions` to bring up Wrangler Pages dev with the D1 binding, or run the unit tests against fixtures instead.

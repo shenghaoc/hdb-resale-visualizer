@@ -20,8 +20,8 @@ inclusion: always
 - Hook tests live under `tests/hooks`.
 - Integration tests live under `tests/integration`.
 - Source-owned pure library tests may live under `src/lib/__tests__`, while feature and entity tests should be colocated within their respective directories.
-- E2E tests live under `tests/e2e` and run with Playwright WebKit against a production build on `localhost:4173`.
-- E2E uses `pnpm setup:fixtures`, `pnpm build`, and `pnpm preview` through `playwright.config.ts`.
+- E2E tests live under `tests/e2e` and run with Playwright Chromium against a production build on `localhost:4173`.
+- E2E uses `vp run setup:fixtures`, `vp run build`, and `vp preview` through `playwright.config.ts`.
 
 ## Fixtures And Data
 

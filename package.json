@@ -30,6 +30,8 @@
     "test:listing-check": "NODE_OPTIONS=--no-experimental-webstorage vp test run listing AskingPriceCheck",
     "test:comparables": "NODE_OPTIONS=--no-experimental-webstorage vp test run comparable time-adjustment transaction-analysis transaction-outliers",
     "test:buyer-workflow": "NODE_OPTIONS=--no-experimental-webstorage vp test run shortlist buyer-first",
+    "test:browser": "VITEST_BROWSER=1 NODE_OPTIONS=--no-experimental-webstorage vp test run --browser=chromium tests/browser",
+    "test:browser:watch": "VITEST_BROWSER=1 NODE_OPTIONS=--no-experimental-webstorage vp test --browser=chromium tests/browser",
     "test:e2e": "playwright test",
     "test:e2e:smoke": "playwright test tests/e2e/production-bootstrap.spec.ts tests/e2e/app.spec.ts tests/e2e/accessibility.spec.ts",
     "test:e2e:reuse": "E2E_REUSE_SERVER=1 playwright test",
@@ -74,20 +76,21 @@
     "globals": "^17.5.0",
     "jsdom": "^29.1.1",
     "papaparse": "^5.5.3",
+    "playwright": "^1.60.0",
     "shadcn": "^4.10.0",
     "tailwindcss": "^4.2.4",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
-    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite": "catalog:",
     "vite-plugin-pwa": "^1.3.0",
-    "vite-plus": "latest",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:",
     "wrangler": "^4.97.0",
     "zod": "^4.4.1"
   },
   "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    "vite": "catalog:",
+    "vitest": "catalog:"
   },
   "engines": {
     "node": ">=26.0.0"
