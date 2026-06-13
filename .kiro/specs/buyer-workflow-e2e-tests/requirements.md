@@ -73,7 +73,7 @@
 
 ## R9 — Test mechanics (non-functional)
 
-- **R9.1** Reuse the existing `playwright.config.ts` (chromium desktop project;
+- **R9.1** Reuse the existing `playwright.config.ts` (webkit desktop project;
   mobile via per-test viewport, as `app.spec.ts` already does).
 - **R9.2** Reuse the existing fixture strategy: static GET fixtures staged into
   `public/api/` plus `page.route` mocks for the POST

@@ -94,7 +94,7 @@ Roles/labels/text and stable container hooks are preferred:
 
 ### Mobile
 
-The mobile case uses `test.use({ viewport: 390×844 })` within the chromium desktop
+The mobile case uses `test.use({ viewport: 390×844 })` within the webkit desktop
 project (the same pattern `app.spec.ts` and `mobile-regression.spec.ts` use), so
 no `playwright.config.ts` change is needed. Horizontal scroll is asserted via
 `document.documentElement.scrollWidth - clientWidth ≤ 1` before and after save.
