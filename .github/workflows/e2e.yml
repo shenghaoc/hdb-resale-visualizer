@@ -78,16 +78,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v6
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 26
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: "26"
+          cache: true
 
       - name: Install dependencies
-        run: pnpm ci
+        run: vp install
 
       - name: Stage E2E fixtures into public/api
         run: pnpm setup:fixtures
@@ -118,18 +115,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-
-      # Install Node 26 inside the Playwright Docker container (which ships a
-      # lower LTS version) so the project's engines requirement is satisfied.
-      - uses: actions/setup-node@v6
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 26
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: "26"
+          cache: true
 
       - name: Install dependencies
-        run: pnpm ci
+        run: vp install
         env:
           # Browsers are already in the Docker image; skip the post-install
           # download that @playwright/test would otherwise trigger.

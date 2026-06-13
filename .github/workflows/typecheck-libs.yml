@@ -18,16 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v6
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 26
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: "26"
+          cache: true
 
       - name: Install dependencies
-        run: pnpm ci
+        run: vp install
 
       - name: Strict lib typecheck (skipLibCheck false)
-        run: pnpm run typecheck:libs
+        run: vp run typecheck:libs
