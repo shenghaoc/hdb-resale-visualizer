@@ -174,19 +174,18 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v6
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 26
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: '26'
+          cache: true
 
       - name: Install dependencies
-        run: pnpm ci
+        run: vp install
 
       - name: Install Chromium for Vitest Browser Mode
-        run: pnpm exec playwright install --with-deps chromium
+        run: vp exec playwright install --with-deps chromium
 
       - name: Browser-mode tests
-        run: pnpm run test:browser
+        run: vp test run --browser=chromium --browser.headless tests/browser
+        env:
+          VITEST_BROWSER: "1"
