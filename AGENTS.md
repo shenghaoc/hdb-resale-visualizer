@@ -184,8 +184,4 @@ The app loads all data from `/api/*` Pages Functions backed by Cloudflare D1. Fo
 
 ### Standard commands
 
-All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright requires WebKit, which can be installed with:
-
-```bash
-vp exec playwright install --with-deps webkit
-```
+All lint/test/build/typecheck commands are listed in the "Useful local commands" section above and in `README.md`. Playwright E2E tests use Chromium exclusively.

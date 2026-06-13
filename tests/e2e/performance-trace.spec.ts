@@ -37,7 +37,7 @@ test.describe("performance traces", () => {
     ).toBeVisible({ timeout: 5_000 });
 
     const elapsed = Date.now() - start;
-    // Filter-to-first-result should be under 3s (generous for CI + WebKit build)
+    // Filter-to-first-result should be under 3s (generous for CI)
     expect(elapsed).toBeLessThan(3000);
   });
 

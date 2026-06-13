@@ -98,10 +98,10 @@ jobs:
           path: dist/
           retention-days: 1
 
-  # Uses the official Playwright Docker image so browser binaries and system
-  # dependencies for WebKit are pre-installed; no `playwright install` step
-  # needed.  The @playwright/test version is pinned exactly to 1.60.0 in
-  # package.json to match the mcr.microsoft.com/playwright:v1.60.0-noble image.
+  # Uses the official Playwright Docker image so Chromium browser binaries and
+  # system dependencies are pre-installed; no `playwright install` step needed.
+  # The @playwright/test version is pinned exactly to 1.60.0 in package.json
+  # to match the mcr.microsoft.com/playwright:v1.60.0-noble image.
   e2e-smoke:
     runs-on: ubuntu-latest
     container:

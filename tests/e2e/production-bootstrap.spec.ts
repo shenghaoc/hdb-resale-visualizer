@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 
 /**
- * Guards the Safari/WebKit production boot path. Intentionally does not import
+ * Guards the production boot path. Intentionally does not import
  * temporal-polyfill here — the browser must get Temporal only from index.html.
  */
-test.describe("Production bootstrap (WebKit mobile)", () => {
+test.describe("Production bootstrap (mobile)", () => {
   test("exposes Temporal and renders the shell without page errors", async ({ page }) => {
     const pageErrors: string[] = [];
     page.on("pageerror", (error) => pageErrors.push(error.message));

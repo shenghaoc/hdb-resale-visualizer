@@ -42,7 +42,7 @@ inclusion: always
 - `pnpm typecheck`: TypeScript verification.
 - `pnpm lint` / `pnpm lint:fast`: typed Oxlint or faster syntax-focused lint.
 - `pnpm test`: Vitest unit and integration tests with `NODE_OPTIONS=--no-experimental-webstorage`.
-- `pnpm test:e2e`: Playwright WebKit E2E against a production build and fixture API.
+- `pnpm test:e2e`: Playwright Chromium E2E against a production build and fixture API.
 - `pnpm build`: production build with boundary check, TypeScript build, Vite build, and bundle check.
 - `pnpm build:deploy`: Cloudflare deployment build path.
 - `pnpm build:full`: maintainer-only path that includes remote `pnpm sync-data`.
