@@ -31,7 +31,9 @@ export default defineConfig({
       "playwright-report/**",
       "test-results/**",
       // Exclude browser tests from the default jsdom run. The test:browser
-      // script sets VITEST_BROWSER=1 to skip this exclusion.
+      // script sets VITEST_BROWSER=1 to skip this exclusion. Running vitest
+      // directly without this env var (e.g. `vp test run tests/browser/…`)
+      // will silently exclude these files — use `pnpm test:browser` instead.
       ...(process.env.VITEST_BROWSER ? [] : ["tests/browser/**"]),
     ],
     browser: {

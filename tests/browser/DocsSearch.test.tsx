@@ -33,7 +33,9 @@ describe("DocsSearch", () => {
     renderSearch();
 
     const input = screen.getByRole("combobox");
-    await user.type(input, "filter");
+    // "overview" matches the stable "Overview" section (slug: "index") — avoids
+    // coupling to any particular subsection title that may change.
+    await user.type(input, "overview");
 
     expect(input).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByRole("listbox")).toBeInTheDocument();
@@ -55,7 +57,7 @@ describe("DocsSearch", () => {
     renderSearch();
 
     const input = screen.getByRole("combobox");
-    await user.type(input, "filter");
+    await user.type(input, "overview");
     expect(input).toHaveAttribute("aria-expanded", "true");
 
     await user.keyboard("{Escape}");
