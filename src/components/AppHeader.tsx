@@ -232,6 +232,7 @@ export function AppHeader({
           variant="ghost"
           data-testid="header-search-toggle"
           aria-label={t("header.openSearch")}
+          title={t("header.openSearch")}
           aria-expanded={isMobileSearchOpen}
           aria-controls={isMobileSearchOpen ? overlayContainerId : undefined}
           onClick={openMobileSearch}
@@ -312,6 +313,7 @@ export function AppHeader({
               size="icon"
               variant="ghost"
               aria-label={t("header.closeSearch")}
+              title={t("header.closeSearch")}
               onClick={closeMobileSearch}
               className={cn("size-9 shrink-0 p-0", HEADER_SURFACE_CLASS)}
             >
