@@ -22,6 +22,6 @@
 **Learning:** In highly customized list elements, such as block list items disguised as flex-box containers inside the `TownProfileSection` component, standard Tailwind UI defaults leave interactive elements without visual focus states.
 **Action:** Verify explicit focus indicators for any new or existing custom interactive elements acting as `<button>` row items, especially when mapped inside a list or data view. Apply utilities like `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background` to resolve it.
 
-## 2026-06-14 - Native title tooltips on icon-only buttons
-**Learning:** Icon-only buttons often have an `aria-label` for screen reader accessibility, but lack a `title` attribute. Sighted mouse users hovering over icons (like a magnifying glass for search) may be unsure of their function without a native tooltip, especially if the icons don't match their mental model.
-**Action:** When an icon-only button is created or encountered, always ensure it has both an `aria-label` (for screen readers) and a matching `title` attribute (for native tooltips on hover).
+## 2026-06-14 - Accessible tooltips on icon-only buttons
+**Learning:** Icon-only buttons often have an `aria-label` for screen reader accessibility, but lack a visual tooltip. Sighted mouse and keyboard users may be unsure of their function without a tooltip. Using native `title` attributes is discouraged as they are not keyboard-accessible and can cause redundant screen reader announcements.
+**Action:** When an icon-only button is created or encountered, wrap it in the custom, accessible `Tooltip` component to provide a consistent and accessible tooltip for both hover and focus states.

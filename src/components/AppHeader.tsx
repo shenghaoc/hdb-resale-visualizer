@@ -226,23 +226,27 @@ export function AppHeader({
           />
         </div>
 
-        <Button
-          type="button"
-          size="icon"
-          variant="ghost"
-          data-testid="header-search-toggle"
-          aria-label={t("header.openSearch")}
-          title={t("header.openSearch")}
-          aria-expanded={isMobileSearchOpen}
-          aria-controls={isMobileSearchOpen ? overlayContainerId : undefined}
-          onClick={openMobileSearch}
-          className={cn(
-            "pointer-events-auto size-9 shrink-0 p-0 text-muted-foreground hover:text-foreground sm:hidden",
-            HEADER_SURFACE_CLASS,
-          )}
-        >
-          <Search data-icon="inline-start" className="size-4" />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              data-testid="header-search-toggle"
+              aria-label={t("header.openSearch")}
+              aria-expanded={isMobileSearchOpen}
+              aria-controls={isMobileSearchOpen ? overlayContainerId : undefined}
+              onClick={openMobileSearch}
+              className={cn(
+                "pointer-events-auto size-9 shrink-0 p-0 text-muted-foreground hover:text-foreground sm:hidden",
+                HEADER_SURFACE_CLASS,
+              )}
+            >
+              <Search data-icon="inline-start" className="size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{t("header.openSearch")}</TooltipContent>
+        </Tooltip>
 
         {isDesktop ? (
           <div
@@ -308,17 +312,21 @@ export function AppHeader({
                 inputClassName="h-10 min-w-0 border-0 bg-transparent px-1 text-sm shadow-none focus-visible:border-0 focus-visible:ring-0"
               />
             </div>
-            <Button
-              type="button"
-              size="icon"
-              variant="ghost"
-              aria-label={t("header.closeSearch")}
-              title={t("header.closeSearch")}
-              onClick={closeMobileSearch}
-              className={cn("size-9 shrink-0 p-0", HEADER_SURFACE_CLASS)}
-            >
-              <X data-icon="inline-start" className="size-4" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  aria-label={t("header.closeSearch")}
+                  onClick={closeMobileSearch}
+                  className={cn("size-9 shrink-0 p-0", HEADER_SURFACE_CLASS)}
+                >
+                  <X data-icon="inline-start" className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t("header.closeSearch")}</TooltipContent>
+            </Tooltip>
           </div>
         </div>
       ) : null}
