@@ -372,6 +372,7 @@ const BlockCard = memo(function BlockCard({
               }}
               type="button"
               className="size-7 shrink-0 rounded-lg p-0"
+              aria-pressed={isSaved}
               aria-label={isSaved ? t("results.saved") : t("results.save")}
               title={isSaved ? t("results.saved") : t("results.save")}
             >
@@ -455,6 +456,7 @@ const BlockCard = memo(function BlockCard({
               onToggleShortlist(block.addressKey);
             }}
             type="button"
+            aria-pressed={isSaved}
           >
             <Bookmark data-icon="inline-start" className="size-3.5" aria-hidden="true" />
             {isSaved ? t("results.saved") : t("results.save")}

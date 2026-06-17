@@ -1374,6 +1374,7 @@ export function DetailDrawer({
                 size="lg"
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
+                aria-pressed={isSaved}
                 aria-label={isSaved ? t("detail.saved") : t("detail.save")}
                 disabled={!currentSummary}
               >
