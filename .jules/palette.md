@@ -25,3 +25,7 @@
 ## 2026-06-14 - Accessible tooltips on icon-only buttons
 **Learning:** Icon-only buttons often have an `aria-label` for screen reader accessibility, but lack a visual tooltip. Sighted mouse and keyboard users may be unsure of their function without a tooltip. Using native `title` attributes is discouraged as they are not keyboard-accessible and can cause redundant screen reader announcements.
 **Action:** When an icon-only button is created or encountered, wrap it in the custom, accessible `Tooltip` component to provide a consistent and accessible tooltip for both hover and focus states.
+
+## 2026-06-17 - Missing accessible explicit toggle states on Bookmark buttons
+**Learning:** Custom UI buttons that function as toggles (like the Bookmark/Save icon buttons) often lack the explicit `aria-pressed` attribute, causing screen reader users to miss their active state entirely.
+**Action:** Always add the `aria-pressed` attribute when custom UI buttons act as presets or toggle controls so that their state is natively exposed to accessibility trees.
