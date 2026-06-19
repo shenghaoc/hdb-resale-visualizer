@@ -40,7 +40,7 @@ export default defineConfig({
     // any GitHub Actions test reporter (e.g. dorny/test-reporter) can
     // surface failures inline on the PR.
     reporters: process.env.CI ? ["default", "junit"] : ["default"],
-    outputFile: { junit: "test-results/junit-node.xml" },
+    outputFile: process.env.CI ? { junit: "test-results/junit-node.xml" } : undefined,
     browser: {
       enabled: false,
       provider: playwright(),
