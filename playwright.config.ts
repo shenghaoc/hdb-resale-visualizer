@@ -18,14 +18,15 @@ export default defineConfig({
   // In CI, emit `list` for log readability plus `html` for artifact upload,
   // `github` for PR-inline annotations, and `junit` so failures show up in
   // any test-report uploader (e.g. dorny/test-reporter).
-  reporter: process.env.CI
-    ? [
-        ["list"],
-        ["html", { open: "never" }],
-        ["github"],
-        ["junit", { outputFile: "test-results/junit-e2e.xml" }],
-      ]
-    : [["html", { open: "never" }]],
+  reporter:
+    process.env.CI && process.env.CI !== "false"
+      ? [
+          ["list"],
+          ["html", { open: "never" }],
+          ["github"],
+          ["junit", { outputFile: "test-results/junit-e2e.xml" }],
+        ]
+      : [["html", { open: "never" }]],
   globalSetup: "./tests/e2e/global-setup.ts",
   testDir: "./tests/e2e",
   fullyParallel: true,

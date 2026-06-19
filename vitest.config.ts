@@ -39,8 +39,11 @@ export default defineConfig({
     // JUnit XML is emitted alongside the default reporter in CI so that
     // any GitHub Actions test reporter (e.g. dorny/test-reporter) can
     // surface failures inline on the PR.
-    reporters: process.env.CI ? ["default", "junit"] : ["default"],
-    outputFile: process.env.CI ? { junit: "test-results/junit-node.xml" } : undefined,
+    reporters: process.env.CI && process.env.CI !== "false" ? ["default", "junit"] : ["default"],
+    outputFile:
+      process.env.CI && process.env.CI !== "false"
+        ? { junit: "test-results/junit-node.xml" }
+        : undefined,
     browser: {
       enabled: false,
       provider: playwright(),
