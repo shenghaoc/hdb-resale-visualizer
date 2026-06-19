@@ -106,6 +106,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.61.0-noble
+      # --ipc=host shares the runner's IPC namespace so Chromium's heavy
+      # /dev/shm usage isn't capped by Docker's default 64 MB segment.
+      options: --ipc=host
     needs: [changes, build]
     if: >-
       github.event_name == 'workflow_dispatch' ||
@@ -193,6 +196,9 @@ jobs:
           npm install -g "pnpm@${PNPM_VERSION}"
           pnpm config set store-dir /github/home/.pnpm-store
       - name: Cache pnpm store
+        # pnpm store path is configured in the "Install pnpm" step above.
+        # actions/cache restores during the pre phase (before step body runs),
+        # so the store-dir config is already in place when pnpm install runs.
         uses: actions/cache@v5
         with:
           path: /github/home/.pnpm-store
