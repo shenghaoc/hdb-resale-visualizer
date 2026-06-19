@@ -36,6 +36,11 @@ export default defineConfig({
       // will silently exclude these files — use `vp run test:browser` instead.
       ...(process.env.VITEST_BROWSER ? [] : ["tests/browser/**"]),
     ],
+    // JUnit XML is emitted alongside the default reporter in CI so that
+    // any GitHub Actions test reporter (e.g. dorny/test-reporter) can
+    // surface failures inline on the PR.
+    reporters: process.env.CI ? ["default", "junit"] : ["default"],
+    outputFile: { junit: "test-results/junit-node.xml" },
     browser: {
       enabled: false,
       provider: playwright(),
