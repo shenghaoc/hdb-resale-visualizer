@@ -15,11 +15,12 @@ const E2E_BASE_URL = `http://${E2E_HOST}:${E2E_PORT}`;
 const prebuilt = process.env.E2E_DIST_PREBUILT === "1" || process.env.E2E_DIST_PREBUILT === "true";
 
 export default defineConfig({
-  // In CI, emit `html` for artifact upload plus `github` for PR-inline
-  // annotations and `junit` so failures show up in any test-report
-  // uploader (e.g. dorny/test-reporter).
+  // In CI, emit `list` for log readability plus `html` for artifact upload,
+  // `github` for PR-inline annotations, and `junit` so failures show up in
+  // any test-report uploader (e.g. dorny/test-reporter).
   reporter: process.env.CI
     ? [
+        ["list"],
         ["html", { open: "never" }],
         ["github"],
         ["junit", { outputFile: "test-results/junit-e2e.xml" }],
