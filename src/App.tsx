@@ -10,6 +10,7 @@ import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useHeaderState } from "@/hooks/useHeaderState";
 import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
+import { use3dColumns } from "@/hooks/use3dColumns";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
@@ -29,6 +30,7 @@ import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
 import { MapSkeleton } from "@/components/MapSkeleton";
 import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
+import { Map3dControl } from "@/components/Map3dControl";
 import { PriceLegend } from "@/components/PriceLegend";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-proximity";
@@ -65,6 +67,7 @@ function App() {
   const geo = useGeolocation({ t });
   const header = useHeaderState();
   const heatmap = usePriceHeatmap();
+  const columns3d = use3dColumns();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
   const searchProfile = useSearchProfile();
   const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
@@ -539,6 +542,8 @@ function App() {
           mrtStationsEnabled={mrtStationsEnabled}
           mrtExitsEnabled={mrtExitsEnabled}
           heatmapMode={heatmap.heatmapMode}
+          columns3dEnabled={columns3d.columns3dEnabled}
+          columns3dMode={columns3d.columns3dMode}
           primarySchools={primarySchoolsForOverlay}
           schoolOverlayEnabled={schoolOverlayEnabled && canShowSchoolOverlay}
           geographicIntent={pipeline.effectiveMapGeographicIntent}
@@ -793,6 +798,29 @@ function App() {
                 : pipeline.hasMapMarkerScope
                   ? "15rem"
                   : "11.5rem",
+              right: panel.isDesktop ? "4.5rem" : "0.75rem",
+            }}
+          />
+        )}
+
+        {/* 3D price columns toggle */}
+        {(panel.isDesktop || panel.mobileTab === null) && (
+          <Map3dControl
+            isEnabled={columns3d.columns3dEnabled}
+            mode={columns3d.columns3dMode}
+            onToggle={columns3d.toggleColumns3d}
+            onModeChange={columns3d.setColumns3dMode}
+            hasScope={pipeline.hasMapMarkerScope}
+            t={t}
+            className="absolute z-25 w-36"
+            style={{
+              bottom: panel.isDesktop
+                ? pipeline.hasMapMarkerScope
+                  ? "15.5rem"
+                  : "12rem"
+                : pipeline.hasMapMarkerScope
+                  ? "19.5rem"
+                  : "16rem",
               right: panel.isDesktop ? "4.5rem" : "0.75rem",
             }}
           />

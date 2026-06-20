@@ -14,6 +14,7 @@ const mapHooks = vi.hoisted(() => ({
   useMapSelectionSync: vi.fn(),
   useMapMarkerVisibility: vi.fn(),
   useMapPriceHeatmapSync: vi.fn(),
+  useMap3dColumnsSync: vi.fn(),
   useAmenityGeoSync: vi.fn(),
   useMapTheme: vi.fn(),
   useMapRadiusLayer: vi.fn(),
@@ -43,6 +44,9 @@ vi.mock("@/hooks/useMapMarkerVisibility", () => ({
 }));
 vi.mock("@/hooks/useMapPriceHeatmapSync", () => ({
   useMapPriceHeatmapSync: mapHooks.useMapPriceHeatmapSync,
+}));
+vi.mock("@/hooks/useMap3dColumnsSync", () => ({
+  useMap3dColumnsSync: mapHooks.useMap3dColumnsSync,
 }));
 vi.mock("@/hooks/useAmenityGeoSync", () => ({
   useAmenityGeoSync: mapHooks.useAmenityGeoSync,
@@ -106,6 +110,8 @@ describe("MapView", () => {
         {...defaultProps}
         priceHeatmapEnabled={true}
         priceHeatmapOpacity={0.5}
+        columns3dEnabled={true}
+        columns3dMode="perSqm"
         flatType="4 ROOM"
       />,
     );
@@ -126,6 +132,13 @@ describe("MapView", () => {
         geoJson: expectedGeoJson,
         priceHeatmapEnabled: true,
         priceHeatmapOpacity: 0.5,
+      }),
+    );
+    expect(mapHooks.useMap3dColumnsSync).toHaveBeenCalledWith(
+      expect.objectContaining({
+        geoJson: expectedGeoJson,
+        enabled: true,
+        mode: "perSqm",
       }),
     );
   });

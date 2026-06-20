@@ -13,6 +13,7 @@ import { useMapInteractions } from "@/hooks/useMapInteractions";
 import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
 import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
 import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
+import { useMap3dColumnsSync } from "@/hooks/useMap3dColumnsSync";
 import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
 import {
   primarySchoolsToGeoJson,
@@ -35,6 +36,8 @@ type MapViewProps = {
   mrtStationsEnabled?: boolean;
   mrtExitsEnabled?: boolean;
   heatmapMode?: import("@/hooks/usePriceHeatmap").HeatmapMode;
+  columns3dEnabled?: boolean;
+  columns3dMode?: import("@/hooks/usePriceHeatmap").HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
   schoolOverlayEnabled?: boolean;
   geographicIntent?: GeographicSearchIntent | null;
@@ -58,6 +61,8 @@ export function MapView({
   mrtStationsEnabled = false,
   mrtExitsEnabled = false,
   heatmapMode = "price",
+  columns3dEnabled = false,
+  columns3dMode = "price",
   primarySchools = [],
   schoolOverlayEnabled = false,
   geographicIntent,
@@ -144,6 +149,13 @@ export function MapView({
     priceHeatmapEnabled,
     priceHeatmapOpacity,
     heatmapMode,
+  });
+  useMap3dColumnsSync({
+    map: mapInstance,
+    geoJson,
+    enabled: columns3dEnabled,
+    mode: columns3dMode,
+    prefersReducedMotion,
   });
 
   useAmenityGeoSync({

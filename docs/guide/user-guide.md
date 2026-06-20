@@ -77,6 +77,10 @@ Toggle these from the **layer control** on the right side of the map:
 
 Enable the **heatmap toggle** (also on the right) to see a density overlay of prices across the map. You can adjust its opacity and switch between total-price and per-square-metre modes.
 
+### 3D price columns
+
+Enable the **3D toggle** (also on the right) to extrude each block into a 3D column whose **height** reflects its price — taller columns are pricier — using the same colour ramp as the flat dots. Turning it on tilts the map into a perspective view; you can then **rotate** (right-click-drag on desktop, or two-finger twist on touch) and **tilt** to read the price "skyline". Switch between total-price and per-square-metre modes to compare like-for-like across flat sizes. Turning it off returns the map to the flat top-down view. Like the heatmap, this view appears once you have scoped the map with a town or search.
+
 ## Viewing block details
 
 Click a block dot on the map (or a row in the Results list) to open the **detail drawer**. It shows:

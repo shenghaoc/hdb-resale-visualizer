@@ -153,6 +153,13 @@ export const PRICE_PER_SQM_COLOR_STOPS = [
   { price: 10000, color: "#d97757" },
   { price: 13000, color: "#a83232" },
 ] as const;
+export const PRICE_PER_SQM_COLOR_EXPRESSION: DataDrivenPropertyValueSpecification<ColorSpecification> =
+  [
+    "interpolate",
+    ["linear"],
+    ["get", "price_per_sqm_median"],
+    ...PRICE_PER_SQM_COLOR_STOPS.flatMap(({ price, color }) => [price, color]),
+  ];
 export const PRICE_PER_SQM_LEGEND_GRADIENT = `linear-gradient(90deg, ${PRICE_PER_SQM_COLOR_STOPS.map(({ color }) => color).join(", ")})`;
 
 /**

@@ -45,6 +45,10 @@ From the **layer control** on the right side of the map:
 
 The **heatmap toggle** overlays price density across the map. Adjust its opacity and switch between total-price and per-square-metre modes — $/sqm is better for comparing across flat types.
 
+### 3D price columns
+
+The **3D toggle** extrudes each block into a column whose height tracks its price — taller is pricier — sharing the same colour ramp as the flat dots. Enabling it tilts the map into a perspective view; rotate (right-click-drag, or two-finger twist on touch) and tilt to read the price "skyline". Switch between total-price and $/sqm so columns stay comparable across flat sizes. Turn it off to return to the flat top-down map. Like the heatmap, it appears once a town or search has scoped the map.
+
 ## Results list
 
 The **Results** tab lists every block matching your filters, with address, median price, flat types, nearest MRT, and remaining lease. Sort by price, remaining lease, MRT proximity, most recent activity, or affordability score (with a profile). Results can also be exported as CSV.
