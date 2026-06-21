@@ -92,3 +92,6 @@
 ## 2026-06-12 - Date Format Cache & Temporal Overhead Optimization
 **Learning:** `Temporal.Instant.from(value).toLocaleString()` causes huge performance overheads when repeated over thousands of rows (e.g. months, datetimes), and its `toLocaleString` is poorly supported natively in Safari/WebKit environments (leading to crashes/polyfills overhead in Playwright e2e tests).
 **Action:** Avoid inline `.toLocaleString` calls on primitives and bypass Temporal when standard ISO-8601 formatting or standard UTC dates are involved. Cache `Intl.DateTimeFormat` and string outputs instead of reinstantiating them inline, reducing format execution time dramatically.
+## 2024-06-21 - Cache search profile evaluation invariants
+**Learning:** In heavy loops (like filtering thousands of HDB blocks), passing an object holding configuration variables like `SearchProfile` and checking strings (e.g. `mainFlatType.trim()`) or allocating arrays inline leads to redundant evaluations per element.
+**Action:** When filtering a large dataset using configurations that do not change per element, hoist those operations out into an invariant setup phase using a factory or higher-order function, and evaluate on blocks with pre-calculated thresholds.

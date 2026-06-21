@@ -1,5 +1,5 @@
 import { getCurrentYear } from "@/shared/lib/constants";
-import { evaluateBlockForProfile, type MatchTier } from "./matchProfile";
+import { createProfileEvaluator, type MatchTier } from "./matchProfile";
 import { median } from "@/shared/lib/utils";
 import type { BlockSummary } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
@@ -35,6 +35,10 @@ export function buildTownRecommendations(
   if (blocks.length === 0) return [];
 
   const currentYear = getCurrentYear();
+
+  // ⚡ Bolt: Cache evaluator to avoid recreating invariants per block
+  const evaluate = createProfileEvaluator(profile, currentYear);
+
   const grouped = new Map<
     string,
     {
@@ -55,7 +59,7 @@ export function buildTownRecommendations(
     }
     bucket.total += 1;
     bucket.prices.push(block.medianPrice);
-    const { tier } = evaluateBlockForProfile(block, profile, currentYear);
+    const { tier } = evaluate(block);
     bucket.weighted += TIER_WEIGHT[tier];
     if (tier === "strong") bucket.strong += 1;
     else if (tier === "good") bucket.good += 1;
