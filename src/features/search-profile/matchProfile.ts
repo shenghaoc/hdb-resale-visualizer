@@ -136,8 +136,7 @@ export function createProfileEvaluator(
 
   const maxCommute = profile.maxComfortableCommuteMinutes;
   const commuteStretchMinutes = profile.commuteStretchMinutes ?? 0;
-  const commuteStretchCeiling =
-    maxCommute !== null ? maxCommute + commuteStretchMinutes : null;
+  const commuteStretchCeiling = maxCommute !== null ? maxCommute + commuteStretchMinutes : null;
 
   const anchorMrt = profile.commuteAnchorMrt;
 
