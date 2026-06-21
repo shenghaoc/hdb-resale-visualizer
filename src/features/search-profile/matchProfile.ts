@@ -125,17 +125,19 @@ export function createProfileEvaluator(
   profile: SearchProfile,
   currentYear: number = getCurrentYear(),
 ): (block: BlockSummary) => ProfileEvaluation {
-  const mainFlatType = profile.mainFlatType.trim();
-  const alternativeFlatTypes = profile.alternativeFlatTypes;
+  const mainFlatType = (profile.mainFlatType ?? "").trim();
+  const alternativeFlatTypes = profile.alternativeFlatTypes ?? [];
   const minLease = profile.minimumRemainingLeaseYears;
 
   const maxBudget = profile.maxBudget;
+  const budgetStretchPercent = profile.budgetStretchPercent ?? 0;
   const budgetStretchCeiling =
-    maxBudget !== null ? maxBudget * (1 + profile.budgetStretchPercent / 100) : null;
+    maxBudget !== null ? maxBudget * (1 + budgetStretchPercent / 100) : null;
 
   const maxCommute = profile.maxComfortableCommuteMinutes;
+  const commuteStretchMinutes = profile.commuteStretchMinutes ?? 0;
   const commuteStretchCeiling =
-    maxCommute !== null ? maxCommute + profile.commuteStretchMinutes : null;
+    maxCommute !== null ? maxCommute + commuteStretchMinutes : null;
 
   const anchorMrt = profile.commuteAnchorMrt;
 
