@@ -16,11 +16,11 @@ export type ProfileEvaluation = {
 
 const WALKING_METERS_PER_MINUTE = 80;
 
-function walkingDistanceToAnchor(block: BlockSummary, profile: SearchProfile): number | null {
-  if (profile.commuteAnchorMrt) {
+function walkingDistanceToAnchor(block: BlockSummary, anchorMrt: string | null): number | null {
+  if (anchorMrt) {
     const anchor =
-      block.nearbyMrts?.find((m) => m.stationName === profile.commuteAnchorMrt) ??
-      (block.nearestMrt?.stationName === profile.commuteAnchorMrt ? block.nearestMrt : null);
+      block.nearbyMrts?.find((m) => m.stationName === anchorMrt) ??
+      (block.nearestMrt?.stationName === anchorMrt ? block.nearestMrt : null);
     return anchor?.distanceMeters ?? null;
   }
   // Proximity-to-nearest-MRT proxy only, not a true commute-time measurement.
@@ -51,33 +51,40 @@ export function computeRemainingLeaseYears(
 
 function evaluateLease(
   block: BlockSummary,
-  profile: SearchProfile,
+  minLease: number | null,
   currentYear: number,
 ): DimensionMatch {
-  if (profile.minimumRemainingLeaseYears === null) return "skip";
+  if (minLease === null) return "skip";
   const remaining = computeRemainingLeaseYears(block.leaseCommenceRange, currentYear);
-  return remaining >= profile.minimumRemainingLeaseYears ? "pass" : "fail";
+  return remaining >= minLease ? "pass" : "fail";
 }
 
-function evaluateBudget(block: BlockSummary, profile: SearchProfile): DimensionMatch {
-  if (profile.maxBudget === null) return "skip";
-  if (block.medianPrice <= profile.maxBudget) return "pass";
-  const stretchCeiling = profile.maxBudget * (1 + profile.budgetStretchPercent / 100);
+function evaluateBudget(
+  block: BlockSummary,
+  maxBudget: number | null,
+  stretchCeiling: number | null,
+): DimensionMatch {
+  if (maxBudget === null || stretchCeiling === null) return "skip";
+  if (block.medianPrice <= maxBudget) return "pass";
   if (block.medianPrice <= stretchCeiling) return "stretch";
   return "fail";
 }
 
-function evaluateCommute(block: BlockSummary, profile: SearchProfile): DimensionMatch {
-  if (profile.maxComfortableCommuteMinutes === null) return "skip";
-  const distanceMeters = walkingDistanceToAnchor(block, profile);
+function evaluateCommute(
+  block: BlockSummary,
+  anchorMrt: string | null,
+  maxCommute: number | null,
+  stretchCeiling: number | null,
+): DimensionMatch {
+  if (maxCommute === null || stretchCeiling === null) return "skip";
+  const distanceMeters = walkingDistanceToAnchor(block, anchorMrt);
   // No measurable walking distance to the anchor (or nearest MRT when no anchor
   // is set): we can't verify the commute threshold from static data, so fail
   // rather than skip — silently ignoring the user's commute constraint would
   // let blocks far from the anchor be ranked as strong matches.
   if (distanceMeters === null) return "fail";
   const proxyMinutes = distanceMeters / WALKING_METERS_PER_MINUTE;
-  if (proxyMinutes <= profile.maxComfortableCommuteMinutes) return "pass";
-  const stretchCeiling = profile.maxComfortableCommuteMinutes + profile.commuteStretchMinutes;
+  if (proxyMinutes <= maxCommute) return "pass";
   if (proxyMinutes <= stretchCeiling) return "stretch";
   return "fail";
 }
@@ -114,24 +121,48 @@ function combineTier(
   return "stretch";
 }
 
+export function createProfileEvaluator(
+  profile: SearchProfile,
+  currentYear: number = getCurrentYear(),
+): (block: BlockSummary) => ProfileEvaluation {
+  const mainFlatType = (profile.mainFlatType ?? "").trim();
+  const alternativeFlatTypes = profile.alternativeFlatTypes ?? [];
+  const minLease = profile.minimumRemainingLeaseYears;
+
+  const maxBudget = profile.maxBudget;
+  const budgetStretchPercent = profile.budgetStretchPercent ?? 0;
+  const budgetStretchCeiling =
+    maxBudget !== null ? maxBudget * (1 + budgetStretchPercent / 100) : null;
+
+  const maxCommute = profile.maxComfortableCommuteMinutes;
+  const commuteStretchMinutes = profile.commuteStretchMinutes ?? 0;
+  const commuteStretchCeiling = maxCommute !== null ? maxCommute + commuteStretchMinutes : null;
+
+  const anchorMrt = profile.commuteAnchorMrt;
+
+  return function evaluate(block: BlockSummary): ProfileEvaluation {
+    const flatType = evaluateFlatType(block, mainFlatType, alternativeFlatTypes);
+    const lease = evaluateLease(block, minLease, currentYear);
+    const budget = evaluateBudget(block, maxBudget, budgetStretchCeiling);
+    const commute = evaluateCommute(block, anchorMrt, maxCommute, commuteStretchCeiling);
+    const tier = combineTier(flatType, lease, budget, commute);
+    return { tier, flatType, lease, budget, commute };
+  };
+}
+
 export function evaluateBlockForProfile(
   block: BlockSummary,
   profile: SearchProfile,
   currentYear: number = getCurrentYear(),
 ): ProfileEvaluation {
-  const mainFlatType = profile.mainFlatType.trim();
-  const flatType = evaluateFlatType(block, mainFlatType, profile.alternativeFlatTypes);
-  const lease = evaluateLease(block, profile, currentYear);
-  const budget = evaluateBudget(block, profile);
-  const commute = evaluateCommute(block, profile);
-  const tier = combineTier(flatType, lease, budget, commute);
-  return { tier, flatType, lease, budget, commute };
+  const evaluate = createProfileEvaluator(profile, currentYear);
+  return evaluate(block);
 }
 
 export function isProfileVisibilityActive(profile: SearchProfile): boolean {
   if (profile.showAllBlocks) return false;
   return Boolean(
-    profile.mainFlatType.trim() ||
+    (profile.mainFlatType ?? "").trim() ||
     profile.minimumRemainingLeaseYears !== null ||
     profile.maxBudget !== null ||
     profile.maxComfortableCommuteMinutes !== null,
@@ -144,8 +175,11 @@ export function applyProfileVisibility(
   currentYear: number = getCurrentYear(),
 ): BlockSummary[] {
   if (!isProfileVisibilityActive(profile)) return blocks;
+
+  const evaluate = createProfileEvaluator(profile, currentYear);
+
   return blocks.filter((block) => {
-    const { tier } = evaluateBlockForProfile(block, profile, currentYear);
+    const { tier } = evaluate(block);
     if (tier === "weak") return false;
     if (tier === "stretch" && !profile.showStretchOptions) return false;
     return true;
