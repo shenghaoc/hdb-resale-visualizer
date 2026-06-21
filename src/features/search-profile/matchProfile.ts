@@ -162,7 +162,7 @@ export function evaluateBlockForProfile(
 export function isProfileVisibilityActive(profile: SearchProfile): boolean {
   if (profile.showAllBlocks) return false;
   return Boolean(
-    profile.mainFlatType.trim() ||
+    (profile.mainFlatType ?? "").trim() ||
     profile.minimumRemainingLeaseYears !== null ||
     profile.maxBudget !== null ||
     profile.maxComfortableCommuteMinutes !== null,
@@ -176,7 +176,6 @@ export function applyProfileVisibility(
 ): BlockSummary[] {
   if (!isProfileVisibilityActive(profile)) return blocks;
 
-  // ⚡ Bolt: Cache evaluator to avoid recreating invariants per block
   const evaluate = createProfileEvaluator(profile, currentYear);
 
   return blocks.filter((block) => {

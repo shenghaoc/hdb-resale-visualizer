@@ -36,7 +36,6 @@ export function buildTownRecommendations(
 
   const currentYear = getCurrentYear();
 
-  // ⚡ Bolt: Cache evaluator to avoid recreating invariants per block
   const evaluate = createProfileEvaluator(profile, currentYear);
 
   const grouped = new Map<
