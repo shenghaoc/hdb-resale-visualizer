@@ -1675,10 +1675,6 @@ export function ShortlistDrawer({
                                   }
                                   className="flex min-w-0 flex-1 flex-col rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                                   aria-expanded={isExpanded}
-                                  aria-label={t(
-                                    isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
-                                    { address: `${row.block.block} ${row.block.streetName}` },
-                                  )}
                                   title={t(
                                     isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
                                     { address: `${row.block.block} ${row.block.streetName}` },
