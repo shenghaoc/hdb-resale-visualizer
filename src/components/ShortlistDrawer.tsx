@@ -1679,6 +1679,10 @@ export function ShortlistDrawer({
                                     isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
                                     { address: `${row.block.block} ${row.block.streetName}` },
                                   )}
+                                  title={t(
+                                    isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
+                                    { address: `${row.block.block} ${row.block.streetName}` },
+                                  )}
                                 >
                                   <div className="flex min-w-0 items-start gap-2">
                                     <span
