@@ -32,7 +32,11 @@ describe("ShareButton", () => {
   });
 
   it("renders a button with the share icon", () => {
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     const button = screen.getByRole("button", { name: "Share this block" });
     expect(button).toBeInTheDocument();
   });
@@ -45,7 +49,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -65,7 +73,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -74,7 +86,11 @@ describe("ShareButton", () => {
   });
 
   it("shows check icon after clipboard copy and reverts", async () => {
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     // Button briefly shows "copied" state
@@ -100,7 +116,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -125,7 +145,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -141,7 +165,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -198,7 +226,11 @@ describe("ShareButton", () => {
     });
     const onShareBlocked = vi.fn();
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} shareDisabled onShareBlocked={onShareBlocked} /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} shareDisabled onShareBlocked={onShareBlocked} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button", { name: "Share this block" }));
 
     await waitFor(() => {
@@ -216,7 +248,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<TooltipProvider><ShareButton {...DEFAULT_PROPS} text="Check out this HDB block" /></TooltipProvider>);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} text="Check out this HDB block" />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {

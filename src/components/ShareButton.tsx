@@ -128,9 +128,7 @@ export function ShareButton({
             )}
           </Button>
         </TooltipTrigger>
-        <TooltipContent>
-          {copied ? ariaLabelCopied : ariaLabel}
-        </TooltipContent>
+        <TooltipContent>{copied ? ariaLabelCopied : ariaLabel}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
@@ -158,9 +156,7 @@ export function ShareButton({
                   )}
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                {exported ? exportAriaLabelDone : exportAriaLabel}
-              </TooltipContent>
+              <TooltipContent>{exported ? exportAriaLabelDone : exportAriaLabel}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </ButtonGroup>

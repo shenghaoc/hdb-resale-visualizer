@@ -96,7 +96,7 @@ test.describe("Global header location search", () => {
     await page.getByTestId("header-search-toggle").click();
     await expect(overlayInput).toHaveValue("BEDOK");
 
-    await overlay.locator('[data-slot="button"]').click();
+    await overlay.locator("button:has(svg)").click();
     await expect(overlay).toHaveCount(0);
 
     await page.getByTestId("header-search-toggle").click();
