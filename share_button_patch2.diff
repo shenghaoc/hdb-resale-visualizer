@@ -1,0 +1,45 @@
+--- src/components/ShareButton.tsx
++++ src/components/ShareButton.tsx
+@@ -141,17 +141,21 @@
+       {csvExport ? (
+         <ButtonGroup className="gap-0">
+           {shareButton}
+-          <Button
+-            onClick={handleExportCsv}
+-            size={size}
+-            variant={variant}
+-            type="button"
+-            className={cn(className, exported && "text-primary")}
+-            aria-label={exported ? exportAriaLabelDone : exportAriaLabel}
+-            title={exported ? exportAriaLabelDone : exportAriaLabel}
+-          >
+-            {exported ? (
+-              <Check data-icon className="size-4" aria-hidden="true" />
+-            ) : (
+-              <Download data-icon className="size-4" aria-hidden="true" />
+-            )}
+-          </Button>
++          <Tooltip>
++            <TooltipTrigger asChild>
++              <Button
++                onClick={handleExportCsv}
++                size={size}
++                variant={variant}
++                type="button"
++                className={cn(className, exported && "text-primary")}
++                aria-label={exported ? exportAriaLabelDone : exportAriaLabel}
++              >
++                {exported ? (
++                  <Check data-icon className="size-4" aria-hidden="true" />
++                ) : (
++                  <Download data-icon className="size-4" aria-hidden="true" />
++                )}
++              </Button>
++            </TooltipTrigger>
++            <TooltipContent>
++              {exported ? exportAriaLabelDone : exportAriaLabel}
++            </TooltipContent>
++          </Tooltip>
+         </ButtonGroup>
+       ) : (
+         shareButton

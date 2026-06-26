@@ -1,0 +1,25 @@
+--- tests/components/ShareButton.test.tsx
++++ tests/components/ShareButton.test.tsx
+@@ -140,17 +140,17 @@
+     });
+
+     render(
+-      <TooltipProvider>
+-        <ShareButton
+-          {...DEFAULT_PROPS}
+-          csvExport={{
+-            filename: "test.csv",
+-            getContent: () => '"Notes"\n"\'=1+1"',
+-          }}
+-          exportAriaLabel="Export CSV"
+-        />
+-      </TooltipProvider>,
++      <ShareButton
++        {...DEFAULT_PROPS}
++        csvExport={{
++          filename: "test.csv",
++          getContent: () => '"Notes"\n"\'=1+1"',
++        }}
++        exportAriaLabel="Export CSV"
++      />,
+     );

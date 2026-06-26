@@ -1,0 +1,50 @@
+--- src/components/ShareButton.tsx
++++ src/components/ShareButton.tsx
+@@ -107,26 +107,24 @@
+   }, [cleanup, csvExport]);
+
+   const shareButton = (
+-    <TooltipProvider>
+-      <Tooltip>
+-        <TooltipTrigger asChild>
+-          <Button
+-            onClick={() => void handleShare()}
+-            size={size}
+-            variant={variant}
+-            type="button"
+-            className={cn(className, copied && "text-primary")}
+-            aria-label={copied ? ariaLabelCopied : ariaLabel}
+-          >
+-            {copied ? (
+-              <Check data-icon className="size-4" aria-hidden="true" />
+-            ) : (
+-              <Link2 data-icon className="size-4" aria-hidden="true" />
+-            )}
+-          </Button>
+-        </TooltipTrigger>
+-        <TooltipContent>
+-          {copied ? ariaLabelCopied : ariaLabel}
+-        </TooltipContent>
+-      </Tooltip>
+-    </TooltipProvider>
++    <Tooltip>
++      <TooltipTrigger asChild>
++        <Button
++          onClick={() => void handleShare()}
++          size={size}
++          variant={variant}
++          type="button"
++          className={cn(className, copied && "text-primary")}
++          aria-label={copied ? ariaLabelCopied : ariaLabel}
++        >
++          {copied ? (
++            <Check data-icon className="size-4" aria-hidden="true" />
++          ) : (
++            <Link2 data-icon className="size-4" aria-hidden="true" />
++          )}
++        </Button>
++      </TooltipTrigger>
++      <TooltipContent>
++        {copied ? ariaLabelCopied : ariaLabel}
++      </TooltipContent>
++    </Tooltip>

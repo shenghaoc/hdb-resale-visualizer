@@ -164,16 +164,14 @@ describe("ShareButton", () => {
     });
 
     render(
-      <TooltipProvider>
-        <ShareButton
-          {...DEFAULT_PROPS}
-          csvExport={{
-            filename: "test.csv",
-            getContent: () => '"Notes"\n"\'=1+1"',
-          }}
-          exportAriaLabel="Export CSV"
-        />
-      </TooltipProvider>,
+      <ShareButton
+        {...DEFAULT_PROPS}
+        csvExport={{
+          filename: "test.csv",
+          getContent: () => '"Notes"\n"\'=1+1"',
+        }}
+        exportAriaLabel="Export CSV"
+      />,
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Export CSV" }));

@@ -1,0 +1,138 @@
+--- tests/components/ShareButton.test.tsx
++++ tests/components/ShareButton.test.tsx
+@@ -2,6 +2,7 @@
+ import { render, screen } from "@testing-library/react";
+ import userEvent from "@testing-library/user-event";
+ import { ShareButton } from "@/components/ShareButton";
++import { TooltipProvider } from "@/components/ui/tooltip";
+ import { shareViaNavigator } from "@/shared/lib/shareUrls";
+ import { downloadCsv } from "@/shared/lib/export";
+
+@@ -37,7 +38,11 @@
+   });
+
+   it("renders a button with the share icon", () => {
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+     const button = screen.getByRole("button", { name: "Share" });
+     expect(button).toBeInTheDocument();
+     expect(button).toHaveAttribute("aria-label", "Share");
+@@ -45,7 +50,11 @@
+   });
+
+   it("uses Web Share API when available", async () => {
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+     const button = screen.getByRole("button", { name: "Share" });
+
+     await userEvent.click(button);
+@@ -58,7 +67,11 @@
+   it("falls back to clipboard when Web Share is unavailable", async () => {
+     vi.mocked(shareViaNavigator).mockResolvedValueOnce("copied");
+
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+     const button = screen.getByRole("button", { name: "Share" });
+
+     await userEvent.click(button);
+@@ -69,7 +82,11 @@
+     vi.useFakeTimers();
+     vi.mocked(shareViaNavigator).mockResolvedValueOnce("copied");
+
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+     const button = screen.getByRole("button", { name: "Share" });
+
+     await userEvent.click(button);
+@@ -87,7 +104,11 @@
+     const abortError = new Error("AbortError");
+     abortError.name = "AbortError";
+     vi.mocked(shareViaNavigator).mockRejectedValueOnce(abortError);
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+
+     await userEvent.click(screen.getByRole("button", { name: "Share" }));
+
+@@ -98,7 +119,11 @@
+   it("falls back to clipboard when Web Share throws non-AbortError", async () => {
+     vi.mocked(shareViaNavigator).mockRejectedValueOnce(new Error("NotAllowedError"));
+     vi.mocked(shareViaNavigator).mockResolvedValueOnce("copied"); // The fallback
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+
+     await userEvent.click(screen.getByRole("button", { name: "Share" }));
+
+@@ -107,7 +132,11 @@
+
+   it("shows error alert when clipboard write fails", async () => {
+     vi.mocked(shareViaNavigator).mockRejectedValueOnce(new Error("Failed"));
+-    render(<ShareButton {...defaultProps} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} />
++      </TooltipProvider>
++    );
+     const button = screen.getByRole("button", { name: "Share" });
+
+     await userEvent.click(button);
+@@ -124,7 +153,11 @@
+       getContent: () => "A,B\n1,2",
+     };
+
+-    render(<ShareButton {...defaultProps} csvExport={csvExport} />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} csvExport={csvExport} />
++      </TooltipProvider>
++    );
+
+     // There should be two buttons now
+     const buttons = screen.getAllByRole("button");
+@@ -148,7 +181,11 @@
+   it("invokes onShareBlocked instead of sharing when shareDisabled is true", async () => {
+     const onShareBlocked = vi.fn();
+     render(
+-      <ShareButton {...defaultProps} shareDisabled={true} onShareBlocked={onShareBlocked} />,
++      <TooltipProvider>
++        <ShareButton {...defaultProps} shareDisabled={true} onShareBlocked={onShareBlocked} />
++      </TooltipProvider>
+     );
+
+     const button = screen.getByRole("button", { name: "Share" });
+@@ -159,7 +196,11 @@
+   });
+
+   it("accepts optional text prop for Web Share", async () => {
+-    render(<ShareButton {...defaultProps} text="Check this out" />);
++    render(
++      <TooltipProvider>
++        <ShareButton {...defaultProps} text="Check this out" />
++      </TooltipProvider>
++    );
+     const button = screen.getByRole("button", { name: "Share" });
+
+     await userEvent.click(button);
