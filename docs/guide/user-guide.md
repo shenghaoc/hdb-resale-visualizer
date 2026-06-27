@@ -52,7 +52,7 @@ All filters combine — setting Town to "Tampines" and Flat type to "4-Room" sho
 
 ### Filter chips
 
-Active filters appear as **chips** below the header. Remove any chip to clear that single filter. You can also share your current filter set by tapping the **share icon** next to the chips.
+Active filters appear as **chips** below the header. Remove any chip to clear that single filter. You can also share your current filter set by tapping the **share icon** next to the chips. Hover over (or focus) any icon-only button to see a tooltip describing its action.
 
 ## Using the map
 
@@ -202,8 +202,8 @@ The **Saved** tab holds blocks you have bookmarked. You can save up to 20 blocks
 - **Notes and legacy compatibility** — old saved shortlist entries still load with data preserved.
   Existing `notes` continue to display and are mirrored into the new board where needed.
 - **Sort and rank** — order saved blocks by your preferred metric; decision status is included as a tie-break in ranking.
-- **Export** — download your shortlist as CSV or JSON including offer-board fields and decision notes.
-- **Share** — generate a URL to share your shortlist with all shortlist board data (within payload size limits).
+- **Export** — download your shortlist as CSV or JSON including offer-board fields and decision notes. Hover over the export button to see its tooltip.
+- **Share** — generate a URL to share your shortlist with all shortlist board data (within payload size limits). Hover over the share button to see its tooltip.
 - **Mobile-friendly compare** — mobile view uses compact cards so all required shortlist metrics remain scannable without horizontal clipping, including the nearest MRT station name with walking time and any buyer notes you have recorded.
 
 ### Cloud sync

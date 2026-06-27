@@ -110,35 +110,33 @@ export function ShareButton({
   }, [cleanup, csvExport]);
 
   const shareButton = (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            onClick={() => void handleShare()}
-            size={size}
-            variant={variant}
-            type="button"
-            className={cn(className, copied && "text-primary")}
-            aria-label={copied ? ariaLabelCopied : ariaLabel}
-          >
-            {copied ? (
-              <Check data-icon className="size-4" aria-hidden="true" />
-            ) : (
-              <Link2 data-icon className="size-4" aria-hidden="true" />
-            )}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{copied ? ariaLabelCopied : ariaLabel}</TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          onClick={() => void handleShare()}
+          size={size}
+          variant={variant}
+          type="button"
+          className={cn(className, copied && "text-primary")}
+          aria-label={copied ? ariaLabelCopied : ariaLabel}
+        >
+          {copied ? (
+            <Check data-icon className="size-4" aria-hidden="true" />
+          ) : (
+            <Link2 data-icon className="size-4" aria-hidden="true" />
+          )}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{copied ? ariaLabelCopied : ariaLabel}</TooltipContent>
+    </Tooltip>
   );
 
   return (
     <span className="relative inline-flex">
-      {csvExport ? (
-        <ButtonGroup className="gap-0">
-          {shareButton}
-          <TooltipProvider>
+      <TooltipProvider>
+        {csvExport ? (
+          <ButtonGroup className="gap-0">
+            {shareButton}
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -158,11 +156,11 @@ export function ShareButton({
               </TooltipTrigger>
               <TooltipContent>{exported ? exportAriaLabelDone : exportAriaLabel}</TooltipContent>
             </Tooltip>
-          </TooltipProvider>
-        </ButtonGroup>
-      ) : (
-        shareButton
-      )}
+          </ButtonGroup>
+        ) : (
+          shareButton
+        )}
+      </TooltipProvider>
       {error && (
         <div
           role="alert"
