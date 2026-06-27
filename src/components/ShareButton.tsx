@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { downloadCsv } from "@/shared/lib/export";
 import { cn } from "@/shared/lib/utils";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { shareViaNavigator } from "@/shared/lib/shareUrls";
 
 export type CsvExportConfig = {
@@ -109,47 +110,57 @@ export function ShareButton({
   }, [cleanup, csvExport]);
 
   const shareButton = (
-    <Button
-      onClick={() => void handleShare()}
-      size={size}
-      variant={variant}
-      type="button"
-      className={cn(className, copied && "text-primary")}
-      aria-label={copied ? ariaLabelCopied : ariaLabel}
-      title={copied ? ariaLabelCopied : ariaLabel}
-    >
-      {copied ? (
-        <Check data-icon className="size-4" aria-hidden="true" />
-      ) : (
-        <Link2 data-icon className="size-4" aria-hidden="true" />
-      )}
-    </Button>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          onClick={() => void handleShare()}
+          size={size}
+          variant={variant}
+          type="button"
+          className={cn(className, copied && "text-primary")}
+          aria-label={copied ? ariaLabelCopied : ariaLabel}
+        >
+          {copied ? (
+            <Check data-icon className="size-4" aria-hidden="true" />
+          ) : (
+            <Link2 data-icon className="size-4" aria-hidden="true" />
+          )}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>{copied ? ariaLabelCopied : ariaLabel}</TooltipContent>
+    </Tooltip>
   );
 
   return (
     <span className="relative inline-flex">
-      {csvExport ? (
-        <ButtonGroup className="gap-0">
-          {shareButton}
-          <Button
-            onClick={handleExportCsv}
-            size={size}
-            variant={variant}
-            type="button"
-            className={cn(className, exported && "text-primary")}
-            aria-label={exported ? exportAriaLabelDone : exportAriaLabel}
-            title={exported ? exportAriaLabelDone : exportAriaLabel}
-          >
-            {exported ? (
-              <Check data-icon className="size-4" aria-hidden="true" />
-            ) : (
-              <Download data-icon className="size-4" aria-hidden="true" />
-            )}
-          </Button>
-        </ButtonGroup>
-      ) : (
-        shareButton
-      )}
+      <TooltipProvider>
+        {csvExport ? (
+          <ButtonGroup className="gap-0">
+            {shareButton}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={handleExportCsv}
+                  size={size}
+                  variant={variant}
+                  type="button"
+                  className={cn(className, exported && "text-primary")}
+                  aria-label={exported ? exportAriaLabelDone : exportAriaLabel}
+                >
+                  {exported ? (
+                    <Check data-icon className="size-4" aria-hidden="true" />
+                  ) : (
+                    <Download data-icon className="size-4" aria-hidden="true" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{exported ? exportAriaLabelDone : exportAriaLabel}</TooltipContent>
+            </Tooltip>
+          </ButtonGroup>
+        ) : (
+          shareButton
+        )}
+      </TooltipProvider>
       {error && (
         <div
           role="alert"

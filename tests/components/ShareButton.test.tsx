@@ -1,3 +1,4 @@
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ShareButton } from "@/components/ShareButton";
@@ -31,7 +32,11 @@ describe("ShareButton", () => {
   });
 
   it("renders a button with the share icon", () => {
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     const button = screen.getByRole("button", { name: "Share this block" });
     expect(button).toBeInTheDocument();
   });
@@ -44,7 +49,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -64,7 +73,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -73,7 +86,11 @@ describe("ShareButton", () => {
   });
 
   it("shows check icon after clipboard copy and reverts", async () => {
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     // Button briefly shows "copied" state
@@ -99,7 +116,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -124,7 +145,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -140,7 +165,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<ShareButton {...DEFAULT_PROPS} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
@@ -163,14 +192,16 @@ describe("ShareButton", () => {
     });
 
     render(
-      <ShareButton
-        {...DEFAULT_PROPS}
-        csvExport={{
-          filename: "test.csv",
-          getContent: () => '"Notes"\n"\'=1+1"',
-        }}
-        exportAriaLabel="Export CSV"
-      />,
+      <TooltipProvider>
+        <ShareButton
+          {...DEFAULT_PROPS}
+          csvExport={{
+            filename: "test.csv",
+            getContent: () => '"Notes"\n"\'=1+1"',
+          }}
+          exportAriaLabel="Export CSV"
+        />
+      </TooltipProvider>,
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Export CSV" }));
@@ -195,7 +226,11 @@ describe("ShareButton", () => {
     });
     const onShareBlocked = vi.fn();
 
-    render(<ShareButton {...DEFAULT_PROPS} shareDisabled onShareBlocked={onShareBlocked} />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} shareDisabled onShareBlocked={onShareBlocked} />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button", { name: "Share this block" }));
 
     await waitFor(() => {
@@ -213,7 +248,11 @@ describe("ShareButton", () => {
       configurable: true,
     });
 
-    render(<ShareButton {...DEFAULT_PROPS} text="Check out this HDB block" />);
+    render(
+      <TooltipProvider>
+        <ShareButton {...DEFAULT_PROPS} text="Check out this HDB block" />
+      </TooltipProvider>,
+    );
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {

@@ -18,8 +18,8 @@ The **compare view** lays saved blocks side by side: ask price, fair range, delt
 
 ## Export and share
 
-- **Export** your shortlist as CSV or JSON, including decision-board fields and notes.
-- **Share** generates a URL carrying the shortlist data (within size limits) so someone else can open the same board.
+- **Export** your shortlist as CSV or JSON, including decision-board fields and notes. Hover over (or focus) the export button to see its tooltip.
+- **Share** generates a URL carrying the shortlist data (within size limits) so someone else can open the same board. Hover over (or focus) the share button to see its tooltip.
 
 ## Cloud sync (optional)
 
