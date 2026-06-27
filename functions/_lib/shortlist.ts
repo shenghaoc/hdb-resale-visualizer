@@ -277,7 +277,9 @@ export async function handleShortlistGet(
 
 /** ISO cutoff for rows eligible for TTL purge at `now`. */
 export function shortlistRetentionCutoff(now: Temporal.Instant = Temporal.Now.instant()): string {
-  return now.subtract({ milliseconds: SHORTLIST_RETENTION_MS }).toString();
+  return now
+    .subtract({ milliseconds: SHORTLIST_RETENTION_MS })
+    .toString({ fractionalSecondDigits: 3 });
 }
 
 /**

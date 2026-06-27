@@ -55,7 +55,9 @@ describe("shortlistRetentionCutoff", () => {
     const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const cutoff = shortlistRetentionCutoff(now);
     const expected = now.subtract({ milliseconds: SHORTLIST_RETENTION_MS });
-    expect(cutoff).toBe(expected.toString());
+    expect(cutoff).toBe(
+      expected.toString({ fractionalSecondDigits: 3 }),
+    );
   });
 });
 
