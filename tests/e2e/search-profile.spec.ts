@@ -1,4 +1,3 @@
-import "temporal-polyfill/global";
 import { expect, test } from "@playwright/test";
 
 test.describe("Search Profile Wizard", () => {

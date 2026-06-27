@@ -393,9 +393,9 @@ describe("matchesFilter", () => {
 
     // The queryState truncation is verified elsewhere, but here we confirm that passing
     // it to matchesFilter is extremely fast (not hanging the execution/tab)
-    const startTime = Date.now();
+    const startTime = performance.now();
     const result = matchesFilter(alpha!, parsedFilters);
-    const duration = Date.now() - startTime;
+    const duration = performance.now() - startTime;
 
     // It should complete well under 200 ms even on slow CI runners
     expect(duration).toBeLessThan(200);

@@ -52,10 +52,10 @@ function makeFakeDB(initialRows: Record<string, Row>): {
 
 describe("shortlistRetentionCutoff", () => {
   it("subtracts SHORTLIST_RETENTION_DAYS from the supplied clock", () => {
-    const now = new Date("2026-05-27T12:00:00.000Z");
+    const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const cutoff = shortlistRetentionCutoff(now);
-    const expected = new Date(now.getTime() - SHORTLIST_RETENTION_DAYS * 24 * 60 * 60 * 1000);
-    expect(cutoff).toBe(expected.toISOString());
+    const expected = now.subtract({ days: SHORTLIST_RETENTION_DAYS });
+    expect(cutoff).toBe(expected.toString());
   });
 });
 
@@ -74,7 +74,7 @@ describe("purgeStaleShortlists", () => {
       },
     });
 
-    const now = new Date("2026-05-27T12:00:00.000Z");
+    const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const deleted = await purgeStaleShortlists(db, now);
 
     expect(deleted).toBe(1);
@@ -99,7 +99,7 @@ describe("purgeStaleShortlists", () => {
     }
     const { db, rows, deleteCalls } = makeFakeDB(manyRows);
 
-    const now = new Date("2026-05-27T12:00:00.000Z");
+    const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const deleted = await purgeStaleShortlists(db, now);
 
     expect(deleted).toBe(2500);

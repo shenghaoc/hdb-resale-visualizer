@@ -36,7 +36,7 @@ let manifestCache: { expiresAt: number; version: string; dataWindow: DataWindow 
 async function readManifestMetadata(
   env: Env,
 ): Promise<{ version: string; dataWindow: DataWindow }> {
-  const now = Date.now();
+  const now = Temporal.Now.instant().epochMilliseconds;
   if (manifestCache && manifestCache.expiresAt > now) {
     return { version: manifestCache.version, dataWindow: manifestCache.dataWindow };
   }

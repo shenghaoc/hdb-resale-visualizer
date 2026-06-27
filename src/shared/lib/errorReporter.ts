@@ -64,7 +64,7 @@ export function reportBoundaryError(error: Error, info: ErrorInfo): void {
     stack: error.stack,
     componentStack: info.componentStack ?? undefined,
     route: privacySafeRoute(),
-    timestamp: Date.now(),
+    timestamp: Temporal.Now.instant().epochMilliseconds,
   });
 }
 
@@ -83,7 +83,7 @@ function handleErrorEvent(event: ErrorEvent): void {
     message,
     stack: normalized.stack,
     route: privacySafeRoute(),
-    timestamp: Date.now(),
+    timestamp: Temporal.Now.instant().epochMilliseconds,
   });
 }
 
@@ -94,7 +94,7 @@ function handleUnhandledRejection(event: PromiseRejectionEvent): void {
     message: normalized.message,
     stack: normalized.stack,
     route: privacySafeRoute(),
-    timestamp: Date.now(),
+    timestamp: Temporal.Now.instant().epochMilliseconds,
   });
 }
 

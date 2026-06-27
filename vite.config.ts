@@ -19,7 +19,6 @@ export default defineConfig({
       "docs/archive",
       "pnpm-lock.yaml",
       "public/data",
-      "public/temporal-polyfill.js",
       "tests/fixtures/public-data",
     ],
   },
@@ -44,7 +43,6 @@ export default defineConfig({
       ".jules",
       "docs/archive",
       "public/data",
-      "public/temporal-polyfill.js",
       "tests/e2e/**",
     ],
     overrides: [
@@ -179,7 +177,6 @@ export default defineConfig({
       includeAssets: [
         "favicon.ico",
         "og-card.png",
-        "temporal-polyfill.js",
         "manifest.webmanifest",
         "icons/pwa-192.svg",
         "icons/pwa-512.svg",

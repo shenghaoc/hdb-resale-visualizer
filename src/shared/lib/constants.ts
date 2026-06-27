@@ -24,7 +24,7 @@ let maxLeaseCommenceYearCache: number | undefined;
  */
 export const getCurrentYear = (): number => Temporal.Now.plainDateISO().year;
 
-/** Upper bound for lease-commence validation; computed lazily after the Temporal polyfill loads. */
+/** Upper bound for lease-commence validation; computed lazily after the Temporal runtime is available. */
 export function getMaxLeaseCommenceYear(): number {
   maxLeaseCommenceYearCache ??= getCurrentYear() + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
   return maxLeaseCommenceYearCache;
