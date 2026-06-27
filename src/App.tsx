@@ -299,7 +299,7 @@ function App() {
       flatType: checkFlatType,
       storeyRange: checkStoreyRange,
       leaseCommenceYear: checkLeaseYear,
-      timestamp: new Date().toISOString(),
+      timestamp: Temporal.Now.instant().toString(),
     };
     // Only toggle if not already in shortlist (toggle removes if present)
     const alreadySaved = shortlist.items.some((i) => i.addressKey === checkAddressKey);

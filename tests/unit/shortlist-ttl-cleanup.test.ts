@@ -4,7 +4,7 @@ import {
   shortlistRetentionCutoff,
   type SyncDB,
 } from "../../functions/_lib/shortlist";
-import { SHORTLIST_RETENTION_DAYS } from "../../shared/shortlist-limits";
+import { SHORTLIST_RETENTION_MS } from "../../shared/shortlist-limits";
 
 type Row = { items_json: string; updated_at: string; created_at: string };
 
@@ -52,10 +52,10 @@ function makeFakeDB(initialRows: Record<string, Row>): {
 
 describe("shortlistRetentionCutoff", () => {
   it("subtracts SHORTLIST_RETENTION_DAYS from the supplied clock", () => {
-    const now = new Date("2026-05-27T12:00:00.000Z");
+    const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const cutoff = shortlistRetentionCutoff(now);
-    const expected = new Date(now.getTime() - SHORTLIST_RETENTION_DAYS * 24 * 60 * 60 * 1000);
-    expect(cutoff).toBe(expected.toISOString());
+    const expected = now.subtract({ milliseconds: SHORTLIST_RETENTION_MS });
+    expect(cutoff).toBe(expected.toString({ fractionalSecondDigits: 3 }));
   });
 });
 
@@ -74,7 +74,7 @@ describe("purgeStaleShortlists", () => {
       },
     });
 
-    const now = new Date("2026-05-27T12:00:00.000Z");
+    const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const deleted = await purgeStaleShortlists(db, now);
 
     expect(deleted).toBe(1);
@@ -99,7 +99,7 @@ describe("purgeStaleShortlists", () => {
     }
     const { db, rows, deleteCalls } = makeFakeDB(manyRows);
 
-    const now = new Date("2026-05-27T12:00:00.000Z");
+    const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const deleted = await purgeStaleShortlists(db, now);
 
     expect(deleted).toBe(2500);

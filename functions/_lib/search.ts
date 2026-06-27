@@ -189,7 +189,10 @@ export function buildSearchQuery(request: SearchRequest): SearchQueryPlan {
   }
   if (request.remainingLeaseMin !== null) {
     where.push("(? - lease_commence_year) <= ?");
-    bindings.push(new Date().getUTCFullYear(), MAX_LEASE_DURATION - request.remainingLeaseMin);
+    bindings.push(
+      Temporal.Now.plainDateISO("UTC").year,
+      MAX_LEASE_DURATION - request.remainingLeaseMin,
+    );
   }
   if (request.startMonth) {
     where.push("available_max_month >= ?");

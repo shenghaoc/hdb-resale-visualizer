@@ -48,22 +48,22 @@ describe("rate-limits", () => {
   it("waits at least the configured interval between requests for the same service", async () => {
     vi.stubEnv("DATA_GOV_API_KEY", "test-key");
     vi.stubEnv("DATA_GOV_API_KEY_TIER", "prod");
-    const startedAt = Date.now();
+    const startedAt = performance.now();
     await waitForUpstreamSlot("data-gov-dataset-download");
     await waitForUpstreamSlot("data-gov-dataset-download");
-    expect(Date.now() - startedAt).toBeGreaterThanOrEqual(990);
+    expect(performance.now() - startedAt).toBeGreaterThanOrEqual(990);
   });
 
   it("serializes concurrent waiters so they do not burst past the rate limit", async () => {
     vi.stubEnv("DATA_GOV_API_KEY", "test-key");
     vi.stubEnv("DATA_GOV_API_KEY_TIER", "prod");
-    const startedAt = Date.now();
+    const startedAt = performance.now();
     await Promise.all([
       waitForUpstreamSlot("onemap-search"),
       waitForUpstreamSlot("onemap-search"),
       waitForUpstreamSlot("onemap-search"),
     ]);
     // Three prod-tier slots at 1000ms each → third waiter should finish ~2s after start.
-    expect(Date.now() - startedAt).toBeGreaterThanOrEqual(1990);
+    expect(performance.now() - startedAt).toBeGreaterThanOrEqual(1990);
   });
 });

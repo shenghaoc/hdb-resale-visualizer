@@ -34,7 +34,7 @@ function makeBlock(addressKey: string, medianPrice = 500_000): BlockSummary {
 }
 
 function makeItem(addressKey: string, targetPrice: number | null = null): ShortlistItem {
-  return { addressKey, notes: "", targetPrice, addedAt: new Date().toISOString() };
+  return { addressKey, notes: "", targetPrice, addedAt: Temporal.Now.instant().toString() };
 }
 
 function makeDetail(addressKey: string): AddressDetail {

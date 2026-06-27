@@ -65,7 +65,7 @@ const shortlistItemSchema = z.object({
     .string()
     .datetime({ offset: true })
     .max(MAX_ADDED_AT_LENGTH)
-    .catch(() => new Date().toISOString()),
+    .catch(() => Temporal.Now.instant().toString({ fractionalSecondDigits: 3 })),
 });
 
 function normalizeNumber(
@@ -207,7 +207,7 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
   }
 
   const { syncCode: providedCode, items } = parsed.data;
-  const now = new Date().toISOString();
+  const now = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
 
   try {
     if (!providedCode) {
@@ -276,15 +276,20 @@ export async function handleShortlistGet(
 }
 
 /** ISO cutoff for rows eligible for TTL purge at `now`. */
-export function shortlistRetentionCutoff(now: Date = new Date()): string {
-  return new Date(now.getTime() - SHORTLIST_RETENTION_MS).toISOString();
+export function shortlistRetentionCutoff(now: Temporal.Instant = Temporal.Now.instant()): string {
+  return now
+    .subtract({ milliseconds: SHORTLIST_RETENTION_MS })
+    .toString({ fractionalSecondDigits: 3 });
 }
 
 /**
  * Delete shortlist rows untouched since before the retention cutoff.
  * Returns the number of rows removed (0 when none match).
  */
-export async function purgeStaleShortlists(db: SyncDB, now: Date = new Date()): Promise<number> {
+export async function purgeStaleShortlists(
+  db: SyncDB,
+  now: Temporal.Instant = Temporal.Now.instant(),
+): Promise<number> {
   const cutoff = shortlistRetentionCutoff(now);
   const pageSize = 1000;
   let total = 0;

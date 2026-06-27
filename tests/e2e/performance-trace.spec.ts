@@ -28,7 +28,7 @@ test.describe("performance traces", () => {
     const searchInput = page.getByTestId("header-search-input");
     await searchInput.click();
 
-    const start = Date.now();
+    const start = performance.now();
     await searchInput.fill("BEDOK");
 
     await openResultsTab(page);
@@ -36,7 +36,7 @@ test.describe("performance traces", () => {
       page.locator("[data-testid='results-pane'] [data-slot='item']").first(),
     ).toBeVisible({ timeout: 5_000 });
 
-    const elapsed = Date.now() - start;
+    const elapsed = performance.now() - start;
     // Filter-to-first-result should be under 3s (generous for CI)
     expect(elapsed).toBeLessThan(3000);
   });
@@ -56,12 +56,12 @@ test.describe("performance traces", () => {
     const centerX = box.x + box.width / 2;
     const centerY = box.y + box.height / 2;
 
-    const panStart = Date.now();
+    const panStart = performance.now();
     await page.mouse.move(centerX, centerY);
     await page.mouse.down();
     await page.mouse.move(centerX + 100, centerY + 50, { steps: 10 });
     await page.mouse.up();
-    const panElapsed = Date.now() - panStart;
+    const panElapsed = performance.now() - panStart;
 
     // Pan operation should complete without stalling (generous 2s for CI)
     expect(panElapsed).toBeLessThan(2000);
@@ -85,7 +85,7 @@ test.describe("performance traces", () => {
     // Look for listing check tab/button and interact
     const checkTab = page.getByRole("button", { name: /price check|listing check/i });
     if (await checkTab.isVisible({ timeout: 2_000 }).catch(() => false)) {
-      const start = Date.now();
+      const start = performance.now();
       await checkTab.click();
 
       // Wait for verdict or input form to appear
@@ -93,7 +93,7 @@ test.describe("performance traces", () => {
         "[data-testid='listing-check-panel'], [data-testid='listing-check-verdict']",
       );
       await expect(verdictOrForm.first()).toBeVisible({ timeout: 5_000 });
-      const elapsed = Date.now() - start;
+      const elapsed = performance.now() - start;
 
       // Panel should load within 2s
       expect(elapsed).toBeLessThan(2000);
@@ -126,10 +126,10 @@ test.describe("performance traces", () => {
 async function measureFilterLatency(page: Page, query: string): Promise<number> {
   const searchInput = page.getByTestId("header-search-input");
   await searchInput.fill("");
-  const start = Date.now();
+  const start = performance.now();
   await searchInput.fill(query);
   await expect(page.locator("[data-testid='results-pane'] [data-slot='item']").first()).toBeVisible(
     { timeout: 5_000 },
   );
-  return Date.now() - start;
+  return performance.now() - start;
 }

@@ -12,14 +12,13 @@ function resolveLocale(locale?: Locale) {
 const FORMATTER_CACHE_LIMIT = 128;
 const numberFormatCache = new Map<string, Intl.NumberFormat>();
 
-// ⚡ Bolt: Cache string outputs to avoid repetitive `.format()` calls and Temporal allocations.
+// ⚡ Bolt: Cache string outputs to avoid repetitive formatter and Temporal allocations.
 // For thousands of repeated values (e.g. months, rounded prices), this drops format time by >10x.
 const FORMATTED_STRING_CACHE_LIMIT = 1000;
 const formattedCurrencyCache = new Map<string, string>();
 const formattedCompactCurrencyCache = new Map<string, string>();
 const formattedNumberCache = new Map<string, string>();
 const formattedMonthCache = new Map<string, string>();
-const dateTimeFormatCache = new Map<string, Intl.DateTimeFormat>();
 const formattedDateTimeCache = new Map<string, string>();
 
 function evictCacheIfNeeded<Key, Value>(cache: Map<Key, Value>, limit: number): void {
@@ -44,23 +43,8 @@ function getNumberFormat(locale: Locale, options: Intl.NumberFormatOptions): Int
   return formatter;
 }
 
-function getDateTimeFormat(
-  locale: Locale,
-  options: Intl.DateTimeFormatOptions,
-): Intl.DateTimeFormat {
-  const key = `${locale}-${JSON.stringify(options)}`;
-  let formatter = dateTimeFormatCache.get(key);
-  if (!formatter) {
-    formatter = new Intl.DateTimeFormat(locale, options);
-    evictCacheIfNeeded(dateTimeFormatCache, FORMATTER_CACHE_LIMIT);
-    dateTimeFormatCache.set(key, formatter);
-  }
-  return formatter;
-}
-
 export function resetFormatCachesForTests(): void {
   numberFormatCache.clear();
-  dateTimeFormatCache.clear();
   formattedCurrencyCache.clear();
   formattedCompactCurrencyCache.clear();
   formattedNumberCache.clear();
@@ -147,15 +131,14 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  const [year, m] = month.split("-");
-  const date = new Date(Date.UTC(parseInt(year, 10), parseInt(m, 10) - 1, 1));
-  const formatter = getDateTimeFormat(resolvedLocale, {
+  // Temporal.PlainYearMonth.toLocaleString() throws "Mismatched calendars"
+  // when the locale's default calendar differs from ISO 8601. Use a Date
+  // bridge with Intl.DateTimeFormat for reliable locale formatting.
+  const ym = Temporal.PlainYearMonth.from(month);
+  cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
-    timeZone: "UTC",
-  });
-
-  cached = formatter.format(date);
+  }).format(new Date(ym.year, ym.month - 1, 1));
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);
@@ -179,17 +162,17 @@ export function formatDateTime(value: string, locale?: Locale): string {
   let cached = formattedDateTimeCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  const date = new Date(value);
-  if (isNaN(date.getTime())) {
+  let instant: Temporal.Instant;
+  try {
+    instant = Temporal.Instant.from(value);
+  } catch {
     return value;
   }
 
-  const formatter = getDateTimeFormat(resolvedLocale, {
+  cached = instant.toLocaleString(resolvedLocale, {
     dateStyle: "medium",
     timeStyle: "short",
   });
-
-  cached = formatter.format(date);
 
   evictCacheIfNeeded(formattedDateTimeCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedDateTimeCache.set(cacheKey, cached);
