@@ -122,6 +122,7 @@ describe("matchesFilter — remainingLeaseMin", () => {
   });
 
   afterEach(() => {
+    vi.restoreAllMocks();
     vi.useRealTimers();
   });
 
