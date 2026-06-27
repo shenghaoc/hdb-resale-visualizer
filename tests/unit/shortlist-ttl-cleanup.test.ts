@@ -4,10 +4,7 @@ import {
   shortlistRetentionCutoff,
   type SyncDB,
 } from "../../functions/_lib/shortlist";
-import {
-  SHORTLIST_RETENTION_DAYS,
-  SHORTLIST_RETENTION_MS,
-} from "../../shared/shortlist-limits";
+import { SHORTLIST_RETENTION_MS } from "../../shared/shortlist-limits";
 
 type Row = { items_json: string; updated_at: string; created_at: string };
 

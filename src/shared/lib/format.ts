@@ -131,10 +131,14 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  cached = Temporal.PlainYearMonth.from(month).toLocaleString(resolvedLocale, {
+  // Temporal.PlainYearMonth.toLocaleString() throws "Mismatched calendars"
+  // when the locale's default calendar differs from ISO 8601. Use a Date
+  // bridge with Intl.DateTimeFormat for reliable locale formatting.
+  const ym = Temporal.PlainYearMonth.from(month);
+  cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
-  });
+  }).format(new Date(ym.year, ym.month - 1, 1));
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);

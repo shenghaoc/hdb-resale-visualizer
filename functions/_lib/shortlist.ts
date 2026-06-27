@@ -65,9 +65,7 @@ const shortlistItemSchema = z.object({
     .string()
     .datetime({ offset: true })
     .max(MAX_ADDED_AT_LENGTH)
-    .catch(() =>
-      Temporal.Now.instant().toString({ fractionalSecondDigits: 3 }),
-    ),
+    .catch(() => Temporal.Now.instant().toString({ fractionalSecondDigits: 3 })),
 });
 
 function normalizeNumber(
