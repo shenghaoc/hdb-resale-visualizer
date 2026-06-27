@@ -65,7 +65,9 @@ const shortlistItemSchema = z.object({
     .string()
     .datetime({ offset: true })
     .max(MAX_ADDED_AT_LENGTH)
-    .catch(() => Temporal.Now.instant().toString()),
+    .catch(() =>
+      Temporal.Now.instant().toString({ fractionalSecondDigits: 3 }),
+    ),
 });
 
 function normalizeNumber(
@@ -207,7 +209,7 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
   }
 
   const { syncCode: providedCode, items } = parsed.data;
-  const now = Temporal.Now.instant().toString();
+  const now = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
 
   try {
     if (!providedCode) {

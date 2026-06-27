@@ -4,7 +4,10 @@ import {
   shortlistRetentionCutoff,
   type SyncDB,
 } from "../../functions/_lib/shortlist";
-import { SHORTLIST_RETENTION_DAYS } from "../../shared/shortlist-limits";
+import {
+  SHORTLIST_RETENTION_DAYS,
+  SHORTLIST_RETENTION_MS,
+} from "../../shared/shortlist-limits";
 
 type Row = { items_json: string; updated_at: string; created_at: string };
 
@@ -54,7 +57,7 @@ describe("shortlistRetentionCutoff", () => {
   it("subtracts SHORTLIST_RETENTION_DAYS from the supplied clock", () => {
     const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
     const cutoff = shortlistRetentionCutoff(now);
-    const expected = now.subtract({ days: SHORTLIST_RETENTION_DAYS });
+    const expected = now.subtract({ milliseconds: SHORTLIST_RETENTION_MS });
     expect(cutoff).toBe(expected.toString());
   });
 });

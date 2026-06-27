@@ -31,7 +31,7 @@ function isIsoDateTime(value: string | null | undefined): value is string {
   }
 }
 
-function currentMonth(now: Temporal.PlainDate = Temporal.Now.plainDateISO()): string {
+function currentMonth(now: Temporal.PlainDate = Temporal.Now.plainDateISO("UTC")): string {
   return `${now.year}-${String(now.month).padStart(2, "0")}`;
 }
 
@@ -45,7 +45,7 @@ export function monthsBetween(olderMonth: string, newerMonth: string): number {
 
 export function deriveDataQualityState(
   manifest: Partial<Manifest> | null,
-  now: Temporal.PlainDate = Temporal.Now.plainDateISO(),
+  now: Temporal.PlainDate = Temporal.Now.plainDateISO("UTC"),
 ): DataQualityState {
   const rawMaxMonth = manifest?.dataWindow?.maxMonth;
   const latestMonthUsed = isMonth(rawMaxMonth) ? rawMaxMonth : null;
