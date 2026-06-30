@@ -96,14 +96,15 @@ export function computeRemainingLeaseYears(
  * by using direct comparisons.
  */
 function youngestAge(applicantAge: number | null, coApplicantAge: number | null): number | null {
-  const aValid = applicantAge !== null && Number.isFinite(applicantAge);
-  const cValid = coApplicantAge !== null && Number.isFinite(coApplicantAge);
-
-  if (aValid && cValid) {
-    return (applicantAge as number) < (coApplicantAge as number) ? applicantAge : coApplicantAge;
+  if (applicantAge !== null && Number.isFinite(applicantAge)) {
+    if (coApplicantAge !== null && Number.isFinite(coApplicantAge)) {
+      return applicantAge < coApplicantAge ? applicantAge : coApplicantAge;
+    }
+    return applicantAge;
   }
-  if (aValid) return applicantAge;
-  if (cValid) return coApplicantAge;
+  if (coApplicantAge !== null && Number.isFinite(coApplicantAge)) {
+    return coApplicantAge;
+  }
   return null;
 }
 
