@@ -159,6 +159,7 @@ export function MonthPicker({
                 variant={isSelected ? "default" : "ghost"}
                 disabled={isDisabled}
                 onClick={() => handleMonthClick(index)}
+                aria-pressed={isSelected}
                 className={cn(
                   "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-all",
                   isSelected
