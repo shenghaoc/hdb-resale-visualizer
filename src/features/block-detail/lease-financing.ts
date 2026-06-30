@@ -91,12 +91,21 @@ export function computeRemainingLeaseYears(
 /**
  * Pick the youngest valid applicant age. The CPF lease-to-95 rule keys off the
  * *youngest* owner (the hardest case), so this is the buyer-protective choice.
+ *
+ * Optimized: avoid array allocations and Math.min(...array) spread overhead
+ * by using direct comparisons.
  */
 function youngestAge(applicantAge: number | null, coApplicantAge: number | null): number | null {
-  const ages = [applicantAge, coApplicantAge].filter(
-    (age): age is number => age !== null && Number.isFinite(age),
-  );
-  return ages.length > 0 ? Math.min(...ages) : null;
+  if (applicantAge !== null && Number.isFinite(applicantAge)) {
+    if (coApplicantAge !== null && Number.isFinite(coApplicantAge)) {
+      return applicantAge < coApplicantAge ? applicantAge : coApplicantAge;
+    }
+    return applicantAge;
+  }
+  if (coApplicantAge !== null && Number.isFinite(coApplicantAge)) {
+    return coApplicantAge;
+  }
+  return null;
 }
 
 /**

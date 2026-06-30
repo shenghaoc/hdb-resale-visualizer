@@ -97,6 +97,17 @@ describe("assessLeaseFinancing", () => {
     expect(result.tenureLimitedBy).toBe("lease");
   });
 
+  it("uses co-applicant age when the primary applicant age is missing", () => {
+    const result = assessLeaseFinancing({
+      remainingLeaseYears: 70,
+      applicantAge: null,
+      coApplicantAge: 30,
+    });
+    expect(result.status).toBe("covers-to-95");
+    expect(result.youngestApplicantAge).toBe(30);
+    expect(result.requiredLeaseYears).toBe(HDB_MAX_BUYER_AGE - 30);
+  });
+
   it("returns unknown (but still computes decay) when age is missing", () => {
     const result = assessLeaseFinancing({
       remainingLeaseYears: 70,
