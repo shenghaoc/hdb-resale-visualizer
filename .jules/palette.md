@@ -29,3 +29,7 @@
 ## 2026-06-17 - Missing accessible explicit toggle states on Bookmark buttons
 **Learning:** Custom UI buttons that function as toggles (like the Bookmark/Save icon buttons) often lack the explicit `aria-pressed` attribute, causing screen reader users to miss their active state entirely.
 **Action:** Always add the `aria-pressed` attribute when custom UI buttons act as presets or toggle controls so that their state is natively exposed to accessibility trees.
+
+## 2026-06-30 - Accessible selected state on month picker options
+**Learning:** Calendar and month picker controls often iterate mutually exclusive options (like months) as buttons. Without explicit radio semantics, screen reader users cannot quickly determine which option is currently selected or how the options relate to each other.
+**Action:** For mutually exclusive month/day choices, prefer `role="radiogroup"` with an accessible label, `role="radio"` plus `aria-checked` on each option, and full radio keyboard support with roving `tabIndex` and arrow-key navigation.
