@@ -115,6 +115,7 @@ export function MonthPicker({
       <PopoverContent
         className="w-[280px] p-0 shadow-xl border-border/20 backdrop-blur-xl bg-popover/95"
         align="start"
+        aria-label={t("filters.selectMonth", { defaultValue: "Select month" })}
       >
         <div className="flex items-center justify-between p-3 border-b border-border/10">
           <Button
@@ -149,7 +150,7 @@ export function MonthPicker({
             <ChevronRight data-icon className="size-4" aria-hidden="true" />
           </Button>
         </div>
-        <div className="p-3 grid grid-cols-3 gap-2.5">
+        <div className="p-3 grid grid-cols-3 gap-2.5" role="radiogroup">
           {months.map((monthStr, index) => {
             const currentMonthStr = `${viewYear}-${String(index + 1).padStart(2, "0")}`;
             const isDisabled = currentMonthStr < minMonth || currentMonthStr > maxMonth;
@@ -162,7 +163,8 @@ export function MonthPicker({
                 variant={isSelected ? "default" : "ghost"}
                 disabled={isDisabled}
                 onClick={() => handleMonthClick(index)}
-                aria-pressed={isSelected}
+                role="radio"
+                aria-checked={isSelected}
                 className={cn(
                   "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-all",
                   isSelected
