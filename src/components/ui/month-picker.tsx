@@ -118,6 +118,7 @@ export function MonthPicker({
       >
         <div className="flex items-center justify-between p-3 border-b border-border/10">
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             onClick={handlePreviousYear}
@@ -136,6 +137,7 @@ export function MonthPicker({
             {viewYear}
           </div>
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             onClick={handleNextYear}
@@ -155,6 +157,7 @@ export function MonthPicker({
 
             return (
               <Button
+                type="button"
                 key={index}
                 variant={isSelected ? "default" : "ghost"}
                 disabled={isDisabled}
@@ -176,6 +179,7 @@ export function MonthPicker({
         {value && (
           <div className="p-2 border-t border-border/10 bg-muted/20">
             <Button
+              type="button"
               variant="ghost"
               size="sm"
               className="w-full text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 transition-colors"
