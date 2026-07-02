@@ -67,9 +67,7 @@ describe("shared product core golden parity", () => {
       referenceMonth: "2026-04",
     });
     expect(result?.assessment.verdict).toBe("well_above");
-    expect(result?.caveats.some((c) => c.message.toLowerCase().includes("asking price"))).toBe(
-      true,
-    );
+    expect(result?.caveats.map((c) => c.code)).toContain("EXTREME_OUTLIER_HIGH");
   });
 
   it("keeps affordability calculations deterministic for budget-match scenarios", () => {

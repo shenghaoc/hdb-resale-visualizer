@@ -4,7 +4,7 @@ import {
   type ConfidenceInput,
   type ConfidenceLevel,
 } from "../confidence-system";
-import { generateCaveats as generateEvidenceCaveats } from "../caveat-codes";
+import { generateCaveats as generateEvidenceCaveats, type CaveatCode } from "../caveat-codes";
 import {
   assessAskingPrice,
   findComparableTransactions,
@@ -22,10 +22,13 @@ export type ListingConfidenceResult = {
   reason: string;
 };
 
-export type Caveat = {
+export type ListingCaveat = {
+  code: CaveatCode;
   severity: "info" | "warning";
   message: string;
 };
+
+export type Caveat = ListingCaveat;
 
 function findNewestMonth(comparables: ReadonlyArray<AddressDetailTransaction>): string | null {
   let newest: string | null = null;
@@ -92,6 +95,7 @@ export function generateListingCaveats(params: {
     leaseCommenceYear: params.leaseCommenceYear,
     comparableLeaseYears: params.comparableLeaseYears,
   }).map((caveat) => ({
+    code: caveat.code,
     severity: caveat.severity === "critical" ? "warning" : caveat.severity,
     message: caveat.message,
   }));
