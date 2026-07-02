@@ -446,11 +446,19 @@ describe("isBlockAgeEligible", () => {
     expect(isBlockAgeEligible(block, 35)).toBe(false);
   });
 
-  it("uses the newest commencement year in the block, not the oldest", () => {
+  it("uses the oldest commencement year in the block, not the newest", () => {
     const currentYear = getCurrentYear();
-    // Oldest commencement 60y ago would fail, but newest is recent — block passes.
+    // Newest commencement 5y ago would pass, but oldest is 60y ago — block fails.
     const block = makeBlock({
       leaseCommenceRange: [currentYear - 60, currentYear - 5],
+    });
+    expect(isBlockAgeEligible(block, 35)).toBe(false);
+  });
+
+  it("passes when the oldest commencement year still has enough remaining lease", () => {
+    const currentYear = getCurrentYear();
+    const block = makeBlock({
+      leaseCommenceRange: [currentYear - 5, currentYear - 1],
     });
     expect(isBlockAgeEligible(block, 35)).toBe(true);
   });

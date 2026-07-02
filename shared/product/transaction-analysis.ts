@@ -140,14 +140,11 @@ export function summarizeComparables(
   comparables: ReadonlyArray<AddressDetailTransaction>,
 ): ComparableSummary | null {
   if (comparables.length === 0) return null;
-  const prices = Array.from<number>({ length: comparables.length });
-  const pricePerSqm = Array.from<number>({ length: comparables.length });
+  const prices = comparables.map((tx) => tx.resalePrice);
+  const pricePerSqm = comparables.map((tx) => tx.pricePerSqm);
   let latestMonth: string | null = null;
 
-  for (let i = 0; i < comparables.length; i++) {
-    const comparable = comparables[i];
-    prices[i] = comparable.resalePrice;
-    pricePerSqm[i] = comparable.pricePerSqm;
+  for (const comparable of comparables) {
     if (!latestMonth || comparable.month > latestMonth) latestMonth = comparable.month;
   }
 
@@ -207,7 +204,7 @@ export function assessAskingPrice(params: {
       ? ((askingPricePerSqm - summary.medianPricePerSqm) / summary.medianPricePerSqm) * 100
       : null;
 
-  const pctVsMedian = (deltaVsMedian / summary.medianPrice) * 100;
+  const pctVsMedian = summary.medianPrice > 0 ? (deltaVsMedian / summary.medianPrice) * 100 : 0;
   let verdict: AskingPriceAssessment["verdict"];
   if (pctVsMedian <= -10) verdict = "well_below";
   else if (pctVsMedian < -3) verdict = "below";
@@ -221,9 +218,9 @@ export function assessAskingPrice(params: {
     deltaVsMedian,
     deltaVsMedianPct: pctVsMedian,
     deltaVsP75,
-    deltaVsP75Pct: (deltaVsP75 / summary.p75Price) * 100,
+    deltaVsP75Pct: summary.p75Price > 0 ? (deltaVsP75 / summary.p75Price) * 100 : 0,
     deltaVsMax,
-    deltaVsMaxPct: (deltaVsMax / summary.maxPrice) * 100,
+    deltaVsMaxPct: summary.maxPrice > 0 ? (deltaVsMax / summary.maxPrice) * 100 : 0,
     percentileAmongComparables: (belowCount / params.comparables.length) * 100,
     askingPricePerSqm,
     pricePerSqmDeltaPct,

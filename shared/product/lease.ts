@@ -17,6 +17,6 @@ export function isBlockAgeEligible(
   currentYear: number,
 ): boolean {
   return (
-    remainingLeaseYears(block.leaseCommenceRange[1], currentYear) >= minRequiredRemainingLease(age)
+    remainingLeaseYears(block.leaseCommenceRange[0], currentYear) >= minRequiredRemainingLease(age)
   );
 }
