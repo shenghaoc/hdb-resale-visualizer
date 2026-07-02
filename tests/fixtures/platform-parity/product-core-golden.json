@@ -1,0 +1,102 @@
+{
+  "scenarios": [
+    {
+      "name": "newer-bto-budget-match",
+      "block": {
+        "addressKey": "punggol-newer",
+        "town": "PUNGGOL",
+        "block": "288A",
+        "streetName": "PUNGGOL PLACE",
+        "coordinates": { "lat": 1.405, "lng": 103.902 },
+        "medianPrice": 620000,
+        "pricePerSqmMedian": 6200,
+        "transactionCount": 24,
+        "floorAreaRange": [92, 94],
+        "leaseCommenceRange": [2016, 2018],
+        "latestMonth": "2026-03",
+        "availableDateRange": ["2024-01", "2026-03"],
+        "flatTypes": ["4 ROOM"],
+        "flatModels": ["Model A"],
+        "nearestMrt": null
+      },
+      "budget": { "min": 580000, "max": 650000, "expectedStatus": "within" },
+      "ageEligibility": { "buyerAge": 35, "currentYear": 2026, "expectedEligible": true }
+    },
+    {
+      "name": "older-lease-low-confidence-overpriced",
+      "block": {
+        "addressKey": "queenstown-old",
+        "town": "QUEENSTOWN",
+        "block": "45",
+        "streetName": "STIRLING ROAD",
+        "coordinates": { "lat": 1.296, "lng": 103.804 },
+        "medianPrice": 430000,
+        "pricePerSqmMedian": 5200,
+        "transactionCount": 2,
+        "floorAreaRange": [82, 86],
+        "leaseCommenceRange": [1968, 1968],
+        "latestMonth": "2023-01",
+        "availableDateRange": ["2021-01", "2023-01"],
+        "flatTypes": ["3 ROOM"],
+        "flatModels": ["Improved"],
+        "nearestMrt": null
+      },
+      "budget": { "min": 300000, "max": 400000, "expectedStatus": "near-above" },
+      "ageEligibility": { "buyerAge": 45, "currentYear": 2026, "expectedEligible": false }
+    }
+  ],
+  "transactions": [
+    {
+      "id": "t1",
+      "month": "2026-03",
+      "flatType": "4 ROOM",
+      "storeyRange": "10 TO 12",
+      "floorAreaSqm": 93,
+      "flatModel": "Model A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years",
+      "resalePrice": 610000,
+      "pricePerSqm": 6559.14,
+      "pricePerSqft": 609.37
+    },
+    {
+      "id": "t2",
+      "month": "2026-02",
+      "flatType": "4 ROOM",
+      "storeyRange": "07 TO 09",
+      "floorAreaSqm": 92,
+      "flatModel": "Model A",
+      "leaseCommenceDate": 2017,
+      "remainingLease": "90 years",
+      "resalePrice": 625000,
+      "pricePerSqm": 6793.48,
+      "pricePerSqft": 631.14
+    },
+    {
+      "id": "t3",
+      "month": "2025-12",
+      "flatType": "4 ROOM",
+      "storeyRange": "13 TO 15",
+      "floorAreaSqm": 94,
+      "flatModel": "Model A",
+      "leaseCommenceDate": 2018,
+      "remainingLease": "91 years",
+      "resalePrice": 640000,
+      "pricePerSqm": 6808.51,
+      "pricePerSqft": 632.53
+    },
+    {
+      "id": "t4",
+      "month": "2023-01",
+      "flatType": "3 ROOM",
+      "storeyRange": "04 TO 06",
+      "floorAreaSqm": 84,
+      "flatModel": "Improved",
+      "leaseCommenceDate": 1968,
+      "remainingLease": "41 years",
+      "resalePrice": 420000,
+      "pricePerSqm": 5000,
+      "pricePerSqft": 464.52
+    }
+  ]
+}
