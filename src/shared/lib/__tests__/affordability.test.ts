@@ -446,16 +446,17 @@ describe("isBlockAgeEligible", () => {
     expect(isBlockAgeEligible(block, 35)).toBe(false);
   });
 
-  it("uses the oldest commencement year in the block, not the newest", () => {
+  it("uses the newest commencement year in the block to match filter/profile semantics", () => {
     const currentYear = getCurrentYear();
-    // Newest commencement 5y ago would pass, but oldest is 60y ago — block fails.
+    // A mixed block range remains eligible if its newest commencement year can
+    // satisfy the lease-to-95 rule, matching the web filters/profile behavior.
     const block = makeBlock({
       leaseCommenceRange: [currentYear - 60, currentYear - 5],
     });
-    expect(isBlockAgeEligible(block, 35)).toBe(false);
+    expect(isBlockAgeEligible(block, 35)).toBe(true);
   });
 
-  it("passes when the oldest commencement year still has enough remaining lease", () => {
+  it("passes when the newest commencement year has enough remaining lease", () => {
     const currentYear = getCurrentYear();
     const block = makeBlock({
       leaseCommenceRange: [currentYear - 5, currentYear - 1],

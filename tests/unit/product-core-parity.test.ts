@@ -31,6 +31,9 @@ describe("shared product core golden parity", () => {
     }
     expect(minRequiredRemainingLease(55)).toBe(40);
     expect(remainingLeaseYears(1968, 2026)).toBe(41);
+    expect(
+      isBlockAgeEligible({ leaseCommenceRange: [2026 - 60, 2026 - 5] }, 35, 2026),
+    ).toBe(true);
   });
 
   it("keeps comparable selection, summaries, verdicts, and caveats stable", () => {
