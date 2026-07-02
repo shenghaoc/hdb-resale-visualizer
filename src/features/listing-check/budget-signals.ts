@@ -2,4 +2,4 @@ export {
   getBudgetMatchSignal,
   type BudgetMatchResult,
   type BudgetMatchStatus,
-} from "@shared/product-core";
+} from "@shared/product";

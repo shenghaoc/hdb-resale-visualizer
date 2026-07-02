@@ -11,7 +11,7 @@ import {
   performListingCheck,
   remainingLeaseYears,
   summarizeComparables,
-} from "../../shared/product-core";
+} from "../../shared/product";
 import type { AddressDetailTransaction, BlockSummary } from "../../shared/data-types";
 
 describe("shared product core golden parity", () => {

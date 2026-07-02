@@ -20,9 +20,9 @@ export {
   type ComparableSummary,
   type ComparableTolerances,
   type TrendRangeKey,
-} from "@shared/product-core";
-import { TREND_RANGE_MONTHS } from "@shared/product-core";
-import type { TrendRangeKey } from "@shared/product-core";
+} from "@shared/product";
+import { TREND_RANGE_MONTHS } from "@shared/product";
+import type { TrendRangeKey } from "@shared/product";
 
 export type BlockTrajectory = {
   currentMedian: number;

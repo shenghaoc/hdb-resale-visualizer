@@ -6,7 +6,7 @@ This repository does **not** contain a desktop implementation. Future platform-s
 
 ## Shared product core
 
-Framework-neutral product logic belongs in `shared/`, especially `shared/product-core.ts` and the existing shared modules it composes. Code in this layer must not import React, DOM APIs, browser storage, MapLibre, Cloudflare Worker APIs, D1 bindings, Wrangler, UI components, or route-specific modules.
+Framework-neutral product logic belongs in `shared/`, especially the focused modules under `shared/product/` and the existing shared modules they compose. Code in this layer must not import React, DOM APIs, browser storage, MapLibre, Cloudflare Worker APIs, D1 bindings, Wrangler, UI components, or route-specific modules.
 
 The shared core is the right home for deterministic buyer semantics such as:
 
@@ -34,7 +34,7 @@ MapLibre source/layer IDs, paint expressions, camera behaviour, OneMap attributi
 Every native-platform PR must include evidence that it has not drifted from the web product:
 
 - [ ] No duplicated business logic for filters, transaction analysis, budget, lease, shortlist, listing verdicts, or caveats.
-- [ ] Shared core is used for buyer-facing logic.
+- [ ] Shared core modules under `shared/product/` are used for buyer-facing logic.
 - [ ] Golden parity tests pass, including `vp test run product-core-parity`.
 - [ ] Fixture output in `tests/fixtures/platform-parity/` is unchanged unless the PR explicitly explains an intentional product-semantics update.
 - [ ] Web app behaviour is verified with the existing unit/type/build checks.

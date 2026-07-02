@@ -5,7 +5,7 @@ export {
   type ComparableQuery,
   type ListingCheckResult,
   type ListingConfidenceResult as ConfidenceResult,
-} from "@shared/product-core";
+} from "@shared/product";
 export type ListingCheckParams = Parameters<
-  typeof import("@shared/product-core").performListingCheck
+  typeof import("@shared/product").performListingCheck
 >[0];
