@@ -10,7 +10,7 @@ export { MAX_SHORTLIST_ITEMS } from "@shared/shortlist-limits";
 /**
  * Shared numeric constants used across the codebase.
  */
-export const MAX_LEASE_DURATION = 99;
+export { MAX_LEASE_DURATION } from "@shared/product/lease";
 export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
 
@@ -59,14 +59,16 @@ export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: stri
 /**
  * HDB affordability and eligibility rules.
  *
- * These are policy thresholds that get tuned over time; centralise them here so
- * affordability helpers and the search-profile wizard stay in sync.
+ * Single-sourced from shared/product so web UI, tests, and future platform
+ * implementations cannot drift on buyer-facing affordability semantics.
  */
-export const HDB_MAX_LTV_RATIO = 0.75;
-export const HDB_MAX_BUYER_AGE = 95;
-export const HDB_LOAN_TENURE_MONTHS = 25 * 12;
-export const HDB_CONCESSIONARY_ANNUAL_RATE = 0.026;
-export const HDB_MORTGAGE_SERVICING_RATIO = 0.3;
+export {
+  HDB_MAX_LTV_RATIO,
+  HDB_LOAN_TENURE_MONTHS,
+  HDB_CONCESSIONARY_ANNUAL_RATE,
+  HDB_MORTGAGE_SERVICING_RATIO,
+} from "@shared/product/affordability";
+export { HDB_MAX_BUYER_AGE } from "@shared/product/lease";
 
 export const SEARCH_PROFILE_MIN_APPLICANT_AGE = 21;
 export const SEARCH_PROFILE_MAX_APPLICANT_AGE = 80;
