@@ -199,7 +199,7 @@ jobs:
         # pnpm store path is configured in the "Install pnpm" step above.
         # actions/cache restores during the pre phase (before step body runs),
         # so the store-dir config is already in place when pnpm install runs.
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: /github/home/.pnpm-store
           key: ${{ runner.os }}-${{ runner.arch }}-browser-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
