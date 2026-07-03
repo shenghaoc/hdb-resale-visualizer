@@ -5,6 +5,7 @@ import {
   NEAR_ME_SEARCH_QUERY,
 } from "@/shared/lib/constants";
 import {
+  createFilterEvaluationContext,
   matchesFilter,
   matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
@@ -218,6 +219,8 @@ export function useFilterPipeline({
       scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
       scopeFuseMatchedKeys: ReadonlySet<string> | null,
     ) => {
+      const evaluationContext =
+        scopeFilters.remainingLeaseMin === null ? null : createFilterEvaluationContext();
       return scopeBlocks.filter((block) => {
         if (
           !matchesFilter(
@@ -226,6 +229,7 @@ export function useFilterPipeline({
             scopeIntent,
             affordabilityProfile,
             scopeFuseMatchedKeys,
+            evaluationContext,
           )
         )
           return false;

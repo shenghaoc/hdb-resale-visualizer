@@ -99,3 +99,7 @@
 ## 2026-06-30 - Avoiding Array Filtering for Simple Comparisons
 **Learning:** When comparing a small, fixed number of variables (e.g., finding the minimum valid age between an applicant and a co-applicant), placing them into an array to use `.filter()` and spreading into `Math.min(...ages)` incurs unnecessary memory allocations and spread operator overhead.
 **Action:** Use direct `if/else` and ternary logic for comparisons of two distinct variables rather than converting them into an array to leverage array utilities.
+
+## 2026-06-30 - Hoist Temporal Clock Reads Out of Hot Loops
+**Learning:** Calling `Temporal.Now.instant().epochMilliseconds` or `Temporal.Now.plainDateISO()` repeatedly inside a hot loop (like `matchesFilter` for tens of thousands of items) allocates Temporal objects and creates avoidable GC pressure. Replacing Temporal with legacy `Date` APIs undermines the project time-handling policy; the correct optimization is to move the Temporal read outside the loop.
+**Action:** Keep clock access on Temporal. For filtering/cache work, compute the needed current-year or timestamp context once per filter pass and pass it through the hot path instead of calling Temporal or `Date` per item.
