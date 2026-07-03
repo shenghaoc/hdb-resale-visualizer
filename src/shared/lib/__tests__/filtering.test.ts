@@ -1,6 +1,7 @@
-import { afterEach, beforeEach, describe, expect, it } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { DEFAULT_FILTERS } from "../constants";
 import {
+  createFilterEvaluationContext,
   getEffectiveMedianPrice,
   getEffectivePricePerSqmMedian,
   matchesFilter,
@@ -370,5 +371,31 @@ describe("filter consistency under rapid state toggles", () => {
     expect(pass1).toHaveLength(1);
     expect(pass2).toHaveLength(2);
     expect(pass3).toEqual(pass1);
+  });
+});
+
+describe("filter evaluation context", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    resetFilteringCachesForTests();
+  });
+
+  it("reuses a Temporal-derived current year across a filter pass", () => {
+    const plainDateSpy = vi
+      .spyOn(Temporal.Now, "plainDateISO")
+      .mockReturnValue(Temporal.PlainDate.from("2026-01-01"));
+    const evaluationContext = createFilterEvaluationContext();
+    const filters = { ...DEFAULT_FILTERS, remainingLeaseMin: 73 };
+    const blocks = [
+      makeBlock({ addressKey: "a", leaseCommenceRange: [1990, 2000] }),
+      makeBlock({ addressKey: "b", leaseCommenceRange: [1995, 2000] }),
+    ];
+
+    const matched = blocks.filter((block) =>
+      matchesFilter(block, filters, null, null, null, evaluationContext),
+    );
+
+    expect(matched).toHaveLength(2);
+    expect(plainDateSpy).toHaveBeenCalledTimes(1);
   });
 });

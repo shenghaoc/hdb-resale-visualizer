@@ -567,25 +567,14 @@ export function resetFilteringCachesForTests(): void {
   stationNamesSourceRef = null;
   townNamesCache = null;
   townNamesSourceRef = null;
-  _cachedYear = null;
-  _cachedYearTimestamp = 0;
 }
 
-// Cache current year per filter pass to avoid repeated Temporal allocations inside
-// the hot loop while still refreshing across year boundaries for long-lived sessions.
-let _cachedYear: number | null = null;
-let _cachedYearTimestamp = 0;
-const YEAR_CACHE_TTL_MS = 60_000; // refresh every 60 seconds
+export type FilterEvaluationContext = {
+  currentYear: number;
+};
 
-function getCachedCurrentYear(): number {
-  // ⚡ Bolt: Use Date.now() instead of Temporal.Now.instant().epochMilliseconds
-  // to avoid allocating new Temporal objects per block in hot filtering loops.
-  const now = Date.now();
-  if (_cachedYear === null || now - _cachedYearTimestamp > YEAR_CACHE_TTL_MS) {
-    _cachedYear = getCurrentYear();
-    _cachedYearTimestamp = now;
-  }
-  return _cachedYear;
+export function createFilterEvaluationContext(): FilterEvaluationContext {
+  return { currentYear: getCurrentYear() };
 }
 
 /**
@@ -630,6 +619,7 @@ export function matchesFilter(
   geographicIntent?: GeographicSearchIntent | null,
   affordabilityProfile?: AffordabilityProfile | null,
   fuseMatchedKeys?: ReadonlySet<string> | null,
+  evaluationContext?: FilterEvaluationContext | null,
 ): boolean {
   // Execute cheaper comparisons first to short-circuit early and avoid expensive checks
   if (filters.town && block.town !== filters.town) {
@@ -656,8 +646,8 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    const maxRemainingLease =
-      MAX_LEASE_DURATION - (getCachedCurrentYear() - block.leaseCommenceRange[1]);
+    const currentYear = evaluationContext?.currentYear ?? getCurrentYear();
+    const maxRemainingLease = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;
     }
