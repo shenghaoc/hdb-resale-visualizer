@@ -116,7 +116,7 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
               }}
               className={cn(
-                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
+                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "price"
                   ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -134,7 +134,7 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
               }}
               className={cn(
-                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors",
+                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "perSqm"
                   ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
