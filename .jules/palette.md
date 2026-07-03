@@ -33,3 +33,6 @@
 ## 2026-06-30 - Accessible selected state on month picker options
 **Learning:** Calendar and month picker controls often iterate mutually exclusive options (like months) as buttons. Without explicit radio semantics, screen reader users cannot quickly determine which option is currently selected or how the options relate to each other.
 **Action:** For mutually exclusive month/day choices, prefer `role="radiogroup"` with an accessible label, `role="radio"` plus `aria-checked` on each option, and full radio keyboard support with roving `tabIndex` and arrow-key navigation.
+## 2026-07-03 - Add keyboard focus visible states to custom interactive controls
+**Learning:** Custom interactive elements built with `role="radio"` or similar compound components in Tailwind often lack implicit keyboard focus styles, unlike native buttons.
+**Action:** Always explicitly define `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50` on custom toggles, tabs, and radio buttons to ensure they remain accessible to keyboard users without introducing mouse-click focus rings.

@@ -312,14 +312,14 @@ export function TownCompareSection({
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-primary")}
-              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted"
+              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(primaryTown, locale)}
             </button>
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-secondary")}
-              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted"
+              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(compareTown, locale)}
             </button>
