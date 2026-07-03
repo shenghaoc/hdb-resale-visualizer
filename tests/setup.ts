@@ -46,3 +46,8 @@ if (typeof URLPattern === "undefined") {
     }
   };
 }
+
+// Add Temporal to global object in JSDOM if needed
+import { Temporal } from "@js-temporal/polyfill";
+global.Temporal = Temporal;
+globalThis.Temporal = Temporal;

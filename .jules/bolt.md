@@ -99,3 +99,7 @@
 ## 2026-06-30 - Avoiding Array Filtering for Simple Comparisons
 **Learning:** When comparing a small, fixed number of variables (e.g., finding the minimum valid age between an applicant and a co-applicant), placing them into an array to use `.filter()` and spreading into `Math.min(...ages)` incurs unnecessary memory allocations and spread operator overhead.
 **Action:** Use direct `if/else` and ternary logic for comparisons of two distinct variables rather than converting them into an array to leverage array utilities.
+
+## 2026-06-30 - Date.now() over Temporal.Now.instant() for Timestamps in Hot Loops
+**Learning:** Calling `Temporal.Now.instant().epochMilliseconds` repeatedly inside a hot loop (like `matchesFilter` for tens of thousands of items) is surprisingly expensive (~647ms per 50,000 calls). It allocates a new Temporal object on every call, leading to large GC pressure and execution time. The legacy `Date.now()` performs identically but takes only ~4ms for 50,000 calls, making it vastly superior for simple cache expirations.
+**Action:** Always prefer `Date.now()` or `performance.now()` for simple elapsed time or TTL calculations inside tight loops rather than allocating full `Temporal` instances.

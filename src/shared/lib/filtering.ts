@@ -578,7 +578,9 @@ let _cachedYearTimestamp = 0;
 const YEAR_CACHE_TTL_MS = 60_000; // refresh every 60 seconds
 
 function getCachedCurrentYear(): number {
-  const now = Temporal.Now.instant().epochMilliseconds;
+  // ⚡ Bolt: Use Date.now() instead of Temporal.Now.instant().epochMilliseconds
+  // to avoid allocating new Temporal objects per block in hot filtering loops.
+  const now = Date.now();
   if (_cachedYear === null || now - _cachedYearTimestamp > YEAR_CACHE_TTL_MS) {
     _cachedYear = getCurrentYear();
     _cachedYearTimestamp = now;
