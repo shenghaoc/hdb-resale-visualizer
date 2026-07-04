@@ -21,6 +21,6 @@ export const onRequestGet = async ({ env, request }: SuggestContext) => {
     return jsonResponse({ suggestions });
   } catch (error) {
     console.error("Suggest API failed:", error);
-    return serverError("suggest failed");
+    return serverError("Internal server error");
   }
 };

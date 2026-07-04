@@ -47,6 +47,6 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
     return jsonResponse({ blocks: shaped, truncated, limit: SEARCH_RESULT_LIMIT });
   } catch (error) {
     console.error("Search API failed:", error);
-    return serverError("search failed");
+    return serverError("Internal server error");
   }
 };
