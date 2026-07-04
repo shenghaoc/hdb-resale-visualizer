@@ -411,7 +411,10 @@ export default {
       console.error("Worker error:", error);
       return new Response(JSON.stringify({ error: "Internal server error" }), {
         status: 500,
-        headers: { "content-type": "application/json; charset=utf-8" },
+        headers: {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-store",
+        },
       });
     }
   },

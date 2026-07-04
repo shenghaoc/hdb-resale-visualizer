@@ -251,11 +251,11 @@ function buildAdjustmentMetaFromResponse(
   const adjustmentMap = new Map<string, AdjustmentInfo>();
 
   for (const c of comparables) {
-    if (c.transactionId && (c as TimeAdjustedComparable).adjustedResalePrice !== undefined) {
+    if (c.transactionId && c.adjustedResalePrice !== undefined) {
       adjustmentMap.set(c.transactionId, {
-        adjustedResalePrice: (c as TimeAdjustedComparable).adjustedResalePrice,
-        adjustedPricePerSqm: (c as TimeAdjustedComparable).adjustedPricePerSqm,
-        adjustmentLabel: (c as TimeAdjustedComparable).adjustmentLabel,
+        adjustedResalePrice: c.adjustedResalePrice ?? null,
+        adjustedPricePerSqm: c.adjustedPricePerSqm ?? null,
+        adjustmentLabel: c.adjustmentLabel ?? null,
       });
     }
   }
@@ -305,7 +305,7 @@ export function ListingCheckPanel({
   const [comparableSetError, setComparableSetError] = useState(false);
   // Always request time-adjustment metadata so the UI can surface when the
   // adjustment succeeded, widened partially, or could not be applied.
-  const [adjustmentEnabled] = useState(true);
+  const adjustmentEnabled = true;
   /** Adjustment metadata from the last API response when ?adjust=time was used. */
   const [adjustmentMeta, setAdjustmentMeta] = useState<{
     adjustmentApplied: boolean;
@@ -617,7 +617,9 @@ export function ListingCheckPanel({
 
   // Mirror the time-adjusted prices into the evidence table when adjustment was
   // applied, so the displayed comparables match the assessment and caveat.
-  const comparables: Array<ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number }> = useMemo(() => {
+  const comparables: Array<
+    ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number }
+  > = useMemo(() => {
     const raw = comparableSet?.comparables ?? [];
     if (!adjustmentMeta?.adjustmentApplied) return raw;
     return raw.map((c) => {
@@ -695,7 +697,8 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setLeaseYearInput(raw);
-      const n = Number(raw);
+      const cleaned = raw.replace(/\D/g, "");
+      const n = Number(cleaned);
       onLeaseYearChange(Number.isFinite(n) && n > 0 ? n : null);
     },
     [onLeaseYearChange],

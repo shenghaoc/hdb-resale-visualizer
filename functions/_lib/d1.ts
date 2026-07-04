@@ -68,6 +68,58 @@ export function serverError(message: string): Response {
 }
 
 /**
+ * Read a request body with a byte-size limit. Returns the decoded string on
+ * success, or a `Response` (400/411/413) on failure.
+ */
+export async function readBodyWithLimit(
+  request: Request,
+  maxBytes: number,
+): Promise<string | Response> {
+  const contentLength = request.headers.get("content-length");
+  if (!contentLength) {
+    return privateJsonResponse({ error: "Length Required" }, { status: 411 });
+  }
+  const declared = Number(contentLength);
+  if (!Number.isInteger(declared) || declared < 0 || declared > maxBytes) {
+    return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
+  }
+
+  const reader = request.body?.getReader();
+  if (!reader) {
+    return privateJsonResponse({ error: "Bad Request" }, { status: 400 });
+  }
+
+  const chunks: Uint8Array[] = [];
+  let totalBytes = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      totalBytes += value.length;
+      if (totalBytes > maxBytes) {
+        try {
+          await reader.cancel();
+        } catch {
+          /* ignore */
+        }
+        return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
+      }
+      chunks.push(value);
+    }
+  } catch {
+    return privateJsonResponse({ error: "Failed to read request body" }, { status: 400 });
+  }
+
+  const buffer = new Uint8Array(totalBytes);
+  let offset = 0;
+  for (const chunk of chunks) {
+    buffer.set(chunk, offset);
+    offset += chunk.length;
+  }
+  return new TextDecoder().decode(buffer);
+}
+
+/**
  * Reconstructs the `BlockSummary` shape from a row of the `blocks` table.
  * Keys, ordering, and null/undefined choices match the original artifact
  * JSON contract enforced by `blockSummarySchema` in `src/lib/dataSchemas.ts`.

@@ -47,7 +47,10 @@ const SORT_KEY_ORDER: SortKey[] = [
 
 // ── Sort helper ────────────────────────────────────────────────────────────
 
-type ExtendedComparable = ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number };
+type ExtendedComparable = ComparableTransaction & {
+  rawResalePrice?: number;
+  rawPricePerSqm?: number;
+};
 
 function sortComparables<T extends ComparableTransaction>(
   comparables: ReadonlyArray<T>,

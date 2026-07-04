@@ -8,7 +8,7 @@
  * Deterministic, no AI, no external API calls, no runtime geocoding.
  */
 
-import { privateJsonResponse } from "../_lib/d1";
+import { privateJsonResponse, readBodyWithLimit } from "../_lib/d1";
 import {
   type CandidateListing,
   type ListingComparableSet,
@@ -78,55 +78,6 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
 }
 
 // ---------------------------------------------------------------------------
-// Body reading
-// ---------------------------------------------------------------------------
-
-async function readBodyWithLimit(request: Request): Promise<string | Response> {
-  const contentLength = request.headers.get("content-length");
-  if (!contentLength) {
-    return privateJsonResponse({ error: "Length Required" }, { status: 411 });
-  }
-  const declared = Number(contentLength);
-  if (!Number.isInteger(declared) || declared < 0 || declared > MAX_BODY_BYTES) {
-    return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
-  }
-
-  const reader = request.body?.getReader();
-  if (!reader) {
-    return privateJsonResponse({ error: "Bad Request" }, { status: 400 });
-  }
-
-  const chunks: Uint8Array[] = [];
-  let totalBytes = 0;
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      totalBytes += value.length;
-      if (totalBytes > MAX_BODY_BYTES) {
-        try {
-          await reader.cancel();
-        } catch {
-          /* ignore */
-        }
-        return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
-      }
-      chunks.push(value);
-    }
-  } catch {
-    return privateJsonResponse({ error: "Failed to read request body" }, { status: 400 });
-  }
-
-  const buffer = new Uint8Array(totalBytes);
-  let offset = 0;
-  for (const chunk of chunks) {
-    buffer.set(chunk, offset);
-    offset += chunk.length;
-  }
-  return new TextDecoder().decode(buffer);
-}
-
-// ---------------------------------------------------------------------------
 // D1 queries
 // ---------------------------------------------------------------------------
 
@@ -175,14 +126,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
   if (adjustParam !== null && !VALID_ADJUST_VALUES.has(adjustParam)) {
     return privateJsonResponse(
-      { error: "Invalid ?adjust value. Expected \"time\"." },
+      { error: 'Invalid ?adjust value. Expected "time".' },
       { status: 400 },
     );
   }
   const applyAdjustment = adjustParam === "time";
 
   // 1. Read and validate body
-  const bodyText = await readBodyWithLimit(request);
+  const bodyText = await readBodyWithLimit(request, MAX_BODY_BYTES);
   if (bodyText instanceof Response) return bodyText;
 
   let parsed: CandidateListing;
@@ -191,10 +142,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     parsed = candidateListingSchema.parse(json) as CandidateListing;
   } catch (e) {
     if (e instanceof z.ZodError) {
-      return privateJsonResponse(
-        { error: "Invalid request body" },
-        { status: 400 },
-      );
+      return privateJsonResponse({ error: "Invalid request body" }, { status: 400 });
     }
     return privateJsonResponse({ error: "Invalid JSON" }, { status: 400 });
   }
