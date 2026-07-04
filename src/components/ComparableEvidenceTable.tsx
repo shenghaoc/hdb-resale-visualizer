@@ -101,7 +101,8 @@ export function ComparableEvidenceTable({
   );
 
   const hasAdjustedPrice = useMemo(
-    () => comparables.some((tx) => tx.rawResalePrice != null),
+    () =>
+      comparables.some((tx) => tx.rawResalePrice != null && tx.rawResalePrice !== tx.resalePrice),
     [comparables],
   );
 
