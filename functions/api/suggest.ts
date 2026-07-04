@@ -1,4 +1,4 @@
-import { jsonResponse, serverError } from "../_lib/d1";
+import { badRequest, jsonResponse, serverError } from "../_lib/d1";
 import { buildSuggestions, parseSuggestRequest } from "../_lib/suggest";
 
 type SuggestContext = {
@@ -11,10 +11,7 @@ export const onRequestGet = async ({ env, request }: SuggestContext) => {
     const url = new URL(request.url);
     const parsed = parseSuggestRequest(url);
     if (!parsed.ok) {
-      return new Response(JSON.stringify({ error: parsed.error }), {
-        status: 400,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return badRequest(parsed.error);
     }
 
     const suggestions = await buildSuggestions(env.DB, parsed.normalizedQuery);

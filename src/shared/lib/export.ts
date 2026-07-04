@@ -19,7 +19,7 @@ export function sanitizeCsvCell(value: string): string {
 /** Quote-escape a string field and apply formula sanitization. */
 export function escapeCsvQuotedField(value: string): string {
   const safe = sanitizeCsvCell(value);
-  return `"${safe.replace(/"/g, '""')}"`;
+  return `"${safe.replaceAll('"', '""')}"`;
 }
 
 export function formatCsvCell(value: string | number | null | undefined): string {

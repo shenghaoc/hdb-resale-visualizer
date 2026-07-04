@@ -392,7 +392,7 @@ const BlockCard = memo(function BlockCard({
 
         <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[0.6rem] font-medium text-muted-foreground">
           <span>{formatSqm(sqm, t, locale)}</span>
-          {mrtDist !== undefined && mrtDist !== null && mrtWalkSeconds !== undefined && (
+          {mrtDist != null && mrtWalkSeconds != null && (
             <span
               className="flex items-center gap-1"
               title={formatMeters(mrtDist, t, locale)}

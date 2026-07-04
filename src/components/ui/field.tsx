@@ -164,9 +164,9 @@ function FieldSeparator({
   );
 }
 
-interface FieldErrorProps extends React.ComponentProps<"div"> {
+type FieldErrorProps = React.ComponentProps<"div"> & {
   errors?: Array<{ message?: string } | undefined>;
-}
+};
 
 function FieldError({ className, children, errors, ...props }: FieldErrorProps) {
   const content = useMemo(() => {

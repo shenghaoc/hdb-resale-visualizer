@@ -9,7 +9,7 @@ import { formatMonth } from "@/shared/lib/format";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-interface MonthPickerProps {
+type MonthPickerProps = {
   value: string | null; // "YYYY-MM"
   onChange: (value: string | null) => void;
   minMonth: string; // "YYYY-MM"
@@ -18,7 +18,7 @@ interface MonthPickerProps {
   id?: string;
   previousYearLabel?: string;
   nextYearLabel?: string;
-}
+};
 
 export function MonthPicker({
   value,

@@ -53,6 +53,13 @@ export function privateJsonResponse(body: JsonValue, init: ResponseInit = {}): R
   return new Response(JSON.stringify(body), { ...init, headers });
 }
 
+export function badRequest(message: string): Response {
+  return new Response(JSON.stringify({ error: message }), {
+    status: 400,
+    headers: { "content-type": "application/json; charset=utf-8" },
+  });
+}
+
 export function notFound(message = "Not Found"): Response {
   return new Response(JSON.stringify({ error: message }), {
     status: 404,
@@ -200,5 +207,20 @@ export const BLOCK_SUMMARY_SELECT_SQL =
   "address_key, town, block, street_name, display_name, lat, lng, median_price, price_per_sqm_median, transaction_count, floor_area_min, floor_area_max, lease_commence_year, latest_month, available_min_month, available_max_month, flat_types_json, flat_models_json, median_price_by_flat_type_json, median_price_per_sqm_by_flat_type_json, nearest_mrt_json, nearby_mrts_json, postal_code";
 
 export { townFilenameToCanonical } from "../../shared/geo";
+
+/**
+ * Extract a URL path parameter as a clean string.
+ * Cloudflare Pages Functions may deliver params as `string | string[]`.
+ * Strips a trailing `.json` extension when present.
+ */
+export function parseSlugParam(
+  params: Record<string, string | string[]>,
+  key: string,
+): string | null {
+  const raw = params[key];
+  const slug = Array.isArray(raw) ? raw[0] : raw;
+  if (!slug) return null;
+  return slug.replace(/\.json$/, "");
+}
 
 /** Prefix indexes for `/api/suggest` — see migration `0005_suggest_indexes.sql`. */

@@ -1,12 +1,10 @@
-import { jsonResponse, notFound, serverError } from "../../_lib/d1";
+import { jsonResponse, notFound, parseSlugParam, serverError } from "../../_lib/d1";
 
 export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
-  const raw = params.addressKey;
-  const slug = Array.isArray(raw) ? raw[0] : raw;
-  if (!slug) {
+  const addressKey = parseSlugParam(params, "addressKey");
+  if (!addressKey) {
     return notFound("addressKey required");
   }
-  const addressKey = slug.replace(/\.json$/, "");
 
   try {
     const row = await env.DB.prepare("SELECT json FROM comparisons WHERE address_key = ?")
