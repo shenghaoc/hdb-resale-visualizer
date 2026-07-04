@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { Bookmark, CircleHelp, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import type { LeftTab } from "@/hooks/usePanelState";
 import type { Translator } from "@/shared/lib/i18n";
 
@@ -166,45 +167,53 @@ export function DesktopTabBar({
         ) : null}
       </Button>
       <span className="desktop-tab-bar-divider" aria-hidden="true" />
-      <Button
-        ref={(node) => {
-          itemRefs.current[4] = node;
-        }}
-        type="button"
-        size="icon"
-        variant="ghost"
-        className="desktop-tab-bar-icon-btn"
-        tabIndex={focusedIndex === 4 ? 0 : -1}
-        onClick={onToggleTheme}
-        onKeyDown={(e) => handleKeyDown(e, 4)}
-        onFocus={() => setFocusedIndex(4)}
-        aria-label={t("app.toggleTheme")}
-        aria-pressed={theme === "dark"}
-        title={t("app.toggleTheme")}
-      >
-        {theme === "light" ? (
-          <Moon data-icon className="size-4" />
-        ) : (
-          <Sun data-icon className="size-4" />
-        )}
-      </Button>
-      <Button
-        ref={(node) => {
-          itemRefs.current[5] = node;
-        }}
-        type="button"
-        size="icon"
-        variant="ghost"
-        className="desktop-tab-bar-icon-btn"
-        tabIndex={focusedIndex === 5 ? 0 : -1}
-        onClick={onOpenGuide}
-        onKeyDown={(e) => handleKeyDown(e, 5)}
-        onFocus={() => setFocusedIndex(5)}
-        aria-label={t("app.openGuide")}
-        title={t("app.openGuide")}
-      >
-        <CircleHelp data-icon className="size-4" />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            ref={(node) => {
+              itemRefs.current[4] = node;
+            }}
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="desktop-tab-bar-icon-btn"
+            tabIndex={focusedIndex === 4 ? 0 : -1}
+            onClick={onToggleTheme}
+            onKeyDown={(e) => handleKeyDown(e, 4)}
+            onFocus={() => setFocusedIndex(4)}
+            aria-label={t("app.toggleTheme")}
+            aria-pressed={theme === "dark"}
+          >
+            {theme === "light" ? (
+              <Moon data-icon className="size-4" />
+            ) : (
+              <Sun data-icon className="size-4" />
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{t("app.toggleTheme")}</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            ref={(node) => {
+              itemRefs.current[5] = node;
+            }}
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="desktop-tab-bar-icon-btn"
+            tabIndex={focusedIndex === 5 ? 0 : -1}
+            onClick={onOpenGuide}
+            onKeyDown={(e) => handleKeyDown(e, 5)}
+            onFocus={() => setFocusedIndex(5)}
+            aria-label={t("app.openGuide")}
+          >
+            <CircleHelp data-icon className="size-4" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{t("app.openGuide")}</TooltipContent>
+      </Tooltip>
     </nav>
   );
 }

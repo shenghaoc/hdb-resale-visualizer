@@ -65,6 +65,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Item,
@@ -363,25 +364,29 @@ const BlockCard = memo(function BlockCard({
                 </span>
               </div>
             </div>
-            <Button
-              size="xs"
-              variant={isSaved ? "secondary" : "ghost"}
-              onClick={(event) => {
-                event.stopPropagation();
-                onToggleShortlist(block.addressKey);
-              }}
-              type="button"
-              className="size-7 shrink-0 rounded-lg p-0"
-              aria-pressed={isSaved}
-              aria-label={t("results.save")}
-              title={isSaved ? t("results.saved") : t("results.save")}
-            >
-              <Bookmark
-                data-icon
-                className={cn("size-3.5", isSaved && "fill-current")}
-                aria-hidden="true"
-              />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="xs"
+                  variant={isSaved ? "secondary" : "ghost"}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onToggleShortlist(block.addressKey);
+                  }}
+                  type="button"
+                  className="size-7 shrink-0 rounded-lg p-0"
+                  aria-pressed={isSaved}
+                  aria-label={t("results.save")}
+                >
+                  <Bookmark
+                    data-icon
+                    className={cn("size-3.5", isSaved && "fill-current")}
+                    aria-hidden="true"
+                  />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{isSaved ? t("results.saved") : t("results.save")}</TooltipContent>
+            </Tooltip>
           </div>
         </div>
 
