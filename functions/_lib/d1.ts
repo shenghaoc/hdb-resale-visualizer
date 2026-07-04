@@ -5,6 +5,8 @@
  * dependency-free (no Node imports) so it runs in the Workers runtime.
  */
 
+import type { NearestMrt } from "../../shared/data-types";
+
 type JsonValue = unknown;
 
 const CACHE_HEADERS = {
@@ -133,8 +135,8 @@ export function rowToBlockSummary(row: BlockRow) {
       row.median_price_per_sqm_by_flat_type_json,
       undefined,
     ),
-    nearestMrt: parseJsonOr<unknown>(row.nearest_mrt_json, null),
-    nearbyMrts: parseJsonOr<unknown[]>(row.nearby_mrts_json, []),
+    nearestMrt: parseJsonOr<NearestMrt | null>(row.nearest_mrt_json, null),
+    nearbyMrts: parseJsonOr<NearestMrt[]>(row.nearby_mrts_json, []),
     postalCode: row.postal_code,
   };
 }

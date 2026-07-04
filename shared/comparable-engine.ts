@@ -24,17 +24,6 @@ export const STOREY_WEIGHT = 0.1;
 export const LEASE_WEIGHT = 0.1;
 export const RECENCY_WEIGHT = 0.05;
 
-/** The set of weights that apply when the lease component is excluded. */
-export const WEIGHTS_WITHOUT_LEASE = {
-  block: BLOCK_WEIGHT,
-  street: STREET_WEIGHT,
-  town: TOWN_WEIGHT,
-  flatType: FLAT_TYPE_WEIGHT,
-  floorArea: FLOOR_AREA_WEIGHT,
-  storey: STOREY_WEIGHT,
-  recency: RECENCY_WEIGHT,
-} as const;
-
 export const LEASE_WEIGHT_SUM_EXCLUDING_LEASE =
   BLOCK_WEIGHT +
   STREET_WEIGHT +

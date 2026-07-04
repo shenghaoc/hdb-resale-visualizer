@@ -13,10 +13,11 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
       .bind(addressKey)
       .first<{ json: string }>();
     if (!row) {
-      return notFound(`no comparison for ${addressKey}`);
+      return notFound("Not found");
     }
     return jsonResponse(JSON.parse(row.json));
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "comparison lookup failed");
+    console.error("comparison lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

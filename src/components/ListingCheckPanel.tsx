@@ -617,7 +617,7 @@ export function ListingCheckPanel({
 
   // Mirror the time-adjusted prices into the evidence table when adjustment was
   // applied, so the displayed comparables match the assessment and caveat.
-  const comparables: ComparableTransaction[] = useMemo(() => {
+  const comparables: Array<ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number }> = useMemo(() => {
     const raw = comparableSet?.comparables ?? [];
     if (!adjustmentMeta?.adjustmentApplied) return raw;
     return raw.map((c) => {
@@ -627,6 +627,8 @@ export function ListingCheckPanel({
         ...c,
         resalePrice: adjusted.adjustedResalePrice,
         pricePerSqm: adjusted.adjustedPricePerSqm ?? c.pricePerSqm,
+        rawResalePrice: c.resalePrice,
+        rawPricePerSqm: c.pricePerSqm,
       };
     });
   }, [comparableSet, adjustmentMeta]);

@@ -8,6 +8,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
     const summaries = (result.results ?? []).map(rowToBlockSummary);
     return jsonResponse(summaries);
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "block-summaries lookup failed");
+    console.error("block-summaries lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

@@ -28,6 +28,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
       .all<BlockRow>();
     return jsonResponse((result.results ?? []).map(rowToBlockSummary));
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "town lookup failed");
+    console.error("town lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

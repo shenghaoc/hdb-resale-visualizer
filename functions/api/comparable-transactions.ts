@@ -175,7 +175,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
   if (adjustParam !== null && !VALID_ADJUST_VALUES.has(adjustParam)) {
     return privateJsonResponse(
-      { error: `Invalid ?adjust value. Expected "time", got "${adjustParam}".` },
+      { error: "Invalid ?adjust value. Expected \"time\"." },
       { status: 400 },
     );
   }
@@ -192,7 +192,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   } catch (e) {
     if (e instanceof z.ZodError) {
       return privateJsonResponse(
-        { error: "Invalid request body", details: e.issues },
+        { error: "Invalid request body" },
         { status: 400 },
       );
     }

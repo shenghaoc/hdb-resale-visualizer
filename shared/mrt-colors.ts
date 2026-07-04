@@ -13,5 +13,3 @@ export const DEFAULT_STATION_COLOR = "#2563eb";
 
 export type MrtLineCode = keyof typeof MRT_LINE_COLORS;
 export type RailLineCode = MrtLineCode | "LRT";
-
-export const MRT_LINE_CODES = Object.keys(MRT_LINE_COLORS) as MrtLineCode[];

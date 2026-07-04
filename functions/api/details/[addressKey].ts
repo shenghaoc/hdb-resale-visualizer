@@ -13,10 +13,11 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
       .bind(addressKey)
       .first<{ json: string }>();
     if (!row) {
-      return notFound(`no detail for ${addressKey}`);
+      return notFound("Not found");
     }
     return jsonResponse(JSON.parse(row.json));
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "detail lookup failed");
+    console.error("detail lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

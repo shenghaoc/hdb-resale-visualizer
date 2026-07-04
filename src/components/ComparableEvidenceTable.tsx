@@ -47,11 +47,13 @@ const SORT_KEY_ORDER: SortKey[] = [
 
 // ── Sort helper ────────────────────────────────────────────────────────────
 
-function sortComparables(
-  comparables: ReadonlyArray<ComparableTransaction>,
+type ExtendedComparable = ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number };
+
+function sortComparables<T extends ComparableTransaction>(
+  comparables: ReadonlyArray<T>,
   sortKey: SortKey,
   sortDirection: SortDirection,
-): ComparableTransaction[] {
+): T[] {
   const dir = sortDirection === "asc" ? 1 : -1;
 
   return [...comparables].sort((a, b) => {
@@ -71,7 +73,7 @@ function sortComparables(
 // ── Props ──────────────────────────────────────────────────────────────────
 
 type ComparableEvidenceTableProps = {
-  comparables: ReadonlyArray<ComparableTransaction>;
+  comparables: ReadonlyArray<ExtendedComparable>;
   referenceMonth: string;
   widenedSearch: boolean;
   caveats: ReadonlyArray<string>;
@@ -96,11 +98,7 @@ export function ComparableEvidenceTable({
   );
 
   const hasAdjustedPrice = useMemo(
-    () =>
-      comparables.some(
-        (tx) =>
-          "timeAdjustedPrice" in tx && (tx as Record<string, unknown>).timeAdjustedPrice != null,
-      ),
+    () => comparables.some((tx) => tx.rawResalePrice != null),
     [comparables],
   );
 
@@ -289,12 +287,8 @@ export function ComparableEvidenceTable({
                 </TableCell>
                 {hasAdjustedPrice && (
                   <TableCell className="text-right text-xs tabular-nums">
-                    {"timeAdjustedPrice" in tx &&
-                    (tx as Record<string, unknown>).timeAdjustedPrice != null
-                      ? formatCompactCurrency(
-                          (tx as Record<string, unknown>).timeAdjustedPrice as number,
-                          locale,
-                        )
+                    {tx.rawResalePrice != null
+                      ? formatCompactCurrency(tx.rawResalePrice, locale)
                       : "—"}
                   </TableCell>
                 )}
