@@ -674,11 +674,16 @@ export function ListingCheckPanel({
   );
 
   // ── Input change handlers (delegate to parent when prop-driven) ───────────
+  // Only commit valid parsed values to the parent; preserve intermediate
+  // edits locally so typing "0" or partial input doesn't clear the field.
   const handleAskingPriceChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setAskingPriceInput(raw);
-      onAskingPriceChange(parsePositiveDecimalInput(raw));
+      const parsed = parsePositiveDecimalInput(raw);
+      if (parsed != null) {
+        onAskingPriceChange(parsed);
+      }
     },
     [onAskingPriceChange],
   );
@@ -687,7 +692,10 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setFloorAreaInput(raw);
-      onFloorAreaChange(parsePositiveDecimalInput(raw));
+      const parsed = parsePositiveDecimalInput(raw);
+      if (parsed != null) {
+        onFloorAreaChange(parsed);
+      }
     },
     [onFloorAreaChange],
   );
@@ -696,10 +704,27 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setLeaseYearInput(raw);
-      onLeaseYearChange(parseLeaseCommenceYearInput(raw));
+      // Only commit valid 4-digit years; preserve intermediate edits locally
+      // so backspacing from "1985" to "198" doesn't clear the input.
+      const parsed = parseLeaseCommenceYearInput(raw);
+      if (parsed != null) {
+        onLeaseYearChange(parsed);
+      }
     },
     [onLeaseYearChange],
   );
+
+  const handleLeaseYearBlur = useCallback(() => {
+    onLeaseYearChange(parseLeaseCommenceYearInput(leaseYearInput));
+  }, [onLeaseYearChange, leaseYearInput]);
+
+  const handleAskingPriceBlur = useCallback(() => {
+    onAskingPriceChange(parsePositiveDecimalInput(askingPriceInput));
+  }, [onAskingPriceChange, askingPriceInput]);
+
+  const handleFloorAreaBlur = useCallback(() => {
+    onFloorAreaChange(parsePositiveDecimalInput(floorAreaInput));
+  }, [onFloorAreaChange, floorAreaInput]);
 
   // ── Check button enabled ──────────────────────────────────────────────────
   const canCheck = selectedAddressKey != null && resolvedAskingPrice != null;
@@ -838,6 +863,7 @@ export function ListingCheckPanel({
                 placeholder={t("askingCheck.askingPricePlaceholder")}
                 value={askingPriceInput}
                 onChange={handleAskingPriceChange}
+                onBlur={handleAskingPriceBlur}
                 aria-label={t("askingCheck.askingPrice")}
                 className="h-10 text-base font-bold tabular-nums"
               />
@@ -854,6 +880,7 @@ export function ListingCheckPanel({
                 placeholder={t("askingCheck.floorAreaPlaceholder")}
                 value={floorAreaInput}
                 onChange={handleFloorAreaChange}
+                onBlur={handleFloorAreaBlur}
                 aria-label={t("askingCheck.floorArea")}
                 className="h-10 text-base font-bold tabular-nums"
               />
@@ -914,6 +941,7 @@ export function ListingCheckPanel({
                 placeholder={t("check.leaseYearPlaceholder")}
                 value={leaseYearInput}
                 onChange={handleLeaseYearChange}
+                onBlur={handleLeaseYearBlur}
                 aria-label={t("check.leaseYear")}
                 className="h-10 text-base font-bold tabular-nums"
               />
@@ -1179,6 +1207,7 @@ export function ListingCheckPanel({
             referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
             widenedSearch={comparableSet.widenedSearch}
             caveats={evidenceCaveats}
+            adjustmentApplied={adjustmentMeta?.adjustmentApplied ?? false}
           />
         </div>
       )}

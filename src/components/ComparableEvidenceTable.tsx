@@ -80,6 +80,7 @@ type ComparableEvidenceTableProps = {
   referenceMonth: string;
   widenedSearch: boolean;
   caveats: ReadonlyArray<string>;
+  adjustmentApplied?: boolean;
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -89,6 +90,7 @@ export function ComparableEvidenceTable({
   referenceMonth,
   widenedSearch,
   caveats,
+  adjustmentApplied = false,
 }: ComparableEvidenceTableProps) {
   const { locale, t } = useI18n();
   const [sortKey, setSortKey] = useState<SortKey>("similarity");
@@ -101,9 +103,8 @@ export function ComparableEvidenceTable({
   );
 
   const hasAdjustedPrice = useMemo(
-    () =>
-      comparables.some((tx) => tx.rawResalePrice != null && tx.rawResalePrice !== tx.resalePrice),
-    [comparables],
+    () => adjustmentApplied && comparables.some((tx) => tx.rawResalePrice != null),
+    [adjustmentApplied, comparables],
   );
 
   function handleSort(key: SortKey) {
