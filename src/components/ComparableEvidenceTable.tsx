@@ -341,9 +341,16 @@ export function ComparableEvidenceTable({
             aria-label={`${formatCompactCurrency(tx.resalePrice, locale)}, ${tx.block} ${tx.streetName}, ${formatMonth(tx.month, locale)}`}
           >
             <div className="flex items-baseline justify-between gap-2">
-              <span className="text-sm font-bold tabular-nums">
-                {formatCompactCurrency(tx.resalePrice, locale)}
-              </span>
+              <div className="min-w-0">
+                <span className="block text-sm font-bold tabular-nums">
+                  {formatCompactCurrency(tx.resalePrice, locale)}
+                </span>
+                {tx.rawResalePrice != null && (
+                  <span className="mt-0.5 block text-[0.62rem] tabular-nums text-muted-foreground">
+                    {t("evidence.col.adjPrice")}: {formatCompactCurrency(tx.rawResalePrice, locale)}
+                  </span>
+                )}
+              </div>
               <span className="text-xs tabular-nums text-muted-foreground">
                 {Math.round(tx.floorAreaSqm)}
                 {t("unit.sqmShort")} ·{" "}

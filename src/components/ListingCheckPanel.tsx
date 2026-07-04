@@ -50,6 +50,10 @@ import {
   QUALITY_LABEL_KEYS,
   QUALITY_HINT_KEYS,
 } from "@/shared/lib/listing-quality";
+import {
+  parseLeaseCommenceYearInput,
+  parsePositiveDecimalInput,
+} from "@/features/listing-check/listingCheckInputs";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -428,22 +432,17 @@ export function ListingCheckPanel({
   // ── Parse numeric inputs from parent props ────────────────────────────────
   const resolvedAskingPrice = useMemo(() => {
     if (askingPrice != null) return askingPrice;
-    const cleaned = askingPriceInput.replace(/[^\d.]/g, "");
-    const n = Number(cleaned);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parsePositiveDecimalInput(askingPriceInput);
   }, [askingPrice, askingPriceInput]);
 
   const resolvedFloorAreaSqm = useMemo(() => {
     if (floorAreaSqm != null) return floorAreaSqm;
-    const cleaned = floorAreaInput.replace(/[^\d.]/g, "");
-    const n = Number(cleaned);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parsePositiveDecimalInput(floorAreaInput);
   }, [floorAreaSqm, floorAreaInput]);
 
   const resolvedLeaseYear = useMemo(() => {
     if (leaseCommenceYear != null) return leaseCommenceYear;
-    const n = Number(leaseYearInput);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parseLeaseCommenceYearInput(leaseYearInput);
   }, [leaseCommenceYear, leaseYearInput]);
 
   // ── Perform listing check via v2 comparable engine API ────────────────────
@@ -675,9 +674,7 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setAskingPriceInput(raw);
-      const cleaned = raw.replace(/[^\d.]/g, "");
-      const n = Number(cleaned);
-      onAskingPriceChange(Number.isFinite(n) && n > 0 ? n : null);
+      onAskingPriceChange(parsePositiveDecimalInput(raw));
     },
     [onAskingPriceChange],
   );
@@ -686,9 +683,7 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setFloorAreaInput(raw);
-      const cleaned = raw.replace(/[^\d.]/g, "");
-      const n = Number(cleaned);
-      onFloorAreaChange(Number.isFinite(n) && n > 0 ? n : null);
+      onFloorAreaChange(parsePositiveDecimalInput(raw));
     },
     [onFloorAreaChange],
   );
@@ -697,9 +692,7 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setLeaseYearInput(raw);
-      const cleaned = raw.replace(/\D/g, "");
-      const n = Number(cleaned);
-      onLeaseYearChange(Number.isFinite(n) && n > 0 ? n : null);
+      onLeaseYearChange(parseLeaseCommenceYearInput(raw));
     },
     [onLeaseYearChange],
   );

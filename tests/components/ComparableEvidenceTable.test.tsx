@@ -6,8 +6,12 @@ import { I18nProvider } from "@/shared/lib/i18n";
 import type { ComparableTransaction } from "../../shared/comparable-engine";
 
 function makeTx(
-  overrides: Partial<ComparableTransaction> & { transactionId: string },
-): ComparableTransaction {
+  overrides: Partial<ComparableTransaction> & {
+    transactionId: string;
+    rawResalePrice?: number;
+    rawPricePerSqm?: number;
+  },
+): ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number } {
   return {
     transactionId: overrides.transactionId,
     month: overrides.month ?? "2025-01",
@@ -22,6 +26,8 @@ function makeTx(
     pricePerSqm: overrides.pricePerSqm ?? 5376,
     similarity: overrides.similarity ?? 0.8,
     matchReasons: overrides.matchReasons ?? ["Same block"],
+    ...(overrides.rawResalePrice != null ? { rawResalePrice: overrides.rawResalePrice } : {}),
+    ...(overrides.rawPricePerSqm != null ? { rawPricePerSqm: overrides.rawPricePerSqm } : {}),
   };
 }
 
@@ -100,6 +106,36 @@ describe("ComparableEvidenceTable", () => {
     expect(within(table).getByText("$/sqm")).toBeInTheDocument();
     expect(within(table).getByText("Similarity")).toBeInTheDocument();
     expect(within(table).getByText("Match Reasons")).toBeInTheDocument();
+  });
+
+  it("shows raw original prices when adjusted prices are displayed", () => {
+    renderTable({
+      comparables: [
+        makeTx({
+          transactionId: "adjusted-1",
+          resalePrice: 612000,
+          pricePerSqm: 6581,
+          rawResalePrice: 501000,
+          rawPricePerSqm: 5387,
+          similarity: 0.99,
+        }),
+      ],
+    });
+
+    const table = screen.getByRole("table");
+    expect(within(table).getByText("Orig. Price")).toBeInTheDocument();
+    const row = within(table).getAllByRole("row")[1];
+    expect(row).toHaveTextContent("612");
+    expect(row).toHaveTextContent("501");
+
+    const mobileCard = screen.getByRole("article");
+    expect(mobileCard).toHaveTextContent("Orig. Price");
+    expect(mobileCard).toHaveTextContent("501");
+  });
+
+  it("does not show the original price column for unadjusted comparables", () => {
+    renderTable();
+    expect(screen.queryByText("Orig. Price")).not.toBeInTheDocument();
   });
 
   // ── Mobile card branch (R3.1 / R3.2) ──────────────────────────────────────

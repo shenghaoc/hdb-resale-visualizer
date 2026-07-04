@@ -6,7 +6,8 @@
   `src/components/ComparableEvidenceTable.tsx` renders a table of comparable
   transactions with columns: month, block/street, flat type, storey range,
   floor area sqm, lease commence year, resale price, price per sqm,
-  time-adjusted price (placeholder), similarity score, and match reasons.
+  original registered price when time adjustment is available, similarity
+  score, and match reasons.
 - **R1.2** The component accepts props: `comparables` (readonly array of
   `ComparableTransaction`), `referenceMonth` (string), `widenedSearch`
   (boolean), and `caveats` (readonly array of string).
@@ -41,8 +42,9 @@
 - **R3.2** The desktop table has `hidden sm:table` and the mobile card list
   has `sm:hidden`. No JavaScript media query or resize observer is used.
 - **R3.3** Mobile cards display: price + area + $/sqm on the first line,
-  block + street on the second line, flat type + storey + lease on the third
-  line, month, a similarity bar with percentage, and match reason badges.
+  original registered price when time adjustment is available, block + street
+  on the second line, flat type + storey + lease on the third line, month, a
+  similarity bar with percentage, and match reason badges.
 - **R3.4** Mobile cards use `<article>` elements with an `aria-label`
   summarising the transaction.
 
@@ -77,13 +79,14 @@
 - **R6.2** The caveat banner is a reinforcing duplicate of the verdict card
   caveats — it remains visible when the verdict card scrolls out of view.
 
-## R7 — Time-adjusted price column
+## R7 — Original price column for adjusted comparables
 
-- **R7.1** The "Adj. Price" column is present in the table header.
-- **R7.2** WHEN the comparable transaction does not include a
-  `timeAdjustedPrice` field THEN the cell displays "—".
-- **R7.3** WHEN no comparable in the dataset has a `timeAdjustedPrice` THEN
-  the entire column is hidden to avoid a column of dashes.
+- **R7.1** WHEN any comparable includes `rawResalePrice` THEN the "Orig. Price"
+  column is present in the table header.
+- **R7.2** WHEN a comparable transaction includes `rawResalePrice` THEN the
+  cell displays the registered resale price before time adjustment.
+- **R7.3** WHEN no comparable in the dataset has `rawResalePrice` THEN the
+  entire column is hidden to avoid a column of dashes.
 
 ## R8 — Virtualisation readiness
 

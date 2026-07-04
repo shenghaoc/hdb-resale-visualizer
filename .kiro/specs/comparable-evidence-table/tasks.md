@@ -42,8 +42,8 @@
 - [ ] **T2.3** Implement table body rows. Each row renders: formatted month,
   `block streetName` composite, flat type, storey range, floor area with
   unit, lease commence year (or "—"), compact currency for resale price,
-  compact currency for $/sqm, time-adjusted price (or "—"), similarity
-  percentage with micro progress bar, and match reason badges.
+  compact currency for $/sqm, original registered price when present,
+  similarity percentage with micro progress bar, and match reason badges.
   → `npm run typecheck` passes. (R1.1, R4.1, R4.2, R4.3, R7.1, R7.2, R10.2,
   R10.5)
 
@@ -67,10 +67,9 @@
   render a centered message with an `Info` icon instead of the table.
   → `npm run typecheck` passes. (R1.3)
 
-- [ ] **T2.8** Implement time-adjusted price column visibility: when no
-  comparable in the array has a `timeAdjustedPrice` field (or all are
-  undefined), hide the entire column. Otherwise show "—" for individual
-  rows missing the value.
+- [ ] **T2.8** Implement original-price column visibility: when no comparable
+  in the array has a `rawResalePrice` field (or all are undefined), hide the
+  entire column. Otherwise show "—" for individual rows missing the value.
   → `npm run typecheck` passes. (R7.2, R7.3)
 
 ## Phase 3 — Mobile card layout
@@ -81,8 +80,9 @@
   → `npm run typecheck` passes. (R3.1, R3.2, R3.4)
 
 - [ ] **T3.2** Implement card content: price row (price + area + $/sqm),
-  location row (block + street), details row (flat type + storey + lease),
-  month, similarity bar with percentage, and match reason badges.
+  original registered price when present, location row (block + street),
+  details row (flat type + storey + lease), month, similarity bar with
+  percentage, and match reason badges.
   → `npm run typecheck` passes. (R3.3)
 
 - [ ] **T3.3** Mobile cards respect the same sort order as the desktop table

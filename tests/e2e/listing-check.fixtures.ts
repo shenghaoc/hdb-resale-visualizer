@@ -1,4 +1,5 @@
 import type { Page } from "@playwright/test";
+import { maxLeaseCommenceYear, MIN_LEASE_COMMENCE_YEAR } from "../../shared/product/lease";
 
 /**
  * Deterministic fixtures + route mocks for the buyer listing-price-check E2E
@@ -132,7 +133,21 @@ export const lowSampleSet: ComparableSet = {
   caveats: [LOW_SAMPLE_CAVEAT],
 };
 
-const REFERENCE_MONTH_RE = /^\d{4}-\d{2}$/;
+const REFERENCE_MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+function isValidLeaseCommenceYear(value: unknown, referenceMonth: unknown): boolean {
+  if (value === null) return true;
+  if (
+    typeof value !== "number" ||
+    !Number.isInteger(value) ||
+    typeof referenceMonth !== "string" ||
+    !REFERENCE_MONTH_RE.test(referenceMonth)
+  ) {
+    return false;
+  }
+  const referenceYear = Number(referenceMonth.slice(0, 4));
+  return value >= MIN_LEASE_COMMENCE_YEAR && value <= maxLeaseCommenceYear(referenceYear);
+}
 
 /**
  * Mirror the server-side `CandidateListing` contract
@@ -153,9 +168,9 @@ function isValidCandidateListing(body: unknown): boolean {
     nonEmpty(b.storeyRange) &&
     typeof b.floorAreaSqm === "number" &&
     b.floorAreaSqm > 0 &&
-    (b.leaseCommenceYear === null || typeof b.leaseCommenceYear === "number") &&
     typeof b.referenceMonth === "string" &&
-    REFERENCE_MONTH_RE.test(b.referenceMonth)
+    REFERENCE_MONTH_RE.test(b.referenceMonth) &&
+    isValidLeaseCommenceYear(b.leaseCommenceYear, b.referenceMonth)
   );
 }
 

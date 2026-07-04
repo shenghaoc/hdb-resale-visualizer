@@ -3,6 +3,7 @@ import type {
   ColorSpecification,
   DataDrivenPropertyValueSpecification,
 } from "@maplibre/maplibre-gl-style-spec";
+import { maxLeaseCommenceYear } from "@shared/product/lease";
 
 // Single-sourced from shared/ so the browser and the Worker agree on the cap.
 export { MAX_SHORTLIST_ITEMS } from "@shared/shortlist-limits";
@@ -10,12 +11,13 @@ export { MAX_SHORTLIST_ITEMS } from "@shared/shortlist-limits";
 /**
  * Shared numeric constants used across the codebase.
  */
-export { MAX_LEASE_DURATION } from "@shared/product/lease";
+export {
+  MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET,
+  MAX_LEASE_DURATION,
+  MIN_LEASE_COMMENCE_YEAR,
+} from "@shared/product/lease";
 export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
-
-export const MIN_LEASE_COMMENCE_YEAR = 1960;
-export const MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET = 100;
 
 let maxLeaseCommenceYearCache: number | undefined;
 
@@ -26,7 +28,7 @@ export const getCurrentYear = (): number => Temporal.Now.plainDateISO().year;
 
 /** Upper bound for lease-commence validation; computed lazily after the Temporal runtime is available. */
 export function getMaxLeaseCommenceYear(): number {
-  maxLeaseCommenceYearCache ??= getCurrentYear() + MAX_FUTURE_LEASE_COMMENCE_YEAR_OFFSET;
+  maxLeaseCommenceYearCache ??= maxLeaseCommenceYear(getCurrentYear());
   return maxLeaseCommenceYearCache;
 }
 

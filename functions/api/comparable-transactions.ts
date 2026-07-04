@@ -19,6 +19,7 @@ import {
 import { buildTrendLookup, computeTimeAdjustments } from "../../shared/time-adjustment";
 import type { AdjustmentMeta } from "../../shared/time-adjustment";
 import type { TimeAdjustedComparable } from "../../shared/data-types";
+import { maxLeaseCommenceYear, MIN_LEASE_COMMENCE_YEAR } from "../../shared/product/lease";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -33,12 +34,25 @@ const candidateListingSchema = z.object({
   storeyRange: z.string().min(1),
   floorAreaSqm: z.number().positive(),
   leaseCommenceYear: z.number().int().positive().nullable(),
-  referenceMonth: z.string().regex(/^\d{4}-\d{2}$/),
+  referenceMonth: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   nearestMrtDistance: z.number().nonnegative().optional(),
 });
 
 // Body size limit: 8 KB is more than enough for a CandidateListing payload.
 const MAX_BODY_BYTES = 8192;
+
+function isValidLeaseCommenceYear(
+  leaseCommenceYear: number | null,
+  referenceMonth: string,
+): boolean {
+  if (leaseCommenceYear == null) return true;
+  const referenceYear = Number(referenceMonth.slice(0, 4));
+  return (
+    Number.isFinite(referenceYear) &&
+    leaseCommenceYear >= MIN_LEASE_COMMENCE_YEAR &&
+    leaseCommenceYear <= maxLeaseCommenceYear(referenceYear)
+  );
+}
 
 // ---------------------------------------------------------------------------
 // D1 ↔ TS mapping
@@ -145,6 +159,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       return privateJsonResponse({ error: "Invalid request body" }, { status: 400 });
     }
     return privateJsonResponse({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  if (!isValidLeaseCommenceYear(parsed.leaseCommenceYear, parsed.referenceMonth)) {
+    return privateJsonResponse({ error: "Invalid request body" }, { status: 400 });
   }
 
   // 2. Run three parallel COUNT(*) queries for scope counts

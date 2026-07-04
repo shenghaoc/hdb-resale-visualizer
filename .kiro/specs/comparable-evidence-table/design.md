@@ -18,9 +18,9 @@ This leaves buyers with three blind spots:
    or a different town.
 
 2. **Key columns are missing.** Lease commence year (or remaining lease),
-   price per sqm, and time-adjusted price (when available) are absent. These
-   are the columns that experienced buyers use to normalise and compare
-   transactions.
+   price per sqm, and the original registered price when time adjustment is
+   available are absent. These are the columns that experienced buyers use to
+   normalise and compare transactions.
 
 3. **No sorting or exploration.** The list is static and ordered by the
    engine's similarity ranking. A buyer who wants to sort by date, price, or
@@ -55,9 +55,8 @@ This leaves buyers with three blind spots:
 - Modifying the API endpoint (`/api/comparable-transactions`) — the response
   shape already contains `similarity`, `matchReasons`, `leaseCommenceDate`,
   `pricePerSqm`, etc.
-- Adding time-adjustment computation — this spec displays `timeAdjustedPrice`
-  only if the engine provides it in the future. Until then, the column shows
-  a dash or "N/A".
+- Adding time-adjustment computation — the table consumes adjusted/raw price
+  fields supplied by `ListingCheckPanel` and the comparable-transactions API.
 - Adding new API endpoints.
 - Changing the verdict card, distribution bar, or caveat rendering (those
   remain unchanged above the evidence table).
@@ -103,14 +102,18 @@ type ComparableEvidenceTableProps = {
 | Storey | `storeyRange` | As-is (e.g. `"07 TO 09"`) | No |
 | Area | `floorAreaSqm` | `"93 sqm"` | Yes |
 | Lease | `leaseCommenceDate` | Year or remaining-lease string | No |
-| Price | `resalePrice` | Currency (compact) | Yes |
-| $/sqm | `pricePerSqm` | Currency (compact) | Yes |
-| Adj. Price | (future field) | Currency or "—" | No |
+| Price | `resalePrice` | Currency (compact); adjusted when available | Yes |
+| $/sqm | `pricePerSqm` | Currency (compact); adjusted when available | Yes |
+| Orig. Price | `rawResalePrice` | Currency or "—" | No |
 | Similarity | `similarity` | `0–100` (displayed as percentage) | Yes |
 | Match Reasons | `matchReasons` | Inline badges | No |
 
 The "Block / Street" column is a composite display column. On mobile cards,
 block and street are shown on separate lines.
+
+When time adjustment is applied, `ListingCheckPanel` mirrors the adjusted
+values into `resalePrice` / `pricePerSqm` for display and keeps the registered
+transaction price in `rawResalePrice`.
 
 #### Sort Behaviour
 
@@ -303,11 +306,9 @@ Follow the existing UI standards:
   above the evidence table. This is intentional — the table may scroll below
   the verdict card on long results. If users find it redundant, the verdict
   card caveats can be removed in a follow-up.
-- **Time-adjusted price column:** The column is present but shows "—" until
-  the engine provides a `timeAdjustedPrice` field. This avoids a schema
-  change now but means the column is initially inert. If this feels
-  premature, the column can be conditionally hidden when no adjusted prices
-  exist in the dataset.
+- **Original price column:** The column appears only when adjusted comparables
+  carry `rawResalePrice`. This keeps raw registered prices visible without
+  adding an empty column for unadjusted result sets.
 - **No `@tanstack/react-virtual` dependency added:** The threshold-based
   virtualisation approach means no new dependency is introduced. If
   virtualisation is needed later, `@tanstack/react-virtual` (~3 KB gzipped)

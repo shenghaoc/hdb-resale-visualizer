@@ -157,23 +157,23 @@ The header bar shows the latest transaction month in the dataset and, when avail
 
 Below the verdict, a **comparable evidence table** shows every transaction used to reach the verdict. Each row includes:
 
-| Column             | Description                                                             |
-| ------------------ | ----------------------------------------------------------------------- |
-| **Month**          | Transaction month                                                       |
-| **Block / Street** | Block and street of the comparable unit                                 |
-| **Flat Type**      | e.g. 4 ROOM, 5 ROOM                                                     |
-| **Storey**         | Storey range of the unit                                                |
-| **Area**           | Floor area in square metres                                             |
-| **Lease**          | Lease commencement year                                                 |
-| **Price**          | Resale price                                                            |
-| **$/sqm**          | Price per square metre                                                  |
-| **Adj. Price**     | Time-adjusted price (shown when adjustment data is available)           |
-| **Similarity**     | How closely the transaction matches your listing (percentage bar)       |
-| **Match Reasons**  | Why this transaction was selected (e.g. "Same block", "Same flat type") |
+| Column             | Description                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------- |
+| **Month**          | Transaction month                                                                                   |
+| **Block / Street** | Block and street of the comparable unit                                                             |
+| **Flat Type**      | e.g. 4 ROOM, 5 ROOM                                                                                 |
+| **Storey**         | Storey range of the unit                                                                            |
+| **Area**           | Floor area in square metres                                                                         |
+| **Lease**          | Lease commencement year                                                                             |
+| **Price**          | Time-adjusted resale price when adjustment data is available; otherwise the registered resale price |
+| **$/sqm**          | Time-adjusted price per square metre when adjustment data is available; otherwise registered $/sqm  |
+| **Orig. Price**    | Registered resale price before time adjustment, shown when adjustment data is available             |
+| **Similarity**     | How closely the transaction matches your listing (percentage bar)                                   |
+| **Match Reasons**  | Why this transaction was selected (e.g. "Same block", "Same flat type")                             |
 
 Click any sortable column header to re-order the table. The default sort is **similarity descending** — the closest match appears first. Clicking the same header again toggles between ascending and descending.
 
-On **mobile**, transactions appear as cards instead of a table. Pill-shaped sort buttons at the top let you change the sort order by tapping.
+On **mobile**, transactions appear as cards instead of a table. Pill-shaped sort buttons at the top let you change the sort order by tapping; when time adjustment is applied, each card shows the original registered price under the primary adjusted price.
 
 #### "Why these comparables?"
 
