@@ -623,10 +623,10 @@ export function ListingCheckPanel({
     if (!adjustmentMeta?.adjustmentApplied) return raw;
     return raw.map((c) => {
       const adjusted = adjustmentMeta.adjustmentMap.get(c.transactionId);
-      if (!adjusted || adjusted.adjustedResalePrice == null) return c;
+      if (!adjusted) return c;
       return {
         ...c,
-        resalePrice: adjusted.adjustedResalePrice,
+        resalePrice: adjusted.adjustedResalePrice ?? c.resalePrice,
         pricePerSqm: adjusted.adjustedPricePerSqm ?? c.pricePerSqm,
         rawResalePrice: c.resalePrice,
         rawPricePerSqm: c.pricePerSqm,

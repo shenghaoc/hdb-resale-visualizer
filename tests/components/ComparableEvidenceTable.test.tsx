@@ -119,18 +119,29 @@ describe("ComparableEvidenceTable", () => {
           rawPricePerSqm: 5387,
           similarity: 0.99,
         }),
+        makeTx({
+          transactionId: "raw-fallback-1",
+          resalePrice: 450000,
+          pricePerSqm: 4839,
+          rawResalePrice: 450000,
+          rawPricePerSqm: 4839,
+          similarity: 0.75,
+        }),
       ],
     });
 
     const table = screen.getByRole("table");
     expect(within(table).getByText("Orig. Price")).toBeInTheDocument();
-    const row = within(table).getAllByRole("row")[1];
-    expect(row).toHaveTextContent("612");
-    expect(row).toHaveTextContent("501");
+    const rows = within(table).getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("612");
+    expect(rows[1]).toHaveTextContent("501");
+    expect(rows[2]).toHaveTextContent("450");
 
-    const mobileCard = screen.getByRole("article");
-    expect(mobileCard).toHaveTextContent("Orig. Price");
-    expect(mobileCard).toHaveTextContent("501");
+    const mobileCards = screen.getAllByRole("article");
+    expect(mobileCards[0]).toHaveTextContent("Orig. Price");
+    expect(mobileCards[0]).toHaveTextContent("501");
+    expect(mobileCards[1]).toHaveTextContent("Orig. Price");
+    expect(mobileCards[1]).toHaveTextContent("450");
   });
 
   it("does not show the original price column for unadjusted comparables", () => {
