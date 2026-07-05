@@ -40,7 +40,6 @@ import {
   resolveGeographicSearchIntent as adapterResolveGeographicSearchIntent,
   matchesGeographicSearchIntent as adapterMatchesGeographicSearchIntent,
   getEffectiveMedianPrice as adapterGetEffectiveMedianPrice,
-  createFilterEvaluationContext as adapterCreateFilterEvaluationContext,
 } from "../../src/shared/lib/filtering";
 
 // ── Shared fixtures ──────────────────────────────────────────────────────
@@ -233,8 +232,11 @@ describe("adapter-vs-shared parity", () => {
         ctx,
       );
 
-      // Adapter needs explicit evaluation context for remaining lease
-      const adapterCtx = s.currentYear ? adapterCreateFilterEvaluationContext() : undefined;
+      // Adapter needs explicit evaluation context for remaining lease.
+      // Use sharedCreateFilterEvaluationContext with fixture year to avoid
+      // getCurrentYear() drift — the adapter's 0-arg version defaults to
+      // the runtime year, which would diverge from the fixture in 2027+.
+      const adapterCtx = ctx;
       const adapterResult = adapterMatchesFilter(
         block as unknown as BlockSummary,
         filters,
@@ -313,7 +315,7 @@ describe("adapter-vs-shared parity", () => {
     expect(result3).toBe(true);
 
     // Verify adapter produces same result for 2026
-    const adapterResult = adapterMatchesFilter(
+    const adapterResult2026 = adapterMatchesFilter(
       block as unknown as BlockSummary,
       filters,
       undefined,
@@ -321,7 +323,18 @@ describe("adapter-vs-shared parity", () => {
       undefined,
       ctx2026,
     );
-    expect(adapterResult).toBe(result1);
+    expect(adapterResult2026).toBe(result1);
+
+    // Verify adapter produces same result for 2025
+    const adapterResult2025 = adapterMatchesFilter(
+      block as unknown as BlockSummary,
+      filters,
+      undefined,
+      undefined,
+      undefined,
+      ctx2025,
+    );
+    expect(adapterResult2025).toBe(result3);
   });
 
   // ── Geographic intent ──────────────────────────────────────────────────
