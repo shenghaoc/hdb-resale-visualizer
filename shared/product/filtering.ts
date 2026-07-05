@@ -640,13 +640,10 @@ export function createFilterEvaluationContext(currentYear: number): FilterEvalua
 
 // ── Main filter predicate ────────────────────────────────────────────────
 
-export type AffordabilityMode = "" | "comfortable" | "stretch";
-
 export function matchesFilter(
   block: BlockSummary,
   filters: FilterState,
   geographicIntent?: GeographicSearchIntent | null,
-  _affordabilityProfile?: unknown,
   fuseMatchedKeys?: ReadonlySet<string> | null,
   evaluationContext?: FilterEvaluationContext | null,
   passesAffordability?: boolean | null,

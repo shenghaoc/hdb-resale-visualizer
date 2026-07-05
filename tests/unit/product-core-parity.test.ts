@@ -126,11 +126,16 @@ describe("shared product core golden parity", () => {
 
   it("keeps affordability calculations deterministic for budget-match scenarios", () => {
     expect(
-      computeAffordabilityVerdict({ monthlyIncome: 9000, cpfOABalance: 180000, age: 35 }, 620000),
+      computeAffordabilityVerdict(
+        { monthlyIncome: 9000, cpfOABalance: 180000, age: 35, coApplicantAge: null },
+        620000,
+      ),
     ).toMatchObject({ status: "stretch", maxAffordablePrice: 720000 });
     expect(
-      computeAffordabilityVerdict({ monthlyIncome: 4500, cpfOABalance: 60000, age: 55 }, 620000)
-        .status,
+      computeAffordabilityVerdict(
+        { monthlyIncome: 4500, cpfOABalance: 60000, age: 55, coApplicantAge: null },
+        620000,
+      ).status,
     ).toBe("over");
   });
 
@@ -243,14 +248,7 @@ describe("shared product core golden parity", () => {
         ? createFilterEvaluationContext(s.currentYear as number)
         : undefined;
       expect(
-        matchesFilter(
-          block as unknown as BlockSummary,
-          filters,
-          undefined,
-          undefined,
-          undefined,
-          ctx,
-        ),
+        matchesFilter(block as unknown as BlockSummary, filters, undefined, undefined, ctx),
       ).toBe(s.expected);
     }
   });

@@ -59,7 +59,6 @@ export function filterScopedBlocks(
         block,
         filters,
         geographicIntent,
-        affordabilityProfile,
         fuseMatchedKeys,
         evaluationContext,
         passesAffordability,

@@ -10,7 +10,7 @@ export type AffordabilityProfile = {
   monthlyIncome: number | null;
   cpfOABalance: number | null;
   age: number | null;
-  coApplicantAge?: number | null;
+  coApplicantAge: number | null;
 };
 
 export type AffordabilityStatus = "comfortable" | "stretch" | "over" | "unknown";

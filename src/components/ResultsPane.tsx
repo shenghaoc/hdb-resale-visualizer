@@ -274,6 +274,7 @@ const BlockCard = memo(function BlockCard({
         monthlyIncome: searchProfile.monthlyIncome,
         cpfOABalance: searchProfile.cpfOABalance,
         age: searchProfile.age,
+        coApplicantAge: searchProfile.coApplicantAge,
       },
       block.medianPrice,
     );

@@ -72,7 +72,6 @@ export function matchesFilter(
     block,
     filters,
     geographicIntent,
-    affordabilityProfile,
     fuseMatchedKeys,
     effectiveEvaluationContext,
     passesAffordability,

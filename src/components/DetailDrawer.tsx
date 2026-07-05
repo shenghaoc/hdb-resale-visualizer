@@ -390,6 +390,7 @@ export function DetailDrawer({
         monthlyIncome: searchProfile.monthlyIncome,
         cpfOABalance: searchProfile.cpfOABalance,
         age: searchProfile.age,
+        coApplicantAge: searchProfile.coApplicantAge,
       },
       currentSummary.medianPrice,
     );

@@ -75,6 +75,7 @@ describe("SearchProfileWizard", () => {
       monthlyIncome,
       cpfOABalance,
       age,
+      coApplicantAge: null,
     });
     expect(expectedCeiling).toBeGreaterThan(0);
 

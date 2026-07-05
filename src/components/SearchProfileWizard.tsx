@@ -207,8 +207,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
         monthlyIncome: monthlyIncome.trim() ? Number(monthlyIncome) : null,
         cpfOABalance: cpfOABalance.trim() ? Number(cpfOABalance) : null,
         age: age.trim() ? Number(age) : null,
+        coApplicantAge: coApplicantAge.trim() ? Number(coApplicantAge) : null,
       }),
-    [monthlyIncome, cpfOABalance, age],
+    [monthlyIncome, cpfOABalance, age, coApplicantAge],
   );
 
   const canSubmit = useMemo(() => {

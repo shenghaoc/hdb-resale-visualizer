@@ -103,24 +103,10 @@ describe("shared/product/filtering", () => {
       const block = makeBlock({ leaseCommenceRange: [1990, 2000] });
       const ctx = createFilterEvaluationContext(2026);
       expect(
-        matchesFilter(
-          block,
-          { ...BASE_FILTERS, remainingLeaseMin: 73 },
-          undefined,
-          undefined,
-          undefined,
-          ctx,
-        ),
+        matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 73 }, undefined, undefined, ctx),
       ).toBe(true);
       expect(
-        matchesFilter(
-          block,
-          { ...BASE_FILTERS, remainingLeaseMin: 74 },
-          undefined,
-          undefined,
-          undefined,
-          ctx,
-        ),
+        matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 74 }, undefined, undefined, ctx),
       ).toBe(false);
     });
   });
@@ -202,7 +188,6 @@ describe("shared/product/filtering", () => {
           undefined,
           undefined,
           undefined,
-          undefined,
           null,
         ),
       ).toBe(true);
@@ -216,7 +201,6 @@ describe("shared/product/filtering", () => {
           undefined,
           undefined,
           undefined,
-          undefined,
           false,
         ),
       ).toBe(false);
@@ -227,7 +211,6 @@ describe("shared/product/filtering", () => {
         matchesFilter(
           makeBlock(),
           { ...BASE_FILTERS, affordable: "comfortable" },
-          undefined,
           undefined,
           undefined,
           undefined,
@@ -249,12 +232,10 @@ describe("shared/product/filtering", () => {
     it("uses fuseMatchedKeys when provided", () => {
       const block = makeBlock();
       const keys = new Set(["test-block"]);
-      expect(
-        matchesFilter(block, { ...BASE_FILTERS, search: "xyz" }, undefined, undefined, keys),
-      ).toBe(true);
-      expect(
-        matchesFilter(block, { ...BASE_FILTERS, search: "xyz" }, undefined, undefined, new Set()),
-      ).toBe(false);
+      expect(matchesFilter(block, { ...BASE_FILTERS, search: "xyz" }, undefined, keys)).toBe(true);
+      expect(matchesFilter(block, { ...BASE_FILTERS, search: "xyz" }, undefined, new Set())).toBe(
+        false,
+      );
     });
   });
 
