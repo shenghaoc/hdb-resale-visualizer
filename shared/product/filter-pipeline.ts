@@ -10,11 +10,12 @@ import type { BlockSummary, FilterState } from "../data-types";
 import {
   type GeographicSearchIntent,
   type FilterEvaluationContext,
+  createFilterEvaluationContext,
   matchesFilter,
   matchesGeographicSearchIntent,
 } from "./filtering";
 import { applyProfileVisibility, type SearchProfile } from "./search-profile";
-import type { AffordabilityProfile } from "./affordability";
+import { passesAffordabilityMode, type AffordabilityProfile } from "./affordability";
 
 // ── Pure pipeline functions ──────────────────────────────────────────────
 
@@ -35,6 +36,20 @@ export function filterScopedBlocks(
   passesAffordabilityForBlock: ((block: BlockSummary) => boolean | null) | null | undefined,
 ): BlockSummary[] {
   return blocks.filter((block) => {
+    // When the caller provides an affordability profile and the filter is active
+    // but no caching callback, compute passesAffordabilityMode directly so
+    // shared/native callers don't silently skip affordability filtering.
+    let passesAffordability: boolean | null = null;
+    if (passesAffordabilityForBlock) {
+      passesAffordability = passesAffordabilityForBlock(block);
+    } else if (filters.affordable && affordabilityProfile) {
+      passesAffordability = passesAffordabilityMode(
+        block,
+        affordabilityProfile,
+        filters.affordable,
+      );
+    }
+
     if (
       !matchesFilter(
         block,
@@ -43,7 +58,7 @@ export function filterScopedBlocks(
         affordabilityProfile,
         fuseMatchedKeys,
         evaluationContext,
-        passesAffordabilityForBlock ? passesAffordabilityForBlock(block) : null,
+        passesAffordability,
       )
     )
       return false;
@@ -70,6 +85,12 @@ export function computeMapFilteredBlocks(
   currentYear: number,
   passesAffordabilityForBlock: ((block: BlockSummary) => boolean | null) | null | undefined,
 ): BlockSummary[] {
+  // Pass explicit currentYear for lease filtering so blocks near the
+  // remaining-lease threshold are evaluated deterministically, not based
+  // on the host date.
+  const evaluationContext =
+    mapFilters.remainingLeaseMin !== null ? createFilterEvaluationContext(currentYear) : null;
+
   const scopedBlocks = applyProfileVisibility(
     filterScopedBlocks(
       blocks,
@@ -77,7 +98,7 @@ export function computeMapFilteredBlocks(
       geographicIntent,
       affordabilityProfile,
       fuseMatchedKeys,
-      null,
+      evaluationContext,
       passesAffordabilityForBlock,
     ),
     searchProfile,
