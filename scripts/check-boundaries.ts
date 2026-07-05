@@ -5,10 +5,12 @@ import * as ts from "typescript";
 const ROOT_DIR = process.cwd();
 const SCRIPTS_DIR = path.join(ROOT_DIR, "scripts");
 const SHARED_DIR = path.join(ROOT_DIR, "shared");
+const SHARED_PRODUCT_DIR = path.join(ROOT_DIR, "shared", "product");
 const SRC_DIR = path.join(ROOT_DIR, "src");
 const SOURCE_EXTENSIONS = [".ts", ".tsx", ".mts", ".cts", ".js", ".mjs", ".cjs"] as const;
 const INDEX_FILENAMES = SOURCE_EXTENSIONS.map((extension) => `index${extension}`);
 const FORBIDDEN_RUNTIME_ALIASES = ["@/", "@shared/"] as const;
+const FORBIDDEN_SHARED_PRODUCT_IMPORTS = ["react", "react-dom", "maplibre-gl"] as const;
 
 type Violation = {
   file: string;
@@ -158,6 +160,69 @@ function visitSourceFile(file: string): void {
 
 for (const entryFile of collectScriptFiles(SCRIPTS_DIR)) {
   visitSourceFile(entryFile);
+}
+
+// ── shared/product boundary check ──────────────────────────────────────
+// shared/product/** must not import from src/**, must not use Vite aliases,
+// and must not import browser-only packages (react, maplibre-gl, etc.).
+
+const sharedProductVisited = new Set<string>();
+
+function checkSharedProductFile(file: string): void {
+  const normalizedFile = path.normalize(file);
+  if (sharedProductVisited.has(normalizedFile)) {
+    return;
+  }
+  sharedProductVisited.add(normalizedFile);
+
+  const sourceText = fs.readFileSync(normalizedFile, "utf8");
+  const sourceFile = ts.createSourceFile(normalizedFile, sourceText, ts.ScriptTarget.Latest, true);
+
+  for (const specifier of getModuleSpecifiers(sourceFile)) {
+    const forbiddenAlias = FORBIDDEN_RUNTIME_ALIASES.find((alias) => specifier.startsWith(alias));
+    if (forbiddenAlias) {
+      recordViolation(
+        normalizedFile,
+        `shared/product must not use Vite alias "${forbiddenAlias}" (${specifier}). Use relative imports.`,
+      );
+      continue;
+    }
+
+    const forbiddenPkg = FORBIDDEN_SHARED_PRODUCT_IMPORTS.find(
+      (pkg) => specifier === pkg || specifier.startsWith(`${pkg}/`),
+    );
+    if (forbiddenPkg) {
+      recordViolation(
+        normalizedFile,
+        `shared/product must not import browser-only package "${forbiddenPkg}".`,
+      );
+      continue;
+    }
+
+    const resolvedFile = resolveSourceFile(normalizedFile, specifier);
+    if (!resolvedFile) {
+      continue;
+    }
+
+    if (isInside(SRC_DIR, resolvedFile)) {
+      recordViolation(
+        normalizedFile,
+        `shared/product must not import from src/ — "${specifier}" resolves to ${toDisplayPath(resolvedFile)}.`,
+      );
+      continue;
+    }
+
+    // Recursively check transitive shared imports
+    if (isInside(SHARED_DIR, resolvedFile)) {
+      checkSharedProductFile(resolvedFile);
+    }
+  }
+}
+
+if (fs.existsSync(SHARED_PRODUCT_DIR)) {
+  for (const entryFile of collectScriptFiles(SHARED_PRODUCT_DIR)) {
+    checkSharedProductFile(entryFile);
+  }
 }
 
 if (violations.length > 0) {

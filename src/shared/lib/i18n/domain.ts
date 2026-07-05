@@ -1,15 +1,18 @@
 import type { Locale } from "./types";
 
+/**
+ * Re-export from shared product core. The platform-neutral alias resolver
+ * lives in `shared/product/search-aliases.ts` so the shared filtering
+ * module can import it without reaching into `src/`.
+ */
+export { resolveMultilingualSearchAliases } from "@shared/product/search-aliases";
+
 type DomainCategory = "town" | "flatType";
 
 type DomainTranslations = Record<DomainCategory, Record<string, string>>;
 
-type SearchAliases = Record<string, string>;
-
 type DomainLocaleConfig = {
   translations: DomainTranslations;
-  searchAliases: SearchAliases;
-  searchAliasPattern?: RegExp;
   budgetDivisor: number;
 };
 
@@ -18,16 +21,12 @@ const EMPTY_TRANSLATIONS: DomainTranslations = {
   flatType: {},
 };
 
-const EMPTY_SEARCH_ALIASES: SearchAliases = {};
-
 const DOMAIN_I18N_CONFIG: Record<Locale, DomainLocaleConfig> = {
   "en-SG": {
     translations: EMPTY_TRANSLATIONS,
-    searchAliases: EMPTY_SEARCH_ALIASES,
     budgetDivisor: 1000,
   },
   "zh-SG": {
-    searchAliasPattern: /[\u3400-\u9fff]/,
     budgetDivisor: 10000,
     translations: {
       town: {
@@ -69,40 +68,6 @@ const DOMAIN_I18N_CONFIG: Record<Locale, DomainLocaleConfig> = {
         "MULTI-GENERATION": "多代同堂",
       },
     },
-    searchAliases: {
-      宏茂桥: "ang mo kio",
-      勿洛: "bedok",
-      碧山: "bishan",
-      武吉巴督: "bukit batok",
-      红山: "bukit merah",
-      武吉班让: "bukit panjang",
-      武吉知马: "bukit timah",
-      中央区: "central area",
-      蔡厝港: "choa chu kang",
-      金文泰: "clementi",
-      芽笼: "geylang",
-      后港: "hougang",
-      裕廊东: "jurong east",
-      裕廊西: "jurong west",
-      加冷: "kallang",
-      黄埔: "whampoa",
-      林厝港: "lim chu kang",
-      马林百列: "marine parade",
-      白沙: "pasir ris",
-      榜鹅: "punggol",
-      女皇镇: "queenstown",
-      三巴旺: "sembawang",
-      盛港: "sengkang",
-      实龙岗: "serangoon",
-      淡滨尼: "tampines",
-      大巴窑: "toa payoh",
-      兀兰: "woodlands",
-      义顺: "yishun",
-      地铁: "mrt",
-      捷运: "mrt",
-      附近: "near",
-      周边: "near",
-    },
   },
 };
 
@@ -130,24 +95,4 @@ export function localizeFlatType(flatType: string, locale: Locale): string {
 
 export function getBudgetDivisor(locale: Locale): number {
   return DOMAIN_I18N_CONFIG[locale].budgetDivisor;
-}
-
-export function resolveMultilingualSearchAliases(input: string): string {
-  let normalized = input;
-
-  for (const localeConfig of Object.values(DOMAIN_I18N_CONFIG)) {
-    if (localeConfig.searchAliasPattern && !localeConfig.searchAliasPattern.test(normalized)) {
-      continue;
-    }
-
-    const sortedAliases = Object.entries(localeConfig.searchAliases).sort(
-      ([left], [right]) => right.length - left.length,
-    );
-
-    for (const [source, target] of sortedAliases) {
-      normalized = normalized.replaceAll(source, ` ${target} `);
-    }
-  }
-
-  return normalized;
 }

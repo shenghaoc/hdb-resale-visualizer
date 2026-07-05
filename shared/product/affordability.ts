@@ -1,3 +1,5 @@
+import type { AffordabilityMode, BlockSummary } from "../data-types";
+
 export const HDB_MAX_LTV_RATIO = 0.75;
 export const HDB_LOAN_TENURE_MONTHS = 25 * 12;
 export const HDB_CONCESSIONARY_ANNUAL_RATE = 0.026;
@@ -8,7 +10,7 @@ export type AffordabilityProfile = {
   monthlyIncome: number | null;
   cpfOABalance: number | null;
   age: number | null;
-  coApplicantAge?: number | null;
+  coApplicantAge: number | null;
 };
 
 export type AffordabilityStatus = "comfortable" | "stretch" | "over" | "unknown";
@@ -112,4 +114,35 @@ export function computeAffordabilityVerdict(
     loanAmount,
     status,
   };
+}
+
+/**
+ * Profile completeness gate for affordability filter and sort. Mirrors the
+ * per-card pill gate but extends to CPF + age so the verdict is meaningful
+ * (income alone with no CPF yields a zero ceiling that would flag every
+ * block as "over").
+ */
+export function isAffordabilityProfileComplete(profile: AffordabilityProfile): boolean {
+  return profile.monthlyIncome !== null && profile.cpfOABalance !== null && profile.age !== null;
+}
+
+/**
+ * Predicate for the affordability filter. Returns true (i.e. pass) when:
+ *  - mode is off ("");
+ *  - the profile is incomplete (filter is disabled — never silently hide);
+ *  - the verdict status matches the active mode.
+ *
+ * "comfortable" mode keeps only comfortable blocks. "stretch" mode keeps
+ * both comfortable + stretch (= everything except over/unknown).
+ */
+export function passesAffordabilityMode(
+  block: Pick<BlockSummary, "medianPrice">,
+  profile: AffordabilityProfile,
+  mode: AffordabilityMode,
+): boolean {
+  if (mode === "") return true;
+  if (!isAffordabilityProfileComplete(profile)) return true;
+  const { status } = computeAffordabilityVerdict(profile, block.medianPrice);
+  if (mode === "comfortable") return status === "comfortable";
+  return status === "comfortable" || status === "stretch";
 }

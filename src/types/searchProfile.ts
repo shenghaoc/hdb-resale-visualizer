@@ -1,20 +1,6 @@
-export type SearchProfile = {
-  version: 1;
-  mainFlatType: string;
-  alternativeFlatTypes: string[];
-  maxBudget: number | null;
-  commuteAnchorLabel: string;
-  commuteAnchorMrt: string | null;
-  maxComfortableCommuteMinutes: number | null;
-  commuteStretchMinutes: number;
-  minimumRemainingLeaseYears: number | null;
-  budgetStretchPercent: number;
-  showStretchOptions: boolean;
-  showAllBlocks: boolean;
-  age: number | null;
-  coApplicantAge: number | null;
-  cpfOABalance: number | null;
-  monthlyIncome: number | null;
-};
-
-export type SearchProfilePatch = Partial<SearchProfile>;
+/**
+ * Re-export from shared product core. The canonical SearchProfile type
+ * lives in `shared/product/search-profile.ts` so platform-neutral matching
+ * logic can import it without reaching into `src/`.
+ */
+export type { SearchProfile, SearchProfilePatch } from "@shared/product/search-profile";

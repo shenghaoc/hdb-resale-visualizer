@@ -1,17 +1,10 @@
 import {
   computeAffordabilityVerdict,
-  computeLoanTenureYears,
   maxAffordablePrice,
-  maxLoanFor,
-  COMFORTABLE_AFFORDABILITY_RATIO,
+  isAffordabilityProfileComplete as _isAffordabilityProfileComplete,
   type AffordabilityStatus,
-  type AffordabilityVerdict,
 } from "@shared/product/affordability";
-import {
-  isBlockAgeEligible as isBlockAgeEligibleForYear,
-  minRequiredRemainingLease,
-  remainingLeaseYears,
-} from "@shared/product/lease";
+import { isBlockAgeEligible as isBlockAgeEligibleForYear } from "@shared/product/lease";
 import type { AffordabilityMode, BlockSummary } from "@/types/data";
 import { getCurrentYear } from "./constants";
 
@@ -20,12 +13,13 @@ export {
   computeLoanTenureYears,
   maxAffordablePrice,
   maxLoanFor,
-  minRequiredRemainingLease,
-  remainingLeaseYears,
   COMFORTABLE_AFFORDABILITY_RATIO,
+  isAffordabilityProfileComplete,
   type AffordabilityStatus,
   type AffordabilityVerdict,
-};
+} from "@shared/product/affordability";
+
+export { minRequiredRemainingLease, remainingLeaseYears } from "@shared/product/lease";
 
 export type AffordabilityProfile = {
   monthlyIncome: number | null;
@@ -44,16 +38,6 @@ export function isBlockAgeEligible(block: BlockSummary, age: number): boolean {
 }
 
 // ── Phase 3: filter + sort helpers ─────────────────────────────────────
-
-/**
- * Profile completeness gate for affordability filter and sort. Mirrors the
- * per-card pill gate but extends to CPF + age so the verdict is meaningful
- * (income alone with no CPF yields a zero ceiling that would flag every
- * block as "over").
- */
-export function isAffordabilityProfileComplete(profile: AffordabilityProfile): boolean {
-  return profile.monthlyIncome !== null && profile.cpfOABalance !== null && profile.age !== null;
-}
 
 /**
  * Stable string fingerprint of the inputs that affect affordability ceilings.
@@ -91,13 +75,11 @@ function getAffordabilityStatusCached(
 }
 
 /**
- * Predicate for the affordability filter. Returns true (i.e. pass) when:
- *  - mode is off ("");
- *  - the profile is incomplete (filter is disabled — never silently hide);
- *  - the verdict status matches the active mode.
+ * Web adapter for the shared `passesAffordabilityMode` with WeakMap caching.
  *
- * "comfortable" mode keeps only comfortable blocks. "stretch" mode keeps
- * both comfortable + stretch (= everything except over/unknown).
+ * The shared version calls `computeAffordabilityVerdict` on every invocation.
+ * The web version caches verdicts per block+profile so the 10,000+ iteration
+ * filter loop doesn't recompute affordability for every block.
  */
 export function passesAffordabilityMode(
   block: BlockSummary,
@@ -105,7 +87,7 @@ export function passesAffordabilityMode(
   mode: AffordabilityMode,
 ): boolean {
   if (mode === "") return true;
-  if (!isAffordabilityProfileComplete(profile)) return true;
+  if (!_isAffordabilityProfileComplete(profile)) return true;
   const status = getAffordabilityStatusCached(block, profile);
   if (mode === "comfortable") return status === "comfortable";
   return status === "comfortable" || status === "stretch";
@@ -120,7 +102,7 @@ export function affordabilityHeadroom(
   block: BlockSummary,
   profile: AffordabilityProfile,
 ): number | null {
-  if (!isAffordabilityProfileComplete(profile)) return null;
+  if (!_isAffordabilityProfileComplete(profile)) return null;
   const ceiling = maxAffordablePrice(profile);
   return ceiling - block.medianPrice;
 }
