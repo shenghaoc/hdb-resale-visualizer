@@ -2,11 +2,13 @@
 
 The React web app is the canonical HDB resale buyer product. Its buyer workflow, data semantics, filters, pricing analysis, lease logic, shortlist behaviour, map overlays, and user-facing caveats define the product contract for any future macOS or native companion.
 
-This repository does **not** contain a desktop implementation. Future platform-specific apps must consume the same shared product core instead of copying logic into a desktop-only fork.
+This repository does **not** contain a desktop implementation. A future native macOS app will be written in Swift. It will **not** import or consume the TypeScript shared core at runtime. Instead, it mirrors the deterministic product logic using the golden fixtures and parity tests described below as the cross-language contract.
 
 ## Shared product core
 
 Framework-neutral product logic belongs in `shared/`, especially the focused modules under `shared/product/` and the existing shared modules they compose. Code in this layer must not import React, DOM APIs, browser storage, MapLibre, Cloudflare Worker APIs, D1 bindings, Wrangler, UI components, or route-specific modules.
+
+This TypeScript layer is the **canonical logic reference**. It is the source of truth for what the product does. Native implementations read it to understand the intended behaviour, then reimplement in their own language. The golden fixtures and parity tests (not direct imports) are the cross-language contract.
 
 ### Modules under `shared/product/`
 
@@ -66,8 +68,8 @@ MapLibre source/layer IDs, paint expressions, camera behaviour, OneMap attributi
 
 Every native-platform PR must include evidence that it has not drifted from the web product:
 
-- [ ] No duplicated business logic for filters, transaction analysis, budget, lease, shortlist, listing verdicts, or caveats.
-- [ ] Shared core modules under `shared/product/` are used for buyer-facing logic.
+- [ ] No out-of-sync business logic for filters, transaction analysis, budget, lease, shortlist, listing verdicts, or caveats.
+- [ ] Native buyer-facing logic mirrors the behavior defined by `shared/product/*`, `tests/fixtures/platform-parity/product-core-golden.json`, and the shared-core tests listed below.
 - [ ] Golden parity tests pass, including `vp test run product-core-parity`.
 - [ ] Shared-core tests pass: `vp test run shared-search-profile`, `vp test run shared-filtering`, `vp test run shared-filter-pipeline`.
 - [ ] Fixture output in `tests/fixtures/platform-parity/` is unchanged unless the PR explicitly explains an intentional product-semantics update.
@@ -92,7 +94,7 @@ vp run build
 vp run check:boundaries
 ```
 
-For UI-affecting web changes, also run the relevant browser or Playwright tests. A future native implementation should add its own adapter/UI tests, but those tests supplement rather than replace the shared-core golden tests.
+For UI-affecting web changes, also run the relevant browser or Playwright tests. A future native implementation should add its own adapter/UI tests and a Swift parity suite that runs the same golden fixtures from `tests/fixtures/platform-parity/`. Those tests supplement rather than replace the shared-core golden tests.
 
 ## Adding a new golden fixture
 
@@ -102,10 +104,21 @@ When product semantics change (new filter, new tier rule, new affordability assu
 2. Add a corresponding test in `tests/unit/product-core-parity.test.ts` that asserts the expected outcome.
 3. Run `vp test run product-core-parity` to confirm the new fixture passes.
 4. Document the semantic change in the PR description.
+5. If a native companion exists, its parity suite must also pass against the updated fixtures before the change merges.
+
+## How native implementations stay in sync
+
+A Swift native app reimplements the same deterministic product rules. It does **not** import the TypeScript modules. Instead, it uses three artefacts as the source of truth:
+
+1. **`shared/product/*`** — the canonical logic reference and executable specification. Read these to understand the intended behaviour.
+2. **`tests/fixtures/platform-parity/product-core-golden.json`** — golden input/output fixtures. The native implementation must produce identical outputs for every fixture.
+3. **Shared-core tests** (`product-core-parity`, `shared-search-profile`, `shared-filtering`, `shared-filter-pipeline`) — these describe the expected behaviour and edge cases. The native app should have equivalent test coverage.
+
+Golden fixtures are the cross-language contract. When the TypeScript core changes, the fixtures change first; the native app catches drift by running its own parity suite against the same fixtures.
 
 ## What counts as product logic drift
 
-- A native implementation that reimplements `matchesFilter` or `evaluateBlockForProfile` instead of importing from `shared/product/`.
-- A native implementation that hardcodes affordability constants instead of importing from `shared/product/affordability`.
+- A native implementation that produces different outputs than the golden fixtures in `tests/fixtures/platform-parity/product-core-golden.json`.
+- A native implementation that hardcodes affordability constants or thresholds that diverge from `shared/product/affordability`.
 - A native implementation that uses different stretch/budget/commute thresholds than the shared core.
 - Any module under `shared/product/` that imports from `src/`, React, MapLibre, or browser globals.
