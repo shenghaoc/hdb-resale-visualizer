@@ -15,6 +15,9 @@
 - [x] Rename "Adj. Price" column header to "Orig. Price" (semantic inversion).
 - [x] Fix search.ts/suggest.ts error message inconsistency.
 - [x] Carry raw price metadata for all comparables when adjustment active.
+- [x] Return sanitized 400 when request.body.getReader() throws.
+- [x] Propagate null immediately when listing fact inputs are cleared.
+- [x] Gate responsive Orig. Price display on adjustmentApplied.
 
 ## Gap Sweep Findings
 
@@ -39,11 +42,12 @@
 - [x] Modernize .replace() to .replaceAll() in export.ts and listingPortalLinks.ts.
 - [x] Simplify verbose null checks in data.ts and ResultsPane.tsx.
 - [x] Fix interface to type convention in month-picker.tsx and field.tsx.
+- [x] Avoid misleading trend-query caveat when adjusted comparable request has no comparables.
+- [x] Extract typed amenity GeoJSON fetch helper for TS 6 Response.json() typing.
+- [x] Make Tooltip wrapper self-providing for isolated component renders.
 
 ## Deferred (Pre-existing, Not in This PR Scope)
 
 - [ ] Bare `as` cast on API responses in cloudSync.ts and ListingCheckPanel.tsx (needs Zod schema definition).
-- [ ] Duplicated fetch chains in useAmenityGeoSync.ts (extract shared async helper).
 - [ ] withErrorHandling HOF for all 10 API endpoints (larger refactor).
-- [ ] Mobile parity gap for adjusted price column (feature addition, not a bug).
 - [ ] NaN display from floorAreaRange tuple access (pre-existing, needs defensive guards).

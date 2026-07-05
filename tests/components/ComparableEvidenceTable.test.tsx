@@ -85,6 +85,7 @@ function renderTable(props?: Partial<Parameters<typeof ComparableEvidenceTable>[
         referenceMonth={props?.referenceMonth ?? "2025-04"}
         widenedSearch={props?.widenedSearch ?? false}
         caveats={props?.caveats ?? []}
+        adjustmentApplied={props?.adjustmentApplied ?? false}
       />
     </I18nProvider>,
   );
@@ -128,6 +129,7 @@ describe("ComparableEvidenceTable", () => {
           similarity: 0.75,
         }),
       ],
+      adjustmentApplied: true,
     });
 
     const table = screen.getByRole("table");
@@ -145,7 +147,16 @@ describe("ComparableEvidenceTable", () => {
   });
 
   it("does not show the original price column for unadjusted comparables", () => {
-    renderTable();
+    renderTable({
+      comparables: [
+        makeTx({
+          transactionId: "raw-present-but-not-adjusted",
+          rawResalePrice: 500000,
+          rawPricePerSqm: 5376,
+        }),
+      ],
+      adjustmentApplied: false,
+    });
     expect(screen.queryByText("Orig. Price")).not.toBeInTheDocument();
   });
 

@@ -347,7 +347,7 @@ export function ComparableEvidenceTable({
                 <span className="block text-sm font-bold tabular-nums">
                   {formatCompactCurrency(tx.resalePrice, locale)}
                 </span>
-                {tx.rawResalePrice != null && (
+                {hasAdjustedPrice && tx.rawResalePrice != null && (
                   <span className="mt-0.5 block text-[0.62rem] tabular-nums text-muted-foreground">
                     {t("evidence.col.adjPrice")}: {formatCompactCurrency(tx.rawResalePrice, locale)}
                   </span>

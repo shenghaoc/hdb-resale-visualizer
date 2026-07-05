@@ -91,7 +91,12 @@ export async function readBodyWithLimit(
     return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
   }
 
-  const reader = request.body?.getReader();
+  let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
+  try {
+    reader = request.body?.getReader();
+  } catch {
+    return privateJsonResponse({ error: "Bad Request" }, { status: 400 });
+  }
   if (!reader) {
     return privateJsonResponse({ error: "Bad Request" }, { status: 400 });
   }

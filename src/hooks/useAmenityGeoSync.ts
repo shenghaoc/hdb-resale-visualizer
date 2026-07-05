@@ -27,6 +27,14 @@ function enrichMrtFeaturesWithLineColors(
   };
 }
 
+async function fetchFeatureCollection(url: string, label: string): Promise<FeatureCollection> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${label}: ${response.status}`);
+  }
+  return (await response.json()) as FeatureCollection;
+}
+
 export function useAmenityGeoSync({
   map,
   mrtStationsEnabled,
@@ -42,11 +50,7 @@ export function useAmenityGeoSync({
 
   useEffect(() => {
     if (mrtStationsEnabled && !stationsGeoJson) {
-      fetch(`${API_BASE_PATH}/mrt-stations`)
-        .then((r) => {
-          if (!r.ok) throw new Error(`Failed to load stations: ${r.status}`);
-          return r.json();
-        })
+      void fetchFeatureCollection(`${API_BASE_PATH}/mrt-stations`, "stations")
         .then((data: FeatureCollection) =>
           setStationsGeoJson(enrichMrtFeaturesWithLineColors(data, "stationName")),
         )
@@ -58,11 +62,7 @@ export function useAmenityGeoSync({
 
   useEffect(() => {
     if (mrtExitsEnabled && !exitsGeoJson) {
-      fetch(`${API_BASE_PATH}/mrt-exits`)
-        .then((r) => {
-          if (!r.ok) throw new Error(`Failed to load exits: ${r.status}`);
-          return r.json();
-        })
+      void fetchFeatureCollection(`${API_BASE_PATH}/mrt-exits`, "exits")
         .then((data: FeatureCollection) =>
           setExitsGeoJson(enrichMrtFeaturesWithLineColors(data, "STATION_NA")),
         )

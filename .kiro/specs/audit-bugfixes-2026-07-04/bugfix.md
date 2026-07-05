@@ -18,6 +18,14 @@ PR #336 collects audit fixes found while hardening the buyer listing-check flow 
 
 1.5 WHEN the comparable-transactions API receives an impossible reference month such as `2026-99` THEN validation can accept the shape even though no real calendar month exists.
 
+1.6 WHEN the runtime body stream is already locked or disturbed THEN `readBodyWithLimit` can throw while acquiring a reader instead of returning a sanitized 400 response.
+
+1.7 WHEN a user clears asking price, floor-area, or lease-year inputs THEN the parent listing-check state can keep the stale previous value until blur.
+
+1.8 WHEN `?adjust=time` is requested and no comparable transactions exist THEN the API can report a trend-query failure even though no trend query was needed.
+
+1.9 WHEN raw price metadata is present but time adjustment is not active THEN responsive evidence cards can show **Orig. Price** inconsistently with the desktop table.
+
 ### Expected Behavior
 
 2.1 The primary **Price** and **$/sqm** evidence values SHALL be the time-adjusted values when adjustment data is available; otherwise they SHALL be raw registered values.
@@ -31,6 +39,14 @@ PR #336 collects audit fixes found while hardening the buyer listing-check flow 
 2.5 Current and legacy listing-check surfaces SHALL share one positive decimal parser for asking price and floor area.
 
 2.6 The `/api/comparable-transactions` endpoint SHALL accept only real `YYYY-MM` calendar months.
+
+2.7 Request body reader acquisition failures SHALL return a private sanitized 400 response.
+
+2.8 Clearing listing fact inputs SHALL immediately propagate `null` to the parent state.
+
+2.9 Zero-comparable adjusted requests SHALL preserve the no-comparable caveat without adding a misleading adjustment failure caveat.
+
+2.10 Desktop and responsive evidence layouts SHALL use the same `adjustmentApplied` gate for **Orig. Price**.
 
 ### Unchanged Behavior
 

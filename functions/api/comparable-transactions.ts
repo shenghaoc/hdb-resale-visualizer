@@ -301,10 +301,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   };
 
   if (applyAdjustment) {
-    const effectiveMeta = adjustmentMeta ?? {
-      adjustmentApplied: false,
-      adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
-    };
+    const effectiveMeta =
+      adjustmentMeta ??
+      (result.comparables.length === 0
+        ? {
+            adjustmentApplied: false,
+            adjustmentCaveats: [],
+          }
+        : {
+            adjustmentApplied: false,
+            adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
+          });
     if (adjustedComparables) {
       const comparablesWithAdjustment = result.comparables.map((c, i) => ({
         ...c,

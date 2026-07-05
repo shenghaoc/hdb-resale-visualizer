@@ -680,6 +680,10 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setAskingPriceInput(raw);
+      if (raw.trim() === "") {
+        onAskingPriceChange(null);
+        return;
+      }
       const parsed = parsePositiveDecimalInput(raw);
       if (parsed != null) {
         onAskingPriceChange(parsed);
@@ -692,6 +696,10 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setFloorAreaInput(raw);
+      if (raw.trim() === "") {
+        onFloorAreaChange(null);
+        return;
+      }
       const parsed = parsePositiveDecimalInput(raw);
       if (parsed != null) {
         onFloorAreaChange(parsed);
@@ -704,6 +712,10 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setLeaseYearInput(raw);
+      if (raw.trim() === "") {
+        onLeaseYearChange(null);
+        return;
+      }
       // Only commit valid 4-digit years; preserve intermediate edits locally
       // so backspacing from "1985" to "198" doesn't clear the input.
       const parsed = parseLeaseCommenceYearInput(raw);
