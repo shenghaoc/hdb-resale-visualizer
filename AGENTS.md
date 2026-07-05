@@ -43,6 +43,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 **Completed:**
 
 - [**Platform Parity Extraction**](.kiro/specs/platform-parity-extraction/tasks.md) — Deterministic buyer/filter/search/profile logic moved to shared product core.
+- [**Product Core Adapter Parity**](.kiro/specs/product-core-adapter-parity/tasks.md) — Focused adapter-vs-shared parity tests for future Swift/macOS mirroring.
 - [**Global Search Typeahead**](.kiro/specs/search-typeahead/tasks.md) — Ranked suggest endpoint + combobox UI.
 - [**Header & Map Control Fixes**](.kiro/specs/header-blocks-map-controls/tasks.md) — Pointer-events fix + UI polish.
 - [**UI Redesign**](.kiro/specs/redesign-ui/tasks.md) — Location scope, visual grounding, amenity data.
