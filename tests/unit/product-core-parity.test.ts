@@ -253,6 +253,42 @@ describe("shared product core golden parity", () => {
     }
   });
 
+  it("keeps remaining lease filtering deterministic across explicit years", () => {
+    for (const scenario of golden.leaseDeterminismScenarios) {
+      const block: BlockSummary = {
+        addressKey: scenario.name,
+        town: "BEDOK",
+        block: "1",
+        streetName: "TEST",
+        coordinates: { lat: 1.35, lng: 103.8 },
+        medianPrice: 500000,
+        pricePerSqmMedian: 5500,
+        transactionCount: 5,
+        floorAreaRange: [80, 100],
+        leaseCommenceRange: [
+          scenario.blockLeaseCommenceRange[0]!,
+          scenario.blockLeaseCommenceRange[1]!,
+        ],
+        latestMonth: "2026-01",
+        availableDateRange: ["2024-01", "2026-01"],
+        flatTypes: ["4 ROOM"],
+        flatModels: ["MODEL A"],
+        nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
+        postalCode: null,
+      };
+      const filters: FilterState = {
+        ...DEFAULT_FILTERS,
+        remainingLeaseMin: scenario.filterRemainingLeaseMin,
+      };
+
+      for (const [yearText, expected] of Object.entries(scenario.expectedByYear)) {
+        const ctx = createFilterEvaluationContext(Number(yearText));
+
+        expect(matchesFilter(block, filters, undefined, undefined, ctx)).toBe(expected);
+      }
+    }
+  });
+
   // ── Geographic search parity ───────────────────────────────────────────
 
   it("keeps geographic search intent stable", () => {
