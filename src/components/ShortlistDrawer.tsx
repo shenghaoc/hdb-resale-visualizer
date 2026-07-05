@@ -1547,9 +1547,7 @@ export function ShortlistDrawer({
                   />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="text-sm font-semibold text-foreground">
-                    {t("tab.saved")}
-                  </p>
+                  <p className="text-sm font-semibold text-foreground">{t("tab.saved")}</p>
                   <p className="text-xs text-muted-foreground">
                     {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
                   </p>
