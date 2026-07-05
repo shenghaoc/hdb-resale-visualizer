@@ -127,6 +127,23 @@ describe("shared/product/search-profile", () => {
     it("returns false for default (empty) profile", () => {
       expect(hasCompletedSearchProfile(makeProfile())).toBe(false);
     });
+
+    it("returns false for nullish profile values", () => {
+      expect(hasCompletedSearchProfile(null)).toBe(false);
+      expect(hasCompletedSearchProfile(undefined)).toBe(false);
+    });
+
+    it("returns false for partial profile payloads with missing required fields", () => {
+      expect(hasCompletedSearchProfile({ mainFlatType: "4 ROOM" })).toBe(false);
+      expect(
+        hasCompletedSearchProfile({
+          mainFlatType: "4 ROOM",
+          commuteAnchorLabel: "Raffles Place",
+          commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+          maxComfortableCommuteMinutes: 30,
+        }),
+      ).toBe(false);
+    });
   });
 
   describe("computeRemainingLeaseYears", () => {

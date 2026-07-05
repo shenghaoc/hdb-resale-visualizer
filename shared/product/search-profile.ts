@@ -197,13 +197,15 @@ export function evaluateBlockForProfile(
   return evaluate(block);
 }
 
-export function hasCompletedSearchProfile(profile: SearchProfile): boolean {
+export function hasCompletedSearchProfile(
+  profile: Partial<SearchProfile> | null | undefined,
+): boolean {
   return Boolean(
-    profile.mainFlatType.trim() &&
-      profile.commuteAnchorLabel.trim() &&
-      profile.commuteAnchorMrt?.trim() &&
-      profile.maxComfortableCommuteMinutes !== null &&
-      profile.minimumRemainingLeaseYears !== null,
+    profile?.mainFlatType?.trim() &&
+      profile?.commuteAnchorLabel?.trim() &&
+      profile?.commuteAnchorMrt?.trim() &&
+      profile?.maxComfortableCommuteMinutes != null &&
+      profile?.minimumRemainingLeaseYears != null,
   );
 }
 
