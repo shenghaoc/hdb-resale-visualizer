@@ -408,10 +408,13 @@ export default {
         return assetResponse;
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Worker error";
-      return new Response(JSON.stringify({ error: message }), {
+      console.error("Worker error:", error);
+      return new Response(JSON.stringify({ error: "Internal server error" }), {
         status: 500,
-        headers: { "content-type": "application/json; charset=utf-8" },
+        headers: {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "no-store",
+        },
       });
     }
   },

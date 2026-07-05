@@ -6,8 +6,12 @@ import { I18nProvider } from "@/shared/lib/i18n";
 import type { ComparableTransaction } from "../../shared/comparable-engine";
 
 function makeTx(
-  overrides: Partial<ComparableTransaction> & { transactionId: string },
-): ComparableTransaction {
+  overrides: Partial<ComparableTransaction> & {
+    transactionId: string;
+    rawResalePrice?: number;
+    rawPricePerSqm?: number;
+  },
+): ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number } {
   return {
     transactionId: overrides.transactionId,
     month: overrides.month ?? "2025-01",
@@ -22,6 +26,8 @@ function makeTx(
     pricePerSqm: overrides.pricePerSqm ?? 5376,
     similarity: overrides.similarity ?? 0.8,
     matchReasons: overrides.matchReasons ?? ["Same block"],
+    ...(overrides.rawResalePrice != null ? { rawResalePrice: overrides.rawResalePrice } : {}),
+    ...(overrides.rawPricePerSqm != null ? { rawPricePerSqm: overrides.rawPricePerSqm } : {}),
   };
 }
 
@@ -79,6 +85,7 @@ function renderTable(props?: Partial<Parameters<typeof ComparableEvidenceTable>[
         referenceMonth={props?.referenceMonth ?? "2025-04"}
         widenedSearch={props?.widenedSearch ?? false}
         caveats={props?.caveats ?? []}
+        adjustmentApplied={props?.adjustmentApplied ?? false}
       />
     </I18nProvider>,
   );
@@ -100,6 +107,57 @@ describe("ComparableEvidenceTable", () => {
     expect(within(table).getByText("$/sqm")).toBeInTheDocument();
     expect(within(table).getByText("Similarity")).toBeInTheDocument();
     expect(within(table).getByText("Match Reasons")).toBeInTheDocument();
+  });
+
+  it("shows raw original prices when adjusted prices are displayed", () => {
+    renderTable({
+      comparables: [
+        makeTx({
+          transactionId: "adjusted-1",
+          resalePrice: 612000,
+          pricePerSqm: 6581,
+          rawResalePrice: 501000,
+          rawPricePerSqm: 5387,
+          similarity: 0.99,
+        }),
+        makeTx({
+          transactionId: "raw-fallback-1",
+          resalePrice: 450000,
+          pricePerSqm: 4839,
+          rawResalePrice: 450000,
+          rawPricePerSqm: 4839,
+          similarity: 0.75,
+        }),
+      ],
+      adjustmentApplied: true,
+    });
+
+    const table = screen.getByRole("table");
+    expect(within(table).getByText("Orig. Price")).toBeInTheDocument();
+    const rows = within(table).getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("612");
+    expect(rows[1]).toHaveTextContent("501");
+    expect(rows[2]).toHaveTextContent("450");
+
+    const mobileCards = screen.getAllByRole("article");
+    expect(mobileCards[0]).toHaveTextContent("Orig. Price");
+    expect(mobileCards[0]).toHaveTextContent("501");
+    expect(mobileCards[1]).toHaveTextContent("Orig. Price");
+    expect(mobileCards[1]).toHaveTextContent("450");
+  });
+
+  it("does not show the original price column for unadjusted comparables", () => {
+    renderTable({
+      comparables: [
+        makeTx({
+          transactionId: "raw-present-but-not-adjusted",
+          rawResalePrice: 500000,
+          rawPricePerSqm: 5376,
+        }),
+      ],
+      adjustmentApplied: false,
+    });
+    expect(screen.queryByText("Orig. Price")).not.toBeInTheDocument();
   });
 
   // ── Mobile card branch (R3.1 / R3.2) ──────────────────────────────────────

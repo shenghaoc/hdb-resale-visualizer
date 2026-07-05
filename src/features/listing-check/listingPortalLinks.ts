@@ -11,7 +11,7 @@ function buildFreetext(block: BlockSummary): string {
 }
 
 function encodePathSegment(value: string): string {
-  return encodeURIComponent(value).replace(/%20/g, "+");
+  return encodeURIComponent(value).replaceAll("%20", "+");
 }
 
 export function propertyGuruUrl(block: BlockSummary): string {

@@ -4,7 +4,7 @@ import {
   Line,
   XAxis,
   YAxis,
-  Tooltip,
+  Tooltip as RechartsTooltip,
   Legend,
   ResponsiveContainer,
 } from "recharts";
@@ -82,6 +82,7 @@ import type { ShortlistSync } from "@/hooks/useShortlist";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldContent, FieldLabel } from "@/components/ui/field";
 import {
@@ -1373,23 +1374,32 @@ export function ShortlistDrawer({
                 </Badge>
               </CardTitle>
             </div>
-            <Button
-              onClick={onToggleOpen}
-              size="icon-xs"
-              variant="outline"
-              type="button"
-              className="rounded-lg border-border/50 bg-card/80"
-              aria-expanded={isOpen}
-              aria-controls="shortlist-content"
-              aria-label={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
-              title={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
-            >
-              <ChevronDown
-                data-icon
-                className={cn("size-4 transition-transform", isOpen ? "rotate-180" : "rotate-0")}
-                aria-hidden="true"
-              />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  onClick={onToggleOpen}
+                  size="icon-xs"
+                  variant="outline"
+                  type="button"
+                  className="rounded-lg border-border/50 bg-card/80"
+                  aria-expanded={isOpen}
+                  aria-controls="shortlist-content"
+                  aria-label={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
+                >
+                  <ChevronDown
+                    data-icon
+                    className={cn(
+                      "size-4 transition-transform",
+                      isOpen ? "rotate-180" : "rotate-0",
+                    )}
+                    aria-hidden="true"
+                  />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
+              </TooltipContent>
+            </Tooltip>
           </div>
 
           {rows.length > 0 ? (
@@ -1581,7 +1591,7 @@ export function ShortlistDrawer({
                                 tickLine={false}
                                 width={compareChart.priceAxisWidth}
                               />
-                              <Tooltip
+                              <RechartsTooltip
                                 contentStyle={{
                                   backgroundColor: compareChart.colors.popover,
                                   border: `1px solid ${compareChart.colors.border}`,
@@ -1788,21 +1798,25 @@ export function ShortlistDrawer({
                                   </div>
                                 </button>
 
-                                <Button
-                                  size="icon-xs"
-                                  variant="ghost"
-                                  onClick={() => onRemove(row.item.addressKey)}
-                                  type="button"
-                                  className="rounded-lg text-muted-foreground hover:text-destructive"
-                                  aria-label={t("shortlist.remove")}
-                                  title={t("shortlist.remove")}
-                                >
-                                  <X
-                                    data-icon="inline-start"
-                                    className="size-4"
-                                    aria-hidden="true"
-                                  />
-                                </Button>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Button
+                                      size="icon-xs"
+                                      variant="ghost"
+                                      onClick={() => onRemove(row.item.addressKey)}
+                                      type="button"
+                                      className="rounded-lg text-muted-foreground hover:text-destructive"
+                                      aria-label={t("shortlist.remove")}
+                                    >
+                                      <X
+                                        data-icon="inline-start"
+                                        className="size-4"
+                                        aria-hidden="true"
+                                      />
+                                    </Button>
+                                  </TooltipTrigger>
+                                  <TooltipContent>{t("shortlist.remove")}</TooltipContent>
+                                </Tooltip>
                               </div>
                             </CardHeader>
 

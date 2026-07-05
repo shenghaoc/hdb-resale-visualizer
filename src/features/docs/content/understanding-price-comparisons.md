@@ -49,11 +49,11 @@ Comparable prices are **time-adjusted** to the latest data month by default, so 
 
 ## The comparable evidence table
 
-Every transaction behind the verdict is listed with its month, block/street, flat type, storey range, floor area, lease year, price, $/sqm, time-adjusted price (when available), a similarity score, and the match reasons (e.g. "Same block", "Same flat type"). Sort by any column; the default is similarity descending. On mobile, the table becomes cards with sort pills. Expand **"Why these comparables?"** to see how the set was selected.
+Every transaction behind the verdict is listed with its month, block/street, flat type, storey range, floor area, lease year, price, $/sqm, original price when time adjustment is available, a similarity score, and the match reasons (e.g. "Same block", "Same flat type"). Sort by any column; the default is similarity descending. On mobile, the table becomes cards with sort pills. Expand **"Why these comparables?"** to see how the set was selected.
 
 ## Interpreting the numbers
 
-- **Price** — the registered resale price at the time of the transaction. Older transactions reflect an older market; check the month.
+- **Price** — the time-adjusted resale price when adjustment data is available; otherwise the registered resale price. When adjustment is applied, **Orig. Price** shows the registered resale price at the time of the transaction.
 - **Floor area** — in square metres, as registered. $/sqm is usually the better basis for comparing different-sized units.
 - **Flat type** — 2-Room to Executive. Prices are only meaningful within the same flat type; the app never mixes types in a comparison unless stated.
 - **Town** — towns differ structurally in price. A "cheap" price in one town may be expensive in another; town-level comparisons are shown in the town profile.

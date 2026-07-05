@@ -59,8 +59,8 @@
 
 ## Notes / follow-ups (not in this spec)
 
-- Time-adjusted toggle has no UI yet (`adjustmentEnabled` is permanently
-  `false`); add a toggle test if/when the control ships.
+- Time-adjusted toggle has no UI yet; `ListingCheckPanel` requests time
+  adjustment by default. Add a toggle test if/when the control ships.
 - `handleCheckSaveToShortlist` could be enriched to persist structured
   `fairRangeLow/Median/High` (the schema already supports them) so the saved
   item shows a fair range; the save test would then assert those columns.

@@ -25,6 +25,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
     }));
     return jsonResponse(points);
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "trends lookup failed");
+    console.error("trends lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

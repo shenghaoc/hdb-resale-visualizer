@@ -1,22 +1,21 @@
-import { jsonResponse, notFound, serverError } from "../../_lib/d1";
+import { jsonResponse, notFound, parseSlugParam, serverError } from "../../_lib/d1";
 
 export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
-  const raw = params.addressKey;
-  const slug = Array.isArray(raw) ? raw[0] : raw;
-  if (!slug) {
+  const addressKey = parseSlugParam(params, "addressKey");
+  if (!addressKey) {
     return notFound("addressKey required");
   }
-  const addressKey = slug.replace(/\.json$/, "");
 
   try {
     const row = await env.DB.prepare("SELECT json FROM comparisons WHERE address_key = ?")
       .bind(addressKey)
       .first<{ json: string }>();
     if (!row) {
-      return notFound(`no comparison for ${addressKey}`);
+      return notFound("Not found");
     }
     return jsonResponse(JSON.parse(row.json));
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "comparison lookup failed");
+    console.error("comparison lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

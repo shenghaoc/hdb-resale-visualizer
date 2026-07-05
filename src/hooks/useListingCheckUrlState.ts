@@ -1,4 +1,8 @@
 import { startTransition, useCallback, useMemo } from "react";
+import {
+  parseLeaseCommenceYearInput,
+  parsePositiveDecimalInput,
+} from "@/features/listing-check/listingCheckInputs";
 
 export type ListingCheckUrlState = {
   selectedAddressKey: string | null;
@@ -30,9 +34,9 @@ function parseCheckState(search: string): ListingCheckUrlState {
   const storey = params.get(PARAMS.storey) || null;
   const leaseRaw = params.get(PARAMS.lease);
 
-  const askingPrice = parseNumeric(priceRaw);
-  const floorAreaSqm = parseNumeric(sqmRaw);
-  const leaseCommenceYear = parseNumeric(leaseRaw);
+  const askingPrice = parsePositiveDecimalInput(priceRaw);
+  const floorAreaSqm = parsePositiveDecimalInput(sqmRaw);
+  const leaseCommenceYear = parseLeaseCommenceYearInput(leaseRaw);
 
   return {
     selectedAddressKey: address,
@@ -42,12 +46,6 @@ function parseCheckState(search: string): ListingCheckUrlState {
     storeyRange: storey,
     leaseCommenceYear,
   };
-}
-
-function parseNumeric(raw: string | null): number | null {
-  if (!raw) return null;
-  const n = Number(raw);
-  return Number.isFinite(n) && n > 0 ? n : null;
 }
 
 function serializeCheckState(state: ListingCheckUrlState): string {

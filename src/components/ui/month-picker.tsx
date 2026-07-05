@@ -3,12 +3,13 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from "lucide-reac
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useI18n } from "@/shared/lib/i18n";
 import { formatMonth } from "@/shared/lib/format";
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-interface MonthPickerProps {
+type MonthPickerProps = {
   value: string | null; // "YYYY-MM"
   onChange: (value: string | null) => void;
   minMonth: string; // "YYYY-MM"
@@ -17,7 +18,7 @@ interface MonthPickerProps {
   id?: string;
   previousYearLabel?: string;
   nextYearLabel?: string;
-}
+};
 
 export function MonthPicker({
   value,
@@ -186,37 +187,47 @@ export function MonthPicker({
         aria-label={t("filters.selectMonth", { defaultValue: "Select month" })}
       >
         <div className="flex items-center justify-between p-3 border-b border-border/10">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={handlePreviousYear}
-            disabled={viewYear <= minYear}
-            className="size-8 rounded-full hover:bg-muted"
-            aria-label={
-              previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })
-            }
-            title={
-              previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })
-            }
-          >
-            <ChevronLeft data-icon className="size-4" aria-hidden="true" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={handlePreviousYear}
+                disabled={viewYear <= minYear}
+                className="size-8 rounded-full hover:bg-muted"
+                aria-label={
+                  previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })
+                }
+              >
+                <ChevronLeft data-icon className="size-4" aria-hidden="true" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })}
+            </TooltipContent>
+          </Tooltip>
           <div className="font-bold text-sm tracking-widest uppercase text-foreground/90 select-none">
             {viewYear}
           </div>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={handleNextYear}
-            disabled={viewYear >= maxYear}
-            className="size-8 rounded-full hover:bg-muted"
-            aria-label={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
-            title={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
-          >
-            <ChevronRight data-icon className="size-4" aria-hidden="true" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={handleNextYear}
+                disabled={viewYear >= maxYear}
+                className="size-8 rounded-full hover:bg-muted"
+                aria-label={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
+              >
+                <ChevronRight data-icon className="size-4" aria-hidden="true" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              {nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div
           className="p-3 grid grid-cols-3 gap-2.5"

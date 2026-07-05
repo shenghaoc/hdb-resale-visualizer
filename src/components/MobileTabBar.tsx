@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { Bookmark, CircleHelp, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import type { PanelTab } from "@/hooks/usePanelState";
 import type { Translator } from "@/shared/lib/i18n";
 
@@ -75,45 +76,53 @@ export function MobileTabBar({
       role="toolbar"
       aria-label={t("app.primaryNav")}
     >
-      <Button
-        ref={(node) => {
-          itemRefs.current[0] = node;
-        }}
-        type="button"
-        size="icon"
-        variant="ghost"
-        className="mobile-mode-button"
-        tabIndex={focusedIndex === 0 ? 0 : -1}
-        onClick={onToggleTheme}
-        onKeyDown={(e) => handleKeyDown(e, 0)}
-        onFocus={() => setFocusedIndex(0)}
-        aria-label={t("app.toggleTheme")}
-        aria-pressed={theme === "dark"}
-        title={t("app.toggleTheme")}
-      >
-        {theme === "light" ? (
-          <Moon data-icon="inline-start" className="size-4" aria-hidden="true" />
-        ) : (
-          <Sun data-icon="inline-start" className="size-4" aria-hidden="true" />
-        )}
-      </Button>
-      <Button
-        ref={(node) => {
-          itemRefs.current[1] = node;
-        }}
-        type="button"
-        size="icon"
-        variant="ghost"
-        className="mobile-mode-button"
-        tabIndex={focusedIndex === 1 ? 0 : -1}
-        onClick={onOpenGuide}
-        onKeyDown={(e) => handleKeyDown(e, 1)}
-        onFocus={() => setFocusedIndex(1)}
-        aria-label={t("app.openGuide")}
-        title={t("app.openGuide")}
-      >
-        <CircleHelp data-icon="inline-start" className="size-4" aria-hidden="true" />
-      </Button>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            ref={(node) => {
+              itemRefs.current[0] = node;
+            }}
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="mobile-mode-button"
+            tabIndex={focusedIndex === 0 ? 0 : -1}
+            onClick={onToggleTheme}
+            onKeyDown={(e) => handleKeyDown(e, 0)}
+            onFocus={() => setFocusedIndex(0)}
+            aria-label={t("app.toggleTheme")}
+            aria-pressed={theme === "dark"}
+          >
+            {theme === "light" ? (
+              <Moon data-icon="inline-start" className="size-4" aria-hidden="true" />
+            ) : (
+              <Sun data-icon="inline-start" className="size-4" aria-hidden="true" />
+            )}
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{t("app.toggleTheme")}</TooltipContent>
+      </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            ref={(node) => {
+              itemRefs.current[1] = node;
+            }}
+            type="button"
+            size="icon"
+            variant="ghost"
+            className="mobile-mode-button"
+            tabIndex={focusedIndex === 1 ? 0 : -1}
+            onClick={onOpenGuide}
+            onKeyDown={(e) => handleKeyDown(e, 1)}
+            onFocus={() => setFocusedIndex(1)}
+            aria-label={t("app.openGuide")}
+          >
+            <CircleHelp data-icon="inline-start" className="size-4" aria-hidden="true" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{t("app.openGuide")}</TooltipContent>
+      </Tooltip>
       <Button
         ref={(node) => {
           itemRefs.current[2] = node;

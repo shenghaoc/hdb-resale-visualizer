@@ -8,7 +8,7 @@
  * Deterministic, no AI, no external API calls, no runtime geocoding.
  */
 
-import { privateJsonResponse } from "../_lib/d1";
+import { privateJsonResponse, readBodyWithLimit } from "../_lib/d1";
 import {
   type CandidateListing,
   type ListingComparableSet,
@@ -19,6 +19,7 @@ import {
 import { buildTrendLookup, computeTimeAdjustments } from "../../shared/time-adjustment";
 import type { AdjustmentMeta } from "../../shared/time-adjustment";
 import type { TimeAdjustedComparable } from "../../shared/data-types";
+import { maxLeaseCommenceYear, MIN_LEASE_COMMENCE_YEAR } from "../../shared/product/lease";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -33,12 +34,25 @@ const candidateListingSchema = z.object({
   storeyRange: z.string().min(1),
   floorAreaSqm: z.number().positive(),
   leaseCommenceYear: z.number().int().positive().nullable(),
-  referenceMonth: z.string().regex(/^\d{4}-\d{2}$/),
+  referenceMonth: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   nearestMrtDistance: z.number().nonnegative().optional(),
 });
 
 // Body size limit: 8 KB is more than enough for a CandidateListing payload.
 const MAX_BODY_BYTES = 8192;
+
+function isValidLeaseCommenceYear(
+  leaseCommenceYear: number | null,
+  referenceMonth: string,
+): boolean {
+  if (leaseCommenceYear == null) return true;
+  const referenceYear = Number(referenceMonth.slice(0, 4));
+  return (
+    Number.isFinite(referenceYear) &&
+    leaseCommenceYear >= MIN_LEASE_COMMENCE_YEAR &&
+    leaseCommenceYear <= maxLeaseCommenceYear(referenceYear)
+  );
+}
 
 // ---------------------------------------------------------------------------
 // D1 ↔ TS mapping
@@ -75,55 +89,6 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     pricePerSqm: floorAreaSqm > 0 ? Math.round((resalePrice / floorAreaSqm) * 100) / 100 : 0,
     flatModel: (row.flat_model as string) ?? "",
   };
-}
-
-// ---------------------------------------------------------------------------
-// Body reading
-// ---------------------------------------------------------------------------
-
-async function readBodyWithLimit(request: Request): Promise<string | Response> {
-  const contentLength = request.headers.get("content-length");
-  if (!contentLength) {
-    return privateJsonResponse({ error: "Length Required" }, { status: 411 });
-  }
-  const declared = Number(contentLength);
-  if (!Number.isInteger(declared) || declared < 0 || declared > MAX_BODY_BYTES) {
-    return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
-  }
-
-  const reader = request.body?.getReader();
-  if (!reader) {
-    return privateJsonResponse({ error: "Bad Request" }, { status: 400 });
-  }
-
-  const chunks: Uint8Array[] = [];
-  let totalBytes = 0;
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      totalBytes += value.length;
-      if (totalBytes > MAX_BODY_BYTES) {
-        try {
-          await reader.cancel();
-        } catch {
-          /* ignore */
-        }
-        return privateJsonResponse({ error: "Payload too large" }, { status: 413 });
-      }
-      chunks.push(value);
-    }
-  } catch {
-    return privateJsonResponse({ error: "Failed to read request body" }, { status: 400 });
-  }
-
-  const buffer = new Uint8Array(totalBytes);
-  let offset = 0;
-  for (const chunk of chunks) {
-    buffer.set(chunk, offset);
-    offset += chunk.length;
-  }
-  return new TextDecoder().decode(buffer);
 }
 
 // ---------------------------------------------------------------------------
@@ -175,14 +140,14 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
   if (adjustParam !== null && !VALID_ADJUST_VALUES.has(adjustParam)) {
     return privateJsonResponse(
-      { error: `Invalid ?adjust value. Expected "time", got "${adjustParam}".` },
+      { error: 'Invalid ?adjust value. Expected "time".' },
       { status: 400 },
     );
   }
   const applyAdjustment = adjustParam === "time";
 
   // 1. Read and validate body
-  const bodyText = await readBodyWithLimit(request);
+  const bodyText = await readBodyWithLimit(request, MAX_BODY_BYTES);
   if (bodyText instanceof Response) return bodyText;
 
   let parsed: CandidateListing;
@@ -191,12 +156,13 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     parsed = candidateListingSchema.parse(json) as CandidateListing;
   } catch (e) {
     if (e instanceof z.ZodError) {
-      return privateJsonResponse(
-        { error: "Invalid request body", details: e.issues },
-        { status: 400 },
-      );
+      return privateJsonResponse({ error: "Invalid request body" }, { status: 400 });
     }
     return privateJsonResponse({ error: "Invalid JSON" }, { status: 400 });
+  }
+
+  if (!isValidLeaseCommenceYear(parsed.leaseCommenceYear, parsed.referenceMonth)) {
+    return privateJsonResponse({ error: "Invalid request body" }, { status: 400 });
   }
 
   // 2. Run three parallel COUNT(*) queries for scope counts
@@ -335,10 +301,17 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   };
 
   if (applyAdjustment) {
-    const effectiveMeta = adjustmentMeta ?? {
-      adjustmentApplied: false,
-      adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
-    };
+    const effectiveMeta =
+      adjustmentMeta ??
+      (result.comparables.length === 0
+        ? {
+            adjustmentApplied: false,
+            adjustmentCaveats: [],
+          }
+        : {
+            adjustmentApplied: false,
+            adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
+          });
     if (adjustedComparables) {
       const comparablesWithAdjustment = result.comparables.map((c, i) => ({
         ...c,

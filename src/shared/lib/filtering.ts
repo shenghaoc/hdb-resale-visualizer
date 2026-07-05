@@ -537,7 +537,7 @@ export function matchesGeographicSearchIntent(
 
   // Avoid intermediate array allocations and spreads in the hot filter loop.
   // Check cheap numeric distance bounds before evaluating expensive station name normalization.
-  if (block.nearestMrt !== null && block.nearestMrt.distanceMeters <= intent.radiusMeters) {
+  if (block.nearestMrt && block.nearestMrt.distanceMeters <= intent.radiusMeters) {
     normalizedIntentName = normalizeStationName(intent.stationName);
     if (normalizeStationName(block.nearestMrt.stationName) === normalizedIntentName) {
       return true;

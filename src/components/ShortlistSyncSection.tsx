@@ -6,6 +6,7 @@ import type { ShortlistSync, SyncStatus } from "@/hooks/useShortlist";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const STATUS_KEY: Record<SyncStatus, string> = {
   local: "sync.status.local",
@@ -72,21 +73,25 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
             >
               {sync.code}
             </code>
-            <Button
-              type="button"
-              size="icon-xs"
-              variant="outline"
-              onClick={handleCopy}
-              className={copied ? "text-primary" : undefined}
-              aria-label={copied ? t("sync.codeCopied") : t("sync.copyCode")}
-              title={copied ? t("sync.codeCopied") : t("sync.copyCode")}
-            >
-              {copied ? (
-                <Check data-icon className="size-4" aria-hidden="true" />
-              ) : (
-                <Copy data-icon className="size-4" aria-hidden="true" />
-              )}
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  size="icon-xs"
+                  variant="outline"
+                  onClick={handleCopy}
+                  className={copied ? "text-primary" : undefined}
+                  aria-label={copied ? t("sync.codeCopied") : t("sync.copyCode")}
+                >
+                  {copied ? (
+                    <Check data-icon className="size-4" aria-hidden="true" />
+                  ) : (
+                    <Copy data-icon className="size-4" aria-hidden="true" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{copied ? t("sync.codeCopied") : t("sync.copyCode")}</TooltipContent>
+            </Tooltip>
           </div>
           <Button
             type="button"

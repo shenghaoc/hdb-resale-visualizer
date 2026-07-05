@@ -1,24 +1,21 @@
 import {
+  badRequest,
   BLOCK_SUMMARY_SELECT_SQL,
   type BlockRow,
   jsonResponse,
+  parseSlugParam,
   rowToBlockSummary,
   serverError,
   townFilenameToCanonical,
 } from "../../_lib/d1";
 
 export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
-  const raw = params.town;
-  const slug = Array.isArray(raw) ? raw[0] : raw;
+  const slug = parseSlugParam(params, "town");
   if (!slug) {
-    return new Response(JSON.stringify({ error: "town filename required" }), {
-      status: 400,
-      headers: { "content-type": "application/json; charset=utf-8" },
-    });
+    return badRequest("town filename required");
   }
 
-  // URL paths arrive as `…/blocks/bishan.json` — strip the extension.
-  const town = townFilenameToCanonical(slug.replace(/\.json$/, ""));
+  const town = townFilenameToCanonical(slug);
 
   try {
     const result = await env.DB.prepare(
@@ -28,6 +25,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
       .all<BlockRow>();
     return jsonResponse((result.results ?? []).map(rowToBlockSummary));
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "town lookup failed");
+    console.error("town lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

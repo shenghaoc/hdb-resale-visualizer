@@ -222,11 +222,15 @@ function App() {
     if (pipeline.blocks.length === 0) {
       return FALLBACK_SAMPLE;
     }
-    const candidates = pipeline.blocks.filter(
-      (block) => block.medianPrice > 0 && block.transactionCount > 0,
-    );
-    if (candidates.length === 0) return FALLBACK_SAMPLE;
-    return candidates.slice().sort((a, b) => a.addressKey.localeCompare(b.addressKey))[0];
+    let best: (typeof pipeline.blocks)[number] | null = null;
+    for (const block of pipeline.blocks) {
+      if (block.medianPrice > 0 && block.transactionCount > 0) {
+        if (!best || block.addressKey < best.addressKey) {
+          best = block;
+        }
+      }
+    }
+    return best ?? FALLBACK_SAMPLE;
   }, [pipeline.blocks, FALLBACK_SAMPLE]);
 
   const handleCheckAddressSelect = useCallback((addressKey: string) => {
@@ -239,7 +243,7 @@ function App() {
     const [minArea, maxArea] = sampleCheckBlock.floorAreaRange ?? [];
     const [minLease, maxLease] = sampleCheckBlock.leaseCommenceRange ?? [];
     const fallbackFlatType = sampleCheckBlock.flatTypes?.length
-      ? [...sampleCheckBlock.flatTypes].sort((a, b) => a.localeCompare(b))[0]
+      ? sampleCheckBlock.flatTypes.reduce((min, ft) => (ft < min ? ft : min))
       : null;
     const floorAreaSqm =
       minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;

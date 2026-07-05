@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   loadChecklistState,
   saveChecklistState,
@@ -11,8 +11,13 @@ import { CHECKLIST_STORAGE_KEY } from "@/shared/lib/constants";
 
 export function useChecklist() {
   const [state, setState] = useState<ChecklistState>(() => loadChecklistState(safeStorage));
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
+      return;
+    }
     saveChecklistState(safeStorage, state);
   }, [state]);
 

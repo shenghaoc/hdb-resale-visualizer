@@ -1,4 +1,10 @@
-import { BLOCK_SUMMARY_SELECT_SQL, jsonResponse, rowToBlockSummary, serverError } from "../_lib/d1";
+import {
+  badRequest,
+  BLOCK_SUMMARY_SELECT_SQL,
+  jsonResponse,
+  rowToBlockSummary,
+  serverError,
+} from "../_lib/d1";
 import {
   SEARCH_RESULT_LIMIT,
   buildSearchQuery,
@@ -22,18 +28,12 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
     const url = new URL(request.url);
     const parsed = parseSearchRequest(url);
     if (!parsed.ok) {
-      return new Response(JSON.stringify({ error: parsed.error }), {
-        status: 400,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return badRequest(parsed.error);
     }
 
     const validationError = validateSearchRequest(parsed.request);
     if (validationError) {
-      return new Response(JSON.stringify({ error: validationError }), {
-        status: 400,
-        headers: { "content-type": "application/json; charset=utf-8" },
-      });
+      return badRequest(validationError);
     }
 
     const { whereSql, bindings } = buildSearchQuery(parsed.request);
@@ -47,6 +47,6 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
     return jsonResponse({ blocks: shaped, truncated, limit: SEARCH_RESULT_LIMIT });
   } catch (error) {
     console.error("Search API failed:", error);
-    return serverError("search failed");
+    return serverError("Internal server error");
   }
 };

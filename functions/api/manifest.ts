@@ -10,6 +10,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
     }
     return jsonResponse(JSON.parse(row.json));
   } catch (error) {
-    return serverError(error instanceof Error ? error.message : "manifest lookup failed");
+    console.error("manifest lookup failed:", error);
+    return serverError("Internal server error");
   }
 };

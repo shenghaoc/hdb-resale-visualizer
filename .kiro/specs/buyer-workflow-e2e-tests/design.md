@@ -111,9 +111,9 @@ no `playwright.config.ts` change is needed. Horizontal scroll is asserted via
 ## Out of scope / gaps
 
 - **Time-adjusted toggle (R5):** `ListingCheckPanel` does not render a
-  raw-vs-time-adjusted toggle today (`adjustmentEnabled` is permanently
-  `false`); the evidence table only shows an "Adj. Price" column when the
-  response carries `timeAdjustedPrice`, which the panel never requests. No
+  raw-vs-time-adjusted toggle today; it requests time adjustment by default.
+  The evidence table shows adjusted values in **Price** / **$/sqm** and shows
+  **Orig. Price** only when the response carries raw registered values. No
   toggle test is written; documented as a gap.
 - **Structured fair-range persistence (R7.3):** the check-save path persists
   `targetPrice` + a `notes` JSON blob, not the structured

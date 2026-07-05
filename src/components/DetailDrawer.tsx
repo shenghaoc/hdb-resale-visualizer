@@ -54,6 +54,7 @@ import { computeComparableRange } from "@/entities/transaction/comparable-range"
 import { computeAffordabilityVerdict } from "@/shared/lib/affordability";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import {
@@ -482,16 +483,20 @@ export function DetailDrawer({
       >
         <div className="flex h-full flex-col overflow-hidden">
           <DrawerHeader className="shrink-0 border-b border-border/40 bg-background/80 pb-4 pl-12 pr-12 backdrop-blur-xl sm:pl-6">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute left-2 top-4 sm:hidden"
-              onClick={onClose}
-              aria-label={t("app.close")}
-              title={t("app.close")}
-            >
-              <ChevronLeft data-icon="inline-start" className="size-5" aria-hidden="true" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute left-2 top-4 sm:hidden"
+                  onClick={onClose}
+                  aria-label={t("app.close")}
+                >
+                  <ChevronLeft data-icon="inline-start" className="size-5" aria-hidden="true" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t("app.close")}</TooltipContent>
+            </Tooltip>
             <div className="flex flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline" className="font-bold tracking-wider">
@@ -508,39 +513,49 @@ export function DetailDrawer({
                   {currentSummary ? `${currentSummary.block} ${currentSummary.streetName}` : "…"}
                 </DrawerTitle>
                 {currentSummary && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className={cn(
-                      "shrink-0 transition-colors",
-                      isCopied
-                        ? "text-primary hover:text-primary"
-                        : "text-muted-foreground hover:text-foreground",
-                    )}
-                    onClick={handleCopyAddress}
-                    title={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
-                    aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
-                  >
-                    {isCopied ? (
-                      <Check data-icon="inline-start" className="size-4" aria-hidden="true" />
-                    ) : (
-                      <Copy data-icon="inline-start" className="size-4" aria-hidden="true" />
-                    )}
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className={cn(
+                          "shrink-0 transition-colors",
+                          isCopied
+                            ? "text-primary hover:text-primary"
+                            : "text-muted-foreground hover:text-foreground",
+                        )}
+                        onClick={handleCopyAddress}
+                        aria-label={isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
+                      >
+                        {isCopied ? (
+                          <Check data-icon="inline-start" className="size-4" aria-hidden="true" />
+                        ) : (
+                          <Copy data-icon="inline-start" className="size-4" aria-hidden="true" />
+                        )}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {isCopied ? t("detail.copiedAddress") : t("detail.copyAddress")}
+                    </TooltipContent>
+                  </Tooltip>
                 )}
               </div>
               {trajectory && <TrajectoryBadge trajectory={trajectory} t={t} locale={locale} />}
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-4 top-4 opacity-70 transition-opacity hover:opacity-100"
-              onClick={onClose}
-              aria-label={t("app.close")}
-              title={t("app.close")}
-            >
-              <X data-icon="inline-start" className="size-4" aria-hidden="true" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-4 top-4 opacity-70 transition-opacity hover:opacity-100"
+                  onClick={onClose}
+                  aria-label={t("app.close")}
+                >
+                  <X data-icon="inline-start" className="size-4" aria-hidden="true" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t("app.close")}</TooltipContent>
+            </Tooltip>
           </DrawerHeader>
 
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-4 sm:px-6">

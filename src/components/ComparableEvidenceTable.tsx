@@ -47,11 +47,16 @@ const SORT_KEY_ORDER: SortKey[] = [
 
 // ── Sort helper ────────────────────────────────────────────────────────────
 
-function sortComparables(
-  comparables: ReadonlyArray<ComparableTransaction>,
+type ExtendedComparable = ComparableTransaction & {
+  rawResalePrice?: number;
+  rawPricePerSqm?: number;
+};
+
+function sortComparables<T extends ComparableTransaction>(
+  comparables: ReadonlyArray<T>,
   sortKey: SortKey,
   sortDirection: SortDirection,
-): ComparableTransaction[] {
+): T[] {
   const dir = sortDirection === "asc" ? 1 : -1;
 
   return [...comparables].sort((a, b) => {
@@ -71,10 +76,11 @@ function sortComparables(
 // ── Props ──────────────────────────────────────────────────────────────────
 
 type ComparableEvidenceTableProps = {
-  comparables: ReadonlyArray<ComparableTransaction>;
+  comparables: ReadonlyArray<ExtendedComparable>;
   referenceMonth: string;
   widenedSearch: boolean;
   caveats: ReadonlyArray<string>;
+  adjustmentApplied?: boolean;
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -84,6 +90,7 @@ export function ComparableEvidenceTable({
   referenceMonth,
   widenedSearch,
   caveats,
+  adjustmentApplied = false,
 }: ComparableEvidenceTableProps) {
   const { locale, t } = useI18n();
   const [sortKey, setSortKey] = useState<SortKey>("similarity");
@@ -96,12 +103,8 @@ export function ComparableEvidenceTable({
   );
 
   const hasAdjustedPrice = useMemo(
-    () =>
-      comparables.some(
-        (tx) =>
-          "timeAdjustedPrice" in tx && (tx as Record<string, unknown>).timeAdjustedPrice != null,
-      ),
-    [comparables],
+    () => adjustmentApplied && comparables.some((tx) => tx.rawResalePrice != null),
+    [adjustmentApplied, comparables],
   );
 
   function handleSort(key: SortKey) {
@@ -289,12 +292,8 @@ export function ComparableEvidenceTable({
                 </TableCell>
                 {hasAdjustedPrice && (
                   <TableCell className="text-right text-xs tabular-nums">
-                    {"timeAdjustedPrice" in tx &&
-                    (tx as Record<string, unknown>).timeAdjustedPrice != null
-                      ? formatCompactCurrency(
-                          (tx as Record<string, unknown>).timeAdjustedPrice as number,
-                          locale,
-                        )
+                    {tx.rawResalePrice != null
+                      ? formatCompactCurrency(tx.rawResalePrice, locale)
                       : "—"}
                   </TableCell>
                 )}
@@ -344,9 +343,16 @@ export function ComparableEvidenceTable({
             aria-label={`${formatCompactCurrency(tx.resalePrice, locale)}, ${tx.block} ${tx.streetName}, ${formatMonth(tx.month, locale)}`}
           >
             <div className="flex items-baseline justify-between gap-2">
-              <span className="text-sm font-bold tabular-nums">
-                {formatCompactCurrency(tx.resalePrice, locale)}
-              </span>
+              <div className="min-w-0">
+                <span className="block text-sm font-bold tabular-nums">
+                  {formatCompactCurrency(tx.resalePrice, locale)}
+                </span>
+                {hasAdjustedPrice && tx.rawResalePrice != null && (
+                  <span className="mt-0.5 block text-[0.62rem] tabular-nums text-muted-foreground">
+                    {t("evidence.col.adjPrice")}: {formatCompactCurrency(tx.rawResalePrice, locale)}
+                  </span>
+                )}
+              </div>
               <span className="text-xs tabular-nums text-muted-foreground">
                 {Math.round(tx.floorAreaSqm)}
                 {t("unit.sqmShort")} ·{" "}

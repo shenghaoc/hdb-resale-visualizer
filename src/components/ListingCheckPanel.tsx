@@ -50,6 +50,10 @@ import {
   QUALITY_LABEL_KEYS,
   QUALITY_HINT_KEYS,
 } from "@/shared/lib/listing-quality";
+import {
+  parseLeaseCommenceYearInput,
+  parsePositiveDecimalInput,
+} from "@/features/listing-check/listingCheckInputs";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -251,11 +255,11 @@ function buildAdjustmentMetaFromResponse(
   const adjustmentMap = new Map<string, AdjustmentInfo>();
 
   for (const c of comparables) {
-    if (c.transactionId && (c as TimeAdjustedComparable).adjustedResalePrice !== undefined) {
+    if (c.transactionId && c.adjustedResalePrice !== undefined) {
       adjustmentMap.set(c.transactionId, {
-        adjustedResalePrice: (c as TimeAdjustedComparable).adjustedResalePrice,
-        adjustedPricePerSqm: (c as TimeAdjustedComparable).adjustedPricePerSqm,
-        adjustmentLabel: (c as TimeAdjustedComparable).adjustmentLabel,
+        adjustedResalePrice: c.adjustedResalePrice ?? null,
+        adjustedPricePerSqm: c.adjustedPricePerSqm ?? null,
+        adjustmentLabel: c.adjustmentLabel ?? null,
       });
     }
   }
@@ -305,7 +309,7 @@ export function ListingCheckPanel({
   const [comparableSetError, setComparableSetError] = useState(false);
   // Always request time-adjustment metadata so the UI can surface when the
   // adjustment succeeded, widened partially, or could not be applied.
-  const [adjustmentEnabled] = useState(true);
+  const adjustmentEnabled = true;
   /** Adjustment metadata from the last API response when ?adjust=time was used. */
   const [adjustmentMeta, setAdjustmentMeta] = useState<{
     adjustmentApplied: boolean;
@@ -428,22 +432,17 @@ export function ListingCheckPanel({
   // ── Parse numeric inputs from parent props ────────────────────────────────
   const resolvedAskingPrice = useMemo(() => {
     if (askingPrice != null) return askingPrice;
-    const cleaned = askingPriceInput.replace(/[^\d.]/g, "");
-    const n = Number(cleaned);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parsePositiveDecimalInput(askingPriceInput);
   }, [askingPrice, askingPriceInput]);
 
   const resolvedFloorAreaSqm = useMemo(() => {
     if (floorAreaSqm != null) return floorAreaSqm;
-    const cleaned = floorAreaInput.replace(/[^\d.]/g, "");
-    const n = Number(cleaned);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parsePositiveDecimalInput(floorAreaInput);
   }, [floorAreaSqm, floorAreaInput]);
 
   const resolvedLeaseYear = useMemo(() => {
     if (leaseCommenceYear != null) return leaseCommenceYear;
-    const n = Number(leaseYearInput);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parseLeaseCommenceYearInput(leaseYearInput);
   }, [leaseCommenceYear, leaseYearInput]);
 
   // ── Perform listing check via v2 comparable engine API ────────────────────
@@ -617,16 +616,24 @@ export function ListingCheckPanel({
 
   // Mirror the time-adjusted prices into the evidence table when adjustment was
   // applied, so the displayed comparables match the assessment and caveat.
-  const comparables: ComparableTransaction[] = useMemo(() => {
+  const comparables: Array<
+    ComparableTransaction & { rawResalePrice?: number; rawPricePerSqm?: number }
+  > = useMemo(() => {
     const raw = comparableSet?.comparables ?? [];
     if (!adjustmentMeta?.adjustmentApplied) return raw;
     return raw.map((c) => {
       const adjusted = adjustmentMeta.adjustmentMap.get(c.transactionId);
-      if (!adjusted || adjusted.adjustedResalePrice == null) return c;
+      if (!adjusted || adjusted.adjustedResalePrice == null) {
+        // No adjustment available — keep original price but still carry
+        // raw metadata so the "Orig. Price" column is consistent.
+        return { ...c, rawResalePrice: c.resalePrice, rawPricePerSqm: c.pricePerSqm };
+      }
       return {
         ...c,
         resalePrice: adjusted.adjustedResalePrice,
         pricePerSqm: adjusted.adjustedPricePerSqm ?? c.pricePerSqm,
+        rawResalePrice: c.resalePrice,
+        rawPricePerSqm: c.pricePerSqm,
       };
     });
   }, [comparableSet, adjustmentMeta]);
@@ -667,13 +674,20 @@ export function ListingCheckPanel({
   );
 
   // ── Input change handlers (delegate to parent when prop-driven) ───────────
+  // Only commit valid parsed values to the parent; preserve intermediate
+  // edits locally so typing "0" or partial input doesn't clear the field.
   const handleAskingPriceChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setAskingPriceInput(raw);
-      const cleaned = raw.replace(/[^\d.]/g, "");
-      const n = Number(cleaned);
-      onAskingPriceChange(Number.isFinite(n) && n > 0 ? n : null);
+      if (raw.trim() === "") {
+        onAskingPriceChange(null);
+        return;
+      }
+      const parsed = parsePositiveDecimalInput(raw);
+      if (parsed != null) {
+        onAskingPriceChange(parsed);
+      }
     },
     [onAskingPriceChange],
   );
@@ -682,9 +696,14 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setFloorAreaInput(raw);
-      const cleaned = raw.replace(/[^\d.]/g, "");
-      const n = Number(cleaned);
-      onFloorAreaChange(Number.isFinite(n) && n > 0 ? n : null);
+      if (raw.trim() === "") {
+        onFloorAreaChange(null);
+        return;
+      }
+      const parsed = parsePositiveDecimalInput(raw);
+      if (parsed != null) {
+        onFloorAreaChange(parsed);
+      }
     },
     [onFloorAreaChange],
   );
@@ -693,11 +712,31 @@ export function ListingCheckPanel({
     (e: ChangeEvent<HTMLInputElement>) => {
       const raw = e.target.value;
       setLeaseYearInput(raw);
-      const n = Number(raw);
-      onLeaseYearChange(Number.isFinite(n) && n > 0 ? n : null);
+      if (raw.trim() === "") {
+        onLeaseYearChange(null);
+        return;
+      }
+      // Only commit valid 4-digit years; preserve intermediate edits locally
+      // so backspacing from "1985" to "198" doesn't clear the input.
+      const parsed = parseLeaseCommenceYearInput(raw);
+      if (parsed != null) {
+        onLeaseYearChange(parsed);
+      }
     },
     [onLeaseYearChange],
   );
+
+  const handleLeaseYearBlur = useCallback(() => {
+    onLeaseYearChange(parseLeaseCommenceYearInput(leaseYearInput));
+  }, [onLeaseYearChange, leaseYearInput]);
+
+  const handleAskingPriceBlur = useCallback(() => {
+    onAskingPriceChange(parsePositiveDecimalInput(askingPriceInput));
+  }, [onAskingPriceChange, askingPriceInput]);
+
+  const handleFloorAreaBlur = useCallback(() => {
+    onFloorAreaChange(parsePositiveDecimalInput(floorAreaInput));
+  }, [onFloorAreaChange, floorAreaInput]);
 
   // ── Check button enabled ──────────────────────────────────────────────────
   const canCheck = selectedAddressKey != null && resolvedAskingPrice != null;
@@ -836,6 +875,7 @@ export function ListingCheckPanel({
                 placeholder={t("askingCheck.askingPricePlaceholder")}
                 value={askingPriceInput}
                 onChange={handleAskingPriceChange}
+                onBlur={handleAskingPriceBlur}
                 aria-label={t("askingCheck.askingPrice")}
                 className="h-10 text-base font-bold tabular-nums"
               />
@@ -852,6 +892,7 @@ export function ListingCheckPanel({
                 placeholder={t("askingCheck.floorAreaPlaceholder")}
                 value={floorAreaInput}
                 onChange={handleFloorAreaChange}
+                onBlur={handleFloorAreaBlur}
                 aria-label={t("askingCheck.floorArea")}
                 className="h-10 text-base font-bold tabular-nums"
               />
@@ -912,6 +953,7 @@ export function ListingCheckPanel({
                 placeholder={t("check.leaseYearPlaceholder")}
                 value={leaseYearInput}
                 onChange={handleLeaseYearChange}
+                onBlur={handleLeaseYearBlur}
                 aria-label={t("check.leaseYear")}
                 className="h-10 text-base font-bold tabular-nums"
               />
@@ -1177,6 +1219,7 @@ export function ListingCheckPanel({
             referenceMonth={referenceMonth ?? detail?.summary?.latestMonth ?? ""}
             widenedSearch={comparableSet.widenedSearch}
             caveats={evidenceCaveats}
+            adjustmentApplied={adjustmentMeta?.adjustmentApplied ?? false}
           />
         </div>
       )}

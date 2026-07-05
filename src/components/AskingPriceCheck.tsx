@@ -30,6 +30,7 @@ import {
 import { DistributionBar } from "@/components/DistributionBar";
 import { ComparableTransactionsList } from "@/components/ComparableTransactionsList";
 import { DocsLink } from "@/features/docs/DocsLink";
+import { parsePositiveDecimalInput } from "@/features/listing-check/listingCheckInputs";
 
 type AskingPriceCheckProps = {
   detail: AddressDetail;
@@ -110,15 +111,11 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
   const [comparablesExpanded, setComparablesExpanded] = useState(false);
 
   const askingPrice = useMemo(() => {
-    const cleaned = askingPriceInput.replace(/[^\d.]/g, "");
-    const n = Number(cleaned);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parsePositiveDecimalInput(askingPriceInput);
   }, [askingPriceInput]);
 
   const floorAreaSqm = useMemo(() => {
-    const cleaned = floorAreaInput.replace(/[^\d.]/g, "");
-    const n = Number(cleaned);
-    return Number.isFinite(n) && n > 0 ? n : null;
+    return parsePositiveDecimalInput(floorAreaInput);
   }, [floorAreaInput]);
 
   const storeyMidpoint = useMemo(
