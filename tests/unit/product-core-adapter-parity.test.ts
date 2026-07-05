@@ -94,6 +94,22 @@ type BlockFixtureInput = Partial<
   leaseCommenceRange?: readonly number[];
 };
 
+type FilterGoldenScenario = {
+  blockTown?: string;
+  filterTown?: string;
+  blockFlatTypes?: string[];
+  filterFlatType?: string;
+  blockMedianPrice?: number;
+  filterBudgetMin?: number | null;
+  filterBudgetMax?: number | null;
+  blockLeaseCommenceRange?: [number, number];
+  filterRemainingLeaseMin?: number;
+  currentYear?: number;
+  blockNearestMrtDistance?: number | null;
+  filterMrtMax?: number;
+  expected: boolean;
+};
+
 function numberPair(
   value: readonly number[] | undefined,
   fallback: [number, number],
@@ -256,21 +272,21 @@ describe("adapter-vs-shared parity", () => {
 
   it("town and budget filter matches shared core for all golden scenarios", () => {
     for (const scenario of golden.filterScenarios) {
-      const s = scenario as Record<string, unknown>;
+      const s = scenario as FilterGoldenScenario;
       const block = makeBlock({
         addressKey: "test",
-        town: (s.blockTown as string) ?? "BEDOK",
+        town: s.blockTown ?? "BEDOK",
         block: "1",
         streetName: "TEST",
         coordinates: { lat: 1.35, lng: 103.8 },
-        medianPrice: (s.blockMedianPrice as number) ?? 500000,
+        medianPrice: s.blockMedianPrice ?? 500000,
         pricePerSqmMedian: 5500,
         transactionCount: 5,
         floorAreaRange: [80, 100],
-        leaseCommenceRange: (s.blockLeaseCommenceRange as [number, number]) ?? [2000, 2000],
+        leaseCommenceRange: s.blockLeaseCommenceRange ?? [2000, 2000],
         latestMonth: "2026-01",
         availableDateRange: ["2024-01", "2026-01"],
-        flatTypes: (s.blockFlatTypes as string[]) ?? ["4 ROOM"],
+        flatTypes: s.blockFlatTypes ?? ["4 ROOM"],
         flatModels: ["MODEL A"],
         nearestMrt: buildNearestMrt(s.blockNearestMrtDistance),
         postalCode: null,
@@ -278,20 +294,18 @@ describe("adapter-vs-shared parity", () => {
 
       const filters: FilterState = {
         ...DEFAULT_FILTERS,
-        town: (s.filterTown as string) ?? "",
-        flatType: (s.filterFlatType as string) ?? "",
-        budgetMin: (s.filterBudgetMin as number | undefined) ?? null,
-        budgetMax: (s.filterBudgetMax as number | undefined) ?? null,
-        remainingLeaseMin: (s.filterRemainingLeaseMin as number | undefined) ?? null,
-        mrtMax: (s.filterMrtMax as number | undefined) ?? null,
+        town: s.filterTown ?? "",
+        flatType: s.filterFlatType ?? "",
+        budgetMin: s.filterBudgetMin ?? null,
+        budgetMax: s.filterBudgetMax ?? null,
+        remainingLeaseMin: s.filterRemainingLeaseMin ?? null,
+        mrtMax: s.filterMrtMax ?? null,
       };
 
       // Use sharedCreateFilterEvaluationContext with fixture year to avoid
       // getCurrentYear() drift — the adapter's 0-arg version defaults to
       // the runtime year, which would diverge from the fixture in 2027+.
-      const ctx = s.currentYear
-        ? sharedCreateFilterEvaluationContext(s.currentYear as number)
-        : undefined;
+      const ctx = s.currentYear ? sharedCreateFilterEvaluationContext(s.currentYear) : undefined;
 
       const sharedResult = sharedMatchesFilter(block, filters, undefined, undefined, ctx);
 
