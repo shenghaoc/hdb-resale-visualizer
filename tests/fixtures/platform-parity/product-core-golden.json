@@ -17,7 +17,8 @@
         "availableDateRange": ["2024-01", "2026-03"],
         "flatTypes": ["4 ROOM"],
         "flatModels": ["Model A"],
-        "nearestMrt": null
+        "nearestMrt": null,
+        "postalCode": null
       },
       "budget": { "min": 580000, "max": 650000, "expectedStatus": "within" },
       "ageEligibility": { "buyerAge": 35, "currentYear": 2026, "expectedEligible": true }
@@ -39,10 +40,387 @@
         "availableDateRange": ["2021-01", "2023-01"],
         "flatTypes": ["3 ROOM"],
         "flatModels": ["Improved"],
-        "nearestMrt": null
+        "nearestMrt": null,
+        "postalCode": null
       },
       "budget": { "min": 300000, "max": 400000, "expectedStatus": "near-above" },
       "ageEligibility": { "buyerAge": 45, "currentYear": 2026, "expectedEligible": false }
+    }
+  ],
+  "searchProfileScenarios": [
+    {
+      "name": "strong-match",
+      "block": {
+        "addressKey": "strong-block",
+        "town": "BEDOK",
+        "block": "101",
+        "streetName": "BEDOK NTH AVE 4",
+        "coordinates": { "lat": 1.3339, "lng": 103.9372 },
+        "medianPrice": 550000,
+        "pricePerSqmMedian": 5500,
+        "transactionCount": 10,
+        "floorAreaRange": [85, 95],
+        "leaseCommenceRange": [2010, 2012],
+        "latestMonth": "2026-01",
+        "availableDateRange": ["2024-01", "2026-01"],
+        "flatTypes": ["4 ROOM"],
+        "flatModels": ["Model A"],
+        "nearestMrt": {
+          "stationName": "BEDOK MRT STATION",
+          "distanceMeters": 400,
+          "walkingTimeSeconds": 320
+        },
+        "nearbyMrts": [],
+        "postalCode": null
+      },
+      "profile": {
+        "mainFlatType": "4 ROOM",
+        "maxBudget": 700000,
+        "maxComfortableCommuteMinutes": 30,
+        "minimumRemainingLeaseYears": 60,
+        "budgetStretchPercent": 5,
+        "commuteStretchMinutes": 10
+      },
+      "currentYear": 2026,
+      "expectedTier": "strong"
+    },
+    {
+      "name": "good-stretch-budget",
+      "block": {
+        "addressKey": "good-block",
+        "town": "TAMPINES",
+        "block": "501",
+        "streetName": "TAMPINES CENTRAL 1",
+        "coordinates": { "lat": 1.353, "lng": 103.945 },
+        "medianPrice": 720000,
+        "pricePerSqmMedian": 7200,
+        "transactionCount": 8,
+        "floorAreaRange": [90, 100],
+        "leaseCommenceRange": [2015, 2017],
+        "latestMonth": "2026-02",
+        "availableDateRange": ["2025-01", "2026-02"],
+        "flatTypes": ["4 ROOM"],
+        "flatModels": ["Model A"],
+        "nearestMrt": {
+          "stationName": "TAMPINES MRT STATION",
+          "distanceMeters": 300,
+          "walkingTimeSeconds": 240
+        },
+        "nearbyMrts": [],
+        "postalCode": null
+      },
+      "profile": {
+        "mainFlatType": "4 ROOM",
+        "maxBudget": 700000,
+        "maxComfortableCommuteMinutes": 30,
+        "minimumRemainingLeaseYears": 60,
+        "budgetStretchPercent": 5,
+        "commuteStretchMinutes": 10
+      },
+      "currentYear": 2026,
+      "expectedTier": "good"
+    },
+    {
+      "name": "stretch-both-dimensions",
+      "block": {
+        "addressKey": "stretch-block",
+        "town": "WOODLANDS",
+        "block": "701",
+        "streetName": "WOODLANDS AVE 4",
+        "coordinates": { "lat": 1.437, "lng": 103.786 },
+        "medianPrice": 720000,
+        "pricePerSqmMedian": 7200,
+        "transactionCount": 6,
+        "floorAreaRange": [90, 100],
+        "leaseCommenceRange": [2015, 2017],
+        "latestMonth": "2026-01",
+        "availableDateRange": ["2025-01", "2026-01"],
+        "flatTypes": ["4 ROOM"],
+        "flatModels": ["Model A"],
+        "nearestMrt": {
+          "stationName": "WOODLANDS MRT STATION",
+          "distanceMeters": 3000,
+          "walkingTimeSeconds": 2400
+        },
+        "nearbyMrts": [],
+        "postalCode": null
+      },
+      "profile": {
+        "mainFlatType": "4 ROOM",
+        "maxBudget": 700000,
+        "maxComfortableCommuteMinutes": 30,
+        "minimumRemainingLeaseYears": 60,
+        "budgetStretchPercent": 5,
+        "commuteStretchMinutes": 30
+      },
+      "currentYear": 2026,
+      "expectedTier": "stretch"
+    },
+    {
+      "name": "weak-flat-type-mismatch",
+      "block": {
+        "addressKey": "weak-block",
+        "town": "BEDOK",
+        "block": "201",
+        "streetName": "BEDOK NTH AVE 4",
+        "coordinates": { "lat": 1.334, "lng": 103.937 },
+        "medianPrice": 500000,
+        "pricePerSqmMedian": 5000,
+        "transactionCount": 10,
+        "floorAreaRange": [65, 75],
+        "leaseCommenceRange": [2010, 2012],
+        "latestMonth": "2026-01",
+        "availableDateRange": ["2024-01", "2026-01"],
+        "flatTypes": ["3 ROOM"],
+        "flatModels": ["Model A"],
+        "nearestMrt": {
+          "stationName": "BEDOK MRT STATION",
+          "distanceMeters": 400,
+          "walkingTimeSeconds": 320
+        },
+        "nearbyMrts": [],
+        "postalCode": null
+      },
+      "profile": {
+        "mainFlatType": "4 ROOM",
+        "maxBudget": 700000,
+        "maxComfortableCommuteMinutes": 30,
+        "minimumRemainingLeaseYears": 60,
+        "budgetStretchPercent": 5,
+        "commuteStretchMinutes": 10
+      },
+      "currentYear": 2026,
+      "expectedTier": "weak"
+    },
+    {
+      "name": "weak-lease-too-short",
+      "block": {
+        "addressKey": "old-lease-block",
+        "town": "QUEENSTOWN",
+        "block": "45",
+        "streetName": "STIRLING ROAD",
+        "coordinates": { "lat": 1.296, "lng": 103.804 },
+        "medianPrice": 430000,
+        "pricePerSqmMedian": 5200,
+        "transactionCount": 5,
+        "floorAreaRange": [82, 86],
+        "leaseCommenceRange": [1968, 1968],
+        "latestMonth": "2026-01",
+        "availableDateRange": ["2024-01", "2026-01"],
+        "flatTypes": ["3 ROOM"],
+        "flatModels": ["Improved"],
+        "nearestMrt": null,
+        "nearbyMrts": [],
+        "postalCode": null
+      },
+      "profile": {
+        "mainFlatType": "3 ROOM",
+        "maxBudget": 500000,
+        "minimumRemainingLeaseYears": 60,
+        "budgetStretchPercent": 5,
+        "commuteStretchMinutes": 10
+      },
+      "currentYear": 2026,
+      "expectedTier": "weak"
+    }
+  ],
+  "filterScenarios": [
+    {
+      "name": "town-filter",
+      "blockTown": "BEDOK",
+      "filterTown": "BEDOK",
+      "expected": true
+    },
+    {
+      "name": "town-filter-mismatch",
+      "blockTown": "BEDOK",
+      "filterTown": "ANG MO KIO",
+      "expected": false
+    },
+    {
+      "name": "flat-type-filter-match",
+      "blockFlatTypes": ["4 ROOM", "5 ROOM"],
+      "filterFlatType": "4 ROOM",
+      "expected": true
+    },
+    {
+      "name": "flat-type-filter-mismatch",
+      "blockFlatTypes": ["3 ROOM"],
+      "filterFlatType": "4 ROOM",
+      "expected": false
+    },
+    {
+      "name": "budget-min-filter",
+      "blockMedianPrice": 500000,
+      "filterBudgetMin": 400000,
+      "filterBudgetMax": null,
+      "expected": true
+    },
+    {
+      "name": "budget-max-filter",
+      "blockMedianPrice": 500000,
+      "filterBudgetMin": null,
+      "filterBudgetMax": 600000,
+      "expected": true
+    },
+    {
+      "name": "budget-exceeded",
+      "blockMedianPrice": 700000,
+      "filterBudgetMin": null,
+      "filterBudgetMax": 600000,
+      "expected": false
+    },
+    {
+      "name": "lease-filter-pass",
+      "blockLeaseCommenceRange": [2000, 2000],
+      "filterRemainingLeaseMin": 70,
+      "currentYear": 2026,
+      "expected": true
+    },
+    {
+      "name": "lease-filter-fail",
+      "blockLeaseCommenceRange": [1968, 1968],
+      "filterRemainingLeaseMin": 60,
+      "currentYear": 2026,
+      "expected": false
+    },
+    {
+      "name": "mrt-distance-filter-pass",
+      "blockNearestMrtDistance": 400,
+      "filterMrtMax": 800,
+      "expected": true
+    },
+    {
+      "name": "mrt-distance-filter-fail",
+      "blockNearestMrtDistance": 1200,
+      "filterMrtMax": 800,
+      "expected": false
+    },
+    {
+      "name": "mrt-null-filter-fail",
+      "blockNearestMrtDistance": null,
+      "filterMrtMax": 800,
+      "expected": false
+    }
+  ],
+  "geographicSearchScenarios": [
+    {
+      "name": "station-intent-match",
+      "query": "near bedok mrt",
+      "stationName": "BEDOK MRT STATION",
+      "blockNearestMrt": {
+        "stationName": "BEDOK MRT STATION",
+        "distanceMeters": 400,
+        "walkingTimeSeconds": 320
+      },
+      "radiusMeters": 800,
+      "expectedIntentType": "station",
+      "expectedMatch": true
+    },
+    {
+      "name": "station-intent-no-match",
+      "query": "near bedok mrt",
+      "stationName": "BEDOK MRT STATION",
+      "blockNearestMrt": {
+        "stationName": "JURONG EAST MRT STATION",
+        "distanceMeters": 400,
+        "walkingTimeSeconds": 320
+      },
+      "radiusMeters": 800,
+      "expectedIntentType": "station",
+      "expectedMatch": false
+    },
+    {
+      "name": "coordinate-intent-match",
+      "query": "1.3339, 103.9372",
+      "blockCoordinates": { "lat": 1.3339, "lng": 103.9372 },
+      "radiusMeters": 500,
+      "expectedIntentType": "coordinates",
+      "expectedMatch": true
+    },
+    {
+      "name": "coordinate-intent-no-match",
+      "query": "1.3692, 103.8492",
+      "blockCoordinates": { "lat": 1.3339, "lng": 103.9372 },
+      "radiusMeters": 300,
+      "expectedIntentType": "coordinates",
+      "expectedMatch": false
+    }
+  ],
+  "effectivePriceScenarios": [
+    {
+      "name": "flat-type-specific-median",
+      "blockMedianPrice": 500000,
+      "blockMedianPriceByFlatType": { "4 ROOM": 550000, "5 ROOM": 650000 },
+      "filterFlatType": "4 ROOM",
+      "expectedEffectivePrice": 550000
+    },
+    {
+      "name": "flat-type-fallback-to-overall",
+      "blockMedianPrice": 500000,
+      "blockMedianPriceByFlatType": { "5 ROOM": 650000 },
+      "filterFlatType": "4 ROOM",
+      "expectedEffectivePrice": 500000
+    },
+    {
+      "name": "no-flat-type-filter",
+      "blockMedianPrice": 500000,
+      "blockMedianPriceByFlatType": { "4 ROOM": 550000 },
+      "filterFlatType": "",
+      "expectedEffectivePrice": 500000
+    }
+  ],
+  "stretchBudgetScenarios": [
+    {
+      "name": "within-stretch-ceiling",
+      "maxBudget": 700000,
+      "budgetStretchPercent": 5,
+      "blockMedianPrice": 730000,
+      "expectedDimension": "stretch"
+    },
+    {
+      "name": "beyond-stretch-ceiling",
+      "maxBudget": 700000,
+      "budgetStretchPercent": 5,
+      "blockMedianPrice": 740000,
+      "expectedDimension": "fail"
+    },
+    {
+      "name": "within-primary-budget",
+      "maxBudget": 700000,
+      "budgetStretchPercent": 5,
+      "blockMedianPrice": 700000,
+      "expectedDimension": "pass"
+    }
+  ],
+  "commuteProxyScenarios": [
+    {
+      "name": "commute-pass",
+      "distanceMeters": 400,
+      "maxCommuteMinutes": 30,
+      "stretchMinutes": 10,
+      "expectedDimension": "pass"
+    },
+    {
+      "name": "commute-stretch",
+      "distanceMeters": 2500,
+      "maxCommuteMinutes": 30,
+      "stretchMinutes": 10,
+      "expectedDimension": "stretch"
+    },
+    {
+      "name": "commute-fail",
+      "distanceMeters": 4000,
+      "maxCommuteMinutes": 30,
+      "stretchMinutes": 10,
+      "expectedDimension": "fail"
+    },
+    {
+      "name": "commute-no-data-fail",
+      "distanceMeters": null,
+      "maxCommuteMinutes": 30,
+      "stretchMinutes": 10,
+      "expectedDimension": "fail"
     }
   ],
   "transactions": [
