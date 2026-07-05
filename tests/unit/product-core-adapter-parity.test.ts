@@ -9,34 +9,36 @@
 
 import { beforeEach, describe, expect, it } from "vite-plus/test";
 import golden from "../fixtures/platform-parity/product-core-golden.json";
-import { DEFAULT_FILTERS } from "../../src/shared/lib/constants";
-import type { BlockSummary, FilterState } from "../../shared/data-types";
-import type { SearchProfile } from "../../shared/product/search-profile";
+import { DEFAULT_FILTERS, getCurrentYear } from "@/shared/lib/constants";
+import type { AffordabilityProfile } from "@/shared/lib/affordability";
+import type { BlockSummary, FilterState } from "@shared/data-types";
+import type { SearchProfile } from "@shared/product/search-profile";
 
 // ── Shared core (canonical logic) ────────────────────────────────────────
 import {
   evaluateBlockForProfile as sharedEvaluateBlockForProfile,
-  isProfileVisibilityActive as sharedIsProfileVisibilityActive,
   applyProfileVisibility as sharedApplyProfileVisibility,
   createProfileEvaluator as sharedCreateProfileEvaluator,
-} from "../../shared/product/search-profile";
+} from "@shared/product/search-profile";
 import {
   matchesFilter as sharedMatchesFilter,
   resolveGeographicSearchIntent as sharedResolveGeographicSearchIntent,
   createFilterEvaluationContext as sharedCreateFilterEvaluationContext,
   resetFilteringCachesForTests,
-} from "../../shared/product/filtering";
+} from "@shared/product/filtering";
+import { passesAffordabilityMode as sharedPassesAffordabilityMode } from "@shared/product/affordability";
 
 // ── Web adapters ─────────────────────────────────────────────────────────
 import {
   evaluateBlockForProfile as adapterEvaluateBlockForProfile,
   applyProfileVisibility as adapterApplyProfileVisibility,
   createProfileEvaluator as adapterCreateProfileEvaluator,
-} from "../../src/features/search-profile/matchProfile";
+} from "@/features/search-profile/matchProfile";
 import {
   matchesFilter as adapterMatchesFilter,
   resolveGeographicSearchIntent as adapterResolveGeographicSearchIntent,
-} from "../../src/shared/lib/filtering";
+  createFilterEvaluationContext as adapterCreateFilterEvaluationContext,
+} from "@/shared/lib/filtering";
 
 // ── Test constants ───────────────────────────────────────────────────────
 
@@ -63,6 +65,60 @@ function makeProfile(overrides: Partial<SearchProfile> = {}): SearchProfile {
   return { ...EMPTY_PROFILE, ...overrides };
 }
 
+const BASE_BLOCK: BlockSummary = {
+  addressKey: "test-block",
+  town: "BEDOK",
+  block: "1",
+  streetName: "TEST",
+  displayName: null,
+  coordinates: { lat: 1.35, lng: 103.8 },
+  medianPrice: 500000,
+  pricePerSqmMedian: 5500,
+  transactionCount: 5,
+  floorAreaRange: [80, 100],
+  leaseCommenceRange: [2000, 2000],
+  latestMonth: "2026-01",
+  availableDateRange: ["2024-01", "2026-01"],
+  flatTypes: ["4 ROOM"],
+  flatModels: ["MODEL A"],
+  nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
+  nearbyMrts: [],
+  postalCode: null,
+};
+
+type BlockFixtureInput = Partial<
+  Omit<BlockSummary, "availableDateRange" | "floorAreaRange" | "leaseCommenceRange">
+> & {
+  availableDateRange?: readonly string[];
+  floorAreaRange?: readonly number[];
+  leaseCommenceRange?: readonly number[];
+};
+
+function numberPair(
+  value: readonly number[] | undefined,
+  fallback: [number, number],
+): [number, number] {
+  return value && value.length >= 2 ? [value[0]!, value[1]!] : fallback;
+}
+
+function stringPair(
+  value: readonly string[] | undefined,
+  fallback: [string, string],
+): [string, string] {
+  return value && value.length >= 2 ? [value[0]!, value[1]!] : fallback;
+}
+
+function makeBlock(overrides: BlockFixtureInput = {}): BlockSummary {
+  const { availableDateRange, floorAreaRange, leaseCommenceRange, ...rest } = overrides;
+  return {
+    ...BASE_BLOCK,
+    ...rest,
+    availableDateRange: stringPair(availableDateRange, BASE_BLOCK.availableDateRange),
+    floorAreaRange: numberPair(floorAreaRange, BASE_BLOCK.floorAreaRange),
+    leaseCommenceRange: numberPair(leaseCommenceRange, BASE_BLOCK.leaseCommenceRange),
+  };
+}
+
 /** Build a nearestMrt from fixture distance data. */
 function buildNearestMrt(distance: unknown): BlockSummary["nearestMrt"] {
   if (distance === null) return null;
@@ -86,7 +142,7 @@ describe("adapter-vs-shared parity", () => {
 
   it("search profile tier matches shared core for all golden scenarios", () => {
     for (const scenario of golden.searchProfileScenarios) {
-      const block = scenario.block as unknown as BlockSummary;
+      const block = makeBlock(scenario.block);
       const profile = makeProfile({
         mainFlatType: scenario.profile.mainFlatType ?? "",
         maxBudget: scenario.profile.maxBudget ?? null,
@@ -106,7 +162,7 @@ describe("adapter-vs-shared parity", () => {
 
   it("search profile evaluator factory matches shared core for all scenarios", () => {
     for (const scenario of golden.searchProfileScenarios) {
-      const block = scenario.block as unknown as BlockSummary;
+      const block = makeBlock(scenario.block);
       const profile = makeProfile({
         mainFlatType: scenario.profile.mainFlatType ?? "",
         maxBudget: scenario.profile.maxBudget ?? null,
@@ -125,13 +181,8 @@ describe("adapter-vs-shared parity", () => {
   });
 
   it("alternative flat types produce stretch match via adapter", () => {
-    const block = {
+    const block = makeBlock({
       addressKey: "alt-test",
-      town: "BEDOK",
-      block: "1",
-      streetName: "TEST",
-      displayName: null,
-      coordinates: { lat: 1.35, lng: 103.8 },
       medianPrice: 600000,
       pricePerSqmMedian: 6300,
       transactionCount: 10,
@@ -144,7 +195,7 @@ describe("adapter-vs-shared parity", () => {
       nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
       nearbyMrts: [],
       postalCode: null,
-    } as unknown as BlockSummary;
+    });
 
     const profile = makeProfile({
       mainFlatType: "4 ROOM",
@@ -161,28 +212,31 @@ describe("adapter-vs-shared parity", () => {
 
   // ── Profile visibility filtering ───────────────────────────────────────
 
-  it("isProfileVisibilityActive matches shared core", () => {
-    // Note: isProfileVisibilityActive is a direct re-export from shared core,
-    // so this test validates the module boundary, not adapter wrapping logic.
+  it("profile visibility filtering matches shared core across visibility states", () => {
+    const blocks = [
+      makeBlock({ addressKey: "pass", flatTypes: ["4 ROOM"], medianPrice: 600000 }),
+      makeBlock({ addressKey: "stretch", flatTypes: ["4 ROOM"], medianPrice: 720000 }),
+      makeBlock({ addressKey: "weak", flatTypes: ["3 ROOM"], medianPrice: 600000 }),
+    ];
     const profiles = [
       makeProfile(),
       makeProfile({ maxBudget: 700000 }),
-      makeProfile({ mainFlatType: "4 ROOM", showAllBlocks: true }),
       makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700000 }),
-      makeProfile({ maxComfortableCommuteMinutes: 30 }),
-      makeProfile({ minimumRemainingLeaseYears: 70 }),
+      makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700000, showStretchOptions: false }),
       makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700000, showAllBlocks: true }),
     ];
+    const year = 2026;
 
     for (const profile of profiles) {
-      expect(sharedIsProfileVisibilityActive(profile)).toBe(
-        sharedIsProfileVisibilityActive(profile),
-      );
+      const sharedResult = sharedApplyProfileVisibility(blocks, profile, year);
+      const adapterResult = adapterApplyProfileVisibility(blocks, profile, year);
+
+      expect(adapterResult.map((b) => b.addressKey)).toEqual(sharedResult.map((b) => b.addressKey));
     }
   });
 
   it("applyProfileVisibility matches shared core", () => {
-    const blocks = golden.searchProfileScenarios.map((s) => s.block as unknown as BlockSummary);
+    const blocks = golden.searchProfileScenarios.map((s) => makeBlock(s.block));
     const profile = makeProfile({
       mainFlatType: "4 ROOM",
       maxBudget: 700000,
@@ -203,7 +257,7 @@ describe("adapter-vs-shared parity", () => {
   it("town and budget filter matches shared core for all golden scenarios", () => {
     for (const scenario of golden.filterScenarios) {
       const s = scenario as Record<string, unknown>;
-      const block: Partial<BlockSummary> = {
+      const block = makeBlock({
         addressKey: "test",
         town: (s.blockTown as string) ?? "BEDOK",
         block: "1",
@@ -220,7 +274,7 @@ describe("adapter-vs-shared parity", () => {
         flatModels: ["MODEL A"],
         nearestMrt: buildNearestMrt(s.blockNearestMrtDistance),
         postalCode: null,
-      };
+      });
 
       const filters: FilterState = {
         ...DEFAULT_FILTERS,
@@ -239,16 +293,10 @@ describe("adapter-vs-shared parity", () => {
         ? sharedCreateFilterEvaluationContext(s.currentYear as number)
         : undefined;
 
-      const sharedResult = sharedMatchesFilter(
-        block as unknown as BlockSummary,
-        filters,
-        undefined,
-        undefined,
-        ctx,
-      );
+      const sharedResult = sharedMatchesFilter(block, filters, undefined, undefined, ctx);
 
       const adapterResult = adapterMatchesFilter(
-        block as unknown as BlockSummary,
+        block,
         filters,
         undefined,
         undefined,
@@ -262,77 +310,40 @@ describe("adapter-vs-shared parity", () => {
 
   // ── Remaining lease filtering determinism ──────────────────────────────
 
-  it("remaining lease filtering respects year parameter and adapter matches shared core", () => {
-    const block: Partial<BlockSummary> = {
-      addressKey: "lease-test",
-      town: "BEDOK",
-      block: "1",
-      streetName: "TEST",
-      coordinates: { lat: 1.35, lng: 103.8 },
-      medianPrice: 500000,
-      pricePerSqmMedian: 5500,
-      transactionCount: 5,
-      floorAreaRange: [80, 100],
-      leaseCommenceRange: [2000, 2000],
-      latestMonth: "2026-01",
-      availableDateRange: ["2024-01", "2026-01"],
-      flatTypes: ["4 ROOM"],
-      flatModels: ["MODEL A"],
-      nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
-      postalCode: null,
-    };
+  it("remaining lease filtering uses explicit-year golden scenarios", () => {
+    for (const scenario of golden.leaseDeterminismScenarios) {
+      const block = makeBlock({
+        addressKey: scenario.name,
+        leaseCommenceRange: scenario.blockLeaseCommenceRange,
+      });
+      const filters: FilterState = {
+        ...DEFAULT_FILTERS,
+        remainingLeaseMin: scenario.filterRemainingLeaseMin,
+      };
 
-    // MAX_LEASE_DURATION=99, remaining=99-(year-2000)
-    // At 2026: 99-26=73, at 2025: 99-25=74
-    // Use threshold=74 so 2026 fails (73<74) and 2025 passes (74>=74)
-    const filters: FilterState = {
-      ...DEFAULT_FILTERS,
-      remainingLeaseMin: 74,
-    };
+      for (const [yearText, expected] of Object.entries(scenario.expectedByYear)) {
+        const ctx = sharedCreateFilterEvaluationContext(Number(yearText));
 
-    // Different years produce different results
-    const ctx2026 = sharedCreateFilterEvaluationContext(2026);
-    const ctx2025 = sharedCreateFilterEvaluationContext(2025);
+        const sharedResult = sharedMatchesFilter(block, filters, undefined, undefined, ctx);
+        const adapterResult = adapterMatchesFilter(
+          block,
+          filters,
+          undefined,
+          undefined,
+          undefined,
+          ctx,
+        );
 
-    const sharedResult2026 = sharedMatchesFilter(
-      block as unknown as BlockSummary,
-      filters,
-      undefined,
-      undefined,
-      ctx2026,
+        expect(sharedResult).toBe(expected);
+        expect(adapterResult).toBe(expected);
+      }
+    }
+  });
+
+  it("filter evaluation context adapter matches the shared current-year context", () => {
+    expect(adapterCreateFilterEvaluationContext()).toEqual(
+      sharedCreateFilterEvaluationContext(getCurrentYear()),
     );
-    const sharedResult2025 = sharedMatchesFilter(
-      block as unknown as BlockSummary,
-      filters,
-      undefined,
-      undefined,
-      ctx2025,
-    );
-
-    // 2026: 73<74 => fail, 2025: 74>=74 => pass
-    expect(sharedResult2026).toBe(false);
-    expect(sharedResult2025).toBe(true);
-
-    // Adapter matches shared core for both years
-    const adapterResult2026 = adapterMatchesFilter(
-      block as unknown as BlockSummary,
-      filters,
-      undefined,
-      undefined,
-      undefined,
-      ctx2026,
-    );
-    expect(adapterResult2026).toBe(sharedResult2026);
-
-    const adapterResult2025 = adapterMatchesFilter(
-      block as unknown as BlockSummary,
-      filters,
-      undefined,
-      undefined,
-      undefined,
-      ctx2025,
-    );
-    expect(adapterResult2025).toBe(sharedResult2025);
   });
 
   // ── Geographic intent ──────────────────────────────────────────────────
@@ -408,10 +419,10 @@ describe("adapter-vs-shared parity", () => {
 
   it("stretch budget dimension matches shared core", () => {
     for (const scenario of golden.stretchBudgetScenarios) {
-      const block = {
+      const block = makeBlock({
         medianPrice: scenario.blockMedianPrice,
         flatTypes: ["4 ROOM"],
-      } as unknown as BlockSummary;
+      });
       const profile = makeProfile({
         mainFlatType: "4 ROOM",
         maxBudget: scenario.maxBudget,
@@ -429,10 +440,10 @@ describe("adapter-vs-shared parity", () => {
 
   it("commute proxy dimension matches shared core", () => {
     for (const scenario of golden.commuteProxyScenarios) {
-      const block = {
+      const block = makeBlock({
         flatTypes: ["4 ROOM"],
         medianPrice: 500000,
-        leaseCommenceRange: [2020, 2020] as [number, number],
+        leaseCommenceRange: [2020, 2020],
         nearestMrt:
           scenario.distanceMeters !== null
             ? {
@@ -443,7 +454,7 @@ describe("adapter-vs-shared parity", () => {
               }
             : null,
         nearbyMrts: [],
-      } as unknown as BlockSummary;
+      });
       const profile = makeProfile({
         maxComfortableCommuteMinutes: scenario.maxCommuteMinutes,
         commuteStretchMinutes: scenario.stretchMinutes,
@@ -457,13 +468,8 @@ describe("adapter-vs-shared parity", () => {
   });
 
   it("commute proxy with anchor MRT matches shared core", () => {
-    const block = {
+    const block = makeBlock({
       addressKey: "anchor-test",
-      town: "BEDOK",
-      block: "1",
-      streetName: "TEST",
-      displayName: null,
-      coordinates: { lat: 1.35, lng: 103.8 },
       medianPrice: 600000,
       pricePerSqmMedian: 6300,
       transactionCount: 10,
@@ -483,7 +489,7 @@ describe("adapter-vs-shared parity", () => {
         { stationName: "OTHER MRT STATION", distanceMeters: 5000, walkingTimeSeconds: 4000 },
       ],
       postalCode: null,
-    } as unknown as BlockSummary;
+    });
 
     const profile = makeProfile({
       maxComfortableCommuteMinutes: 30,
@@ -499,36 +505,40 @@ describe("adapter-vs-shared parity", () => {
 
   // ── Affordability integration ──────────────────────────────────────────
 
-  it("affordable filter passes when passesAffordability is null", () => {
-    const block = {
+  it("affordable filter adapter computes verdict before delegating to shared core", () => {
+    const block = makeBlock({
       addressKey: "afford-test",
-      town: "BEDOK",
-      block: "1",
-      streetName: "TEST",
-      coordinates: { lat: 1.35, lng: 103.8 },
-      medianPrice: 500000,
-      pricePerSqmMedian: 5500,
-      transactionCount: 5,
-      floorAreaRange: [80, 100],
-      leaseCommenceRange: [2000, 2000],
-      latestMonth: "2026-01",
-      availableDateRange: ["2024-01", "2026-01"],
-      flatTypes: ["4 ROOM"],
-      flatModels: ["MODEL A"],
-      nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
-      postalCode: null,
-    } as unknown as BlockSummary;
+      medianPrice: 900000,
+    });
+    const affordabilityProfile: AffordabilityProfile = {
+      monthlyIncome: 4000,
+      cpfOABalance: 50000,
+      age: 35,
+      coApplicantAge: null,
+    };
 
     const filters: FilterState = {
       ...DEFAULT_FILTERS,
       affordable: "comfortable",
     };
 
-    // When passesAffordability is null (no profile), both should pass
-    const sharedResult = sharedMatchesFilter(block, filters, undefined, undefined, undefined, null);
-    const adapterResult = adapterMatchesFilter(block, filters);
+    const passesAffordability = sharedPassesAffordabilityMode(
+      block,
+      affordabilityProfile,
+      filters.affordable,
+    );
+    const sharedResult = sharedMatchesFilter(
+      block,
+      filters,
+      undefined,
+      undefined,
+      undefined,
+      passesAffordability,
+    );
+    const adapterResult = adapterMatchesFilter(block, filters, undefined, affordabilityProfile);
 
-    expect(sharedResult).toBe(true);
-    expect(adapterResult).toBe(true);
+    expect(passesAffordability).toBe(false);
+    expect(adapterResult).toBe(sharedResult);
+    expect(adapterResult).toBe(false);
   });
 });
