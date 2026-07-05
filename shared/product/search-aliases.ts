@@ -53,6 +53,16 @@ const ALIAS_CONFIGS: LocaleAliasConfig[] = [
   },
 ];
 
+// Pre-sort aliases once at module level (longest first) so the resolver
+// doesn't re-sort on every invocation. This matters because the resolver
+// runs on every search keystroke and block filter pass.
+const SORTED_ALIAS_CONFIGS = ALIAS_CONFIGS.map((config) => ({
+  searchAliasPattern: config.searchAliasPattern,
+  sortedAliases: Object.entries(config.searchAliases).sort(
+    ([left], [right]) => right.length - left.length,
+  ),
+}));
+
 /**
  * Resolve multilingual (e.g. Chinese) search aliases into their English
  * equivalents. The input string may contain CJK characters that map to
@@ -63,16 +73,12 @@ const ALIAS_CONFIGS: LocaleAliasConfig[] = [
 export function resolveMultilingualSearchAliases(input: string): string {
   let normalized = input;
 
-  for (const config of ALIAS_CONFIGS) {
+  for (const config of SORTED_ALIAS_CONFIGS) {
     if (config.searchAliasPattern && !config.searchAliasPattern.test(normalized)) {
       continue;
     }
 
-    const sortedAliases = Object.entries(config.searchAliases).sort(
-      ([left], [right]) => right.length - left.length,
-    );
-
-    for (const [source, target] of sortedAliases) {
+    for (const [source, target] of config.sortedAliases) {
       normalized = normalized.replaceAll(source, ` ${target} `);
     }
   }

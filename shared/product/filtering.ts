@@ -515,12 +515,15 @@ export function resolveGeographicSearchIntent(
   const normalizedQuery = normalizeSearchText(query);
   const normalizedNearMe = nearMeQuery ? normalizeSearchText(nearMeQuery) : "near me";
 
-  if ((normalizedQuery === "near me" || normalizedQuery === normalizedNearMe) && userLocation) {
-    return {
-      type: "coordinates",
-      coordinates: userLocation,
-      radiusMeters,
-    };
+  if (normalizedQuery === "near me" || normalizedQuery === normalizedNearMe) {
+    if (userLocation) {
+      return {
+        type: "coordinates",
+        coordinates: userLocation,
+        radiusMeters,
+      };
+    }
+    return null;
   }
 
   const coordinates = parseCoordinateSearch(query);
@@ -690,13 +693,13 @@ export function matchesFilter(
 
   if (
     filters.mrtMax !== null &&
-    block.nearestMrt !== null &&
+    block.nearestMrt &&
     block.nearestMrt.distanceMeters > filters.mrtMax
   ) {
     return false;
   }
 
-  if (filters.mrtMax !== null && block.nearestMrt === null) {
+  if (filters.mrtMax !== null && !block.nearestMrt) {
     return false;
   }
 
