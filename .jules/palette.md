@@ -36,3 +36,7 @@
 ## 2026-07-03 - Add keyboard focus visible states to custom interactive controls
 **Learning:** Custom interactive elements built with `role="radio"` or similar compound components in Tailwind often lack implicit keyboard focus styles, unlike native buttons.
 **Action:** Always explicitly define `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50` on custom toggles, tabs, and radio buttons to ensure they remain accessible to keyboard users without introducing mouse-click focus rings.
+
+## 2026-07-05 - Visual structure for empty states
+**Learning:** Using simple, unstyled text for empty states (like an empty shortlist) creates a lack of visual hierarchy and can feel like a bug or missing content rather than an intentional state. Users are more likely to understand and engage with structured empty states that include a clear icon, title, and descriptive text.
+**Action:** When encountering plain-text empty states, upgrade them to a structured layout containing an intentional icon (e.g., inside a muted circular background), a prominent title, and a descriptive subtitle to improve user comprehension and polish.

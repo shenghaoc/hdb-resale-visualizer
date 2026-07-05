@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import {
   ArrowUpDown,
+  Bookmark,
   Check,
   ChevronDown,
   Copy,
@@ -108,6 +109,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 
 type ShortlistRow = {
   item: ShortlistItem;
@@ -1537,9 +1545,22 @@ export function ShortlistDrawer({
               </div>
             ) : null}
             {rows.length === 0 ? (
-              <div className="empty-state pt-12 text-center text-sm text-muted-foreground">
-                {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
-              </div>
+              <Empty role="status" className="empty-state overflow-y-auto px-6 pt-16 pb-0">
+                <EmptyHeader className="gap-1">
+                  <EmptyMedia
+                    variant="icon"
+                    className="mb-1 size-14 rounded-full bg-muted/50 text-muted-foreground/60 [&_svg:not([class*='size-'])]:size-6"
+                  >
+                    <Bookmark aria-hidden="true" />
+                  </EmptyMedia>
+                  <EmptyTitle className="text-sm font-semibold normal-case tracking-normal text-foreground">
+                    {t("shortlist.emptyStateTitle")}
+                  </EmptyTitle>
+                  <EmptyDescription className="text-xs leading-relaxed">
+                    {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
+                  </EmptyDescription>
+                </EmptyHeader>
+              </Empty>
             ) : (
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1 v2-scrollbar">
                 <div className="flex flex-col gap-3 pb-8">
