@@ -118,6 +118,21 @@ describe("shared/product/filter-pipeline", () => {
       // So both blocks pass the filter, but the caller applies visibility.
       expect(result).toHaveLength(2);
     });
+
+    it("requires an explicit evaluation context for remaining lease filters", () => {
+      const block = makeBlock({ addressKey: "lease", leaseCommenceRange: [1990, 2000] });
+      expect(() =>
+        filterScopedBlocks(
+          [block],
+          { ...BASE_FILTERS, remainingLeaseMin: 73 },
+          null,
+          null,
+          null,
+          null,
+          null,
+        ),
+      ).toThrow(/FilterEvaluationContext/);
+    });
   });
 
   describe("computeMapFilteredBlocks", () => {
@@ -189,6 +204,43 @@ describe("shared/product/filter-pipeline", () => {
       // No filters active → all blocks pass. The "no map scope → skip filtering"
       // optimization is the caller's responsibility (the hook), not the pure function's.
       expect(result).toHaveLength(1);
+    });
+
+    it("uses the supplied currentYear for remaining lease filtering", () => {
+      const block = makeBlock({ addressKey: "lease", leaseCommenceRange: [1990, 2000] });
+      const blocks = [block];
+      const blocksByKey = new Map(blocks.map((b) => [b.addressKey, b]));
+      const filters = { ...BASE_FILTERS, remainingLeaseMin: 73 };
+
+      expect(
+        computeMapFilteredBlocks(
+          blocks,
+          filters,
+          null,
+          null,
+          DEFAULT_PROFILE,
+          null,
+          null,
+          blocksByKey,
+          2026,
+          null,
+        ).map((b) => b.addressKey),
+      ).toEqual(["lease"]);
+
+      expect(
+        computeMapFilteredBlocks(
+          blocks,
+          filters,
+          null,
+          null,
+          DEFAULT_PROFILE,
+          null,
+          null,
+          blocksByKey,
+          2027,
+          null,
+        ),
+      ).toEqual([]);
     });
   });
 

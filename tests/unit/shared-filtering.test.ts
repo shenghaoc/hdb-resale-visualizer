@@ -91,6 +91,13 @@ describe("shared/product/filtering", () => {
   });
 
   describe("matchesFilter — remaining lease", () => {
+    it("requires an explicit evaluation context", () => {
+      const block = makeBlock({ leaseCommenceRange: [1990, 2000] });
+      expect(() => matchesFilter(block, { ...BASE_FILTERS, remainingLeaseMin: 73 })).toThrow(
+        /FilterEvaluationContext/,
+      );
+    });
+
     it("includes block where max remaining lease meets remainingLeaseMin", () => {
       // leaseCommenceRange[1] = 2000, year 2026 → 99 - 26 = 73
       const block = makeBlock({ leaseCommenceRange: [1990, 2000] });

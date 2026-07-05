@@ -35,6 +35,10 @@ export function filterScopedBlocks(
   evaluationContext: FilterEvaluationContext | null | undefined,
   passesAffordabilityForBlock: ((block: BlockSummary) => boolean | null) | null | undefined,
 ): BlockSummary[] {
+  if (filters.remainingLeaseMin !== null && !evaluationContext) {
+    throw new Error("FilterEvaluationContext is required when remainingLeaseMin is set.");
+  }
+
   return blocks.filter((block) => {
     // When the caller provides an affordability profile and the filter is active
     // but no caching callback, compute passesAffordabilityMode directly so

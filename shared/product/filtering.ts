@@ -676,7 +676,10 @@ export function matchesFilter(
   }
 
   if (filters.remainingLeaseMin !== null) {
-    const currentYear = evaluationContext?.currentYear ?? new Date().getFullYear();
+    if (!evaluationContext) {
+      throw new Error("FilterEvaluationContext is required when remainingLeaseMin is set.");
+    }
+    const { currentYear } = evaluationContext;
     const maxRemainingLease = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
     if (maxRemainingLease < filters.remainingLeaseMin) {
       return false;

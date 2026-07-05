@@ -63,6 +63,10 @@ export function matchesFilter(
   if (filters.affordable && affordabilityProfile) {
     passesAffordability = passesAffordabilityMode(block, affordabilityProfile, filters.affordable);
   }
+  const effectiveEvaluationContext =
+    filters.remainingLeaseMin !== null
+      ? (evaluationContext ?? createFilterEvaluationContext())
+      : evaluationContext;
 
   return _matchesFilter(
     block,
@@ -70,7 +74,7 @@ export function matchesFilter(
     geographicIntent,
     affordabilityProfile,
     fuseMatchedKeys,
-    evaluationContext,
+    effectiveEvaluationContext,
     passesAffordability,
   );
 }

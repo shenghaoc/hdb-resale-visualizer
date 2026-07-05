@@ -6,10 +6,15 @@ import {
 } from "@/shared/lib/constants";
 import {
   createFilterEvaluationContext,
-  matchesFilter,
-  matchesGeographicSearchIntent,
   resolveGeographicSearchIntent,
 } from "@/shared/lib/filtering";
+import {
+  computeMapFilteredBlocks as computeMapFilteredBlocksCore,
+  filterScopedBlocks as filterScopedBlocksCore,
+  hasMapMarkerScope as hasMapMarkerScopeCore,
+  hasResultScope as hasResultScopeCore,
+} from "@shared/product/filter-pipeline";
+import { passesAffordabilityMode } from "@/shared/lib/affordability";
 import { getFuseMatchedKeys } from "@/features/search-profile/searchFuse";
 import { applyProfileVisibility } from "@/features/search-profile/matchProfile";
 import { hasCompletedSearchProfile } from "@/features/search-profile/searchProfile";
@@ -211,32 +216,17 @@ export function useFilterPipeline({
     [debouncedSearch, stableFilters],
   );
 
-  // Shared single-pass filter function for both the results pane and map pane.
-  const filterScopedBlocks = useCallback(
-    (
-      scopeBlocks: BlockSummary[],
-      scopeFilters: FilterState & { selectedAddressKey: null },
-      scopeIntent: ReturnType<typeof resolveGeographicSearchIntent>,
-      scopeFuseMatchedKeys: ReadonlySet<string> | null,
-    ) => {
-      const evaluationContext =
-        scopeFilters.remainingLeaseMin === null ? null : createFilterEvaluationContext();
-      return scopeBlocks.filter((block) => {
-        if (
-          !matchesFilter(
-            block,
-            scopeFilters,
-            scopeIntent,
-            affordabilityProfile,
-            scopeFuseMatchedKeys,
-            evaluationContext,
-          )
-        )
-          return false;
-        return scopeIntent ? matchesGeographicSearchIntent(block, scopeIntent) : true;
-      });
-    },
-    [affordabilityProfile],
+  const filterEvaluationContext = useMemo(
+    () => (stableFilters.remainingLeaseMin === null ? null : createFilterEvaluationContext()),
+    [stableFilters.remainingLeaseMin],
+  );
+
+  const passesAffordabilityForBlock = useCallback(
+    (block: BlockSummary) =>
+      stableFilters.affordable
+        ? passesAffordabilityMode(block, affordabilityProfile, stableFilters.affordable)
+        : null,
+    [affordabilityProfile, stableFilters.affordable],
   );
 
   const resultsFuseMatchedKeys = useMemo(
@@ -279,33 +269,37 @@ export function useFilterPipeline({
   // immediately to geolocate (mapGeographicIntent lags by debouncedSearch delay).
   const effectiveMapGeographicIntent = mapGeographicIntent ?? geographicIntent;
 
-  // Determine if there is any active filter/search/selection state, independent of which panel is visible.
-  const hasResultScope = Boolean(
-    effectiveFilters.town ||
-    resolvedSearch.trim() ||
-    geographicIntent ||
+  const hasResultScope = hasResultScopeCore(
+    effectiveFilters.town,
+    resolvedSearch,
+    geographicIntent,
     rawFilters.selectedAddressKey,
   );
 
-  // selectedAddressKey is intentionally excluded: a single-block selection has
-  // too few data points to render a meaningful heatmap.
-  const hasMapMarkerScope = Boolean(
-    mapFilters.town || mapFilters.search.trim() || effectiveMapGeographicIntent,
+  const hasMapMarkerScope = hasMapMarkerScopeCore(
+    mapFilters.town,
+    mapFilters.search,
+    effectiveMapGeographicIntent,
   );
 
   const filteredBlocks = useMemo(() => {
     if (!resultsVisible) return [];
-    const scoped = filterScopedBlocks(
+    const scoped = filterScopedBlocksCore(
       blocks,
       stableFilters,
       geographicIntent,
+      affordabilityProfile,
       resultsFuseMatchedKeys,
+      filterEvaluationContext,
+      passesAffordabilityForBlock,
     );
     return applyProfileVisibility(scoped, searchProfile);
   }, [
+    affordabilityProfile,
     blocks,
-    filterScopedBlocks,
+    filterEvaluationContext,
     geographicIntent,
+    passesAffordabilityForBlock,
     resultsVisible,
     searchProfile,
     stableFilters,
@@ -315,28 +309,32 @@ export function useFilterPipeline({
   const selectedAddressKey = rawFilters.selectedAddressKey;
 
   const mapFilteredBlocks = useMemo(() => {
-    const scopedBlocks = hasMapMarkerScope
-      ? applyProfileVisibility(
-          filterScopedBlocks(blocks, mapFilters, effectiveMapGeographicIntent, mapFuseMatchedKeys),
-          searchProfile,
-        )
-      : [];
-
-    if (!selectedAddressKey) return scopedBlocks;
-
-    if (scopedBlocks.some((block) => block.addressKey === selectedAddressKey)) {
-      return scopedBlocks;
+    if (!hasMapMarkerScope) {
+      if (!selectedAddressKey) return [];
+      const selected = blocksByKey.get(selectedAddressKey) ?? null;
+      return selected ? [selected] : [];
     }
 
-    const selected = blocksByKey.get(selectedAddressKey) ?? null;
-    return selected ? [...scopedBlocks, selected] : scopedBlocks;
+    return computeMapFilteredBlocksCore(
+      blocks,
+      mapFilters,
+      effectiveMapGeographicIntent,
+      affordabilityProfile,
+      searchProfile,
+      mapFuseMatchedKeys,
+      selectedAddressKey,
+      blocksByKey,
+      createFilterEvaluationContext().currentYear,
+      passesAffordabilityForBlock,
+    );
   }, [
+    affordabilityProfile,
     blocksByKey,
     blocks,
     effectiveMapGeographicIntent,
-    filterScopedBlocks,
     hasMapMarkerScope,
     mapFilters,
+    passesAffordabilityForBlock,
     searchProfile,
     selectedAddressKey,
     mapFuseMatchedKeys,
