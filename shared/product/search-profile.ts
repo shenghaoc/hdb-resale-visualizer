@@ -16,7 +16,7 @@ import { MAX_LEASE_DURATION } from "./lease";
 export type SearchProfile = {
   version: 1;
   mainFlatType: string;
-  alternativeFlatTypes: string[];
+  alternativeFlatTypes: readonly string[];
   maxBudget: number | null;
   commuteAnchorLabel: string;
   commuteAnchorMrt: string | null;

@@ -123,6 +123,38 @@ describe("shared/product/filtering", () => {
         matchesFilter(makeBlock({ floorAreaRange: [60, 79] }), { ...BASE_FILTERS, areaMin: 80 }),
       ).toBe(false);
     });
+
+    it("includes block whose min area exactly equals areaMax", () => {
+      expect(
+        matchesFilter(makeBlock({ floorAreaRange: [100, 120] }), { ...BASE_FILTERS, areaMax: 100 }),
+      ).toBe(true);
+    });
+
+    it("excludes block whose min area exceeds areaMax", () => {
+      expect(
+        matchesFilter(makeBlock({ floorAreaRange: [101, 120] }), { ...BASE_FILTERS, areaMax: 100 }),
+      ).toBe(false);
+    });
+  });
+
+  describe("matchesFilter — flat model", () => {
+    it("includes block that has the selected flat model", () => {
+      expect(
+        matchesFilter(makeBlock({ flatModels: ["MODEL A", "IMPROVED"] }), {
+          ...BASE_FILTERS,
+          flatModel: "MODEL A",
+        }),
+      ).toBe(true);
+    });
+
+    it("excludes block that does not have the selected flat model", () => {
+      expect(
+        matchesFilter(makeBlock({ flatModels: ["MODEL A"] }), {
+          ...BASE_FILTERS,
+          flatModel: "IMPROVED",
+        }),
+      ).toBe(false);
+    });
   });
 
   describe("matchesFilter — date range", () => {

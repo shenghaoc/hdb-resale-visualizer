@@ -324,7 +324,7 @@ export function useFilterPipeline({
       mapFuseMatchedKeys,
       selectedAddressKey,
       blocksByKey,
-      createFilterEvaluationContext().currentYear,
+      filterEvaluationContext?.currentYear ?? createFilterEvaluationContext().currentYear,
       passesAffordabilityForBlock,
     );
   }, [

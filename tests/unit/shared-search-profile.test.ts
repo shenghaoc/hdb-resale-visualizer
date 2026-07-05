@@ -146,6 +146,36 @@ describe("shared/product/search-profile", () => {
       expect(result.tier).toBe("stretch");
     });
 
+    it("returns weak when both budget and commute fail (two soft failures)", () => {
+      const block = makeBlock({
+        addressKey: "x",
+        medianPrice: 1_500_000,
+        nearestMrt: { stationName: "X", distanceMeters: 6000, walkingTimeSeconds: 4800 },
+      });
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        maxBudget: 700_000,
+        maxComfortableCommuteMinutes: 30,
+      });
+      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
+    });
+
+    it("returns weak when budget stretches and commute fails with no passing soft signals", () => {
+      const block = makeBlock({
+        addressKey: "x",
+        medianPrice: 720_000,
+        nearestMrt: { stationName: "X", distanceMeters: 6000, walkingTimeSeconds: 4800 },
+      });
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        maxBudget: 700_000,
+        budgetStretchPercent: 5,
+        maxComfortableCommuteMinutes: 30,
+      });
+      // budget=stretch, commute=fail → failCount=1, stretchCount=1, passCount=0 → weak
+      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
+    });
+
     it("fails commute when the block has no MRT data and a commute target is set", () => {
       const block = makeBlock({ addressKey: "x", nearestMrt: null });
       const profile = makeProfile({ maxComfortableCommuteMinutes: 30 });
