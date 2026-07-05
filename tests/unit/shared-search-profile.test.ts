@@ -4,6 +4,7 @@ import {
   computeRemainingLeaseYears,
   createProfileEvaluator,
   evaluateBlockForProfile,
+  hasCompletedSearchProfile,
   isProfileVisibilityActive,
 } from "@shared/product/search-profile";
 import type { BlockSummary } from "@shared/data-types";
@@ -56,6 +57,78 @@ function makeProfile(overrides: Partial<SearchProfile> = {}): SearchProfile {
 }
 
 describe("shared/product/search-profile", () => {
+  describe("hasCompletedSearchProfile", () => {
+    it("returns true for a complete profile", () => {
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        commuteAnchorLabel: "Raffles Place",
+        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: 70,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(true);
+    });
+
+    it("returns false when mainFlatType is blank", () => {
+      const profile = makeProfile({
+        mainFlatType: "",
+        commuteAnchorLabel: "Raffles Place",
+        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: 70,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(false);
+    });
+
+    it("returns false when commuteAnchorLabel is blank", () => {
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        commuteAnchorLabel: "",
+        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: 70,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(false);
+    });
+
+    it("returns false when commuteAnchorMrt is null", () => {
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        commuteAnchorLabel: "Raffles Place",
+        commuteAnchorMrt: null,
+        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: 70,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(false);
+    });
+
+    it("returns false when maxComfortableCommuteMinutes is null", () => {
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        commuteAnchorLabel: "Raffles Place",
+        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+        maxComfortableCommuteMinutes: null,
+        minimumRemainingLeaseYears: 70,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(false);
+    });
+
+    it("returns false when minimumRemainingLeaseYears is null", () => {
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        commuteAnchorLabel: "Raffles Place",
+        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: null,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(false);
+    });
+
+    it("returns false for default (empty) profile", () => {
+      expect(hasCompletedSearchProfile(makeProfile())).toBe(false);
+    });
+  });
+
   describe("computeRemainingLeaseYears", () => {
     it("uses MAX_LEASE_DURATION minus elapsed years from upper bound", () => {
       expect(computeRemainingLeaseYears([2000, 2000], 2025)).toBe(74);
