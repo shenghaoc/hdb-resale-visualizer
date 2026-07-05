@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import {
   ArrowUpDown,
+  Bookmark,
   Check,
   ChevronDown,
   Copy,
@@ -1537,8 +1538,22 @@ export function ShortlistDrawer({
               </div>
             ) : null}
             {rows.length === 0 ? (
-              <div className="empty-state pt-12 text-center text-sm text-muted-foreground">
-                {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
+              <div className="empty-state flex flex-col items-center justify-center gap-3 pt-16 text-center">
+                <div className="rounded-full bg-muted/50 p-4">
+                  <Bookmark
+                    data-icon
+                    className="size-6 text-muted-foreground/60"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm font-semibold text-foreground">
+                    {t("tab.saved")}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
+                  </p>
+                </div>
               </div>
             ) : (
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1 v2-scrollbar">
