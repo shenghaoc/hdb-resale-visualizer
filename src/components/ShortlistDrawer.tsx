@@ -1538,7 +1538,10 @@ export function ShortlistDrawer({
               </div>
             ) : null}
             {rows.length === 0 ? (
-              <div className="empty-state flex flex-col items-center justify-center gap-3 pt-16 text-center">
+              <div
+                role="status"
+                className="empty-state flex flex-col items-center justify-center gap-3 overflow-y-auto pt-16 pb-0 text-center"
+              >
                 <div className="rounded-full bg-muted/50 p-4">
                   <Bookmark
                     data-icon
