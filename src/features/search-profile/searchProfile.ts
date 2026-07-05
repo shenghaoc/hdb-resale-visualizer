@@ -9,6 +9,9 @@ import {
 import { safeStorage } from "@/shared/lib/storage";
 import type { SearchProfile } from "@/types/searchProfile";
 
+// Re-exported from shared product core for cross-platform reuse.
+export { hasCompletedSearchProfile } from "@shared/product/search-profile";
+
 export const applicantAgeSchema = z
   .number()
   .int()
@@ -81,14 +84,4 @@ export function loadSearchProfileWizardDismissed(): boolean {
 
 export function saveSearchProfileWizardDismissed(isDismissed: boolean): void {
   safeStorage.setItem(SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY, isDismissed ? "1" : "0");
-}
-
-export function hasCompletedSearchProfile(profile: SearchProfile): boolean {
-  return Boolean(
-    profile.mainFlatType.trim() &&
-    profile.commuteAnchorLabel.trim() &&
-    profile.commuteAnchorMrt?.trim() &&
-    profile.maxComfortableCommuteMinutes !== null &&
-    profile.minimumRemainingLeaseYears !== null,
-  );
 }
