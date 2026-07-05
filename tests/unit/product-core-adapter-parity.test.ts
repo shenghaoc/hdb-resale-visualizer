@@ -295,10 +295,10 @@ describe("adapter-vs-shared parity", () => {
       ctx2026,
     );
 
-    // Deterministic: same year → same result
+    // Deterministic: same year => same result
     expect(result1).toBe(result2);
 
-    // Different year → different result
+    // Different year => different result
     const ctx2025 = sharedCreateFilterEvaluationContext(2025);
     const result3 = sharedMatchesFilter(
       block as unknown as BlockSummary,
@@ -308,7 +308,7 @@ describe("adapter-vs-shared parity", () => {
       ctx2025,
     );
 
-    // 2026: 73<74 → fail, 2025: 74≥74 → pass
+    // 2026: 73<74 => fail, 2025: 74>=74 => pass
     expect(result1).toBe(false);
     expect(result3).toBe(true);
 
