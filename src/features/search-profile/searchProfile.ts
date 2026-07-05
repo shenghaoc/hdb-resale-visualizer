@@ -9,6 +9,7 @@ import {
 import { safeStorage } from "@/shared/lib/storage";
 import type { SearchProfile } from "@/types/searchProfile";
 
+// Re-exported from shared product core for cross-platform reuse.
 export { hasCompletedSearchProfile } from "@shared/product/search-profile";
 
 export const applicantAgeSchema = z

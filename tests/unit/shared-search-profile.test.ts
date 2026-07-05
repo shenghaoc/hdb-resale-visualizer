@@ -144,6 +144,53 @@ describe("shared/product/search-profile", () => {
         }),
       ).toBe(false);
     });
+
+    it("returns false for whitespace-only string fields", () => {
+      expect(
+        hasCompletedSearchProfile(
+          makeProfile({
+            mainFlatType: "   ",
+            commuteAnchorLabel: "Raffles Place",
+            commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+            maxComfortableCommuteMinutes: 30,
+            minimumRemainingLeaseYears: 70,
+          }),
+        ),
+      ).toBe(false);
+      expect(
+        hasCompletedSearchProfile(
+          makeProfile({
+            mainFlatType: "4 ROOM",
+            commuteAnchorLabel: "   ",
+            commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
+            maxComfortableCommuteMinutes: 30,
+            minimumRemainingLeaseYears: 70,
+          }),
+        ),
+      ).toBe(false);
+      expect(
+        hasCompletedSearchProfile(
+          makeProfile({
+            mainFlatType: "4 ROOM",
+            commuteAnchorLabel: "Raffles Place",
+            commuteAnchorMrt: "   ",
+            maxComfortableCommuteMinutes: 30,
+            minimumRemainingLeaseYears: 70,
+          }),
+        ),
+      ).toBe(false);
+    });
+
+    it("returns false when commuteAnchorMrt is empty string", () => {
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        commuteAnchorLabel: "Raffles Place",
+        commuteAnchorMrt: "",
+        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: 70,
+      });
+      expect(hasCompletedSearchProfile(profile)).toBe(false);
+    });
   });
 
   describe("computeRemainingLeaseYears", () => {
