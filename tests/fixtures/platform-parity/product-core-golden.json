@@ -347,6 +347,22 @@
       "expectedMatch": false
     }
   ],
+  "leaseDeterminismScenarios": [
+    {
+      "name": "lease-threshold-at-year-boundary",
+      "blockLeaseCommenceRange": [2000, 2000],
+      "filterRemainingLeaseMin": 74,
+      "year2026Expected": false,
+      "year2025Expected": true
+    },
+    {
+      "name": "lease-old-lease-consistently-fails",
+      "blockLeaseCommenceRange": [1968, 1968],
+      "filterRemainingLeaseMin": 60,
+      "year2026Expected": false,
+      "year2030Expected": false
+    }
+  ],
   "effectivePriceScenarios": [
     {
       "name": "flat-type-specific-median",
