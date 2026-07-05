@@ -181,7 +181,7 @@ describe("ShortlistDrawer", () => {
       </I18nProvider>,
     );
 
-    expect(screen.getByText("Saved")).toBeInTheDocument();
+    expect(screen.getByText("Saved shortlist")).toBeInTheDocument();
     expect(
       screen.getByText(`Save up to ${MAX_SHORTLIST_ITEMS} blocks to compare.`),
     ).toBeInTheDocument();
