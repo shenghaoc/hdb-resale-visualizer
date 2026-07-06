@@ -25,6 +25,11 @@ import {
   SYNC_CODE_PATTERN,
 } from "../../shared/shortlist-limits";
 import type { ShortlistItem } from "../../shared/data-types";
+import {
+  workerIsoTimestampFromEpochMilliseconds,
+  workerNowEpochMilliseconds,
+  workerNowIsoTimestamp,
+} from "./worker-time";
 
 const note = z.string().transform((s) => s.slice(0, MAX_NOTE_LENGTH));
 
@@ -65,7 +70,7 @@ const shortlistItemSchema = z.object({
     .string()
     .datetime({ offset: true })
     .max(MAX_ADDED_AT_LENGTH)
-    .catch(() => Temporal.Now.instant().toString({ fractionalSecondDigits: 3 })),
+    .catch(() => workerNowIsoTimestamp()),
 });
 
 function normalizeNumber(
@@ -207,7 +212,7 @@ export async function handleShortlistPush(db: SyncDB, bodyText: string): Promise
   }
 
   const { syncCode: providedCode, items } = parsed.data;
-  const now = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+  const now = workerNowIsoTimestamp();
 
   try {
     if (!providedCode) {
@@ -276,10 +281,10 @@ export async function handleShortlistGet(
 }
 
 /** ISO cutoff for rows eligible for TTL purge at `now`. */
-export function shortlistRetentionCutoff(now: Temporal.Instant = Temporal.Now.instant()): string {
-  return now
-    .subtract({ milliseconds: SHORTLIST_RETENTION_MS })
-    .toString({ fractionalSecondDigits: 3 });
+export function shortlistRetentionCutoff(
+  nowEpochMilliseconds: number = workerNowEpochMilliseconds(),
+): string {
+  return workerIsoTimestampFromEpochMilliseconds(nowEpochMilliseconds - SHORTLIST_RETENTION_MS);
 }
 
 /**
@@ -288,9 +293,9 @@ export function shortlistRetentionCutoff(now: Temporal.Instant = Temporal.Now.in
  */
 export async function purgeStaleShortlists(
   db: SyncDB,
-  now: Temporal.Instant = Temporal.Now.instant(),
+  nowEpochMilliseconds: number = workerNowEpochMilliseconds(),
 ): Promise<number> {
-  const cutoff = shortlistRetentionCutoff(now);
+  const cutoff = shortlistRetentionCutoff(nowEpochMilliseconds);
   const pageSize = 1000;
   let total = 0;
   while (true) {

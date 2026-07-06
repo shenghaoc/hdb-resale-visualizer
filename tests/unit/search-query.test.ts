@@ -8,23 +8,27 @@ import {
 
 describe("search query builder", () => {
   it("builds coarse WHERE and bindings", () => {
-    const q = buildSearchQuery({
-      town: "BEDOK",
-      flatType: "4 ROOM",
-      flatModel: "Model A",
-      budgetMin: 500000,
-      budgetMax: 800000,
-      areaMin: 90,
-      areaMax: 120,
-      mrtMax: 1000,
-      remainingLeaseMin: 60,
-      startMonth: "2022-01",
-      endMonth: "2024-12",
-    });
+    const q = buildSearchQuery(
+      {
+        town: "BEDOK",
+        flatType: "4 ROOM",
+        flatModel: "Model A",
+        budgetMin: 500000,
+        budgetMax: 800000,
+        areaMin: 90,
+        areaMax: 120,
+        mrtMax: 1000,
+        remainingLeaseMin: 60,
+        startMonth: "2022-01",
+        endMonth: "2024-12",
+      },
+      2026,
+    );
     expect(q.whereSql).toContain("town = ?");
     expect(q.whereSql).toContain("flat_types_json");
     expect(q.whereSql).toContain("flat_models_json");
     expect(q.bindings.length).toBeGreaterThan(5);
+    expect(q.bindings).toContain(2026);
   });
 
   it("rejects invalid bounds", () => {

@@ -6,7 +6,6 @@
  * static asset (SPA fallback via `not_found_handling`).
  */
 
-import "../shared/temporal";
 import { onRequestGet as manifestHandler } from "../functions/api/manifest";
 import { onRequestGet as blockSummariesHandler } from "../functions/api/block-summaries";
 import { onRequestGet as blocksByTownHandler } from "../functions/api/blocks/[town]";
