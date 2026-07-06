@@ -1,4 +1,5 @@
 import { rowToBlockSummary, townFilenameToCanonical, type BlockRow } from "../functions/_lib/d1";
+import { workerNowEpochMilliseconds } from "../functions/_lib/worker-time";
 import {
   escapeXml,
   formatCount,
@@ -36,7 +37,7 @@ let manifestCache: { expiresAt: number; version: string; dataWindow: DataWindow 
 async function readManifestMetadata(
   env: Env,
 ): Promise<{ version: string; dataWindow: DataWindow }> {
-  const now = Temporal.Now.instant().epochMilliseconds;
+  const now = workerNowEpochMilliseconds();
   if (manifestCache && manifestCache.expiresAt > now) {
     return { version: manifestCache.version, dataWindow: manifestCache.dataWindow };
   }

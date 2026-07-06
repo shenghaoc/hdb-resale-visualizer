@@ -1,5 +1,12 @@
 import "@testing-library/jest-dom/vitest";
 
+// jsdom does not currently expose Node 26's native Temporal on window/globalThis.
+// Mirror the host runtime so browser-facing tests exercise the same API surface
+// as the repo's native-Temporal assumption without adding a polyfill dependency.
+if (typeof globalThis.Temporal === "undefined" && typeof Temporal !== "undefined") {
+  globalThis.Temporal = Temporal;
+}
+
 if (typeof ResizeObserver === "undefined") {
   global.ResizeObserver = class ResizeObserver {
     observe() {}

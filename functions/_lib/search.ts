@@ -1,4 +1,5 @@
 import { canonicalFlatType } from "../../shared/filter-options";
+import { workerCurrentUtcYear } from "./worker-time";
 
 const MAX_LEASE_DURATION = 99;
 const MAX_SEARCH_QUERY_LENGTH = 256;
@@ -128,7 +129,10 @@ export function validateSearchRequest(request: SearchRequest): string | null {
   return null;
 }
 
-export function buildSearchQuery(request: SearchRequest): SearchQueryPlan {
+export function buildSearchQuery(
+  request: SearchRequest,
+  currentYear: number = workerCurrentUtcYear(),
+): SearchQueryPlan {
   const where: string[] = [];
   const bindings: unknown[] = [];
 
@@ -189,10 +193,7 @@ export function buildSearchQuery(request: SearchRequest): SearchQueryPlan {
   }
   if (request.remainingLeaseMin !== null) {
     where.push("(? - lease_commence_year) <= ?");
-    bindings.push(
-      Temporal.Now.plainDateISO("UTC").year,
-      MAX_LEASE_DURATION - request.remainingLeaseMin,
-    );
+    bindings.push(currentYear, MAX_LEASE_DURATION - request.remainingLeaseMin);
   }
   if (request.startMonth) {
     where.push("available_max_month >= ?");

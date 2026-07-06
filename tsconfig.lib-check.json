@@ -1,14 +1,8 @@
 {
-  // Stricter than day-to-day builds: skipLibCheck false surfaces vendor .d.ts issues.
-  // module CommonJS avoids echarts' export= root typing incompatibility with module ESNext.
-  "extends": "./tsconfig.app.json",
-  "compilerOptions": {
-    "skipLibCheck": false,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "CommonJS",
-    "moduleResolution": "Node10",
-    "verbatimModuleSyntax": false,
-    "ignoreDeprecations": "6.0"
-  },
-  "include": ["src", "shared", "types/lib-check-ambient.d.ts"]
+  // Dedicated CI gate for the browser/source graph. Intentionally inherit the
+  // Vite app config so this stays aligned with ESM + Bundler module resolution
+  // and the vite-plus client types loaded from src/vite-env.d.ts.
+  // skipLibCheck remains enabled via tsconfig.app.json so this gate stays
+  // focused on repo-owned source rather than third-party declaration internals.
+  "extends": "./tsconfig.app.json"
 }

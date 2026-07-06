@@ -53,7 +53,7 @@ function makeFakeDB(initialRows: Record<string, Row>): {
 describe("shortlistRetentionCutoff", () => {
   it("subtracts SHORTLIST_RETENTION_DAYS from the supplied clock", () => {
     const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
-    const cutoff = shortlistRetentionCutoff(now);
+    const cutoff = shortlistRetentionCutoff(now.epochMilliseconds);
     const expected = now.subtract({ milliseconds: SHORTLIST_RETENTION_MS });
     expect(cutoff).toBe(expected.toString({ fractionalSecondDigits: 3 }));
   });
@@ -75,7 +75,7 @@ describe("purgeStaleShortlists", () => {
     });
 
     const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
-    const deleted = await purgeStaleShortlists(db, now);
+    const deleted = await purgeStaleShortlists(db, now.epochMilliseconds);
 
     expect(deleted).toBe(1);
     expect(rows.has("stale")).toBe(false);
@@ -84,7 +84,7 @@ describe("purgeStaleShortlists", () => {
     expect(deleteCalls[0]?.sql).toBe(
       "DELETE FROM shortlists WHERE code_hash IN (SELECT code_hash FROM shortlists WHERE updated_at < ? LIMIT ?)",
     );
-    expect(deleteCalls[0]?.args).toEqual([shortlistRetentionCutoff(now), 1000]);
+    expect(deleteCalls[0]?.args).toEqual([shortlistRetentionCutoff(now.epochMilliseconds), 1000]);
   });
 
   it("loops until fewer than pageSize rows are deleted", async () => {
@@ -100,13 +100,13 @@ describe("purgeStaleShortlists", () => {
     const { db, rows, deleteCalls } = makeFakeDB(manyRows);
 
     const now = Temporal.Instant.from("2026-05-27T12:00:00.000Z");
-    const deleted = await purgeStaleShortlists(db, now);
+    const deleted = await purgeStaleShortlists(db, now.epochMilliseconds);
 
     expect(deleted).toBe(2500);
     expect(rows.size).toBe(0);
     // 1000 + 1000 + 500 = 3 batches
     expect(deleteCalls).toHaveLength(3);
-    expect(deleteCalls[0]?.args).toEqual([shortlistRetentionCutoff(now), 1000]);
-    expect(deleteCalls[2]?.args).toEqual([shortlistRetentionCutoff(now), 1000]);
+    expect(deleteCalls[0]?.args).toEqual([shortlistRetentionCutoff(now.epochMilliseconds), 1000]);
+    expect(deleteCalls[2]?.args).toEqual([shortlistRetentionCutoff(now.epochMilliseconds), 1000]);
   });
 });
