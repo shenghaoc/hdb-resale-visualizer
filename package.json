@@ -19,7 +19,7 @@
     "db:migrate:remote": "wrangler d1 migrations apply hdb-resale --remote",
     "preview": "vp preview",
     "typecheck": "tsc -b",
-    "typecheck:libs": "tsc --noEmit -p tsconfig.lib-check.json",
+    "typecheck:libs": "tsc --noEmit -p tsconfig.app.json",
     "setup:fixtures": "tsx scripts/setup-api-fixtures.ts",
     "format": "vp fmt .",
     "format:check": "vp fmt --check .",
