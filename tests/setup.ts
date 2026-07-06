@@ -1,3 +1,4 @@
+import "../shared/temporal";
 import "@testing-library/jest-dom/vitest";
 
 if (typeof ResizeObserver === "undefined") {
