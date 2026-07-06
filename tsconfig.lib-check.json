@@ -2,10 +2,7 @@
   // Dedicated CI gate for the browser/source graph. Intentionally inherit the
   // Vite app config so this stays aligned with ESM + Bundler module resolution
   // and the vite-plus client types loaded from src/vite-env.d.ts.
-  "extends": "./tsconfig.app.json",
-  "compilerOptions": {
-    // Third-party declaration internals are outside repo control. Keep this
-    // gate focused on strictness in repo-owned source.
-    "skipLibCheck": true
-  }
+  // skipLibCheck remains enabled via tsconfig.app.json so this gate stays
+  // focused on repo-owned source rather than third-party declaration internals.
+  "extends": "./tsconfig.app.json"
 }
