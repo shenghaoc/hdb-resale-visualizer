@@ -68,7 +68,8 @@
 
 ## 6) Move listing-check feature logic
 
-- [ ] 6.1 Extract listing check orchestration from mixed components into `src/features/listing-check`.
+- [x] 6.1 Extract listing check orchestration from mixed components into `src/features/listing-check`.
+  - Completed via `src/features/listing-check/useListingCheckController.ts`.
 - [ ] 6.2 Keep calculation functions in entities/shared/lib modules; move only orchestration and component composition into feature.
 - [ ] 6.3 Ensure `AskingPriceCheck`, verdict panels, and comparable evidence producers import from new feature/entity modules.
 - [ ] 6.4 Add a feature-level test boundary:
