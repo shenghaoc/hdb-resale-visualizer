@@ -4,7 +4,12 @@ import {
   haversineDistanceMeters,
   makeAddressKey,
 } from "../../scripts/lib/pipeline";
-import { buildFixtureArtifacts, fixtureGeocodes, fixtureMrtExits } from "../fixtures/pipeline";
+import {
+  buildFixtureArtifacts,
+  fixtureGeocodes,
+  fixtureMrtExits,
+  fixtureTransactions,
+} from "../fixtures/pipeline";
 
 describe("pipeline artifacts", () => {
   it("builds summaries, detail files, and town trends", () => {
@@ -90,5 +95,17 @@ describe("pipeline artifacts", () => {
       distanceMeters: 16,
       walkingTimeSeconds: 13,
     });
+  });
+
+  it("rejects an empty transaction dataset before producing an invalid manifest", () => {
+    expect(() => buildFixtureArtifacts([])).toThrow(
+      "Cannot build artifacts without at least one resale transaction",
+    );
+  });
+
+  it("rejects malformed transaction months before recency arithmetic", () => {
+    expect(() => buildFixtureArtifacts([{ ...fixtureTransactions[0], month: "2026-13" }])).toThrow(
+      'Invalid transaction month "2026-13" for transaction "alpha-1"',
+    );
   });
 });

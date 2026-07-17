@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 
-// Node 24 does not include Temporal. Tests use the Date API throughout.
+// Tests use the standard Date API throughout; no time polyfill is required.
 
 if (typeof ResizeObserver === "undefined") {
   global.ResizeObserver = class ResizeObserver {

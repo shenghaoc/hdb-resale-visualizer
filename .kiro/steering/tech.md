@@ -31,7 +31,8 @@ inclusion: always
 2. **Runtime data source boundary**: No runtime `fetch()` to data.gov.sg, OneMap data APIs, LTA dataset APIs, or other upstream data sources from `src/`, `functions/`, or `worker/`. Upstream data ingestion belongs in `scripts/sync-data.ts`.
 3. **D1 schema discipline**: Add new numbered migrations in `migrations/*.sql`. Do not retroactively edit existing migrations. Schema changes must update D1 helpers, shared types, Zod schemas, sync storage, and tests together.
 4. **Script/runtime import boundary**: Node-executed scripts must not import from `src/` or use Vite-only aliases. Shared cross-runtime code belongs in `shared/`.
-5. **Privacy**: Browser-local storage is the default. Cloud shortlist sync uses anonymous high-entropy sync codes; store only hashes server-side and never introduce account or PII requirements without a product spec.
+5. **Date API compatibility**: Use the standard `Date` and `Intl` APIs. Do not add Temporal globals, polyfills, or `ESNext.Temporal` library declarations while Node 24 is the runtime baseline.
+6. **Privacy**: Browser-local storage is the default. Cloud shortlist sync uses anonymous high-entropy sync codes; store only hashes server-side and never introduce account or PII requirements without a product spec.
 
 ## Standard Scripts
 

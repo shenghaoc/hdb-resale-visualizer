@@ -1,26 +1,10 @@
 import { MAX_SHORTLIST_ITEMS } from "./shortlist-limits";
 import type { ShortlistItem } from "./data-types";
-
-const ISO_DATETIME_RE =
-  /^(\d{4})-(\d{2})-(\d{2})T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+import { parseIsoInstantMilliseconds } from "./isoDateTime";
 
 function addedAtMs(iso?: string): number {
   if (!iso) return 0;
-  const m = ISO_DATETIME_RE.exec(iso);
-  if (!m) return 0;
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return 0;
-  // Reject calendar-invalid dates (e.g. 9999-02-30) that Date normalizes
-  // silently, preserving the strictness of Temporal.Instant.from.
-  const checkDate = new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00Z`);
-  if (
-    checkDate.getUTCFullYear() !== Number(m[1]) ||
-    checkDate.getUTCMonth() + 1 !== Number(m[2]) ||
-    checkDate.getUTCDate() !== Number(m[3])
-  ) {
-    return 0;
-  }
-  return d.getTime();
+  return parseIsoInstantMilliseconds(iso) ?? 0;
 }
 
 /**

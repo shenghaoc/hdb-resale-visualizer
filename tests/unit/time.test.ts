@@ -1,10 +1,14 @@
 import { describe, it, expect } from "vite-plus/test";
+import { yearMonthIndex } from "@shared/yearMonth";
 
 describe("Year-month month distance", () => {
   function monthDistance(earlierMonth: string, laterMonth: string): number {
-    const [ey, em] = earlierMonth.split("-").map(Number);
-    const [ly, lm] = laterMonth.split("-").map(Number);
-    return Math.max(0, (ly - ey) * 12 + (lm - em));
+    const earlierIndex = yearMonthIndex(earlierMonth);
+    const laterIndex = yearMonthIndex(laterMonth);
+    if (earlierIndex === null || laterIndex === null) {
+      throw new Error("Invalid year-month fixture");
+    }
+    return Math.max(0, laterIndex - earlierIndex);
   }
 
   it("returns 0 for same month", () => {
@@ -25,6 +29,12 @@ describe("Year-month month distance", () => {
 
   it("handles large distance", () => {
     expect(monthDistance("2020-01", "2025-06")).toBe(65);
+  });
+
+  it("rejects partial and calendar-invalid year-month values", () => {
+    expect(yearMonthIndex("2026")).toBeNull();
+    expect(yearMonthIndex("2026-00")).toBeNull();
+    expect(yearMonthIndex("2026-13")).toBeNull();
   });
 });
 

@@ -1,4 +1,6 @@
 import type { Manifest } from "@/types/data";
+import { isIsoInstant } from "@shared/isoDateTime";
+import { isYearMonth, yearMonthIndex } from "@shared/yearMonth";
 
 export type DataSyncState = "fresh" | "stale" | "missing" | "partial";
 
@@ -14,29 +16,14 @@ export type DataQualityState = {
   syncState: DataSyncState;
 };
 
-const MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 const STALE_METADATA_MONTHS = 3;
 
 function isMonth(value: string | null | undefined): value is string {
-  return typeof value === "string" && MONTH_PATTERN.test(value);
+  return isYearMonth(value);
 }
 
 function isIsoDateTime(value: string | null | undefined): value is string {
-  if (typeof value !== "string") return false;
-  const isoDateRegex =
-    /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
-  const m = isoDateRegex.exec(value);
-  if (!m) return false;
-  const d = new Date(value);
-  if (isNaN(d.getTime())) return false;
-  // Verify round-trip using parsed components at UTC midnight so timezone
-  // offsets do not shift the date: "2026-06-15T00:00:00+08:00" must pass.
-  const checkDate = new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00Z`);
-  return (
-    checkDate.getUTCFullYear() === Number(m[1]) &&
-    checkDate.getUTCMonth() + 1 === Number(m[2]) &&
-    checkDate.getUTCDate() === Number(m[3])
-  );
+  return isIsoInstant(value);
 }
 
 function currentMonth(now: Date = new Date()): string {
@@ -45,11 +32,9 @@ function currentMonth(now: Date = new Date()): string {
 }
 
 export function monthsBetween(olderMonth: string, newerMonth: string): number {
-  const olderYear = Number(olderMonth.slice(0, 4));
-  const olderMon = Number(olderMonth.slice(5, 7));
-  const newerYear = Number(newerMonth.slice(0, 4));
-  const newerMon = Number(newerMonth.slice(5, 7));
-  return (newerYear - olderYear) * 12 + (newerMon - olderMon);
+  const olderIndex = yearMonthIndex(olderMonth);
+  const newerIndex = yearMonthIndex(newerMonth);
+  return olderIndex === null || newerIndex === null ? Number.NaN : newerIndex - olderIndex;
 }
 
 export function deriveDataQualityState(

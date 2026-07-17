@@ -115,6 +115,23 @@ describe("deriveDataQualityState", () => {
     expect(state.syncState).toBe("partial");
   });
 
+  it("rejects calendar-invalid and non-ISO generated timestamps", () => {
+    for (const generatedAt of ["2026-02-30T00:00:00Z", "January 1, 2026"]) {
+      const state = deriveDataQualityState(makeManifest({ generatedAt }), new Date("2026-06-15"));
+
+      expect(state.generatedAt, generatedAt).toBeNull();
+      expect(state.syncState, generatedAt).toBe("partial");
+    }
+  });
+
+  it("accepts valid ISO timestamps with hour-only offsets", () => {
+    const generatedAt = "2026-06-01T08:00:00+08";
+    const state = deriveDataQualityState(makeManifest({ generatedAt }), new Date("2026-06-15"));
+
+    expect(state.generatedAt).toBe(generatedAt);
+    expect(state.syncState).toBe("fresh");
+  });
+
   it("detects stale even when other fields are partial", () => {
     const state = deriveDataQualityState(
       {

@@ -50,6 +50,30 @@ describe("mergeShortlists", () => {
     expect(merged.map((i) => i.addressKey)).toEqual(["a", "b"]);
   });
 
+  it("treats calendar-invalid and permissive Date strings as oldest", () => {
+    const valid = item("valid", "2026-04-20T00:00:00.000Z");
+    const invalid = [
+      item("calendar-invalid", "9999-02-30T00:00:00Z"),
+      item("non-iso", "12/31/2099"),
+    ];
+
+    expect(mergeShortlists(invalid, [valid]).map((entry) => entry.addressKey)).toEqual([
+      "valid",
+      "calendar-invalid",
+      "non-iso",
+    ]);
+  });
+
+  it("orders valid hour-only offsets by their instant", () => {
+    const earlier = item("earlier", "2026-01-01T00:00:00+08");
+    const later = item("later", "2025-12-31T17:00:00Z");
+
+    expect(mergeShortlists([earlier, later], []).map((entry) => entry.addressKey)).toEqual([
+      "later",
+      "earlier",
+    ]);
+  });
+
   it("caps at MAX_SHORTLIST_ITEMS, keeping the most recent", () => {
     const many = Array.from({ length: MAX_SHORTLIST_ITEMS + 5 }, (_, index) =>
       item(`k${index}`, `2026-04-${String(index + 1).padStart(2, "0")}T00:00:00.000Z`),

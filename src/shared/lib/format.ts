@@ -1,5 +1,7 @@
 import { MAX_LEASE_DURATION, getCurrentYear } from "./constants";
 import type { Locale, Translator } from "./i18n/types";
+import { parseIsoInstantMilliseconds } from "@shared/isoDateTime";
+import { yearMonthIndex } from "@shared/yearMonth";
 
 const DEFAULT_LOCALE: Locale = "en-SG";
 
@@ -122,7 +124,8 @@ export function formatSqm(value: number, t: Translator, locale?: Locale): string
 }
 
 export function formatMonth(month: string, locale?: Locale): string {
-  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
+  const monthIndex = yearMonthIndex(month);
+  if (monthIndex === null) {
     return month;
   }
 
@@ -133,10 +136,8 @@ export function formatMonth(month: string, locale?: Locale): string {
 
   // Use a Date bridge with Intl.DateTimeFormat for reliable locale formatting
   // regardless of the locale's default calendar.
-  const [year = 0, monthNum = 1] = month ? month.split("-").map(Number) : [];
-  if (year <= 0 || monthNum < 1 || monthNum > 12 || isNaN(year) || isNaN(monthNum)) {
-    return month;
-  }
+  const year = Math.floor(monthIndex / 12);
+  const monthNum = (monthIndex % 12) + 1;
   cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
@@ -164,16 +165,14 @@ export function formatDateTime(value: string, locale?: Locale): string {
   let cached = formattedDateTimeCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  try {
-    const date = new Date(value);
-    if (isNaN(date.getTime())) throw new Error("Invalid date");
-    cached = new Intl.DateTimeFormat(resolvedLocale, {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(date);
-  } catch {
+  const epochMilliseconds = parseIsoInstantMilliseconds(value);
+  if (epochMilliseconds === null) {
     return value;
   }
+  cached = new Intl.DateTimeFormat(resolvedLocale, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(epochMilliseconds));
 
   evictCacheIfNeeded(formattedDateTimeCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedDateTimeCache.set(cacheKey, cached);

@@ -9,6 +9,7 @@ import type {
 } from "../../shared/data-types";
 import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
 import { parseStoreyMidpoint } from "../../shared/comparable-engine";
+import { yearMonthIndex } from "../../shared/yearMonth";
 import { getStationDetails } from "./mrt";
 import type { TransactionRow } from "./schemas";
 
@@ -575,9 +576,20 @@ export function buildArtifacts({
   const runTimestamp = new Date().toISOString();
   const grouped = new Map<string, ResaleTransaction[]>();
   const allMonths = new Set<string>();
+  const monthIndexes = new Map<string, number>();
   const propertyByAddress = new Map(propertyInfo.map((row) => [row.addressKey, row]));
 
   for (const transaction of transactions) {
+    let monthIndex = monthIndexes.get(transaction.month);
+    if (monthIndex === undefined) {
+      monthIndex = yearMonthIndex(transaction.month) ?? undefined;
+      if (monthIndex === undefined) {
+        throw new Error(
+          `Invalid transaction month "${transaction.month}" for transaction "${transaction.id}"; expected YYYY-MM`,
+        );
+      }
+      monthIndexes.set(transaction.month, monthIndex);
+    }
     allMonths.add(transaction.month);
     const list = grouped.get(transaction.addressKey) ?? [];
     list.push(transaction);
@@ -585,11 +597,14 @@ export function buildArtifacts({
   }
 
   const sortedMonths = [...allMonths].sort();
-  const maxMonth = sortedMonths[sortedMonths.length - 1] ?? "";
-  const maxMonthParts = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(maxMonth);
-  const [maxYear, maxMonthNum] = maxMonthParts
-    ? [Number(maxMonthParts[1]), Number(maxMonthParts[2])]
-    : [0, 0];
+  const maxMonth = sortedMonths[sortedMonths.length - 1];
+  if (maxMonth === undefined) {
+    throw new Error("Cannot build artifacts without at least one resale transaction");
+  }
+  const maxMonthIndex = monthIndexes.get(maxMonth);
+  if (maxMonthIndex === undefined) {
+    throw new Error(`Missing validated month index for "${maxMonth}"`);
+  }
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
@@ -860,6 +875,10 @@ export function buildArtifacts({
       );
       const sourceWindow = summaryWindow.length > 0 ? summaryWindow : cohortTransactions;
       const geocode = geocodes[addressKey];
+      const cohortMonthIndex = monthIndexes.get(cohort.month);
+      if (cohortMonthIndex === undefined) {
+        throw new Error(`Missing validated month index for "${cohort.month}"`);
+      }
 
       blockMetrics.push({
         addressKey,
@@ -873,12 +892,7 @@ export function buildArtifacts({
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
-        monthsSinceLatestTransaction: (() => {
-          const [cy = 0, cm = 0] = cohort.month ? cohort.month.split("-").map(Number) : [];
-          return cy > 0 && cm >= 1 && cm <= 12
-            ? Math.max(0, (maxYear - cy) * 12 + (maxMonthNum - cm))
-            : 0;
-        })(),
+        monthsSinceLatestTransaction: Math.max(0, maxMonthIndex - cohortMonthIndex),
       });
     }
 

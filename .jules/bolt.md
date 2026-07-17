@@ -89,9 +89,9 @@
 **Learning:** Chaining array operations like `.flatMap().map()` inside `useMemo` hooks (e.g., when aggregating chart data points) creates multiple intermediate arrays. In heavily rendered views like `ShortlistDrawer`, this causes significant memory allocations and GC pressure, leading to UI stutter.
 **Action:** Combine multi-step data extraction operations into a single-pass `for...of` loop, directly appending to pre-allocated sets or arrays.
 
-## 2026-06-12 - Date Format Cache & Temporal Overhead Optimization
-**Learning:** `Temporal.Instant.from(value).toLocaleString()` causes huge performance overheads when repeated over thousands of rows (e.g. months, datetimes), and its `toLocaleString` is poorly supported natively in Safari/WebKit environments (leading to crashes/polyfills overhead in Playwright e2e tests).
-**Action:** Avoid inline `.toLocaleString` calls on primitives and bypass Temporal when standard ISO-8601 formatting or standard UTC dates are involved. Cache `Intl.DateTimeFormat` and string outputs instead of reinstantiating them inline, reducing format execution time dramatically.
+## 2026-06-12 - Date Format Cache Optimization
+**Learning:** Repeated date parsing and inline `.toLocaleString()` calls cause substantial overhead across thousands of rows and can vary across browser engines.
+**Action:** Parse persisted ISO instants through the shared strict parser, then cache `Intl.DateTimeFormat` instances and formatted string outputs instead of reinstantiating them inline.
 ## 2026-06-21 - Cache search profile evaluation invariants
 **Learning:** In heavy loops (like filtering thousands of HDB blocks), passing an object holding configuration variables like `SearchProfile` and checking strings (e.g. `mainFlatType.trim()`) or allocating arrays inline leads to redundant evaluations per element.
 **Action:** When filtering a large dataset using configurations that do not change per element, hoist those operations out into an invariant setup phase using a factory or higher-order function, and evaluate on blocks with pre-calculated thresholds.
@@ -100,6 +100,6 @@
 **Learning:** When comparing a small, fixed number of variables (e.g., finding the minimum valid age between an applicant and a co-applicant), placing them into an array to use `.filter()` and spreading into `Math.min(...ages)` incurs unnecessary memory allocations and spread operator overhead.
 **Action:** Use direct `if/else` and ternary logic for comparisons of two distinct variables rather than converting them into an array to leverage array utilities.
 
-## 2026-06-30 - Hoist Temporal Clock Reads Out of Hot Loops
-**Learning:** Calling `Temporal.Now.instant().epochMilliseconds` or `Temporal.Now.plainDateISO()` repeatedly inside a hot loop (like `matchesFilter` for tens of thousands of items) allocates Temporal objects and creates avoidable GC pressure. Replacing Temporal with legacy `Date` APIs undermines the project time-handling policy; the correct optimization is to move the Temporal read outside the loop.
-**Action:** Keep clock access on Temporal. For filtering/cache work, compute the needed current-year or timestamp context once per filter pass and pass it through the hot path instead of calling Temporal or `Date` per item.
+## 2026-06-30 - Hoist Clock Reads Out of Hot Loops
+**Learning:** Calling `Date.now()` or constructing `Date` objects repeatedly inside a hot loop (like `matchesFilter` for tens of thousands of items) creates avoidable work and GC pressure.
+**Action:** Use the standard Date API, but compute the needed current-year or timestamp context once per filter pass and pass it through the hot path instead of reading the clock per item.

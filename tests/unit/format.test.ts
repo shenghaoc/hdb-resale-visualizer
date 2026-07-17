@@ -106,8 +106,10 @@ describe("format functions", () => {
     });
 
     it("returns input unchanged for invalid month strings", () => {
+      expect(formatMonth("2026")).toBe("2026");
       expect(formatMonth("2024-00")).toBe("2024-00");
       expect(formatMonth("2024-13")).toBe("2024-13");
+      expect(formatMonth("2024-01-extra")).toBe("2024-01-extra");
       expect(formatMonth("not-a-month")).toBe("not-a-month");
     });
   });
@@ -145,7 +147,14 @@ describe("format functions", () => {
 
     it("returns raw input for invalid date strings", () => {
       expect(formatDateTime("not-a-date")).toBe("not-a-date");
+      expect(formatDateTime("January 1, 2026")).toBe("January 1, 2026");
+      expect(formatDateTime("2026-02-30T00:00:00Z")).toBe("2026-02-30T00:00:00Z");
       expect(formatDateTime("")).toBe("");
+    });
+
+    it("formats valid ISO timestamps with hour-only offsets", () => {
+      const value = "2026-01-01T00:00:00+08";
+      expect(formatDateTime(value, "en-SG")).not.toBe(value);
     });
 
     it("returns cached result on repeated calls", () => {
