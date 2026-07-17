@@ -1,20 +1,17 @@
 import { MAX_SHORTLIST_ITEMS } from "./shortlist-limits";
 import type { ShortlistItem } from "./data-types";
+import { parseIsoInstantMilliseconds } from "./isoDateTime";
 
 function addedAtMs(iso?: string): number {
   if (!iso) return 0;
-  try {
-    return Temporal.Instant.from(iso).epochMilliseconds;
-  } catch {
-    return 0;
-  }
+  return parseIsoInstantMilliseconds(iso) ?? 0;
 }
 
 /**
  * Merge two shortlists into one, deduplicating by `addressKey`.
  *
  * When the same `addressKey` appears in both inputs, the item with the newer
- * `addedAt` (ISO-8601, compared as Temporal instants for timezone correctness) wins.
+ * `addedAt` (ISO-8601, compared as epoch milliseconds for timezone correctness) wins.
  * On an exact tie the first-seen item is kept (i.e. `a` takes precedence over
  * `b`). The result is ordered newest-first and capped at
  * {@link MAX_SHORTLIST_ITEMS}, keeping the most recently added items when over

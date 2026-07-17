@@ -62,8 +62,7 @@ type AmenityFetchDependencies = {
   normalizeSupermarketRowsFn?: typeof normalizeSupermarketRows;
 };
 
-const nowTimestamp: TimestampFactory = () =>
-  Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+const nowTimestamp: TimestampFactory = () => new Date().toISOString();
 
 async function fetchCollectionMetadata(): Promise<CollectionMetadata> {
   const payload = await fetchJson<unknown>(

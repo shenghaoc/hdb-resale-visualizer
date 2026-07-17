@@ -104,7 +104,7 @@ export async function sleep(milliseconds: number): Promise<void> {
 
 export async function waitForUpstreamSlot(service: UpstreamService): Promise<void> {
   const intervalMs = upstreamIntervalMs(service);
-  const now = Temporal.Now.instant().epochMilliseconds;
+  const now = Date.now();
   const last = lastRequestAt.get(service) ?? 0;
   // Reserve the next slot before sleeping so concurrent workers cannot all
   // read the same `last` and burst past the documented rate limit.

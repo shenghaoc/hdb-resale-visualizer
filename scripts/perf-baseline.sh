@@ -12,7 +12,7 @@ echo "Capturing performance baseline..." >&2
 # Portable millisecond timestamp (date +%s%N's nanoseconds are GNU-only and
 # break on BSD/macOS date). Node is already a project dependency.
 get_time_ms() {
-  node -e 'console.log(Temporal.Now.instant().epochMilliseconds)'
+  node -e 'console.log(Date.now())'
 }
 
 # Build timing

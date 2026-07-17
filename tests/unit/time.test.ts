@@ -1,13 +1,14 @@
 import { describe, it, expect } from "vite-plus/test";
+import { yearMonthIndex } from "@shared/yearMonth";
 
-describe("Temporal PlainYearMonth month distance", () => {
+describe("Year-month month distance", () => {
   function monthDistance(earlierMonth: string, laterMonth: string): number {
-    return Math.max(
-      0,
-      Temporal.PlainYearMonth.from(earlierMonth).until(Temporal.PlainYearMonth.from(laterMonth), {
-        largestUnit: "months",
-      }).months,
-    );
+    const earlierIndex = yearMonthIndex(earlierMonth);
+    const laterIndex = yearMonthIndex(laterMonth);
+    if (earlierIndex === null || laterIndex === null) {
+      throw new Error("Invalid year-month fixture");
+    }
+    return Math.max(0, laterIndex - earlierIndex);
   }
 
   it("returns 0 for same month", () => {
@@ -29,18 +30,24 @@ describe("Temporal PlainYearMonth month distance", () => {
   it("handles large distance", () => {
     expect(monthDistance("2020-01", "2025-06")).toBe(65);
   });
+
+  it("rejects partial and calendar-invalid year-month values", () => {
+    expect(yearMonthIndex("2026")).toBeNull();
+    expect(yearMonthIndex("2026-00")).toBeNull();
+    expect(yearMonthIndex("2026-13")).toBeNull();
+  });
 });
 
-describe("Temporal.Now.instant() ISO format", () => {
+describe("Date ISO format", () => {
   it("produces ISO string with millisecond precision", () => {
-    const ts = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+    const ts = new Date().toISOString();
     expect(ts).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
   });
 });
 
-describe("Temporal.Now.plainDateISO().year", () => {
+describe("new Date().getFullYear()", () => {
   it("returns current year as a 4-digit number", () => {
-    const year = Temporal.Now.plainDateISO().year;
+    const year = new Date().getFullYear();
     expect(year).toBeGreaterThanOrEqual(2025);
     expect(year).toBeLessThan(2100);
   });

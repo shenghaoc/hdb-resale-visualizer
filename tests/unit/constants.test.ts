@@ -8,21 +8,17 @@ describe("constants", () => {
     });
 
     it("should return the current year", () => {
-      const spy = vi
-        .spyOn(Temporal.Now, "plainDateISO")
-        .mockReturnValue(Temporal.PlainDate.from("2025-05-02"));
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date(2025, 4, 2, 12));
 
       expect(getCurrentYear()).toBe(2025);
-      spy.mockRestore();
     });
 
     it("should return another year when time changes", () => {
-      const spy = vi
-        .spyOn(Temporal.Now, "plainDateISO")
-        .mockReturnValue(Temporal.PlainDate.from("2020-01-01"));
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date(2020, 0, 1, 12));
 
       expect(getCurrentYear()).toBe(2020);
-      spy.mockRestore();
     });
   });
 

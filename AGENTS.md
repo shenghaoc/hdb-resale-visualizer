@@ -7,7 +7,7 @@ Use this file as a **thin router**. Keep task execution focused; treat deeper pr
 Before executing any directive, agents MUST read the authoritative steering files to maintain the project's strict architectural boundaries:
 
 - [**Product Vision**](.kiro/steering/product.md) — Map-first, deterministic facts only.
-- [**Technical Constraints**](.kiro/steering/tech.md) — Cloudflare Pages + D1 backend, Node 26 + Vite+, no runtime geocoding.
+- [**Technical Constraints**](.kiro/steering/tech.md) — Cloudflare Pages + D1 backend, Node 24 + Vite+, no runtime geocoding.
 - [**Data Pipeline**](.kiro/steering/pipeline.md) — `scripts/sync-data.ts` writes D1; `functions/api/*` reads D1.
 - [**Repository Structure**](.kiro/steering/structure.md) — Naming conventions and project layout.
 - [**UI/UX Standards**](.kiro/steering/ui-standards.md) — Shadcn composition and high-density standards.
@@ -130,7 +130,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
 - D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
-- `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 26 + pnpm
+- `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 24 + pnpm
 
 ### Output Format
 
@@ -148,7 +148,7 @@ The following structured format applies to the overall PR review summary comment
 - Bypass D1 by hand-editing static data files or hosting JSON elsewhere
 - Modify `migrations/*.sql` files retroactively — add a new numbered migration instead
 - Break existing deployment assumptions or map attribution requirements
-- Include `bun.lock`, `yarn.lock`, or `package-lock.json` (Node 26 + pnpm project)
+- Include `bun.lock`, `yarn.lock`, or `package-lock.json` (Node 24 + pnpm project)
 
 ### Review priorities
 
@@ -166,7 +166,7 @@ P1 (must fix before merge):
 
 ### Environment
 
-- **Node.js 26** is required (`engines.node >= 26.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
+- **Node.js 24** is required (`engines.node >= 24.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
 - **Vite+** (`vp`) is the package manager and task runner. `pnpm-lock.yaml` is the lockfile.
 
 ### Local data dev

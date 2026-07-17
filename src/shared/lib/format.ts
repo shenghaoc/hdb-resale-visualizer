@@ -1,5 +1,7 @@
 import { MAX_LEASE_DURATION, getCurrentYear } from "./constants";
 import type { Locale, Translator } from "./i18n/types";
+import { parseIsoInstantMilliseconds } from "@shared/isoDateTime";
+import { yearMonthIndex } from "@shared/yearMonth";
 
 const DEFAULT_LOCALE: Locale = "en-SG";
 
@@ -12,7 +14,7 @@ function resolveLocale(locale?: Locale) {
 const FORMATTER_CACHE_LIMIT = 128;
 const numberFormatCache = new Map<string, Intl.NumberFormat>();
 
-// ⚡ Bolt: Cache string outputs to avoid repetitive formatter and Temporal allocations.
+// ⚡ Bolt: Cache string outputs to avoid repetitive formatter and Date allocations.
 // For thousands of repeated values (e.g. months, rounded prices), this drops format time by >10x.
 const FORMATTED_STRING_CACHE_LIMIT = 1000;
 const formattedCurrencyCache = new Map<string, string>();
@@ -122,7 +124,8 @@ export function formatSqm(value: number, t: Translator, locale?: Locale): string
 }
 
 export function formatMonth(month: string, locale?: Locale): string {
-  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
+  const monthIndex = yearMonthIndex(month);
+  if (monthIndex === null) {
     return month;
   }
 
@@ -131,14 +134,14 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  // Temporal.PlainYearMonth.toLocaleString() throws "Mismatched calendars"
-  // when the locale's default calendar differs from ISO 8601. Use a Date
-  // bridge with Intl.DateTimeFormat for reliable locale formatting.
-  const ym = Temporal.PlainYearMonth.from(month);
+  // Use a Date bridge with Intl.DateTimeFormat for reliable locale formatting
+  // regardless of the locale's default calendar.
+  const year = Math.floor(monthIndex / 12);
+  const monthNum = (monthIndex % 12) + 1;
   cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
-  }).format(new Date(ym.year, ym.month - 1, 1));
+  }).format(new Date(year, monthNum - 1, 1));
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);
@@ -162,17 +165,14 @@ export function formatDateTime(value: string, locale?: Locale): string {
   let cached = formattedDateTimeCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  let instant: Temporal.Instant;
-  try {
-    instant = Temporal.Instant.from(value);
-  } catch {
+  const epochMilliseconds = parseIsoInstantMilliseconds(value);
+  if (epochMilliseconds === null) {
     return value;
   }
-
-  cached = instant.toLocaleString(resolvedLocale, {
+  cached = new Intl.DateTimeFormat(resolvedLocale, {
     dateStyle: "medium",
     timeStyle: "short",
-  });
+  }).format(new Date(epochMilliseconds));
 
   evictCacheIfNeeded(formattedDateTimeCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedDateTimeCache.set(cacheKey, cached);

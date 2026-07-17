@@ -4,7 +4,7 @@ Use `AGENTS.md` as the authoritative policy for this repository.
 
 ## Implementation rules
 
-- Use Node.js 26 + pnpm only (`pnpm install`, `pnpm run ...`).
+- Use Node.js 24 + pnpm only (`pnpm install`, `pnpm run ...`).
 - Do not add backend mutation routes or server-side write paths.
 - Keep core domain processing in `scripts/sync-data.ts`.
 - Frontend core data must come from the `/api/*` Pages Functions backed by Cloudflare D1.

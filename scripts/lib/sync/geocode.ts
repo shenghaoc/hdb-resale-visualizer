@@ -12,9 +12,7 @@ type GeocodeCacheRow = {
   search_value: string;
 };
 
-const EPOCH_TIMESTAMP = Temporal.Instant.fromEpochMilliseconds(0).toString({
-  fractionalSecondDigits: 3,
-});
+const EPOCH_TIMESTAMP = new Date(0).toISOString();
 
 export async function loadGeocodeCache(db: D1Client): Promise<GeocodeCacheFile> {
   const rows = await db.query<GeocodeCacheRow>({

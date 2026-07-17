@@ -69,7 +69,7 @@
   → `node -e` print of each script string succeeds. (R8.1)
 
 - [x] **T5.2** Confirm no second test runner, no new test/Playwright config,
-  and no `bun.lock`/`yarn.lock`/`pnpm-lock.yaml` were introduced; npm + Node 26
+  and no `bun.lock`/`yarn.lock`/`pnpm-lock.yaml` were introduced; npm + Node 24
   assumptions unchanged.
   → Only `package.json` scripts + docs changed. (R6.1–R6.5)
 

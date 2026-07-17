@@ -9,6 +9,7 @@ import type {
 } from "../../shared/data-types";
 import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
 import { parseStoreyMidpoint } from "../../shared/comparable-engine";
+import { yearMonthIndex } from "../../shared/yearMonth";
 import { getStationDetails } from "./mrt";
 import type { TransactionRow } from "./schemas";
 
@@ -480,7 +481,7 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
     return value.trim();
   }
 
-  const currentYear = Temporal.Now.plainDateISO().year;
+  const currentYear = new Date().getFullYear();
   const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
   return `${remaining} years`;
 }
@@ -572,12 +573,23 @@ export function buildArtifacts({
   walkingTimes,
   metadata,
 }: BuildArtifactsInput): GeneratedArtifacts {
-  const runTimestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+  const runTimestamp = new Date().toISOString();
   const grouped = new Map<string, ResaleTransaction[]>();
   const allMonths = new Set<string>();
+  const monthIndexes = new Map<string, number>();
   const propertyByAddress = new Map(propertyInfo.map((row) => [row.addressKey, row]));
 
   for (const transaction of transactions) {
+    let monthIndex = monthIndexes.get(transaction.month);
+    if (monthIndex === undefined) {
+      monthIndex = yearMonthIndex(transaction.month) ?? undefined;
+      if (monthIndex === undefined) {
+        throw new Error(
+          `Invalid transaction month "${transaction.month}" for transaction "${transaction.id}"; expected YYYY-MM`,
+        );
+      }
+      monthIndexes.set(transaction.month, monthIndex);
+    }
     allMonths.add(transaction.month);
     const list = grouped.get(transaction.addressKey) ?? [];
     list.push(transaction);
@@ -586,7 +598,13 @@ export function buildArtifacts({
 
   const sortedMonths = [...allMonths].sort();
   const maxMonth = sortedMonths[sortedMonths.length - 1];
-  const maxMonthYM = Temporal.PlainYearMonth.from(maxMonth);
+  if (maxMonth === undefined) {
+    throw new Error("Cannot build artifacts without at least one resale transaction");
+  }
+  const maxMonthIndex = monthIndexes.get(maxMonth);
+  if (maxMonthIndex === undefined) {
+    throw new Error(`Missing validated month index for "${maxMonth}"`);
+  }
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
@@ -857,6 +875,10 @@ export function buildArtifacts({
       );
       const sourceWindow = summaryWindow.length > 0 ? summaryWindow : cohortTransactions;
       const geocode = geocodes[addressKey];
+      const cohortMonthIndex = monthIndexes.get(cohort.month);
+      if (cohortMonthIndex === undefined) {
+        throw new Error(`Missing validated month index for "${cohort.month}"`);
+      }
 
       blockMetrics.push({
         addressKey,
@@ -870,11 +892,7 @@ export function buildArtifacts({
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
-        monthsSinceLatestTransaction: Math.max(
-          0,
-          Temporal.PlainYearMonth.from(cohort.month).until(maxMonthYM, { largestUnit: "months" })
-            .months,
-        ),
+        monthsSinceLatestTransaction: Math.max(0, maxMonthIndex - cohortMonthIndex),
       });
     }
 

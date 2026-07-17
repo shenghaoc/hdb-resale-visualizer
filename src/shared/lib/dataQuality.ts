@@ -1,4 +1,6 @@
 import type { Manifest } from "@/types/data";
+import { isIsoInstant } from "@shared/isoDateTime";
+import { isYearMonth, yearMonthIndex } from "@shared/yearMonth";
 
 export type DataSyncState = "fresh" | "stale" | "missing" | "partial";
 
@@ -14,38 +16,30 @@ export type DataQualityState = {
   syncState: DataSyncState;
 };
 
-const MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 const STALE_METADATA_MONTHS = 3;
 
 function isMonth(value: string | null | undefined): value is string {
-  return typeof value === "string" && MONTH_PATTERN.test(value);
+  return isYearMonth(value);
 }
 
 function isIsoDateTime(value: string | null | undefined): value is string {
-  if (typeof value !== "string") return false;
-  try {
-    Temporal.Instant.from(value);
-    return true;
-  } catch {
-    return false;
-  }
+  return isIsoInstant(value);
 }
 
-function currentMonth(now: Temporal.PlainDate = Temporal.Now.plainDateISO("UTC")): string {
-  return `${now.year}-${String(now.month).padStart(2, "0")}`;
+function currentMonth(now: Date = new Date()): string {
+  if (isNaN(now.getTime())) return "";
+  return now.toISOString().slice(0, 7);
 }
 
 export function monthsBetween(olderMonth: string, newerMonth: string): number {
-  const olderYear = Number(olderMonth.slice(0, 4));
-  const olderMon = Number(olderMonth.slice(5, 7));
-  const newerYear = Number(newerMonth.slice(0, 4));
-  const newerMon = Number(newerMonth.slice(5, 7));
-  return (newerYear - olderYear) * 12 + (newerMon - olderMon);
+  const olderIndex = yearMonthIndex(olderMonth);
+  const newerIndex = yearMonthIndex(newerMonth);
+  return olderIndex === null || newerIndex === null ? Number.NaN : newerIndex - olderIndex;
 }
 
 export function deriveDataQualityState(
   manifest: Partial<Manifest> | null,
-  now: Temporal.PlainDate = Temporal.Now.plainDateISO("UTC"),
+  now: Date = new Date(),
 ): DataQualityState {
   const rawMaxMonth = manifest?.dataWindow?.maxMonth;
   const latestMonthUsed = isMonth(rawMaxMonth) ? rawMaxMonth : null;

@@ -19,7 +19,7 @@ inclusion: always
 - `migrations/`: D1 schema migrations. Add new numbered migrations; never edit old migrations retroactively.
 - `tests/`: Vitest unit/component/hook/integration suites and Playwright E2E.
 - `tests/fixtures/public-data/`: small tracked fixture artifacts for tests. Use this for schema and UI fixture work instead of `public/data`.
-- `public/`: static assets only, including PWA icons, manifest, headers, OG fallback, favicon, and generated Temporal polyfill.
+- `public/`: static assets only, including PWA icons, manifest, headers, OG fallback, and favicon.
 - `docs/`: screenshots and architecture reference material.
 
 ## Desired Frontend Organization

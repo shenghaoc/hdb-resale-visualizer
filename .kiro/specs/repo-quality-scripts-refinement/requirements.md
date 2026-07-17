@@ -65,7 +65,7 @@
   config — no new config files.
 - **R6.3** npm remains the only package manager. No `bun.lock`, `yarn.lock`,
   or `pnpm-lock.yaml` is added. `package-lock.json` stays the lockfile.
-- **R6.4** Node 26 assumptions (`engines.node >= 26.0.0`) are unchanged.
+- **R6.4** Node 24 assumptions (`engines.node >= 24.0.0`) are unchanged.
 - **R6.5** Scripts contain no Kiro-specific behaviour — CI can invoke the exact
   same `npm run …` commands.
 

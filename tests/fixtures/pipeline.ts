@@ -118,9 +118,9 @@ export const fixtureGeocodes: Record<string, GeocodeEntry> = {
   },
 };
 
-export function buildFixtureArtifacts() {
+export function buildFixtureArtifacts(transactions: ResaleTransaction[] = fixtureTransactions) {
   return buildArtifacts({
-    transactions: fixtureTransactions,
+    transactions,
     propertyInfo: fixturePropertyInfo,
     mrtExits: fixtureMrtExits,
     geocodes: fixtureGeocodes,

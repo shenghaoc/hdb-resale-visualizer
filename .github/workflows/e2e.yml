@@ -182,10 +182,10 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      # The Playwright image ships Node 24, but this project requires Node 26
-      # (engines.node >= 26.0.0). setup-node installs the correct version and
-      # puts it on PATH, overriding the image's bundled Node.
-      - name: Setup Node 26
+      # The Playwright image ships Node 24, matching this project's
+      # requirement (engines.node >= 24.0.0). Use setup-node to ensure the
+      # correct version is on PATH.
+      - name: Setup Node 24
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
