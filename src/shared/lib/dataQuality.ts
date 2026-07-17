@@ -29,10 +29,13 @@ function isIsoDateTime(value: string | null | undefined): value is string {
   if (!m) return false;
   const d = new Date(value);
   if (isNaN(d.getTime())) return false;
+  // Verify round-trip using parsed components at UTC midnight so timezone
+  // offsets do not shift the date: "2026-06-15T00:00:00+08:00" must pass.
+  const checkDate = new Date(`${m[1]}-${m[2]}-${m[3]}T00:00:00Z`);
   return (
-    d.getUTCFullYear() === Number(m[1]) &&
-    d.getUTCMonth() + 1 === Number(m[2]) &&
-    d.getUTCDate() === Number(m[3])
+    checkDate.getUTCFullYear() === Number(m[1]) &&
+    checkDate.getUTCMonth() + 1 === Number(m[2]) &&
+    checkDate.getUTCDate() === Number(m[3])
   );
 }
 
