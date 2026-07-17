@@ -30,7 +30,7 @@ function isIsoDateTime(value: string | null | undefined): value is string {
 }
 
 function currentMonth(now: Date = new Date()): string {
-  return `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
+  return now.toISOString().slice(0, 7);
 }
 
 export function monthsBetween(olderMonth: string, newerMonth: string): number {
