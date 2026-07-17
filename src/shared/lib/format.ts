@@ -12,7 +12,7 @@ function resolveLocale(locale?: Locale) {
 const FORMATTER_CACHE_LIMIT = 128;
 const numberFormatCache = new Map<string, Intl.NumberFormat>();
 
-// ⚡ Bolt: Cache string outputs to avoid repetitive formatter and Temporal allocations.
+// ⚡ Bolt: Cache string outputs to avoid repetitive formatter and Date allocations.
 // For thousands of repeated values (e.g. months, rounded prices), this drops format time by >10x.
 const FORMATTED_STRING_CACHE_LIMIT = 1000;
 const formattedCurrencyCache = new Map<string, string>();
@@ -131,9 +131,8 @@ export function formatMonth(month: string, locale?: Locale): string {
   let cached = formattedMonthCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  // Temporal.PlainYearMonth.toLocaleString() throws "Mismatched calendars"
-  // when the locale's default calendar differs from ISO 8601. Use a Date
-  // bridge with Intl.DateTimeFormat for reliable locale formatting.
+  // Use a Date bridge with Intl.DateTimeFormat for reliable locale formatting
+  // regardless of the locale's default calendar.
   const [year, monthNum] = month.split("-").map(Number);
   cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",

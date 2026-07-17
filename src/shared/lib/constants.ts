@@ -26,7 +26,7 @@ let maxLeaseCommenceYearCache: number | undefined;
  */
 export const getCurrentYear = (): number => new Date().getFullYear();
 
-/** Upper bound for lease-commence validation; computed lazily after the Temporal runtime is available. */
+/** Upper bound for lease-commence validation; computed lazily at module init. */
 export function getMaxLeaseCommenceYear(): number {
   maxLeaseCommenceYearCache ??= maxLeaseCommenceYear(getCurrentYear());
   return maxLeaseCommenceYearCache;

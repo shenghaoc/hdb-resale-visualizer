@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.app.json",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM", "DOM.Iterable", "ESNext.Temporal"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["node", "vitest/globals", "@cloudflare/workers-types"]
   },
   "include": [
