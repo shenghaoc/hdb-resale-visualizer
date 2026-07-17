@@ -377,6 +377,7 @@ describe("filter consistency under rapid state toggles", () => {
 describe("filter evaluation context", () => {
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
     resetFilteringCachesForTests();
   });
 
