@@ -40,6 +40,7 @@ function isIsoDateTime(value: string | null | undefined): value is string {
 }
 
 function currentMonth(now: Date = new Date()): string {
+  if (isNaN(now.getTime())) return "";
   return now.toISOString().slice(0, 7);
 }
 

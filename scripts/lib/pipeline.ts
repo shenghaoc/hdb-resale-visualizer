@@ -871,7 +871,7 @@ export function buildArtifacts({
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
         monthsSinceLatestTransaction: (() => {
-          const [cy = 0, cm = 0] = cohort.month.split("-").map(Number);
+          const [cy = 0, cm = 0] = cohort.month ? cohort.month.split("-").map(Number) : [];
           return cy > 0 && cm >= 1 && cm <= 12
             ? Math.max(0, (maxYear - cy) * 12 + (maxMonthNum - cm))
             : 0;

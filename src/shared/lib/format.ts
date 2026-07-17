@@ -133,7 +133,10 @@ export function formatMonth(month: string, locale?: Locale): string {
 
   // Use a Date bridge with Intl.DateTimeFormat for reliable locale formatting
   // regardless of the locale's default calendar.
-  const [year = 0, monthNum = 1] = month.split("-").map(Number);
+  const [year = 0, monthNum = 1] = month ? month.split("-").map(Number) : [];
+  if (year <= 0 || monthNum < 1 || monthNum > 12 || isNaN(year) || isNaN(monthNum)) {
+    return month;
+  }
   cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
