@@ -15,7 +15,7 @@ inclusion: always
 - **Mapping**: MapLibre GL JS with OneMap GreyLite tiles and required attribution.
 - **Charts**: Recharts is the current charting library. Keep chart-heavy UI lazy-loaded where practical.
 - **Search**: Local/browser fuzzy search may use deterministic libraries such as Fuse.js. Server-side suggest/search endpoints must stay deterministic D1-backed logic.
-- **PWA**: `vite-plugin-pwa` generates the service worker. `public/temporal-polyfill.js` is prepared by `pnpm prepare:temporal-polyfill` and loaded from HTML before app code.
+- **PWA**: `vite-plugin-pwa` generates the service worker.
 
 ## Runtime Architecture
 
@@ -31,14 +31,13 @@ inclusion: always
 2. **Runtime data source boundary**: No runtime `fetch()` to data.gov.sg, OneMap data APIs, LTA dataset APIs, or other upstream data sources from `src/`, `functions/`, or `worker/`. Upstream data ingestion belongs in `scripts/sync-data.ts`.
 3. **D1 schema discipline**: Add new numbered migrations in `migrations/*.sql`. Do not retroactively edit existing migrations. Schema changes must update D1 helpers, shared types, Zod schemas, sync storage, and tests together.
 4. **Script/runtime import boundary**: Node-executed scripts must not import from `src/` or use Vite-only aliases. Shared cross-runtime code belongs in `shared/`.
-5. **Temporal loading**: Do not read `Temporal` at module load in `src/`. The boundary check enforces lazy access so Safari can load the HTML polyfill first.
-6. **Privacy**: Browser-local storage is the default. Cloud shortlist sync uses anonymous high-entropy sync codes; store only hashes server-side and never introduce account or PII requirements without a product spec.
+5. **Privacy**: Browser-local storage is the default. Cloud shortlist sync uses anonymous high-entropy sync codes; store only hashes server-side and never introduce account or PII requirements without a product spec.
 
 ## Standard Scripts
 
-- `pnpm dev`: prepare the Temporal polyfill and start Vite on `localhost:5173` for UI-only iteration.
-- `pnpm dev:functions`: prepare the polyfill, build, and run `wrangler dev` for the Worker/API/D1 stack.
-- `pnpm check:boundaries`: enforce script/runtime and Temporal boundaries.
+- `pnpm dev`: start Vite on `localhost:5173` for UI-only iteration.
+- `pnpm dev:functions`: build and run `wrangler dev` for the Worker/API/D1 stack.
+- `pnpm check:boundaries`: enforce script/runtime boundaries.
 - `pnpm typecheck`: TypeScript verification.
 - `pnpm lint` / `pnpm lint:fast`: typed Oxlint or faster syntax-focused lint.
 - `pnpm test`: Vitest unit and integration tests with `NODE_OPTIONS=--no-experimental-webstorage`.

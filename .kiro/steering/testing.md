@@ -9,7 +9,7 @@ inclusion: always
 - For source changes, run the smallest focused test first, then run the relevant broader checks.
 - `pnpm check` is the local quality bundle: boundary check, typecheck, typed lint, and Vitest.
 - Before claiming a broad source change is complete, prefer `pnpm typecheck`, `pnpm lint`, and `pnpm test`.
-- For deployment, Worker, routing, PWA, bundle, Temporal, or import-boundary changes, run `pnpm build` or `pnpm build:deploy`.
+- For deployment, Worker, routing, PWA, bundle, or import-boundary changes, run `pnpm build` or `pnpm build:deploy`.
 - For UI changes touching tabs, drawers, focus behavior, keyboard interactions, map shell, mobile layout, or mount semantics, add or run Playwright coverage. Unit tests alone often miss these regressions.
 
 ## Test Suites

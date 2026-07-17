@@ -586,7 +586,10 @@ export function buildArtifacts({
 
   const sortedMonths = [...allMonths].sort();
   const maxMonth = sortedMonths[sortedMonths.length - 1] ?? "";
-  const [maxYear = 0, maxMonthNum = 0] = maxMonth ? maxMonth.split("-").map(Number) : [];
+  const maxMonthParts = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(maxMonth);
+  const [maxYear, maxMonthNum] = maxMonthParts
+    ? [Number(maxMonthParts[1]), Number(maxMonthParts[2])]
+    : [0, 0];
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
