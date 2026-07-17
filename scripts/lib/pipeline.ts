@@ -586,7 +586,7 @@ export function buildArtifacts({
 
   const sortedMonths = [...allMonths].sort();
   const maxMonth = sortedMonths[sortedMonths.length - 1] ?? "";
-  const [maxYear, maxMonthNum] = maxMonth ? maxMonth.split("-").map(Number) : [0, 0];
+  const [maxYear = 0, maxMonthNum = 0] = maxMonth ? maxMonth.split("-").map(Number) : [];
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
@@ -871,9 +871,10 @@ export function buildArtifacts({
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
         monthsSinceLatestTransaction: (() => {
-          if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(cohort.month)) return 0;
           const [cy = 0, cm = 0] = cohort.month.split("-").map(Number);
-          return Math.max(0, (maxYear - cy) * 12 + (maxMonthNum - cm));
+          return cy > 0 && cm >= 1 && cm <= 12
+            ? Math.max(0, (maxYear - cy) * 12 + (maxMonthNum - cm))
+            : 0;
         })(),
       });
     }
