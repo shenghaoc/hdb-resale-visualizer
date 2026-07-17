@@ -335,6 +335,29 @@ describe("useListingCheckController", () => {
     expect(openCheckPanel).toHaveBeenCalledOnce();
   });
 
+  it("keeps incomplete sample facts null instead of crashing", () => {
+    const incompleteBlock = {
+      ...makeBlock({ addressKey: "eligible-incomplete" }),
+      floorAreaRange: null,
+      leaseCommenceRange: undefined,
+      flatTypes: undefined,
+    } as unknown as BlockSummary;
+    const openCheckPanel = vi.fn();
+    const { result } = renderController({ blocks: [incompleteBlock], openCheckPanel });
+
+    act(() => result.current.onUseSampleCheck());
+
+    expect(result.current.state).toEqual({
+      selectedAddressKey: "eligible-incomplete",
+      askingPrice: 500_000,
+      floorAreaSqm: null,
+      flatType: null,
+      storeyRange: null,
+      leaseCommenceYear: null,
+    });
+    expect(openCheckPanel).toHaveBeenCalledOnce();
+  });
+
   it.each([
     { label: "no blocks", blocks: [] },
     { label: "no eligible blocks", blocks: [ineligibleByPrice, ineligibleByCount] },

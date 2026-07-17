@@ -122,20 +122,27 @@ function chooseSampleBlock(blocks: readonly BlockSummary[]): SampleListingBlock 
 }
 
 function sampleFormState(block: SampleListingBlock): ListingCheckUrlState {
-  const [minArea, maxArea] = block.floorAreaRange;
-  const [minLease, maxLease] = block.leaseCommenceRange;
-  const flatType = block.flatTypes.reduce<string | null>(
-    (lowest, candidate) => (lowest == null || candidate < lowest ? candidate : lowest),
-    null,
-  );
+  const [minArea, maxArea] = block.floorAreaRange ?? [];
+  const [minLease, maxLease] = block.leaseCommenceRange ?? [];
+  const flatType =
+    block.flatTypes?.reduce<string | null>(
+      (lowest, candidate) => (lowest == null || candidate < lowest ? candidate : lowest),
+      null,
+    ) ?? null;
+  const floorAreaSqm =
+    minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
+  const leaseCommenceYear =
+    minLease != null && maxLease != null && minLease > 0 && maxLease > 0
+      ? Math.round((minLease + maxLease) / 2)
+      : null;
 
   return {
     selectedAddressKey: block.addressKey,
     askingPrice: Math.round(block.medianPrice),
-    floorAreaSqm: Math.round((minArea + maxArea) / 2),
+    floorAreaSqm,
     flatType,
     storeyRange: null,
-    leaseCommenceYear: minLease > 0 && maxLease > 0 ? Math.round((minLease + maxLease) / 2) : null,
+    leaseCommenceYear,
   };
 }
 
