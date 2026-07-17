@@ -383,7 +383,7 @@ describe("filter evaluation context", () => {
 
   it("reuses a Date-derived current year across a filter pass", () => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-01-01"));
+    vi.setSystemTime(new Date(2026, 0, 1, 12));
     const evaluationContext = createFilterEvaluationContext();
     const filters = { ...DEFAULT_FILTERS, remainingLeaseMin: 73 };
     const blocks = [

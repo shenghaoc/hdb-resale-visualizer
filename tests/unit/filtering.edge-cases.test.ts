@@ -117,7 +117,7 @@ describe("matchesFilter — remainingLeaseMin", () => {
   beforeEach(() => {
     resetFilteringCachesForTests();
     vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-01-01"));
+    vi.setSystemTime(new Date(2026, 0, 1, 12));
     resetFilteringCachesForTests(); // reset again after time change just in case
   });
 

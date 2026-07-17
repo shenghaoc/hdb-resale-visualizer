@@ -133,7 +133,7 @@ export function formatMonth(month: string, locale?: Locale): string {
 
   // Use a Date bridge with Intl.DateTimeFormat for reliable locale formatting
   // regardless of the locale's default calendar.
-  const [year, monthNum] = month.split("-").map(Number);
+  const [year = 0, monthNum = 1] = month.split("-").map(Number);
   cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",

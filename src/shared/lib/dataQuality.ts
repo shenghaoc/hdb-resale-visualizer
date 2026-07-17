@@ -23,10 +23,16 @@ function isMonth(value: string | null | undefined): value is string {
 
 function isIsoDateTime(value: string | null | undefined): value is string {
   if (typeof value !== "string") return false;
-  const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
-  if (!isoDateRegex.test(value)) return false;
+  const isoDateRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+  const m = isoDateRegex.exec(value);
+  if (!m) return false;
   const d = new Date(value);
-  return !isNaN(d.getTime());
+  if (isNaN(d.getTime())) return false;
+  return (
+    d.getUTCFullYear() === Number(m[1]) &&
+    d.getUTCMonth() + 1 === Number(m[2]) &&
+    d.getUTCDate() === Number(m[3])
+  );
 }
 
 function currentMonth(now: Date = new Date()): string {

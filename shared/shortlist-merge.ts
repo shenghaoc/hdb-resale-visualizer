@@ -1,8 +1,11 @@
 import { MAX_SHORTLIST_ITEMS } from "./shortlist-limits";
 import type { ShortlistItem } from "./data-types";
 
+const ISO_DATETIME_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:?\d{2})$/;
+
 function addedAtMs(iso?: string): number {
   if (!iso) return 0;
+  if (!ISO_DATETIME_RE.test(iso)) return 0;
   const ms = new Date(iso).getTime();
   return isNaN(ms) ? 0 : ms;
 }
