@@ -22,9 +22,9 @@ export const NEAR_ME_SEARCH_QUERY = "near me";
 let maxLeaseCommenceYearCache: number | undefined;
 
 /**
- * Returns the current Gregorian year using the Temporal API.
+ * Returns the current Gregorian year using the Date API.
  */
-export const getCurrentYear = (): number => Temporal.Now.plainDateISO().year;
+export const getCurrentYear = (): number => new Date().getFullYear();
 
 /** Upper bound for lease-commence validation; computed lazily after the Temporal runtime is available. */
 export function getMaxLeaseCommenceYear(): number {

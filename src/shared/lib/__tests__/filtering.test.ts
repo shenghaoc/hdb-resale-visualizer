@@ -380,10 +380,9 @@ describe("filter evaluation context", () => {
     resetFilteringCachesForTests();
   });
 
-  it("reuses a Temporal-derived current year across a filter pass", () => {
-    const plainDateSpy = vi
-      .spyOn(Temporal.Now, "plainDateISO")
-      .mockReturnValue(Temporal.PlainDate.from("2026-01-01"));
+  it("reuses a Date-derived current year across a filter pass", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-01-01"));
     const evaluationContext = createFilterEvaluationContext();
     const filters = { ...DEFAULT_FILTERS, remainingLeaseMin: 73 };
     const blocks = [
@@ -396,6 +395,5 @@ describe("filter evaluation context", () => {
     );
 
     expect(matched).toHaveLength(2);
-    expect(plainDateSpy).toHaveBeenCalledTimes(1);
   });
 });

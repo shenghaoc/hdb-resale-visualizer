@@ -6,7 +6,7 @@ inclusion: always
 
 ## Core Stack
 
-- **Runtime and package manager**: Node.js 26 or newer, pnpm, `pnpm-lock.yaml` as the lockfile. Do not add `bun.lock`, `yarn.lock`, or `package-lock.json`.
+- **Runtime and package manager**: Node.js 24 or newer, pnpm, `pnpm-lock.yaml` as the lockfile. Do not add `bun.lock`, `yarn.lock`, or `package-lock.json`.
 - **Frontend**: React 19, TypeScript, Vite 8, Tailwind CSS v4, shadcn-style components with Radix primitives, and Lucide icons.
 - **Deployment runtime**: Cloudflare Worker declared in `wrangler.jsonc` (`worker/index.ts`) serving static assets from `dist` and routing API, SEO, sitemap, and OG image requests.
 - **Runtime API modules**: `functions/api/*` and `functions/_lib/*` contain Pages Functions-style handlers and D1 helpers reused by the Worker router.
@@ -51,4 +51,4 @@ inclusion: always
 
 ## CI Reality
 
-GitHub CI uses Node 26 and pnpm. The `quality` job runs `pnpm install`, `pnpm typecheck`, `pnpm lint`, and `pnpm test`. Conditional jobs run `pnpm test:e2e` and `pnpm build:deploy` when relevant paths change. Local validation should mirror this instead of inventing substitute commands.
+GitHub CI uses Node 24 and pnpm. The `quality` job runs `pnpm install`, `pnpm typecheck`, `pnpm lint`, and `pnpm test`. Conditional jobs run `pnpm test:e2e` and `pnpm build:deploy` when relevant paths change. Local validation should mirror this instead of inventing substitute commands.

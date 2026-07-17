@@ -134,11 +134,11 @@ export function formatMonth(month: string, locale?: Locale): string {
   // Temporal.PlainYearMonth.toLocaleString() throws "Mismatched calendars"
   // when the locale's default calendar differs from ISO 8601. Use a Date
   // bridge with Intl.DateTimeFormat for reliable locale formatting.
-  const ym = Temporal.PlainYearMonth.from(month);
+  const [year, monthNum] = month.split("-").map(Number);
   cached = new Intl.DateTimeFormat(resolvedLocale, {
     month: "short",
     year: "numeric",
-  }).format(new Date(ym.year, ym.month - 1, 1));
+  }).format(new Date(year, monthNum - 1, 1));
 
   evictCacheIfNeeded(formattedMonthCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedMonthCache.set(cacheKey, cached);
@@ -162,17 +162,16 @@ export function formatDateTime(value: string, locale?: Locale): string {
   let cached = formattedDateTimeCache.get(cacheKey);
   if (cached !== undefined) return cached;
 
-  let instant: Temporal.Instant;
   try {
-    instant = Temporal.Instant.from(value);
+    const date = new Date(value);
+    if (isNaN(date.getTime())) throw new Error("Invalid date");
+    cached = new Intl.DateTimeFormat(resolvedLocale, {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(date);
   } catch {
     return value;
   }
-
-  cached = instant.toLocaleString(resolvedLocale, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
 
   evictCacheIfNeeded(formattedDateTimeCache, FORMATTED_STRING_CACHE_LIMIT);
   formattedDateTimeCache.set(cacheKey, cached);

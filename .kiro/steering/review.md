@@ -47,7 +47,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 - Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
 - D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
-- `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 26 + pnpm
+- `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 24 + pnpm
 
 ## Output Format
 
@@ -65,7 +65,7 @@ The following structured format applies to the overall PR review summary comment
 - Bypass D1 by hand-editing static data files or hosting JSON elsewhere
 - Modify `migrations/*.sql` files retroactively — add a new numbered migration instead
 - Break existing deployment assumptions or map attribution requirements
-- Include `bun.lock`, `yarn.lock`, or `package-lock.json` (Node 26 + pnpm project)
+- Include `bun.lock`, `yarn.lock`, or `package-lock.json` (Node 24 + pnpm project)
 
 ## Platform-Specific Review Tooling
 

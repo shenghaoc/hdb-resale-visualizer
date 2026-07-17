@@ -47,7 +47,7 @@ const shortlistItemSchema = z.object({
   addedAt: z
     .string()
     .min(1)
-    .catch(() => Temporal.Instant.fromEpochMilliseconds(0).toString()),
+    .catch(() => new Date(0).toISOString()),
 });
 
 function normalizeNumber(
@@ -215,7 +215,7 @@ export function toggleShortlistItem(items: ShortlistItem[], addressKey: string):
       addressKey,
       notes: "",
       targetPrice: null,
-      addedAt: Temporal.Now.instant().toString(),
+      addedAt: new Date().toISOString(),
     },
   ];
 }

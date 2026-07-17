@@ -46,7 +46,7 @@ function dispatchVital(metric: Metric): void {
     value: metric.value,
     rating: metric.rating,
     route: privacySafeRoute(),
-    timestamp: Temporal.Now.instant().epochMilliseconds,
+    timestamp: Date.now(),
     navigationType: metric.navigationType,
   };
 

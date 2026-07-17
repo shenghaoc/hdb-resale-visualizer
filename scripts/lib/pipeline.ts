@@ -480,7 +480,7 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
     return value.trim();
   }
 
-  const currentYear = Temporal.Now.plainDateISO().year;
+  const currentYear = new Date().getFullYear();
   const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
   return `${remaining} years`;
 }
@@ -572,7 +572,7 @@ export function buildArtifacts({
   walkingTimes,
   metadata,
 }: BuildArtifactsInput): GeneratedArtifacts {
-  const runTimestamp = Temporal.Now.instant().toString({ fractionalSecondDigits: 3 });
+  const runTimestamp = new Date().toISOString();
   const grouped = new Map<string, ResaleTransaction[]>();
   const allMonths = new Set<string>();
   const propertyByAddress = new Map(propertyInfo.map((row) => [row.addressKey, row]));
@@ -586,7 +586,7 @@ export function buildArtifacts({
 
   const sortedMonths = [...allMonths].sort();
   const maxMonth = sortedMonths[sortedMonths.length - 1];
-  const maxMonthYM = Temporal.PlainYearMonth.from(maxMonth);
+  const [maxYear, maxMonthNum] = maxMonth.split("-").map(Number);
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
@@ -870,11 +870,10 @@ export function buildArtifacts({
         ),
         mrtDistanceMeters: findNearestMrtDistanceMeters(mrtExits, geocode),
         transactionCount: sourceWindow.length,
-        monthsSinceLatestTransaction: Math.max(
-          0,
-          Temporal.PlainYearMonth.from(cohort.month).until(maxMonthYM, { largestUnit: "months" })
-            .months,
-        ),
+        monthsSinceLatestTransaction: (() => {
+          const [cy, cm] = cohort.month.split("-").map(Number);
+          return Math.max(0, (maxYear - cy) * 12 + (maxMonthNum - cm));
+        })(),
       });
     }
 

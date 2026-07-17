@@ -117,7 +117,7 @@ describe("matchesFilter — remainingLeaseMin", () => {
   beforeEach(() => {
     resetFilteringCachesForTests();
     vi.useFakeTimers();
-    vi.spyOn(Temporal.Now, "plainDateISO").mockReturnValue(Temporal.PlainDate.from("2026-01-01"));
+    vi.setSystemTime(new Date("2026-01-01"));
     resetFilteringCachesForTests(); // reset again after time change just in case
   });
 

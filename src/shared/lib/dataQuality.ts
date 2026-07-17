@@ -23,16 +23,12 @@ function isMonth(value: string | null | undefined): value is string {
 
 function isIsoDateTime(value: string | null | undefined): value is string {
   if (typeof value !== "string") return false;
-  try {
-    Temporal.Instant.from(value);
-    return true;
-  } catch {
-    return false;
-  }
+  const d = new Date(value);
+  return !isNaN(d.getTime());
 }
 
-function currentMonth(now: Temporal.PlainDate = Temporal.Now.plainDateISO("UTC")): string {
-  return `${now.year}-${String(now.month).padStart(2, "0")}`;
+function currentMonth(now: Date = new Date()): string {
+  return `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
 }
 
 export function monthsBetween(olderMonth: string, newerMonth: string): number {
@@ -45,7 +41,7 @@ export function monthsBetween(olderMonth: string, newerMonth: string): number {
 
 export function deriveDataQualityState(
   manifest: Partial<Manifest> | null,
-  now: Temporal.PlainDate = Temporal.Now.plainDateISO("UTC"),
+  now: Date = new Date(),
 ): DataQualityState {
   const rawMaxMonth = manifest?.dataWindow?.maxMonth;
   const latestMonthUsed = isMonth(rawMaxMonth) ? rawMaxMonth : null;

@@ -19,9 +19,7 @@ export type RoutingCacheFile = {
 export type RoutingCoordinate = { lat: number; lng: number };
 
 const COORD_PRECISION = 5;
-const EPOCH_TIMESTAMP = Temporal.Instant.fromEpochMilliseconds(0).toString({
-  fractionalSecondDigits: 3,
-});
+const EPOCH_TIMESTAMP = new Date(0).toISOString();
 
 function roundCoord(value: number): string {
   return value.toFixed(COORD_PRECISION);

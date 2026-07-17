@@ -49,7 +49,7 @@ inclusion: always
 
 ## CI Parity
 
-GitHub CI runs Node 26 with pnpm. The quality job installs with `pnpm install`, then runs:
+GitHub CI runs Node 24 with pnpm. The quality job installs with `pnpm install`, then runs:
 
 - `pnpm typecheck`
 - `pnpm lint`

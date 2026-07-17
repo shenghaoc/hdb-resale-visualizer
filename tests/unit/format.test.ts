@@ -22,7 +22,7 @@ describe("format functions", () => {
     it("formats currency correctly with default locale", () => {
       const formatted = formatCurrency(1234567);
       expect(formatted).toContain("1,234,567");
-      // Node 26+ ICU may render "SGD" instead of "$" for en-SG locale
+      // Node 24+ ICU may render "SGD" instead of "$" for en-SG locale
       expect(formatted).toMatch(/\$|SGD/);
     });
 
@@ -51,7 +51,7 @@ describe("format functions", () => {
     it("handles small numbers", () => {
       const formatted = formatCompactCurrency(500);
       expect(formatted).toContain("500");
-      // Node 26+ ICU may render "SGD" instead of "$" for en-SG locale
+      // Node 24+ ICU may render "SGD" instead of "$" for en-SG locale
       expect(formatted).toMatch(/\$|SGD/);
     });
   });

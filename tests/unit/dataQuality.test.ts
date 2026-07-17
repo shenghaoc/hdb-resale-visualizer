@@ -22,7 +22,7 @@ function makeManifest(overrides: Partial<Manifest> = {}): Manifest {
 
 describe("deriveDataQualityState", () => {
   it("marks complete recent metadata as fresh", () => {
-    const state = deriveDataQualityState(makeManifest(), Temporal.PlainDate.from("2026-06-15"));
+    const state = deriveDataQualityState(makeManifest(), new Date("2026-06-15"));
 
     expect(state.syncState).toBe("fresh");
     expect(state.sourceLabels).toEqual(["data.gov.sg", "OneMap"]);
@@ -36,7 +36,7 @@ describe("deriveDataQualityState", () => {
       makeManifest({
         dataWindow: { minMonth: "2020-01", maxMonth: "2025-12" },
       }),
-      Temporal.PlainDate.from("2026-06-15"),
+      new Date("2026-06-15"),
     );
 
     expect(state.syncState).toBe("stale");
@@ -51,7 +51,7 @@ describe("deriveDataQualityState", () => {
         counts: { blocks: 1, transactions: 1, towns: 1, mrtStations: 1 },
         sources: {},
       },
-      Temporal.PlainDate.from("2026-06-15"),
+      new Date("2026-06-15"),
     );
 
     expect(state.syncState).toBe("partial");
@@ -67,7 +67,7 @@ describe("deriveDataQualityState", () => {
           resaleCollectionId: "resale",
         },
       }),
-      Temporal.PlainDate.from("2026-06-15"),
+      new Date("2026-06-15"),
     );
 
     expect(state.syncState).toBe("partial");
@@ -75,7 +75,7 @@ describe("deriveDataQualityState", () => {
   });
 
   it("marks null manifest as missing", () => {
-    const state = deriveDataQualityState(null, Temporal.PlainDate.from("2026-06-15"));
+    const state = deriveDataQualityState(null, new Date("2026-06-15"));
 
     expect(state.syncState).toBe("missing");
     expect(state.latestMonthUsed).toBeNull();
@@ -85,7 +85,7 @@ describe("deriveDataQualityState", () => {
   });
 
   it("marks empty object manifest as missing", () => {
-    const state = deriveDataQualityState({}, Temporal.PlainDate.from("2026-06-15"));
+    const state = deriveDataQualityState({}, new Date("2026-06-15"));
 
     expect(state.syncState).toBe("missing");
     expect(state.latestMonthUsed).toBeNull();
@@ -93,13 +93,13 @@ describe("deriveDataQualityState", () => {
   });
 
   it("returns latestMonthUsed from dataWindow.maxMonth", () => {
-    const state = deriveDataQualityState(makeManifest(), Temporal.PlainDate.from("2026-06-15"));
+    const state = deriveDataQualityState(makeManifest(), new Date("2026-06-15"));
 
     expect(state.latestMonthUsed).toBe("2026-05");
   });
 
   it("returns generatedAt and lastSyncedAt from manifest", () => {
-    const state = deriveDataQualityState(makeManifest(), Temporal.PlainDate.from("2026-06-15"));
+    const state = deriveDataQualityState(makeManifest(), new Date("2026-06-15"));
 
     expect(state.generatedAt).toBe("2026-06-01T00:00:00Z");
     expect(state.lastSyncedAt).toBe("2026-05-31T00:00:00Z");
@@ -108,7 +108,7 @@ describe("deriveDataQualityState", () => {
   it("treats invalid generatedAt as null", () => {
     const state = deriveDataQualityState(
       makeManifest({ generatedAt: "not-a-date" }),
-      Temporal.PlainDate.from("2026-06-15"),
+      new Date("2026-06-15"),
     );
 
     expect(state.generatedAt).toBeNull();
@@ -124,7 +124,7 @@ describe("deriveDataQualityState", () => {
         counts: { blocks: 1, transactions: 1, towns: 1, mrtStations: 1 },
         sources: {},
       },
-      Temporal.PlainDate.from("2026-06-15"),
+      new Date("2026-06-15"),
     );
 
     expect(state.syncState).toBe("stale");

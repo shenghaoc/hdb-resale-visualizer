@@ -3,11 +3,8 @@ import type { ShortlistItem } from "./data-types";
 
 function addedAtMs(iso?: string): number {
   if (!iso) return 0;
-  try {
-    return Temporal.Instant.from(iso).epochMilliseconds;
-  } catch {
-    return 0;
-  }
+  const ms = new Date(iso).getTime();
+  return isNaN(ms) ? 0 : ms;
 }
 
 /**
