@@ -749,6 +749,91 @@
   }
 }
 
+/* ── Pointer / hover media queries ─────────────────────────────────────
+   Screen size doesn't tell you input method. A laptop with touchscreen,
+   a tablet with keyboard — detect capabilities, not pixels. */
+@media (pointer: coarse) {
+  /* Enforce 44×44 px minimum touch targets on coarse pointers. */
+  button:not([data-no-touch-enlarge]),
+  [role="button"]:not([data-no-touch-enlarge]),
+  a:not([data-no-touch-enlarge]) {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+}
+
+@media (hover: none) {
+  /* Touch users can't hover — suppress hover-only effects. */
+  .map-attribution-link:hover {
+    text-decoration: none;
+  }
+}
+
+@media (pointer: fine) {
+  /* Fine pointers (mouse, trackpad) keep their natural sizing. */
+  button:not([data-no-touch-enlarge]),
+  [role="button"]:not([data-no-touch-enlarge]),
+  a:not([data-no-touch-enlarge]) {
+    min-height: revert;
+    min-width: revert;
+  }
+}
+
+/* ── Landscape orientation — mobile panels ──────────────────────────── */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .mobile-tab-bar {
+    padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobile-tab-bar .mobile-tab-button {
+    height: 2.5rem;
+    gap: 0.125rem;
+    font-size: 0.58rem;
+  }
+
+  .mobile-mode-button {
+    height: 2.5rem;
+    min-height: 2.5rem;
+    width: 2.25rem;
+    min-width: 2.25rem;
+  }
+
+  #mobile-panel {
+    max-height: 70vh;
+  }
+}
+
+/* ── Tablet intermediate layout (768–1023 px) ──────────────────────────
+   Tablets have space for wider panels than phones but don't need the
+   full desktop sidebar. Constrain the panel width and center it. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  #mobile-panel {
+    left: 2rem;
+    right: 2rem;
+    max-height: min(44rem, calc(100vh - 10rem));
+    top: 3.5rem;
+  }
+
+  .filter-chip {
+    max-width: 16rem;
+  }
+}
+
+/* ── Ultrawide / large desktop capping ──────────────────────────────── */
+@media (min-width: 1920px) {
+  #desktop-left-panel[data-open="true"] {
+    max-width: min(32rem, 25vw);
+  }
+
+  #desktop-saved-panel[data-open="true"] {
+    max-width: min(24rem, 20vw);
+  }
+
+  .map-attribution-link {
+    max-width: min(48vw, 26rem);
+  }
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -1016,6 +1101,99 @@ html {
 
 .guide-prose a:hover {
   opacity: 0.8;
+}
+
+/* ── Print styles ──────────────────────────────────────────────────────
+   Strip the map, panels, and tab bars. Show only core content in a
+   linear, black-on-white layout suitable for paper or PDF export. */
+@media print {
+  @page {
+    margin: 1.8cm;
+    size: A4;
+  }
+
+  * {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html,
+  body,
+  #root,
+  main {
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+  }
+
+  /* Hide interactive chrome — map, panels, tab bars, popups */
+  .map-view,
+  .map-skeleton,
+  .mobile-tab-bar,
+  .desktop-tab-bar,
+  .map-attribution-link,
+  .filter-chip,
+  .map-popup,
+  [role="toolbar"],
+  [data-testid="desktop-tab-bar"],
+  [data-testid="mobile-tab-bar"],
+  .maplibregl-ctrl,
+  #desktop-left-panel,
+  #desktop-saved-panel,
+  #mobile-panel {
+    display: none !important;
+  }
+
+  /* Content sections — show the docs page linearly */
+  .guide-prose {
+    max-width: 100% !important;
+    font-size: 11pt;
+    line-height: 1.55;
+  }
+
+  .guide-prose h1 {
+    font-size: 18pt;
+    page-break-after: avoid;
+  }
+
+  .guide-prose h2 {
+    font-size: 14pt;
+    page-break-after: avoid;
+  }
+
+  .guide-prose h3 {
+    font-size: 12pt;
+    page-break-after: avoid;
+  }
+
+  /* Expand links to show URLs */
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555 !important;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript"]::after {
+    content: "";
+  }
+
+  /* Avoid page breaks inside content blocks */
+  p,
+  li,
+  pre,
+  blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid;
+  }
 }
 
 .guide-prose code {
