@@ -43,5 +43,5 @@
 - [x] **T5.1** Add focused restoration and switch hit-area tests. (R7.3)
 - [x] **T5.2** Run formatting, diff checks, focused tests, the full repository
   check, and the pre-PR E2E gate; correct every in-scope failure. (R7.3)
-- [ ] **T5.3** Verify the final user flow and responsive layout in the deployed
+- [x] **T5.3** Verify the final user flow and responsive layout in the deployed
   branch preview, then confirm the exact pushed head is green. (R4, R5, R7.3)
