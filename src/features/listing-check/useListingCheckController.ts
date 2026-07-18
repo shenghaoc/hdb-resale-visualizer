@@ -52,7 +52,7 @@ const FALLBACK_SAMPLE: SampleListingBlock = {
 };
 
 function defaultNowISOString(): string {
-  return Temporal.Now.instant().toString();
+  return new Date().toISOString();
 }
 
 function createInitialState(form: ListingCheckUrlState): ListingCheckControllerState {
