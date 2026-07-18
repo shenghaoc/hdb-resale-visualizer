@@ -4,14 +4,8 @@ import { cn } from "@/shared/lib/utils";
 import { formatCurrency, formatMonth } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
 import type { AddressDetailTransaction } from "@/types/data";
-import type { AdjustmentLabel } from "../../shared/data-types";
 import { Badge } from "@/components/ui/badge";
-
-export type AdjustmentInfo = {
-  adjustedResalePrice: number | null;
-  adjustedPricePerSqm: number | null;
-  adjustmentLabel: AdjustmentLabel | null;
-};
+import type { ListingAdjustmentInfo } from "./listingCheckAnalysis";
 
 export type ComparableTransactionsListProps = {
   transactions: ReadonlyArray<AddressDetailTransaction>;
@@ -20,7 +14,7 @@ export type ComparableTransactionsListProps = {
   maxItems?: number;
   /** Optional map from transaction ID → adjustment metadata.
    *  When provided, adjusted prices are shown alongside raw prices. */
-  adjustmentMap?: ReadonlyMap<string, AdjustmentInfo>;
+  adjustmentMap?: ReadonlyMap<string, ListingAdjustmentInfo>;
   /** Whether the adjustment toggle is active (controls visibility). */
   showAdjusted?: boolean;
 };

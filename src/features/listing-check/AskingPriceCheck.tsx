@@ -1,20 +1,11 @@
 import { useMemo, useState } from "react";
-import {
-  AlertTriangle,
-  ArrowDown,
-  ArrowUp,
-  CheckCircle2,
-  Info,
-  Scale,
-  Sparkles,
-} from "lucide-react";
+import { AlertTriangle, Info, Scale, Sparkles } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
 import {
   assessAskingPrice,
   findComparableTransactions,
-  type AskingPriceAssessment,
 } from "@/entities/transaction/transaction-analysis";
 import { parseStoreyMidpoint } from "@shared/comparable-engine";
 import type { AddressDetail } from "@/types/data";
@@ -27,71 +18,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DistributionBar } from "@/components/DistributionBar";
-import { ComparableTransactionsList } from "@/components/ComparableTransactionsList";
+import { DistributionBar } from "./DistributionBar";
+import { ComparableTransactionsList } from "./ComparableTransactionsList";
 import { DocsLink } from "@/features/docs/DocsLink";
-import { parsePositiveDecimalInput } from "@/features/listing-check/listingCheckInputs";
+import { parsePositiveDecimalInput } from "./listingCheckInputs";
+import {
+  formatSignedListingCurrency,
+  formatSignedListingPercent,
+  getListingVerdictStyles,
+  LISTING_VERDICT_THEMES,
+} from "./listingVerdictPresentation";
 
 type AskingPriceCheckProps = {
   detail: AddressDetail;
 };
-
-type VerdictTheme = {
-  tone: "success" | "warning" | "destructive" | "muted";
-  icon: typeof CheckCircle2;
-  i18nKey: string;
-};
-
-const VERDICT_THEMES: Record<AskingPriceAssessment["verdict"], VerdictTheme> = {
-  well_below: { tone: "success", icon: ArrowDown, i18nKey: "askingCheck.verdict.wellBelow" },
-  below: { tone: "success", icon: ArrowDown, i18nKey: "askingCheck.verdict.below" },
-  fair: { tone: "muted", icon: CheckCircle2, i18nKey: "askingCheck.verdict.fair" },
-  above: { tone: "warning", icon: ArrowUp, i18nKey: "askingCheck.verdict.above" },
-  well_above: {
-    tone: "destructive",
-    icon: AlertTriangle,
-    i18nKey: "askingCheck.verdict.wellAbove",
-  },
-};
-
-function toneStyles(tone: VerdictTheme["tone"]) {
-  switch (tone) {
-    case "success":
-      return {
-        bg: "bg-success/10",
-        border: "border-success/30",
-        text: "text-success",
-      };
-    case "warning":
-      return {
-        bg: "bg-warning/10",
-        border: "border-warning/30",
-        text: "text-warning",
-      };
-    case "destructive":
-      return {
-        bg: "bg-destructive/10",
-        border: "border-destructive/30",
-        text: "text-destructive",
-      };
-    default:
-      return {
-        bg: "bg-muted/30",
-        border: "border-border/40",
-        text: "text-foreground",
-      };
-  }
-}
-
-function formatSignedCurrency(value: number) {
-  const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-  return `${sign}${formatCompactCurrency(Math.abs(value))}`;
-}
-
-function formatSignedPct(value: number) {
-  const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-  return `${sign}${Math.abs(value).toFixed(1)}%`;
-}
 
 export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
   const { locale, t } = useI18n();
@@ -140,8 +80,8 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
     });
   }, [askingPrice, floorAreaSqm, comparables]);
 
-  const theme = assessment ? VERDICT_THEMES[assessment.verdict] : null;
-  const styles = theme ? toneStyles(theme.tone) : toneStyles("muted");
+  const theme = assessment ? LISTING_VERDICT_THEMES[assessment.verdict] : null;
+  const styles = theme ? getListingVerdictStyles(theme.tone) : getListingVerdictStyles("muted");
   const VerdictIcon = theme?.icon ?? Sparkles;
 
   return (
@@ -289,7 +229,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               {assessment.pricePerSqmDeltaPct != null && (
                 <DataRow
                   label={t("askingCheck.psmDelta")}
-                  value={formatSignedPct(assessment.pricePerSqmDeltaPct)}
+                  value={formatSignedListingPercent(assessment.pricePerSqmDeltaPct)}
                   emphasis={
                     assessment.pricePerSqmDeltaPct > 5
                       ? "negative"
@@ -374,9 +314,11 @@ function DeltaCell({
     <div className="rounded-none bg-muted/30 p-3">
       <div className="v2-field-label">{label}</div>
       <div className={cn("mt-1 font-heading text-lg font-extrabold tabular-nums", colorClass)}>
-        {formatSignedCurrency(amount)}
+        {formatSignedListingCurrency(amount, locale)}
       </div>
-      <div className={cn("text-xs font-bold tabular-nums", colorClass)}>{formatSignedPct(pct)}</div>
+      <div className={cn("text-xs font-bold tabular-nums", colorClass)}>
+        {formatSignedListingPercent(pct)}
+      </div>
       <div className="mt-1 truncate text-[length:var(--text-xs)] text-muted-foreground">
         {referenceLabel}: {formatCompactCurrency(reference, locale)}
       </div>

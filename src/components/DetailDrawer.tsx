@@ -101,7 +101,9 @@ import { ShareButton } from "@/components/ShareButton";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
-  import("./AskingPriceCheck").then((m) => ({ default: m.AskingPriceCheck })),
+  import("@/features/listing-check/AskingPriceCheck").then((module) => ({
+    default: module.AskingPriceCheck,
+  })),
 );
 
 type DetailDrawerProps = {

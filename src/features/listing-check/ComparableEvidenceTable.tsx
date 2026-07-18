@@ -3,7 +3,10 @@ import { AlertTriangle, ArrowUpDown, ChevronDown, ChevronUp, Info } from "lucide
 import { cn } from "@/shared/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
-import { LOW_SAMPLE_THRESHOLD, type ComparableTransaction } from "../../shared/comparable-engine";
+import {
+  LOW_SAMPLE_THRESHOLD,
+  type ComparableTransaction,
+} from "../../../shared/comparable-engine";
 import {
   Table,
   TableBody,
@@ -13,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import type { DisplayComparable } from "./listingCheckAnalysis";
 
 // ── Constants ──────────────────────────────────────────────────────────────
 
@@ -47,11 +51,6 @@ const SORT_KEY_ORDER: SortKey[] = [
 
 // ── Sort helper ────────────────────────────────────────────────────────────
 
-type ExtendedComparable = ComparableTransaction & {
-  rawResalePrice?: number;
-  rawPricePerSqm?: number;
-};
-
 function sortComparables<T extends ComparableTransaction>(
   comparables: ReadonlyArray<T>,
   sortKey: SortKey,
@@ -76,7 +75,7 @@ function sortComparables<T extends ComparableTransaction>(
 // ── Props ──────────────────────────────────────────────────────────────────
 
 type ComparableEvidenceTableProps = {
-  comparables: ReadonlyArray<ExtendedComparable>;
+  comparables: ReadonlyArray<DisplayComparable>;
   referenceMonth: string;
   widenedSearch: boolean;
   caveats: ReadonlyArray<string>;
