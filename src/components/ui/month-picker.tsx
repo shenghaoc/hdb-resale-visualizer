@@ -182,7 +182,7 @@ export function MonthPicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[280px] p-0 shadow-xl border-border/20 backdrop-blur-xl bg-popover/95"
+        className="w-[280px] p-0 shadow-xl border-border/20 bg-popover"
         align="start"
         aria-label={t("filters.selectMonth", { defaultValue: "Select month" })}
       >

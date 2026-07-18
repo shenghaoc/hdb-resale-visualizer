@@ -83,7 +83,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
     <section
       aria-labelledby="lease-financing-title"
       data-testid="lease-financing-section"
-      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+      className="border border-border/40 bg-muted/20 p-3"
     >
       <div
         id="lease-financing-title"

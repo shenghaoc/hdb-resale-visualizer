@@ -310,7 +310,7 @@ const BlockCard = memo(function BlockCard({
           }
         }}
         className={cn(
-          "v2-card animate-fade-in-up cursor-pointer rounded-xl border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
+          "v2-card animate-fade-in-up cursor-pointer border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
           isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
           "gap-0 px-3 py-2",
         )}
@@ -436,7 +436,7 @@ const BlockCard = memo(function BlockCard({
         }
       }}
       className={cn(
-        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
+        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
       onClick={() => onSelect(block.addressKey)}
@@ -1123,7 +1123,7 @@ export function ResultsPane({
   return (
     <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden border-none bg-transparent py-0 shadow-none">
-        <CardHeader className="shrink-0 border-b border-border/30 bg-background/80 px-3 py-2.5 backdrop-blur-xl sm:px-4">
+        <CardHeader className="shrink-0 border-b border-border/30 bg-background px-3 py-2.5 sm:px-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
             <CardTitle className="v2-section-title mr-auto min-w-0 truncate">
               {t("results.filteredBlocks")}
@@ -1162,7 +1162,7 @@ export function ResultsPane({
         ) : null}
         {hasResultScope ? (
           <div
-            className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4"
+            className="shrink-0 border-b border-border/30 bg-background px-3 py-2 sm:px-4"
             data-testid="results-view-toolbar"
           >
             <div

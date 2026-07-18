@@ -26,7 +26,7 @@ type AppHeaderProps = {
   onClearMobileTab?: () => void;
 };
 
-const HEADER_SURFACE_CLASS = "rounded-xl border bg-popover/90 backdrop-blur-[20px] shadow-lg";
+const HEADER_SURFACE_CLASS = "border bg-popover shadow-lg";
 
 export function AppHeader({
   manifest,
@@ -283,7 +283,7 @@ export function AppHeader({
           <button
             type="button"
             data-testid="header-search-scrim"
-            className="absolute inset-0 bg-background/55 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-background/55"
             aria-label={t("header.closeSearch")}
             onClick={closeMobileSearch}
           />

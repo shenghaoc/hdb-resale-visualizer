@@ -479,11 +479,11 @@ export function DetailDrawer({
     <Drawer open={isDrawerOpen} onClose={onClose}>
       <DrawerContent
         data-testid="detail-drawer"
-        className="h-full min-h-0 max-h-full w-full border-border/40 bg-card/95 backdrop-blur-xl"
+        className="h-full min-h-0 max-h-full w-full border-border/40 bg-card"
         hideHandle={true}
       >
         <div className="flex h-full flex-col overflow-hidden">
-          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background/80 pb-4 pl-12 pr-12 backdrop-blur-xl sm:pl-6">
+          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background pb-4 pl-12 pr-12 sm:pl-6">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -1383,7 +1383,7 @@ export function DetailDrawer({
             </Tabs>
           </div>
 
-          <div className="shrink-0 border-t border-border/40 bg-background/80 p-4 backdrop-blur-md sm:p-6">
+          <div className="shrink-0 border-t border-border/40 bg-background p-4 sm:p-6">
             <div className="mx-auto flex w-full items-center gap-2.5 sm:gap-4">
               <Button
                 className="min-w-0 flex-1 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"

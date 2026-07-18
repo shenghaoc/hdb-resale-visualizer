@@ -106,6 +106,7 @@ The visual language is restrained and utilitarian: cyan is the sole accent, depl
 This system explicitly rejects: cluttered marketplace grids (PropertyGuru), lifestyle imagery and vague sentiment scores (Zillow), gradient hero sections and animated stat counters (flashy real-estate startups). The aesthetic is professional, not promotional.
 
 **Key Characteristics:**
+
 - Single-accent palette: cyan as the only chromatic voice; everything else is slate
 - Squared-off geometry: no rounded corners on interactive elements (buttons, badges, inputs)
 - Uppercase micro-labels: 0.625rem, 600 weight, 0.1em tracking for metadata and actions
@@ -118,10 +119,12 @@ This system explicitly rejects: cluttered marketplace grids (PropertyGuru), life
 The palette is deliberately restrained. Cyan is the only accent; slate neutrals carry the rest. Semantic colors (green, amber, red) appear only when they carry meaning — success, warning, error — never as decoration.
 
 ### Primary
+
 - **Deep Cyan** (#0e7490 / cyan-700): Primary buttons, focus rings, chart series 1, active states. The only chromatic voice in the interface. In dark mode, lifts to cyan-400 (#22d3ee) for luminosity.
 - **Cyan Wash** (#ecfeff / cyan-50): Accent background for selected rows, hover tints, subtle highlights. In dark mode, deepens to a navy-cyan blend (#193353).
 
 ### Neutral
+
 - **Cool Slate BG** (#f8fafc / slate-50): Page background. Near-white with negligible chroma — deliberately not warm/cream. In dark mode, drops to near-black navy (#080e1a).
 - **Paper White** (#ffffff): Card and popover surfaces. In dark mode, lifts slightly to (#0d1628).
 - **Deep Ink** (#0f172a / slate-900): Body text, headings, primary content. In dark mode, lightens to (#e2e8f0).
@@ -130,17 +133,20 @@ The palette is deliberately restrained. Cyan is the only accent; slate neutrals 
 - **Subtle Rule** (rgba(15, 23, 42, 0.08)): Card rings, dividers, hairline borders. In dark mode, shifts to a cyan-tinted transparency (rgba(34, 211, 238, 0.12)).
 
 ### Semantic
+
 - **Verified Green** (#047857 / emerald-700): Positive signals — budget match, price below median, lease health. Dark mode: emerald-400.
 - **Caution Amber** (#b45309 / amber-700): Warning signals — lease decay approaching, price above range. Dark mode: amber-400.
 - **Critical Red** (#b91c1c / red-700): Destructive actions, errors, price significantly above market. Dark mode: red-400.
 
 ### Chart
+
 - **Chart Indigo** (#6366f1): Secondary chart series. Dark mode: indigo-400.
 - **Chart Amber** (#f59e0b): Tertiary chart series. Dark mode: orange-400.
 - **Chart Emerald** (#10b981): Quaternary chart series. Dark mode: emerald-400.
 - **Chart Pink** (#ec4899): Quinary chart series. Dark mode: pink-400.
 
 ### Named Rules
+
 **The One Voice Rule.** Deep Cyan is the only accent. It appears on primary buttons, focus rings, links, and chart series 1 — and nowhere else. Secondary colors (indigo, amber, emerald, pink) exist only in charts where multiple series need discrimination. Never introduce a second UI accent.
 
 **The Cold Neutral Rule.** Backgrounds and surfaces are cool or neutral in chroma — never warm-tinted. The system's warmth comes from data utility, not from beige backgrounds.
@@ -153,12 +159,14 @@ The palette is deliberately restrained. Cyan is the only accent; slate neutrals 
 **Character:** IBM Plex Sans is a pragmatic grotesk with an engineering sensibility — open apertures, rational proportions, no stylistic indulgence. A single family across all roles (headings, body, labels, data) reinforces the tool-like character. No serif pairing; the contrast comes from weight and scale, not classification.
 
 ### Hierarchy
+
 - **Title** (600 weight, 1.125rem / 18px, 1.4 line-height): Card titles, section headers. Uppercase with 0.05em tracking. Appears sparingly — not an eyebrow on every section.
 - **Body** (400 weight, 1rem / 16px, 1.5 line-height): Primary content, descriptions, transaction rows. Max line length 65–75ch in prose contexts.
 - **Label** (600 weight, 0.625rem / 10px, 1.4 line-height, 0.1em tracking, uppercase): Badges, button text, metadata tags, filter labels, table column headers. The workhorse of the micro-typography system.
 - **Data** (400–500 weight, inherits size): Numbers, prices, statistics. Tabular figures where possible; right-aligned in table columns.
 
 ### Named Rules
+
 **The Single Family Rule.** IBM Plex Sans everywhere. No heading/secondary font pair. Weight (400→500→600→700) and scale (0.625rem→1rem→1.125rem) create the hierarchy.
 
 **The Micro-Label Rule.** Secondary metadata, filter chips, action buttons, and badge text are always 0.625rem / 600 weight / 0.1em tracking / uppercase. This is the system's signature typographic gesture — consistent, not sprinkled.
@@ -168,15 +176,18 @@ The palette is deliberately restrained. Cyan is the only accent; slate neutrals 
 The system is essentially flat. Depth is conveyed through tonal layering (Cool Slate BG behind Paper White cards) and a single subtle shadow tier, not a multi-level elevation ramp.
 
 ### Shadow Vocabulary
+
 - **Card Rest** (`box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); ring: 1px solid rgba(15,23,42,0.05)`): The only elevation state. Cards and popovers sit slightly above the background with a hairline ring and minimal shadow. In dark mode, the ring shifts to a cyan tint.
 - **No Elevation**: Buttons, inputs, badges, and chips are flat. They indicate state through color change, not lift.
 
 ### Named Rules
+
 **The Flat-at-Rest Rule.** Nothing casts a shadow unless it's a card or popover hovering above the page background. Interactive elements stay flat; state changes use color and border, not elevation.
 
 ## 5. Components
 
 ### Buttons
+
 **Character:** Tactile but restrained — solid fills for primary, transparent with hairlines for secondary. Always squared-off, always uppercase.
 
 - **Shape:** `rounded-none` (0px radius). Sharp corners are deliberate and consistent.
@@ -189,6 +200,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - **Focus:** `ring-2 ring-ring/30` with ring matching Deep Cyan.
 
 ### Cards
+
 **Character:** Clean data containers, not decorative panels. Subtle border + minimal shadow. Internal spacing is generous but content is dense.
 
 - **Shape:** `rounded-none`.
@@ -198,6 +210,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - **Title:** font-heading, text-lg, font-semibold, uppercase, tracking-wider.
 
 ### Inputs
+
 **Character:** Underline-only — a single bottom border. No box, no full-border, no background fill. Feels like filling in a form on paper.
 
 - **Shape:** `rounded-none`. No background. Border-bottom only (`border-b-input`).
@@ -208,6 +221,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - **Invalid:** Bottom border shifts to Critical Red.
 
 ### Badges
+
 **Character:** The smallest typographic element — purely textual, no background, no border. Identified by weight, tracking, and case.
 
 - **Shape:** `rounded-none`. `bg-transparent`, `border-0`, `px-0 py-0`. Zero chrome.
@@ -216,6 +230,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - **Usage:** Town names, price ranks, flat types, metadata tags in lists and tables.
 
 ### Tables
+
 **Character:** Data-first with minimal chrome. Headers are uppercase labels; rows are separated by subtle dividers.
 
 - **Shape:** `rounded-none`. No outer border.
@@ -224,6 +239,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - **Divider:** Subtle horizontal rules between rows.
 
 ### Tooltips
+
 **Character:** Compact data tooltips for map markers and chart points. Dark surface with light text, minimal padding.
 
 - **Shape:** `rounded-md` (the exception — tooltips are informational, not interactive).
@@ -233,6 +249,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 ## 6. Do's and Don'ts
 
 ### Do
+
 - ✅ Use Deep Cyan sparingly — primary buttons, focus rings, active links only
 - ✅ Keep cards squared-off (`rounded-none`) and clean — data containers, not decorative panels
 - ✅ Use uppercase micro-labels (0.625rem, 600w, 0.1em tracking) consistently for metadata
@@ -242,6 +259,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - ✅ Use semantic colors (green, amber, red) only when they carry real meaning
 
 ### Don't
+
 - ❌ Don't add a second accent color — cyan is the only chromatic voice
 - ❌ Don't add rounded corners to interactive elements (buttons, inputs, badges)
 - ❌ Don't use gradient text, glassmorphism, or decorative blurs

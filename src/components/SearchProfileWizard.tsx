@@ -285,9 +285,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
 
   return (
     <div className="absolute inset-0 z-[100] flex items-end justify-center px-4 pb-20 pt-6 lg:items-center lg:px-0 lg:pb-0">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
-      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-[1.25rem] border bg-popover/95 shadow-xl backdrop-blur-2xl lg:w-[28.75rem] lg:max-w-[28.75rem]">
-        <div className="h-[3px] w-full rounded-t-[1.25rem] bg-gradient-to-r from-primary to-transparent opacity-60" />
+      <div className="absolute inset-0 bg-black/50" />
+      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible border bg-popover shadow-xl lg:w-[28.75rem] lg:max-w-[28.75rem]">
         <CardContent className="overflow-hidden px-5 py-6 lg:px-8 lg:py-7">
           <div className="mb-6 flex items-center justify-center gap-1.5">
             {Array.from({ length: totalSteps }).map((_, index) => (
@@ -480,7 +479,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             />
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border bg-popover/98 p-0 shadow-lg backdrop-blur-xl">
+                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 border bg-popover p-0 shadow-lg">
                           <div className="border-b border-border/60 p-2.5">
                             <div className="rounded-[0.6rem] bg-muted/40 px-3">
                               <div className="flex items-center gap-2">

@@ -79,7 +79,7 @@ export function TownProfileSection({
   return (
     <section
       aria-label={t("townProfile.sectionLabel", { town: localizeTownName(townName, locale) })}
-      className="mb-4 rounded-xl border border-border/35 bg-muted/35 p-3 sm:p-3.5"
+      className="mb-4 border border-border/35 bg-muted/35 p-3 sm:p-3.5"
     >
       <header className="mb-3 flex flex-wrap items-end gap-x-3 gap-y-1">
         <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[0.95rem]">

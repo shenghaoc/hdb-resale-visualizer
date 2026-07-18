@@ -233,7 +233,7 @@ export function TownCompareSection({
         town: localizeTownName(primaryTown, locale),
       })}
       data-testid="town-compare-section"
-      className="mb-4 rounded-xl border border-border/35 bg-muted/35 p-3 sm:p-3.5"
+      className="mb-4 border border-border/35 bg-muted/35 p-3 sm:p-3.5"
     >
       <header className="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="flex min-w-0 flex-col gap-0.5">
@@ -307,7 +307,7 @@ export function TownCompareSection({
           {/* Sticky pill for mobile section jumps. */}
           <nav
             aria-label={t("townCompare.sectionsNavLabel")}
-            className="sticky top-0 z-10 mb-3 flex w-full gap-1 rounded-full border border-border/40 bg-background/95 p-1 backdrop-blur md:hidden"
+            className="sticky top-0 z-10 mb-3 flex w-full gap-1 rounded-full border border-border/40 bg-background p-1 md:hidden"
           >
             <button
               type="button"
@@ -382,7 +382,7 @@ function CompareColumn({
       data-testid={dataTestId}
       className="min-w-0 rounded-lg border border-border/30 bg-background/60"
     >
-      <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background/95 px-2.5 py-2 backdrop-blur md:top-0">
+      <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background px-2.5 py-2 md:top-0">
         <span className="truncate font-heading text-[0.78rem] font-extrabold uppercase tracking-[0.08em]">
           {localizeTownName(townName, locale)}
         </span>

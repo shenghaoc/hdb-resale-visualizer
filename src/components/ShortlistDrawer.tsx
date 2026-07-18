@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -1057,6 +1057,63 @@ export function ShortlistDrawer({
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const sortLabelId = useId();
 
+  // Undo state for shortlist removal
+  const [pendingUndo, setPendingUndo] = useState<{
+    addressKey: string;
+    label: string;
+  } | null>(null);
+  const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Clean up undo timer on unmount
+  useEffect(() => {
+    return () => {
+      if (undoTimerRef.current) {
+        clearTimeout(undoTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleRemove = useCallback(
+    (addressKey: string) => {
+      // Find the item being removed for its label
+      const row = rows.find((r) => r.item.addressKey === addressKey);
+      if (!row) {
+        onRemove(addressKey);
+        return;
+      }
+
+      // Clear any previous pending undo
+      if (undoTimerRef.current) {
+        clearTimeout(undoTimerRef.current);
+      }
+
+      // Perform the removal immediately
+      onRemove(addressKey);
+
+      // Set up undo
+      const label = `${row.block.block} ${row.block.streetName}`;
+      setPendingUndo({ addressKey, label });
+
+      // Auto-dismiss after 5 seconds
+      undoTimerRef.current = setTimeout(() => {
+        setPendingUndo(null);
+        undoTimerRef.current = null;
+      }, 5000);
+    },
+    [onRemove, rows],
+  );
+
+  const handleUndo = useCallback(() => {
+    if (!pendingUndo) return;
+    if (undoTimerRef.current) {
+      clearTimeout(undoTimerRef.current);
+      undoTimerRef.current = null;
+    }
+    // Re-add the item (toggle back)
+    onRemove(pendingUndo.addressKey);
+    setPendingUndo(null);
+  }, [onRemove, pendingUndo]);
+
   if (isOpen !== prevIsOpen) {
     setPrevIsOpen(isOpen);
     if (!isOpen && shareError !== null) setShareError(null);
@@ -1371,7 +1428,7 @@ export function ShortlistDrawer({
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col gap-0 border-none bg-transparent py-0 shadow-none">
-        <CardHeader className="shrink-0 gap-3 border-b border-border/40 bg-background/90 px-3 py-3 backdrop-blur-xl sm:px-4">
+        <CardHeader className="shrink-0 gap-3 border-b border-border/40 bg-background px-3 py-3 sm:px-4">
           <div className="flex min-w-0 items-center gap-2">
             <div className="mr-auto min-w-0">
               <div className="v2-kicker">{t("shortlist.savedProperties")}</div>
@@ -1824,10 +1881,7 @@ export function ShortlistDrawer({
                                     <Button
                                       size="icon-xs"
                                       variant="ghost"
-                                      onClick={() => onRemove(row.item.addressKey)}
-                                      type="button"
-                                      className="rounded-lg text-muted-foreground hover:text-destructive"
-                                      aria-label={t("shortlist.remove")}
+                                      onClick={() => handleRemove(row.item.addressKey)}
                                     >
                                       <X
                                         data-icon="inline-start"
@@ -2066,7 +2120,7 @@ export function ShortlistDrawer({
                                     variant="outline"
                                     size="sm"
                                     className="rounded-lg border-border/50"
-                                    onClick={() => onRemove(row.item.addressKey)}
+                                    onClick={() => handleRemove(row.item.addressKey)}
                                   >
                                     <X
                                       data-icon="inline-start"
@@ -2102,6 +2156,24 @@ export function ShortlistDrawer({
           </CardContent>
         ) : null}
       </Card>
+      {pendingUndo ? (
+        <div className="shrink-0 border-t border-border/40 bg-background px-3 py-2.5 sm:px-4">
+          <div className="flex items-center justify-between gap-2">
+            <span className="truncate text-xs text-muted-foreground">
+              {t("shortlist.removed")}: {pendingUndo.label}
+            </span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              className="shrink-0 rounded-lg text-xs font-semibold text-primary hover:text-primary/80"
+              onClick={handleUndo}
+            >
+              {t("shortlist.undo")}
+            </Button>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

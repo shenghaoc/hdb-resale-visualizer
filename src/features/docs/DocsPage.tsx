@@ -47,7 +47,7 @@ export function DocsPage() {
         {t("app.skipToContent")}
       </a>
 
-      <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <header className="sticky top-0 z-40 border-b bg-background">
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 sm:px-6">
           <Button type="button" variant="ghost" size="sm" onClick={() => navigate("/")}>
             <ArrowLeft data-icon className="size-4" aria-hidden="true" />

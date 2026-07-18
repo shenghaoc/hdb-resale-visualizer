@@ -223,7 +223,7 @@ export function FilterPanel(props: FilterPanelProps) {
   return (
     <aside data-testid="filters-panel">
       <Card className="flex min-h-0 flex-1 flex-col gap-0 border-none bg-transparent py-0 shadow-none">
-        <CardHeader className="border-b border-border/30 bg-background/80 px-3 py-2.5 backdrop-blur-xl sm:px-4">
+        <CardHeader className="border-b border-border/30 bg-background px-3 py-2.5 sm:px-4">
           <div className="flex min-w-0 items-center gap-2">
             <CardTitle className="v2-section-title mr-auto min-w-0 truncate">
               {t("filters.title")}

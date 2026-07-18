@@ -253,7 +253,7 @@ export function SearchCombobox({
       <PopoverContent
         align="start"
         side="bottom"
-        className="z-[70] w-[min(24rem,calc(100vw-2rem))] gap-0 rounded-[0.75rem] border bg-popover/98 p-0 shadow-lg backdrop-blur-xl"
+        className="z-[70] w-[min(24rem,calc(100vw-2rem))] gap-0 border bg-popover p-0 shadow-lg"
         onOpenAutoFocus={(event) => event.preventDefault()}
       >
         {loading && suggestions.length === 0 ? (
