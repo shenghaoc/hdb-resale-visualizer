@@ -310,8 +310,8 @@ const BlockCard = memo(function BlockCard({
           }
         }}
         className={cn(
-          "v2-card animate-fade-in-up cursor-pointer border-border/40 bg-card transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
-          isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
+          "v2-card animate-fade-in-up cursor-pointer border-border/40 bg-card transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[var(--shadow-card-hover)] active:scale-[0.995]",
+          isFeatured && "border-primary/45 bg-primary/5 shadow-[var(--shadow-card-featured)]",
           "gap-0 px-3 py-2",
         )}
         style={{ animationDelay: `${index * 40}ms`, minHeight: 92 }}
@@ -436,8 +436,8 @@ const BlockCard = memo(function BlockCard({
         }
       }}
       className={cn(
-        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 border-border/40 bg-card p-4 shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
-        isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
+        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 border-border/40 bg-card p-4 shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[var(--shadow-card-hover)] active:scale-[0.995] cv-auto",
+        isFeatured && "border-primary/40 bg-primary/5 shadow-[var(--shadow-card-featured)]",
       )}
       onClick={() => onSelect(block.addressKey)}
     >

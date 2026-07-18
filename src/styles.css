@@ -215,24 +215,11 @@
    substituted var() collide with the function's argument separators), so we
    drive them via a single custom property and override it in .dark. The cyan
    tint is now derived from --primary instead of hardcoded rgba. */
-.v2-panel {
-  --shadow-panel: 0 12px 32px rgba(23, 28, 31, 0.08);
-
-  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
-  background: color-mix(in oklab, var(--card) 94%, transparent);
-  box-shadow: var(--shadow-panel);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  contain: layout paint;
-}
-
-.dark .v2-panel {
-  --shadow-panel:
-    0 0 0 1px color-mix(in oklab, var(--primary) 7%, transparent), 0 12px 48px rgba(4, 12, 24, 0.8);
-}
-
 .v2-card {
   --shadow-card: 0 2px 8px rgba(23, 28, 31, 0.04);
+  --shadow-card-hover: 0 4px 16px color-mix(in oklab, var(--primary) 6%, transparent);
+  --shadow-card-featured: 0 4px 16px color-mix(in oklab, var(--primary) 10%, transparent);
+  --shadow-card-expanded: 0 12px 32px rgba(23, 28, 31, 0.1);
 
   border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
   background: color-mix(in oklab, var(--card) 96%, transparent);
@@ -242,6 +229,12 @@
 .dark .v2-card {
   --shadow-card:
     0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 2px 16px rgba(4, 12, 24, 0.55);
+  --shadow-card-hover:
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 4px 20px rgba(4, 12, 24, 0.5);
+  --shadow-card-featured:
+    0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent), 0 8px 24px rgba(4, 12, 24, 0.6);
+  --shadow-card-expanded:
+    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 16px 48px rgba(4, 12, 24, 0.65);
 }
 
 .v2-kicker,
@@ -963,30 +956,9 @@ html {
   color: var(--foreground);
 }
 
-@layer utilities {
-  .panel-glass {
-    --shadow-glass: none;
-
-    background-color: var(--panel);
-    border: 1px solid var(--panel-border);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: var(--shadow-glass);
-  }
-}
-
-.dark .panel-glass {
-  --shadow-glass:
-    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
-    inset 0 1px 0 color-mix(in oklab, var(--primary) 5%, transparent),
-    0 8px 40px rgba(4, 12, 24, 0.75);
-}
-
 /* Respect users who request reduced transparency — drop blurs and use the
    solid surface colour beneath them. Covers every backdrop-filter site. */
 @media (prefers-reduced-transparency: reduce) {
-  .v2-panel,
-  .panel-glass,
   .mobile-tab-bar,
   .desktop-tab-bar,
   .map-attribution-link,
@@ -1003,8 +975,7 @@ html {
   :root {
     --border: light-dark(rgba(15, 23, 42, 0.18), rgba(34, 211, 238, 0.22));
   }
-  .v2-card,
-  .v2-panel {
+  .v2-card {
     border-width: 1.5px;
   }
   .filter-chip {
@@ -1016,8 +987,7 @@ html {
   :root {
     --muted-foreground: light-dark(#94a3b8, #64748b);
   }
-  .v2-card,
-  .v2-panel {
+  .v2-card {
     border-color: transparent;
   }
 }

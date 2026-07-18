@@ -1753,7 +1753,7 @@ export function ShortlistDrawer({
                             data-state={isExpanded ? "expanded" : "collapsed"}
                             className={cn(
                               "v2-card ss-fade-in gap-0 rounded-lg py-0 transition-[border-color,box-shadow] cv-auto",
-                              isExpanded && "shadow-[0_12px_32px_rgba(23,28,31,0.10)]",
+                              isExpanded && "shadow-[var(--shadow-card-expanded)]",
                             )}
                           >
                             <CardHeader className="gap-0 px-0">
