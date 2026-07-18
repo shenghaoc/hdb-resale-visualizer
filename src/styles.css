@@ -88,7 +88,7 @@
   --font-mono: "SFMono-Regular", ui-monospace, monospace;
 
   /* ── Type scale (fixed rem, 1.125–1.2 ratio for product UI) ──────── */
-  --text-xs: 0.625rem;
+  --text-xs: 0.6875rem;
   --text-sm: 0.8125rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
@@ -251,7 +251,8 @@
 
 .dark .v2-chrome {
   box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 1px 2px rgba(4, 12, 24, 0.45);
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
+    0 1px 2px rgba(4, 12, 24, 0.45);
 }
 
 /* Workbench panels — drafting-table overlays on the map. */
@@ -264,7 +265,8 @@
 
 .dark .v2-panel {
   box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 1px 2px rgba(4, 12, 24, 0.45);
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent),
+    0 1px 2px rgba(4, 12, 24, 0.45);
 }
 
 .v2-kicker,
@@ -277,7 +279,7 @@
 }
 
 .v2-kicker {
-  font-size: 0.56rem;
+  font-size: var(--text-xs);
   letter-spacing: var(--tracking-label);
 }
 
@@ -317,15 +319,15 @@
   background: transparent;
 }
 
+/* Keep wizard content fully opaque during motion so transient frames retain
+   the same text and control contrast as the resting state. */
 @keyframes wizard-panel-in {
   from {
     transform: translateY(24px) scale(0.97);
-    opacity: 0;
   }
 
   to {
     transform: translateY(0) scale(1);
-    opacity: 1;
   }
 }
 
@@ -333,11 +335,9 @@
    --wizard-x to flip slide direction (+20px forward / -20px back). */
 @keyframes wizard-step-enter {
   from {
-    opacity: 0;
     transform: translateX(var(--wizard-x, 20px));
   }
   to {
-    opacity: 1;
     transform: translateX(0);
   }
 }
@@ -348,7 +348,7 @@
 
 .wizard-panel-in {
   animation: wizard-panel-in 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -793,10 +793,9 @@
    Screen size doesn't tell you input method. A laptop with touchscreen,
    a tablet with keyboard — detect capabilities, not pixels. */
 @media (pointer: coarse) {
-  /* Enforce 44×44 px minimum touch targets on coarse pointers. */
-  button:not([data-no-touch-enlarge]),
-  [role="button"]:not([data-no-touch-enlarge]),
-  a:not([data-no-touch-enlarge]) {
+  /* Enlarge component hit areas without distorting custom visual controls. */
+  [data-slot="button"],
+  [data-touch-target] {
     min-height: 2.75rem;
     min-width: 2.75rem;
   }
@@ -806,16 +805,6 @@
   /* Touch users can't hover — suppress hover-only effects. */
   .map-attribution-link:hover {
     text-decoration: none;
-  }
-}
-
-@media (pointer: fine) {
-  /* Fine pointers (mouse, trackpad) keep their natural sizing. */
-  button:not([data-no-touch-enlarge]),
-  [role="button"]:not([data-no-touch-enlarge]),
-  a:not([data-no-touch-enlarge]) {
-    min-height: revert;
-    min-width: revert;
   }
 }
 
@@ -851,7 +840,6 @@
     left: 2rem;
     right: 2rem;
     max-height: min(44rem, calc(100vh - 10rem));
-    top: 3.5rem;
   }
 
   .filter-chip {

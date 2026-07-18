@@ -5,6 +5,7 @@ import {
   loadShortlist,
   mergeImportedShortlistItems,
   mergeShortlists,
+  restoreShortlistItem,
   saveShortlist,
   toggleShortlistItem,
 } from "@/features/shortlist/shortlist";
@@ -377,6 +378,10 @@ export function useShortlist() {
     setItems((current) => toggleShortlistItem(current, addressKey));
   }, []);
 
+  const restore = useCallback((item: ShortlistItem, index?: number) => {
+    setItems((current) => restoreShortlistItem(current, item, index));
+  }, []);
+
   const update = useCallback((addressKey: string, patch: Partial<ShortlistItem>) => {
     setItems((current) =>
       current.map((item) => {
@@ -501,10 +506,11 @@ export function useShortlist() {
       items,
       isFull: items.length >= MAX_SHORTLIST_ITEMS,
       toggle,
+      restore,
       update,
       has,
       sync,
     }),
-    [items, toggle, update, has, sync],
+    [items, toggle, restore, update, has, sync],
   );
 }

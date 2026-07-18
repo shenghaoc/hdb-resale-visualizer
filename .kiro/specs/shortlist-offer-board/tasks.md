@@ -113,6 +113,12 @@
   enqueue.
   → `npm run typecheck` passes. (R4.3)
 
+- [x] **T5.3** Make shortlist removal recoverable without data loss:
+  preserve the complete removed item and its index, expose an explicit restore
+  operation through `useShortlist`, announce a five-second Undo action, and
+  test exact offer-board-field restoration.
+  → Focused shortlist tests and `npm run typecheck` pass. (R4.5, R4.6, R5.1)
+
 ## Phase 6 — Export, i18n, and share compatibility
 
 - [x] **T6.1** Update `buildShortlistCsvContent` in `src/lib/export.ts`

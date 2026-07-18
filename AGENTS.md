@@ -39,6 +39,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Repo Quality Scripts Refinement**](.kiro/specs/repo-quality-scripts-refinement/tasks.md) — Targeted Vitest scripts + a single pre-PR command, refining existing npm scripts (no parallel runner).
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
+- [**Analyst's Workbench Design System**](.kiro/specs/analyst-workbench-design-system/tasks.md) — Opaque workbench UI, tokenized typography, responsive controls, and exact shortlist removal recovery.
 
 **Completed:**
 

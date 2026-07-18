@@ -47,7 +47,7 @@ export function ComparableTransactionsList({
       >
         <span className="flex min-w-0 items-center gap-2">
           <span className="truncate">{t("askingCheck.comparablesTitle")}</span>
-          <Badge variant="outline" className="h-5 shrink-0 font-mono text-[var(--text-xs)]">
+          <Badge variant="outline" className="h-5 shrink-0 font-mono text-[length:var(--text-xs)]">
             {transactions.length}
           </Badge>
         </span>
@@ -95,7 +95,7 @@ export function ComparableTransactionsList({
                       </span>
                     )}
                     {showMissingIndicator && (
-                      <span className="font-normal text-[var(--text-xs)] italic text-muted-foreground/60">
+                      <span className="font-normal text-[length:var(--text-xs)] italic text-muted-foreground/60">
                         {t("check.noAdjustmentData")}
                       </span>
                     )}
@@ -115,7 +115,10 @@ export function ComparableTransactionsList({
                     )}
                   </span>
                 </div>
-                <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[var(--text-xs)]">
+                <Badge
+                  variant="secondary"
+                  className="h-5 shrink-0 font-mono text-[length:var(--text-xs)]"
+                >
                   {formatMonth(tx.month, locale)}
                 </Badge>
               </li>

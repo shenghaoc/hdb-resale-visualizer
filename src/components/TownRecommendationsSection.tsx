@@ -90,7 +90,7 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
                     </span>
                     <Badge
                       variant="outline"
-                      className="text-[var(--text-xs)] font-bold uppercase tracking-wider"
+                      className="text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                     >
                       {t("townRecommendations.townMedian")}
                     </Badge>

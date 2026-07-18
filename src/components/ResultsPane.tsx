@@ -229,7 +229,7 @@ function SortSelect({
       {disabledHint ? (
         <p
           id="results-sort-disabled-hint"
-          className="text-[var(--text-xs)] leading-snug text-muted-foreground"
+          className="text-[length:var(--text-xs)] leading-snug text-muted-foreground"
         >
           {disabledHint}
         </p>
@@ -331,7 +331,7 @@ const BlockCard = memo(function BlockCard({
           </div>
           <div className="flex shrink-0 items-start gap-2">
             <div className="text-right">
-              <strong className="block font-heading text-[var(--text-base)] font-extrabold leading-snug tracking-tight v2-tabular">
+              <strong className="block font-heading text-[length:var(--text-base)] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
@@ -360,7 +360,7 @@ const BlockCard = memo(function BlockCard({
                     }
                   />
                 ) : null}
-                <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                 </span>
               </div>
@@ -375,7 +375,7 @@ const BlockCard = memo(function BlockCard({
                     onToggleShortlist(block.addressKey);
                   }}
                   type="button"
-                  className="size-7 sm:size-9 shrink-0 rounded-none p-0 min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
+                  className="size-7 shrink-0 rounded-none p-0 sm:size-9"
                   aria-pressed={isSaved}
                   aria-label={t("results.save")}
                 >
@@ -391,7 +391,7 @@ const BlockCard = memo(function BlockCard({
           </div>
         </div>
 
-        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[var(--text-xs)] font-medium text-muted-foreground">
+        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[length:var(--text-xs)] font-medium text-muted-foreground">
           <span>{formatSqm(sqm, t, locale)}</span>
           {mrtDist != null && mrtWalkSeconds != null && (
             <span
@@ -490,11 +490,11 @@ const BlockCard = memo(function BlockCard({
               <>
                 <Badge
                   variant="outline"
-                  className="w-fit text-[var(--text-xs)] font-bold uppercase tracking-wider"
+                  className="w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                 >
                   {t(QUALITY_LABEL_KEYS[qualityTag])}
                 </Badge>
-                <span className="text-[var(--text-xs)] font-semibold text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-semibold text-muted-foreground">
                   {t(QUALITY_HINT_KEYS[qualityTag])}
                 </span>
               </>
@@ -503,7 +503,7 @@ const BlockCard = memo(function BlockCard({
           {affordVerdict && affordVerdict.status !== "unknown" ? (
             <span
               className={cn(
-                "mt-1 inline-flex items-center gap-1 rounded-none px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
+                "mt-1 inline-flex items-center gap-1 rounded-none px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase",
                 affordVerdict.status === "comfortable" && "bg-success/10 text-success",
                 affordVerdict.status === "stretch" && "bg-warning/10 text-warning",
                 affordVerdict.status === "over" && "bg-destructive/10 text-destructive",
@@ -1130,7 +1130,7 @@ export function ResultsPane({
             </CardTitle>
             {hasResultScope ? (
               <>
-                <Badge className="h-6 shrink-0 px-2 text-[var(--text-xs)] font-bold">
+                <Badge className="h-6 shrink-0 px-2 text-[length:var(--text-xs)] font-bold">
                   {t("results.shown", { count: blocks.length })}
                 </Badge>
                 {shareUrl ? (

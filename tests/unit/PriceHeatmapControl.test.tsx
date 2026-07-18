@@ -55,6 +55,16 @@ describe("PriceHeatmapControl — hasScope=true", () => {
     expect(screen.getByRole("switch")).not.toBeDisabled();
   });
 
+  it("separates the coarse-pointer hit area from the visual switch track", () => {
+    renderWithProviders(<PriceHeatmapControl {...baseProps} hasScope={true} />);
+    const toggle = screen.getByRole("switch");
+    const track = toggle.firstElementChild;
+
+    expect(toggle).toHaveAttribute("data-touch-target");
+    expect(toggle).toHaveClass("size-7");
+    expect(track).toHaveClass("h-4", "w-7", "rounded-full");
+  });
+
   it("sets aria-checked to true when isEnabled and hasScope", () => {
     renderWithProviders(<PriceHeatmapControl {...baseProps} isEnabled={true} hasScope={true} />);
     expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "true");

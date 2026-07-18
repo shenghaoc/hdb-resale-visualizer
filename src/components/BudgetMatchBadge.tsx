@@ -30,7 +30,7 @@ export function BudgetMatchBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded text-[var(--text-xs)] font-bold uppercase",
+        "inline-flex items-center gap-1 rounded text-[length:var(--text-xs)] font-bold uppercase",
         isCompact ? "px-0 py-0" : "px-1.5 py-0.5",
         signal.status === "within" && (isCompact ? "text-success" : "bg-success/10 text-success"),
         (signal.status === "above-max" || signal.status === "below-min") &&

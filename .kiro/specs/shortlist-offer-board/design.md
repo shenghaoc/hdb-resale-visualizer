@@ -243,14 +243,33 @@ view. Each expanded item card gains collapsible sections:
 All fields persist on change via the existing `onUpdate` callback, which
 writes to localStorage and enqueues a sync push.
 
-### 7. CSV Export
+### 7. Removal Recovery
+
+Removal recovery preserves the complete item rather than reconstructing a
+minimal item from its address:
+
+- `restoreShortlistItem` owns deterministic restoration: it rejects
+  duplicates, respects `MAX_SHORTLIST_ITEMS`, and inserts the original item at
+  its bounded previous index.
+- `useShortlist.restore` applies that helper through the existing state setter,
+  so local persistence and optional cloud sync observe the restored item.
+- `useShortlistRemovalUndo` owns the five-second timer and pending removal
+  state outside the already-large drawer component.
+- `ShortlistDrawer` passes the exact removed item and index to that hook and
+  exposes a live-status Undo action. It never routes Undo through the
+  add/remove toggle.
+
+This separation keeps persistence rules in the shortlist hook, transient UI
+state in a focused hook, and rendering in the drawer.
+
+### 8. CSV Export
 
 `buildShortlistCsvContent` in `src/lib/export.ts` includes the new
 fields as additional columns. Formula injection sanitization already
 covers all string fields. New numeric fields (asking price, fair range,
 COV) are exported as raw numbers.
 
-### 8. I18n
+### 9. I18n
 
 All new labels, placeholders, and empty-value strings are added to
 `src/lib/i18n/messages.ts` under the `shortlist.*` namespace,
@@ -282,17 +301,23 @@ status labels.
 4. **`tests/unit/ShortlistDrawer.test.tsx`** — Component rendering:
    - Comparison table renders correct column count
    - Comparison rows match item count
+   - Removing and undoing passes the exact item and original index to the
+     explicit restore callback without issuing a second remove
+
+5. **`tests/hooks/useShortlist.test.tsx`** — Restoration behavior:
+   - Restoring an item preserves every offer-board field and note
+   - Restoring an item returns it to its previous list position
 
 ### E2E Tests
 
-5. **`tests/e2e/mobile-regression.spec.ts`** — Mobile usability:
+6. **`tests/e2e/mobile-regression.spec.ts`** — Mobile usability:
    - Comparison view renders card layout (not table) on mobile viewport
    - Cards display expected count matching shortlisted items
    - View toggle between list and comparison modes works
 
 ### Boundary Tests
 
-6. **`tests/unit/check-boundaries.test.ts`** — Architecture:
+7. **`tests/unit/check-boundaries.test.ts`** — Architecture:
    - No runtime external API calls in `src/` or `functions/`
    - No geocoding or data ingestion in frontend code
 

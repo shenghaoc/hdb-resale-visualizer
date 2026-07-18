@@ -138,7 +138,7 @@ function TrajectoryBadge({
   const { direction, yoyDeltaPct, peakMonth, peakToCurrentPct } = trajectory;
 
   let badgeContent: React.ReactNode;
-  let className = "h-5 gap-1 text-[var(--text-xs)] font-extrabold px-1.5";
+  let className = "h-5 gap-1 text-[length:var(--text-xs)] font-extrabold px-1.5";
 
   if (yoyDeltaPct != null) {
     const abs = Math.abs(yoyDeltaPct).toFixed(1);
@@ -181,7 +181,7 @@ function TrajectoryBadge({
           {badgeContent}
         </Badge>
       )}
-      <span className="text-[var(--text-xs)] text-muted-foreground/70 font-medium">
+      <span className="text-[length:var(--text-xs)] text-muted-foreground/70 font-medium">
         {peakLabel}
       </span>
     </div>
@@ -207,7 +207,7 @@ function PercentileBadge({
         <span className="v2-field-label">{label}</span>
         <Badge
           variant={isGood ? "default" : isMid ? "secondary" : "outline"}
-          className="h-5 text-[var(--text-xs)] font-extrabold"
+          className="h-5 text-[length:var(--text-xs)] font-extrabold"
         >
           {rounded}%
         </Badge>
@@ -292,7 +292,7 @@ function AmenityCard({
                   </div>
                   <div className="flex shrink-0 items-center gap-1.5">
                     {distanceBand ? (
-                      <span className="rounded-none bg-primary/10 px-1.5 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-primary">
+                      <span className="rounded-none bg-primary/10 px-1.5 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider text-primary">
                         {t(`detail.schoolBand.${distanceBand}`)}
                       </span>
                     ) : null}
@@ -636,11 +636,11 @@ export function DetailDrawer({
                                 <>
                                   <Badge
                                     variant="outline"
-                                    className="mt-2 w-fit text-[var(--text-xs)] font-bold uppercase tracking-wider"
+                                    className="mt-2 w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                                   >
                                     {t(QUALITY_LABEL_KEYS[qualityTag])}
                                   </Badge>
-                                  <div className="mt-1 text-[var(--text-xs)] font-semibold text-muted-foreground">
+                                  <div className="mt-1 text-[length:var(--text-xs)] font-semibold text-muted-foreground">
                                     {t(QUALITY_HINT_KEYS[qualityTag])}
                                   </div>
                                 </>
@@ -734,7 +734,7 @@ export function DetailDrawer({
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.loanAmount")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -742,18 +742,18 @@ export function DetailDrawer({
                           </div>
                         </div>
                         <div>
-                          <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.monthlyRepayment")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
                             {formatCurrency(affordabilityVerdict.monthlyRepayment, locale)}
-                            <span className="text-[var(--text-xs)] font-normal text-muted-foreground">
+                            <span className="text-[length:var(--text-xs)] font-normal text-muted-foreground">
                               {t("unit.perMonth")}
                             </span>
                           </div>
                         </div>
                         <div>
-                          <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.downPayment")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -765,7 +765,7 @@ export function DetailDrawer({
                           </div>
                         </div>
                         <div>
-                          <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.fromCpf")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -773,7 +773,7 @@ export function DetailDrawer({
                           </div>
                         </div>
                         <div className="col-span-2">
-                          <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.cashRequired")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -781,7 +781,7 @@ export function DetailDrawer({
                           </div>
                         </div>
                       </div>
-                      <div className="mt-2 flex items-center gap-1.5 text-[var(--text-xs)] font-bold">
+                      <div className="mt-2 flex items-center gap-1.5 text-[length:var(--text-xs)] font-bold">
                         <span
                           className={cn(
                             "h-1.5 w-1.5 rounded-full",
@@ -797,7 +797,7 @@ export function DetailDrawer({
                         </span>
                         <span
                           className={cn(
-                            "ml-auto rounded-none px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
+                            "ml-auto rounded-none px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase",
                             affordabilityVerdict.status === "comfortable" &&
                               "bg-success/10 text-success",
                             affordabilityVerdict.status === "stretch" &&
@@ -839,7 +839,7 @@ export function DetailDrawer({
                         {t("detail.priceLadder")}
                       </h3>
                       <FlatTypePriceLadder entries={flatTypeLadder} />
-                      <p className="mt-1 text-[var(--text-xs)] text-muted-foreground">
+                      <p className="mt-1 text-[length:var(--text-xs)] text-muted-foreground">
                         {t("detail.priceLadderHint")}
                       </p>
                     </section>
@@ -861,7 +861,7 @@ export function DetailDrawer({
                               <Badge
                                 key={type}
                                 variant="outline"
-                                className="h-5 text-[var(--text-xs)] font-bold uppercase"
+                                className="h-5 text-[length:var(--text-xs)] font-bold uppercase"
                               >
                                 {localizeFlatType(type, locale)}
                               </Badge>
@@ -877,7 +877,7 @@ export function DetailDrawer({
                               <Badge
                                 key={model}
                                 variant="secondary"
-                                className="h-5 text-[var(--text-xs)] font-bold uppercase tracking-tight"
+                                className="h-5 text-[length:var(--text-xs)] font-bold uppercase tracking-tight"
                               >
                                 {model}
                               </Badge>
@@ -1115,7 +1115,7 @@ export function DetailDrawer({
                             key={key}
                             onClick={() => setTrendRange(key)}
                             className={cn(
-                              "rounded px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider transition-colors",
+                              "rounded px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider transition-colors",
                               trendRange === key
                                 ? "bg-primary text-primary-foreground"
                                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
@@ -1210,7 +1210,7 @@ export function DetailDrawer({
                       <CardHeader className="p-4">
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col gap-1">
-                            <CardDescription className="text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)]">
+                            <CardDescription className="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)]">
                               {t("detail.marketRank")}
                             </CardDescription>
                             <CardTitle className="text-xl font-bold tracking-tight">
@@ -1251,7 +1251,7 @@ export function DetailDrawer({
                         {recentTransactionOutliers.size > 0 && (
                           <Badge
                             variant="outline"
-                            className="h-5 gap-1 border-warning/40 bg-warning/10 text-[var(--text-xs)] font-bold text-warning"
+                            className="h-5 gap-1 border-warning/40 bg-warning/10 text-[length:var(--text-xs)] font-bold text-warning"
                           >
                             <AlertTriangle data-icon className="size-3" aria-hidden="true" />
                             {t("detail.outlierCount", { count: recentTransactionOutliers.size })}
@@ -1297,7 +1297,7 @@ export function DetailDrawer({
                                   {outlier?.direction === "high" && (
                                     <Badge
                                       variant="outline"
-                                      className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-warning"
+                                      className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-warning"
                                     >
                                       {t("detail.outlier.high")}
                                     </Badge>
@@ -1305,7 +1305,7 @@ export function DetailDrawer({
                                   {outlier?.direction === "low" && (
                                     <Badge
                                       variant="outline"
-                                      className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-primary"
+                                      className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-primary"
                                     >
                                       {t("detail.outlier.low")}
                                     </Badge>
@@ -1316,11 +1316,11 @@ export function DetailDrawer({
                                 <div className="flex flex-col items-end gap-1">
                                   <Badge
                                     variant="secondary"
-                                    className="h-5 text-[var(--text-xs)] font-mono tracking-tighter"
+                                    className="h-5 text-[length:var(--text-xs)] font-mono tracking-tighter"
                                   >
                                     {formatMonth(tx.month, locale)}
                                   </Badge>
-                                  <span className="text-[var(--text-xs)] font-medium text-muted-foreground/60 tracking-tight">
+                                  <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground/60 tracking-tight">
                                     {t("unit.sqm", { value: tx.floorAreaSqm })}
                                   </span>
                                 </div>
@@ -1372,7 +1372,10 @@ export function DetailDrawer({
                   ) : (
                     <div className="flex flex-col gap-3 py-12">
                       {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-none bg-muted/40" />
+                        <div
+                          key={i}
+                          className="h-20 w-full animate-pulse rounded-none bg-muted/40"
+                        />
                       ))}
                     </div>
                   )}
@@ -1465,14 +1468,14 @@ function SimilarBlockCard({
         <div className="min-w-0 flex-1">
           <div className="truncate text-sm font-bold leading-tight">{address}</div>
           <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-            <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[0.1em] text-muted-foreground/70">
+            <span className="text-[length:var(--text-xs)] font-extrabold uppercase tracking-[0.1em] text-muted-foreground/70">
               {localizeTownName(block.town, locale)}
             </span>
             {block.flatTypes.slice(0, 2).map((ft) => (
               <Badge
                 key={ft}
                 variant="outline"
-                className="h-4 px-1 text-[var(--text-xs)] font-bold uppercase"
+                className="h-4 px-1 text-[length:var(--text-xs)] font-bold uppercase"
               >
                 {localizeFlatType(ft, locale)}
               </Badge>
@@ -1485,7 +1488,7 @@ function SimilarBlockCard({
           </div>
           {block.nearestMrt && (
             <div
-              className="mt-0.5 text-[var(--text-xs)] text-muted-foreground/70 tabular-nums"
+              className="mt-0.5 text-[length:var(--text-xs)] text-muted-foreground/70 tabular-nums"
               title={formatMeters(block.nearestMrt.distanceMeters, t, locale)}
               aria-label={`${formatMinutesWalk(block.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(block.nearestMrt.distanceMeters, t, locale)})`}
             >
@@ -1523,7 +1526,7 @@ function StatPill({
       >
         {value}
       </div>
-      {sub && <div className="text-[var(--text-xs)] text-muted-foreground">{sub}</div>}
+      {sub && <div className="text-[length:var(--text-xs)] text-muted-foreground">{sub}</div>}
     </div>
   );
 }

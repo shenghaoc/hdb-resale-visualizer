@@ -377,7 +377,7 @@ function DeltaCell({
         {formatSignedCurrency(amount)}
       </div>
       <div className={cn("text-xs font-bold tabular-nums", colorClass)}>{formatSignedPct(pct)}</div>
-      <div className="mt-1 truncate text-[var(--text-xs)] text-muted-foreground">
+      <div className="mt-1 truncate text-[length:var(--text-xs)] text-muted-foreground">
         {referenceLabel}: {formatCompactCurrency(reference, locale)}
       </div>
     </div>

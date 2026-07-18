@@ -165,7 +165,7 @@ export function AppPanelShell({
               id="mobile-panel"
               className={cn(
                 "v2-panel pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden overscroll-contain transition-[transform,opacity]",
-                activeFilterChipCount > 0 ? "top-[4.5rem]" : "top-0",
+                activeFilterChipCount > 0 ? "top-[4.5rem]" : "top-0 md:top-[3.5rem]",
               )}
             >
               <div

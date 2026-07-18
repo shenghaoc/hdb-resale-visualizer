@@ -291,7 +291,7 @@ export function SearchCombobox({
                       onClick={() => selectSuggestion(suggestion)}
                     >
                       <span>{suggestion.label}</span>
-                      <span className="text-[var(--text-xs)] font-semibold uppercase tracking-wide text-muted-foreground">
+                      <span className="text-[length:var(--text-xs)] font-semibold uppercase tracking-wide text-muted-foreground">
                         {groupLabel(t, suggestion.group)}
                       </span>
                     </button>

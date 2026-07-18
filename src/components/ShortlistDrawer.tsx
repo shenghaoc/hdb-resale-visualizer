@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useId, useMemo, useState } from "react";
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -45,6 +45,7 @@ import {
   formatRemainingLease,
 } from "@/shared/lib/format";
 import { rankShortlistRows, type CompareMode } from "@/features/shortlist/shortlist-ranking";
+import { useShortlistRemovalUndo } from "@/features/shortlist/useShortlistRemovalUndo";
 import {
   ninetyNineCoUrl,
   propertyGuruUrl,
@@ -137,6 +138,7 @@ type ShortlistDrawerProps = {
   referenceMonth?: string;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
+  onRestore: (item: ShortlistItem, index: number) => void;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
   onSelectAddress: (addressKey: string) => void;
   sync?: ShortlistSync;
@@ -316,7 +318,7 @@ function ShortlistComparisonTable({
                       {row.address}
                     </button>
                     {row.flatTypeLabel ? (
-                      <span className="block text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                      <span className="block text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                         {row.flatTypeLabel}
                       </span>
                     ) : null}
@@ -335,12 +337,12 @@ function ShortlistComparisonTable({
                       t={t}
                       locale={locale}
                       variant="compact"
-                      className="block text-[var(--text-xs)] font-bold tabular-nums"
+                      className="block text-[length:var(--text-xs)] font-bold tabular-nums"
                     />
                     {gap ? (
                       <span
                         className={cn(
-                          "block text-[var(--text-xs)] font-bold tabular-nums",
+                          "block text-[length:var(--text-xs)] font-bold tabular-nums",
                           gap.tone === "below" && "text-success",
                           gap.tone === "above" && "text-destructive",
                           gap.tone === "match" && "text-primary",
@@ -360,14 +362,14 @@ function ShortlistComparisonTable({
                       ? formatCompactCurrency(row.askingPrice, locale)
                       : t("shortlist.compare.cellEmpty")}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-right text-[var(--text-xs)] leading-relaxed">
+                  <TableCell className="px-2 py-2 text-right text-[length:var(--text-xs)] leading-relaxed">
                     {formatFairRange(row)}
                   </TableCell>
                   <TableCell className="px-2 py-2 text-right tabular-nums">
                     {formatDelta(row.deltaVsFairMedian)}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-[var(--text-xs)]">
-                    <span className="inline-block rounded-none border border-border/40 px-2 py-0.5 text-[var(--text-xs)] font-bold">
+                  <TableCell className="px-2 py-2 text-[length:var(--text-xs)]">
+                    <span className="inline-block rounded-none border border-border/40 px-2 py-0.5 text-[length:var(--text-xs)] font-bold">
                       {t(row.confidenceLevelLabel)}
                     </span>
                   </TableCell>
@@ -381,7 +383,7 @@ function ShortlistComparisonTable({
                           {row.nearestMrt.stationName}
                         </span>
                         <span
-                          className="block text-[var(--text-xs)] font-bold tabular-nums text-muted-foreground"
+                          className="block text-[length:var(--text-xs)] font-bold tabular-nums text-muted-foreground"
                           title={formatMeters(row.nearestMrt.distanceMeters, t, locale)}
                           aria-label={`${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`}
                         >
@@ -394,10 +396,10 @@ function ShortlistComparisonTable({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-[var(--text-xs)]">
+                  <TableCell className="px-2 py-2 text-[length:var(--text-xs)]">
                     {formatDecision(row)}
                   </TableCell>
-                  <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground text-[var(--text-xs)]">
+                  <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground text-[length:var(--text-xs)]">
                     {formatCaveats(row)}
                   </TableCell>
                   <TableCell className="px-2 py-2 text-right tabular-nums">
@@ -437,11 +439,11 @@ function ShortlistComparisonTable({
                   {row.address}
                 </button>
                 {row.flatTypeLabel ? (
-                  <span className="block text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                  <span className="block text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                     {row.flatTypeLabel}
                   </span>
                 ) : null}
-                <div className="mt-1 flex flex-wrap gap-1.5 text-[var(--text-xs)]">
+                <div className="mt-1 flex flex-wrap gap-1.5 text-[length:var(--text-xs)]">
                   <Badge variant="outline" className="font-bold">
                     {t("shortlist.compare.col.medianPrice")}:{" "}
                     {formatCompactCurrency(row.medianPrice, locale)}
@@ -455,7 +457,7 @@ function ShortlistComparisonTable({
                 </div>
               </div>
             </div>
-            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[var(--text-xs)]">
+            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[length:var(--text-xs)]">
               <span className="text-muted-foreground">
                 {t("shortlist.compare.col.askingPrice")}:{" "}
                 <strong className="text-foreground">
@@ -515,11 +517,11 @@ function ShortlistComparisonTable({
                 </strong>
               </span>
             </div>
-            <div className="mt-1.5 text-[var(--text-xs)] text-muted-foreground">
+            <div className="mt-1.5 text-[length:var(--text-xs)] text-muted-foreground">
               {formatCaveats(row)}
             </div>
             {row.buyerNotes.trim().length > 0 ? (
-              <div className="mt-1.5 text-[var(--text-xs)] text-muted-foreground">
+              <div className="mt-1.5 text-[length:var(--text-xs)] text-muted-foreground">
                 <span className="font-semibold">{t("shortlist.compare.col.notes")}:</span>{" "}
                 {row.buyerNotes}
               </div>
@@ -628,7 +630,7 @@ function PercentileBar({
           style={{ width: `${Math.max(0, Math.min(100, rounded))}%` }}
         />
       </div>
-      <span className="w-9 text-right text-[var(--text-xs)] font-bold text-muted-foreground v2-tabular">
+      <span className="w-9 text-right text-[length:var(--text-xs)] font-bold text-muted-foreground v2-tabular">
         {rounded}%
       </span>
     </div>
@@ -652,11 +654,11 @@ function AmenityTile({
         <Icon data-icon className="size-3.5 text-primary" aria-hidden="true" />
         <strong className="text-xs font-extrabold tracking-tight">{count}</strong>
       </div>
-      <div className="mt-1 text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+      <div className="mt-1 text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
         {label}
       </div>
       {note ? (
-        <div className="mt-1 line-clamp-1 text-[var(--text-xs)] italic text-muted-foreground">
+        <div className="mt-1 line-clamp-1 text-[length:var(--text-xs)] italic text-muted-foreground">
           {note}
         </div>
       ) : null}
@@ -1045,6 +1047,7 @@ export function ShortlistDrawer({
   referenceMonth,
   onToggleOpen,
   onRemove,
+  onRestore,
   onUpdate,
   onSelectAddress,
   sync,
@@ -1060,63 +1063,22 @@ export function ShortlistDrawer({
   const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
   const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const sortLabelId = useId();
-
-  // Undo state for shortlist removal
-  const [pendingUndo, setPendingUndo] = useState<{
-    addressKey: string;
-    label: string;
-  } | null>(null);
-  const undoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Clean up undo timer on unmount
-  useEffect(() => {
-    return () => {
-      if (undoTimerRef.current) {
-        clearTimeout(undoTimerRef.current);
-      }
-    };
-  }, []);
+  const { pendingRemoval, remove, undo } = useShortlistRemovalUndo({ onRemove, onRestore });
 
   const handleRemove = useCallback(
     (addressKey: string) => {
-      // Find the item being removed for its label
-      const row = rows.find((r) => r.item.addressKey === addressKey);
-      if (!row) {
+      const index = rows.findIndex((row) => row.item.addressKey === addressKey);
+      const row = rows[index];
+      if (row === undefined) {
         onRemove(addressKey);
         return;
       }
 
-      // Clear any previous pending undo
-      if (undoTimerRef.current) {
-        clearTimeout(undoTimerRef.current);
-      }
-
-      // Perform the removal immediately
-      onRemove(addressKey);
-
-      // Set up undo
       const label = `${row.block.block} ${row.block.streetName}`;
-      setPendingUndo({ addressKey, label });
-
-      // Auto-dismiss after 5 seconds
-      undoTimerRef.current = setTimeout(() => {
-        setPendingUndo(null);
-        undoTimerRef.current = null;
-      }, 5000);
+      remove({ item: row.item, index, label });
     },
-    [onRemove, rows],
+    [onRemove, remove, rows],
   );
-
-  const handleUndo = useCallback(() => {
-    if (!pendingUndo) return;
-    if (undoTimerRef.current) {
-      clearTimeout(undoTimerRef.current);
-      undoTimerRef.current = null;
-    }
-    // Re-add the item (toggle back)
-    onRemove(pendingUndo.addressKey);
-    setPendingUndo(null);
-  }, [onRemove, pendingUndo]);
 
   if (isOpen !== prevIsOpen) {
     setPrevIsOpen(isOpen);
@@ -1438,7 +1400,7 @@ export function ShortlistDrawer({
               <div className="v2-kicker">{t("shortlist.savedProperties")}</div>
               <CardTitle className="mt-1 flex min-w-0 items-center gap-2 text-lg font-extrabold normal-case leading-none tracking-tight">
                 <span className="truncate">{t("shortlist.title")}</span>
-                <Badge className="h-5 shrink-0 px-1.5 text-[var(--text-xs)] font-extrabold">
+                <Badge className="h-5 shrink-0 px-1.5 text-[length:var(--text-xs)] font-extrabold">
                   {rows.length}
                 </Badge>
               </CardTitle>
@@ -1802,9 +1764,9 @@ export function ShortlistDrawer({
                                         t={t}
                                         locale={locale}
                                         variant="compact"
-                                        className="block text-[var(--text-xs)] font-bold"
+                                        className="block text-[length:var(--text-xs)] font-bold"
                                       />
-                                      <span className="block text-[var(--text-xs)] font-semibold text-muted-foreground">
+                                      <span className="block text-[length:var(--text-xs)] font-semibold text-muted-foreground">
                                         {row.detailSummary?.pricePerSqftMedian
                                           ? t("unit.psf", {
                                               value: formatNumber(
@@ -1852,11 +1814,11 @@ export function ShortlistDrawer({
                                         <>
                                           <Badge
                                             variant="outline"
-                                            className="w-fit text-[var(--text-xs)] font-bold uppercase tracking-wider"
+                                            className="w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                                           >
                                             {t(QUALITY_LABEL_KEYS[qualityTag])}
                                           </Badge>
-                                          <span className="text-[var(--text-xs)] font-semibold uppercase tracking-wider">
+                                          <span className="text-[length:var(--text-xs)] font-semibold uppercase tracking-wider">
                                             {t(QUALITY_HINT_KEYS[qualityTag])}
                                           </span>
                                         </>
@@ -1864,7 +1826,7 @@ export function ShortlistDrawer({
                                     })()}
                                     <span
                                       className={cn(
-                                        "ml-auto text-right text-[var(--text-xs)] font-extrabold uppercase tracking-wider",
+                                        "ml-auto text-right text-[length:var(--text-xs)] font-extrabold uppercase tracking-wider",
                                         gapInfo?.tone === "positive" && "text-success",
                                         gapInfo?.tone === "negative" && "text-destructive",
                                         gapInfo?.tone === "match" && "text-primary",
@@ -1886,6 +1848,9 @@ export function ShortlistDrawer({
                                       size="icon-xs"
                                       variant="ghost"
                                       onClick={() => handleRemove(row.item.addressKey)}
+                                      aria-label={t("shortlist.removeAddress", {
+                                        address: `${row.block.block} ${row.block.streetName}`,
+                                      })}
                                     >
                                       <X
                                         data-icon="inline-start"
@@ -2040,7 +2005,7 @@ export function ShortlistDrawer({
                                           </span>
                                           <Badge
                                             variant={idx === 0 ? "default" : "secondary"}
-                                            className="h-5 shrink-0 text-[var(--text-xs)] font-extrabold v2-tabular"
+                                            className="h-5 shrink-0 text-[length:var(--text-xs)] font-extrabold v2-tabular"
                                             title={formatMeters(mrt.distanceMeters, t, locale)}
                                             aria-label={`${formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)} (${formatMeters(mrt.distanceMeters, t, locale)})`}
                                           >
@@ -2160,18 +2125,22 @@ export function ShortlistDrawer({
           </CardContent>
         ) : null}
       </Card>
-      {pendingUndo ? (
-        <div className="shrink-0 border-t border-border/40 bg-background px-3 py-2.5 sm:px-4">
+      {pendingRemoval ? (
+        <div
+          className="shrink-0 border-t border-border/40 bg-background px-3 py-2.5 sm:px-4"
+          role="status"
+          aria-live="polite"
+        >
           <div className="flex items-center justify-between gap-2">
             <span className="truncate text-xs text-muted-foreground">
-              {t("shortlist.removed")}: {pendingUndo.label}
+              {t("shortlist.removed")}: {pendingRemoval.label}
             </span>
             <Button
               type="button"
               variant="ghost"
               size="xs"
               className="shrink-0 rounded-none text-xs font-semibold text-primary hover:text-primary/80"
-              onClick={handleUndo}
+              onClick={undo}
             >
               {t("shortlist.undo")}
             </Button>

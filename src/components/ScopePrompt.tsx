@@ -82,7 +82,7 @@ export function ScopePrompt({
               type="button"
               size="xs"
               variant="outline"
-              className="h-8 rounded-none px-2.5 text-[var(--text-xs)] font-extrabold uppercase tracking-wider"
+              className="h-8 rounded-none px-2.5 text-[length:var(--text-xs)] font-extrabold uppercase tracking-wider"
               onClick={onCheckListing}
             >
               <Scale data-icon className="size-3.5" aria-hidden="true" />

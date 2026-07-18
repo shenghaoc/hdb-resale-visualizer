@@ -210,13 +210,13 @@ export function ComparableEvidenceTable({
                 ariaSortValue={ariaSortValue("month")}
                 onSort={handleSort}
               />
-              <TableHead className="text-[var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.location")}
               </TableHead>
-              <TableHead className="text-[var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.flatType")}
               </TableHead>
-              <TableHead className="text-[var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.storey")}
               </TableHead>
               <SortableHead
@@ -227,7 +227,7 @@ export function ComparableEvidenceTable({
                 ariaSortValue={ariaSortValue("floorAreaSqm")}
                 onSort={handleSort}
               />
-              <TableHead className="text-[var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.lease")}
               </TableHead>
               <SortableHead
@@ -249,7 +249,7 @@ export function ComparableEvidenceTable({
                 align="right"
               />
               {hasAdjustedPrice && (
-                <TableHead className="text-right text-[var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
+                <TableHead className="text-right text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                   {t("evidence.col.adjPrice")}
                 </TableHead>
               )}
@@ -261,7 +261,7 @@ export function ComparableEvidenceTable({
                 ariaSortValue={ariaSortValue("similarity")}
                 onSort={handleSort}
               />
-              <TableHead className="text-[var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.matchReasons")}
               </TableHead>
             </TableRow>
@@ -323,7 +323,7 @@ export function ComparableEvidenceTable({
               key={key}
               type="button"
               className={cn(
-                "shrink-0 rounded-none px-2.5 py-1 text-[var(--text-xs)] font-semibold uppercase tracking-wider transition-colors",
+                "shrink-0 rounded-none px-2.5 py-1 text-[length:var(--text-xs)] font-semibold uppercase tracking-wider transition-colors",
                 key === sortKey
                   ? "bg-primary/15 text-primary"
                   : "bg-muted/20 text-muted-foreground hover:bg-muted/40",
@@ -348,7 +348,7 @@ export function ComparableEvidenceTable({
                   {formatCompactCurrency(tx.resalePrice, locale)}
                 </span>
                 {hasAdjustedPrice && tx.rawResalePrice != null && (
-                  <span className="mt-0.5 block text-[var(--text-xs)] tabular-nums text-muted-foreground">
+                  <span className="mt-0.5 block text-[length:var(--text-xs)] tabular-nums text-muted-foreground">
                     {t("evidence.col.adjPrice")}: {formatCompactCurrency(tx.rawResalePrice, locale)}
                   </span>
                 )}
@@ -368,7 +368,10 @@ export function ComparableEvidenceTable({
                 ` · ${t("evidence.leasePrefix")}${tx.leaseCommenceDate}`}
             </div>
             <div className="mt-1 flex items-center justify-between gap-2">
-              <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[var(--text-xs)]">
+              <Badge
+                variant="secondary"
+                className="h-5 shrink-0 font-mono text-[length:var(--text-xs)]"
+              >
                 {formatMonth(tx.month, locale)}
               </Badge>
               <SimilarityBar similarity={tx.similarity} />
@@ -418,7 +421,7 @@ function SortableHead({
       <button
         type="button"
         className={cn(
-          "inline-flex items-center gap-1 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] transition-colors hover:text-foreground",
+          "inline-flex items-center gap-1 text-[length:var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] transition-colors hover:text-foreground",
           isActive ? "text-foreground" : "text-muted-foreground",
         )}
         onClick={() => onSort(sortKey)}
@@ -443,7 +446,7 @@ function SimilarityBar({ similarity }: { similarity: number }) {
       <div className="h-1 w-12 rounded-full bg-muted/40">
         <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
       </div>
-      <span className="text-[var(--text-xs)] font-mono tabular-nums text-muted-foreground">
+      <span className="text-[length:var(--text-xs)] font-mono tabular-nums text-muted-foreground">
         {pct}%
       </span>
     </div>
@@ -460,7 +463,7 @@ function MatchReasonBadges({ reasons }: { reasons: string[] }) {
         <Badge
           key={reason}
           variant="outline"
-          className="h-4 border border-border/40 px-1 text-[var(--text-xs)] font-medium normal-case tracking-normal"
+          className="h-4 border border-border/40 px-1 text-[length:var(--text-xs)] font-medium normal-case tracking-normal"
         >
           {reason}
         </Badge>

@@ -64,11 +64,11 @@ const YOY_FLAT_THRESHOLD_PCT = 0.05;
 
 const TONE_BADGE_CLASS: Record<DeltaTone, string> = {
   better:
-    "rounded-none bg-success/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-success",
+    "rounded-none bg-success/10 px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider text-success",
   worse:
-    "rounded-none bg-destructive/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-destructive",
+    "rounded-none bg-destructive/10 px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider text-destructive",
   neutral:
-    "rounded-none bg-warning/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-warning",
+    "rounded-none bg-warning/10 px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider text-warning",
 };
 
 function buildMetricRows(t: Translator, locale: Locale): MetricRow[] {
@@ -151,7 +151,7 @@ function formatSignedCompactCurrency(value: number, locale: Locale): string {
 function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
   if (pct === null) {
     return (
-      <span className="inline-flex items-center gap-1 text-[var(--text-xs)] font-semibold text-muted-foreground">
+      <span className="inline-flex items-center gap-1 text-[length:var(--text-xs)] font-semibold text-muted-foreground">
         <Minus className="size-3" aria-hidden="true" />
         {label}
       </span>
@@ -165,7 +165,7 @@ function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 text-[var(--text-xs)] font-semibold v2-tabular",
+        "inline-flex items-center gap-1 text-[length:var(--text-xs)] font-semibold v2-tabular",
         color,
       )}
     >
@@ -240,10 +240,10 @@ export function TownCompareSection({
     >
       <header className="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="flex min-w-0 flex-col gap-0.5">
-          <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[var(--text-base)]">
+          <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[length:var(--text-base)]">
             {t("townCompare.title")}
           </h2>
-          <p className="text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+          <p className="text-[length:var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             {formatMonth(monthRange.start, locale)} – {formatMonth(monthRange.end, locale)}
           </p>
         </div>
@@ -312,14 +312,14 @@ export function TownCompareSection({
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-primary")}
-              className="flex-1 truncate rounded-none px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex-1 truncate rounded-none px-3 py-1 text-center text-[length:var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(primaryTown, locale)}
             </button>
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-secondary")}
-              className="flex-1 truncate rounded-none px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex-1 truncate rounded-none px-3 py-1 text-center text-[length:var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(compareTown, locale)}
             </button>
@@ -383,7 +383,7 @@ function CompareColumn({
       className="min-w-0 rounded-none border border-border/30 bg-background"
     >
       <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background px-2.5 py-2 md:top-0">
-        <span className="truncate font-heading text-[var(--text-sm)] font-extrabold uppercase tracking-wider">
+        <span className="truncate font-heading text-[length:var(--text-sm)] font-extrabold uppercase tracking-wider">
           {localizeTownName(townName, locale)}
         </span>
         <YoyArrow pct={snap.yoyMedianPricePct} label={t("townCompare.yoyUnavailable")} />
@@ -402,7 +402,7 @@ function CompareColumn({
             >
               <span className="v2-field-label">{t(metric.labelKey)}</span>
               <div className="ml-auto flex items-baseline gap-1.5">
-                <span className="v2-tabular text-[var(--text-sm)] font-extrabold">
+                <span className="v2-tabular text-[length:var(--text-sm)] font-extrabold">
                   {valueLabel}
                 </span>
                 {delta ? (

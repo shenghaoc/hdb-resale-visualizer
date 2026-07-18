@@ -82,15 +82,15 @@ export function TownProfileSection({
       className="mb-4 border border-border/35 bg-muted/35 p-3 sm:p-3.5"
     >
       <header className="mb-3 flex flex-wrap items-end gap-x-3 gap-y-1">
-        <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[var(--text-base)]">
+        <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[length:var(--text-base)]">
           {localizeTownName(townName, locale)}
         </h2>
-        <p className="text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+        <p className="text-[length:var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
           {formatMonth(monthRange.start, locale)} – {formatMonth(monthRange.end, locale)}
         </p>
       </header>
 
-      <p className="mb-3 text-[var(--text-xs)] leading-relaxed text-muted-foreground">
+      <p className="mb-3 text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
         {t("townProfile.factualNote")}
       </p>
 
@@ -162,7 +162,7 @@ export function TownProfileSection({
               <span className="font-semibold text-muted-foreground">
                 {t("townProfile.typicalSqm")}
               </span>
-              <span className="max-w-[16rem] text-right text-[var(--text-xs)] font-medium leading-snug">
+              <span className="max-w-[16rem] text-right text-[length:var(--text-xs)] font-medium leading-snug">
                 <span className="v2-tabular font-extrabold text-foreground">
                   {weightedLatestSqm === null
                     ? "—"
@@ -190,7 +190,7 @@ export function TownProfileSection({
               />
             ))}
           </div>
-          <ul className="mt-1.5 grid gap-x-4 gap-y-0.5 text-[var(--text-xs)] sm:grid-cols-3">
+          <ul className="mt-1.5 grid gap-x-4 gap-y-0.5 text-[length:var(--text-xs)] sm:grid-cols-3">
             {leaseBuckets.map((bucket) => (
               <li key={bucket.decadeStart} className="flex justify-between gap-2 font-medium">
                 <span className="text-muted-foreground">{bucket.decadeLabel}</span>
@@ -224,7 +224,7 @@ export function TownProfileSection({
           {belowMedian.blocks.length > 0 ? (
             <div className="min-w-0">
               <p className="mb-1 v2-field-label">{t("townProfile.valueBlocks")}</p>
-              <p className="mb-1.5 text-[var(--text-xs)] leading-snug text-muted-foreground">
+              <p className="mb-1.5 text-[length:var(--text-xs)] leading-snug text-muted-foreground">
                 {t("townProfile.townMedianMeta", {
                   median:
                     belowMedian.townMedian === null

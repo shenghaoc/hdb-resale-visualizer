@@ -102,7 +102,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
 
       <dl className="mt-2 grid grid-cols-2 gap-2">
         <div>
-          <dt className="text-[var(--text-xs)] font-medium text-muted-foreground">
+          <dt className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
             {t("leaseFinancing.remainingNow")}
           </dt>
           <dd className="font-heading text-sm font-extrabold tabular-nums">
@@ -111,7 +111,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         </div>
         {assessment.requiredLeaseYears !== null ? (
           <div>
-            <dt className="text-[var(--text-xs)] font-medium text-muted-foreground">
+            <dt className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
               {t("leaseFinancing.requiredTo95")}
             </dt>
             <dd className="font-heading text-sm font-extrabold tabular-nums">
@@ -121,13 +121,13 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         ) : null}
         {assessment.loanTenureYears !== null && assessment.loanTenureYears > 0 ? (
           <div className="col-span-2">
-            <dt className="text-[var(--text-xs)] font-medium text-muted-foreground">
+            <dt className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
               {t("leaseFinancing.loanTenure")}
             </dt>
             <dd className="font-heading text-sm font-extrabold tabular-nums">
               {t("unit.years", { value: assessment.loanTenureYears })}
               {assessment.tenureLimitedBy !== null ? (
-                <span className="ml-1 text-[var(--text-xs)] font-medium text-muted-foreground">
+                <span className="ml-1 text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {assessment.tenureLimitedBy === "lease"
                     ? t("leaseFinancing.loanTenureLeaseCapped")
                     : t("leaseFinancing.loanTenureAgeCapped")}
@@ -143,7 +143,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         <span>{decayText}</span>
       </div>
 
-      <p className="mt-2 text-[var(--text-xs)] leading-snug text-muted-foreground">
+      <p className="mt-2 text-[length:var(--text-xs)] leading-snug text-muted-foreground">
         {t("leaseFinancing.disclaimer")}{" "}
         <a
           href="https://www.cpf.gov.sg/member/home-ownership"

@@ -47,10 +47,7 @@ export function PriceHeatmapControl({
 
   return (
     <div
-      className={cn(
-        "v2-chrome pointer-events-auto flex flex-col gap-2 p-2",
-        className,
-      )}
+      className={cn("v2-chrome pointer-events-auto flex flex-col gap-2 p-2", className)}
       style={style}
     >
       {/* Header row: icon + label + toggle */}
@@ -62,7 +59,7 @@ export function PriceHeatmapControl({
             isEnabled ? "text-primary" : "text-muted-foreground",
           )}
         />
-        <p className="text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground leading-none flex-1">
+        <p className="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground leading-none flex-1">
           {t("heatmap.label")}
         </p>
 
@@ -71,26 +68,33 @@ export function PriceHeatmapControl({
             <button
               type="button"
               role="switch"
+              data-touch-target
               aria-checked={isEnabled && hasScope}
               aria-label={t("heatmap.label")}
               id={toggleId}
               disabled={!hasScope}
               onClick={onToggle}
               className={cn(
-                "relative h-4 w-7 shrink-0 rounded-full transition-[background-color] duration-300",
+                "flex size-7 shrink-0 items-center justify-center bg-transparent",
                 !hasScope && "cursor-not-allowed opacity-50",
                 hasScope &&
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-                isEnabled && hasScope ? "bg-primary" : "bg-muted-foreground/30",
               )}
             >
               <span
                 className={cn(
-                  "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
-                  isEnabled && hasScope ? "translate-x-3" : "translate-x-0",
+                  "relative h-4 w-7 rounded-full transition-[background-color] duration-300",
+                  isEnabled && hasScope ? "bg-primary" : "bg-muted-foreground/30",
                 )}
                 aria-hidden="true"
-              />
+              >
+                <span
+                  className={cn(
+                    "absolute left-[2px] top-[2px] size-3 rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
+                    isEnabled && hasScope ? "translate-x-3" : "translate-x-0",
+                  )}
+                />
+              </span>
             </button>
           </TooltipTrigger>
           <TooltipContent>{toggleHint}</TooltipContent>
@@ -108,6 +112,7 @@ export function PriceHeatmapControl({
             <button
               type="button"
               role="radio"
+              data-touch-target
               aria-checked={mode === "price"}
               tabIndex={mode === "price" ? 0 : -1}
               onClick={() => onModeChange("price")}
@@ -115,7 +120,7 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
               }}
               className={cn(
-                "flex-1 rounded-none py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "price"
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -126,6 +131,7 @@ export function PriceHeatmapControl({
             <button
               type="button"
               role="radio"
+              data-touch-target
               aria-checked={mode === "perSqm"}
               tabIndex={mode === "perSqm" ? 0 : -1}
               onClick={() => onModeChange("perSqm")}
@@ -133,7 +139,7 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
               }}
               className={cn(
-                "flex-1 rounded-none py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "perSqm"
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -145,7 +151,7 @@ export function PriceHeatmapControl({
           <div className="flex items-center gap-1.5">
             <label
               htmlFor={sliderId}
-              className="text-[0.5rem] font-medium uppercase tracking-wider text-muted-foreground leading-none whitespace-nowrap"
+              className="whitespace-nowrap text-[length:var(--text-xs)] font-medium uppercase leading-none tracking-wider text-muted-foreground"
             >
               {t("heatmap.opacity")}
             </label>

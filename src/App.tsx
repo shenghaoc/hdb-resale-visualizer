@@ -467,6 +467,7 @@ function App() {
           filters={filters}
           onSelectAddress={handleSelectAddress}
           onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onRestore={shortlist.restore}
           onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
           onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
           rows={shortlistRows}

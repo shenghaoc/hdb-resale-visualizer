@@ -767,7 +767,7 @@ export function ListingCheckPanel({
           <div className="flex-1">
             <h3 className="text-sm font-bold tracking-tight">{t("check.primaryAction")}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{t("check.valueStatement")}</p>
-            <p className="mt-1 text-[var(--text-xs)] font-medium text-success">
+            <p className="mt-1 text-[length:var(--text-xs)] font-medium text-success">
               {t("check.trustStatement")}
             </p>
           </div>
@@ -1048,7 +1048,7 @@ export function ListingCheckPanel({
                   <TooltipTrigger asChild>
                     <Badge
                       variant={confidenceBadgeVariant(result.confidence.level)}
-                      className="h-5 w-fit font-mono text-[var(--text-xs)]"
+                      className="h-5 w-fit font-mono text-[length:var(--text-xs)]"
                       data-testid="listing-check-confidence-badge"
                     >
                       {t("check.confidence.label", {
@@ -1061,7 +1061,7 @@ export function ListingCheckPanel({
                   </TooltipContent>
                 </Tooltip>
                 <p
-                  className="text-[var(--text-xs)] leading-snug text-muted-foreground sm:hidden"
+                  className="text-[length:var(--text-xs)] leading-snug text-muted-foreground sm:hidden"
                   data-testid="listing-check-confidence-summary"
                 >
                   {result.confidence.summary}
@@ -1071,7 +1071,7 @@ export function ListingCheckPanel({
                     <TooltipTrigger asChild>
                       <Badge
                         variant="outline"
-                        className="h-5 text-[var(--text-xs)] font-bold uppercase tracking-wider"
+                        className="h-5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                       >
                         {t(QUALITY_LABEL_KEYS[qualityTag])}
                       </Badge>

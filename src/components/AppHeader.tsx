@@ -127,38 +127,38 @@ export function AppHeader({
               </span>
               <Badge
                 variant="secondary"
-                className="h-5 shrink-0 text-[var(--text-xs)] font-bold"
+                className="h-5 shrink-0 text-[length:var(--text-xs)] font-bold"
               >
                 {t("stats.dataThrough", {
                   month: formatMonth(manifest.dataWindow.maxMonth, locale),
                 })}
               </Badge>
-              <span className="hidden text-[var(--text-xs)] font-medium text-muted-foreground sm:inline">
+              <span className="hidden text-[length:var(--text-xs)] font-medium text-muted-foreground sm:inline">
                 ·{" "}
                 {t("stats.transactions", {
                   count: formatNumber(manifest.counts.transactions, 0, locale),
                 })}
               </span>
               {dataQuality.lastSyncedAt ? (
-                <span className="hidden text-[var(--text-xs)] font-medium text-muted-foreground lg:inline">
+                <span className="hidden text-[length:var(--text-xs)] font-medium text-muted-foreground lg:inline">
                   {" "}
                   · {t("stats.synced", { date: formatDateTime(dataQuality.lastSyncedAt, locale) })}
                 </span>
               ) : null}
               {sourceLabel ? (
-                <span className="hidden text-[var(--text-xs)] font-medium text-muted-foreground xl:inline">
+                <span className="hidden text-[length:var(--text-xs)] font-medium text-muted-foreground xl:inline">
                   {" "}
                   · {t("stats.sources", { sources: sourceLabel })}
                 </span>
               ) : null}
               {dataQuality.syncState === "partial" ? (
-                <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {" "}
                   · {t("stats.metadataPartial")}
                 </span>
               ) : null}
               {dataQuality.syncState === "missing" ? (
-                <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {" "}
                   · {t("stats.metadataUnavailable")}
                 </span>
@@ -170,20 +170,20 @@ export function AppHeader({
                 <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
                 <span
                   data-testid="header-title"
-                  className="truncate text-[var(--text-sm)] font-bold leading-tight"
+                  className="truncate text-[length:var(--text-sm)] font-bold leading-tight"
                 >
                   {t("app.title")}
                 </span>
               </span>
               <Badge
                 variant="secondary"
-                className="h-5 w-fit text-[var(--text-xs)] font-bold"
+                className="h-5 w-fit text-[length:var(--text-xs)] font-bold"
               >
                 {t("stats.dataThrough", {
                   month: formatMonth(manifest.dataWindow.maxMonth, locale),
                 })}
               </Badge>
-              <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
+              <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                 {t("stats.transactions", {
                   count: formatNumber(manifest.counts.transactions, 0, locale),
                 })}
@@ -261,7 +261,7 @@ export function AppHeader({
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="size-8 p-0 text-muted-foreground hover:text-foreground min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
+                  className="size-8 p-0 text-muted-foreground hover:text-foreground"
                   onClick={onDismiss}
                   aria-label={t("app.dismissHeader")}
                 >

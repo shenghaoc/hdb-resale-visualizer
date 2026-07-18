@@ -202,6 +202,7 @@ The **Saved** tab holds blocks you have bookmarked. You can save up to 20 blocks
 - **Notes and legacy compatibility** — old saved shortlist entries still load with data preserved.
   Existing `notes` continue to display and are mirrored into the new board where needed.
 - **Sort and rank** — order saved blocks by your preferred metric; decision status is included as a tie-break in ranking.
+- **Safe removal** — removing a saved block shows an **Undo** action for five seconds. Undo restores the same block in its previous position with its asking price, offer fields, status, and notes intact.
 - **Export** — download your shortlist as CSV or JSON including offer-board fields and decision notes. Hover over the export button to see its tooltip.
 - **Share** — generate a URL to share your shortlist with all shortlist board data (within payload size limits). Hover over the share button to see its tooltip.
 - **Mobile-friendly compare** — mobile view uses compact cards so all required shortlist metrics remain scannable without horizontal clipping, including the nearest MRT station name with walking time and any buyer notes you have recorded.

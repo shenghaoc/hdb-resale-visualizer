@@ -1,8 +1,4 @@
-# Product
-
-## Register
-
-product
+# HDB Resale Explorer Product Brief
 
 ## Users
 

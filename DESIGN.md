@@ -32,7 +32,7 @@ typography:
     textTransform: "uppercase"
   label:
     fontFamily: "IBM Plex Sans, system-ui, sans-serif"
-    fontSize: "0.625rem"
+    fontSize: "0.6875rem"
     fontWeight: 600
     letterSpacing: "0.12em"
     textTransform: "uppercase"
@@ -108,9 +108,9 @@ This system explicitly rejects: cluttered marketplace grids (PropertyGuru), life
 **Key Characteristics:**
 
 - Single-accent palette: cyan as the only chromatic voice; everything else is slate
-- Squared-off geometry: no rounded corners on interactive elements (buttons, badges, inputs)
+- Squared-off geometry: no rounded corners on primary chrome (buttons, badges, inputs); conventional switch tracks remain pill-shaped so their state is immediately recognisable
 - Uppercase micro-labels: `var(--text-xs)`, 600 weight, `var(--tracking-label)` tracking for metadata and actions
-- Underline inputs: border-bottom only, no full-border input fields
+- Underline inputs by default; compact grouped editors may use a square framed field when the border communicates field grouping
 - Subtle elevation: cards use `shadow-sm` + `ring-1` at 5% opacity; the system is nearly flat
 - Light/dark parity: every color token uses `light-dark()` for automatic theme switching
 
@@ -166,8 +166,7 @@ The palette is deliberately restrained. Cyan is the only accent; slate neutrals 
 - **--text-base** (1rem / 16px): Primary body content, descriptions, transaction rows. Max line length 65ch in prose contexts.
 - **--text-sm** (0.8125rem / 13px): Secondary data, compact values, stats in table cells.
 - **Tab size** (0.75rem / 12px): Mode toggles, panel tab labels, empty-state prompts, field hints.
-- **--text-xs** (0.625rem / 10px): Badges, button text, metadata tags, filter labels, table column headers. The workhorse of the micro-typography system. `.v2-section-title` (700w) for section headers; `.v2-field-label` (800w) for field/metric labels. Label tracking at `var(--tracking-label)` (0.12em), uppercase.
-- **Kicker** (0.56rem / ~9px): The smallest intentional size — used only for `.v2-kicker` eyebrow text. Same `var(--tracking-label)` as labels.
+- **--text-xs** (0.6875rem / 11px): Badges, button text, metadata tags, filter labels, table column headers, and kickers. This is the smallest intentional size. `.v2-section-title` (700w) is used for section headers; `.v2-field-label` (800w) for field/metric labels. Label tracking is `var(--tracking-label)` (0.12em), uppercase.
 - **Data** (400–500 weight, inherits size): Numbers, prices, statistics. Tabular figures via `.v2-tabular`; right-aligned in table columns.
 
 ### Letter-Spacing Tokens
@@ -182,7 +181,7 @@ These replace the ad-hoc 0.04em/0.14em/0.16em/0.18em values that previously prol
 
 **The Single Family Rule.** IBM Plex Sans everywhere. No heading/secondary font pair. Weight (400→500→600→700) and scale (`var(--text-xs)`→1rem→1.125rem) create the hierarchy.
 
-**The Micro-Label Rule.** Secondary metadata, filter chips, action buttons, and badge text are always `var(--text-xs)` (0.625rem) / 600 weight / `var(--tracking-label)` (0.12em) / uppercase. This is the system's signature typographic gesture — consistent, not sprinkled.
+**The Micro-Label Rule.** Secondary metadata, filter chips, action buttons, and badge text are always `var(--text-xs)` (0.6875rem) / 600 weight / `var(--tracking-label)` (0.12em) / uppercase. This is the system's signature typographic gesture — consistent, not sprinkled.
 
 **The Field-Label Pattern.** The most-repeated typographic pattern in the codebase is `.v2-field-label`: `var(--text-xs)`, 800 weight (extrabold), `var(--tracking-label)` tracking, upper-case, muted foreground. Used for metric labels, column headers, field labels, and data callouts inside cards. The 800 weight distinguishes labels-within-sections from `v2-section-title` (700 weight) section headers.
 
@@ -199,11 +198,11 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 
 Use these instead of ad-hoc `border bg-popover shadow-lg rounded-lg` stacks:
 
-| Class | Role |
-| --- | --- |
-| `.v2-chrome` | Floating map chrome (header chips, tab bars, map controls, scope prompt) |
-| `.v2-panel` | Large drafting-table overlays (filter/results/saved side panels) |
-| `.v2-card` / `.v2-surface` | In-panel data cards and list rows |
+| Class                      | Role                                                                     |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `.v2-chrome`               | Floating map chrome (header chips, tab bars, map controls, scope prompt) |
+| `.v2-panel`                | Large drafting-table overlays (filter/results/saved side panels)         |
+| `.v2-card` / `.v2-surface` | In-panel data cards and list rows                                        |
 
 All three are **opaque**, **square** (`border-radius: 0`), and **Card Rest** elevated. Prefer them over inventing new glass or soft-radius surfaces.
 
@@ -225,7 +224,7 @@ All three are **opaque**, **square** (`border-radius: 0`), and **Card Rest** ele
 - **Ghost:** `bg-transparent`. Hover: muted background fill.
 - **Destructive:** `bg-critical-red/10 text-critical-red`. Hover: 20% background opacity.
 - **Sizes:** Default (h-10, px-6), sm (h-9, px-4), xs (h-7, px-3), lg (h-11, px-8), plus icon-only variants (size-10, size-9, size-7, size-11).
-- **Typography:** `var(--text-xs)` (0.625rem), 600 weight, `var(--tracking-label)` tracking, uppercase.
+- **Typography:** `var(--text-xs)` (0.6875rem), 600 weight, `var(--tracking-label)` tracking, uppercase.
 - **Focus:** `ring-2 ring-ring/30` with ring matching Deep Cyan.
 
 ### Cards
@@ -240,7 +239,7 @@ All three are **opaque**, **square** (`border-radius: 0`), and **Card Rest** ele
 
 ### Inputs
 
-**Character:** Underline-only — a single bottom border. No box, no full-border, no background fill. Feels like filling in a form on paper.
+**Character:** Underline-only by default — a single bottom border with no background fill. Compact grouped editors, such as currency inputs with a prefix, may use a square full border when it makes the field grouping clearer.
 
 - **Shape:** `rounded-none`. No background. Border-bottom only (`border-b-input`).
 - **Height:** h-10 (40px).
@@ -282,7 +281,7 @@ All three are **opaque**, **square** (`border-radius: 0`), and **Card Rest** ele
 - ✅ Use Deep Cyan sparingly — primary buttons, focus rings, active links only
 - ✅ Keep cards squared-off (`rounded-none`) and clean — data containers, not decorative panels
 - ✅ Use uppercase micro-labels (`var(--text-xs)`, 600w, `var(--tracking-label)` tracking) consistently for metadata
-- ✅ Use underline-only inputs — `border-b-input` with no background fill
+- ✅ Use underline-only inputs by default; use square framed fields only for explicit grouped-input contexts
 - ✅ Prefer high-density layouts: tight headers, compact tables, small badges
 - ✅ Let `light-dark()` handle theme switching automatically
 - ✅ Use semantic colors (green, amber, red) only when they carry real meaning
@@ -290,7 +289,7 @@ All three are **opaque**, **square** (`border-radius: 0`), and **Card Rest** ele
 ### Don't
 
 - ❌ Don't add a second accent color — cyan is the only chromatic voice
-- ❌ Don't add rounded corners to interactive elements (buttons, inputs, badges)
+- ❌ Don't add decorative rounded corners to buttons, inputs, or badges; conventional switch tracks and slider thumbs are the functional exception
 - ❌ Don't use gradient text, glassmorphism, or decorative blurs
 - ❌ Don't add side-stripe borders (border-left/right >1px as accent)
 - ❌ Don't render "hero metric" templates (big number + small label + gradient accent)

@@ -219,3 +219,19 @@ export function toggleShortlistItem(items: ShortlistItem[], addressKey: string):
     },
   ];
 }
+
+export function restoreShortlistItem(
+  items: ShortlistItem[],
+  item: ShortlistItem,
+  index = items.length,
+): ShortlistItem[] {
+  if (
+    items.length >= MAX_SHORTLIST_ITEMS ||
+    items.some((current) => current.addressKey === item.addressKey)
+  ) {
+    return items;
+  }
+
+  const insertionIndex = Math.max(0, Math.min(index, items.length));
+  return [...items.slice(0, insertionIndex), item, ...items.slice(insertionIndex)];
+}

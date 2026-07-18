@@ -195,7 +195,7 @@ export function MonthPicker({
                 size="icon"
                 onClick={handlePreviousYear}
                 disabled={viewYear <= minYear}
-                className="size-8 rounded-full hover:bg-muted min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
+                className="size-8 rounded-full hover:bg-muted"
                 aria-label={
                   previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })
                 }
@@ -218,7 +218,7 @@ export function MonthPicker({
                 size="icon"
                 onClick={handleNextYear}
                 disabled={viewYear >= maxYear}
-                className="size-8 rounded-full hover:bg-muted min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
+                className="size-8 rounded-full hover:bg-muted"
                 aria-label={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
               >
                 <ChevronRight data-icon className="size-4" aria-hidden="true" />

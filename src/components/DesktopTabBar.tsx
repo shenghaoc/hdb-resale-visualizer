@@ -161,7 +161,7 @@ export function DesktopTabBar({
         <Bookmark data-icon="inline-start" className={isSavedPanelOpen ? "fill-current" : ""} />
         <span>{savedLabel}</span>
         {shortlistCount > 0 ? (
-          <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[var(--text-xs)]">
+          <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[length:var(--text-xs)]">
             {shortlistCount}
           </Badge>
         ) : null}

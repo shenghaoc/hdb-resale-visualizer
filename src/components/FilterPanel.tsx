@@ -487,7 +487,7 @@ export function FilterPanel(props: FilterPanelProps) {
                   <span className="v2-section-title" aria-hidden="true">
                     {t("filters.transactionWindow")}
                   </span>
-                  <Badge variant="secondary" className="h-5 text-[var(--text-xs)] font-bold">
+                  <Badge variant="secondary" className="h-5 text-[length:var(--text-xs)] font-bold">
                     {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
                   </Badge>
                 </div>

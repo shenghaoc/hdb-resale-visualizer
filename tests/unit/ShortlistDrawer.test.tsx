@@ -107,6 +107,7 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -148,6 +149,7 @@ describe("ShortlistDrawer", () => {
           rows={[rowWithoutComparison]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -175,6 +177,7 @@ describe("ShortlistDrawer", () => {
           rows={[]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -200,6 +203,7 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={onUpdate}
           onSelectAddress={onSelectAddress}
         />
@@ -213,6 +217,49 @@ describe("ShortlistDrawer", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "View on map" }));
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
+  });
+
+  it("restores the exact removed shortlist item through the explicit restore path", () => {
+    const onRemove = vi.fn();
+    const onRestore = vi.fn();
+    const itemWithBuyerData: ShortlistItem = {
+      ...mockShortlistItem,
+      askingPrice: 612345,
+      buyerNotes: "Keep exact buyer data",
+      fairRangeMedian: 590000,
+      decisionStatus: "viewing booked",
+    };
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[{ ...mockRow, item: itemWithBuyerData }]}
+          onToggleOpen={() => {}}
+          onRemove={onRemove}
+          onRestore={onRestore}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Remove 101 Ang Mo Kio Ave 3 from shortlist",
+      }),
+    );
+
+    expect(onRemove).toHaveBeenCalledTimes(1);
+    expect(onRemove).toHaveBeenCalledWith("test-block");
+    expect(screen.getByRole("status")).toHaveTextContent("Removed: 101 Ang Mo Kio Ave 3");
+
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
+
+    expect(onRestore).toHaveBeenCalledWith(itemWithBuyerData, 0);
+    expect(onRemove).toHaveBeenCalledTimes(1);
   });
 
   it("uses the same exact target copy in the card view as the comparison table", () => {
@@ -230,6 +277,7 @@ describe("ShortlistDrawer", () => {
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -252,6 +300,7 @@ describe("ShortlistDrawer", () => {
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={onSelectAddress}
         />
@@ -302,6 +351,7 @@ describe("ShortlistDrawer", () => {
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -332,6 +382,7 @@ describe("ShortlistDrawer", () => {
           rows={[]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -347,13 +398,17 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
       </I18nProvider>,
     );
 
-    const firstCardButton = screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i });
+    const firstCardButton = screen.getByRole("button", {
+      name: /101 Ang Mo Kio Ave 3/i,
+      expanded: true,
+    });
     expect(firstCardButton).toHaveAttribute("aria-expanded", "true");
 
     rerender(
@@ -365,13 +420,14 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow, mockRowTwo]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
       </I18nProvider>,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /202 Bedok North St 1/i }));
+    fireEvent.click(screen.getByRole("button", { name: /202 Bedok North St 1/i, expanded: false }));
 
     rerender(
       <I18nProvider>
@@ -382,15 +438,15 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
+          onRestore={() => {}}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
       </I18nProvider>,
     );
 
-    expect(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i })).toHaveAttribute(
-      "aria-expanded",
-      "true",
-    );
+    expect(
+      screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i, expanded: true }),
+    ).toHaveAttribute("aria-expanded", "true");
   });
 });

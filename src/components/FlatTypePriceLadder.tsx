@@ -41,12 +41,12 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
                 {formatCompactCurrency(entry.medianPrice, locale)}
               </div>
             ) : (
-              <div className="text-[var(--text-xs)] font-medium uppercase tracking-[0.1em]">
+              <div className="text-[length:var(--text-xs)] font-medium uppercase tracking-[0.1em]">
                 {t("detail.unavailable")}
               </div>
             )}
             {entry.transactionCount > 0 && (
-              <div className="text-[var(--text-xs)] text-muted-foreground">
+              <div className="text-[length:var(--text-xs)] text-muted-foreground">
                 {t("stats.txns", { count: entry.transactionCount })}
               </div>
             )}
