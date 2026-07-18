@@ -245,6 +245,67 @@ describe("useListingCheckAnalysis", () => {
     });
   });
 
+  it("clears stale detail immediately when selecting a different address", async () => {
+    let resolveSecond: (value: AddressDetail) => void = () => {};
+    const secondPromise = new Promise<AddressDetail>((resolve) => {
+      resolveSecond = resolve;
+    });
+
+    dataMocks.fetchAddressDetail
+      .mockResolvedValueOnce(makeDetail({ addressKey: "ang-mo-kio-123a" }))
+      .mockImplementationOnce(() => secondPromise);
+
+    const fetchMock = vi.fn(async () => Response.json(makeComparableResponse()));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result, rerender } = renderAnalysis({
+      selectedAddressKey: "ang-mo-kio-123a",
+      flatType: "4 ROOM",
+      storeyRange: "07 TO 09",
+      floorAreaSqm: 93,
+      askingPrice: 650000,
+    });
+
+    await waitFor(() => {
+      expect(result.current.detail?.summary.addressKey).toBe("ang-mo-kio-123a");
+    });
+    const comparableCallsBeforeSwitch = fetchMock.mock.calls.length;
+
+    rerender({
+      selectedAddressKey: "bedok-1",
+      askingPrice: 650000,
+      floorAreaSqm: 93,
+      flatType: "4 ROOM",
+      storeyRange: "07 TO 09",
+      leaseCommenceYear: null,
+      referenceMonth: "2026-04",
+    });
+
+    // Stale detail must drop before the next detail resolves.
+    await waitFor(() => {
+      expect(result.current.detail).toBeNull();
+      expect(result.current.detailLoading).toBe(true);
+    });
+    // Without stale detail, no comparable request should fire for the old address.
+    expect(fetchMock.mock.calls.length).toBe(comparableCallsBeforeSwitch);
+
+    await act(async () => {
+      resolveSecond(
+        makeDetail({
+          addressKey: "bedok-1",
+          town: "BEDOK",
+          block: "1",
+          streetName: "BEDOK NORTH",
+        }),
+      );
+      await Promise.resolve();
+    });
+
+    await waitFor(() => {
+      expect(result.current.detail?.summary.addressKey).toBe("bedok-1");
+    });
+  });
+
   it("ignores stale detail responses for a newer address", async () => {
     let resolveFirst: (value: AddressDetail) => void = () => {};
     const firstPromise = new Promise<AddressDetail>((resolve) => {

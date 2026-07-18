@@ -113,6 +113,24 @@ describe("useListingFactInput", () => {
     expect(result.current.value).toBe("100");
   });
 
+  it("idle blur does not clear a committed parent value", () => {
+    const onCommit = vi.fn();
+    const { result } = renderHook(() =>
+      useListingFactInput({
+        value: 650000,
+        parse: parsePositiveDecimalInput,
+        onCommit,
+      }),
+    );
+
+    act(() => {
+      result.current.onBlur();
+    });
+
+    expect(onCommit).not.toHaveBeenCalled();
+    expect(result.current.value).toBe("650000");
+  });
+
   it("external sample/deep-link value appears when not editing", () => {
     const onCommit = vi.fn();
     const { result, rerender } = renderHook(

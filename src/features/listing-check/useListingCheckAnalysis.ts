@@ -89,6 +89,9 @@ export function useListingCheckAnalysis({
     let cancelled = false;
     setDetailLoading(true);
     setDetailError(false);
+    // Drop stale detail immediately so the UI does not show the previous
+    // address while loading, and so comparable fetch does not reuse old summary.
+    setDetail(null);
 
     fetchAddressDetail(selectedAddressKey)
       .then((data) => {
@@ -130,7 +133,15 @@ export function useListingCheckAnalysis({
   // depend on the asking price. The verdict recomputes locally from the existing
   // set when the price changes.
   useEffect(() => {
-    if (!detail || !selectedAddressKey || !flatType || !storeyRange) {
+    // Require detail to match the current selection so a mid-switch render that
+    // still holds the previous address cannot fire a redundant comparable request.
+    if (
+      !detail ||
+      !selectedAddressKey ||
+      detail.summary.addressKey !== selectedAddressKey ||
+      !flatType ||
+      !storeyRange
+    ) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale state when inputs become invalid
       setComparableSet(null);
       setComparableSetLoading(false);

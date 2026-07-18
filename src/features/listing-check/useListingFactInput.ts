@@ -51,8 +51,10 @@ export function useListingFactInput({
   }, [value]);
 
   const onBlur = useCallback(() => {
-    const raw = draft ?? "";
-    onCommit(parse(raw));
+    // Only commit when an edit session is active. A programmatic or double blur
+    // with draft === null must not overwrite a valid parent value with null.
+    if (draft === null) return;
+    onCommit(parse(draft));
     setDraft(null);
   }, [draft, onCommit, parse]);
 
