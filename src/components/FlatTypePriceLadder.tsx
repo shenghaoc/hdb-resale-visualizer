@@ -20,7 +20,7 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
   return (
     <ul
       role="list"
-      className={cn("flex flex-wrap items-center gap-2 text-[0.7rem]", className)}
+      className={cn("flex flex-wrap items-center gap-2 text-[0.75rem]", className)}
       aria-label={t("detail.priceLadder")}
     >
       {entries.map((entry, idx) => (
@@ -41,12 +41,12 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
                 {formatCompactCurrency(entry.medianPrice, locale)}
               </div>
             ) : (
-              <div className="text-[0.58rem] font-medium uppercase tracking-[0.1em]">
+              <div className="text-[var(--text-xs)] font-medium uppercase tracking-[0.1em]">
                 {t("detail.unavailable")}
               </div>
             )}
             {entry.transactionCount > 0 && (
-              <div className="text-[0.55rem] text-muted-foreground">
+              <div className="text-[var(--text-xs)] text-muted-foreground">
                 {t("stats.txns", { count: entry.transactionCount })}
               </div>
             )}

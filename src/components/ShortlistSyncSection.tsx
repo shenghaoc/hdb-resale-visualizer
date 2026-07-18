@@ -65,7 +65,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
 
       {sync.code ? (
         <div className="mt-2 flex flex-col gap-2">
-          <p className="text-[0.7rem] text-muted-foreground">{t("sync.linkHint")}</p>
+          <p className="text-[0.75rem] text-muted-foreground">{t("sync.linkHint")}</p>
           <div className="flex items-center gap-2">
             <code
               data-testid="sync-code"
@@ -105,7 +105,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
         </div>
       ) : (
         <div className="mt-2 flex flex-col gap-3">
-          <p className="text-[0.7rem] text-muted-foreground">{t("sync.intro")}</p>
+          <p className="text-[0.75rem] text-muted-foreground">{t("sync.intro")}</p>
           <Button
             type="button"
             size="sm"
@@ -154,7 +154,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
 
       <p
         data-testid="sync-status"
-        className="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.1em] text-muted-foreground"
+        className="mt-2 text-[0.75rem] font-bold uppercase tracking-[0.1em] text-muted-foreground"
       >
         {t(STATUS_KEY[sync.status])}
       </p>
@@ -163,7 +163,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
         <p
           role="alert"
           data-testid="sync-error"
-          className="mt-1.5 rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.7rem] font-medium text-destructive"
+          className="mt-1.5 rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
         >
           {error}
         </p>

@@ -34,7 +34,7 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
           <Sparkles data-icon className="size-4 text-primary" aria-hidden="true" />
           <h2
             id="town-recommendations-title"
-            className="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-foreground"
+            className="text-[0.75rem] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground"
           >
             {t("townRecommendations.title")}
           </h2>
@@ -59,7 +59,7 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
           <Sparkles data-icon className="size-4 text-primary" aria-hidden="true" />
           <h2
             id="town-recommendations-title"
-            className="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-foreground"
+            className="text-[0.75rem] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground"
           >
             {t("townRecommendations.title")}
           </h2>
@@ -74,10 +74,10 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
               <Card className="border-border/40 bg-card shadow-none">
                 <CardContent className="flex flex-wrap items-center gap-3 p-3">
                   <div className="min-w-0 flex-1">
-                    <strong className="block truncate font-heading text-sm font-extrabold uppercase tracking-[0.08em]">
+                    <strong className="block truncate font-heading text-sm font-extrabold uppercase tracking-wider">
                       {localizeTownName(rec.town, locale)}
                     </strong>
-                    <span className="block text-[0.65rem] text-muted-foreground">
+                    <span className="block text-[0.75rem] text-muted-foreground">
                       {t("townRecommendations.matchCount", {
                         matched: formatNumber(matchedCount, 0, locale),
                         total: formatNumber(rec.totalBlocks, 0, locale),
@@ -90,7 +90,7 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
                     </span>
                     <Badge
                       variant="outline"
-                      className="text-[0.55rem] font-bold uppercase tracking-[0.08em]"
+                      className="text-[var(--text-xs)] font-bold uppercase tracking-wider"
                     >
                       {t("townRecommendations.townMedian")}
                     </Badge>

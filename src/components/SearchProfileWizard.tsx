@@ -319,7 +319,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
                     <WizardIcon stepKey="welcome" />
                   </div>
-                  <p className="mb-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                     {t("searchProfile.wizard.kicker")}
                   </p>
                   <h2 className="text-[1.5rem] font-extrabold tracking-[-0.02em] text-foreground lg:text-[1.65rem]">
@@ -356,7 +356,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={selected}
                           onClick={() => setMainFlatType(selected ? "" : flatType)}
                           className={cn(
-                            "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-[color,background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                            "rounded-[0.65rem] px-5 py-2.5 text-[var(--text-sm)] font-bold tracking-[0.02em] transition-[color,background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             selected
                               ? "scale-[1.04] bg-primary text-primary-foreground"
                               : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -395,7 +395,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         value={maxBudget}
                         onChange={(e) => setMaxBudget(e.target.value)}
                         placeholder={t("searchProfile.maxBudgetPlaceholder")}
-                        className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                        className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                       />
                     </div>
                   </div>
@@ -442,7 +442,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   </div>
                   <div className="flex flex-col gap-4">
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.commuteDestination")}
                       </p>
                       <div className="rounded-[0.65rem] border bg-muted/40 px-4">
@@ -450,19 +450,19 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           value={commuteAnchorLabel}
                           onChange={(e) => setCommuteAnchorLabel(e.target.value)}
                           placeholder={t("searchProfile.commuteAnchorPlaceholder")}
-                          className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold focus-visible:border-0"
+                          className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold focus-visible:border-0"
                         />
                       </div>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.commuteMrtStation")}
                       </p>
                       <Popover open={stationPickerOpen} onOpenChange={setStationPickerOpen}>
                         <PopoverTrigger asChild>
                           <button
                             type="button"
-                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[0.95rem] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[var(--text-base)] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                           >
                             <span
                               className={
@@ -534,7 +534,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </Popover>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.maxCommute")}
                       </p>
                       <div className="flex flex-wrap gap-2">
@@ -587,9 +587,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         value={minLease}
                         onChange={(e) => setMinLease(e.target.value)}
                         placeholder={t("searchProfile.minLeasePlaceholder")}
-                        className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                        className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                       />
-                      <span className="pl-2 text-[0.68rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                      <span className="pl-2 text-[0.75rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                         {t("searchProfile.yearsShort")}
                       </span>
                     </div>
@@ -636,7 +636,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   <div className="flex flex-col gap-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                           {t("searchProfile.age")}
                         </p>
                         <div className="rounded-[0.65rem] border bg-muted/40 px-4">
@@ -651,12 +651,12 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setAge(e.target.value)}
                             placeholder={t("searchProfile.agePlaceholder")}
                             aria-label={t("searchProfile.age")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
                       <div>
-                        <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                           {t("searchProfile.coApplicantAge")}
                         </p>
                         <div className="rounded-[0.65rem] border bg-muted/40 px-4">
@@ -671,13 +671,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setCoApplicantAge(e.target.value)}
                             placeholder={t("searchProfile.coApplicantAgePlaceholder")}
                             aria-label={t("searchProfile.coApplicantAge")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.cpfOABalance")}
                       </p>
                       <div className="rounded-[0.65rem] border bg-muted/40 px-4">
@@ -691,13 +691,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setCpfOABalance(e.target.value)}
                             placeholder={t("searchProfile.cpfOABalancePlaceholder")}
                             aria-label={t("searchProfile.cpfOABalance")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.monthlyIncome")}
                       </p>
                       <div className="rounded-[0.65rem] border bg-muted/40 px-4">
@@ -711,7 +711,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setMonthlyIncome(e.target.value)}
                             placeholder={t("searchProfile.monthlyIncomePlaceholder")}
                             aria-label={t("searchProfile.monthlyIncome")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
@@ -776,13 +776,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   </div>
                   {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
                     <div className="mt-5 rounded-[0.65rem] border border-success/30 bg-success/[0.06] px-4 py-3 text-left">
-                      <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-success">
+                      <p className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-success">
                         {t("affordability.ceiling", {
                           price: formatCurrency(affordabilityCeiling, locale),
                         })}
                       </p>
                       {monthlyIncome.trim() ? (
-                        <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-muted-foreground">
+                        <p className="mt-1 text-[0.75rem] font-semibold leading-snug text-muted-foreground">
                           {t("affordability.summary", {
                             cpf: formatCurrency(Number(cpfOABalance), locale),
                             income: formatCurrency(Number(monthlyIncome), locale),

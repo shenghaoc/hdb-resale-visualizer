@@ -87,7 +87,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
     >
       <div
         id="lease-financing-title"
-        className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+        className="mb-2 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground"
       >
         <ShieldCheck data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
         {t("leaseFinancing.title")}
@@ -98,14 +98,14 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         <div className="flex flex-col gap-0.5">
           <span className="text-xs font-bold leading-snug">{headline}</span>
           {detail ? (
-            <span className="text-[0.65rem] font-medium leading-snug opacity-90">{detail}</span>
+            <span className="text-[0.75rem] font-medium leading-snug opacity-90">{detail}</span>
           ) : null}
         </div>
       </div>
 
       <dl className="mt-2 grid grid-cols-2 gap-2">
         <div>
-          <dt className="text-[0.58rem] font-medium text-muted-foreground">
+          <dt className="text-[var(--text-xs)] font-medium text-muted-foreground">
             {t("leaseFinancing.remainingNow")}
           </dt>
           <dd className="font-heading text-sm font-extrabold tabular-nums">
@@ -114,7 +114,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         </div>
         {assessment.requiredLeaseYears !== null ? (
           <div>
-            <dt className="text-[0.58rem] font-medium text-muted-foreground">
+            <dt className="text-[var(--text-xs)] font-medium text-muted-foreground">
               {t("leaseFinancing.requiredTo95")}
             </dt>
             <dd className="font-heading text-sm font-extrabold tabular-nums">
@@ -124,13 +124,13 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         ) : null}
         {assessment.loanTenureYears !== null && assessment.loanTenureYears > 0 ? (
           <div className="col-span-2">
-            <dt className="text-[0.58rem] font-medium text-muted-foreground">
+            <dt className="text-[var(--text-xs)] font-medium text-muted-foreground">
               {t("leaseFinancing.loanTenure")}
             </dt>
             <dd className="font-heading text-sm font-extrabold tabular-nums">
               {t("unit.years", { value: assessment.loanTenureYears })}
               {assessment.tenureLimitedBy !== null ? (
-                <span className="ml-1 text-[0.58rem] font-medium text-muted-foreground">
+                <span className="ml-1 text-[var(--text-xs)] font-medium text-muted-foreground">
                   {assessment.tenureLimitedBy === "lease"
                     ? t("leaseFinancing.loanTenureLeaseCapped")
                     : t("leaseFinancing.loanTenureAgeCapped")}
@@ -141,12 +141,12 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         ) : null}
       </dl>
 
-      <div className="mt-2 flex items-start gap-2 rounded-lg bg-muted/40 px-3 py-2 text-[0.65rem] font-medium text-muted-foreground">
+      <div className="mt-2 flex items-start gap-2 rounded-lg bg-muted/40 px-3 py-2 text-[0.75rem] font-medium text-muted-foreground">
         <CalendarClock className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
         <span>{decayText}</span>
       </div>
 
-      <p className="mt-2 text-[0.58rem] leading-snug text-muted-foreground">
+      <p className="mt-2 text-[var(--text-xs)] leading-snug text-muted-foreground">
         {t("leaseFinancing.disclaimer")}{" "}
         <a
           href="https://www.cpf.gov.sg/member/home-ownership"

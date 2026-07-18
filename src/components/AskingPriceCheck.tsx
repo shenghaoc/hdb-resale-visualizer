@@ -159,7 +159,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1">
-            <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
               {t("askingCheck.askingPrice")}
             </span>
             <Input
@@ -175,7 +175,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
             />
           </label>
           <label className="flex flex-col gap-1">
-            <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
               {t("askingCheck.floorArea")}
             </span>
             <Input
@@ -192,7 +192,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
           </label>
           {flatTypeOptions.length > 1 && (
             <label className="flex flex-col gap-1">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                 {t("askingCheck.flatType")}
               </span>
               <Select value={flatType} onValueChange={setFlatType}>
@@ -211,7 +211,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
           )}
           {storeyOptions.length > 0 && (
             <label className="flex flex-col gap-1">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                 {t("askingCheck.storey")}
               </span>
               <Select value={storeyRange} onValueChange={setStoreyRange}>
@@ -380,14 +380,14 @@ function DeltaCell({
       : "text-foreground";
   return (
     <div className="rounded-md bg-muted/30 p-3">
-      <div className="text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+      <div className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
         {label}
       </div>
       <div className={cn("mt-1 font-heading text-lg font-extrabold tabular-nums", colorClass)}>
         {formatSignedCurrency(amount)}
       </div>
       <div className={cn("text-xs font-bold tabular-nums", colorClass)}>{formatSignedPct(pct)}</div>
-      <div className="mt-1 truncate text-[0.6rem] text-muted-foreground">
+      <div className="mt-1 truncate text-[var(--text-xs)] text-muted-foreground">
         {referenceLabel}: {formatCompactCurrency(reference, locale)}
       </div>
     </div>
@@ -405,7 +405,7 @@ function DataRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-2 border-b border-border/30 py-1 last:border-b-0">
-      <span className="text-[0.65rem] uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="text-[0.75rem] uppercase tracking-wider text-muted-foreground">{label}</span>
       <span
         className={cn(
           "font-mono text-xs font-bold tabular-nums",

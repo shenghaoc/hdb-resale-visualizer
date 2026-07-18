@@ -254,7 +254,7 @@ export function MonthPicker({
                 aria-checked={isSelected}
                 tabIndex={focusableMonthIndex === index ? 0 : -1}
                 className={cn(
-                  "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-[color,background-color]",
+                  "h-10 text-[0.75rem] font-bold uppercase tracking-wider w-full rounded-lg transition-[color,background-color]",
                   isSelected
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90"
                     : "hover:bg-accent hover:text-accent-foreground text-muted-foreground",
@@ -272,7 +272,7 @@ export function MonthPicker({
               type="button"
               variant="ghost"
               size="sm"
-              className="w-full text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 transition-colors"
+              className="w-full text-[0.75rem] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 transition-colors"
               onClick={() => {
                 onChange(null);
                 setOpen(false);

@@ -55,7 +55,7 @@ type FilterPanelProps = {
 const ALL_VALUE = "__all__";
 
 const FILTER_INLINE_ACTION_CLASS =
-  "gap-1 rounded-lg px-2 text-[0.65rem] font-extrabold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
+  "gap-1 rounded-lg px-2 text-[0.75rem] font-extrabold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
 
 function parseOptionalNumberValue(value: string) {
   if (value === "") {
@@ -126,7 +126,7 @@ type AffordabilityFilterFieldProps = {
 function AffordabilityFilterField({ value, onChange, disabled, t }: AffordabilityFilterFieldProps) {
   const legendId = useId();
   const buttonClass =
-    "h-7 w-full justify-start rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-50";
+    "h-7 w-full justify-start rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider disabled:cursor-not-allowed disabled:opacity-50";
 
   const options: ReadonlyArray<{ mode: AffordabilityMode; label: string; aria: string }> = [
     {
@@ -234,7 +234,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 variant="outline"
                 size="sm"
                 data-testid="filters-panel-toggle"
-                className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card px-2.5 text-[0.65rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
+                className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card px-2.5 text-[0.75rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
                 onClick={desktopToggle.onToggle}
                 aria-expanded={desktopToggle.isOpen}
               >
@@ -487,7 +487,7 @@ export function FilterPanel(props: FilterPanelProps) {
                   <span className="v2-section-title" aria-hidden="true">
                     {t("filters.transactionWindow")}
                   </span>
-                  <Badge variant="secondary" className="h-5 text-[0.6rem] font-bold">
+                  <Badge variant="secondary" className="h-5 text-[var(--text-xs)] font-bold">
                     {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
                   </Badge>
                 </div>

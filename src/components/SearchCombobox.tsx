@@ -270,7 +270,7 @@ export function SearchCombobox({
           >
             {grouped.map((section) => (
               <div key={section.group} role="presentation">
-                <p className="px-3 pb-1 pt-2 text-[0.62rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                <p className="px-3 pb-1 pt-2 text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                   {groupLabel(t, section.group)}
                 </p>
                 {section.items.map((suggestion) => {
@@ -286,14 +286,14 @@ export function SearchCombobox({
                       aria-selected={active}
                       data-testid={`search-suggest-option-${suggestion.group}`}
                       className={cn(
-                        "flex w-full items-center justify-between px-3 py-2 text-left text-[0.72rem] transition-colors hover:bg-muted/60",
+                        "flex w-full items-center justify-between px-3 py-2 text-left text-[0.75rem] transition-colors hover:bg-muted/60",
                         active && "bg-primary/10 text-primary",
                       )}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => selectSuggestion(suggestion)}
                     >
                       <span>{suggestion.label}</span>
-                      <span className="text-[0.58rem] font-semibold uppercase tracking-wide text-muted-foreground">
+                      <span className="text-[var(--text-xs)] font-semibold uppercase tracking-wide text-muted-foreground">
                         {groupLabel(t, suggestion.group)}
                       </span>
                     </button>

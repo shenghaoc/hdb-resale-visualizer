@@ -98,7 +98,7 @@ export function AmenityLayersControl({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover p-2 text-[0.55rem] shadow-lg",
+        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover p-2 text-[var(--text-xs)] shadow-lg",
         className,
       )}
       style={style}

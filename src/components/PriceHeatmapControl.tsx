@@ -63,7 +63,7 @@ export function PriceHeatmapControl({
             isEnabled ? "text-orange-500 dark:text-orange-400" : "text-muted-foreground",
           )}
         />
-        <p className="text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground leading-none flex-1">
+        <p className="text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground leading-none flex-1">
           {t("heatmap.label")}
         </p>
 
@@ -116,7 +116,7 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
               }}
               className={cn(
-                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                "flex-1 rounded py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "price"
                   ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -134,7 +134,7 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
               }}
               className={cn(
-                "flex-1 rounded py-1 text-[0.55rem] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                "flex-1 rounded py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "perSqm"
                   ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -146,7 +146,7 @@ export function PriceHeatmapControl({
           <div className="flex items-center gap-1.5">
             <label
               htmlFor={sliderId}
-              className="text-[0.5rem] font-medium uppercase tracking-[0.08em] text-muted-foreground leading-none whitespace-nowrap"
+              className="text-[0.5rem] font-medium uppercase tracking-wider text-muted-foreground leading-none whitespace-nowrap"
             >
               {t("heatmap.opacity")}
             </label>

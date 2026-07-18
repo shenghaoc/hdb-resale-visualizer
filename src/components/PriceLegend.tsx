@@ -43,7 +43,7 @@ export function PriceLegend({
         ...style,
       }}
     >
-      <p className="mb-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+      <p className="mb-1 text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
         {mode === "perSqm" ? t("heatmap.labelSqm") : t("map.legend.heading")}
       </p>
       <div
@@ -56,7 +56,7 @@ export function PriceLegend({
       />
       <div
         aria-hidden="true"
-        className="mt-0.5 flex justify-between text-[0.55rem] font-medium text-muted-foreground"
+        className="mt-0.5 flex justify-between text-[var(--text-xs)] font-medium text-muted-foreground"
       >
         <span>{mode === "perSqm" ? perSqmLowLabel : t("map.legend.priceLow")}</span>
         <span>{mode === "perSqm" ? perSqmHighLabel : t("map.legend.priceHigh")}</span>

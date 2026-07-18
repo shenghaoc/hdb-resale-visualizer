@@ -203,7 +203,7 @@ function SortSelect({
   return (
     <div className={cn("flex min-w-0 flex-col gap-1", className)}>
       <div className="flex min-w-0 items-center gap-2">
-        <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
+        <span className="inline-flex shrink-0 items-center gap-1.5 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
           <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
           {label}
         </span>
@@ -229,7 +229,7 @@ function SortSelect({
       {disabledHint ? (
         <p
           id="results-sort-disabled-hint"
-          className="text-[0.62rem] leading-snug text-muted-foreground"
+          className="text-[var(--text-xs)] leading-snug text-muted-foreground"
         >
           {disabledHint}
         </p>
@@ -322,7 +322,7 @@ const BlockCard = memo(function BlockCard({
             <strong className="block truncate font-heading text-[0.9rem] font-extrabold leading-snug tracking-tight">
               {block.block} {block.streetName}
             </strong>
-            <span className="block truncate text-[0.58rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="block truncate text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
               {localizeTownName(block.town, locale)}
               {block.flatTypes.length > 0
                 ? ` · ${localizeFlatType(block.flatTypes[0], locale)}`
@@ -331,7 +331,7 @@ const BlockCard = memo(function BlockCard({
           </div>
           <div className="flex shrink-0 items-start gap-2">
             <div className="text-right">
-              <strong className="block font-heading text-[0.95rem] font-extrabold leading-snug tracking-tight v2-tabular">
+              <strong className="block font-heading text-[var(--text-base)] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
@@ -360,7 +360,7 @@ const BlockCard = memo(function BlockCard({
                     }
                   />
                 ) : null}
-                <span className="text-[0.58rem] font-medium text-muted-foreground">
+                <span className="text-[var(--text-xs)] font-medium text-muted-foreground">
                   {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                 </span>
               </div>
@@ -391,7 +391,7 @@ const BlockCard = memo(function BlockCard({
           </div>
         </div>
 
-        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[0.6rem] font-medium text-muted-foreground">
+        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[var(--text-xs)] font-medium text-muted-foreground">
           <span>{formatSqm(sqm, t, locale)}</span>
           {mrtDist != null && mrtWalkSeconds != null && (
             <span
@@ -447,7 +447,7 @@ const BlockCard = memo(function BlockCard({
             <strong className="font-heading text-xl font-extrabold leading-none tracking-tight">
               {block.block} {block.streetName}
             </strong>
-            <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="text-sm uppercase tracking-[var(--tracking-label)] text-muted-foreground">
               {localizeTownName(block.town, locale)}
             </span>
           </div>
@@ -473,7 +473,7 @@ const BlockCard = memo(function BlockCard({
 
       <div className="grid basis-full gap-4 border-t border-border/60 pt-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <WalletCards data-icon className="size-3.5" aria-hidden="true" />
             {t("results.medianResale")}
           </span>
@@ -490,11 +490,11 @@ const BlockCard = memo(function BlockCard({
               <>
                 <Badge
                   variant="outline"
-                  className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                  className="w-fit text-[var(--text-xs)] font-bold uppercase tracking-wider"
                 >
                   {t(QUALITY_LABEL_KEYS[qualityTag])}
                 </Badge>
-                <span className="text-[0.62rem] font-semibold text-muted-foreground">
+                <span className="text-[var(--text-xs)] font-semibold text-muted-foreground">
                   {t(QUALITY_HINT_KEYS[qualityTag])}
                 </span>
               </>
@@ -503,7 +503,7 @@ const BlockCard = memo(function BlockCard({
           {affordVerdict && affordVerdict.status !== "unknown" ? (
             <span
               className={cn(
-                "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
+                "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
                 affordVerdict.status === "comfortable" && "bg-success/10 text-success",
                 affordVerdict.status === "stretch" && "bg-warning/10 text-warning",
                 affordVerdict.status === "over" && "bg-destructive/10 text-destructive",
@@ -526,7 +526,7 @@ const BlockCard = memo(function BlockCard({
           ) : null}
         </div>
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <TrainFront data-icon className="size-3.5" aria-hidden="true" />
             {t("results.nearestMrt")}
           </span>
@@ -539,7 +539,7 @@ const BlockCard = memo(function BlockCard({
                 >
                   <div className="flex items-center gap-1.5 min-w-0">
                     <MrtLineDots stationName={station.stationName} />
-                    <span className="truncate font-semibold uppercase tracking-[0.08em]">
+                    <span className="truncate font-semibold uppercase tracking-wider">
                       {station.stationName}
                     </span>
                   </div>
@@ -554,26 +554,26 @@ const BlockCard = memo(function BlockCard({
               ))}
             </ul>
           ) : (
-            <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
               {t("results.noMatch")}
             </strong>
           )}
         </div>
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <Coins data-icon className="size-3.5" aria-hidden="true" />
             {t("results.remainingLease")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+          <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
             {formatRemainingLease(block.leaseCommenceRange, t)}
           </strong>
         </div>
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <Clock3 data-icon className="size-3.5" aria-hidden="true" />
             {t("results.latestMonth")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+          <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
             {formatMonth(block.latestMonth, locale)}
           </strong>
         </div>
@@ -1130,7 +1130,7 @@ export function ResultsPane({
             </CardTitle>
             {hasResultScope ? (
               <>
-                <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
+                <Badge className="h-6 shrink-0 px-2 text-[var(--text-xs)] font-bold">
                   {t("results.shown", { count: blocks.length })}
                 </Badge>
                 {shareUrl ? (
@@ -1181,7 +1181,7 @@ export function ResultsPane({
                     aria-pressed={resultsView === "blocks"}
                     aria-label={t("results.view.blocksAria")}
                     onClick={() => setResultsView("blocks")}
-                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                    className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                   >
                     <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("results.view.blocks")}
@@ -1193,7 +1193,7 @@ export function ResultsPane({
                     aria-pressed={resultsView === "town"}
                     aria-label={t("results.view.townAria")}
                     onClick={() => setResultsView("town")}
-                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                    className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                   >
                     <Building2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("results.view.town")}

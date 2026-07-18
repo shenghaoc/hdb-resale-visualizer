@@ -64,11 +64,11 @@ const YOY_FLAT_THRESHOLD_PCT = 0.05;
 
 const TONE_BADGE_CLASS: Record<DeltaTone, string> = {
   better:
-    "rounded-full bg-success/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-success",
+    "rounded-full bg-success/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-success",
   worse:
-    "rounded-full bg-destructive/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-destructive",
+    "rounded-full bg-destructive/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-destructive",
   neutral:
-    "rounded-full bg-warning/10 px-2 py-0.5 text-[0.58rem] font-bold uppercase tracking-[0.08em] text-warning",
+    "rounded-full bg-warning/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-warning",
 };
 
 function buildMetricRows(t: Translator, locale: Locale): MetricRow[] {
@@ -151,7 +151,7 @@ function formatSignedCompactCurrency(value: number, locale: Locale): string {
 function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
   if (pct === null) {
     return (
-      <span className="inline-flex items-center gap-1 text-[0.6rem] font-semibold text-muted-foreground">
+      <span className="inline-flex items-center gap-1 text-[var(--text-xs)] font-semibold text-muted-foreground">
         <Minus className="size-3" aria-hidden="true" />
         {label}
       </span>
@@ -164,7 +164,10 @@ function YoyArrow({ pct, label }: { pct: number | null; label: string }) {
   const sign = pct > 0 ? "+" : pct < 0 ? "−" : "";
   return (
     <span
-      className={cn("inline-flex items-center gap-1 text-[0.6rem] font-semibold v2-tabular", color)}
+      className={cn(
+        "inline-flex items-center gap-1 text-[var(--text-xs)] font-semibold v2-tabular",
+        color,
+      )}
     >
       <Icon className="size-3" aria-hidden="true" />
       {sign}
@@ -237,17 +240,17 @@ export function TownCompareSection({
     >
       <header className="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="flex min-w-0 flex-col gap-0.5">
-          <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[0.95rem]">
+          <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[var(--text-base)]">
             {t("townCompare.title")}
           </h2>
-          <p className="text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+          <p className="text-[var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             {formatMonth(monthRange.start, locale)} – {formatMonth(monthRange.end, locale)}
           </p>
         </div>
         <div className="flex min-w-0 items-center gap-2">
           <label
             htmlFor="town-compare-with"
-            className="shrink-0 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+            className="shrink-0 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground"
           >
             {t("townCompare.compareWith")}
           </label>
@@ -291,17 +294,17 @@ export function TownCompareSection({
       {!compareSnap ? (
         <div
           data-testid="town-compare-empty"
-          className="rounded-lg border border-dashed border-border/40 bg-background px-3 py-4 text-center text-[0.72rem] text-muted-foreground"
+          className="rounded-lg border border-dashed border-border/40 bg-background px-3 py-4 text-center text-[0.75rem] text-muted-foreground"
         >
           {t("townCompare.emptyHint")}
         </div>
       ) : (
         <>
           {trendsLoading || compareBlocksLoading ? (
-            <p className="mb-2 text-[0.7rem] text-muted-foreground">{t("townCompare.loading")}</p>
+            <p className="mb-2 text-[0.75rem] text-muted-foreground">{t("townCompare.loading")}</p>
           ) : null}
           {trendsFailed || compareBlocksFailed ? (
-            <p className="mb-2 text-[0.7rem] text-destructive">{t("townCompare.loadFailed")}</p>
+            <p className="mb-2 text-[0.75rem] text-destructive">{t("townCompare.loadFailed")}</p>
           ) : null}
 
           {/* Sticky pill for mobile section jumps. */}
@@ -312,14 +315,14 @@ export function TownCompareSection({
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-primary")}
-              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(primaryTown, locale)}
             </button>
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-secondary")}
-              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(compareTown, locale)}
             </button>
@@ -383,7 +386,7 @@ function CompareColumn({
       className="min-w-0 rounded-lg border border-border/30 bg-background"
     >
       <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background px-2.5 py-2 md:top-0">
-        <span className="truncate font-heading text-[0.78rem] font-extrabold uppercase tracking-[0.08em]">
+        <span className="truncate font-heading text-[var(--text-sm)] font-extrabold uppercase tracking-wider">
           {localizeTownName(townName, locale)}
         </span>
         <YoyArrow pct={snap.yoyMedianPricePct} label={t("townCompare.yoyUnavailable")} />
@@ -400,11 +403,13 @@ function CompareColumn({
               key={metric.kind}
               className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 border-b border-border/20 pb-1.5 last:border-b-0 last:pb-0"
             >
-              <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                 {t(metric.labelKey)}
               </span>
               <div className="ml-auto flex items-baseline gap-1.5">
-                <span className="v2-tabular text-[0.78rem] font-extrabold">{valueLabel}</span>
+                <span className="v2-tabular text-[var(--text-sm)] font-extrabold">
+                  {valueLabel}
+                </span>
                 {delta ? (
                   <Badge
                     asChild

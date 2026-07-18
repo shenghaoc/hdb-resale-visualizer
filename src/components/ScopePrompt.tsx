@@ -56,7 +56,7 @@ export function ScopePrompt({
           <Button
             type="button"
             size="xs"
-            className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+            className="h-8 rounded-lg px-2.5 text-[var(--text-xs)] font-extrabold uppercase tracking-wider"
             onClick={onUseCurrentLocation}
             disabled={isLocating}
           >
@@ -71,7 +71,7 @@ export function ScopePrompt({
             type="button"
             size="xs"
             variant="outline"
-            className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+            className="h-8 rounded-lg px-2.5 text-[var(--text-xs)] font-extrabold uppercase tracking-wider"
             onClick={onChooseTown}
           >
             <SlidersHorizontal data-icon className="size-3.5" aria-hidden="true" />
@@ -82,7 +82,7 @@ export function ScopePrompt({
               type="button"
               size="xs"
               variant="outline"
-              className="h-8 rounded-lg px-2.5 text-[0.62rem] font-extrabold uppercase tracking-wider"
+              className="h-8 rounded-lg px-2.5 text-[var(--text-xs)] font-extrabold uppercase tracking-wider"
               onClick={onCheckListing}
             >
               <Scale data-icon className="size-3.5" aria-hidden="true" />

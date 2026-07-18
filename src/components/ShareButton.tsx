@@ -164,7 +164,7 @@ export function ShareButton({
       {error && (
         <div
           role="alert"
-          className="absolute left-0 top-full z-50 mt-1 whitespace-nowrap rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive"
+          className="absolute left-0 top-full z-50 mt-1 whitespace-nowrap rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
         >
           {error}
         </div>

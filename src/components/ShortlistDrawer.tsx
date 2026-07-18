@@ -316,7 +316,7 @@ function ShortlistComparisonTable({
                       {row.address}
                     </button>
                     {row.flatTypeLabel ? (
-                      <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                      <span className="block text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                         {row.flatTypeLabel}
                       </span>
                     ) : null}
@@ -335,12 +335,12 @@ function ShortlistComparisonTable({
                       t={t}
                       locale={locale}
                       variant="compact"
-                      className="block text-[0.6rem] font-bold tabular-nums"
+                      className="block text-[var(--text-xs)] font-bold tabular-nums"
                     />
                     {gap ? (
                       <span
                         className={cn(
-                          "block text-[0.6rem] font-bold tabular-nums",
+                          "block text-[var(--text-xs)] font-bold tabular-nums",
                           gap.tone === "below" && "text-success",
                           gap.tone === "above" && "text-destructive",
                           gap.tone === "match" && "text-primary",
@@ -360,14 +360,14 @@ function ShortlistComparisonTable({
                       ? formatCompactCurrency(row.askingPrice, locale)
                       : t("shortlist.compare.cellEmpty")}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-right text-[0.63rem] leading-relaxed">
+                  <TableCell className="px-2 py-2 text-right text-[var(--text-xs)] leading-relaxed">
                     {formatFairRange(row)}
                   </TableCell>
                   <TableCell className="px-2 py-2 text-right tabular-nums">
                     {formatDelta(row.deltaVsFairMedian)}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-[0.63rem]">
-                    <span className="inline-block rounded-full border border-border/40 px-2 py-0.5 text-[0.6rem] font-bold">
+                  <TableCell className="px-2 py-2 text-[var(--text-xs)]">
+                    <span className="inline-block rounded-full border border-border/40 px-2 py-0.5 text-[var(--text-xs)] font-bold">
                       {t(row.confidenceLevelLabel)}
                     </span>
                   </TableCell>
@@ -381,7 +381,7 @@ function ShortlistComparisonTable({
                           {row.nearestMrt.stationName}
                         </span>
                         <span
-                          className="block text-[0.6rem] font-bold tabular-nums text-muted-foreground"
+                          className="block text-[var(--text-xs)] font-bold tabular-nums text-muted-foreground"
                           title={formatMeters(row.nearestMrt.distanceMeters, t, locale)}
                           aria-label={`${formatMinutesWalk(row.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(row.nearestMrt.distanceMeters, t, locale)})`}
                         >
@@ -394,8 +394,10 @@ function ShortlistComparisonTable({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell className="px-2 py-2 text-[0.63rem]">{formatDecision(row)}</TableCell>
-                  <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground text-[0.64rem]">
+                  <TableCell className="px-2 py-2 text-[var(--text-xs)]">
+                    {formatDecision(row)}
+                  </TableCell>
+                  <TableCell className="min-w-[10rem] whitespace-normal px-2 py-2 text-muted-foreground text-[var(--text-xs)]">
                     {formatCaveats(row)}
                   </TableCell>
                   <TableCell className="px-2 py-2 text-right tabular-nums">
@@ -435,11 +437,11 @@ function ShortlistComparisonTable({
                   {row.address}
                 </button>
                 {row.flatTypeLabel ? (
-                  <span className="block text-[0.6rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                  <span className="block text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                     {row.flatTypeLabel}
                   </span>
                 ) : null}
-                <div className="mt-1 flex flex-wrap gap-1.5 text-[0.6rem]">
+                <div className="mt-1 flex flex-wrap gap-1.5 text-[var(--text-xs)]">
                   <Badge variant="outline" className="font-bold">
                     {t("shortlist.compare.col.medianPrice")}:{" "}
                     {formatCompactCurrency(row.medianPrice, locale)}
@@ -453,7 +455,7 @@ function ShortlistComparisonTable({
                 </div>
               </div>
             </div>
-            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[0.63rem]">
+            <div className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[var(--text-xs)]">
               <span className="text-muted-foreground">
                 {t("shortlist.compare.col.askingPrice")}:{" "}
                 <strong className="text-foreground">
@@ -513,9 +515,11 @@ function ShortlistComparisonTable({
                 </strong>
               </span>
             </div>
-            <div className="mt-1.5 text-[0.6rem] text-muted-foreground">{formatCaveats(row)}</div>
+            <div className="mt-1.5 text-[var(--text-xs)] text-muted-foreground">
+              {formatCaveats(row)}
+            </div>
             {row.buyerNotes.trim().length > 0 ? (
-              <div className="mt-1.5 text-[0.6rem] text-muted-foreground">
+              <div className="mt-1.5 text-[var(--text-xs)] text-muted-foreground">
                 <span className="font-semibold">{t("shortlist.compare.col.notes")}:</span>{" "}
                 {row.buyerNotes}
               </div>
@@ -614,7 +618,7 @@ function PercentileBar({
 
   return (
     <div className="flex items-center gap-2">
-      <span className="w-14 shrink-0 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+      <span className="w-14 shrink-0 text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
         {label}
       </span>
       <div className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
@@ -626,7 +630,7 @@ function PercentileBar({
           style={{ width: `${Math.max(0, Math.min(100, rounded))}%` }}
         />
       </div>
-      <span className="w-9 text-right text-[0.62rem] font-bold text-muted-foreground v2-tabular">
+      <span className="w-9 text-right text-[var(--text-xs)] font-bold text-muted-foreground v2-tabular">
         {rounded}%
       </span>
     </div>
@@ -650,11 +654,13 @@ function AmenityTile({
         <Icon data-icon className="size-3.5 text-primary" aria-hidden="true" />
         <strong className="text-xs font-extrabold tracking-tight">{count}</strong>
       </div>
-      <div className="mt-1 text-[0.55rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+      <div className="mt-1 text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
         {label}
       </div>
       {note ? (
-        <div className="mt-1 line-clamp-1 text-[0.62rem] italic text-muted-foreground">{note}</div>
+        <div className="mt-1 line-clamp-1 text-[var(--text-xs)] italic text-muted-foreground">
+          {note}
+        </div>
       ) : null}
     </div>
   );
@@ -692,7 +698,7 @@ function CurrencyEditor({
         </FieldLabel>
         <InputGroup className="rounded-lg border border-border/40 bg-muted/10">
           <InputGroupAddon align="inline-start" className="px-2.5">
-            <InputGroupText className="text-[0.65rem] font-extrabold">
+            <InputGroupText className="text-[0.75rem] font-extrabold">
               {t("shortlist.currencyCode")}
             </InputGroupText>
           </InputGroupAddon>
@@ -852,13 +858,13 @@ function ShortlistRowEditor({
                   : formatCurrency(gapInfo.amount, locale)}
               </strong>
               {gapInfo.tone !== "match" ? (
-                <span className="text-[0.65rem] font-medium text-muted-foreground">
+                <span className="text-[0.75rem] font-medium text-muted-foreground">
                   {t(gapInfo.labelKey)}
                 </span>
               ) : null}
             </>
           ) : (
-            <span className="text-[0.65rem] font-medium text-muted-foreground">
+            <span className="text-[0.75rem] font-medium text-muted-foreground">
               {t("shortlist.enterTargetToCompare")}
             </span>
           )}
@@ -1434,7 +1440,7 @@ export function ShortlistDrawer({
               <div className="v2-kicker">{t("shortlist.savedProperties")}</div>
               <CardTitle className="mt-1 flex min-w-0 items-center gap-2 text-lg font-extrabold normal-case leading-none tracking-tight">
                 <span className="truncate">{t("shortlist.title")}</span>
-                <Badge className="h-5 shrink-0 px-1.5 text-[0.62rem] font-extrabold">
+                <Badge className="h-5 shrink-0 px-1.5 text-[var(--text-xs)] font-extrabold">
                   {rows.length}
                 </Badge>
               </CardTitle>
@@ -1481,7 +1487,7 @@ export function ShortlistDrawer({
                   aria-pressed={viewMode === "list"}
                   aria-label={t("shortlist.view.listAria")}
                   onClick={() => setViewMode("list")}
-                  className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                  className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                 >
                   <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                   {t("shortlist.view.list")}
@@ -1493,7 +1499,7 @@ export function ShortlistDrawer({
                   aria-pressed={viewMode === "compare"}
                   aria-label={t("shortlist.view.compareAria")}
                   onClick={() => setViewMode("compare")}
-                  className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                  className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                 >
                   <TableIcon data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                   {t("shortlist.view.compare")}
@@ -1510,7 +1516,7 @@ export function ShortlistDrawer({
                   >
                     <SelectTrigger
                       aria-labelledby={sortLabelId}
-                      className="h-8 min-w-0 rounded-lg border-border/50 bg-card px-2 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                      className="h-8 min-w-0 rounded-lg border-border/50 bg-card px-2 text-[0.75rem] font-extrabold uppercase tracking-wider"
                     >
                       <ArrowUpDown
                         data-icon="inline-start"
@@ -1557,7 +1563,7 @@ export function ShortlistDrawer({
               {shareError && (
                 <div
                   role="alert"
-                  className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.65rem] font-medium text-destructive"
+                  className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
                 >
                   {shareError}
                 </div>
@@ -1630,7 +1636,7 @@ export function ShortlistDrawer({
                             ? `${highlight.row.block.block} ${highlight.row.block.streetName}`
                             : t("shortlist.na")}
                         </strong>
-                        <span className="mt-0.5 block text-[0.66rem] font-extrabold text-primary">
+                        <span className="mt-0.5 block text-[0.75rem] font-extrabold text-primary">
                           {highlight.sub}
                         </span>
                       </div>
@@ -1779,7 +1785,7 @@ export function ShortlistDrawer({
                                       <strong className="block truncate text-sm font-extrabold leading-tight tracking-tight">
                                         {row.block.block} {row.block.streetName}
                                       </strong>
-                                      <span className="block truncate text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
+                                      <span className="block truncate text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                                         {localizeTownName(row.block.town, locale)}
                                         {row.block.flatTypes[0]
                                           ? ` - ${row.block.flatTypes[0]}`
@@ -1798,9 +1804,9 @@ export function ShortlistDrawer({
                                         t={t}
                                         locale={locale}
                                         variant="compact"
-                                        className="block text-[0.58rem] font-bold"
+                                        className="block text-[var(--text-xs)] font-bold"
                                       />
-                                      <span className="block text-[0.6rem] font-semibold text-muted-foreground">
+                                      <span className="block text-[var(--text-xs)] font-semibold text-muted-foreground">
                                         {row.detailSummary?.pricePerSqftMedian
                                           ? t("unit.psf", {
                                               value: formatNumber(
@@ -1814,7 +1820,7 @@ export function ShortlistDrawer({
                                     </span>
                                   </div>
 
-                                  <div className="mt-2 flex min-w-0 items-center gap-3 text-[0.65rem] font-semibold text-muted-foreground">
+                                  <div className="mt-2 flex min-w-0 items-center gap-3 text-[0.75rem] font-semibold text-muted-foreground">
                                     <MiniSpark color={accentColor} points={row.monthlyTrend} />
                                     <span>{t("unit.years", { value: getLeaseYears(row) })}</span>
                                     {row.block.nearestMrt ? (
@@ -1848,11 +1854,11 @@ export function ShortlistDrawer({
                                         <>
                                           <Badge
                                             variant="outline"
-                                            className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                                            className="w-fit text-[var(--text-xs)] font-bold uppercase tracking-wider"
                                           >
                                             {t(QUALITY_LABEL_KEYS[qualityTag])}
                                           </Badge>
-                                          <span className="text-[0.58rem] font-semibold uppercase tracking-[0.08em]">
+                                          <span className="text-[var(--text-xs)] font-semibold uppercase tracking-wider">
                                             {t(QUALITY_HINT_KEYS[qualityTag])}
                                           </span>
                                         </>
@@ -1860,7 +1866,7 @@ export function ShortlistDrawer({
                                     })()}
                                     <span
                                       className={cn(
-                                        "ml-auto text-right text-[0.62rem] font-extrabold uppercase tracking-[0.08em]",
+                                        "ml-auto text-right text-[var(--text-xs)] font-extrabold uppercase tracking-wider",
                                         gapInfo?.tone === "positive" && "text-success",
                                         gapInfo?.tone === "negative" && "text-destructive",
                                         gapInfo?.tone === "match" && "text-primary",
@@ -2036,7 +2042,7 @@ export function ShortlistDrawer({
                                           </span>
                                           <Badge
                                             variant={idx === 0 ? "default" : "secondary"}
-                                            className="h-5 shrink-0 text-[0.58rem] font-extrabold v2-tabular"
+                                            className="h-5 shrink-0 text-[var(--text-xs)] font-extrabold v2-tabular"
                                             title={formatMeters(mrt.distanceMeters, t, locale)}
                                             aria-label={`${formatMinutesWalk(mrt.walkingTimeSeconds, t, locale)} (${formatMeters(mrt.distanceMeters, t, locale)})`}
                                           >

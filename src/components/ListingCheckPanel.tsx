@@ -767,7 +767,7 @@ export function ListingCheckPanel({
           <div className="flex-1">
             <h3 className="text-sm font-bold tracking-tight">{t("check.primaryAction")}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{t("check.valueStatement")}</p>
-            <p className="mt-1 text-[0.62rem] font-medium text-success">
+            <p className="mt-1 text-[var(--text-xs)] font-medium text-success">
               {t("check.trustStatement")}
             </p>
           </div>
@@ -863,7 +863,7 @@ export function ListingCheckPanel({
         {detail && detail.recentTransactions.length > 0 && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                 {t("askingCheck.askingPrice")}
               </span>
               <Input
@@ -881,7 +881,7 @@ export function ListingCheckPanel({
               />
             </label>
             <label className="flex flex-col gap-1">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                 {t("askingCheck.floorArea")}
               </span>
               <Input
@@ -899,7 +899,7 @@ export function ListingCheckPanel({
             </label>
             {flatTypeOptions.length > 1 && (
               <label className="flex flex-col gap-1">
-                <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                   {t("askingCheck.flatType")}
                 </span>
                 <Select
@@ -921,7 +921,7 @@ export function ListingCheckPanel({
             )}
             {storeyOptions.length > 0 && (
               <label className="flex flex-col gap-1">
-                <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                   {t("askingCheck.storey")}
                 </span>
                 <Select
@@ -942,7 +942,7 @@ export function ListingCheckPanel({
               </label>
             )}
             <label className="flex flex-col gap-1 sm:col-span-2">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                 {t("check.leaseYear")}
               </span>
               <Input
@@ -1058,7 +1058,7 @@ export function ListingCheckPanel({
                   <TooltipTrigger asChild>
                     <Badge
                       variant={confidenceBadgeVariant(result.confidence.level)}
-                      className="h-5 w-fit font-mono text-[0.6rem]"
+                      className="h-5 w-fit font-mono text-[var(--text-xs)]"
                       data-testid="listing-check-confidence-badge"
                     >
                       {t("check.confidence.label", {
@@ -1071,7 +1071,7 @@ export function ListingCheckPanel({
                   </TooltipContent>
                 </Tooltip>
                 <p
-                  className="text-[0.62rem] leading-snug text-muted-foreground sm:hidden"
+                  className="text-[var(--text-xs)] leading-snug text-muted-foreground sm:hidden"
                   data-testid="listing-check-confidence-summary"
                 >
                   {result.confidence.summary}
@@ -1081,7 +1081,7 @@ export function ListingCheckPanel({
                     <TooltipTrigger asChild>
                       <Badge
                         variant="outline"
-                        className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]"
+                        className="h-5 text-[var(--text-xs)] font-bold uppercase tracking-wider"
                       >
                         {t(QUALITY_LABEL_KEYS[qualityTag])}
                       </Badge>
@@ -1155,7 +1155,7 @@ export function ListingCheckPanel({
             {/* Caveats */}
             {result.caveats.length > 0 && (
               <div className="rounded-md bg-muted/20 p-3">
-                <h4 className="mb-2 text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                <h4 className="mb-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                   {t("check.caveatsTitle")}
                 </h4>
                 <ul className="flex flex-col gap-1.5">

@@ -34,7 +34,7 @@ typography:
     fontFamily: "IBM Plex Sans, system-ui, sans-serif"
     fontSize: "0.625rem"
     fontWeight: 600
-    letterSpacing: "0.1em"
+    letterSpacing: "0.12em"
     textTransform: "uppercase"
 rounded:
   none: "0px"
@@ -109,7 +109,7 @@ This system explicitly rejects: cluttered marketplace grids (PropertyGuru), life
 
 - Single-accent palette: cyan as the only chromatic voice; everything else is slate
 - Squared-off geometry: no rounded corners on interactive elements (buttons, badges, inputs)
-- Uppercase micro-labels: 0.625rem, 600 weight, 0.1em tracking for metadata and actions
+- Uppercase micro-labels: `var(--text-xs)`, 600 weight, `var(--tracking-label)` tracking for metadata and actions
 - Underline inputs: border-bottom only, no full-border input fields
 - Subtle elevation: cards use `shadow-sm` + `ring-1` at 5% opacity; the system is nearly flat
 - Light/dark parity: every color token uses `light-dark()` for automatic theme switching
@@ -160,16 +160,29 @@ The palette is deliberately restrained. Cyan is the only accent; slate neutrals 
 
 ### Hierarchy
 
-- **Title** (600 weight, 1.125rem / 18px, 1.4 line-height): Card titles, section headers. Uppercase with 0.05em tracking. Appears sparingly — not an eyebrow on every section.
-- **Body** (400 weight, 1rem / 16px, 1.5 line-height): Primary content, descriptions, transaction rows. Max line length 65–75ch in prose contexts.
-- **Label** (600 weight, 0.625rem / 10px, 1.4 line-height, 0.1em tracking, uppercase): Badges, button text, metadata tags, filter labels, table column headers. The workhorse of the micro-typography system.
-- **Data** (400–500 weight, inherits size): Numbers, prices, statistics. Tabular figures where possible; right-aligned in table columns.
+- **--text-2xl** (1.5rem / 24px): Large display headings. Used sparingly.
+- **--text-xl** (1.25rem / 20px): Guide prose h1, prominent section headers.
+- **--text-lg** (1.125rem / 18px): Card titles, section headers. Uppercase with subtle tracking.
+- **--text-base** (1rem / 16px): Primary body content, descriptions, transaction rows. Max line length 65ch in prose contexts.
+- **--text-sm** (0.8125rem / 13px): Secondary data, compact values, stats in table cells.
+- **Tab size** (0.75rem / 12px): Mode toggles, panel tab labels, empty-state prompts, field hints.
+- **--text-xs** (0.625rem / 10px): Badges, button text, metadata tags, filter labels, table column headers. The workhorse of the micro-typography system. Label tracking at `var(--tracking-label)` (0.12em), uppercase.
+- **Kicker** (0.56rem / ~9px): The smallest intentional size — used only for `.v2-kicker` eyebrow text. Same `var(--tracking-label)` as labels.
+- **Data** (400–500 weight, inherits size): Numbers, prices, statistics. Tabular figures via `.v2-tabular`; right-aligned in table columns.
+
+### Letter-Spacing Tokens
+
+- `--tracking-label`: 0.12em — uppercase micro-labels, kickers, section titles, field hints.
+- `--tracking-wide`: 0.05em — tab buttons, action labels at `--text-xs`.
+- `--tracking-tight`: -0.01em — guide prose headings (h1–h3).
+
+These replace the ad-hoc 0.04em/0.14em/0.16em/0.18em values that previously proliferated.
 
 ### Named Rules
 
-**The Single Family Rule.** IBM Plex Sans everywhere. No heading/secondary font pair. Weight (400→500→600→700) and scale (0.625rem→1rem→1.125rem) create the hierarchy.
+**The Single Family Rule.** IBM Plex Sans everywhere. No heading/secondary font pair. Weight (400→500→600→700) and scale (`var(--text-xs)`→1rem→1.125rem) create the hierarchy.
 
-**The Micro-Label Rule.** Secondary metadata, filter chips, action buttons, and badge text are always 0.625rem / 600 weight / 0.1em tracking / uppercase. This is the system's signature typographic gesture — consistent, not sprinkled.
+**The Micro-Label Rule.** Secondary metadata, filter chips, action buttons, and badge text are always `var(--text-xs)` (0.625rem) / 600 weight / `var(--tracking-label)` (0.12em) / uppercase. This is the system's signature typographic gesture — consistent, not sprinkled.
 
 ## 4. Elevation
 
@@ -196,7 +209,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 - **Ghost:** `bg-transparent`. Hover: muted background fill.
 - **Destructive:** `bg-critical-red/10 text-critical-red`. Hover: 20% background opacity.
 - **Sizes:** Default (h-10, px-6), sm (h-9, px-4), xs (h-7, px-3), lg (h-11, px-8), plus icon-only variants (size-10, size-9, size-7, size-11).
-- **Typography:** 0.625rem, 600 weight, 0.1em tracking, uppercase.
+- **Typography:** `var(--text-xs)` (0.625rem), 600 weight, `var(--tracking-label)` tracking, uppercase.
 - **Focus:** `ring-2 ring-ring/30` with ring matching Deep Cyan.
 
 ### Cards
@@ -225,7 +238,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 **Character:** The smallest typographic element — purely textual, no background, no border. Identified by weight, tracking, and case.
 
 - **Shape:** `rounded-none`. `bg-transparent`, `border-0`, `px-0 py-0`. Zero chrome.
-- **Typography:** 0.625rem, 600 weight, 0.1em tracking, uppercase.
+- **Typography:** `var(--text-xs)`, 600 weight, `var(--tracking-label)` tracking, uppercase.
 - **Variants:** default (foreground), secondary (muted-foreground), destructive (critical-red).
 - **Usage:** Town names, price ranks, flat types, metadata tags in lists and tables.
 
@@ -252,7 +265,7 @@ The system is essentially flat. Depth is conveyed through tonal layering (Cool S
 
 - ✅ Use Deep Cyan sparingly — primary buttons, focus rings, active links only
 - ✅ Keep cards squared-off (`rounded-none`) and clean — data containers, not decorative panels
-- ✅ Use uppercase micro-labels (0.625rem, 600w, 0.1em tracking) consistently for metadata
+- ✅ Use uppercase micro-labels (`var(--text-xs)`, 600w, `var(--tracking-label)` tracking) consistently for metadata
 - ✅ Use underline-only inputs — `border-b-input` with no background fill
 - ✅ Prefer high-density layouts: tight headers, compact tables, small badges
 - ✅ Let `light-dark()` handle theme switching automatically
