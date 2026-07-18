@@ -27,7 +27,7 @@ export function FlatTypePriceLadder({ entries, className }: FlatTypePriceLadderP
         <li key={entry.flatType} className="flex items-center gap-1.5">
           <div
             className={cn(
-              "rounded-md border px-2 py-1 text-center",
+              "rounded-none border px-2 py-1 text-center",
               entry.medianPrice === null
                 ? "border-dashed border-border/40 bg-muted/30 text-muted-foreground"
                 : "border-border/30 bg-background",

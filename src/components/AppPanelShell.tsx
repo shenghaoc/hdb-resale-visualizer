@@ -52,7 +52,7 @@ export function AppPanelShell({
           <Button
             variant="outline"
             size="xs"
-            className="h-8 rounded-lg bg-popover px-3 v2-section-title transition-colors hover:text-foreground shadow-lg"
+            className="v2-chrome h-8 px-3 v2-section-title transition-colors hover:text-foreground"
             onClick={onShowHeader}
           >
             {showHeaderLabel}
@@ -69,7 +69,7 @@ export function AppPanelShell({
             data-open={isLeftPanelOpen ? "true" : "false"}
             data-mode={leftTab}
             className={cn(
-              "pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden overscroll-contain border bg-popover transition-[transform,opacity] duration-200 ease-out shadow-xl",
+              "v2-panel pointer-events-auto absolute bottom-20 left-6 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden overscroll-contain transition-[transform,opacity] duration-200 ease-out",
               detailVisible || detailLoading
                 ? "max-h-[min(calc(100vh-8rem),52rem)]"
                 : "max-h-[min(44rem,calc(100vh-12rem))]",
@@ -136,7 +136,7 @@ export function AppPanelShell({
             data-open={isSavedPanelOpen ? "true" : "false"}
             data-mode="saved"
             className={cn(
-              "pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden overscroll-contain border bg-popover transition-[transform,opacity,left] duration-200 ease-out shadow-xl",
+              "v2-panel pointer-events-auto absolute bottom-20 flex max-w-[calc(100vw-3rem)] flex-col overflow-hidden overscroll-contain transition-[transform,opacity,left] duration-200 ease-out",
               "max-h-[min(44rem,calc(100vh-12rem))] min-h-[24rem] w-[min(28rem,32vw)]",
               isSavedPanelOpen
                 ? "translate-y-0 opacity-100"
@@ -164,7 +164,7 @@ export function AppPanelShell({
             <div
               id="mobile-panel"
               className={cn(
-                "pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden overscroll-contain border bg-popover transition-[transform,opacity] shadow-xl",
+                "v2-panel pointer-events-auto absolute inset-x-0 bottom-0 overflow-hidden overscroll-contain transition-[transform,opacity]",
                 activeFilterChipCount > 0 ? "top-[4.5rem]" : "top-0",
               )}
             >

@@ -41,7 +41,7 @@ export function ComparableTransactionsList({
     <section>
       <button
         type="button"
-        className="mb-2 flex w-full items-center justify-between gap-2 rounded-md border border-border/40 bg-muted/20 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/40"
+        className="mb-2 flex w-full items-center justify-between gap-2 rounded-none border border-border/40 bg-muted/20 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/40"
         aria-expanded={expanded}
         onClick={onToggle}
       >
@@ -75,7 +75,7 @@ export function ComparableTransactionsList({
             return (
               <li
                 key={tx.id}
-                className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
+                className="flex items-center justify-between gap-2 rounded-none bg-muted/20 px-3 py-2 text-xs cv-auto"
               >
                 <div className="flex min-w-0 flex-col gap-0.5">
                   <div className="flex items-baseline gap-1.5">

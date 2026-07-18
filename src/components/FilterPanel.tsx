@@ -55,7 +55,7 @@ type FilterPanelProps = {
 const ALL_VALUE = "__all__";
 
 const FILTER_INLINE_ACTION_CLASS =
-  "gap-1 rounded-lg px-2 text-[0.75rem] font-extrabold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
+  "gap-1 rounded-none px-2 text-[0.75rem] font-extrabold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
 
 function parseOptionalNumberValue(value: string) {
   if (value === "") {
@@ -96,7 +96,7 @@ function SelectField({
         >
           <SelectTrigger
             aria-labelledby={labelId}
-            className="h-9 w-full rounded-lg border-border/40 bg-card px-2"
+            className="h-9 w-full rounded-none border-border/40 bg-card px-2"
           >
             <SelectValue placeholder={allLabel} />
           </SelectTrigger>
@@ -126,7 +126,7 @@ type AffordabilityFilterFieldProps = {
 function AffordabilityFilterField({ value, onChange, disabled, t }: AffordabilityFilterFieldProps) {
   const legendId = useId();
   const buttonClass =
-    "h-7 w-full justify-start rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider disabled:cursor-not-allowed disabled:opacity-50";
+    "h-7 w-full justify-start rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider disabled:cursor-not-allowed disabled:opacity-50";
 
   const options: ReadonlyArray<{ mode: AffordabilityMode; label: string; aria: string }> = [
     {
@@ -153,7 +153,7 @@ function AffordabilityFilterField({ value, onChange, disabled, t }: Affordabilit
       data-testid="affordability-filter-toggle"
       data-affordability-mode={value || "all"}
       data-affordability-disabled={disabled ? "true" : "false"}
-      className="w-full gap-0 rounded-lg border border-border/40 bg-card p-0.5"
+      className="w-full gap-0 rounded-none border border-border/40 bg-card p-0.5"
     >
       {options.map((option) => {
         const isActive = (value || "") === option.mode;
@@ -234,7 +234,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 variant="outline"
                 size="sm"
                 data-testid="filters-panel-toggle"
-                className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card px-2.5 text-[0.75rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
+                className="hidden h-10 shrink-0 gap-1.5 rounded-none border-border/40 bg-card px-2.5 text-[0.75rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
                 onClick={desktopToggle.onToggle}
                 aria-expanded={desktopToggle.isOpen}
               >

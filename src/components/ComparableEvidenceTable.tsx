@@ -126,7 +126,7 @@ export function ComparableEvidenceTable({
     return (
       <section className="flex flex-col gap-3">
         {caveats.length > 0 && (
-          <div className="rounded-md bg-warning/5 p-3">
+          <div className="rounded-none bg-warning/5 p-3">
             <ul className="flex flex-col gap-1.5">
               {caveats.map((caveat, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-warning">
@@ -137,7 +137,7 @@ export function ComparableEvidenceTable({
             </ul>
           </div>
         )}
-        <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+        <div className="flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <Info
             data-icon
             className="mt-0.5 size-4 shrink-0 text-muted-foreground/70"
@@ -153,7 +153,7 @@ export function ComparableEvidenceTable({
     <section className="flex flex-col gap-3">
       {/* ── Caveat banner ─────────────────────────────────────────────── */}
       {caveats.length > 0 && (
-        <div className="rounded-md bg-warning/5 p-3">
+        <div className="rounded-none bg-warning/5 p-3">
           <ul className="flex flex-col gap-1.5">
             {caveats.map((caveat, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-warning">
@@ -166,7 +166,7 @@ export function ComparableEvidenceTable({
       )}
 
       {/* ── "Why these comparables?" ──────────────────────────────────── */}
-      <div className="rounded-md bg-muted/10">
+      <div className="rounded-none bg-muted/10">
         <button
           type="button"
           className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/20"
@@ -323,7 +323,7 @@ export function ComparableEvidenceTable({
               key={key}
               type="button"
               className={cn(
-                "shrink-0 rounded-full px-2.5 py-1 text-[var(--text-xs)] font-semibold uppercase tracking-wider transition-colors",
+                "shrink-0 rounded-none px-2.5 py-1 text-[var(--text-xs)] font-semibold uppercase tracking-wider transition-colors",
                 key === sortKey
                   ? "bg-primary/15 text-primary"
                   : "bg-muted/20 text-muted-foreground hover:bg-muted/40",
@@ -339,7 +339,7 @@ export function ComparableEvidenceTable({
         {sorted.map((tx) => (
           <article
             key={tx.transactionId}
-            className="rounded-md bg-muted/20 p-3"
+            className="rounded-none bg-muted/20 p-3"
             aria-label={`${formatCompactCurrency(tx.resalePrice, locale)}, ${tx.block} ${tx.streetName}, ${formatMonth(tx.month, locale)}`}
           >
             <div className="flex items-baseline justify-between gap-2">

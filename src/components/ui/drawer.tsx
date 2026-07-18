@@ -73,14 +73,13 @@ function DrawerContent({ className, hideHandle = false, children, ...props }: Dr
       role="dialog"
       aria-modal="false"
       className={cn(
-        "flex min-h-0 flex-col overflow-hidden overscroll-contain border border-border bg-background shadow-lg outline-none",
-        "rounded-lg",
+        "flex min-h-0 flex-col overflow-hidden overscroll-contain rounded-none border border-border bg-background shadow-sm outline-none",
         className,
       )}
       {...props}
     >
       {hideHandle ? null : (
-        <div className="mx-auto mt-3 h-1 w-10 shrink-0 rounded-full bg-muted-foreground/30" />
+        <div className="mx-auto mt-3 h-0.5 w-8 shrink-0 bg-muted-foreground/30" />
       )}
       {children}
     </div>
@@ -101,7 +100,7 @@ function DrawerTitle({ className, ...props }: React.ComponentProps<"h2">) {
   return (
     <h2
       data-slot="drawer-title"
-      className={cn("font-heading text-lg font-semibold tracking-tight", className)}
+      className={cn("font-heading text-lg font-semibold tracking-wider uppercase", className)}
       {...props}
     />
   );

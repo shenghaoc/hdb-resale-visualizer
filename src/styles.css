@@ -127,16 +127,12 @@
   --warning: light-dark(#b45309, #fbbf24);
   --warning-foreground: light-dark(#451a03, #2a1a02);
   --border: light-dark(rgba(15, 23, 42, 0.08), rgba(34, 211, 238, 0.12));
-  /* Shared tokens derived from --primary — reused for hover/active tints and
-     glass hairlines so colour adjustments propagate from one source.
+  /* Shared tokens derived from --primary — reused for hover/active tints so
+     colour adjustments propagate from one source.
      Note: --primary itself is light-dark(), so the nested var() inside the
      light-dark() arms below resolves correctly per-element at computed-value
      time — each consumer's own color-scheme picks the right --primary arm. */
   --primary-soft-bg: color-mix(in oklab, var(--primary) 10%, transparent);
-  --glass-border: light-dark(
-    rgba(195, 198, 215, 0.3),
-    color-mix(in oklab, var(--primary) 10%, transparent)
-  );
   --input: light-dark(#e2e8f0, #111f35);
   --ring: var(--primary);
   --chart-1: var(--primary);
@@ -144,9 +140,15 @@
   --chart-3: light-dark(#f59e0b, #fb923c);
   --chart-4: light-dark(#10b981, #4ade80);
   --chart-5: light-dark(#ec4899, #f472b6);
-  --panel: light-dark(oklch(0.99 0.005 210 / 0.92), oklch(0.09 0.04 232 / 0.92));
-  --panel-border: light-dark(oklch(0.65 0.09 210 / 0.5), oklch(0.5 0.1 196 / 0.3));
-  --radius: 0.5rem;
+  /* Floating workbench surfaces stay opaque — no frosted glass. */
+  --panel: light-dark(#ffffff, #0d1628);
+  --panel-border: var(--border);
+  /* Radius token exists for rare exceptions (tooltips, map popups).
+     Interactive chrome uses rounded-none per DESIGN.md. */
+  --radius: 0.375rem;
+  /* Card Rest — the only elevation tier for workbench surfaces. */
+  --shadow-surface: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-surface-hover: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
   --sidebar: light-dark(#f1f5f9, #060c18);
   --sidebar-foreground: var(--foreground);
   --sidebar-primary: var(--primary);
@@ -211,30 +213,58 @@
   overflow: hidden;
 }
 
-/* Multi-value shadows cannot live inside light-dark() (commas inside a
-   substituted var() collide with the function's argument separators), so we
-   drive them via a single custom property and override it in .dark. The cyan
-   tint is now derived from --primary instead of hardcoded rgba. */
+/* Workbench surfaces: opaque, squared, hairline ring + Card Rest shadow.
+   Multi-value shadows cannot live inside light-dark() (commas inside a
+   substituted var() collide with the function's argument separators). */
+.v2-surface,
 .v2-card {
-  --shadow-card: 0 2px 8px rgba(23, 28, 31, 0.04);
-  --shadow-card-hover: 0 4px 16px color-mix(in oklab, var(--primary) 6%, transparent);
-  --shadow-card-featured: 0 4px 16px color-mix(in oklab, var(--primary) 10%, transparent);
-  --shadow-card-expanded: 0 12px 32px rgba(23, 28, 31, 0.1);
+  --shadow-card: var(--shadow-surface);
+  --shadow-card-hover: var(--shadow-surface-hover);
+  --shadow-card-featured: 0 1px 2px 0 color-mix(in oklab, var(--primary) 12%, transparent);
+  --shadow-card-expanded: 0 2px 8px rgba(15, 23, 42, 0.08);
 
-  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
-  background: color-mix(in oklab, var(--card) 96%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--card);
   box-shadow: var(--shadow-card);
 }
 
+.dark .v2-surface,
 .dark .v2-card {
   --shadow-card:
-    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 2px 16px rgba(4, 12, 24, 0.55);
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 1px 2px rgba(4, 12, 24, 0.45);
   --shadow-card-hover:
-    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 4px 20px rgba(4, 12, 24, 0.5);
+    0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent), 0 1px 3px rgba(4, 12, 24, 0.55);
   --shadow-card-featured:
-    0 0 0 1px color-mix(in oklab, var(--primary) 12%, transparent), 0 8px 24px rgba(4, 12, 24, 0.6);
+    0 0 0 1px color-mix(in oklab, var(--primary) 18%, transparent), 0 1px 3px rgba(4, 12, 24, 0.6);
   --shadow-card-expanded:
-    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 16px 48px rgba(4, 12, 24, 0.65);
+    0 0 0 1px color-mix(in oklab, var(--primary) 10%, transparent), 0 2px 12px rgba(4, 12, 24, 0.65);
+}
+
+/* Floating map chrome (header chips, tab bars, map controls). */
+.v2-chrome {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--popover);
+  box-shadow: var(--shadow-surface);
+}
+
+.dark .v2-chrome {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 1px 2px rgba(4, 12, 24, 0.45);
+}
+
+/* Workbench panels — drafting-table overlays on the map. */
+.v2-panel {
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--popover);
+  box-shadow: var(--shadow-surface);
+}
+
+.dark .v2-panel {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 1px 2px rgba(4, 12, 24, 0.45);
 }
 
 .v2-kicker,
@@ -362,17 +392,15 @@
   bottom: 0.5rem;
   z-index: 5;
   max-width: min(72vw, 22rem);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-sm);
-  background: color-mix(in oklab, var(--background) 88%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--popover);
   padding: 0.25rem 0.5rem;
   font-size: 0.625rem;
   line-height: 1.2;
   color: light-dark(var(--foreground), color-mix(in oklab, var(--foreground) 70%, transparent));
   text-decoration: none;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 2px 8px rgba(23, 28, 31, 0.04);
+  box-shadow: var(--shadow-surface);
 }
 
 .map-attribution-link:hover {
@@ -402,9 +430,9 @@
   min-height: 14rem;
 }
 
-/* Mobile tab bar */
+/* Mobile tab bar — solid workbench chrome, no frost */
 .mobile-tab-bar {
-  --shadow-mobile-tab: 0 -4px 16px rgba(23, 28, 31, 0.04);
+  --shadow-mobile-tab: 0 -1px 0 var(--border);
 
   position: fixed;
   bottom: 0;
@@ -413,18 +441,15 @@
   z-index: 50;
   display: flex;
   align-items: stretch;
-  border-top: 1px solid var(--glass-border);
+  border-top: 1px solid var(--border);
   gap: 0.25rem;
-  background: color-mix(in oklab, var(--background) 92%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: var(--popover);
   padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
   box-shadow: var(--shadow-mobile-tab);
 }
 
 .dark .mobile-tab-bar {
-  --shadow-mobile-tab:
-    0 -1px 0 color-mix(in oklab, var(--primary) 6%, transparent), 0 -8px 32px rgba(4, 12, 24, 0.65);
+  --shadow-mobile-tab: 0 -1px 0 color-mix(in oklab, var(--primary) 10%, transparent);
 }
 
 /* Shared base for every "tab-bar / mode" trigger button. Per-element rules
@@ -462,10 +487,10 @@
   gap: 0.25rem;
   height: 3rem;
   min-width: 0;
-  border-radius: 0.375rem;
+  border-radius: 0;
   padding: 0.5rem 0.25rem;
   font-size: 0.625rem;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-wide);
   white-space: normal;
 }
 
@@ -483,7 +508,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 0.2rem;
-  border-radius: 0.375rem;
+  border-radius: 0;
   background: transparent;
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
@@ -492,7 +517,7 @@
 }
 
 .desktop-tab-bar {
-  --shadow-desktop-tab: 0 8px 24px rgba(23, 28, 31, 0.08);
+  --shadow-desktop-tab: var(--shadow-surface);
 
   position: fixed;
   bottom: 1.5rem;
@@ -500,19 +525,17 @@
   z-index: 50;
   display: flex;
   align-items: stretch;
-  gap: 0.25rem;
-  border: 1px solid var(--glass-border);
-  border-radius: 0.75rem;
-  background: color-mix(in oklab, var(--background) 92%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  gap: 0.125rem;
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--popover);
   padding: 0.25rem;
   box-shadow: var(--shadow-desktop-tab);
 }
 
 .dark .desktop-tab-bar {
   --shadow-desktop-tab:
-    0 0 0 1px color-mix(in oklab, var(--primary) 6%, transparent), 0 8px 32px rgba(4, 12, 24, 0.65);
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 1px 2px rgba(4, 12, 24, 0.45);
 }
 
 .desktop-tab-bar-divider {
@@ -527,7 +550,7 @@
   min-width: 2.625rem;
   width: 2.625rem;
   height: 2.625rem;
-  border-radius: 0.5rem;
+  border-radius: 0;
   padding: 0;
 }
 
@@ -535,7 +558,7 @@
   justify-content: center;
   min-width: 6.75rem;
   height: 2.625rem;
-  border-radius: 0.5rem;
+  border-radius: 0;
   padding: 0.5rem 0.75rem;
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-wide);
@@ -642,11 +665,11 @@
 }
 
 .map-popup .maplibregl-popup-content {
-  --shadow-popup: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --shadow-popup: var(--shadow-surface);
 
   background: var(--popover);
   color: var(--popover-foreground);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   border: 1px solid light-dark(var(--border), color-mix(in oklab, var(--primary) 15%, transparent));
   padding: 0.85rem 1rem;
   box-shadow: var(--shadow-popup);
@@ -656,7 +679,7 @@
 
 .dark .map-popup .maplibregl-popup-content {
   --shadow-popup:
-    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 16px 40px rgba(4, 12, 24, 0.85);
+    0 0 0 1px color-mix(in oklab, var(--primary) 8%, transparent), 0 2px 12px rgba(4, 12, 24, 0.75);
 }
 
 .map-popup .maplibregl-popup-content strong {
@@ -701,7 +724,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0;
   background: transparent;
   padding: 0;
   color: var(--muted-foreground);
@@ -750,10 +773,8 @@
   .maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib {
     margin: 0;
     max-width: min(70vw, 22rem);
-    border-radius: 0.375rem;
-    background: color-mix(in oklab, var(--background) 88%, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    border-radius: 0;
+    background: var(--popover);
   }
 
   .map-view .maplibregl-ctrl-top-right {
@@ -956,17 +977,19 @@ html {
   color: var(--foreground);
 }
 
-/* Respect users who request reduced transparency — drop blurs and use the
-   solid surface colour beneath them. Covers every backdrop-filter site. */
+/* Workbench chrome is already opaque; keep the media query as a safety net
+   for any residual translucent map controls. */
 @media (prefers-reduced-transparency: reduce) {
   .mobile-tab-bar,
   .desktop-tab-bar,
   .map-attribution-link,
   .maplibregl-ctrl-bottom-right .maplibregl-ctrl-attrib,
-  .maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib {
+  .maplibregl-ctrl-bottom-left .maplibregl-ctrl-attrib,
+  .v2-chrome,
+  .v2-panel {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background: var(--background);
+    background: var(--popover);
   }
 }
 

@@ -23,8 +23,7 @@ type PriceHeatmapControlProps = {
  * and adjust its opacity via a native range slider.
  *
  * Designed to sit in the bottom-right corner of the map alongside the
- * existing colour-ramp legend, sharing the same glassmorphism styling used
- * throughout the UI.
+ * existing colour-ramp legend. Surfaces use workbench chrome (opaque, squared).
  */
 export function PriceHeatmapControl({
   isEnabled,
@@ -49,7 +48,7 @@ export function PriceHeatmapControl({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover p-2 shadow-lg",
+        "v2-chrome pointer-events-auto flex flex-col gap-2 p-2",
         className,
       )}
       style={style}
@@ -60,10 +59,10 @@ export function PriceHeatmapControl({
           aria-hidden="true"
           className={cn(
             "size-3 shrink-0 transition-colors duration-200",
-            isEnabled ? "text-orange-500 dark:text-orange-400" : "text-muted-foreground",
+            isEnabled ? "text-primary" : "text-muted-foreground",
           )}
         />
-        <p className="text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground leading-none flex-1">
+        <p className="text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground leading-none flex-1">
           {t("heatmap.label")}
         </p>
 
@@ -82,7 +81,7 @@ export function PriceHeatmapControl({
                 !hasScope && "cursor-not-allowed opacity-50",
                 hasScope &&
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
-                isEnabled && hasScope ? "bg-orange-500" : "bg-muted-foreground/30",
+                isEnabled && hasScope ? "bg-primary" : "bg-muted-foreground/30",
               )}
             >
               <span
@@ -116,9 +115,9 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
               }}
               className={cn(
-                "flex-1 rounded py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                "flex-1 rounded-none py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "price"
-                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                  ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )}
             >
@@ -134,9 +133,9 @@ export function PriceHeatmapControl({
                 if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
               }}
               className={cn(
-                "flex-1 rounded py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
+                "flex-1 rounded-none py-1 text-[var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "perSqm"
-                  ? "bg-orange-500/10 text-orange-600 dark:text-orange-400"
+                  ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )}
             >
@@ -159,7 +158,7 @@ export function PriceHeatmapControl({
               value={opacity}
               onChange={(e) => onOpacityChange(Number(e.target.value))}
               aria-label={t("heatmap.opacityLabel")}
-              className="heatmap-opacity-slider h-1 w-16 cursor-pointer appearance-none rounded-full accent-orange-500 dark:accent-orange-400"
+              className="heatmap-opacity-slider h-1 w-16 cursor-pointer appearance-none rounded-full accent-primary"
             />
           </div>
         </div>

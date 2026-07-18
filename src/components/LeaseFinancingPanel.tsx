@@ -90,7 +90,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         {t("leaseFinancing.title")}
       </div>
 
-      <div className={cn("flex items-start gap-2 rounded-lg px-3 py-2", meta.banner)}>
+      <div className={cn("flex items-start gap-2 rounded-none px-3 py-2", meta.banner)}>
         <Icon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
         <div className="flex flex-col gap-0.5">
           <span className="text-xs font-bold leading-snug">{headline}</span>
@@ -138,7 +138,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
         ) : null}
       </dl>
 
-      <div className="mt-2 flex items-start gap-2 rounded-lg bg-muted/40 px-3 py-2 text-[0.75rem] font-medium text-muted-foreground">
+      <div className="mt-2 flex items-start gap-2 rounded-none bg-muted/40 px-3 py-2 text-[0.75rem] font-medium text-muted-foreground">
         <CalendarClock className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
         <span>{decayText}</span>
       </div>

@@ -39,7 +39,7 @@ export function ScopePrompt({
     return (
       <div
         className={cn(
-          "pointer-events-auto absolute z-25 max-w-[22rem] border bg-popover p-3 text-sm shadow-lg",
+          "v2-chrome pointer-events-auto absolute z-25 max-w-[22rem] p-3 text-sm",
           isDesktop ? DESKTOP_POSITION : MOBILE_PROMPT_POSITION,
         )}
       >
@@ -56,7 +56,7 @@ export function ScopePrompt({
           <Button
             type="button"
             size="xs"
-            className="h-8 rounded-lg px-2.5 font-extrabold uppercase tracking-wider"
+            className="h-8 rounded-none px-2.5 font-extrabold uppercase tracking-wider"
             onClick={onUseCurrentLocation}
             disabled={isLocating}
           >
@@ -71,7 +71,7 @@ export function ScopePrompt({
             type="button"
             size="xs"
             variant="outline"
-            className="h-8 rounded-lg px-2.5 font-extrabold uppercase tracking-wider"
+            className="h-8 rounded-none px-2.5 font-extrabold uppercase tracking-wider"
             onClick={onChooseTown}
           >
             <SlidersHorizontal data-icon className="size-3.5" aria-hidden="true" />
@@ -82,7 +82,7 @@ export function ScopePrompt({
               type="button"
               size="xs"
               variant="outline"
-              className="h-8 rounded-lg px-2.5 text-[var(--text-xs)] font-extrabold uppercase tracking-wider"
+              className="h-8 rounded-none px-2.5 text-[var(--text-xs)] font-extrabold uppercase tracking-wider"
               onClick={onCheckListing}
             >
               <Scale data-icon className="size-3.5" aria-hidden="true" />
@@ -99,7 +99,7 @@ export function ScopePrompt({
       <div
         role="status"
         className={cn(
-          "pointer-events-auto absolute z-25 rounded-lg border border-destructive/30 bg-popover px-3 py-2 text-xs font-medium leading-snug text-destructive shadow-lg",
+          "v2-chrome pointer-events-auto absolute z-25 border-destructive/30 px-3 py-2 text-xs font-medium leading-snug text-destructive",
           isDesktop ? `${DESKTOP_POSITION} max-w-[22rem]` : MOBILE_ERROR_POSITION,
         )}
       >

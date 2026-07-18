@@ -31,7 +31,7 @@ export function DocsNav({ sections, activeSlug, navLabel }: DocsNavProps) {
                 aria-current={isActive ? "page" : undefined}
                 onClick={(event) => handleClick(event, href)}
                 className={cn(
-                  "block whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                  "block whitespace-nowrap rounded-none px-3 py-1.5 text-sm font-medium transition-colors",
                   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
                   isActive
                     ? "bg-secondary text-secondary-foreground"

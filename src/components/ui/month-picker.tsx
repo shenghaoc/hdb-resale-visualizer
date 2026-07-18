@@ -182,7 +182,7 @@ export function MonthPicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[280px] p-0 shadow-xl border-border/20 bg-popover"
+        className="w-[280px] p-0 shadow-sm border-border/20 bg-popover"
         align="start"
         aria-label={t("filters.selectMonth", { defaultValue: "Select month" })}
       >
@@ -254,9 +254,9 @@ export function MonthPicker({
                 aria-checked={isSelected}
                 tabIndex={focusableMonthIndex === index ? 0 : -1}
                 className={cn(
-                  "h-10 text-[0.75rem] font-bold uppercase tracking-wider w-full rounded-lg transition-[color,background-color]",
+                  "h-10 text-[0.75rem] font-bold uppercase tracking-wider w-full rounded-none transition-[color,background-color]",
                   isSelected
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "hover:bg-accent hover:text-accent-foreground text-muted-foreground",
                   isDisabled && "opacity-20 grayscale cursor-not-allowed",
                 )}

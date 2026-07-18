@@ -188,16 +188,30 @@ These replace the ad-hoc 0.04em/0.14em/0.16em/0.18em values that previously prol
 
 ## 4. Elevation
 
-The system is essentially flat. Depth is conveyed through tonal layering (Cool Slate BG behind Paper White cards) and a single subtle shadow tier, not a multi-level elevation ramp.
+The system is essentially flat. Depth is conveyed through tonal layering (Cool Slate BG behind Paper White cards) and a single subtle shadow tier, not a multi-level elevation ramp. No frosted glass, no multi-stop soft drop shadows.
 
 ### Shadow Vocabulary
 
-- **Card Rest** (`box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); ring: 1px solid rgba(15,23,42,0.05)`): The only elevation state. Cards and popovers sit slightly above the background with a hairline ring and minimal shadow. In dark mode, the ring shifts to a cyan tint.
+- **Card Rest** (`--shadow-surface`: `0 1px 2px 0 rgba(0,0,0,0.05)` + hairline border): The only elevation state. Cards, panels, and floating map chrome sit slightly above the map with a hairline border and this minimal shadow. In dark mode, the hairline shifts to a cyan tint.
 - **No Elevation**: Buttons, inputs, badges, and chips are flat. They indicate state through color change, not lift.
+
+### Surface Utilities (`src/styles.css`)
+
+Use these instead of ad-hoc `border bg-popover shadow-lg rounded-lg` stacks:
+
+| Class | Role |
+| --- | --- |
+| `.v2-chrome` | Floating map chrome (header chips, tab bars, map controls, scope prompt) |
+| `.v2-panel` | Large drafting-table overlays (filter/results/saved side panels) |
+| `.v2-card` / `.v2-surface` | In-panel data cards and list rows |
+
+All three are **opaque**, **square** (`border-radius: 0`), and **Card Rest** elevated. Prefer them over inventing new glass or soft-radius surfaces.
 
 ### Named Rules
 
-**The Flat-at-Rest Rule.** Nothing casts a shadow unless it's a card or popover hovering above the page background. Interactive elements stay flat; state changes use color and border, not elevation.
+**The Flat-at-Rest Rule.** Nothing casts a shadow unless it's a card, panel, or chrome surface hovering above the map. Interactive elements stay flat; state changes use color and border, not elevation.
+
+**The Opaque Chrome Rule.** Map overlays never use `backdrop-filter` or translucent fills. Legibility over the map comes from solid paper surfaces, not frost.
 
 ## 5. Components
 

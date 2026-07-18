@@ -20,7 +20,7 @@ export function LeaseWarningPanel({ signals, t }: Props) {
             key={signal.key}
             role="listitem"
             className={cn(
-              "flex items-start gap-2 rounded-lg px-3 py-2 text-xs font-medium",
+              "flex items-start gap-2 rounded-none px-3 py-2 text-xs font-medium",
               signal.severity === "warn"
                 ? "bg-destructive/10 text-destructive"
                 : "bg-muted/40 text-muted-foreground",

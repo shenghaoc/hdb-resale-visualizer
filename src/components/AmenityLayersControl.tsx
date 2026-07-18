@@ -98,14 +98,16 @@ export function AmenityLayersControl({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover p-2 text-[var(--text-xs)] shadow-lg",
+        "v2-chrome pointer-events-auto flex flex-col gap-2 p-2 text-[var(--text-xs)]",
         className,
       )}
       style={style}
     >
       <div className="flex items-center gap-1.5 text-muted-foreground">
         <MapPin data-icon className="size-3" aria-hidden />
-        <span className="font-bold uppercase tracking-[0.1em]">{t("amenity.label")}</span>
+        <span className="font-bold uppercase tracking-[var(--tracking-label)]">
+          {t("amenity.label")}
+        </span>
       </div>
 
       <div className="flex flex-col gap-1.5">

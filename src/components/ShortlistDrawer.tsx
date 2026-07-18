@@ -258,7 +258,7 @@ function ShortlistComparisonTable({
 
   return (
     <div
-      className="rounded-lg border border-border/40 bg-card v2-scrollbar"
+      className="rounded-none border border-border/40 bg-card v2-scrollbar"
       data-testid="shortlist-comparison-table"
     >
       <div className="hidden md:block overflow-x-auto">
@@ -309,7 +309,7 @@ function ShortlistComparisonTable({
                   <TableCell className="px-2 py-2">
                     <button
                       type="button"
-                      className="block rounded-sm text-left font-extrabold text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                      className="block rounded-none text-left font-extrabold text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                       onClick={() => onSelectAddress(row.addressKey)}
                       aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
                     >
@@ -367,7 +367,7 @@ function ShortlistComparisonTable({
                     {formatDelta(row.deltaVsFairMedian)}
                   </TableCell>
                   <TableCell className="px-2 py-2 text-[var(--text-xs)]">
-                    <span className="inline-block rounded-full border border-border/40 px-2 py-0.5 text-[var(--text-xs)] font-bold">
+                    <span className="inline-block rounded-none border border-border/40 px-2 py-0.5 text-[var(--text-xs)] font-bold">
                       {t(row.confidenceLevelLabel)}
                     </span>
                   </TableCell>
@@ -421,7 +421,7 @@ function ShortlistComparisonTable({
           <div
             key={`mobile-${row.addressKey}`}
             data-testid="shortlist-comparison-card"
-            className="rounded-lg border border-border/40 bg-card p-2.5"
+            className="rounded-none border border-border/40 bg-card p-2.5"
           >
             <div className="flex items-start gap-2">
               <span className="mt-0.5 w-6 shrink-0 text-center text-xs font-extrabold tabular-nums text-muted-foreground">
@@ -430,7 +430,7 @@ function ShortlistComparisonTable({
               <div className="min-w-0">
                 <button
                   type="button"
-                  className="block rounded-sm text-left font-extrabold leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                  className="block rounded-none text-left font-extrabold leading-tight text-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                   onClick={() => onSelectAddress(row.addressKey)}
                   aria-label={t("shortlist.compare.viewBlock", { address: row.address })}
                 >
@@ -584,7 +584,7 @@ function MiniSpark({ color, points }: { color: string; points: AddressTrendPoint
   }
 
   if (values.length < 2) {
-    return <span className="h-[18px] w-16 rounded-sm bg-muted/60" aria-hidden="true" />;
+    return <span className="h-[18px] w-16 rounded-none bg-muted/60" aria-hidden="true" />;
   }
 
   const range = max - min || 1;
@@ -647,7 +647,7 @@ function AmenityTile({
   note?: string | null;
 }) {
   return (
-    <div className="rounded-lg border border-border/40 bg-muted/20 p-2.5">
+    <div className="rounded-none border border-border/40 bg-muted/20 p-2.5">
       <div className="flex items-center gap-1.5">
         <Icon data-icon className="size-3.5 text-primary" aria-hidden="true" />
         <strong className="text-xs font-extrabold tracking-tight">{count}</strong>
@@ -694,7 +694,7 @@ function CurrencyEditor({
         <FieldLabel htmlFor={id} className="v2-section-title">
           {label}
         </FieldLabel>
-        <InputGroup className="rounded-lg border border-border/40 bg-muted/10">
+        <InputGroup className="rounded-none border border-border/40 bg-muted/10">
           <InputGroupAddon align="inline-start" className="px-2.5">
             <InputGroupText className="text-[0.75rem] font-extrabold">
               {t("shortlist.currencyCode")}
@@ -741,7 +741,7 @@ function NotesEditor({
           id={id}
           value={ime.localValue ?? value}
           placeholder={placeholder}
-          className="min-h-14 rounded-lg border border-border/40 bg-muted/10 px-3 py-2 text-sm"
+          className="min-h-14 rounded-none border border-border/40 bg-muted/10 px-3 py-2 text-sm"
           onCompositionStart={ime.onCompositionStart}
           onCompositionEnd={ime.onCompositionEnd}
           onChange={ime.onChange}
@@ -776,7 +776,7 @@ function DateEditor({
             type="date"
             value={value}
             placeholder={placeholder}
-            className="rounded-lg border border-border/40 bg-muted/10 text-sm"
+            className="rounded-none border border-border/40 bg-muted/10 text-sm"
             onChange={(event) => onChange(event.target.value)}
           />
         </InputGroup>
@@ -1450,7 +1450,7 @@ export function ShortlistDrawer({
                   size="icon-xs"
                   variant="outline"
                   type="button"
-                  className="rounded-lg border-border/50 bg-card"
+                  className="rounded-none border-border/50 bg-card"
                   aria-expanded={isOpen}
                   aria-controls="shortlist-content"
                   aria-label={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
@@ -1475,7 +1475,7 @@ export function ShortlistDrawer({
             <div className="flex flex-col gap-2">
               <ButtonGroup
                 aria-label={t("shortlist.view.label")}
-                className="w-fit gap-0 rounded-lg border border-border/50 bg-card p-0.5"
+                className="w-fit gap-0 rounded-none border border-border/50 bg-card p-0.5"
                 data-testid="shortlist-view-toggle"
               >
                 <Button
@@ -1485,7 +1485,7 @@ export function ShortlistDrawer({
                   aria-pressed={viewMode === "list"}
                   aria-label={t("shortlist.view.listAria")}
                   onClick={() => setViewMode("list")}
-                  className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
+                  className="h-7 rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                 >
                   <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                   {t("shortlist.view.list")}
@@ -1497,7 +1497,7 @@ export function ShortlistDrawer({
                   aria-pressed={viewMode === "compare"}
                   aria-label={t("shortlist.view.compareAria")}
                   onClick={() => setViewMode("compare")}
-                  className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
+                  className="h-7 rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                 >
                   <TableIcon data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                   {t("shortlist.view.compare")}
@@ -1514,7 +1514,7 @@ export function ShortlistDrawer({
                   >
                     <SelectTrigger
                       aria-labelledby={sortLabelId}
-                      className="h-8 min-w-0 rounded-lg border-border/50 bg-card px-2 text-[0.75rem] font-extrabold uppercase tracking-wider"
+                      className="h-8 min-w-0 rounded-none border-border/50 bg-card px-2 text-[0.75rem] font-extrabold uppercase tracking-wider"
                     >
                       <ArrowUpDown
                         data-icon="inline-start"
@@ -1552,7 +1552,7 @@ export function ShortlistDrawer({
                   csvExport={shortlistCsvExport}
                   exportAriaLabel={t("shortlist.export.csvLabel")}
                   exportAriaLabelDone={t("share.exportCsvDone")}
-                  className="rounded-lg border-border/50 bg-card"
+                  className="rounded-none border-border/50 bg-card"
                   size="icon-xs"
                   variant="outline"
                 />
@@ -1561,14 +1561,14 @@ export function ShortlistDrawer({
               {shareError && (
                 <div
                   role="alert"
-                  className="rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
+                  className="rounded-none bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
                 >
                   {shareError}
                 </div>
               )}
 
               <div className="min-w-0 overflow-x-auto v2-scrollbar">
-                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card">
+                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border-border/50 [&>*]:bg-card">
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
                     <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("shortlist.export.json")}
@@ -1625,7 +1625,7 @@ export function ShortlistDrawer({
             ) : (
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1 v2-scrollbar">
                 <div className="flex flex-col gap-3 pb-8">
-                  <div className="grid overflow-hidden rounded-lg border border-border/40 bg-border/50 sm:grid-cols-3">
+                  <div className="grid overflow-hidden rounded-none border border-border/40 bg-border/50 sm:grid-cols-3">
                     {highlights.map((highlight) => (
                       <div key={highlight.label} className="min-w-0 bg-muted/35 p-3">
                         <div className="v2-kicker">{highlight.label}</div>
@@ -1642,7 +1642,7 @@ export function ShortlistDrawer({
                   </div>
 
                   {viewMode === "list" && compareChart ? (
-                    <Card size="sm" className="v2-card gap-3 rounded-lg py-3 shadow-none">
+                    <Card size="sm" className="v2-card gap-3 rounded-none py-3 shadow-none">
                       <CardHeader className="px-3">
                         <CardTitle className="v2-section-title">
                           {t("shortlist.compareTrendsTitle")}
@@ -1752,7 +1752,7 @@ export function ShortlistDrawer({
                             role="listitem"
                             data-state={isExpanded ? "expanded" : "collapsed"}
                             className={cn(
-                              "v2-card ss-fade-in gap-0 rounded-lg py-0 transition-[border-color,box-shadow] cv-auto",
+                              "v2-card ss-fade-in gap-0 rounded-none py-0 transition-[border-color,box-shadow] cv-auto",
                               isExpanded && "shadow-[var(--shadow-card-expanded)]",
                             )}
                           >
@@ -1765,7 +1765,7 @@ export function ShortlistDrawer({
                                       current === row.item.addressKey ? null : row.item.addressKey,
                                     )
                                   }
-                                  className="flex min-w-0 flex-1 flex-col rounded-md text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                                  className="flex min-w-0 flex-1 flex-col rounded-none text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                                   aria-expanded={isExpanded}
                                   title={t(
                                     isExpanded ? "shortlist.collapseRow" : "shortlist.expandRow",
@@ -1774,7 +1774,7 @@ export function ShortlistDrawer({
                                 >
                                   <div className="flex min-w-0 items-start gap-2">
                                     <span
-                                      className="flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-extrabold text-white"
+                                      className="flex size-7 shrink-0 items-center justify-center rounded-none text-xs font-extrabold text-white"
                                       style={{ backgroundColor: accentColor }}
                                     >
                                       {index + 1}
@@ -2066,7 +2066,7 @@ export function ShortlistDrawer({
 
                                 <ButtonGroup
                                   aria-label={t("shortlist.openInPortal.group")}
-                                  className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card"
+                                  className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-none [&>*]:border-border/50 [&>*]:bg-card"
                                 >
                                   <Button asChild variant="outline" size="xs">
                                     <a
@@ -2123,7 +2123,7 @@ export function ShortlistDrawer({
                                     type="button"
                                     variant="outline"
                                     size="sm"
-                                    className="rounded-lg border-border/50"
+                                    className="rounded-none border-border/50"
                                     onClick={() => handleRemove(row.item.addressKey)}
                                   >
                                     <X
@@ -2136,7 +2136,7 @@ export function ShortlistDrawer({
                                   <Button
                                     type="button"
                                     size="sm"
-                                    className="rounded-lg"
+                                    className="rounded-none"
                                     onClick={() => onSelectAddress(row.item.addressKey)}
                                   >
                                     <MapPin
@@ -2170,7 +2170,7 @@ export function ShortlistDrawer({
               type="button"
               variant="ghost"
               size="xs"
-              className="shrink-0 rounded-lg text-xs font-semibold text-primary hover:text-primary/80"
+              className="shrink-0 rounded-none text-xs font-semibold text-primary hover:text-primary/80"
               onClick={handleUndo}
             >
               {t("shortlist.undo")}

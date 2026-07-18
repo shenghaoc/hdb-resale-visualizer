@@ -759,9 +759,9 @@ export function ListingCheckPanel({
   return (
     <section className="flex flex-col gap-5">
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="rounded-lg bg-muted/10 p-4">
+      <div className="rounded-none bg-muted/10 p-4">
         <div className="mb-3 flex items-start gap-3">
-          <div className="rounded-md bg-primary/10 p-2 text-primary">
+          <div className="rounded-none bg-primary/10 p-2 text-primary">
             <Scale data-icon className="size-4" aria-hidden="true" />
           </div>
           <div className="flex-1">
@@ -819,7 +819,7 @@ export function ListingCheckPanel({
 
         {/* ── Block info ───────────────────────────────────────────────── */}
         {selectedAddressKey && detail && (
-          <div className="mb-4 rounded-md bg-muted/20 px-3 py-2 text-xs">
+          <div className="mb-4 rounded-none bg-muted/20 px-3 py-2 text-xs">
             <span className="font-semibold text-foreground">{detail.summary.town}</span>
             <span className="mx-1.5 text-muted-foreground">·</span>
             <span className="text-muted-foreground">
@@ -830,7 +830,7 @@ export function ListingCheckPanel({
 
         {/* ── Loading / error states ────────────────────────────────────── */}
         {selectedAddressKey && detailLoading && (
-          <div className="mb-4 flex items-center gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+          <div className="mb-4 flex items-center gap-2 rounded-none bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
             <div
               className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
               aria-hidden="true"
@@ -839,7 +839,7 @@ export function ListingCheckPanel({
           </div>
         )}
         {selectedAddressKey && detailError && (
-          <div className="mb-4 flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+          <div className="mb-4 flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
             <AlertTriangle data-icon className="size-4 shrink-0 text-warning" aria-hidden="true" />
             <span>{t("check.noDetail")}</span>
           </div>
@@ -849,7 +849,7 @@ export function ListingCheckPanel({
           !detailError &&
           detail &&
           detail.recentTransactions.length === 0 && (
-            <div className="mb-4 flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+            <div className="mb-4 flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
               <Info
                 data-icon
                 className="size-4 shrink-0 text-muted-foreground/70"
@@ -968,7 +968,7 @@ export function ListingCheckPanel({
 
       {/* ── API loading state ──────────────────────────────────────────── */}
       {comparableSetLoading && (
-        <div className="flex items-center gap-2 rounded-md bg-muted/20 p-3 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2 rounded-none bg-muted/20 p-3 text-xs text-muted-foreground">
           <div
             className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
             aria-hidden="true"
@@ -979,7 +979,7 @@ export function ListingCheckPanel({
 
       {/* ── API error state ────────────────────────────────────────────── */}
       {comparableSetError && !comparableSetLoading && (
-        <div className="flex items-start gap-3 rounded-md border border-destructive/30 bg-destructive/5 p-3 text-xs">
+        <div className="flex items-start gap-3 rounded-none border border-destructive/30 bg-destructive/5 p-3 text-xs">
           <AlertTriangle
             data-icon
             className="size-4 shrink-0 text-destructive"
@@ -994,7 +994,7 @@ export function ListingCheckPanel({
 
       {/* ── No block selected hint ─────────────────────────────────────── */}
       {!selectedAddressKey && (
-        <div className="flex flex-col gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+        <div className="flex flex-col gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <div className="flex items-start gap-3">
             <Info
               data-icon
@@ -1025,7 +1025,7 @@ export function ListingCheckPanel({
           <CardContent className="flex flex-col gap-4 p-4">
             {/* Verdict badge + confidence */}
             <div className="flex items-center gap-3">
-              <div className={cn("rounded-md p-2", styles.bg)}>
+              <div className={cn("rounded-none p-2", styles.bg)}>
                 <VerdictIcon data-icon className={cn("size-5", styles.text)} aria-hidden="true" />
               </div>
               <div className="flex-1">
@@ -1085,7 +1085,7 @@ export function ListingCheckPanel({
             </div>
 
             {/* Stats grid */}
-            <div className="grid grid-cols-1 gap-2 rounded-md bg-card p-3 text-xs sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 rounded-none bg-card p-3 text-xs sm:grid-cols-2">
               <DataRow
                 label={t("check.fairRange")}
                 value={`${formatCompactCurrency(result.assessment.summary.p25Price)} – ${formatCompactCurrency(result.assessment.summary.p75Price)}`}
@@ -1144,7 +1144,7 @@ export function ListingCheckPanel({
 
             {/* Caveats */}
             {result.caveats.length > 0 && (
-              <div className="rounded-md bg-muted/20 p-3">
+              <div className="rounded-none bg-muted/20 p-3">
                 <h4 className="mb-2 v2-field-label">{t("check.caveatsTitle")}</h4>
                 <ul className="flex flex-col gap-1.5">
                   {result.caveats.map((caveat: Caveat) => (

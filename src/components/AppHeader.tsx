@@ -26,7 +26,7 @@ type AppHeaderProps = {
   onClearMobileTab?: () => void;
 };
 
-const HEADER_SURFACE_CLASS = "border bg-popover shadow-lg";
+const HEADER_SURFACE_CLASS = "v2-chrome";
 
 export function AppHeader({
   manifest,
@@ -126,8 +126,8 @@ export function AppHeader({
                 {t("app.title")}
               </span>
               <Badge
-                variant="outline"
-                className="h-5 shrink-0 border-border/35 bg-muted/30 px-1.5 text-[var(--text-xs)] font-bold"
+                variant="secondary"
+                className="h-5 shrink-0 text-[var(--text-xs)] font-bold"
               >
                 {t("stats.dataThrough", {
                   month: formatMonth(manifest.dataWindow.maxMonth, locale),
@@ -176,8 +176,8 @@ export function AppHeader({
                 </span>
               </span>
               <Badge
-                variant="outline"
-                className="h-5 w-fit border-border/35 bg-muted/30 px-1.5 text-[var(--text-xs)] font-bold"
+                variant="secondary"
+                className="h-5 w-fit text-[var(--text-xs)] font-bold"
               >
                 {t("stats.dataThrough", {
                   month: formatMonth(manifest.dataWindow.maxMonth, locale),

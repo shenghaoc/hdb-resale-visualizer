@@ -64,11 +64,11 @@ const YOY_FLAT_THRESHOLD_PCT = 0.05;
 
 const TONE_BADGE_CLASS: Record<DeltaTone, string> = {
   better:
-    "rounded-full bg-success/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-success",
+    "rounded-none bg-success/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-success",
   worse:
-    "rounded-full bg-destructive/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-destructive",
+    "rounded-none bg-destructive/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-destructive",
   neutral:
-    "rounded-full bg-warning/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-warning",
+    "rounded-none bg-warning/10 px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-warning",
 };
 
 function buildMetricRows(t: Translator, locale: Locale): MetricRow[] {
@@ -258,7 +258,7 @@ export function TownCompareSection({
             <SelectTrigger
               id="town-compare-with"
               data-testid="town-compare-with"
-              className="h-8 min-w-[10rem] rounded-lg border-border/40 bg-card px-2"
+              className="h-8 min-w-[10rem] rounded-none border-border/40 bg-card px-2"
             >
               <SelectValue placeholder={t("townCompare.choosePrompt")} />
             </SelectTrigger>
@@ -282,7 +282,7 @@ export function TownCompareSection({
               errorLabel={t("share.copyError")}
               variant="outline"
               size="icon-xs"
-              className="shrink-0 rounded-lg border-border/50 bg-card"
+              className="shrink-0 rounded-none border-border/50 bg-card"
             />
           )}
         </div>
@@ -291,7 +291,7 @@ export function TownCompareSection({
       {!compareSnap ? (
         <div
           data-testid="town-compare-empty"
-          className="rounded-lg border border-dashed border-border/40 bg-background px-3 py-4 text-center text-[0.75rem] text-muted-foreground"
+          className="rounded-none border border-dashed border-border/40 bg-background px-3 py-4 text-center text-[0.75rem] text-muted-foreground"
         >
           {t("townCompare.emptyHint")}
         </div>
@@ -307,19 +307,19 @@ export function TownCompareSection({
           {/* Sticky pill for mobile section jumps. */}
           <nav
             aria-label={t("townCompare.sectionsNavLabel")}
-            className="sticky top-0 z-10 mb-3 flex w-full gap-1 rounded-full border border-border/40 bg-background p-1 md:hidden"
+            className="sticky top-0 z-10 mb-3 flex w-full gap-1 rounded-none border border-border/40 bg-background p-1 md:hidden"
           >
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-primary")}
-              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex-1 truncate rounded-none px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(primaryTown, locale)}
             </button>
             <button
               type="button"
               onClick={() => scrollToColumn("town-compare-secondary")}
-              className="flex-1 truncate rounded-full px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="flex-1 truncate rounded-none px-3 py-1 text-center text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {localizeTownName(compareTown, locale)}
             </button>
@@ -380,7 +380,7 @@ function CompareColumn({
     <div
       id={id}
       data-testid={dataTestId}
-      className="min-w-0 rounded-lg border border-border/30 bg-background"
+      className="min-w-0 rounded-none border border-border/30 bg-background"
     >
       <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background px-2.5 py-2 md:top-0">
         <span className="truncate font-heading text-[var(--text-sm)] font-extrabold uppercase tracking-wider">

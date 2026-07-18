@@ -305,7 +305,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   return (
     <div className="absolute inset-0 z-[100] flex items-end justify-center px-4 pb-20 pt-6 lg:items-center lg:px-0 lg:pb-0">
       <div className="absolute inset-0 bg-black/50" />
-      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible border bg-popover shadow-xl lg:w-[28.75rem] lg:max-w-[28.75rem]">
+      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-none border bg-popover shadow-sm lg:w-[28.75rem] lg:max-w-[28.75rem]">
         <CardContent className="overflow-hidden px-5 py-6 lg:px-8 lg:py-7">
           <div className="mb-6 flex items-center justify-center gap-1.5">
             {Array.from({ length: totalSteps }).map((_, index) => (
@@ -737,42 +737,42 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     {t("searchProfile.wizard.hint.review")}
                   </p>
                   <div className="mt-5 flex flex-wrap justify-center gap-2">
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {mainFlatType}
                     </div>
                     {maxBudget ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {`S$${formatNumber(Number(maxBudget), 0, locale)}`}
                       </div>
                     ) : null}
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {formatStationLabel(commuteAnchorMrt)}
                     </div>
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {t("searchProfile.minutesPreset", { value: Number(maxCommute) })}
                     </div>
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {t("searchProfile.yearsPreset", { value: Number(minLease) })}
                     </div>
                     {age ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.age", { age: Number(age) })}
                       </div>
                     ) : null}
                     {coApplicantAge ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.coApplicantAge", { age: Number(coApplicantAge) })}
                       </div>
                     ) : null}
                     {cpfOABalance ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.cpfOABalance", {
                           amount: formatNumber(Number(cpfOABalance), 0, locale),
                         })}
                       </div>
                     ) : null}
                     {monthlyIncome ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.monthlyIncome", {
                           amount: formatNumber(Number(monthlyIncome), 0, locale),
                         })}
@@ -819,7 +819,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <button
               type="button"
               onClick={onSkip}
-              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-md"
+              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-none"
             >
               {t("searchProfile.skip")}
             </button>

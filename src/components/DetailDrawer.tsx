@@ -251,7 +251,7 @@ function AmenityCard({
   locale: Locale;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-lg bg-muted/30 p-3">
+    <div className="flex flex-col gap-2 rounded-none bg-muted/30 p-3">
       {showLabel && Icon && label && (
         <div className="mb-2 flex items-center gap-2">
           <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
@@ -292,7 +292,7 @@ function AmenityCard({
                   </div>
                   <div className="flex shrink-0 items-center gap-1.5">
                     {distanceBand ? (
-                      <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-primary">
+                      <span className="rounded-none bg-primary/10 px-1.5 py-0.5 text-[var(--text-xs)] font-bold uppercase tracking-wider text-primary">
                         {t(`detail.schoolBand.${distanceBand}`)}
                       </span>
                     ) : null}
@@ -576,7 +576,7 @@ export function DetailDrawer({
               }}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
-              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-lg bg-muted/40 p-1">
+              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-none bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
                   className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
@@ -614,7 +614,7 @@ export function DetailDrawer({
                   className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
                 >
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="flex flex-col rounded-lg bg-muted/30 p-3">
+                    <div className="flex flex-col rounded-none bg-muted/30 p-3">
                       <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.medianResale")}
@@ -667,7 +667,7 @@ export function DetailDrawer({
                         ) : null}
                       </div>
                     </div>
-                    <div className="flex flex-col rounded-lg bg-muted/30 p-3">
+                    <div className="flex flex-col rounded-none bg-muted/30 p-3">
                       <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.remainingLease")}
@@ -684,7 +684,7 @@ export function DetailDrawer({
                     <section
                       aria-labelledby="comparable-range-title"
                       data-testid="comparable-range-headline"
-                      className="rounded-lg border border-border/40 bg-muted/20 p-3"
+                      className="rounded-none border border-border/40 bg-muted/20 p-3"
                     >
                       <div
                         id="comparable-range-title"
@@ -723,7 +723,7 @@ export function DetailDrawer({
                     <section
                       aria-labelledby="affordability-title"
                       data-testid="affordability-section"
-                      className="rounded-lg border border-border/40 bg-muted/20 p-3"
+                      className="rounded-none border border-border/40 bg-muted/20 p-3"
                     >
                       <div
                         id="affordability-title"
@@ -797,7 +797,7 @@ export function DetailDrawer({
                         </span>
                         <span
                           className={cn(
-                            "ml-auto rounded-full px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
+                            "ml-auto rounded-none px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
                             affordabilityVerdict.status === "comfortable" &&
                               "bg-success/10 text-success",
                             affordabilityVerdict.status === "stretch" &&
@@ -815,7 +815,7 @@ export function DetailDrawer({
                       </div>
                     </section>
                   ) : searchProfile && searchProfile.monthlyIncome === null ? (
-                    <section className="rounded-lg border border-border/40 bg-muted/20 p-3">
+                    <section className="rounded-none border border-border/40 bg-muted/20 p-3">
                       <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.title")}
@@ -850,7 +850,7 @@ export function DetailDrawer({
                       <Table data-icon className="size-4" aria-hidden="true" />
                       {t("detail.unitAttributes")}
                     </h3>
-                    <Card className="v2-card rounded-lg border-border/40 bg-card py-0 shadow-none">
+                    <Card className="v2-card rounded-none border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="divide-y divide-border/40 p-0">
                         <div className="flex items-center justify-between p-3">
                           <span className="text-sm font-medium text-muted-foreground">
@@ -925,7 +925,7 @@ export function DetailDrawer({
                       <Info data-icon className="size-4" aria-hidden="true" />
                       {t("detail.whyThisBlock")}
                     </h3>
-                    <Card className="v2-card rounded-lg border-border/40 bg-card py-0 shadow-none">
+                    <Card className="v2-card rounded-none border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="p-3">
                         {isComparisonLoading ? (
                           <div className="flex flex-col gap-2">
@@ -966,7 +966,7 @@ export function DetailDrawer({
                         {Array.from({ length: 4 }).map((_, i) => (
                           <div
                             key={i}
-                            className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                            className="h-20 w-full animate-pulse rounded-none bg-muted/40"
                           />
                         ))}
                       </div>
@@ -1026,7 +1026,7 @@ export function DetailDrawer({
                         {Array.from({ length: 6 }).map((_, i) => (
                           <div
                             key={i}
-                            className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
+                            className="h-16 w-full animate-pulse rounded-none bg-muted/40"
                           />
                         ))}
                       </div>
@@ -1221,7 +1221,7 @@ export function DetailDrawer({
                               })}
                             </CardTitle>
                           </div>
-                          <div className="rounded-full bg-primary/5 p-2 text-primary">
+                          <div className="rounded-none bg-primary/5 p-2 text-primary">
                             <TrendingUp data-icon className="size-5" aria-hidden="true" />
                           </div>
                         </div>
@@ -1334,7 +1334,7 @@ export function DetailDrawer({
                           {Array.from({ length: 5 }).map((_, i) => (
                             <div
                               key={i}
-                              className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
+                              className="h-16 w-full animate-pulse rounded-none bg-muted/40"
                             />
                           ))}
                         </div>
@@ -1357,7 +1357,7 @@ export function DetailDrawer({
                             {Array.from({ length: 3 }).map((_, i) => (
                               <div
                                 key={i}
-                                className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                                className="h-20 w-full animate-pulse rounded-none bg-muted/40"
                               />
                             ))}
                           </div>
@@ -1372,7 +1372,7 @@ export function DetailDrawer({
                   ) : (
                     <div className="flex flex-col gap-3 py-12">
                       {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                        <div key={i} className="h-20 w-full animate-pulse rounded-none bg-muted/40" />
                       ))}
                     </div>
                   )}
@@ -1414,7 +1414,7 @@ export function DetailDrawer({
                 errorLabel={t("share.copyError")}
                 variant="outline"
                 size="icon-xs"
-                className="shrink-0 rounded-lg border-border/50 bg-card"
+                className="shrink-0 rounded-none border-border/50 bg-card"
               />
               <Button
                 variant="outline"
@@ -1457,7 +1457,7 @@ function SimilarBlockCard({
   return (
     <button
       type="button"
-      className="w-full rounded-lg bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      className="w-full rounded-none bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       onClick={() => onSelect(block.addressKey)}
       aria-label={t("detail.similarBlocks.viewBlock", { address })}
     >
@@ -1512,7 +1512,7 @@ function StatPill({
   tone?: "positive" | "negative";
 }) {
   return (
-    <div className="rounded-md bg-muted/30 px-3 py-2">
+    <div className="rounded-none bg-muted/30 px-3 py-2">
       <div className="v2-field-label">{label}</div>
       <div
         className={cn(

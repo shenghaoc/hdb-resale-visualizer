@@ -29,7 +29,7 @@ const tabsListVariants = cva(
   {
     variants: {
       variant: {
-        default: "cn-tabs-list-variant-default bg-muted p-1 rounded-md",
+        default: "cn-tabs-list-variant-default bg-muted p-0.5 rounded-none",
         line: "cn-tabs-list-variant-line gap-1 bg-transparent border-b border-border w-full",
       },
     },
@@ -59,10 +59,9 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "cn-tabs-trigger relative inline-flex flex-1 cursor-pointer items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium text-foreground/60 transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-box-trim",
+        "cn-tabs-trigger relative inline-flex flex-1 cursor-pointer items-center justify-center whitespace-nowrap rounded-none px-3 py-1.5 text-[length:var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-wide)] text-foreground/60 transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-box-trim",
         "group-data-[variant=default]/tabs-list:hover:bg-background/60",
-        "group-data-[variant=default]/tabs-list:hover:shadow-sm",
-        "group-data-[variant=default]/tabs-list:data-[state=active]:bg-background group-data-[variant=default]/tabs-list:data-[state=active]:text-foreground group-data-[variant=default]/tabs-list:data-[state=active]:shadow-sm group-data-[variant=default]/tabs-list:rounded-sm",
+        "group-data-[variant=default]/tabs-list:data-[state=active]:bg-background group-data-[variant=default]/tabs-list:data-[state=active]:text-foreground group-data-[variant=default]/tabs-list:data-[state=active]:shadow-sm group-data-[variant=default]/tabs-list:rounded-none",
         "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:hover:border-border group-data-[variant=line]/tabs-list:hover:text-foreground group-data-[variant=line]/tabs-list:data-[state=active]:text-foreground group-data-[variant=line]/tabs-list:border-b-2 group-data-[variant=line]/tabs-list:border-transparent group-data-[variant=line]/tabs-list:data-[state=active]:border-primary",
         className,
       )}

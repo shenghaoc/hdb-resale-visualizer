@@ -34,7 +34,7 @@ export function PriceLegend({
       role="img"
       aria-label={mode === "perSqm" ? t("heatmap.ariaLabelSqm") : t("map.legend.ariaLabel")}
       className={cn(
-        "pointer-events-none absolute z-25 rounded-lg border bg-popover p-2 shadow-lg",
+        "v2-chrome pointer-events-none absolute z-25 p-2",
         className,
       )}
       style={{
@@ -43,7 +43,7 @@ export function PriceLegend({
         ...style,
       }}
     >
-      <p className="mb-1 text-[var(--text-xs)] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+      <p className="mb-1 text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
         {mode === "perSqm" ? t("heatmap.labelSqm") : t("map.legend.heading")}
       </p>
       <div

@@ -146,9 +146,9 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
 
   return (
     <section className="flex flex-col gap-5">
-      <div className="rounded-lg bg-muted/10 p-4">
+      <div className="rounded-none bg-muted/10 p-4">
         <div className="mb-3 flex items-start gap-3">
-          <div className="rounded-md bg-primary/10 p-2 text-primary">
+          <div className="rounded-none bg-primary/10 p-2 text-primary">
             <Scale data-icon className="size-4" aria-hidden="true" />
           </div>
           <div className="flex-1">
@@ -230,7 +230,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
         >
           <CardContent className="flex flex-col gap-4 p-4">
             <div className="flex items-center gap-3">
-              <div className={cn("rounded-md p-2", styles.bg)}>
+              <div className={cn("rounded-none p-2", styles.bg)}>
                 <VerdictIcon data-icon className={cn("size-5", styles.text)} aria-hidden="true" />
               </div>
               <div className="flex-1">
@@ -269,7 +269,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-2 rounded-md bg-card p-3 text-xs sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 rounded-none bg-card p-3 text-xs sm:grid-cols-2">
               <DataRow
                 label={t("askingCheck.askingPerSqm")}
                 value={
@@ -321,12 +321,12 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
           </CardContent>
         </Card>
       ) : askingPrice == null ? (
-        <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+        <div className="flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
           <span>{t("askingCheck.enterPriceHint")}</span>
         </div>
       ) : (
-        <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+        <div className="flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <AlertTriangle data-icon className="size-4 shrink-0 text-warning" aria-hidden="true" />
           <span>{t("askingCheck.noComparables")}</span>
         </div>
@@ -371,7 +371,7 @@ function DeltaCell({
       ? "text-success"
       : "text-foreground";
   return (
-    <div className="rounded-md bg-muted/30 p-3">
+    <div className="rounded-none bg-muted/30 p-3">
       <div className="v2-field-label">{label}</div>
       <div className={cn("mt-1 font-heading text-lg font-extrabold tabular-nums", colorClass)}>
         {formatSignedCurrency(amount)}

@@ -211,7 +211,7 @@ function SortSelect({
           <SelectTrigger
             data-testid="results-sort-trigger"
             aria-describedby={disabledHint ? "results-sort-disabled-hint" : undefined}
-            className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card px-2 sm:w-[12.5rem]"
+            className="h-8 min-w-0 flex-1 rounded-none border-border/40 bg-card px-2 sm:w-[12.5rem]"
           >
             <SelectValue />
           </SelectTrigger>
@@ -375,7 +375,7 @@ const BlockCard = memo(function BlockCard({
                     onToggleShortlist(block.addressKey);
                   }}
                   type="button"
-                  className="size-7 sm:size-9 shrink-0 rounded-lg p-0 min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
+                  className="size-7 sm:size-9 shrink-0 rounded-none p-0 min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
                   aria-pressed={isSaved}
                   aria-label={t("results.save")}
                 >
@@ -503,7 +503,7 @@ const BlockCard = memo(function BlockCard({
           {affordVerdict && affordVerdict.status !== "unknown" ? (
             <span
               className={cn(
-                "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
+                "mt-1 inline-flex items-center gap-1 rounded-none px-2 py-0.5 text-[var(--text-xs)] font-bold uppercase",
                 affordVerdict.status === "comfortable" && "bg-success/10 text-success",
                 affordVerdict.status === "stretch" && "bg-warning/10 text-warning",
                 affordVerdict.status === "over" && "bg-destructive/10 text-destructive",
@@ -1171,7 +1171,7 @@ export function ResultsPane({
               {townProfileAvailable ? (
                 <ButtonGroup
                   aria-label={t("results.view.label")}
-                  className="w-fit gap-0 rounded-lg border border-border/50 bg-card p-0.5"
+                  className="w-fit gap-0 rounded-none border border-border/50 bg-card p-0.5"
                   data-testid="results-view-toggle"
                 >
                   <Button
@@ -1181,7 +1181,7 @@ export function ResultsPane({
                     aria-pressed={resultsView === "blocks"}
                     aria-label={t("results.view.blocksAria")}
                     onClick={() => setResultsView("blocks")}
-                    className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
+                    className="h-7 rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                   >
                     <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("results.view.blocks")}
@@ -1193,7 +1193,7 @@ export function ResultsPane({
                     aria-pressed={resultsView === "town"}
                     aria-label={t("results.view.townAria")}
                     onClick={() => setResultsView("town")}
-                    className="h-7 rounded-md px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
+                    className="h-7 rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                   >
                     <Building2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("results.view.town")}
