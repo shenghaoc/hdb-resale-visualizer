@@ -204,9 +204,7 @@ function PercentileBadge({
   return (
     <div className="flex flex-col gap-1.5 py-1">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-          {label}
-        </span>
+        <span className="v2-field-label">{label}</span>
         <Badge
           variant={isGood ? "default" : isMid ? "secondary" : "outline"}
           className="h-5 text-[var(--text-xs)] font-extrabold"
@@ -257,9 +255,7 @@ function AmenityCard({
       {showLabel && Icon && label && (
         <div className="mb-2 flex items-center gap-2">
           <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
-          <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-            {label}
-          </span>
+          <span className="v2-field-label">{label}</span>
         </div>
       )}
       <div className="flex flex-col gap-1">
@@ -619,7 +615,7 @@ export function DetailDrawer({
                 >
                   <div className="grid grid-cols-2 gap-3">
                     <div className="flex flex-col rounded-lg bg-muted/30 p-3">
-                      <div className="mb-2 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+                      <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.medianResale")}
                       </div>
@@ -672,7 +668,7 @@ export function DetailDrawer({
                       </div>
                     </div>
                     <div className="flex flex-col rounded-lg bg-muted/30 p-3">
-                      <div className="mb-2 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+                      <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.remainingLease")}
                       </div>
@@ -692,7 +688,7 @@ export function DetailDrawer({
                     >
                       <div
                         id="comparable-range-title"
-                        className="mb-1 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground"
+                        className="mb-1 flex items-center gap-2 v2-field-label"
                       >
                         <Scale data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("detail.comparableRange.title")}
@@ -731,7 +727,7 @@ export function DetailDrawer({
                     >
                       <div
                         id="affordability-title"
-                        className="mb-2 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground"
+                        className="mb-2 flex items-center gap-2 v2-field-label"
                       >
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.breakdownTitle")}
@@ -820,7 +816,7 @@ export function DetailDrawer({
                     </section>
                   ) : searchProfile && searchProfile.monthlyIncome === null ? (
                     <section className="rounded-lg border border-border/40 bg-muted/20 p-3">
-                      <div className="mb-2 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+                      <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.title")}
                       </div>
@@ -1517,9 +1513,7 @@ function StatPill({
 }) {
   return (
     <div className="rounded-md bg-muted/30 px-3 py-2">
-      <div className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-        {label}
-      </div>
+      <div className="v2-field-label">{label}</div>
       <div
         className={cn(
           "mt-0.5 text-sm font-extrabold tabular-nums",

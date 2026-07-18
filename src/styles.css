@@ -263,6 +263,19 @@
   letter-spacing: var(--tracking-label);
 }
 
+/* Field labels: the most-repeated pattern in the codebase — micro-label
+   used for metric labels, column headers, field labels, and data callouts
+   inside cards.  Distinguishable from v2-section-title by extra-bold weight
+   (800 vs 700) to differentiate labels-within-sections from section titles. */
+.v2-field-label {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-label);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
 .v2-tabular {
   font-variant-numeric: tabular-nums;
 }

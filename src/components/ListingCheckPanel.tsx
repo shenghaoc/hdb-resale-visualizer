@@ -863,9 +863,7 @@ export function ListingCheckPanel({
         {detail && detail.recentTransactions.length > 0 && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
-              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("askingCheck.askingPrice")}
-              </span>
+              <span className="v2-field-label">{t("askingCheck.askingPrice")}</span>
               <Input
                 ref={askingPriceInputRef}
                 type="number"
@@ -881,9 +879,7 @@ export function ListingCheckPanel({
               />
             </label>
             <label className="flex flex-col gap-1">
-              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("askingCheck.floorArea")}
-              </span>
+              <span className="v2-field-label">{t("askingCheck.floorArea")}</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -899,9 +895,7 @@ export function ListingCheckPanel({
             </label>
             {flatTypeOptions.length > 1 && (
               <label className="flex flex-col gap-1">
-                <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                  {t("askingCheck.flatType")}
-                </span>
+                <span className="v2-field-label">{t("askingCheck.flatType")}</span>
                 <Select
                   value={flatType ?? flatTypeOptions[0]}
                   onValueChange={(v) => onFlatTypeChange(v || null)}
@@ -921,9 +915,7 @@ export function ListingCheckPanel({
             )}
             {storeyOptions.length > 0 && (
               <label className="flex flex-col gap-1">
-                <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                  {t("askingCheck.storey")}
-                </span>
+                <span className="v2-field-label">{t("askingCheck.storey")}</span>
                 <Select
                   value={storeyRange ?? storeyOptions[0]}
                   onValueChange={(v) => onStoreyRangeChange(v || null)}
@@ -942,9 +934,7 @@ export function ListingCheckPanel({
               </label>
             )}
             <label className="flex flex-col gap-1 sm:col-span-2">
-              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("check.leaseYear")}
-              </span>
+              <span className="v2-field-label">{t("check.leaseYear")}</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -1155,9 +1145,7 @@ export function ListingCheckPanel({
             {/* Caveats */}
             {result.caveats.length > 0 && (
               <div className="rounded-md bg-muted/20 p-3">
-                <h4 className="mb-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                  {t("check.caveatsTitle")}
-                </h4>
+                <h4 className="mb-2 v2-field-label">{t("check.caveatsTitle")}</h4>
                 <ul className="flex flex-col gap-1.5">
                   {result.caveats.map((caveat: Caveat) => (
                     <li

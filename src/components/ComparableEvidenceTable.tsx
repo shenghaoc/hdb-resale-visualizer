@@ -169,7 +169,7 @@ export function ComparableEvidenceTable({
       <div className="rounded-md bg-muted/10">
         <button
           type="button"
-          className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground transition-colors hover:bg-muted/20"
+          className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/20"
           aria-expanded={explainerOpen}
           aria-controls="why-comparables-explainer"
           onClick={() => setExplainerOpen((o) => !o)}

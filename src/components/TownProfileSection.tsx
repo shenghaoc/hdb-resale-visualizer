@@ -113,7 +113,7 @@ export function TownProfileSection({
           <div className="-mx-1 mb-3 overflow-x-auto">
             <table className="w-full min-w-[18rem] border-separate border-spacing-y-1 text-[0.75rem] sm:text-[0.75rem]">
               <thead>
-                <tr className="text-left text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+                <tr className="text-left v2-field-label">
                   <th className="pb-1 pl-1 pr-2">{t("townProfile.flatType")}</th>
                   <th className="pb-1 pr-2">{t("townProfile.median")}</th>
                   <th className="pb-1 pr-2">{t("townProfile.medPerSqm")}</th>
@@ -179,9 +179,7 @@ export function TownProfileSection({
 
       {leaseBuckets.length > 0 && totalLeaseBlocks > 0 ? (
         <div className="mb-3">
-          <p className="mb-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-            {t("townProfile.leaseBucketsTitle")}
-          </p>
+          <p className="mb-2 v2-field-label">{t("townProfile.leaseBucketsTitle")}</p>
           <div className="flex h-2.5 w-full overflow-hidden rounded-full bg-muted/60">
             {leaseBuckets.map((bucket) => (
               <div
@@ -207,9 +205,7 @@ export function TownProfileSection({
         <div className="grid gap-3 sm:grid-cols-2">
           {busyBlocks.length > 0 ? (
             <div className="min-w-0">
-              <p className="mb-1 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("townProfile.busyBlocks")}
-              </p>
+              <p className="mb-1 v2-field-label">{t("townProfile.busyBlocks")}</p>
               <div className="flex flex-col gap-1.5">
                 {busyBlocks.map((block) => (
                   <BlockMicroRow
@@ -227,9 +223,7 @@ export function TownProfileSection({
           ) : null}
           {belowMedian.blocks.length > 0 ? (
             <div className="min-w-0">
-              <p className="mb-1 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("townProfile.valueBlocks")}
-              </p>
+              <p className="mb-1 v2-field-label">{t("townProfile.valueBlocks")}</p>
               <p className="mb-1.5 text-[var(--text-xs)] leading-snug text-muted-foreground">
                 {t("townProfile.townMedianMeta", {
                   median:

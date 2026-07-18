@@ -166,7 +166,7 @@ The palette is deliberately restrained. Cyan is the only accent; slate neutrals 
 - **--text-base** (1rem / 16px): Primary body content, descriptions, transaction rows. Max line length 65ch in prose contexts.
 - **--text-sm** (0.8125rem / 13px): Secondary data, compact values, stats in table cells.
 - **Tab size** (0.75rem / 12px): Mode toggles, panel tab labels, empty-state prompts, field hints.
-- **--text-xs** (0.625rem / 10px): Badges, button text, metadata tags, filter labels, table column headers. The workhorse of the micro-typography system. Label tracking at `var(--tracking-label)` (0.12em), uppercase.
+- **--text-xs** (0.625rem / 10px): Badges, button text, metadata tags, filter labels, table column headers. The workhorse of the micro-typography system. `.v2-section-title` (700w) for section headers; `.v2-field-label` (800w) for field/metric labels. Label tracking at `var(--tracking-label)` (0.12em), uppercase.
 - **Kicker** (0.56rem / ~9px): The smallest intentional size — used only for `.v2-kicker` eyebrow text. Same `var(--tracking-label)` as labels.
 - **Data** (400–500 weight, inherits size): Numbers, prices, statistics. Tabular figures via `.v2-tabular`; right-aligned in table columns.
 
@@ -183,6 +183,8 @@ These replace the ad-hoc 0.04em/0.14em/0.16em/0.18em values that previously prol
 **The Single Family Rule.** IBM Plex Sans everywhere. No heading/secondary font pair. Weight (400→500→600→700) and scale (`var(--text-xs)`→1rem→1.125rem) create the hierarchy.
 
 **The Micro-Label Rule.** Secondary metadata, filter chips, action buttons, and badge text are always `var(--text-xs)` (0.625rem) / 600 weight / `var(--tracking-label)` (0.12em) / uppercase. This is the system's signature typographic gesture — consistent, not sprinkled.
+
+**The Field-Label Pattern.** The most-repeated typographic pattern in the codebase is `.v2-field-label`: `var(--text-xs)`, 800 weight (extrabold), `var(--tracking-label)` tracking, upper-case, muted foreground. Used for metric labels, column headers, field labels, and data callouts inside cards. The 800 weight distinguishes labels-within-sections from `v2-section-title` (700 weight) section headers.
 
 ## 4. Elevation
 

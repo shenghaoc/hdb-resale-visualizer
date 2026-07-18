@@ -41,7 +41,7 @@ export function ComparableTransactionsList({
     <section>
       <button
         type="button"
-        className="mb-2 flex w-full items-center justify-between gap-2 rounded-md border border-border/40 bg-muted/20 px-3 py-2 text-left text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground transition-colors hover:bg-muted/40"
+        className="mb-2 flex w-full items-center justify-between gap-2 rounded-md border border-border/40 bg-muted/20 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/40"
         aria-expanded={expanded}
         onClick={onToggle}
       >

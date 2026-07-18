@@ -85,10 +85,7 @@ export function LeaseFinancingPanel({ assessment, t }: Props) {
       data-testid="lease-financing-section"
       className="border border-border/40 bg-muted/20 p-3"
     >
-      <div
-        id="lease-financing-title"
-        className="mb-2 flex items-center gap-2 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground"
-      >
+      <div id="lease-financing-title" className="mb-2 flex items-center gap-2 v2-field-label">
         <ShieldCheck data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
         {t("leaseFinancing.title")}
       </div>

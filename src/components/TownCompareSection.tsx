@@ -248,10 +248,7 @@ export function TownCompareSection({
           </p>
         </div>
         <div className="flex min-w-0 items-center gap-2">
-          <label
-            htmlFor="town-compare-with"
-            className="shrink-0 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground"
-          >
+          <label htmlFor="town-compare-with" className="shrink-0 v2-field-label">
             {t("townCompare.compareWith")}
           </label>
           <Select
@@ -403,9 +400,7 @@ function CompareColumn({
               key={metric.kind}
               className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5 border-b border-border/20 pb-1.5 last:border-b-0 last:pb-0"
             >
-              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t(metric.labelKey)}
-              </span>
+              <span className="v2-field-label">{t(metric.labelKey)}</span>
               <div className="ml-auto flex items-baseline gap-1.5">
                 <span className="v2-tabular text-[var(--text-sm)] font-extrabold">
                   {valueLabel}

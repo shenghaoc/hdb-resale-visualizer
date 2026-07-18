@@ -159,9 +159,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1">
-            <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-              {t("askingCheck.askingPrice")}
-            </span>
+            <span className="v2-field-label">{t("askingCheck.askingPrice")}</span>
             <Input
               type="number"
               inputMode="numeric"
@@ -175,9 +173,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
             />
           </label>
           <label className="flex flex-col gap-1">
-            <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-              {t("askingCheck.floorArea")}
-            </span>
+            <span className="v2-field-label">{t("askingCheck.floorArea")}</span>
             <Input
               type="number"
               inputMode="numeric"
@@ -192,9 +188,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
           </label>
           {flatTypeOptions.length > 1 && (
             <label className="flex flex-col gap-1">
-              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("askingCheck.flatType")}
-              </span>
+              <span className="v2-field-label">{t("askingCheck.flatType")}</span>
               <Select value={flatType} onValueChange={setFlatType}>
                 <SelectTrigger aria-label={t("askingCheck.flatType")}>
                   <SelectValue />
@@ -211,9 +205,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
           )}
           {storeyOptions.length > 0 && (
             <label className="flex flex-col gap-1">
-              <span className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                {t("askingCheck.storey")}
-              </span>
+              <span className="v2-field-label">{t("askingCheck.storey")}</span>
               <Select value={storeyRange} onValueChange={setStoreyRange}>
                 <SelectTrigger aria-label={t("askingCheck.storey")}>
                   <SelectValue />
@@ -380,9 +372,7 @@ function DeltaCell({
       : "text-foreground";
   return (
     <div className="rounded-md bg-muted/30 p-3">
-      <div className="text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-        {label}
-      </div>
+      <div className="v2-field-label">{label}</div>
       <div className={cn("mt-1 font-heading text-lg font-extrabold tabular-nums", colorClass)}>
         {formatSignedCurrency(amount)}
       </div>

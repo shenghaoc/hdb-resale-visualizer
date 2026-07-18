@@ -618,9 +618,7 @@ function PercentileBar({
 
   return (
     <div className="flex items-center gap-2">
-      <span className="w-14 shrink-0 text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-        {label}
-      </span>
+      <span className="w-14 shrink-0 v2-section-title">{label}</span>
       <div className="h-1 flex-1 overflow-hidden rounded-full bg-muted">
         <div
           className={cn(
@@ -1785,7 +1783,7 @@ export function ShortlistDrawer({
                                       <strong className="block truncate text-sm font-extrabold leading-tight tracking-tight">
                                         {row.block.block} {row.block.streetName}
                                       </strong>
-                                      <span className="block truncate text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+                                      <span className="block truncate v2-field-label">
                                         {localizeTownName(row.block.town, locale)}
                                         {row.block.flatTypes[0]
                                           ? ` - ${row.block.flatTypes[0]}`

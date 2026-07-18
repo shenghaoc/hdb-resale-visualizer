@@ -270,9 +270,7 @@ export function SearchCombobox({
           >
             {grouped.map((section) => (
               <div key={section.group} role="presentation">
-                <p className="px-3 pb-1 pt-2 text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                  {groupLabel(t, section.group)}
-                </p>
+                <p className="px-3 pb-1 pt-2 v2-section-title">{groupLabel(t, section.group)}</p>
                 {section.items.map((suggestion) => {
                   const index = flatGroupedItems.indexOf(suggestion);
                   const active = index === activeIndex;

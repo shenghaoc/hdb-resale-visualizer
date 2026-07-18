@@ -131,6 +131,25 @@ function WizardIcon({ stepKey }: { stepKey: keyof typeof WIZARD_ICONS }) {
   return WIZARD_ICONS[stepKey] || WIZARD_ICONS.welcome;
 }
 
+function WizardStepIcon({
+  stepKey,
+  size = "md",
+}: {
+  stepKey: keyof typeof WIZARD_ICONS;
+  size?: "md" | "lg";
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary",
+        size === "lg" ? "mx-auto mb-4 size-14" : "size-12 shrink-0",
+      )}
+    >
+      <WizardIcon stepKey={stepKey} />
+    </div>
+  );
+}
+
 export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const { locale, t } = useI18n();
   const [mainFlatType, setMainFlatType] = useState("");
@@ -316,9 +335,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             >
               {step === 0 ? (
                 <div className="pt-2 text-center">
-                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                    <WizardIcon stepKey="welcome" />
-                  </div>
+                  <WizardStepIcon stepKey="welcome" size="lg" />
                   <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                     {t("searchProfile.wizard.kicker")}
                   </p>
@@ -334,9 +351,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 1 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="flatType" />
-                    </div>
+                    <WizardStepIcon stepKey="flatType" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.flatType")}
@@ -373,9 +388,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 2 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="budget" />
-                    </div>
+                    <WizardStepIcon stepKey="budget" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.budget")}
@@ -428,9 +441,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 3 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="commute" />
-                    </div>
+                    <WizardStepIcon stepKey="commute" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.commute")}
@@ -566,9 +577,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 4 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="lease" />
-                    </div>
+                    <WizardStepIcon stepKey="lease" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.lease")}
@@ -621,9 +630,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 5 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="affordability" />
-                    </div>
+                    <WizardStepIcon stepKey="affordability" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.affordability")}
@@ -722,9 +729,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
 
               {step === 6 ? (
                 <div className="pt-2 text-center">
-                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                    <WizardIcon stepKey="welcome" />
-                  </div>
+                  <WizardStepIcon stepKey="welcome" size="lg" />
                   <p className="text-[1.45rem] font-extrabold tracking-[-0.02em] text-foreground">
                     {t("searchProfile.wizard.question.review")}
                   </p>

@@ -203,7 +203,7 @@ function SortSelect({
   return (
     <div className={cn("flex min-w-0 flex-col gap-1", className)}>
       <div className="flex min-w-0 items-center gap-2">
-        <span className="inline-flex shrink-0 items-center gap-1.5 text-[var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+        <span className="inline-flex shrink-0 items-center gap-1.5 v2-field-label">
           <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
           {label}
         </span>
@@ -322,7 +322,7 @@ const BlockCard = memo(function BlockCard({
             <strong className="block truncate font-heading text-[0.9rem] font-extrabold leading-snug tracking-tight">
               {block.block} {block.streetName}
             </strong>
-            <span className="block truncate text-[var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
+            <span className="block truncate v2-section-title">
               {localizeTownName(block.town, locale)}
               {block.flatTypes.length > 0
                 ? ` · ${localizeFlatType(block.flatTypes[0], locale)}`
