@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { ListingCheckPanel } from "@/components/ListingCheckPanel";
+import { ListingCheckPanel } from "@/features/listing-check/ListingCheckPanel";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { AddressDetail, Suggestion } from "@/types/data";
 

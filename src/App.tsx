@@ -52,7 +52,9 @@ const ResultsPane = lazy(() =>
   import("@/components/ResultsPane").then((m) => ({ default: m.ResultsPane })),
 );
 const ListingCheckPanel = lazy(() =>
-  import("@/components/ListingCheckPanel").then((m) => ({ default: m.ListingCheckPanel })),
+  import("@/features/listing-check/ListingCheckPanel").then((module) => ({
+    default: module.ListingCheckPanel,
+  })),
 );
 
 function App() {

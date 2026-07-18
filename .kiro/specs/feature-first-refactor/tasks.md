@@ -70,14 +70,17 @@
 
 - [x] 6.1 Extract listing check orchestration from mixed components into `src/features/listing-check`.
   - Completed via `src/features/listing-check/useListingCheckController.ts`.
-- [ ] 6.2 Keep calculation functions in entities/shared/lib modules; move only orchestration and component composition into feature.
+- [x] 6.2 Keep calculation functions in entities/shared/lib modules; move only orchestration and component composition into feature.
+  - Completed: panel at `src/features/listing-check/ListingCheckPanel.tsx`; async orchestration in `useListingCheckAnalysis.ts`; pure composition in `listingCheckAnalysis.ts` (orchestrates entity/shared calculations without reimplementing them).
 - [ ] 6.3 Ensure `AskingPriceCheck`, verdict panels, and comparable evidence producers import from new feature/entity modules.
-- [ ] 6.4 Add a feature-level test boundary:
+- [x] 6.4 Add a feature-level test boundary:
   - unit tests for pure math (in entity/shared-lib),
   - component tests for listing check UI under `tests/components` or `tests/unit` near feature.
-- [ ] 6.5 Validate:
+  - Added `tests/unit/listingCheckAnalysis.test.ts`, `tests/unit/useListingCheckAnalysis.test.tsx`, `tests/unit/useListingFactInput.test.tsx`; retained `tests/components/ListingCheckPanel.inputs.test.tsx`.
+- [x] 6.5 Validate:
   - `npm run test tests/unit/listing-verdict.test.ts tests/unit/listing-confidence.test.ts tests/unit/comparable-engine.test.ts`
   - `npm run test tests/unit/ComparableEvidenceTable.test.tsx tests/components/AskingPriceCheck.test.tsx`
+  - Plus focused feature tests, buyer listing-check E2E, `vp run check`, and `vp run check:pr`.
 
 ## 7) Move shortlist feature logic
 
