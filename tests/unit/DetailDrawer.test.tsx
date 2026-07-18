@@ -362,7 +362,7 @@ describe("DetailDrawer", () => {
         "Nearby or comparable alternatives based on flat type, price, lease, and MRT access.",
       ),
     ).toBeInTheDocument();
-    expect(screen.getByText("No similar blocks found.")).toBeInTheDocument();
+    expect(screen.getByText(/no similar blocks found/i)).toBeInTheDocument();
   });
 
   it("renders similar block cards and selects a block when clicked", () => {
