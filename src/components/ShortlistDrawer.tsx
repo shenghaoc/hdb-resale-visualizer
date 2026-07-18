@@ -1446,7 +1446,7 @@ export function ShortlistDrawer({
                   size="icon-xs"
                   variant="outline"
                   type="button"
-                  className="rounded-lg border-border/50 bg-card/80"
+                  className="rounded-lg border-border/50 bg-card"
                   aria-expanded={isOpen}
                   aria-controls="shortlist-content"
                   aria-label={isOpen ? t("shortlist.collapse") : t("shortlist.expand")}
@@ -1471,7 +1471,7 @@ export function ShortlistDrawer({
             <div className="flex flex-col gap-2">
               <ButtonGroup
                 aria-label={t("shortlist.view.label")}
-                className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
+                className="w-fit gap-0 rounded-lg border border-border/50 bg-card p-0.5"
                 data-testid="shortlist-view-toggle"
               >
                 <Button
@@ -1510,7 +1510,7 @@ export function ShortlistDrawer({
                   >
                     <SelectTrigger
                       aria-labelledby={sortLabelId}
-                      className="h-8 min-w-0 rounded-lg border-border/50 bg-card/80 px-2 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                      className="h-8 min-w-0 rounded-lg border-border/50 bg-card px-2 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
                     >
                       <ArrowUpDown
                         data-icon="inline-start"
@@ -1548,7 +1548,7 @@ export function ShortlistDrawer({
                   csvExport={shortlistCsvExport}
                   exportAriaLabel={t("shortlist.export.csvLabel")}
                   exportAriaLabelDone={t("share.exportCsvDone")}
-                  className="rounded-lg border-border/50 bg-card/80"
+                  className="rounded-lg border-border/50 bg-card"
                   size="icon-xs"
                   variant="outline"
                 />
@@ -1564,7 +1564,7 @@ export function ShortlistDrawer({
               )}
 
               <div className="min-w-0 overflow-x-auto v2-scrollbar">
-                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80">
+                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card">
                   <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
                     <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("shortlist.export.json")}
@@ -2062,7 +2062,7 @@ export function ShortlistDrawer({
 
                                 <ButtonGroup
                                   aria-label={t("shortlist.openInPortal.group")}
-                                  className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card/80"
+                                  className="w-full grid grid-cols-1 sm:grid-cols-3 gap-1.5 [&>*]:rounded-lg [&>*]:border-border/50 [&>*]:bg-card"
                                 >
                                   <Button asChild variant="outline" size="xs">
                                     <a

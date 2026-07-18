@@ -258,7 +258,7 @@ export function TownCompareSection({
             <SelectTrigger
               id="town-compare-with"
               data-testid="town-compare-with"
-              className="h-8 min-w-[10rem] rounded-lg border-border/40 bg-card/80 px-2"
+              className="h-8 min-w-[10rem] rounded-lg border-border/40 bg-card px-2"
             >
               <SelectValue placeholder={t("townCompare.choosePrompt")} />
             </SelectTrigger>
@@ -282,7 +282,7 @@ export function TownCompareSection({
               errorLabel={t("share.copyError")}
               variant="outline"
               size="icon-xs"
-              className="shrink-0 rounded-lg border-border/50 bg-card/80"
+              className="shrink-0 rounded-lg border-border/50 bg-card"
             />
           )}
         </div>
@@ -291,7 +291,7 @@ export function TownCompareSection({
       {!compareSnap ? (
         <div
           data-testid="town-compare-empty"
-          className="rounded-lg border border-dashed border-border/40 bg-background/60 px-3 py-4 text-center text-[0.72rem] text-muted-foreground"
+          className="rounded-lg border border-dashed border-border/40 bg-background px-3 py-4 text-center text-[0.72rem] text-muted-foreground"
         >
           {t("townCompare.emptyHint")}
         </div>
@@ -380,7 +380,7 @@ function CompareColumn({
     <div
       id={id}
       data-testid={dataTestId}
-      className="min-w-0 rounded-lg border border-border/30 bg-background/60"
+      className="min-w-0 rounded-lg border border-border/30 bg-background"
     >
       <div className="sticky top-12 z-[5] flex items-center justify-between gap-2 rounded-t-lg border-b border-border/35 bg-background px-2.5 py-2 md:top-0">
         <span className="truncate font-heading text-[0.78rem] font-extrabold uppercase tracking-[0.08em]">

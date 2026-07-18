@@ -96,7 +96,7 @@ function SelectField({
         >
           <SelectTrigger
             aria-labelledby={labelId}
-            className="h-9 w-full rounded-lg border-border/40 bg-card/80 px-2"
+            className="h-9 w-full rounded-lg border-border/40 bg-card px-2"
           >
             <SelectValue placeholder={allLabel} />
           </SelectTrigger>
@@ -153,7 +153,7 @@ function AffordabilityFilterField({ value, onChange, disabled, t }: Affordabilit
       data-testid="affordability-filter-toggle"
       data-affordability-mode={value || "all"}
       data-affordability-disabled={disabled ? "true" : "false"}
-      className="w-full gap-0 rounded-lg border border-border/40 bg-card/80 p-0.5"
+      className="w-full gap-0 rounded-lg border border-border/40 bg-card p-0.5"
     >
       {options.map((option) => {
         const isActive = (value || "") === option.mode;
@@ -234,7 +234,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 variant="outline"
                 size="sm"
                 data-testid="filters-panel-toggle"
-                className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card/80 px-2.5 text-[0.65rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
+                className="hidden h-10 shrink-0 gap-1.5 rounded-lg border-border/40 bg-card px-2.5 text-[0.65rem] font-extrabold normal-case tracking-wide text-muted-foreground hover:text-foreground sm:inline-flex"
                 onClick={desktopToggle.onToggle}
                 aria-expanded={desktopToggle.isOpen}
               >

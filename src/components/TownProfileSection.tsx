@@ -147,7 +147,7 @@ export function TownProfileSection({
             </table>
           </div>
 
-          <div className="mb-3 grid gap-1.5 rounded-lg border border-border/25 bg-background/60 px-2.5 py-2 text-[0.65rem]">
+          <div className="mb-3 grid gap-1.5 rounded-lg border border-border/25 bg-background px-2.5 py-2 text-[0.65rem]">
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
               <span className="font-semibold text-muted-foreground">
                 {t("townProfile.totalTrendVolume")}

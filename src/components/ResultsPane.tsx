@@ -211,7 +211,7 @@ function SortSelect({
           <SelectTrigger
             data-testid="results-sort-trigger"
             aria-describedby={disabledHint ? "results-sort-disabled-hint" : undefined}
-            className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]"
+            className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card px-2 sm:w-[12.5rem]"
           >
             <SelectValue />
           </SelectTrigger>
@@ -1171,7 +1171,7 @@ export function ResultsPane({
               {townProfileAvailable ? (
                 <ButtonGroup
                   aria-label={t("results.view.label")}
-                  className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
+                  className="w-fit gap-0 rounded-lg border border-border/50 bg-card p-0.5"
                   data-testid="results-view-toggle"
                 >
                   <Button

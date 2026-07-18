@@ -1416,7 +1416,7 @@ export function DetailDrawer({
                 errorLabel={t("share.copyError")}
                 variant="outline"
                 size="icon-xs"
-                className="shrink-0 rounded-lg border-border/50 bg-card/80"
+                className="shrink-0 rounded-lg border-border/50 bg-card"
               />
               <Button
                 variant="outline"

@@ -69,7 +69,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
           <div className="flex items-center gap-2">
             <code
               data-testid="sync-code"
-              className="flex-1 truncate rounded-lg border border-border/50 bg-card/80 px-2.5 py-1.5 text-sm font-bold tracking-wide"
+              className="flex-1 truncate rounded-lg border border-border/50 bg-card px-2.5 py-1.5 text-sm font-bold tracking-wide"
             >
               {sync.code}
             </code>
