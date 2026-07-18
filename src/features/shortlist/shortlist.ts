@@ -249,8 +249,8 @@ export function updateShortlistItem(
     if (item.addressKey !== addressKey) return item;
     const next = { ...item, ...patch };
 
-    // Normalize empty strings and nulls to undefined to omit them from JSON serialization,
-    // reducing the footprint in localStorage and shared URL payloads.
+    // Normalize empty legacy free-text fields to undefined so they omit from JSON
+    // serialization, reducing the footprint in localStorage and shared URL payloads.
     if (next.pros === "") next.pros = undefined;
     if (next.cons === "") next.cons = undefined;
     if (next.renovation === "") next.renovation = undefined;

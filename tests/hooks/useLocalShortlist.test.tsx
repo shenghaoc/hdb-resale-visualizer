@@ -153,6 +153,19 @@ describe("useLocalShortlist", () => {
     expect(nextUrl).not.toContain("shortlist=");
   });
 
+  it("clears to pathname alone when shortlist is the only query parameter", () => {
+    const items = [
+      { addressKey: "addr-url", notes: "", targetPrice: null, addedAt: "2026-01-01T00:00:00Z" },
+    ];
+    const encoded = Buffer.from(JSON.stringify(items)).toString("base64");
+    mockLocation(`?shortlist=${encoded}`);
+    const replaceSpy = vi.spyOn(window.history, "replaceState");
+
+    renderHook(() => useLocalShortlist());
+
+    expect(replaceSpy).toHaveBeenCalledWith({}, "", "/");
+  });
+
   // --- Local actions ---
 
   it("toggle adds a new item", () => {

@@ -83,8 +83,11 @@ export function useLocalShortlist(): UseLocalShortlistResult {
 
     const newParams = new URLSearchParams(window.location.search);
     newParams.delete("shortlist");
-    const newUrl = newParams.size
-      ? `${window.location.pathname}?${newParams.toString()}`
+    // Prefer toString() over .size — size is missing on older Safari/Chrome and
+    // would falsily strip remaining unrelated query parameters.
+    const remaining = newParams.toString();
+    const newUrl = remaining
+      ? `${window.location.pathname}?${remaining}`
       : window.location.pathname;
     window.history.replaceState({}, "", newUrl);
   }, [initialState.shouldClearUrlParam]);
