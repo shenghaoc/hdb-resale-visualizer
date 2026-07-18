@@ -30,7 +30,7 @@ jobs:
       run_e2e: ${{ steps.filter.outputs.e2e }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - id: filter
         uses: dorny/paths-filter@v4
@@ -76,7 +76,7 @@ jobs:
       needs.changes.outputs.run_e2e == 'true'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: voidzero-dev/setup-vp@v1
         with:
@@ -115,7 +115,7 @@ jobs:
       needs.changes.outputs.run_e2e == 'true'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: voidzero-dev/setup-vp@v1
         with:
@@ -180,7 +180,7 @@ jobs:
       needs.changes.outputs.run_e2e == 'true'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # The Playwright image ships Node 24, matching this project's
       # requirement (engines.node >= 24.0.0). Use setup-node to ensure the
