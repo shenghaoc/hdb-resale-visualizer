@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vite-plus/test";
-import { AskingPriceCheck } from "@/components/AskingPriceCheck";
+import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import { AskingPriceCheck } from "@/features/listing-check/AskingPriceCheck";
 import { I18nProvider } from "@/shared/lib/i18n";
 import { formatNumber } from "@/shared/lib/format";
 import {
@@ -58,6 +58,10 @@ function renderCheck(transactions = comparableTransactions) {
 }
 
 describe("AskingPriceCheck", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("prompts for an asking price when the input is empty", () => {
     renderCheck();
     expect(
@@ -68,6 +72,7 @@ describe("AskingPriceCheck", () => {
 
   it("shows price-per-sqm and verdict from known asking price and floor area", async () => {
     const user = userEvent.setup();
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
     const askingPrice = 625_000;
     const floorAreaSqm = 93;
     const comparables = findComparableTransactions(comparableTransactions, {
@@ -102,6 +107,7 @@ describe("AskingPriceCheck", () => {
     expect(
       screen.getByText(`${deltaSign}${Math.abs(expected!.pricePerSqmDeltaPct!).toFixed(1)}%`),
     ).toBeInTheDocument();
+    expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("warns when a price is entered but there are no transactions to compare", async () => {

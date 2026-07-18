@@ -72,7 +72,11 @@
   - Completed via `src/features/listing-check/useListingCheckController.ts`.
 - [x] 6.2 Keep calculation functions in entities/shared/lib modules; move only orchestration and component composition into feature.
   - Completed: panel at `src/features/listing-check/ListingCheckPanel.tsx`; async orchestration in `useListingCheckAnalysis.ts`; pure composition in `listingCheckAnalysis.ts` (orchestrates entity/shared calculations without reimplementing them).
-- [ ] 6.3 Ensure `AskingPriceCheck`, verdict panels, and comparable evidence producers import from new feature/entity modules.
+- [x] 6.3 Ensure `AskingPriceCheck`, verdict panels, and comparable evidence producers import from new feature/entity modules.
+  - Moved `AskingPriceCheck`, `ComparableEvidenceTable`, `ComparableTransactionsList`, and `DistributionBar` into `src/features/listing-check/`.
+  - Consolidated shared verdict presentation in `src/features/listing-check/listingVerdictPresentation.ts`.
+  - Evidence components now consume feature analysis types (`DisplayComparable`, `ListingAdjustmentInfo`) rather than parallel local contracts.
+  - Listing-check feature boundary is complete (tasks 6.1–6.5).
 - [x] 6.4 Add a feature-level test boundary:
   - unit tests for pure math (in entity/shared-lib),
   - component tests for listing check UI under `tests/components` or `tests/unit` near feature.

@@ -1,20 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  AlertTriangle,
-  ArrowDown,
-  ArrowUp,
-  Bookmark,
-  CheckCircle2,
-  Info,
-  List,
-  Search,
-  Scale,
-  Sparkles,
-} from "lucide-react";
+import { AlertTriangle, Bookmark, Info, List, Search, Scale, Sparkles } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
-import type { AskingPriceAssessment } from "@/entities/transaction/transaction-analysis";
 import type { ConfidenceAssessment } from "../../../shared/confidence-system";
 import type { Caveat } from "../../../shared/caveat-codes";
 import { Card, CardContent } from "@/components/ui/card";
@@ -29,17 +17,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { DistributionBar } from "@/components/DistributionBar";
-import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
+import { DistributionBar } from "./DistributionBar";
+import { ComparableEvidenceTable } from "./ComparableEvidenceTable";
 import { SearchCombobox } from "@/components/SearchCombobox";
 import type { Suggestion } from "@/types/data";
 import { QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
+import { parseLeaseCommenceYearInput, parsePositiveDecimalInput } from "./listingCheckInputs";
+import { useListingCheckAnalysis } from "./useListingCheckAnalysis";
+import { useListingFactInput } from "./useListingFactInput";
 import {
-  parseLeaseCommenceYearInput,
-  parsePositiveDecimalInput,
-} from "@/features/listing-check/listingCheckInputs";
-import { useListingCheckAnalysis } from "@/features/listing-check/useListingCheckAnalysis";
-import { useListingFactInput } from "@/features/listing-check/useListingFactInput";
+  formatSignedListingCurrency,
+  formatSignedListingPercent,
+  getListingVerdictStyles,
+  LISTING_VERDICT_THEMES,
+} from "./listingVerdictPresentation";
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -64,69 +55,6 @@ type ListingCheckPanelProps = {
   savedToShortlist: boolean;
   referenceMonth?: string;
 };
-
-// ── Verdict themes ──────────────────────────────────────────────────────────
-
-type VerdictTheme = {
-  tone: "success" | "warning" | "destructive" | "muted";
-  icon: typeof CheckCircle2;
-  i18nKey: string;
-};
-
-const VERDICT_THEMES: Record<AskingPriceAssessment["verdict"], VerdictTheme> = {
-  well_below: { tone: "success", icon: ArrowDown, i18nKey: "askingCheck.verdict.wellBelow" },
-  below: { tone: "success", icon: ArrowDown, i18nKey: "askingCheck.verdict.below" },
-  fair: { tone: "muted", icon: CheckCircle2, i18nKey: "askingCheck.verdict.fair" },
-  above: { tone: "warning", icon: ArrowUp, i18nKey: "askingCheck.verdict.above" },
-  well_above: {
-    tone: "destructive",
-    icon: AlertTriangle,
-    i18nKey: "askingCheck.verdict.wellAbove",
-  },
-};
-
-function toneStyles(tone: VerdictTheme["tone"]) {
-  switch (tone) {
-    case "success":
-      return {
-        bg: "bg-success/10",
-        border: "border-success/30",
-        text: "text-success",
-        badge: "bg-success/15 text-success border-success/30",
-      };
-    case "warning":
-      return {
-        bg: "bg-warning/10",
-        border: "border-warning/30",
-        text: "text-warning",
-        badge: "bg-warning/15 text-warning border-warning/30",
-      };
-    case "destructive":
-      return {
-        bg: "bg-destructive/10",
-        border: "border-destructive/30",
-        text: "text-destructive",
-        badge: "bg-destructive/15 text-destructive border-destructive/30",
-      };
-    default:
-      return {
-        bg: "bg-muted/30",
-        border: "border-border/40",
-        text: "text-foreground",
-        badge: "bg-muted/40 text-foreground border-border/40",
-      };
-  }
-}
-
-function formatSignedCurrency(value: number) {
-  const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-  return `${sign}${formatCompactCurrency(Math.abs(value))}`;
-}
-
-function formatSignedPct(value: number) {
-  const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-  return `${sign}${Math.abs(value).toFixed(1)}%`;
-}
 
 function confidenceBadgeVariant(
   level: ConfidenceAssessment["level"],
@@ -239,8 +167,8 @@ export function ListingCheckPanel({
   }, []);
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
-  const theme = result ? VERDICT_THEMES[result.assessment.verdict] : null;
-  const styles = theme ? toneStyles(theme.tone) : toneStyles("muted");
+  const theme = result ? LISTING_VERDICT_THEMES[result.assessment.verdict] : null;
+  const styles = theme ? getListingVerdictStyles(theme.tone) : getListingVerdictStyles("muted");
   const VerdictIcon = theme?.icon ?? Sparkles;
 
   // ── SearchCombobox handlers ───────────────────────────────────────────────
@@ -636,7 +564,7 @@ export function ListingCheckPanel({
               {result.assessment.pricePerSqmDeltaPct != null && (
                 <DataRow
                   label={t("check.psmDelta")}
-                  value={formatSignedPct(result.assessment.pricePerSqmDeltaPct)}
+                  value={formatSignedListingPercent(result.assessment.pricePerSqmDeltaPct)}
                   emphasis={
                     result.assessment.pricePerSqmDeltaPct > 5
                       ? "negative"
@@ -648,7 +576,7 @@ export function ListingCheckPanel({
               )}
               <DataRow
                 label={t("check.vsMedian")}
-                value={formatSignedCurrency(result.assessment.deltaVsMedian)}
+                value={formatSignedListingCurrency(result.assessment.deltaVsMedian)}
               />
               <DataRow
                 label={t("check.percentile")}

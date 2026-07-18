@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vite-plus/test";
-import { ComparableEvidenceTable } from "@/components/ComparableEvidenceTable";
+import { ComparableEvidenceTable } from "@/features/listing-check/ComparableEvidenceTable";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { ComparableTransaction } from "../../shared/comparable-engine";
 
