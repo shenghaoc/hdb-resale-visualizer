@@ -109,7 +109,7 @@ export function AppHeader({
           aria-expanded={isMobileHeaderOpen}
           onClick={onToggleMobileHeader}
           className={cn(
-            "pointer-events-auto flex min-w-0 items-center gap-2 px-3 py-2 text-left transition-all",
+            "pointer-events-auto flex min-w-0 items-center gap-2 px-3 py-2 text-left transition-[color,background-color]",
             !isDesktop && "min-w-0 flex-1 overflow-hidden",
             isDesktop && "shrink-0",
             HEADER_SURFACE_CLASS,
@@ -261,7 +261,7 @@ export function AppHeader({
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="size-8 p-0 text-muted-foreground hover:text-foreground"
+                  className="size-8 p-0 text-muted-foreground hover:text-foreground min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
                   onClick={onDismiss}
                   aria-label={t("app.dismissHeader")}
                 >

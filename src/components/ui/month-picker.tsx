@@ -165,7 +165,7 @@ export function MonthPicker({
           id={id}
           variant="outline"
           className={cn(
-            "group w-full justify-start text-left font-normal bg-background/50 px-3 hover:bg-background transition-all border-border/40",
+            "group w-full justify-start text-left font-normal bg-background px-3 hover:bg-muted transition-[color,background-color] border-border/40",
             !value && "text-muted-foreground",
           )}
         >
@@ -195,7 +195,7 @@ export function MonthPicker({
                 size="icon"
                 onClick={handlePreviousYear}
                 disabled={viewYear <= minYear}
-                className="size-8 rounded-full hover:bg-muted"
+                className="size-8 rounded-full hover:bg-muted min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
                 aria-label={
                   previousYearLabel || t("filters.previousYear", { defaultValue: "Previous year" })
                 }
@@ -218,7 +218,7 @@ export function MonthPicker({
                 size="icon"
                 onClick={handleNextYear}
                 disabled={viewYear >= maxYear}
-                className="size-8 rounded-full hover:bg-muted"
+                className="size-8 rounded-full hover:bg-muted min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
                 aria-label={nextYearLabel || t("filters.nextYear", { defaultValue: "Next year" })}
               >
                 <ChevronRight data-icon className="size-4" aria-hidden="true" />
@@ -254,7 +254,7 @@ export function MonthPicker({
                 aria-checked={isSelected}
                 tabIndex={focusableMonthIndex === index ? 0 : -1}
                 className={cn(
-                  "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-all",
+                  "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-[color,background-color]",
                   isSelected
                     ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90"
                     : "hover:bg-accent hover:text-accent-foreground text-muted-foreground",

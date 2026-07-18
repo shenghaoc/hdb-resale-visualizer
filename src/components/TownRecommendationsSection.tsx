@@ -71,7 +71,7 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
           const matchedCount = rec.strongCount + rec.goodCount + rec.stretchCount;
           return (
             <li key={rec.town}>
-              <Card className="border-border/40 bg-card/95 shadow-none">
+              <Card className="border-border/40 bg-card shadow-none">
                 <CardContent className="flex flex-wrap items-center gap-3 p-3">
                   <div className="min-w-0 flex-1">
                     <strong className="block truncate font-heading text-sm font-extrabold uppercase tracking-[0.08em]">

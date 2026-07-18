@@ -277,7 +277,7 @@ export function AskingPriceCheck({ detail }: AskingPriceCheckProps) {
               />
             </div>
 
-            <div className="grid grid-cols-1 gap-2 rounded-md bg-card/70 p-3 text-xs sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 rounded-md bg-card p-3 text-xs sm:grid-cols-2">
               <DataRow
                 label={t("askingCheck.askingPerSqm")}
                 value={

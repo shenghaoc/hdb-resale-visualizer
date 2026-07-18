@@ -310,7 +310,7 @@ const BlockCard = memo(function BlockCard({
           }
         }}
         className={cn(
-          "v2-card animate-fade-in-up cursor-pointer border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
+          "v2-card animate-fade-in-up cursor-pointer border-border/40 bg-card transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
           isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
           "gap-0 px-3 py-2",
         )}
@@ -375,7 +375,7 @@ const BlockCard = memo(function BlockCard({
                     onToggleShortlist(block.addressKey);
                   }}
                   type="button"
-                  className="size-7 shrink-0 rounded-lg p-0"
+                  className="size-7 sm:size-9 shrink-0 rounded-lg p-0 min-h-11 min-w-11 sm:min-h-0 sm:min-w-0"
                   aria-pressed={isSaved}
                   aria-label={t("results.save")}
                 >
@@ -436,7 +436,7 @@ const BlockCard = memo(function BlockCard({
         }
       }}
       className={cn(
-        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
+        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 border-border/40 bg-card p-4 shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
         isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
       )}
       onClick={() => onSelect(block.addressKey)}
@@ -1284,7 +1284,7 @@ export function ResultsPane({
                   {affordabilityMode && onClearAffordabilityFilter ? (
                     <Card
                       data-testid="affordability-empty-card"
-                      className="w-full border-border/50 bg-card/95"
+                      className="w-full border-border/50 bg-card"
                     >
                       <CardHeader>
                         <CardTitle>{t("affordability.filter.empty.title")}</CardTitle>

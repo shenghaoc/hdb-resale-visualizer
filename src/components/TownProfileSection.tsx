@@ -122,23 +122,23 @@ export function TownProfileSection({
               <tbody>
                 {rollups.map((row) => (
                   <tr key={row.flatType}>
-                    <td className="rounded-l-md bg-background/85 px-1 py-1 font-semibold">
+                    <td className="rounded-l-md bg-background px-1 py-1 font-semibold">
                       {localizeFlatType(row.flatType, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                    <td className="bg-background px-1 py-1 v2-tabular">
                       {row.latestMedianPrice === null
                         ? "—"
                         : formatCompactCurrency(row.latestMedianPrice, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                    <td className="bg-background px-1 py-1 v2-tabular">
                       {row.latestMedianPricePerSqm === null
                         ? "—"
                         : formatCompactCurrency(row.latestMedianPricePerSqm, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                    <td className="bg-background px-1 py-1 v2-tabular">
                       {formatNumber(row.windowTransactionVolume, 0, locale)}
                     </td>
-                    <td className="rounded-r-md bg-background/85 px-1 py-1 text-muted-foreground">
+                    <td className="rounded-r-md bg-background px-1 py-1 text-muted-foreground">
                       {row.latestMonth === null ? "—" : formatMonth(row.latestMonth, locale)}
                     </td>
                   </tr>

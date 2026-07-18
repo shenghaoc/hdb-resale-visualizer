@@ -52,7 +52,7 @@ export function AppPanelShell({
           <Button
             variant="outline"
             size="xs"
-            className="h-8 rounded-xl bg-popover px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground shadow-lg"
+            className="h-8 rounded-lg bg-popover px-3 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground shadow-lg"
             onClick={onShowHeader}
           >
             {showHeaderLabel}

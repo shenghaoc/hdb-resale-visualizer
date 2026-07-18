@@ -251,7 +251,7 @@ function AmenityCard({
   locale: Locale;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-muted/30 p-3">
+    <div className="flex flex-col gap-2 rounded-lg bg-muted/30 p-3">
       {showLabel && Icon && label && (
         <div className="mb-2 flex items-center gap-2">
           <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
@@ -578,7 +578,7 @@ export function DetailDrawer({
               }}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
-              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-xl bg-muted/40 p-1">
+              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-lg bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
                   className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
@@ -616,7 +616,7 @@ export function DetailDrawer({
                   className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
                 >
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                    <div className="flex flex-col rounded-lg bg-muted/30 p-3">
                       <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.medianResale")}
@@ -669,7 +669,7 @@ export function DetailDrawer({
                         ) : null}
                       </div>
                     </div>
-                    <div className="flex flex-col rounded-xl bg-muted/30 p-3">
+                    <div className="flex flex-col rounded-lg bg-muted/30 p-3">
                       <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
                         <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.remainingLease")}
@@ -686,7 +686,7 @@ export function DetailDrawer({
                     <section
                       aria-labelledby="comparable-range-title"
                       data-testid="comparable-range-headline"
-                      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                      className="rounded-lg border border-border/40 bg-muted/20 p-3"
                     >
                       <div
                         id="comparable-range-title"
@@ -725,7 +725,7 @@ export function DetailDrawer({
                     <section
                       aria-labelledby="affordability-title"
                       data-testid="affordability-section"
-                      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                      className="rounded-lg border border-border/40 bg-muted/20 p-3"
                     >
                       <div
                         id="affordability-title"
@@ -817,7 +817,7 @@ export function DetailDrawer({
                       </div>
                     </section>
                   ) : searchProfile && searchProfile.monthlyIncome === null ? (
-                    <section className="rounded-xl border border-border/40 bg-muted/20 p-3">
+                    <section className="rounded-lg border border-border/40 bg-muted/20 p-3">
                       <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.title")}
@@ -852,7 +852,7 @@ export function DetailDrawer({
                       <Table data-icon className="size-4" aria-hidden="true" />
                       {t("detail.unitAttributes")}
                     </h3>
-                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                    <Card className="v2-card rounded-lg border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="divide-y divide-border/40 p-0">
                         <div className="flex items-center justify-between p-3">
                           <span className="text-sm font-medium text-muted-foreground">
@@ -927,7 +927,7 @@ export function DetailDrawer({
                       <Info data-icon className="size-4" aria-hidden="true" />
                       {t("detail.whyThisBlock")}
                     </h3>
-                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                    <Card className="v2-card rounded-lg border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="p-3">
                         {isComparisonLoading ? (
                           <div className="flex flex-col gap-2">
@@ -1208,7 +1208,7 @@ export function DetailDrawer({
                   </section>
 
                   <div className="grid grid-cols-1 gap-4">
-                    <Card className="border-border/40 bg-card shadow-sm transition-all hover:border-primary/20">
+                    <Card className="border-border/40 bg-card shadow-sm transition-[border-color,box-shadow] hover:border-primary/20">
                       <CardHeader className="p-4">
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col gap-1">
@@ -1386,7 +1386,7 @@ export function DetailDrawer({
           <div className="shrink-0 border-t border-border/40 bg-background p-4 sm:p-6">
             <div className="mx-auto flex w-full items-center gap-2.5 sm:gap-4">
               <Button
-                className="min-w-0 flex-1 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
+                className="min-w-0 flex-1 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-[color,background-color,transform] active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
@@ -1420,7 +1420,7 @@ export function DetailDrawer({
               />
               <Button
                 variant="outline"
-                className="min-w-0 flex-1 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
+                className="min-w-0 flex-1 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-[color,background-color,transform] active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 disabled={!currentSummary}
                 onClick={() => {
@@ -1459,7 +1459,7 @@ function SimilarBlockCard({
   return (
     <button
       type="button"
-      className="w-full rounded-xl bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      className="w-full rounded-lg bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       onClick={() => onSelect(block.addressKey)}
       aria-label={t("detail.similarBlocks.viewBlock", { address })}
     >

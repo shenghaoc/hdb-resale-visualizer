@@ -258,7 +258,7 @@ function ShortlistComparisonTable({
 
   return (
     <div
-      className="rounded-xl border border-border/40 bg-card/50 v2-scrollbar"
+      className="rounded-lg border border-border/40 bg-card v2-scrollbar"
       data-testid="shortlist-comparison-table"
     >
       <div className="hidden md:block overflow-x-auto">
@@ -419,7 +419,7 @@ function ShortlistComparisonTable({
           <div
             key={`mobile-${row.addressKey}`}
             data-testid="shortlist-comparison-card"
-            className="rounded-lg border border-border/40 bg-card/70 p-2.5"
+            className="rounded-lg border border-border/40 bg-card p-2.5"
           >
             <div className="flex items-start gap-2">
               <span className="mt-0.5 w-6 shrink-0 text-center text-xs font-extrabold tabular-nums text-muted-foreground">
@@ -1621,7 +1621,7 @@ export function ShortlistDrawer({
             ) : (
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1 v2-scrollbar">
                 <div className="flex flex-col gap-3 pb-8">
-                  <div className="grid overflow-hidden rounded-xl border border-border/40 bg-border/50 sm:grid-cols-3">
+                  <div className="grid overflow-hidden rounded-lg border border-border/40 bg-border/50 sm:grid-cols-3">
                     {highlights.map((highlight) => (
                       <div key={highlight.label} className="min-w-0 bg-muted/35 p-3">
                         <div className="v2-kicker">{highlight.label}</div>
@@ -1638,7 +1638,7 @@ export function ShortlistDrawer({
                   </div>
 
                   {viewMode === "list" && compareChart ? (
-                    <Card size="sm" className="v2-card gap-3 rounded-xl py-3 shadow-none">
+                    <Card size="sm" className="v2-card gap-3 rounded-lg py-3 shadow-none">
                       <CardHeader className="px-3">
                         <CardTitle className="v2-section-title">
                           {t("shortlist.compareTrendsTitle")}
@@ -1748,7 +1748,7 @@ export function ShortlistDrawer({
                             role="listitem"
                             data-state={isExpanded ? "expanded" : "collapsed"}
                             className={cn(
-                              "v2-card ss-fade-in gap-0 rounded-xl py-0 transition-all cv-auto",
+                              "v2-card ss-fade-in gap-0 rounded-lg py-0 transition-[border-color,box-shadow] cv-auto",
                               isExpanded && "shadow-[0_12px_32px_rgba(23,28,31,0.10)]",
                             )}
                           >

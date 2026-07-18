@@ -56,7 +56,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
   return (
     <section
       data-testid="shortlist-sync"
-      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+      className="rounded-lg border border-border/40 bg-muted/20 p-3"
     >
       <div className="flex items-center gap-1.5">
         <Cloud data-icon className="size-3.5 text-primary" aria-hidden="true" />

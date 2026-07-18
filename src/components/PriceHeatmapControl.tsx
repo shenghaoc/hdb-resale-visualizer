@@ -78,7 +78,7 @@ export function PriceHeatmapControl({
               disabled={!hasScope}
               onClick={onToggle}
               className={cn(
-                "relative h-4 w-7 shrink-0 rounded-full transition-all duration-300",
+                "relative h-4 w-7 shrink-0 rounded-full transition-[background-color] duration-300",
                 !hasScope && "cursor-not-allowed opacity-50",
                 hasScope &&
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
@@ -87,7 +87,7 @@ export function PriceHeatmapControl({
             >
               <span
                 className={cn(
-                  "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-all duration-300 ease-in-out",
+                  "absolute top-[2px] left-[2px] size-3 rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
                   isEnabled && hasScope ? "translate-x-3" : "translate-x-0",
                 )}
                 aria-hidden="true"
