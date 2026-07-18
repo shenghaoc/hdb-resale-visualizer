@@ -131,6 +131,32 @@ describe("useListingFactInput", () => {
     expect(result.current.value).toBe("650000");
   });
 
+  it("focus-only blur does not clobber an external value changed while focused", () => {
+    const onCommit = vi.fn();
+    const { result, rerender } = renderHook(
+      ({ value }: { value: number | null }) =>
+        useListingFactInput({
+          value,
+          parse: parsePositiveDecimalInput,
+          onCommit,
+        }),
+      { initialProps: { value: 100 as number | null } },
+    );
+
+    act(() => {
+      result.current.onFocus();
+    });
+    // Sample / deep-link updates parent while the field is focused but untouched.
+    rerender({ value: 999999 });
+
+    act(() => {
+      result.current.onBlur();
+    });
+
+    expect(onCommit).not.toHaveBeenCalled();
+    expect(result.current.value).toBe("999999");
+  });
+
   it("external sample/deep-link value appears when not editing", () => {
     const onCommit = vi.fn();
     const { result, rerender } = renderHook(

@@ -51,7 +51,8 @@ export type ListingCheckAnalysisState = {
  * listing-check result derivation for the listing-check panel.
  *
  * Asking-price changes recompute the local result without refetching
- * comparables. Stale async responses are discarded via request generation tokens.
+ * comparables. Stale async responses are discarded via effect cleanup
+ * cancellation flags.
  */
 export function useListingCheckAnalysis({
   selectedAddressKey,
@@ -71,10 +72,6 @@ export function useListingCheckAnalysis({
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
   const [adjustmentMeta, setAdjustmentMeta] = useState<ListingAdjustmentMeta | null>(null);
-
-  // Always request time-adjustment metadata so the UI can surface when the
-  // adjustment succeeded, widened partially, or could not be applied.
-  const adjustmentEnabled = true;
 
   // ── Address detail ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -174,11 +171,9 @@ export function useListingCheckAnalysis({
     setComparableSet(null);
     setAdjustmentMeta(null);
 
-    const url = adjustmentEnabled
-      ? "/api/comparable-transactions?adjust=time"
-      : "/api/comparable-transactions";
-
-    fetch(url, {
+    // Always request time-adjustment metadata so the UI can surface when the
+    // adjustment succeeded, widened partially, or could not be applied.
+    fetch("/api/comparable-transactions?adjust=time", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -190,7 +185,7 @@ export function useListingCheckAnalysis({
         if (!cancelled) {
           setComparableSet(data);
           setComparableSetLoading(false);
-          setAdjustmentMeta(adjustmentEnabled ? buildListingAdjustmentMeta(data) : null);
+          setAdjustmentMeta(buildListingAdjustmentMeta(data));
         }
       })
       .catch(() => {
@@ -213,7 +208,6 @@ export function useListingCheckAnalysis({
     storeyRange,
     detail,
     referenceMonth,
-    adjustmentEnabled,
   ]);
 
   // ── Pure derivation ───────────────────────────────────────────────────────

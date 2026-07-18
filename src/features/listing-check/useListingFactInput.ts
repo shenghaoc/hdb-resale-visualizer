@@ -27,6 +27,8 @@ export function useListingFactInput({
   onCommit,
 }: UseListingFactInputOptions): ListingFactInput {
   const [draft, setDraft] = useState<string | null>(null);
+  /** True only after the user has typed; focus alone is not dirty. */
+  const [dirty, setDirty] = useState(false);
   const isEditing = draft !== null;
   const displayValue = isEditing ? draft : value == null ? "" : String(value);
 
@@ -34,6 +36,7 @@ export function useListingFactInput({
     (event: ChangeEvent<HTMLInputElement>) => {
       const raw = event.target.value;
       setDraft(raw);
+      setDirty(true);
       if (raw.trim() === "") {
         onCommit(null);
         return;
@@ -48,15 +51,20 @@ export function useListingFactInput({
 
   const onFocus = useCallback(() => {
     setDraft(value == null ? "" : String(value));
+    setDirty(false);
   }, [value]);
 
   const onBlur = useCallback(() => {
-    // Only commit when an edit session is active. A programmatic or double blur
-    // with draft === null must not overwrite a valid parent value with null.
+    // Only normalize when the user actually edited. Idle blur and focus→blur
+    // without typing must not overwrite a parent value that may have changed
+    // while the field was focused (sample apply, deep-link, re-hydration).
     if (draft === null) return;
-    onCommit(parse(draft));
+    if (dirty) {
+      onCommit(parse(draft));
+    }
     setDraft(null);
-  }, [draft, onCommit, parse]);
+    setDirty(false);
+  }, [draft, dirty, onCommit, parse]);
 
   return {
     value: displayValue,
