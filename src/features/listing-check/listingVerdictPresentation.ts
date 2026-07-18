@@ -63,11 +63,23 @@ export function getListingVerdictStyles(tone: ListingVerdictTone): {
 }
 
 export function formatSignedListingCurrency(value: number, locale?: Locale): string {
-  const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-  return `${sign}${formatCompactCurrency(Math.abs(value), locale)}`;
+  const amount = formatCompactCurrency(Math.abs(value), locale);
+  // Compact notation can round tiny magnitudes to the same display as zero.
+  // Omit the sign so we never show "+$0" / "−$0".
+  if (value === 0 || amount === formatCompactCurrency(0, locale)) {
+    return amount;
+  }
+  const sign = value > 0 ? "+" : "−";
+  return `${sign}${amount}`;
 }
 
 export function formatSignedListingPercent(value: number): string {
+  const formatted = Math.abs(value).toFixed(1);
+  // toFixed(1) can round magnitudes below 0.05 to "0.0". Omit the sign so we
+  // never show "+0.0%" / "−0.0%".
+  if (formatted === "0.0") {
+    return "0.0%";
+  }
   const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-  return `${sign}${Math.abs(value).toFixed(1)}%`;
+  return `${sign}${formatted}%`;
 }

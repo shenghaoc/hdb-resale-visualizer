@@ -75,6 +75,16 @@ describe("listingVerdictPresentation", () => {
     expect(formatted.startsWith("-")).toBe(false);
   });
 
+  it("omits the sign when compact currency rounds tiny magnitudes to zero", () => {
+    const positiveTiny = formatSignedListingCurrency(0.04);
+    const negativeTiny = formatSignedListingCurrency(-0.04);
+    const zero = formatSignedListingCurrency(0);
+    expect(positiveTiny).toBe(zero);
+    expect(negativeTiny).toBe(zero);
+    expect(positiveTiny.startsWith("+")).toBe(false);
+    expect(negativeTiny.startsWith("−")).toBe(false);
+  });
+
   it("formats positive signed percentage with a plus sign", () => {
     expect(formatSignedListingPercent(3.25)).toBe("+3.3%");
   });
@@ -86,6 +96,13 @@ describe("listingVerdictPresentation", () => {
   it("retains one decimal place for percentage output", () => {
     expect(formatSignedListingPercent(0)).toBe("0.0%");
     expect(formatSignedListingPercent(10)).toBe("+10.0%");
+    expect(formatSignedListingPercent(-0.04)).toBe("0.0%");
+    expect(formatSignedListingPercent(0.04)).toBe("0.0%");
+  });
+
+  it("keeps the sign when percentage rounds away from zero", () => {
+    expect(formatSignedListingPercent(0.05)).toBe("+0.1%");
+    expect(formatSignedListingPercent(-0.05)).toBe("−0.1%");
   });
 
   it("returns the expected style classes for each tone", () => {

@@ -576,7 +576,7 @@ export function ListingCheckPanel({
               )}
               <DataRow
                 label={t("check.vsMedian")}
-                value={formatSignedListingCurrency(result.assessment.deltaVsMedian)}
+                value={formatSignedListingCurrency(result.assessment.deltaVsMedian, locale)}
               />
               <DataRow
                 label={t("check.percentile")}

@@ -83,7 +83,7 @@
   - Added `tests/unit/listingCheckAnalysis.test.ts`, `tests/unit/useListingCheckAnalysis.test.tsx`, `tests/unit/useListingFactInput.test.tsx`; retained `tests/components/ListingCheckPanel.inputs.test.tsx`.
 - [x] 6.5 Validate:
   - `npm run test tests/unit/listing-verdict.test.ts tests/unit/listing-confidence.test.ts tests/unit/comparable-engine.test.ts`
-  - `npm run test tests/unit/ComparableEvidenceTable.test.tsx tests/components/AskingPriceCheck.test.tsx`
+  - `npm run test tests/components/ComparableEvidenceTable.test.tsx tests/components/AskingPriceCheck.test.tsx`
   - Plus focused feature tests, buyer listing-check E2E, `vp run check`, and `vp run check:pr`.
 
 ## 7) Move shortlist feature logic

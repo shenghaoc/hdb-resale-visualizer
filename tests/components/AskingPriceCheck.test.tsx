@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import { AskingPriceCheck } from "@/features/listing-check/AskingPriceCheck";
+import { formatSignedListingPercent } from "@/features/listing-check/listingVerdictPresentation";
 import { I18nProvider } from "@/shared/lib/i18n";
 import { formatNumber } from "@/shared/lib/format";
 import {
@@ -102,11 +103,11 @@ describe("AskingPriceCheck", () => {
     expect(
       screen.getByText(`$${formatNumber(expected!.summary.medianPricePerSqm, 0, LOCALE)}/sqm`),
     ).toBeInTheDocument();
-    const deltaSign =
-      expected!.pricePerSqmDeltaPct! > 0 ? "+" : expected!.pricePerSqmDeltaPct! < 0 ? "−" : "";
+    // price-per-sqm delta can round to the same display as other 0.0% stats
+    // (e.g. vs-median), so match any occurrence rather than a unique node.
     expect(
-      screen.getByText(`${deltaSign}${Math.abs(expected!.pricePerSqmDeltaPct!).toFixed(1)}%`),
-    ).toBeInTheDocument();
+      screen.getAllByText(formatSignedListingPercent(expected!.pricePerSqmDeltaPct!)).length,
+    ).toBeGreaterThan(0);
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 

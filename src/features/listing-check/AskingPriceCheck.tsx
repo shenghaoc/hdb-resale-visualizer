@@ -314,7 +314,7 @@ function DeltaCell({
     <div className="rounded-none bg-muted/30 p-3">
       <div className="v2-field-label">{label}</div>
       <div className={cn("mt-1 font-heading text-lg font-extrabold tabular-nums", colorClass)}>
-        {formatSignedListingCurrency(amount)}
+        {formatSignedListingCurrency(amount, locale)}
       </div>
       <div className={cn("text-xs font-bold tabular-nums", colorClass)}>
         {formatSignedListingPercent(pct)}
