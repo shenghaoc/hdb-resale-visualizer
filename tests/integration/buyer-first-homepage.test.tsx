@@ -81,7 +81,7 @@ vi.mock("@/components/StatsBar", () => ({
   GlobalHeader: () => <div data-testid="global-header" />,
 }));
 
-vi.mock("@/components/ListingCheckPanel", () => ({
+vi.mock("@/features/listing-check/ListingCheckPanel", () => ({
   ListingCheckPanel: ({
     selectedAddressKey,
     askingPrice,
