@@ -80,7 +80,7 @@ import type {
   FilterState,
   ShortlistItem,
 } from "@/types/data";
-import type { ShortlistSync } from "@/hooks/useShortlist";
+import type { ShortlistSync } from "@/features/shortlist/useShortlist";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";

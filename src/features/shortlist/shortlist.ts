@@ -235,3 +235,29 @@ export function restoreShortlistItem(
   const insertionIndex = Math.max(0, Math.min(index, items.length));
   return [...items.slice(0, insertionIndex), item, ...items.slice(insertionIndex)];
 }
+
+/**
+ * Patch a single shortlist item by address key.
+ * Normalizes empty legacy free-text fields to `undefined` so they omit from JSON.
+ */
+export function updateShortlistItem(
+  items: ShortlistItem[],
+  addressKey: string,
+  patch: Partial<ShortlistItem>,
+): ShortlistItem[] {
+  return items.map((item) => {
+    if (item.addressKey !== addressKey) return item;
+    const next = { ...item, ...patch };
+
+    // Normalize empty legacy free-text fields to undefined so they omit from JSON
+    // serialization, reducing the footprint in localStorage and shared URL payloads.
+    if (next.pros === "") next.pros = undefined;
+    if (next.cons === "") next.cons = undefined;
+    if (next.renovation === "") next.renovation = undefined;
+    if (next.noise === "") next.noise = undefined;
+    if (next.transport === "") next.transport = undefined;
+    if (next.agentRemarks === "") next.agentRemarks = undefined;
+
+    return next;
+  });
+}

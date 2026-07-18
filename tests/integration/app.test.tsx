@@ -56,7 +56,7 @@ vi.mock("@/hooks/useMediaQuery", () => ({
   useMediaQuery: () => true,
 }));
 
-vi.mock("@/hooks/useShortlist", () => ({
+vi.mock("@/features/shortlist/useShortlist", () => ({
   useShortlist: () => ({
     items: shortlistMocks.state.items,
     has: (addressKey: string) =>

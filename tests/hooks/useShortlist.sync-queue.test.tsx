@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { useShortlist } from "@/hooks/useShortlist";
+import { useShortlist } from "@/features/shortlist/useShortlist";
 import { SyncRateLimitedError, pullShortlist, pushShortlist } from "@/features/shortlist/cloudSync";
 import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
 import { SHORTLIST_SYNC_QUEUE_KEY } from "@/features/shortlist/shortlistSyncQueue";
