@@ -36,7 +36,7 @@ vi.mock("@/hooks/useMediaQuery", () => ({
   useMediaQuery: () => true,
 }));
 
-vi.mock("@/hooks/useShortlist", () => ({
+vi.mock("@/features/shortlist/useShortlist", () => ({
   useShortlist: () => ({
     items: [],
     has: () => false,

@@ -1,14 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MAX_SHORTLIST_ITEMS, SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
-import {
-  decodeShortlistFromUrl,
-  loadShortlist,
-  mergeImportedShortlistItems,
-  mergeShortlists,
-  restoreShortlistItem,
-  saveShortlist,
-  toggleShortlistItem,
-} from "@/features/shortlist/shortlist";
+import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
+import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
+import { mergeShortlists } from "@/features/shortlist/shortlist";
 import {
   isRetriableSyncError,
   SyncCodeNotFoundError,
@@ -22,6 +14,7 @@ import {
   hasPendingShortlistPush,
   readPendingShortlistPush,
 } from "@/features/shortlist/shortlistSyncQueue";
+import { useLocalShortlist } from "@/features/shortlist/useLocalShortlist";
 import type { ShortlistItem } from "@/types/data";
 import { safeStorage } from "@/shared/lib/storage";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -34,20 +27,10 @@ function mergeFromCloud(current: ShortlistItem[], cloud: ShortlistItem[]): Short
   return JSON.stringify(current) === JSON.stringify(next) ? current : next;
 }
 
-/** Keep itemsRef in sync with React state for async sync callbacks. */
-function applyItems(
-  itemsRef: { current: ShortlistItem[] },
-  setItems: (value: ShortlistItem[]) => void,
-  next: ShortlistItem[],
-): void {
-  itemsRef.current = next;
-  setItems(next);
-}
-
 function applyPushResult(
-  itemsRef: { current: ShortlistItem[] },
-  setItems: (value: ShortlistItem[]) => void,
-  lastPushedRef: { current: string | null },
+  itemsRef: MutableRefObject<ShortlistItem[]>,
+  replaceItems: (items: ShortlistItem[]) => void,
+  lastPushedRef: MutableRefObject<string | null>,
   snapshot: string,
   resultItems: ShortlistItem[],
 ): void {
@@ -55,7 +38,7 @@ function applyPushResult(
   if (JSON.stringify(itemsRef.current) === snapshot) {
     const nextItems = mergeFromCloud(itemsRef.current, resultItems);
     if (nextItems !== itemsRef.current) {
-      applyItems(itemsRef, setItems, nextItems);
+      replaceItems(nextItems);
     }
   }
 }
@@ -74,49 +57,9 @@ export type ShortlistSync = {
   disable: () => void;
 };
 
-type InitialShortlistState = {
-  items: ShortlistItem[];
-  shouldClearUrlParam: boolean;
-};
-
-function readInitialShortlist(): InitialShortlistState {
-  if (typeof window === "undefined") {
-    return {
-      items: [],
-      shouldClearUrlParam: false,
-    };
-  }
-
-  const savedItems = loadShortlist(safeStorage);
-
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const shortlistParam = params.get("shortlist");
-    if (shortlistParam) {
-      const parsed = decodeShortlistFromUrl(shortlistParam);
-      if (parsed.length > 0) {
-        return {
-          items: mergeImportedShortlistItems(savedItems, parsed),
-          shouldClearUrlParam: true,
-        };
-      }
-    }
-  } catch {
-    // Ignore URL parsing errors
-  }
-
-  return {
-    items: savedItems,
-    shouldClearUrlParam: false,
-  };
-}
-
 export function useShortlist() {
-  const [initialState] = useState(readInitialShortlist);
-  const [items, setItems] = useState<ShortlistItem[]>(initialState.items);
-  // Mirrors `items` for use inside async sync callbacks/effects without making
-  // them depend on `items`. Updated in the persistence effect below.
-  const itemsRef = useRef(items);
+  const { items, isFull, toggle, restore, update, has, itemsRef, replaceItems } =
+    useLocalShortlist();
 
   const [syncCode, setSyncCode] = useState<string | null>(() =>
     safeStorage.getItem(SYNC_CODE_STORAGE_KEY),
@@ -142,24 +85,6 @@ export function useShortlist() {
       flushPendingPushRef.current();
     }, retryAfterSec * 1000);
   }, []);
-
-  useEffect(() => {
-    if (!initialState.shouldClearUrlParam) {
-      return;
-    }
-
-    const newParams = new URLSearchParams(window.location.search);
-    newParams.delete("shortlist");
-    const newUrl = newParams.size
-      ? `${window.location.pathname}?${newParams.toString()}`
-      : window.location.pathname;
-    window.history.replaceState({}, "", newUrl);
-  }, [initialState.shouldClearUrlParam]);
-
-  useEffect(() => {
-    itemsRef.current = items;
-    saveShortlist(safeStorage, items);
-  }, [items]);
 
   const dropSyncCode = useCallback((status: SyncStatus) => {
     safeStorage.removeItem(SYNC_CODE_STORAGE_KEY);
@@ -210,7 +135,7 @@ export function useShortlist() {
           setSyncCode(result.syncCode);
           readyRef.current = true;
         }
-        applyPushResult(itemsRef, setItems, lastPushedRef, flushedSnapshot, result.items);
+        applyPushResult(itemsRef, replaceItems, lastPushedRef, flushedSnapshot, result.items);
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
@@ -233,7 +158,7 @@ export function useShortlist() {
       .finally(() => {
         flushInFlightRef.current = false;
       });
-  }, [dropSyncCode, scheduleRateLimitRetry]);
+  }, [dropSyncCode, itemsRef, replaceItems, scheduleRateLimitRetry]);
 
   useEffect(() => {
     flushPendingPushRef.current = flushPendingPush;
@@ -289,7 +214,7 @@ export function useShortlist() {
         const mergedItems = mergeFromCloud(itemsRef.current, cloud);
         const mergedSnapshot = JSON.stringify(mergedItems);
         pushPayload = mergeShortlists(itemsRef.current, cloud);
-        applyItems(itemsRef, setItems, mergedItems);
+        replaceItems(mergedItems);
         const result = await pushShortlist(syncCode, pushPayload);
         if (cancelled) return;
         readyRef.current = true;
@@ -298,7 +223,7 @@ export function useShortlist() {
         if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
           const nextItems = mergeFromCloud(itemsRef.current, result.items);
           if (nextItems !== itemsRef.current) {
-            applyItems(itemsRef, setItems, nextItems);
+            replaceItems(nextItems);
           }
         }
         setSyncStatus("synced");
@@ -332,7 +257,7 @@ export function useShortlist() {
     return () => {
       cancelled = true;
     };
-  }, [syncCode, dropSyncCode, hydrationKey, scheduleRateLimitRetry]);
+  }, [syncCode, dropSyncCode, hydrationKey, itemsRef, replaceItems, scheduleRateLimitRetry]);
 
   // Debounced push of subsequent local changes while a code is active.
   useEffect(() => {
@@ -350,7 +275,7 @@ export function useShortlist() {
       .then((result) => {
         if (cancelled) return;
         clearPendingShortlistPush();
-        applyPushResult(itemsRef, setItems, lastPushedRef, snapshot, result.items);
+        applyPushResult(itemsRef, replaceItems, lastPushedRef, snapshot, result.items);
         setSyncStatus("synced");
       })
       .catch((error: unknown) => {
@@ -372,42 +297,7 @@ export function useShortlist() {
     return () => {
       cancelled = true;
     };
-  }, [debouncedItems, syncCode, dropSyncCode, scheduleRateLimitRetry]);
-
-  const toggle = useCallback((addressKey: string) => {
-    setItems((current) => toggleShortlistItem(current, addressKey));
-  }, []);
-
-  const restore = useCallback((item: ShortlistItem, index?: number) => {
-    setItems((current) => restoreShortlistItem(current, item, index));
-  }, []);
-
-  const update = useCallback((addressKey: string, patch: Partial<ShortlistItem>) => {
-    setItems((current) =>
-      current.map((item) => {
-        if (item.addressKey !== addressKey) return item;
-        const next = { ...item, ...patch };
-
-        // Normalize empty strings and nulls to undefined to omit them from JSON serialization,
-        // reducing the footprint in localStorage and shared URL payloads.
-        if (next.pros === "") next.pros = undefined;
-        if (next.cons === "") next.cons = undefined;
-        if (next.renovation === "") next.renovation = undefined;
-        if (next.noise === "") next.noise = undefined;
-        if (next.transport === "") next.transport = undefined;
-        if (next.agentRemarks === "") next.agentRemarks = undefined;
-
-        return next;
-      }),
-    );
-  }, []);
-
-  const has = useCallback(
-    (addressKey: string) => {
-      return items.some((item) => item.addressKey === addressKey);
-    },
-    [items],
-  );
+  }, [debouncedItems, syncCode, dropSyncCode, itemsRef, replaceItems, scheduleRateLimitRetry]);
 
   const enable = useCallback(async () => {
     setSyncStatus("syncing");
@@ -416,7 +306,7 @@ export function useShortlist() {
       const result = await pushShortlist(null, itemsRef.current);
       readyRef.current = true;
       clearPendingShortlistPush();
-      applyPushResult(itemsRef, setItems, lastPushedRef, snapshot, result.items);
+      applyPushResult(itemsRef, replaceItems, lastPushedRef, snapshot, result.items);
       safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
       setSyncCode(result.syncCode);
       setSyncStatus("synced");
@@ -435,7 +325,7 @@ export function useShortlist() {
       setSyncStatus("error");
       throw error;
     }
-  }, [scheduleRateLimitRetry]);
+  }, [itemsRef, replaceItems, scheduleRateLimitRetry]);
 
   const link = useCallback(
     async (code: string) => {
@@ -446,7 +336,7 @@ export function useShortlist() {
         const mergedItems = mergeFromCloud(itemsRef.current, cloud);
         const mergedSnapshot = JSON.stringify(mergedItems);
         pushPayload = mergeShortlists(itemsRef.current, cloud);
-        applyItems(itemsRef, setItems, mergedItems);
+        replaceItems(mergedItems);
         const result = await pushShortlist(code, pushPayload);
         readyRef.current = true;
         clearPendingShortlistPush();
@@ -454,7 +344,7 @@ export function useShortlist() {
         if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
           const nextItems = mergeFromCloud(itemsRef.current, result.items);
           if (nextItems !== itemsRef.current) {
-            applyItems(itemsRef, setItems, nextItems);
+            replaceItems(nextItems);
           }
         }
         safeStorage.setItem(SYNC_CODE_STORAGE_KEY, code);
@@ -489,7 +379,7 @@ export function useShortlist() {
         throw error;
       }
     },
-    [scheduleRateLimitRetry],
+    [itemsRef, replaceItems, scheduleRateLimitRetry],
   );
 
   const disable = useCallback(() => {
@@ -504,13 +394,13 @@ export function useShortlist() {
   return useMemo(
     () => ({
       items,
-      isFull: items.length >= MAX_SHORTLIST_ITEMS,
+      isFull,
       toggle,
       restore,
       update,
       has,
       sync,
     }),
-    [items, toggle, restore, update, has, sync],
+    [items, isFull, toggle, restore, update, has, sync],
   );
 }

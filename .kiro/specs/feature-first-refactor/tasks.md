@@ -92,6 +92,11 @@
   - ranking helper calls,
   - local/local-sync adapter boundaries,
   - mutation paths for notes/target price.
+  - Local persistence, URL import, and mutation paths extracted to
+    `src/features/shortlist/useLocalShortlist.ts`.
+  - Public `useShortlist` moved into feature ownership and now composes the local
+    store with the unchanged cloud-sync state machine.
+  - Cloud-sync extraction and ranking/view-model orchestration remain pending.
 - [ ] 7.2 Keep UI components as composition layers only.
 - [ ] 7.3 Preserve sync contract and retry/queue behavior unchanged.
 - [ ] 7.4 Add/relocate tests next to feature logic and update existing shortlist tests.

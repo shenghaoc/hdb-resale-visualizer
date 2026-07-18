@@ -2,7 +2,7 @@ import { useCallback, useId, useState } from "react";
 import { Check, Cloud, Copy } from "lucide-react";
 import { useI18n } from "@/shared/lib/i18n";
 import { SyncCodeNotFoundError } from "@/features/shortlist/cloudSync";
-import type { ShortlistSync, SyncStatus } from "@/hooks/useShortlist";
+import type { ShortlistSync, SyncStatus } from "@/features/shortlist/useShortlist";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

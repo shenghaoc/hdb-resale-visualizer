@@ -13,7 +13,9 @@ import {
   restoreShortlistItem,
   saveShortlist,
   toggleShortlistItem,
+  updateShortlistItem,
 } from "@/features/shortlist/shortlist";
+import type { ShortlistItem } from "@/types/data";
 
 describe("shortlist storage", () => {
   it("restores the exact item at a bounded original position", () => {
@@ -352,5 +354,129 @@ describe("shortlist storage", () => {
     expect(loaded).toHaveLength(1);
     expect(loaded[0]?.notes).toHaveLength(MAX_NOTE_LENGTH);
     expect(loaded[0]?.buyerNotes).toHaveLength(MAX_NOTE_LENGTH);
+  });
+});
+
+describe("updateShortlistItem", () => {
+  const baseItems: ShortlistItem[] = [
+    {
+      addressKey: "addr-a",
+      notes: "notes-a",
+      buyerNotes: "buyer-a",
+      noiseNotes: "noise-a",
+      transportNotes: "transport-a",
+      pros: "pros-a",
+      cons: "cons-a",
+      renovation: "reno-a",
+      noise: "legacy-noise-a",
+      transport: "legacy-transport-a",
+      agentRemarks: "agent-a",
+      targetPrice: 500000,
+      askingPrice: 510000,
+      addedAt: "2026-01-01T00:00:00.000Z",
+    },
+    {
+      addressKey: "addr-b",
+      notes: "notes-b",
+      targetPrice: null,
+      addedAt: "2026-01-02T00:00:00.000Z",
+    },
+  ];
+
+  it("patches the matching item", () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { notes: "updated" });
+    expect(next[0]?.notes).toBe("updated");
+  });
+
+  it("leaves other items unchanged", () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { notes: "updated" });
+    expect(next[1]).toBe(baseItems[1]);
+  });
+
+  it("does not mutate the source array", () => {
+    const snapshot = [...baseItems];
+    updateShortlistItem(baseItems, "addr-a", { notes: "updated" });
+    expect(baseItems).toEqual(snapshot);
+  });
+
+  it("does not mutate the source item", () => {
+    const original = baseItems[0]!;
+    updateShortlistItem(baseItems, "addr-a", { notes: "updated" });
+    expect(original.notes).toBe("notes-a");
+  });
+
+  it("preserves item order", () => {
+    const next = updateShortlistItem(baseItems, "addr-b", { notes: "b-updated" });
+    expect(next.map((item) => item.addressKey)).toEqual(["addr-a", "addr-b"]);
+  });
+
+  it('normalizes empty "pros" to undefined', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { pros: "" });
+    expect(next[0]?.pros).toBeUndefined();
+  });
+
+  it('normalizes empty "cons" to undefined', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { cons: "" });
+    expect(next[0]?.cons).toBeUndefined();
+  });
+
+  it('normalizes empty "renovation" to undefined', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { renovation: "" });
+    expect(next[0]?.renovation).toBeUndefined();
+  });
+
+  it('normalizes empty legacy "noise" to undefined', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { noise: "" });
+    expect(next[0]?.noise).toBeUndefined();
+  });
+
+  it('normalizes empty legacy "transport" to undefined', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { transport: "" });
+    expect(next[0]?.transport).toBeUndefined();
+  });
+
+  it('normalizes empty "agentRemarks" to undefined', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { agentRemarks: "" });
+    expect(next[0]?.agentRemarks).toBeUndefined();
+  });
+
+  it('does not normalize empty "notes"', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { notes: "" });
+    expect(next[0]?.notes).toBe("");
+  });
+
+  it('does not normalize empty "buyerNotes"', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { buyerNotes: "" });
+    expect(next[0]?.buyerNotes).toBe("");
+  });
+
+  it('does not normalize empty "noiseNotes"', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { noiseNotes: "" });
+    expect(next[0]?.noiseNotes).toBe("");
+  });
+
+  it('does not normalize empty "transportNotes"', () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { transportNotes: "" });
+    expect(next[0]?.transportNotes).toBe("");
+  });
+
+  it("preserves targetPrice: null", () => {
+    const next = updateShortlistItem(baseItems, "addr-a", { targetPrice: null });
+    expect(next[0]?.targetPrice).toBeNull();
+  });
+
+  it("preserves numeric zero values when supplied", () => {
+    const next = updateShortlistItem(baseItems, "addr-a", {
+      askingPrice: 0,
+      suggestedOfferCeiling: 0,
+    });
+    expect(next[0]?.askingPrice).toBe(0);
+    expect(next[0]?.suggestedOfferCeiling).toBe(0);
+  });
+
+  it("leaves all item values unchanged when another address is patched", () => {
+    const next = updateShortlistItem(baseItems, "addr-missing", { notes: "nope" });
+    expect(next[0]).toEqual(baseItems[0]);
+    expect(next[1]).toEqual(baseItems[1]);
   });
 });
