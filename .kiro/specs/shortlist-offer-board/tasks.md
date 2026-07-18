@@ -117,7 +117,7 @@
   preserve the complete removed item and its index, expose an explicit restore
   operation through `useShortlist`, announce a five-second Undo action, and
   test exact offer-board-field restoration.
-  → Focused shortlist tests and `npm run typecheck` pass. (R4.5, R4.6, R5.1)
+  → Focused shortlist tests and `vp run typecheck` pass. (R4.5, R4.6, R5.1)
 
 ## Phase 6 — Export, i18n, and share compatibility
 
