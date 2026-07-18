@@ -126,7 +126,7 @@ export function ComparableEvidenceTable({
     return (
       <section className="flex flex-col gap-3">
         {caveats.length > 0 && (
-          <div className="rounded-md bg-warning/5 p-3">
+          <div className="rounded-none bg-warning/5 p-3">
             <ul className="flex flex-col gap-1.5">
               {caveats.map((caveat, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-warning">
@@ -137,7 +137,7 @@ export function ComparableEvidenceTable({
             </ul>
           </div>
         )}
-        <div className="flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+        <div className="flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <Info
             data-icon
             className="mt-0.5 size-4 shrink-0 text-muted-foreground/70"
@@ -153,7 +153,7 @@ export function ComparableEvidenceTable({
     <section className="flex flex-col gap-3">
       {/* ── Caveat banner ─────────────────────────────────────────────── */}
       {caveats.length > 0 && (
-        <div className="rounded-md bg-warning/5 p-3">
+        <div className="rounded-none bg-warning/5 p-3">
           <ul className="flex flex-col gap-1.5">
             {caveats.map((caveat, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-warning">
@@ -166,10 +166,10 @@ export function ComparableEvidenceTable({
       )}
 
       {/* ── "Why these comparables?" ──────────────────────────────────── */}
-      <div className="rounded-md bg-muted/10">
+      <div className="rounded-none bg-muted/10">
         <button
           type="button"
-          className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:bg-muted/20"
+          className="flex w-full items-center justify-between gap-2 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/20"
           aria-expanded={explainerOpen}
           aria-controls="why-comparables-explainer"
           onClick={() => setExplainerOpen((o) => !o)}
@@ -189,7 +189,7 @@ export function ComparableEvidenceTable({
             {widenedSearch ? t("evidence.whyWidened") : t("evidence.whyNormal")}
             {comparables.length < LOW_SAMPLE_THRESHOLD && <> {t("evidence.whyLowSample")}</>}
             {referenceMonth && (
-              <span className="mt-1 block text-[0.65rem] text-muted-foreground/70">
+              <span className="mt-1 block text-[0.75rem] text-muted-foreground/70">
                 {t("evidence.referenceDate", { month: formatMonth(referenceMonth, locale) })}
               </span>
             )}
@@ -210,13 +210,13 @@ export function ComparableEvidenceTable({
                 ariaSortValue={ariaSortValue("month")}
                 onSort={handleSort}
               />
-              <TableHead className="text-[0.62rem] font-extrabold tracking-[0.14em]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.location")}
               </TableHead>
-              <TableHead className="text-[0.62rem] font-extrabold tracking-[0.14em]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.flatType")}
               </TableHead>
-              <TableHead className="text-[0.62rem] font-extrabold tracking-[0.14em]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.storey")}
               </TableHead>
               <SortableHead
@@ -227,7 +227,7 @@ export function ComparableEvidenceTable({
                 ariaSortValue={ariaSortValue("floorAreaSqm")}
                 onSort={handleSort}
               />
-              <TableHead className="text-[0.62rem] font-extrabold tracking-[0.14em]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.lease")}
               </TableHead>
               <SortableHead
@@ -249,7 +249,7 @@ export function ComparableEvidenceTable({
                 align="right"
               />
               {hasAdjustedPrice && (
-                <TableHead className="text-right text-[0.62rem] font-extrabold tracking-[0.14em]">
+                <TableHead className="text-right text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                   {t("evidence.col.adjPrice")}
                 </TableHead>
               )}
@@ -261,7 +261,7 @@ export function ComparableEvidenceTable({
                 ariaSortValue={ariaSortValue("similarity")}
                 onSort={handleSort}
               />
-              <TableHead className="text-[0.62rem] font-extrabold tracking-[0.14em]">
+              <TableHead className="text-[length:var(--text-xs)] font-extrabold tracking-[var(--tracking-label)]">
                 {t("evidence.col.matchReasons")}
               </TableHead>
             </TableRow>
@@ -323,7 +323,7 @@ export function ComparableEvidenceTable({
               key={key}
               type="button"
               className={cn(
-                "shrink-0 rounded-full px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-wider transition-colors",
+                "shrink-0 rounded-none px-2.5 py-1 text-[length:var(--text-xs)] font-semibold uppercase tracking-wider transition-colors",
                 key === sortKey
                   ? "bg-primary/15 text-primary"
                   : "bg-muted/20 text-muted-foreground hover:bg-muted/40",
@@ -339,7 +339,7 @@ export function ComparableEvidenceTable({
         {sorted.map((tx) => (
           <article
             key={tx.transactionId}
-            className="rounded-md bg-muted/20 p-3"
+            className="rounded-none bg-muted/20 p-3"
             aria-label={`${formatCompactCurrency(tx.resalePrice, locale)}, ${tx.block} ${tx.streetName}, ${formatMonth(tx.month, locale)}`}
           >
             <div className="flex items-baseline justify-between gap-2">
@@ -348,7 +348,7 @@ export function ComparableEvidenceTable({
                   {formatCompactCurrency(tx.resalePrice, locale)}
                 </span>
                 {hasAdjustedPrice && tx.rawResalePrice != null && (
-                  <span className="mt-0.5 block text-[0.62rem] tabular-nums text-muted-foreground">
+                  <span className="mt-0.5 block text-[length:var(--text-xs)] tabular-nums text-muted-foreground">
                     {t("evidence.col.adjPrice")}: {formatCompactCurrency(tx.rawResalePrice, locale)}
                   </span>
                 )}
@@ -362,13 +362,16 @@ export function ComparableEvidenceTable({
             <div className="mt-1 truncate text-xs text-muted-foreground">
               {tx.block} {tx.streetName}
             </div>
-            <div className="mt-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+            <div className="mt-0.5 text-[0.75rem] uppercase tracking-wider text-muted-foreground">
               {tx.flatType} · {tx.storeyRange}
               {tx.leaseCommenceDate != null &&
                 ` · ${t("evidence.leasePrefix")}${tx.leaseCommenceDate}`}
             </div>
             <div className="mt-1 flex items-center justify-between gap-2">
-              <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
+              <Badge
+                variant="secondary"
+                className="h-5 shrink-0 font-mono text-[length:var(--text-xs)]"
+              >
                 {formatMonth(tx.month, locale)}
               </Badge>
               <SimilarityBar similarity={tx.similarity} />
@@ -418,7 +421,7 @@ function SortableHead({
       <button
         type="button"
         className={cn(
-          "inline-flex items-center gap-1 text-[0.62rem] font-extrabold uppercase tracking-[0.14em] transition-colors hover:text-foreground",
+          "inline-flex items-center gap-1 text-[length:var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] transition-colors hover:text-foreground",
           isActive ? "text-foreground" : "text-muted-foreground",
         )}
         onClick={() => onSort(sortKey)}
@@ -443,7 +446,9 @@ function SimilarityBar({ similarity }: { similarity: number }) {
       <div className="h-1 w-12 rounded-full bg-muted/40">
         <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
       </div>
-      <span className="text-[0.6rem] font-mono tabular-nums text-muted-foreground">{pct}%</span>
+      <span className="text-[length:var(--text-xs)] font-mono tabular-nums text-muted-foreground">
+        {pct}%
+      </span>
     </div>
   );
 }
@@ -458,7 +463,7 @@ function MatchReasonBadges({ reasons }: { reasons: string[] }) {
         <Badge
           key={reason}
           variant="outline"
-          className="h-4 border border-border/40 px-1 text-[0.55rem] font-medium normal-case tracking-normal"
+          className="h-4 border border-border/40 px-1 text-[length:var(--text-xs)] font-medium normal-case tracking-normal"
         >
           {reason}
         </Badge>

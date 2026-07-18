@@ -22,7 +22,7 @@ const chipFocusClass =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2";
 
 const chipLayoutClass =
-  "filter-chip flex shrink-0 items-center justify-center gap-1 rounded-full px-3 py-1.5 text-[0.65rem] font-semibold leading-none shadow-sm backdrop-blur-[16px] transition-all min-h-11 min-w-11 sm:min-h-min sm:min-w-min text-box-trim";
+  "filter-chip flex shrink-0 items-center justify-center gap-1 rounded-none border px-3 py-1.5 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-wide)] leading-none shadow-sm transition-[color,background-color,box-shadow,transform] text-box-trim";
 
 export function FilterChipsBar({
   chips,
@@ -95,7 +95,7 @@ export function FilterChipsBar({
       role="toolbar"
       aria-label={t("filters.title")}
       className={cn(
-        "absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-all",
+        "absolute z-25 flex gap-2 overflow-x-auto pb-1 transition-[opacity,visibility]",
         hidden ? "invisible opacity-0 pointer-events-none" : "pointer-events-auto",
         isDesktop ? "left-6 right-[8rem] top-[5rem]" : "left-0 right-[4.25rem] top-[3.6rem] px-3",
       )}
@@ -108,6 +108,7 @@ export function FilterChipsBar({
             itemRefs.current[index] = node;
           }}
           type="button"
+          data-touch-target
           aria-label={t("filters.removeChip", { label: chip.label })}
           tabIndex={activeIndex === index ? 0 : -1}
           onClick={chip.onRemove}
@@ -128,6 +129,7 @@ export function FilterChipsBar({
             itemRefs.current[shareButtonIndex] = node;
           }}
           type="button"
+          data-touch-target
           aria-label={shareCopied ? t("share.linkCopied") : t("share.filterResults")}
           tabIndex={activeIndex === shareButtonIndex ? 0 : -1}
           onClick={() => void handleShareClick()}
@@ -135,7 +137,7 @@ export function FilterChipsBar({
           onFocus={() => setFocusedIndex(shareButtonIndex)}
           className={cn(
             chipLayoutClass,
-            "border border-border/30 bg-background/90 text-foreground",
+            "border border-border/30 bg-background text-foreground",
             chipFocusClass,
           )}
         >
@@ -147,6 +149,7 @@ export function FilterChipsBar({
           itemRefs.current[filtersButtonIndex] = node;
         }}
         type="button"
+        data-touch-target
         aria-label={t("filters.openPanel")}
         tabIndex={activeIndex === filtersButtonIndex ? 0 : -1}
         onClick={onOpenFilters}
@@ -154,7 +157,7 @@ export function FilterChipsBar({
         onFocus={() => setFocusedIndex(filtersButtonIndex)}
         className={cn(
           chipLayoutClass,
-          "border border-border/30 bg-background/90 text-foreground",
+          "border border-border/30 bg-background text-foreground",
           chipFocusClass,
         )}
       >

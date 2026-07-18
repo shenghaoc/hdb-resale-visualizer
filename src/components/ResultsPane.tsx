@@ -203,7 +203,7 @@ function SortSelect({
   return (
     <div className={cn("flex min-w-0 flex-col gap-1", className)}>
       <div className="flex min-w-0 items-center gap-2">
-        <span className="inline-flex shrink-0 items-center gap-1.5 text-[0.6rem] font-extrabold uppercase tracking-[0.16em] text-muted-foreground">
+        <span className="inline-flex shrink-0 items-center gap-1.5 v2-field-label">
           <ArrowUpDown data-icon className="size-3.5" aria-hidden="true" />
           {label}
         </span>
@@ -211,7 +211,7 @@ function SortSelect({
           <SelectTrigger
             data-testid="results-sort-trigger"
             aria-describedby={disabledHint ? "results-sort-disabled-hint" : undefined}
-            className="h-8 min-w-0 flex-1 rounded-lg border-border/40 bg-card/80 px-2 sm:w-[12.5rem]"
+            className="h-8 min-w-0 flex-1 rounded-none border-border/40 bg-card px-2 sm:w-[12.5rem]"
           >
             <SelectValue />
           </SelectTrigger>
@@ -229,7 +229,7 @@ function SortSelect({
       {disabledHint ? (
         <p
           id="results-sort-disabled-hint"
-          className="text-[0.62rem] leading-snug text-muted-foreground"
+          className="text-[length:var(--text-xs)] leading-snug text-muted-foreground"
         >
           {disabledHint}
         </p>
@@ -310,8 +310,8 @@ const BlockCard = memo(function BlockCard({
           }
         }}
         className={cn(
-          "v2-card animate-fade-in-up cursor-pointer rounded-xl border-border/40 bg-card/95 transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_2px_12px_rgba(37,99,235,0.08)] active:scale-[0.995]",
-          isFeatured && "border-primary/45 bg-primary/5 shadow-[0_2px_12px_rgba(37,99,235,0.12)]",
+          "v2-card animate-fade-in-up cursor-pointer border-border/40 bg-card transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[var(--shadow-card-hover)] active:scale-[0.995]",
+          isFeatured && "border-primary/45 bg-primary/5 shadow-[var(--shadow-card-featured)]",
           "gap-0 px-3 py-2",
         )}
         style={{ animationDelay: `${index * 40}ms`, minHeight: 92 }}
@@ -322,7 +322,7 @@ const BlockCard = memo(function BlockCard({
             <strong className="block truncate font-heading text-[0.9rem] font-extrabold leading-snug tracking-tight">
               {block.block} {block.streetName}
             </strong>
-            <span className="block truncate text-[0.58rem] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="block truncate v2-section-title">
               {localizeTownName(block.town, locale)}
               {block.flatTypes.length > 0
                 ? ` · ${localizeFlatType(block.flatTypes[0], locale)}`
@@ -331,7 +331,7 @@ const BlockCard = memo(function BlockCard({
           </div>
           <div className="flex shrink-0 items-start gap-2">
             <div className="text-right">
-              <strong className="block font-heading text-[0.95rem] font-extrabold leading-snug tracking-tight v2-tabular">
+              <strong className="block font-heading text-[length:var(--text-base)] font-extrabold leading-snug tracking-tight v2-tabular">
                 {formatCompactCurrency(block.medianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
@@ -360,7 +360,7 @@ const BlockCard = memo(function BlockCard({
                     }
                   />
                 ) : null}
-                <span className="text-[0.58rem] font-medium text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
                 </span>
               </div>
@@ -375,7 +375,7 @@ const BlockCard = memo(function BlockCard({
                     onToggleShortlist(block.addressKey);
                   }}
                   type="button"
-                  className="size-7 shrink-0 rounded-lg p-0"
+                  className="size-7 shrink-0 rounded-none p-0 sm:size-9"
                   aria-pressed={isSaved}
                   aria-label={t("results.save")}
                 >
@@ -391,7 +391,7 @@ const BlockCard = memo(function BlockCard({
           </div>
         </div>
 
-        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[0.6rem] font-medium text-muted-foreground">
+        <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[length:var(--text-xs)] font-medium text-muted-foreground">
           <span>{formatSqm(sqm, t, locale)}</span>
           {mrtDist != null && mrtWalkSeconds != null && (
             <span
@@ -436,8 +436,8 @@ const BlockCard = memo(function BlockCard({
         }
       }}
       className={cn(
-        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 rounded-xl border-border/40 bg-card/95 p-4 shadow-sm transition-all duration-200 hover:border-primary/25 hover:bg-card hover:shadow-[0_4px_16px_rgba(23,28,31,0.06)] active:scale-[0.995] cv-auto",
-        isFeatured && "border-primary/40 bg-primary/5 shadow-[0_4px_16px_rgba(37,99,235,0.1)]",
+        "v2-card ss-fade-in group flex cursor-pointer flex-col gap-4 border-border/40 bg-card p-4 shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/25 hover:shadow-[var(--shadow-card-hover)] active:scale-[0.995] cv-auto",
+        isFeatured && "border-primary/40 bg-primary/5 shadow-[var(--shadow-card-featured)]",
       )}
       onClick={() => onSelect(block.addressKey)}
     >
@@ -447,7 +447,7 @@ const BlockCard = memo(function BlockCard({
             <strong className="font-heading text-xl font-extrabold leading-none tracking-tight">
               {block.block} {block.streetName}
             </strong>
-            <span className="text-sm uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="text-sm uppercase tracking-[var(--tracking-label)] text-muted-foreground">
               {localizeTownName(block.town, locale)}
             </span>
           </div>
@@ -473,7 +473,7 @@ const BlockCard = memo(function BlockCard({
 
       <div className="grid basis-full gap-4 border-t border-border/60 pt-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <WalletCards data-icon className="size-3.5" aria-hidden="true" />
             {t("results.medianResale")}
           </span>
@@ -490,11 +490,11 @@ const BlockCard = memo(function BlockCard({
               <>
                 <Badge
                   variant="outline"
-                  className="w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                  className="w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                 >
                   {t(QUALITY_LABEL_KEYS[qualityTag])}
                 </Badge>
-                <span className="text-[0.62rem] font-semibold text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-semibold text-muted-foreground">
                   {t(QUALITY_HINT_KEYS[qualityTag])}
                 </span>
               </>
@@ -503,7 +503,7 @@ const BlockCard = memo(function BlockCard({
           {affordVerdict && affordVerdict.status !== "unknown" ? (
             <span
               className={cn(
-                "mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
+                "mt-1 inline-flex items-center gap-1 rounded-none px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase",
                 affordVerdict.status === "comfortable" && "bg-success/10 text-success",
                 affordVerdict.status === "stretch" && "bg-warning/10 text-warning",
                 affordVerdict.status === "over" && "bg-destructive/10 text-destructive",
@@ -526,7 +526,7 @@ const BlockCard = memo(function BlockCard({
           ) : null}
         </div>
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <TrainFront data-icon className="size-3.5" aria-hidden="true" />
             {t("results.nearestMrt")}
           </span>
@@ -539,7 +539,7 @@ const BlockCard = memo(function BlockCard({
                 >
                   <div className="flex items-center gap-1.5 min-w-0">
                     <MrtLineDots stationName={station.stationName} />
-                    <span className="truncate font-semibold uppercase tracking-[0.08em]">
+                    <span className="truncate font-semibold uppercase tracking-wider">
                       {station.stationName}
                     </span>
                   </div>
@@ -554,26 +554,26 @@ const BlockCard = memo(function BlockCard({
               ))}
             </ul>
           ) : (
-            <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+            <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
               {t("results.noMatch")}
             </strong>
           )}
         </div>
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <Coins data-icon className="size-3.5" aria-hidden="true" />
             {t("results.remainingLease")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+          <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
             {formatRemainingLease(block.leaseCommenceRange, t)}
           </strong>
         </div>
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <Clock3 data-icon className="size-3.5" aria-hidden="true" />
             {t("results.latestMonth")}
           </span>
-          <strong className="text-sm font-semibold uppercase tracking-[0.12em]">
+          <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
             {formatMonth(block.latestMonth, locale)}
           </strong>
         </div>
@@ -1123,14 +1123,14 @@ export function ResultsPane({
   return (
     <section data-testid="results-pane" className="flex min-h-0 flex-1 flex-col">
       <Card className="flex min-h-0 flex-1 flex-col gap-0 overflow-hidden border-none bg-transparent py-0 shadow-none">
-        <CardHeader className="shrink-0 border-b border-border/30 bg-background/80 px-3 py-2.5 backdrop-blur-xl sm:px-4">
+        <CardHeader className="shrink-0 border-b border-border/30 bg-background px-3 py-2.5 sm:px-4">
           <div className="flex min-w-0 flex-wrap items-center gap-2">
             <CardTitle className="v2-section-title mr-auto min-w-0 truncate">
               {t("results.filteredBlocks")}
             </CardTitle>
             {hasResultScope ? (
               <>
-                <Badge className="h-6 shrink-0 px-2 text-[0.62rem] font-bold">
+                <Badge className="h-6 shrink-0 px-2 text-[length:var(--text-xs)] font-bold">
                   {t("results.shown", { count: blocks.length })}
                 </Badge>
                 {shareUrl ? (
@@ -1162,7 +1162,7 @@ export function ResultsPane({
         ) : null}
         {hasResultScope ? (
           <div
-            className="shrink-0 border-b border-border/30 bg-background/95 px-3 py-2 backdrop-blur-xl sm:px-4"
+            className="shrink-0 border-b border-border/30 bg-background px-3 py-2 sm:px-4"
             data-testid="results-view-toolbar"
           >
             <div
@@ -1171,7 +1171,7 @@ export function ResultsPane({
               {townProfileAvailable ? (
                 <ButtonGroup
                   aria-label={t("results.view.label")}
-                  className="w-fit gap-0 rounded-lg border border-border/50 bg-card/80 p-0.5"
+                  className="w-fit gap-0 rounded-none border border-border/50 bg-card p-0.5"
                   data-testid="results-view-toggle"
                 >
                   <Button
@@ -1181,7 +1181,7 @@ export function ResultsPane({
                     aria-pressed={resultsView === "blocks"}
                     aria-label={t("results.view.blocksAria")}
                     onClick={() => setResultsView("blocks")}
-                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                    className="h-7 rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                   >
                     <LayoutGrid data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("results.view.blocks")}
@@ -1193,7 +1193,7 @@ export function ResultsPane({
                     aria-pressed={resultsView === "town"}
                     aria-label={t("results.view.townAria")}
                     onClick={() => setResultsView("town")}
-                    className="h-7 rounded-md px-2.5 text-[0.65rem] font-extrabold uppercase tracking-[0.08em]"
+                    className="h-7 rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider"
                   >
                     <Building2 data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("results.view.town")}
@@ -1284,7 +1284,7 @@ export function ResultsPane({
                   {affordabilityMode && onClearAffordabilityFilter ? (
                     <Card
                       data-testid="affordability-empty-card"
-                      className="w-full border-border/50 bg-card/95"
+                      className="w-full border-border/50 bg-card"
                     >
                       <CardHeader>
                         <CardTitle>{t("affordability.filter.empty.title")}</CardTitle>

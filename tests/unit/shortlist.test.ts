@@ -1,16 +1,68 @@
 import { describe, expect, it } from "vite-plus/test";
-import { MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH, SHORTLIST_STORAGE_KEY } from "@/shared/lib/constants";
+import {
+  MAX_SHORTLIST_ITEMS,
+  MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH,
+  SHORTLIST_STORAGE_KEY,
+} from "@/shared/lib/constants";
 import { MAX_NOTE_LENGTH } from "@shared/shortlist-limits";
 import {
   decodeShortlistFromUrl,
   encodeShortlistForUrl,
   loadShortlist,
   mergeImportedShortlistItems,
+  restoreShortlistItem,
   saveShortlist,
   toggleShortlistItem,
 } from "@/features/shortlist/shortlist";
 
 describe("shortlist storage", () => {
+  it("restores the exact item at a bounded original position", () => {
+    const item = {
+      addressKey: "restored",
+      notes: "keep",
+      buyerNotes: "exact buyer notes",
+      askingPrice: 612345,
+      targetPrice: 600000,
+      addedAt: "2026-07-18T00:00:00.000Z",
+    };
+    const existing = [
+      {
+        addressKey: "existing",
+        notes: "",
+        targetPrice: null,
+        addedAt: "2026-07-17T00:00:00.000Z",
+      },
+    ];
+
+    const restored = restoreShortlistItem(existing, item, -10);
+
+    expect(restored.map((entry) => entry.addressKey)).toEqual(["restored", "existing"]);
+    expect(restored[0]).toBe(item);
+  });
+
+  it("does not duplicate an item or exceed the shortlist capacity while restoring", () => {
+    const items = Array.from({ length: MAX_SHORTLIST_ITEMS }, (_, index) => ({
+      addressKey: `saved-${index}`,
+      notes: "",
+      targetPrice: null,
+      addedAt: "2026-07-17T00:00:00.000Z",
+    }));
+
+    expect(restoreShortlistItem(items, items[0]!, 0)).toBe(items);
+    expect(
+      restoreShortlistItem(
+        items,
+        {
+          addressKey: "overflow",
+          notes: "",
+          targetPrice: null,
+          addedAt: "2026-07-18T00:00:00.000Z",
+        },
+        0,
+      ),
+    ).toBe(items);
+  });
+
   it("loads and saves shortlist entries", () => {
     const storage = new Map<string, string>();
     const shim = {

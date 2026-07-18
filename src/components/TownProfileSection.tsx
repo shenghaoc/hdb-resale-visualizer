@@ -40,7 +40,7 @@ function BlockMicroRow({
     <button
       type="button"
       onClick={onSelect}
-      className="flex w-full min-w-0 items-center gap-2 rounded-lg border border-border/35 bg-muted/40 px-2 py-1.5 text-left text-[0.7rem] transition-colors hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background"
+      className="flex w-full min-w-0 items-center gap-2 rounded-none border border-border/35 bg-muted/40 px-2 py-1.5 text-left text-[0.75rem] transition-colors hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-1 focus-visible:ring-offset-background"
     >
       <span className="min-w-0 flex-1 truncate font-semibold">
         {block.block} {block.streetName}
@@ -79,39 +79,41 @@ export function TownProfileSection({
   return (
     <section
       aria-label={t("townProfile.sectionLabel", { town: localizeTownName(townName, locale) })}
-      className="mb-4 rounded-xl border border-border/35 bg-muted/35 p-3 sm:p-3.5"
+      className="mb-4 border border-border/35 bg-muted/35 p-3 sm:p-3.5"
     >
       <header className="mb-3 flex flex-wrap items-end gap-x-3 gap-y-1">
-        <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[0.95rem]">
+        <h2 className="font-heading text-sm font-extrabold tracking-tight sm:text-[length:var(--text-base)]">
           {localizeTownName(townName, locale)}
         </h2>
-        <p className="text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+        <p className="text-[length:var(--text-xs)] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
           {formatMonth(monthRange.start, locale)} – {formatMonth(monthRange.end, locale)}
         </p>
       </header>
 
-      <p className="mb-3 text-[0.62rem] leading-relaxed text-muted-foreground">
+      <p className="mb-3 text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
         {t("townProfile.factualNote")}
       </p>
 
       {trendsLoading ? (
-        <p className="mb-3 text-[0.7rem] text-muted-foreground">{t("townProfile.loadingTrends")}</p>
+        <p className="mb-3 text-[0.75rem] text-muted-foreground">
+          {t("townProfile.loadingTrends")}
+        </p>
       ) : null}
 
       {!trendsLoading && trendsFailed ? (
-        <p className="mb-3 text-[0.7rem] text-destructive">{t("townProfile.trendLoadFailed")}</p>
+        <p className="mb-3 text-[0.75rem] text-destructive">{t("townProfile.trendLoadFailed")}</p>
       ) : null}
 
       {!trendsLoading && !trendsFailed && rollups.length === 0 ? (
-        <p className="mb-3 text-[0.7rem] text-muted-foreground">{t("townProfile.noTrendRows")}</p>
+        <p className="mb-3 text-[0.75rem] text-muted-foreground">{t("townProfile.noTrendRows")}</p>
       ) : null}
 
       {!trendsLoading && !trendsFailed && rollups.length > 0 ? (
         <>
           <div className="-mx-1 mb-3 overflow-x-auto">
-            <table className="w-full min-w-[18rem] border-separate border-spacing-y-1 text-[0.65rem] sm:text-[0.68rem]">
+            <table className="w-full min-w-[18rem] border-separate border-spacing-y-1 text-[0.75rem] sm:text-[0.75rem]">
               <thead>
-                <tr className="text-left text-[0.58rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                <tr className="text-left v2-field-label">
                   <th className="pb-1 pl-1 pr-2">{t("townProfile.flatType")}</th>
                   <th className="pb-1 pr-2">{t("townProfile.median")}</th>
                   <th className="pb-1 pr-2">{t("townProfile.medPerSqm")}</th>
@@ -122,23 +124,23 @@ export function TownProfileSection({
               <tbody>
                 {rollups.map((row) => (
                   <tr key={row.flatType}>
-                    <td className="rounded-l-md bg-background/85 px-1 py-1 font-semibold">
+                    <td className="rounded-l-md bg-background px-1 py-1 font-semibold">
                       {localizeFlatType(row.flatType, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                    <td className="bg-background px-1 py-1 v2-tabular">
                       {row.latestMedianPrice === null
                         ? "—"
                         : formatCompactCurrency(row.latestMedianPrice, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                    <td className="bg-background px-1 py-1 v2-tabular">
                       {row.latestMedianPricePerSqm === null
                         ? "—"
                         : formatCompactCurrency(row.latestMedianPricePerSqm, locale)}
                     </td>
-                    <td className="bg-background/85 px-1 py-1 v2-tabular">
+                    <td className="bg-background px-1 py-1 v2-tabular">
                       {formatNumber(row.windowTransactionVolume, 0, locale)}
                     </td>
-                    <td className="rounded-r-md bg-background/85 px-1 py-1 text-muted-foreground">
+                    <td className="rounded-r-md bg-background px-1 py-1 text-muted-foreground">
                       {row.latestMonth === null ? "—" : formatMonth(row.latestMonth, locale)}
                     </td>
                   </tr>
@@ -147,7 +149,7 @@ export function TownProfileSection({
             </table>
           </div>
 
-          <div className="mb-3 grid gap-1.5 rounded-lg border border-border/25 bg-background/60 px-2.5 py-2 text-[0.65rem]">
+          <div className="mb-3 grid gap-1.5 rounded-none border border-border/25 bg-background px-2.5 py-2 text-[0.75rem]">
             <div className="flex flex-wrap justify-between gap-x-3 gap-y-1">
               <span className="font-semibold text-muted-foreground">
                 {t("townProfile.totalTrendVolume")}
@@ -160,7 +162,7 @@ export function TownProfileSection({
               <span className="font-semibold text-muted-foreground">
                 {t("townProfile.typicalSqm")}
               </span>
-              <span className="max-w-[16rem] text-right text-[0.62rem] font-medium leading-snug">
+              <span className="max-w-[16rem] text-right text-[length:var(--text-xs)] font-medium leading-snug">
                 <span className="v2-tabular font-extrabold text-foreground">
                   {weightedLatestSqm === null
                     ? "—"
@@ -177,9 +179,7 @@ export function TownProfileSection({
 
       {leaseBuckets.length > 0 && totalLeaseBlocks > 0 ? (
         <div className="mb-3">
-          <p className="mb-2 text-[0.58rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-            {t("townProfile.leaseBucketsTitle")}
-          </p>
+          <p className="mb-2 v2-field-label">{t("townProfile.leaseBucketsTitle")}</p>
           <div className="flex h-2.5 w-full overflow-hidden rounded-full bg-muted/60">
             {leaseBuckets.map((bucket) => (
               <div
@@ -190,7 +190,7 @@ export function TownProfileSection({
               />
             ))}
           </div>
-          <ul className="mt-1.5 grid gap-x-4 gap-y-0.5 text-[0.62rem] sm:grid-cols-3">
+          <ul className="mt-1.5 grid gap-x-4 gap-y-0.5 text-[length:var(--text-xs)] sm:grid-cols-3">
             {leaseBuckets.map((bucket) => (
               <li key={bucket.decadeStart} className="flex justify-between gap-2 font-medium">
                 <span className="text-muted-foreground">{bucket.decadeLabel}</span>
@@ -205,9 +205,7 @@ export function TownProfileSection({
         <div className="grid gap-3 sm:grid-cols-2">
           {busyBlocks.length > 0 ? (
             <div className="min-w-0">
-              <p className="mb-1 text-[0.58rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                {t("townProfile.busyBlocks")}
-              </p>
+              <p className="mb-1 v2-field-label">{t("townProfile.busyBlocks")}</p>
               <div className="flex flex-col gap-1.5">
                 {busyBlocks.map((block) => (
                   <BlockMicroRow
@@ -225,10 +223,8 @@ export function TownProfileSection({
           ) : null}
           {belowMedian.blocks.length > 0 ? (
             <div className="min-w-0">
-              <p className="mb-1 text-[0.58rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                {t("townProfile.valueBlocks")}
-              </p>
-              <p className="mb-1.5 text-[0.61rem] leading-snug text-muted-foreground">
+              <p className="mb-1 v2-field-label">{t("townProfile.valueBlocks")}</p>
+              <p className="mb-1.5 text-[length:var(--text-xs)] leading-snug text-muted-foreground">
                 {t("townProfile.townMedianMeta", {
                   median:
                     belowMedian.townMedian === null

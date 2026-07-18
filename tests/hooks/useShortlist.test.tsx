@@ -77,6 +77,40 @@ describe("useShortlist", () => {
     expect(result.current.items).toHaveLength(0);
   });
 
+  it("restore puts a removed item back at its original position without losing buyer data", () => {
+    writeStorage([
+      {
+        addressKey: "addr-a",
+        notes: "legacy notes",
+        buyerNotes: "keep exact buyer notes",
+        askingPrice: 612345,
+        fairRangeMedian: 590000,
+        decisionStatus: "viewing booked",
+        targetPrice: 600000,
+        addedAt: "2026-01-01T00:00:00Z",
+      },
+      {
+        addressKey: "addr-b",
+        notes: "second",
+        targetPrice: null,
+        addedAt: "2026-01-02T00:00:00Z",
+      },
+    ]);
+
+    const { result } = renderHook(() => useShortlist());
+    const removedItem = result.current.items[0]!;
+
+    act(() => {
+      result.current.toggle("addr-a");
+    });
+    act(() => {
+      result.current.restore(removedItem, 0);
+    });
+
+    expect(result.current.items.map((item) => item.addressKey)).toEqual(["addr-a", "addr-b"]);
+    expect(result.current.items[0]).toEqual(removedItem);
+  });
+
   it("toggle does not exceed MAX_SHORTLIST_ITEMS", () => {
     const { result } = renderHook(() => useShortlist());
 

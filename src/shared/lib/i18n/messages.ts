@@ -50,12 +50,18 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "app.loadingResults": "Loading results…",
     "app.loadingShortlist": "Loading shortlist…",
     "error.retry": "Retry",
-    "error.mapFallback": "The map failed to load.",
-    "error.detailFallback": "Block details failed to load.",
-    "error.resultsFallback": "Results failed to load.",
-    "error.trendFallback": "The trend chart failed to load.",
-    "error.shortlistFallback": "Your shortlist failed to load.",
-    "error.askingPriceFallback": "The asking-price check failed to load.",
+    "error.mapFallback":
+      "The map couldn't start. Try refreshing the page — filters and results are still available while it recovers.",
+    "error.detailFallback":
+      "This block's details couldn't load. Try selecting a different block, or refresh the page to retry.",
+    "error.resultsFallback":
+      "Results couldn't load. Try refreshing the page or narrowing your filters to reduce the data size.",
+    "error.trendFallback":
+      "The trend chart couldn't load. Try refreshing the page or selecting a different time range.",
+    "error.shortlistFallback":
+      "Your shortlist couldn't load. It's still safe in your browser — refresh the page to retry.",
+    "error.askingPriceFallback":
+      "The asking-price check couldn't load. Try refreshing or checking a different block — your inputs have been saved.",
     "app.close": "Close",
     "app.primaryNav": "Primary navigation",
     "app.filtersPanel": "Filters panel",
@@ -258,6 +264,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.emptyState": "Save up to {count} blocks to compare.",
     "shortlist.savedProperties": "Saved properties",
     "shortlist.remove": "Remove",
+    "shortlist.removeAddress": "Remove {address} from shortlist",
+    "shortlist.removed": "Removed",
+    "shortlist.undo": "Undo",
     "shortlist.viewOnMap": "View on map",
     "shortlist.marketMedian": "Market median",
     "shortlist.pricePerSqft": "Price / sqft",
@@ -373,7 +382,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "sync.status.synced": "Synced",
     "sync.status.error": "Sync failed — saved on this device",
     "sync.error.generic": "Something went wrong. Your shortlist is still saved on this device.",
-    "sync.error.notFound": "That sync code wasn't found.",
+    "sync.error.notFound":
+      "That sync code wasn't found. Double-check the code, or generate a new one from the device that has your latest shortlist.",
     "shortlist.compareTrendsTitle": "Price trend overlay",
     "shortlist.compareTrendsHint":
       "Compare monthly median resale prices across shortlisted blocks.",
@@ -786,7 +796,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.similarBlocks": "Similar Blocks",
     "detail.similarBlocks.hint":
       "Nearby or comparable alternatives based on flat type, price, lease, and MRT access.",
-    "detail.similarBlocks.empty": "No similar blocks found.",
+    "detail.similarBlocks.empty":
+      "No similar blocks found. Try broadening your search area, adjusting flat-type filters, or checking a different town.",
     "detail.similarBlocks.viewBlock": "View block {address}",
     "detail.comparableRange.title": "Comparable range",
     "detail.comparableRange.summary":
@@ -884,12 +895,12 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "app.loadingResults": "加载结果中…",
     "app.loadingShortlist": "加载候选清单中…",
     "error.retry": "重试",
-    "error.mapFallback": "地图加载失败。",
-    "error.detailFallback": "房源详情加载失败。",
-    "error.resultsFallback": "结果加载失败。",
-    "error.trendFallback": "走势图加载失败。",
-    "error.shortlistFallback": "收藏清单加载失败。",
-    "error.askingPriceFallback": "询价核对加载失败。",
+    "error.mapFallback": "地图无法启动。请尝试刷新页面 — 地图恢复期间，筛选和结果仍可正常使用。",
+    "error.detailFallback": "该组屋详情无法加载。请尝试选择其他组屋，或刷新页面重试。",
+    "error.resultsFallback": "结果无法加载。请尝试刷新页面或缩小筛选范围以减少数据量。",
+    "error.trendFallback": "趋势图表无法加载。请尝试刷新页面或选择其他时间范围。",
+    "error.shortlistFallback": "候选名单无法加载。数据仍在浏览器中安全保存 — 请刷新页面重试。",
+    "error.askingPriceFallback": "询价核对无法加载。请尝试刷新或检查其他组屋 — 您的输入已保存。",
     "app.close": "关闭",
     "app.primaryNav": "主导航",
     "app.filtersPanel": "筛选面板",
@@ -1084,6 +1095,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "shortlist.emptyState": "最多可选{count}个组屋进行比较。",
     "shortlist.savedProperties": "已保存组屋",
     "shortlist.remove": "移除",
+    "shortlist.removeAddress": "从候选清单移除 {address}",
+    "shortlist.removed": "已移除",
+    "shortlist.undo": "撤销",
     "shortlist.viewOnMap": "在地图查看",
     "shortlist.marketMedian": "市场中位价",
     "shortlist.pricePerSqft": "每平方英尺",
@@ -1199,7 +1213,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "sync.status.synced": "已同步",
     "sync.status.error": "同步失败 — 已保存在本设备",
     "sync.error.generic": "出了点问题。你的收藏夹仍保存在本设备上。",
-    "sync.error.notFound": "找不到该同步代码。",
+    "sync.error.notFound":
+      "找不到该同步代码。请仔细核对代码，或从最近更新短名单的设备生成一个新代码。",
     "shortlist.compareTrendsTitle": "价格走势对比",
     "shortlist.compareTrendsHint": "对比候选组屋的每月转售中位价走势。",
     "shortlist.lowestMedian": "价格最低",
@@ -1583,7 +1598,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "leaseFinancing.cpfLink": "公积金购房规定",
     "detail.similarBlocks": "相似组屋",
     "detail.similarBlocks.hint": "根据户型、价格、租约及地铁距离筛选出的相近备选组屋。",
-    "detail.similarBlocks.empty": "未找到相似组屋。",
+    "detail.similarBlocks.empty":
+      "未找到相似组屋。请尝试扩大搜索范围、调整户型筛选，或查看其他镇区。",
     "detail.similarBlocks.viewBlock": "查看 {address}",
     "detail.comparableRange.title": "可比范围",
     "detail.comparableRange.summary": "{min} – {max}（中位 {median}），来自 {count} 个相似组屋",

@@ -43,10 +43,10 @@ export function DistributionBar({ assessment, askingPrice }: DistributionBarProp
           className="absolute top-0 flex h-full -translate-x-1/2 flex-col items-center"
           style={askingPositionStyle}
         >
-          <div className="size-3 rotate-45 rounded-sm bg-foreground shadow" aria-hidden="true" />
+          <div className="size-3 rotate-45 rounded-none bg-foreground shadow" aria-hidden="true" />
         </div>
       </div>
-      <div className="mt-1 flex justify-between text-[0.55rem] font-mono uppercase tracking-wider text-muted-foreground">
+      <div className="mt-1 flex justify-between text-[length:var(--text-xs)] font-mono uppercase tracking-wider text-muted-foreground">
         <span>{formatCompactCurrency(min)}</span>
         <span>{formatCompactCurrency(max)}</span>
       </div>

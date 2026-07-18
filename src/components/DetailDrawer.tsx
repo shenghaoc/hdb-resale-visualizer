@@ -138,7 +138,7 @@ function TrajectoryBadge({
   const { direction, yoyDeltaPct, peakMonth, peakToCurrentPct } = trajectory;
 
   let badgeContent: React.ReactNode;
-  let className = "h-5 gap-1 text-[0.6rem] font-extrabold px-1.5";
+  let className = "h-5 gap-1 text-[length:var(--text-xs)] font-extrabold px-1.5";
 
   if (yoyDeltaPct != null) {
     const abs = Math.abs(yoyDeltaPct).toFixed(1);
@@ -181,7 +181,9 @@ function TrajectoryBadge({
           {badgeContent}
         </Badge>
       )}
-      <span className="text-[0.58rem] text-muted-foreground/70 font-medium">{peakLabel}</span>
+      <span className="text-[length:var(--text-xs)] text-muted-foreground/70 font-medium">
+        {peakLabel}
+      </span>
     </div>
   );
 }
@@ -202,12 +204,10 @@ function PercentileBadge({
   return (
     <div className="flex flex-col gap-1.5 py-1">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-          {label}
-        </span>
+        <span className="v2-field-label">{label}</span>
         <Badge
           variant={isGood ? "default" : isMid ? "secondary" : "outline"}
-          className="h-5 text-[0.6rem] font-extrabold"
+          className="h-5 text-[length:var(--text-xs)] font-extrabold"
         >
           {rounded}%
         </Badge>
@@ -251,13 +251,11 @@ function AmenityCard({
   locale: Locale;
 }) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl bg-muted/30 p-3">
+    <div className="flex flex-col gap-2 rounded-none bg-muted/30 p-3">
       {showLabel && Icon && label && (
         <div className="mb-2 flex items-center gap-2">
           <Icon data-icon className="size-4 text-primary/70" aria-hidden="true" />
-          <span className="text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-muted-foreground">
-            {label}
-          </span>
+          <span className="v2-field-label">{label}</span>
         </div>
       )}
       <div className="flex flex-col gap-1">
@@ -294,12 +292,12 @@ function AmenityCard({
                   </div>
                   <div className="flex shrink-0 items-center gap-1.5">
                     {distanceBand ? (
-                      <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-[0.08em] text-primary">
+                      <span className="rounded-none bg-primary/10 px-1.5 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider text-primary">
                         {t(`detail.schoolBand.${distanceBand}`)}
                       </span>
                     ) : null}
                     <span
-                      className="font-mono text-[0.65rem] tabular-nums"
+                      className="font-mono text-[0.75rem] tabular-nums"
                       title={
                         item.walkingTimeSeconds !== undefined
                           ? formatMeters(item.distanceMeters, t, locale)
@@ -479,11 +477,11 @@ export function DetailDrawer({
     <Drawer open={isDrawerOpen} onClose={onClose}>
       <DrawerContent
         data-testid="detail-drawer"
-        className="h-full min-h-0 max-h-full w-full border-border/40 bg-card/95 backdrop-blur-xl"
+        className="h-full min-h-0 max-h-full w-full border-border/40 bg-card"
         hideHandle={true}
       >
         <div className="flex h-full flex-col overflow-hidden">
-          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background/80 pb-4 pl-12 pr-12 backdrop-blur-xl sm:pl-6">
+          <DrawerHeader className="shrink-0 border-b border-border/40 bg-background pb-4 pl-12 pr-12 sm:pl-6">
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -578,31 +576,31 @@ export function DetailDrawer({
               }}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
-              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-xl bg-muted/40 p-1">
+              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-none bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
-                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
                 >
                   <Info data-icon className="size-3" aria-hidden="true" />
                   {t("detail.overview")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="trends"
-                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
                 >
                   <TrendingUp data-icon className="size-3" aria-hidden="true" />
                   {t("detail.trends")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="history"
-                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
                 >
                   <History data-icon className="size-3" aria-hidden="true" />
                   {t("detail.history")}
                 </TabsTrigger>
                 <TabsTrigger
                   value="negotiate"
-                  className="gap-1.5 text-[0.65rem] font-semibold uppercase tracking-wider"
+                  className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
                 >
                   <Scale data-icon className="size-3" aria-hidden="true" />
                   {t("detail.negotiate")}
@@ -616,8 +614,8 @@ export function DetailDrawer({
                   className="mt-0 flex flex-col gap-5 pb-8 focus-visible:outline-none"
                 >
                   <div className="grid grid-cols-2 gap-3">
-                    <div className="flex flex-col rounded-xl bg-muted/30 p-3">
-                      <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                    <div className="flex flex-col rounded-none bg-muted/30 p-3">
+                      <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.medianResale")}
                       </div>
@@ -638,11 +636,11 @@ export function DetailDrawer({
                                 <>
                                   <Badge
                                     variant="outline"
-                                    className="mt-2 w-fit text-[0.58rem] font-bold uppercase tracking-[0.08em]"
+                                    className="mt-2 w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                                   >
                                     {t(QUALITY_LABEL_KEYS[qualityTag])}
                                   </Badge>
-                                  <div className="mt-1 text-[0.62rem] font-semibold text-muted-foreground">
+                                  <div className="mt-1 text-[length:var(--text-xs)] font-semibold text-muted-foreground">
                                     {t(QUALITY_HINT_KEYS[qualityTag])}
                                   </div>
                                 </>
@@ -669,8 +667,8 @@ export function DetailDrawer({
                         ) : null}
                       </div>
                     </div>
-                    <div className="flex flex-col rounded-xl bg-muted/30 p-3">
-                      <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                    <div className="flex flex-col rounded-none bg-muted/30 p-3">
+                      <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Clock3 data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("results.remainingLease")}
                       </div>
@@ -686,11 +684,11 @@ export function DetailDrawer({
                     <section
                       aria-labelledby="comparable-range-title"
                       data-testid="comparable-range-headline"
-                      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                      className="rounded-none border border-border/40 bg-muted/20 p-3"
                     >
                       <div
                         id="comparable-range-title"
-                        className="mb-1 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+                        className="mb-1 flex items-center gap-2 v2-field-label"
                       >
                         <Scale data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("detail.comparableRange.title")}
@@ -703,7 +701,7 @@ export function DetailDrawer({
                           count: formatNumber(comparableRange.sampleSize, 0, locale),
                         })}
                       </p>
-                      <p className="mt-1 text-[0.65rem] font-medium text-muted-foreground">
+                      <p className="mt-1 text-[0.75rem] font-medium text-muted-foreground">
                         {Math.abs(comparableRange.deltaFromMedianPct) < 0.5
                           ? t("detail.comparableRange.inline")
                           : comparableRange.deltaFromMedianPct >= 0
@@ -725,18 +723,18 @@ export function DetailDrawer({
                     <section
                       aria-labelledby="affordability-title"
                       data-testid="affordability-section"
-                      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+                      className="rounded-none border border-border/40 bg-muted/20 p-3"
                     >
                       <div
                         id="affordability-title"
-                        className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground"
+                        className="mb-2 flex items-center gap-2 v2-field-label"
                       >
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.breakdownTitle")}
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.loanAmount")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -744,18 +742,18 @@ export function DetailDrawer({
                           </div>
                         </div>
                         <div>
-                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.monthlyRepayment")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
                             {formatCurrency(affordabilityVerdict.monthlyRepayment, locale)}
-                            <span className="text-[0.58rem] font-normal text-muted-foreground">
+                            <span className="text-[length:var(--text-xs)] font-normal text-muted-foreground">
                               {t("unit.perMonth")}
                             </span>
                           </div>
                         </div>
                         <div>
-                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.downPayment")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -767,7 +765,7 @@ export function DetailDrawer({
                           </div>
                         </div>
                         <div>
-                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.fromCpf")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -775,7 +773,7 @@ export function DetailDrawer({
                           </div>
                         </div>
                         <div className="col-span-2">
-                          <span className="text-[0.58rem] font-medium text-muted-foreground">
+                          <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                             {t("affordability.cashRequired")}
                           </span>
                           <div className="font-heading text-sm font-extrabold tabular-nums">
@@ -783,7 +781,7 @@ export function DetailDrawer({
                           </div>
                         </div>
                       </div>
-                      <div className="mt-2 flex items-center gap-1.5 text-[0.6rem] font-bold">
+                      <div className="mt-2 flex items-center gap-1.5 text-[length:var(--text-xs)] font-bold">
                         <span
                           className={cn(
                             "h-1.5 w-1.5 rounded-full",
@@ -792,14 +790,14 @@ export function DetailDrawer({
                             affordabilityVerdict.status === "over" && "bg-destructive",
                           )}
                         />
-                        <span className="uppercase tracking-[0.08em] text-muted-foreground">
+                        <span className="uppercase tracking-wider text-muted-foreground">
                           {t("affordability.ceiling", {
                             price: formatCurrency(affordabilityVerdict.maxAffordablePrice, locale),
                           })}
                         </span>
                         <span
                           className={cn(
-                            "ml-auto rounded-full px-2 py-0.5 text-[0.58rem] font-bold uppercase",
+                            "ml-auto rounded-none px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase",
                             affordabilityVerdict.status === "comfortable" &&
                               "bg-success/10 text-success",
                             affordabilityVerdict.status === "stretch" &&
@@ -817,8 +815,8 @@ export function DetailDrawer({
                       </div>
                     </section>
                   ) : searchProfile && searchProfile.monthlyIncome === null ? (
-                    <section className="rounded-xl border border-border/40 bg-muted/20 p-3">
-                      <div className="mb-2 flex items-center gap-2 text-[0.6rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
+                    <section className="rounded-none border border-border/40 bg-muted/20 p-3">
+                      <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.title")}
                       </div>
@@ -836,12 +834,12 @@ export function DetailDrawer({
 
                   {flatTypeLadder.length > 0 && (
                     <section>
-                      <h3 className="v2-section-title mb-2 flex items-center gap-2 text-[0.72rem]">
+                      <h3 className="v2-section-title mb-2 flex items-center gap-2 text-[0.75rem]">
                         <TrendingUp data-icon className="size-3.5" aria-hidden="true" />
                         {t("detail.priceLadder")}
                       </h3>
                       <FlatTypePriceLadder entries={flatTypeLadder} />
-                      <p className="mt-1 text-[0.58rem] text-muted-foreground">
+                      <p className="mt-1 text-[length:var(--text-xs)] text-muted-foreground">
                         {t("detail.priceLadderHint")}
                       </p>
                     </section>
@@ -852,7 +850,7 @@ export function DetailDrawer({
                       <Table data-icon className="size-4" aria-hidden="true" />
                       {t("detail.unitAttributes")}
                     </h3>
-                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                    <Card className="v2-card rounded-none border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="divide-y divide-border/40 p-0">
                         <div className="flex items-center justify-between p-3">
                           <span className="text-sm font-medium text-muted-foreground">
@@ -863,7 +861,7 @@ export function DetailDrawer({
                               <Badge
                                 key={type}
                                 variant="outline"
-                                className="h-5 text-[0.6rem] font-bold uppercase"
+                                className="h-5 text-[length:var(--text-xs)] font-bold uppercase"
                               >
                                 {localizeFlatType(type, locale)}
                               </Badge>
@@ -879,7 +877,7 @@ export function DetailDrawer({
                               <Badge
                                 key={model}
                                 variant="secondary"
-                                className="h-5 text-[0.6rem] font-bold uppercase tracking-tight"
+                                className="h-5 text-[length:var(--text-xs)] font-bold uppercase tracking-tight"
                               >
                                 {model}
                               </Badge>
@@ -927,7 +925,7 @@ export function DetailDrawer({
                       <Info data-icon className="size-4" aria-hidden="true" />
                       {t("detail.whyThisBlock")}
                     </h3>
-                    <Card className="v2-card rounded-xl border-border/40 bg-card/70 py-0 shadow-none">
+                    <Card className="v2-card rounded-none border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="p-3">
                         {isComparisonLoading ? (
                           <div className="flex flex-col gap-2">
@@ -968,7 +966,7 @@ export function DetailDrawer({
                         {Array.from({ length: 4 }).map((_, i) => (
                           <div
                             key={i}
-                            className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                            className="h-20 w-full animate-pulse rounded-none bg-muted/40"
                           />
                         ))}
                       </div>
@@ -1028,7 +1026,7 @@ export function DetailDrawer({
                         {Array.from({ length: 6 }).map((_, i) => (
                           <div
                             key={i}
-                            className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
+                            className="h-16 w-full animate-pulse rounded-none bg-muted/40"
                           />
                         ))}
                       </div>
@@ -1107,7 +1105,7 @@ export function DetailDrawer({
                 >
                   <section>
                     <div className="mb-3 flex items-center justify-between gap-2">
-                      <h3 className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                      <h3 className="flex items-center gap-2 text-[0.75rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                         <TrendingUp data-icon className="size-4" aria-hidden="true" />
                         {t("detail.priceTrendFull")}
                       </h3>
@@ -1117,7 +1115,7 @@ export function DetailDrawer({
                             key={key}
                             onClick={() => setTrendRange(key)}
                             className={cn(
-                              "rounded px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider transition-colors",
+                              "rounded px-2 py-0.5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider transition-colors",
                               trendRange === key
                                 ? "bg-primary text-primary-foreground"
                                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
@@ -1208,11 +1206,11 @@ export function DetailDrawer({
                   </section>
 
                   <div className="grid grid-cols-1 gap-4">
-                    <Card className="border-border/40 bg-card shadow-sm transition-all hover:border-primary/20">
+                    <Card className="border-border/40 bg-card shadow-sm transition-[border-color,box-shadow] hover:border-primary/20">
                       <CardHeader className="p-4">
                         <div className="flex items-center justify-between">
                           <div className="flex flex-col gap-1">
-                            <CardDescription className="text-[0.6rem] font-bold uppercase tracking-[0.16em]">
+                            <CardDescription className="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)]">
                               {t("detail.marketRank")}
                             </CardDescription>
                             <CardTitle className="text-xl font-bold tracking-tight">
@@ -1223,7 +1221,7 @@ export function DetailDrawer({
                               })}
                             </CardTitle>
                           </div>
-                          <div className="rounded-full bg-primary/5 p-2 text-primary">
+                          <div className="rounded-none bg-primary/5 p-2 text-primary">
                             <TrendingUp data-icon className="size-5" aria-hidden="true" />
                           </div>
                         </div>
@@ -1244,7 +1242,7 @@ export function DetailDrawer({
                 {/* ── HISTORY ── */}
                 <TabsContent value="history" className="mt-0 pb-8 focus-visible:outline-none">
                   <section>
-                    <h3 className="mb-4 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
+                    <h3 className="mb-4 flex items-center justify-between text-[0.75rem] font-bold uppercase tracking-[0.2em] text-muted-foreground/80">
                       <span className="flex items-center gap-2">
                         <History data-icon className="size-4" aria-hidden="true" />
                         {t("detail.recentTransactions")}
@@ -1253,13 +1251,13 @@ export function DetailDrawer({
                         {recentTransactionOutliers.size > 0 && (
                           <Badge
                             variant="outline"
-                            className="h-5 gap-1 border-warning/40 bg-warning/10 text-[0.6rem] font-bold text-warning"
+                            className="h-5 gap-1 border-warning/40 bg-warning/10 text-[length:var(--text-xs)] font-bold text-warning"
                           >
                             <AlertTriangle data-icon className="size-3" aria-hidden="true" />
                             {t("detail.outlierCount", { count: recentTransactionOutliers.size })}
                           </Badge>
                         )}
-                        <Badge variant="outline" className="font-mono text-[0.65rem]">
+                        <Badge variant="outline" className="font-mono text-[0.75rem]">
                           {t("detail.totalCount", {
                             count: detail?.recentTransactions.length ?? 0,
                           })}
@@ -1293,13 +1291,13 @@ export function DetailDrawer({
                                   <strong className="text-sm font-bold tracking-tight">
                                     {formatCurrency(tx.resalePrice, locale)}
                                   </strong>
-                                  <ItemDescription className="text-[0.65rem] font-bold uppercase tracking-wider">
+                                  <ItemDescription className="text-[0.75rem] font-bold uppercase tracking-wider">
                                     {tx.flatType} • {tx.storeyRange}
                                   </ItemDescription>
                                   {outlier?.direction === "high" && (
                                     <Badge
                                       variant="outline"
-                                      className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-warning"
+                                      className="mt-1 h-5 w-fit border-warning/40 bg-warning/10 px-1.5 text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-warning"
                                     >
                                       {t("detail.outlier.high")}
                                     </Badge>
@@ -1307,7 +1305,7 @@ export function DetailDrawer({
                                   {outlier?.direction === "low" && (
                                     <Badge
                                       variant="outline"
-                                      className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[0.58rem] font-bold uppercase tracking-[0.1em] text-primary"
+                                      className="mt-1 h-5 w-fit border-primary/40 bg-primary/10 px-1.5 text-[length:var(--text-xs)] font-bold uppercase tracking-[0.1em] text-primary"
                                     >
                                       {t("detail.outlier.low")}
                                     </Badge>
@@ -1318,11 +1316,11 @@ export function DetailDrawer({
                                 <div className="flex flex-col items-end gap-1">
                                   <Badge
                                     variant="secondary"
-                                    className="h-5 text-[0.6rem] font-mono tracking-tighter"
+                                    className="h-5 text-[length:var(--text-xs)] font-mono tracking-tighter"
                                   >
                                     {formatMonth(tx.month, locale)}
                                   </Badge>
-                                  <span className="text-[0.6rem] font-medium text-muted-foreground/60 tracking-tight">
+                                  <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground/60 tracking-tight">
                                     {t("unit.sqm", { value: tx.floorAreaSqm })}
                                   </span>
                                 </div>
@@ -1336,7 +1334,7 @@ export function DetailDrawer({
                           {Array.from({ length: 5 }).map((_, i) => (
                             <div
                               key={i}
-                              className="h-16 w-full animate-pulse rounded-lg bg-muted/40"
+                              className="h-16 w-full animate-pulse rounded-none bg-muted/40"
                             />
                           ))}
                         </div>
@@ -1359,7 +1357,7 @@ export function DetailDrawer({
                             {Array.from({ length: 3 }).map((_, i) => (
                               <div
                                 key={i}
-                                className="h-20 w-full animate-pulse rounded-lg bg-muted/40"
+                                className="h-20 w-full animate-pulse rounded-none bg-muted/40"
                               />
                             ))}
                           </div>
@@ -1374,7 +1372,10 @@ export function DetailDrawer({
                   ) : (
                     <div className="flex flex-col gap-3 py-12">
                       {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="h-20 w-full animate-pulse rounded-lg bg-muted/40" />
+                        <div
+                          key={i}
+                          className="h-20 w-full animate-pulse rounded-none bg-muted/40"
+                        />
                       ))}
                     </div>
                   )}
@@ -1383,10 +1384,10 @@ export function DetailDrawer({
             </Tabs>
           </div>
 
-          <div className="shrink-0 border-t border-border/40 bg-background/80 p-4 backdrop-blur-md sm:p-6">
+          <div className="shrink-0 border-t border-border/40 bg-background p-4 sm:p-6">
             <div className="mx-auto flex w-full items-center gap-2.5 sm:gap-4">
               <Button
-                className="min-w-0 flex-1 gap-1.5 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
+                className="min-w-0 flex-1 gap-1.5 px-3 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] transition-[color,background-color,transform] active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
@@ -1416,11 +1417,11 @@ export function DetailDrawer({
                 errorLabel={t("share.copyError")}
                 variant="outline"
                 size="icon-xs"
-                className="shrink-0 rounded-lg border-border/50 bg-card/80"
+                className="shrink-0 rounded-none border-border/50 bg-card"
               />
               <Button
                 variant="outline"
-                className="min-w-0 flex-1 gap-1.5 border-border/60 px-3 text-[0.68rem] font-bold uppercase tracking-[0.12em] transition-all active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
+                className="min-w-0 flex-1 gap-1.5 border-border/60 px-3 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] transition-[color,background-color,transform] active:scale-[0.98] sm:gap-2 sm:text-sm sm:tracking-widest"
                 size="lg"
                 disabled={!currentSummary}
                 onClick={() => {
@@ -1459,7 +1460,7 @@ function SimilarBlockCard({
   return (
     <button
       type="button"
-      className="w-full rounded-xl bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+      className="w-full rounded-none bg-muted/20 px-3 py-2.5 text-left transition-colors hover:bg-muted/30 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       onClick={() => onSelect(block.addressKey)}
       aria-label={t("detail.similarBlocks.viewBlock", { address })}
     >
@@ -1467,14 +1468,14 @@ function SimilarBlockCard({
         <div className="min-w-0 flex-1">
           <div className="truncate text-sm font-bold leading-tight">{address}</div>
           <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-            <span className="text-[0.6rem] font-extrabold uppercase tracking-[0.1em] text-muted-foreground/70">
+            <span className="text-[length:var(--text-xs)] font-extrabold uppercase tracking-[0.1em] text-muted-foreground/70">
               {localizeTownName(block.town, locale)}
             </span>
             {block.flatTypes.slice(0, 2).map((ft) => (
               <Badge
                 key={ft}
                 variant="outline"
-                className="h-4 px-1 text-[0.55rem] font-bold uppercase"
+                className="h-4 px-1 text-[length:var(--text-xs)] font-bold uppercase"
               >
                 {localizeFlatType(ft, locale)}
               </Badge>
@@ -1487,7 +1488,7 @@ function SimilarBlockCard({
           </div>
           {block.nearestMrt && (
             <div
-              className="mt-0.5 text-[0.6rem] text-muted-foreground/70 tabular-nums"
+              className="mt-0.5 text-[length:var(--text-xs)] text-muted-foreground/70 tabular-nums"
               title={formatMeters(block.nearestMrt.distanceMeters, t, locale)}
               aria-label={`${formatMinutesWalk(block.nearestMrt.walkingTimeSeconds, t, locale)} (${formatMeters(block.nearestMrt.distanceMeters, t, locale)})`}
             >
@@ -1514,10 +1515,8 @@ function StatPill({
   tone?: "positive" | "negative";
 }) {
   return (
-    <div className="rounded-md bg-muted/30 px-3 py-2">
-      <div className="text-[0.55rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-        {label}
-      </div>
+    <div className="rounded-none bg-muted/30 px-3 py-2">
+      <div className="v2-field-label">{label}</div>
       <div
         className={cn(
           "mt-0.5 text-sm font-extrabold tabular-nums",
@@ -1527,7 +1526,7 @@ function StatPill({
       >
         {value}
       </div>
-      {sub && <div className="text-[0.58rem] text-muted-foreground">{sub}</div>}
+      {sub && <div className="text-[length:var(--text-xs)] text-muted-foreground">{sub}</div>}
     </div>
   );
 }

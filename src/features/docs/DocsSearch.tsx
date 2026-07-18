@@ -128,7 +128,7 @@ export function DocsSearch({ t }: DocsSearchProps) {
           id={listboxId}
           role="listbox"
           aria-label={t("docs.searchLabel")}
-          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-80 overflow-y-auto rounded-md border bg-popover p-1 text-popover-foreground shadow-md"
+          className="absolute left-0 right-0 top-full z-50 mt-1 max-h-80 overflow-y-auto rounded-none border bg-popover p-1 text-popover-foreground shadow-md"
         >
           {results.length === 0 ? (
             <li role="presentation" className="px-3 py-2 text-sm text-muted-foreground">
@@ -142,7 +142,7 @@ export function DocsSearch({ t }: DocsSearchProps) {
                 role="option"
                 aria-selected={index === activeIndex}
                 className={cn(
-                  "cursor-pointer rounded-sm px-3 py-2",
+                  "cursor-pointer rounded-none px-3 py-2",
                   index === activeIndex ? "bg-accent text-accent-foreground" : "hover:bg-muted/60",
                 )}
                 onMouseEnter={() => setActiveIndex(index)}

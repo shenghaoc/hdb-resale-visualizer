@@ -1,5 +1,14 @@
 import { useMemo, useState, type CSSProperties } from "react";
-import { Check, ChevronDown, Search } from "lucide-react";
+import {
+  Building2,
+  CalendarRange,
+  Check,
+  ChevronDown,
+  CircleDollarSign,
+  ClipboardList,
+  Search,
+  TrainFront,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -37,98 +46,36 @@ const isOptionalIntegerInRange = (value: string, min: number, max: number) =>
   (Number.isInteger(Number(value)) && Number(value) >= min && Number(value) <= max);
 
 const WIZARD_ICONS = {
-  welcome: (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <circle cx="11" cy="11" r="7.5" />
-      <path d="M16.5 16.5 21 21" strokeLinecap="round" />
-    </svg>
-  ),
-  flatType: (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path
-        d="M3 9.5 12 3l9 6.5V20A1.5 1.5 0 0 1 19.5 21.5h-15A1.5 1.5 0 0 1 3 20V9.5Z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M9 21.5V14h6v7.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  ),
-  budget: (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <circle cx="12" cy="12" r="9.5" />
-      <path
-        d="M12 6.5v11M15 9.5c0-1.1-1.34-2-3-2s-3 .9-3 2 1.34 2 3 2 3 .9 3 2-1.34 2-3 2-3-.9-3-2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  ),
-  commute: (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <rect x="5" y="2.5" width="14" height="16" rx="3" />
-      <path d="M5 12.5h14M12 2.5v10" strokeLinecap="round" />
-      <circle cx="8.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
-      <circle cx="15.5" cy="15.5" r="1" fill="currentColor" stroke="none" />
-      <path d="M7 18.5l-2 3M17 18.5l2 3M9 21.5h6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  ),
-  lease: (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <rect x="3" y="4.5" width="18" height="17" rx="2" />
-      <path d="M16 2.5v4M8 2.5v4M3 9.5h18" strokeLinecap="round" />
-      <path d="M8 13.5h2v2H8z" fill="currentColor" stroke="none" />
-    </svg>
-  ),
-  affordability: (
-    <svg
-      viewBox="0 0 24 24"
-      className="size-10"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    >
-      <path
-        d="M4 7h16v12.5A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5V7Z"
-        strokeLinejoin="round"
-      />
-      <path d="M4 7V5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5V7" strokeLinejoin="round" />
-      <path d="M9 13h6M9 16.5h4" strokeLinecap="round" />
-    </svg>
-  ),
+  welcome: Search,
+  flatType: Building2,
+  budget: CircleDollarSign,
+  commute: TrainFront,
+  lease: CalendarRange,
+  affordability: ClipboardList,
 } as const;
 
 function WizardIcon({ stepKey }: { stepKey: keyof typeof WIZARD_ICONS }) {
-  return WIZARD_ICONS[stepKey] || WIZARD_ICONS.welcome;
+  const Icon = WIZARD_ICONS[stepKey];
+  return <Icon className="size-8" strokeWidth={1.5} aria-hidden="true" />;
+}
+
+function WizardStepIcon({
+  stepKey,
+  size = "md",
+}: {
+  stepKey: keyof typeof WIZARD_ICONS;
+  size?: "md" | "lg";
+}) {
+  return (
+    <div
+      className={cn(
+        "flex items-center justify-center rounded-none bg-primary/10 text-primary",
+        size === "lg" ? "mx-auto mb-4 size-14" : "size-12 shrink-0",
+      )}
+    >
+      <WizardIcon stepKey={stepKey} />
+    </div>
+  );
 }
 
 export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
@@ -285,16 +232,15 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
 
   return (
     <div className="absolute inset-0 z-[100] flex items-end justify-center px-4 pb-20 pt-6 lg:items-center lg:px-0 lg:pb-0">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
-      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-[1.25rem] border bg-popover/95 shadow-xl backdrop-blur-2xl lg:w-[28.75rem] lg:max-w-[28.75rem]">
-        <div className="h-[3px] w-full rounded-t-[1.25rem] bg-gradient-to-r from-primary to-transparent opacity-60" />
+      <div className="absolute inset-0 bg-black/50" />
+      <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-none border bg-popover shadow-sm lg:w-[28.75rem] lg:max-w-[28.75rem]">
         <CardContent className="overflow-hidden px-5 py-6 lg:px-8 lg:py-7">
           <div className="mb-6 flex items-center justify-center gap-1.5">
             {Array.from({ length: totalSteps }).map((_, index) => (
               <div
                 key={index}
                 className={cn(
-                  "h-2 rounded-full transition-all duration-300",
+                  "h-2 rounded-full transition-[width,background-color] duration-300",
                   index === step
                     ? "w-6 bg-primary"
                     : index < step
@@ -317,10 +263,8 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             >
               {step === 0 ? (
                 <div className="pt-2 text-center">
-                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                    <WizardIcon stepKey="welcome" />
-                  </div>
-                  <p className="mb-2 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  <WizardStepIcon stepKey="welcome" size="lg" />
+                  <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                     {t("searchProfile.wizard.kicker")}
                   </p>
                   <h2 className="text-[1.5rem] font-extrabold tracking-[-0.02em] text-foreground lg:text-[1.65rem]">
@@ -335,9 +279,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 1 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="flatType" />
-                    </div>
+                    <WizardStepIcon stepKey="flatType" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.flatType")}
@@ -357,7 +299,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={selected}
                           onClick={() => setMainFlatType(selected ? "" : flatType)}
                           className={cn(
-                            "rounded-[0.65rem] px-5 py-2.5 text-[0.82rem] font-bold tracking-[0.02em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                            "rounded-none px-5 py-2.5 text-[length:var(--text-sm)] font-bold tracking-[0.02em] transition-[color,background-color,box-shadow,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             selected
                               ? "scale-[1.04] bg-primary text-primary-foreground"
                               : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -374,9 +316,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 2 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="budget" />
-                    </div>
+                    <WizardStepIcon stepKey="budget" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.budget")}
@@ -386,7 +326,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </p>
                     </div>
                   </div>
-                  <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                  <div className="rounded-none border bg-muted/40 px-4">
                     <div className="flex items-center">
                       <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                       <Input
@@ -396,7 +336,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         value={maxBudget}
                         onChange={(e) => setMaxBudget(e.target.value)}
                         placeholder={t("searchProfile.maxBudgetPlaceholder")}
-                        className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                        className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                       />
                     </div>
                   </div>
@@ -410,7 +350,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={active}
                           onClick={() => setMaxBudget(active ? "" : String(preset))}
                           className={cn(
-                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                            "rounded-none border px-3.5 py-2 text-xs font-bold [font-variant-numeric:tabular-nums] transition-[border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -429,9 +369,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 3 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="commute" />
-                    </div>
+                    <WizardStepIcon stepKey="commute" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.commute")}
@@ -443,27 +381,27 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   </div>
                   <div className="flex flex-col gap-4">
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.commuteDestination")}
                       </p>
-                      <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                      <div className="rounded-none border bg-muted/40 px-4">
                         <Input
                           value={commuteAnchorLabel}
                           onChange={(e) => setCommuteAnchorLabel(e.target.value)}
                           placeholder={t("searchProfile.commuteAnchorPlaceholder")}
-                          className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold focus-visible:border-0"
+                          className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold focus-visible:border-0"
                         />
                       </div>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.commuteMrtStation")}
                       </p>
                       <Popover open={stationPickerOpen} onOpenChange={setStationPickerOpen}>
                         <PopoverTrigger asChild>
                           <button
                             type="button"
-                            className="flex h-12 w-full items-center justify-between rounded-[0.65rem] border bg-muted/40 px-4 text-left text-[0.95rem] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                            className="flex h-12 w-full items-center justify-between rounded-none border bg-muted/40 px-4 text-left text-[length:var(--text-base)] font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                           >
                             <span
                               className={
@@ -480,9 +418,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             />
                           </button>
                         </PopoverTrigger>
-                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 rounded-[0.9rem] border bg-popover/98 p-0 shadow-lg backdrop-blur-xl">
+                        <PopoverContent className="z-[110] w-[min(24rem,calc(100vw-2rem))] gap-3 border bg-popover p-0 shadow-lg">
                           <div className="border-b border-border/60 p-2.5">
-                            <div className="rounded-[0.6rem] bg-muted/40 px-3">
+                            <div className="rounded-none bg-muted/40 px-3">
                               <div className="flex items-center gap-2">
                                 <Search className="size-4 text-muted-foreground" />
                                 <Input
@@ -535,7 +473,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </Popover>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.maxCommute")}
                       </p>
                       <div className="flex flex-wrap gap-2">
@@ -548,7 +486,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                               aria-pressed={active}
                               onClick={() => setMaxCommute(active ? "" : String(preset))}
                               className={cn(
-                                "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                                "rounded-none border px-3.5 py-2 text-xs font-bold transition-[border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                                 active
                                   ? "border-primary bg-primary text-primary-foreground"
                                   : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -567,9 +505,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 4 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="lease" />
-                    </div>
+                    <WizardStepIcon stepKey="lease" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.lease")}
@@ -579,7 +515,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                       </p>
                     </div>
                   </div>
-                  <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                  <div className="rounded-none border bg-muted/40 px-4">
                     <div className="flex items-center">
                       <Input
                         inputMode="numeric"
@@ -588,9 +524,9 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                         value={minLease}
                         onChange={(e) => setMinLease(e.target.value)}
                         placeholder={t("searchProfile.minLeasePlaceholder")}
-                        className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                        className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                       />
-                      <span className="pl-2 text-[0.68rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
+                      <span className="pl-2 text-[0.75rem] font-bold uppercase tracking-[0.1em] text-muted-foreground">
                         {t("searchProfile.yearsShort")}
                       </span>
                     </div>
@@ -605,7 +541,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                           aria-pressed={active}
                           onClick={() => setMinLease(active ? "" : String(preset))}
                           className={cn(
-                            "rounded-[0.55rem] border px-3.5 py-2 text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                            "rounded-none border px-3.5 py-2 text-xs font-bold transition-[border-color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                             active
                               ? "border-primary bg-primary text-primary-foreground"
                               : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -622,9 +558,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
               {step === 5 ? (
                 <div>
                   <div className="mb-5 flex items-start gap-3">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                      <WizardIcon stepKey="affordability" />
-                    </div>
+                    <WizardStepIcon stepKey="affordability" />
                     <div>
                       <p className="text-[1.35rem] font-extrabold tracking-[-0.02em] text-foreground">
                         {t("searchProfile.wizard.question.affordability")}
@@ -637,10 +571,10 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                   <div className="flex flex-col gap-4">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                           {t("searchProfile.age")}
                         </p>
-                        <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                        <div className="rounded-none border bg-muted/40 px-4">
                           <Input
                             inputMode="numeric"
                             enterKeyHint="done"
@@ -652,15 +586,15 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setAge(e.target.value)}
                             placeholder={t("searchProfile.agePlaceholder")}
                             aria-label={t("searchProfile.age")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
                       <div>
-                        <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                        <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                           {t("searchProfile.coApplicantAge")}
                         </p>
-                        <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                        <div className="rounded-none border bg-muted/40 px-4">
                           <Input
                             inputMode="numeric"
                             enterKeyHint="done"
@@ -672,16 +606,16 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setCoApplicantAge(e.target.value)}
                             placeholder={t("searchProfile.coApplicantAgePlaceholder")}
                             aria-label={t("searchProfile.coApplicantAge")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.cpfOABalance")}
                       </p>
-                      <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                      <div className="rounded-none border bg-muted/40 px-4">
                         <div className="flex items-center">
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
@@ -692,16 +626,16 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setCpfOABalance(e.target.value)}
                             placeholder={t("searchProfile.cpfOABalancePlaceholder")}
                             aria-label={t("searchProfile.cpfOABalance")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
                     </div>
                     <div>
-                      <p className="mb-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
+                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.monthlyIncome")}
                       </p>
-                      <div className="rounded-[0.65rem] border bg-muted/40 px-4">
+                      <div className="rounded-none border bg-muted/40 px-4">
                         <div className="flex items-center">
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
@@ -712,7 +646,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                             onChange={(e) => setMonthlyIncome(e.target.value)}
                             placeholder={t("searchProfile.monthlyIncomePlaceholder")}
                             aria-label={t("searchProfile.monthlyIncome")}
-                            className="h-12 border-0 px-0 py-0 text-[0.95rem] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
+                            className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold [font-variant-numeric:tabular-nums] focus-visible:border-0"
                           />
                         </div>
                       </div>
@@ -723,9 +657,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
 
               {step === 6 ? (
                 <div className="pt-2 text-center">
-                  <div className="mx-auto mb-4 flex size-14 items-center justify-center rounded-[0.9rem] bg-primary/10 text-primary">
-                    <WizardIcon stepKey="welcome" />
-                  </div>
+                  <WizardStepIcon stepKey="welcome" size="lg" />
                   <p className="text-[1.45rem] font-extrabold tracking-[-0.02em] text-foreground">
                     {t("searchProfile.wizard.question.review")}
                   </p>
@@ -733,42 +665,42 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     {t("searchProfile.wizard.hint.review")}
                   </p>
                   <div className="mt-5 flex flex-wrap justify-center gap-2">
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {mainFlatType}
                     </div>
                     {maxBudget ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {`S$${formatNumber(Number(maxBudget), 0, locale)}`}
                       </div>
                     ) : null}
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {formatStationLabel(commuteAnchorMrt)}
                     </div>
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {t("searchProfile.minutesPreset", { value: Number(maxCommute) })}
                     </div>
-                    <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                    <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                       {t("searchProfile.yearsPreset", { value: Number(minLease) })}
                     </div>
                     {age ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.age", { age: Number(age) })}
                       </div>
                     ) : null}
                     {coApplicantAge ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.coApplicantAge", { age: Number(coApplicantAge) })}
                       </div>
                     ) : null}
                     {cpfOABalance ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.cpfOABalance", {
                           amount: formatNumber(Number(cpfOABalance), 0, locale),
                         })}
                       </div>
                     ) : null}
                     {monthlyIncome ? (
-                      <div className="rounded-full bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
+                      <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
                         {t("searchProfile.chip.monthlyIncome", {
                           amount: formatNumber(Number(monthlyIncome), 0, locale),
                         })}
@@ -776,14 +708,14 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     ) : null}
                   </div>
                   {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
-                    <div className="mt-5 rounded-[0.65rem] border border-success/30 bg-success/[0.06] px-4 py-3 text-left">
-                      <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-success">
+                    <div className="mt-5 rounded-none border border-success/30 bg-success/[0.06] px-4 py-3 text-left">
+                      <p className="text-[length:var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-success">
                         {t("affordability.ceiling", {
                           price: formatCurrency(affordabilityCeiling, locale),
                         })}
                       </p>
                       {monthlyIncome.trim() ? (
-                        <p className="mt-1 text-[0.68rem] font-semibold leading-snug text-muted-foreground">
+                        <p className="mt-1 text-[0.75rem] font-semibold leading-snug text-muted-foreground">
                           {t("affordability.summary", {
                             cpf: formatCurrency(Number(cpfOABalance), locale),
                             income: formatCurrency(Number(monthlyIncome), locale),
@@ -807,7 +739,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                 setDirection(-1);
                 setStep((prev) => Math.max(0, prev - 1));
               }}
-              className="rounded-[0.65rem] bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              className="rounded-none bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
               {t("searchProfile.back")}
             </button>
@@ -815,7 +747,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             <button
               type="button"
               onClick={onSkip}
-              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-md"
+              className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-none"
             >
               {t("searchProfile.skip")}
             </button>
@@ -824,7 +756,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
             type="button"
             onClick={handleContinue}
             disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-            className="rounded-[0.65rem] bg-[color-mix(in_oklab,var(--primary),#000_35%)] px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-white transition-[color,background-color,box-shadow] enabled:hover:bg-[color-mix(in_oklab,var(--primary),#000_50%)] disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="rounded-none bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-[color,background-color,box-shadow] enabled:hover:bg-primary/80 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {nextLabel}
           </button>

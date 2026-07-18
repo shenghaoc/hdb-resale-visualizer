@@ -759,15 +759,15 @@ export function ListingCheckPanel({
   return (
     <section className="flex flex-col gap-5">
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="rounded-lg bg-muted/10 p-4">
+      <div className="rounded-none bg-muted/10 p-4">
         <div className="mb-3 flex items-start gap-3">
-          <div className="rounded-md bg-primary/10 p-2 text-primary">
+          <div className="rounded-none bg-primary/10 p-2 text-primary">
             <Scale data-icon className="size-4" aria-hidden="true" />
           </div>
           <div className="flex-1">
             <h3 className="text-sm font-bold tracking-tight">{t("check.primaryAction")}</h3>
             <p className="mt-1 text-xs text-muted-foreground">{t("check.valueStatement")}</p>
-            <p className="mt-1 text-[0.62rem] font-medium text-success">
+            <p className="mt-1 text-[length:var(--text-xs)] font-medium text-success">
               {t("check.trustStatement")}
             </p>
           </div>
@@ -819,7 +819,7 @@ export function ListingCheckPanel({
 
         {/* ── Block info ───────────────────────────────────────────────── */}
         {selectedAddressKey && detail && (
-          <div className="mb-4 rounded-md bg-muted/20 px-3 py-2 text-xs">
+          <div className="mb-4 rounded-none bg-muted/20 px-3 py-2 text-xs">
             <span className="font-semibold text-foreground">{detail.summary.town}</span>
             <span className="mx-1.5 text-muted-foreground">·</span>
             <span className="text-muted-foreground">
@@ -830,7 +830,7 @@ export function ListingCheckPanel({
 
         {/* ── Loading / error states ────────────────────────────────────── */}
         {selectedAddressKey && detailLoading && (
-          <div className="mb-4 flex items-center gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
+          <div className="mb-4 flex items-center gap-2 rounded-none bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
             <div
               className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
               aria-hidden="true"
@@ -839,7 +839,7 @@ export function ListingCheckPanel({
           </div>
         )}
         {selectedAddressKey && detailError && (
-          <div className="mb-4 flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+          <div className="mb-4 flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
             <AlertTriangle data-icon className="size-4 shrink-0 text-warning" aria-hidden="true" />
             <span>{t("check.noDetail")}</span>
           </div>
@@ -849,7 +849,7 @@ export function ListingCheckPanel({
           !detailError &&
           detail &&
           detail.recentTransactions.length === 0 && (
-            <div className="mb-4 flex items-start gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+            <div className="mb-4 flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
               <Info
                 data-icon
                 className="size-4 shrink-0 text-muted-foreground/70"
@@ -863,9 +863,7 @@ export function ListingCheckPanel({
         {detail && detail.recentTransactions.length > 0 && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                {t("askingCheck.askingPrice")}
-              </span>
+              <span className="v2-field-label">{t("askingCheck.askingPrice")}</span>
               <Input
                 ref={askingPriceInputRef}
                 type="number"
@@ -881,9 +879,7 @@ export function ListingCheckPanel({
               />
             </label>
             <label className="flex flex-col gap-1">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                {t("askingCheck.floorArea")}
-              </span>
+              <span className="v2-field-label">{t("askingCheck.floorArea")}</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -899,9 +895,7 @@ export function ListingCheckPanel({
             </label>
             {flatTypeOptions.length > 1 && (
               <label className="flex flex-col gap-1">
-                <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                  {t("askingCheck.flatType")}
-                </span>
+                <span className="v2-field-label">{t("askingCheck.flatType")}</span>
                 <Select
                   value={flatType ?? flatTypeOptions[0]}
                   onValueChange={(v) => onFlatTypeChange(v || null)}
@@ -921,9 +915,7 @@ export function ListingCheckPanel({
             )}
             {storeyOptions.length > 0 && (
               <label className="flex flex-col gap-1">
-                <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                  {t("askingCheck.storey")}
-                </span>
+                <span className="v2-field-label">{t("askingCheck.storey")}</span>
                 <Select
                   value={storeyRange ?? storeyOptions[0]}
                   onValueChange={(v) => onStoreyRangeChange(v || null)}
@@ -942,9 +934,7 @@ export function ListingCheckPanel({
               </label>
             )}
             <label className="flex flex-col gap-1 sm:col-span-2">
-              <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                {t("check.leaseYear")}
-              </span>
+              <span className="v2-field-label">{t("check.leaseYear")}</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -978,7 +968,7 @@ export function ListingCheckPanel({
 
       {/* ── API loading state ──────────────────────────────────────────── */}
       {comparableSetLoading && (
-        <div className="flex items-center gap-2 rounded-md bg-muted/20 p-3 text-xs text-muted-foreground">
+        <div className="flex items-center gap-2 rounded-none bg-muted/20 p-3 text-xs text-muted-foreground">
           <div
             className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
             aria-hidden="true"
@@ -989,7 +979,7 @@ export function ListingCheckPanel({
 
       {/* ── API error state ────────────────────────────────────────────── */}
       {comparableSetError && !comparableSetLoading && (
-        <div className="flex items-start gap-3 rounded-md border border-destructive/30 bg-destructive/5 p-3 text-xs">
+        <div className="flex items-start gap-3 rounded-none border border-destructive/30 bg-destructive/5 p-3 text-xs">
           <AlertTriangle
             data-icon
             className="size-4 shrink-0 text-destructive"
@@ -1004,7 +994,7 @@ export function ListingCheckPanel({
 
       {/* ── No block selected hint ─────────────────────────────────────── */}
       {!selectedAddressKey && (
-        <div className="flex flex-col gap-3 rounded-md border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+        <div className="flex flex-col gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
           <div className="flex items-start gap-3">
             <Info
               data-icon
@@ -1035,7 +1025,7 @@ export function ListingCheckPanel({
           <CardContent className="flex flex-col gap-4 p-4">
             {/* Verdict badge + confidence */}
             <div className="flex items-center gap-3">
-              <div className={cn("rounded-md p-2", styles.bg)}>
+              <div className={cn("rounded-none p-2", styles.bg)}>
                 <VerdictIcon data-icon className={cn("size-5", styles.text)} aria-hidden="true" />
               </div>
               <div className="flex-1">
@@ -1058,7 +1048,7 @@ export function ListingCheckPanel({
                   <TooltipTrigger asChild>
                     <Badge
                       variant={confidenceBadgeVariant(result.confidence.level)}
-                      className="h-5 w-fit font-mono text-[0.6rem]"
+                      className="h-5 w-fit font-mono text-[length:var(--text-xs)]"
                       data-testid="listing-check-confidence-badge"
                     >
                       {t("check.confidence.label", {
@@ -1071,7 +1061,7 @@ export function ListingCheckPanel({
                   </TooltipContent>
                 </Tooltip>
                 <p
-                  className="text-[0.62rem] leading-snug text-muted-foreground sm:hidden"
+                  className="text-[length:var(--text-xs)] leading-snug text-muted-foreground sm:hidden"
                   data-testid="listing-check-confidence-summary"
                 >
                   {result.confidence.summary}
@@ -1081,7 +1071,7 @@ export function ListingCheckPanel({
                     <TooltipTrigger asChild>
                       <Badge
                         variant="outline"
-                        className="h-5 text-[0.6rem] font-bold uppercase tracking-[0.08em]"
+                        className="h-5 text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                       >
                         {t(QUALITY_LABEL_KEYS[qualityTag])}
                       </Badge>
@@ -1095,7 +1085,7 @@ export function ListingCheckPanel({
             </div>
 
             {/* Stats grid */}
-            <div className="grid grid-cols-1 gap-2 rounded-md bg-card/70 p-3 text-xs sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 rounded-none bg-card p-3 text-xs sm:grid-cols-2">
               <DataRow
                 label={t("check.fairRange")}
                 value={`${formatCompactCurrency(result.assessment.summary.p25Price)} – ${formatCompactCurrency(result.assessment.summary.p75Price)}`}
@@ -1154,10 +1144,8 @@ export function ListingCheckPanel({
 
             {/* Caveats */}
             {result.caveats.length > 0 && (
-              <div className="rounded-md bg-muted/20 p-3">
-                <h4 className="mb-2 text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground">
-                  {t("check.caveatsTitle")}
-                </h4>
+              <div className="rounded-none bg-muted/20 p-3">
+                <h4 className="mb-2 v2-field-label">{t("check.caveatsTitle")}</h4>
                 <ul className="flex flex-col gap-1.5">
                   {result.caveats.map((caveat: Caveat) => (
                     <li

@@ -12,6 +12,8 @@ Each saved block can carry richer context for your decision:
 - decision status — `considering`, `viewing booked`, `offered`, `kiv`, `rejected`, `dropped`
 - pros, cons, renovation notes, noise notes, transport notes, agent remarks, and free-form buyer notes
 
+Removing a saved block shows an **Undo** action for five seconds. Undo restores the exact saved entry in its previous position, including its asking price, offer fields, decision status, and notes.
+
 ## Comparing saved blocks
 
 The **compare view** lays saved blocks side by side: ask price, fair range, delta vs fair median, remaining lease, MRT context, confidence and caveats from the listing check, and a monthly payment estimate when available. Sort and rank by your preferred metric; decision status breaks ties. On mobile, compact cards keep everything scannable without horizontal scrolling.

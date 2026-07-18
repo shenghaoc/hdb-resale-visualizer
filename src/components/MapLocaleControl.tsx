@@ -18,7 +18,7 @@ export function MapLocaleControl({ isDesktop }: MapLocaleControlProps) {
         isDesktop ? "right-6 top-6" : "right-2 top-[calc(env(safe-area-inset-top,0px)+0.75rem)]",
       )}
     >
-      <div className="pointer-events-auto flex items-center rounded-xl border bg-popover/90 p-1 backdrop-blur-[20px] shadow-lg">
+      <div className="v2-chrome pointer-events-auto flex items-center p-1">
         <LocaleSelector />
       </div>
     </div>

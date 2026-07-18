@@ -88,6 +88,7 @@ function renderDrawer(onUpdate = vi.fn()) {
         rows={[mockRow]}
         onToggleOpen={() => {}}
         onRemove={() => {}}
+        onRestore={() => {}}
         onUpdate={onUpdate}
         onSelectAddress={() => {}}
       />

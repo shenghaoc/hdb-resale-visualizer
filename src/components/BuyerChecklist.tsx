@@ -24,7 +24,7 @@ export function BuyerChecklist({
   return (
     <div
       className={cn(
-        "flex flex-col gap-2 rounded-lg border border-border/40 bg-muted/10 p-3",
+        "flex flex-col gap-2 rounded-none border border-border/40 bg-muted/10 p-3",
         className,
       )}
     >

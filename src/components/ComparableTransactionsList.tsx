@@ -41,13 +41,13 @@ export function ComparableTransactionsList({
     <section>
       <button
         type="button"
-        className="mb-2 flex w-full items-center justify-between gap-2 rounded-md border border-border/40 bg-muted/20 px-3 py-2 text-left text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:bg-muted/40"
+        className="mb-2 flex w-full items-center justify-between gap-2 rounded-none border border-border/40 bg-muted/20 px-3 py-2 text-left v2-field-label transition-colors hover:bg-muted/40"
         aria-expanded={expanded}
         onClick={onToggle}
       >
         <span className="flex min-w-0 items-center gap-2">
           <span className="truncate">{t("askingCheck.comparablesTitle")}</span>
-          <Badge variant="outline" className="h-5 shrink-0 font-mono text-[0.6rem]">
+          <Badge variant="outline" className="h-5 shrink-0 font-mono text-[length:var(--text-xs)]">
             {transactions.length}
           </Badge>
         </span>
@@ -75,7 +75,7 @@ export function ComparableTransactionsList({
             return (
               <li
                 key={tx.id}
-                className="flex items-center justify-between gap-2 rounded-md bg-muted/20 px-3 py-2 text-xs cv-auto"
+                className="flex items-center justify-between gap-2 rounded-none bg-muted/20 px-3 py-2 text-xs cv-auto"
               >
                 <div className="flex min-w-0 flex-col gap-0.5">
                   <div className="flex items-baseline gap-1.5">
@@ -83,7 +83,7 @@ export function ComparableTransactionsList({
                       className={cn(
                         "font-bold tabular-nums",
                         (hasAdjusted || showMissingIndicator) &&
-                          "text-muted-foreground text-[0.65rem]",
+                          "text-muted-foreground text-[0.75rem]",
                         hasAdjusted && "line-through",
                       )}
                     >
@@ -95,12 +95,12 @@ export function ComparableTransactionsList({
                       </span>
                     )}
                     {showMissingIndicator && (
-                      <span className="font-normal text-[0.6rem] italic text-muted-foreground/60">
+                      <span className="font-normal text-[length:var(--text-xs)] italic text-muted-foreground/60">
                         {t("check.noAdjustmentData")}
                       </span>
                     )}
                   </div>
-                  <span className="truncate text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                  <span className="truncate text-[0.75rem] uppercase tracking-wider text-muted-foreground">
                     {tx.storeyRange} · {Math.round(tx.floorAreaSqm)}
                     {t("unit.sqmShort")}
                     {hasAdjusted && adj?.adjustmentLabel && (
@@ -115,7 +115,10 @@ export function ComparableTransactionsList({
                     )}
                   </span>
                 </div>
-                <Badge variant="secondary" className="h-5 shrink-0 font-mono text-[0.6rem]">
+                <Badge
+                  variant="secondary"
+                  className="h-5 shrink-0 font-mono text-[length:var(--text-xs)]"
+                >
                   {formatMonth(tx.month, locale)}
                 </Badge>
               </li>

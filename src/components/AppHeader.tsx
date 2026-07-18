@@ -26,7 +26,7 @@ type AppHeaderProps = {
   onClearMobileTab?: () => void;
 };
 
-const HEADER_SURFACE_CLASS = "rounded-xl border bg-popover/90 backdrop-blur-[20px] shadow-lg";
+const HEADER_SURFACE_CLASS = "v2-chrome";
 
 export function AppHeader({
   manifest,
@@ -109,7 +109,7 @@ export function AppHeader({
           aria-expanded={isMobileHeaderOpen}
           onClick={onToggleMobileHeader}
           className={cn(
-            "pointer-events-auto flex min-w-0 items-center gap-2 px-3 py-2 text-left transition-all",
+            "pointer-events-auto flex min-w-0 items-center gap-2 px-3 py-2 text-left transition-[color,background-color]",
             !isDesktop && "min-w-0 flex-1 overflow-hidden",
             isDesktop && "shrink-0",
             HEADER_SURFACE_CLASS,
@@ -121,44 +121,44 @@ export function AppHeader({
               <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
               <span
                 data-testid="header-title"
-                className="truncate text-[0.7rem] font-bold leading-none"
+                className="truncate text-[0.75rem] font-bold leading-none"
               >
                 {t("app.title")}
               </span>
               <Badge
-                variant="outline"
-                className="h-5 shrink-0 border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold"
+                variant="secondary"
+                className="h-5 shrink-0 text-[length:var(--text-xs)] font-bold"
               >
                 {t("stats.dataThrough", {
                   month: formatMonth(manifest.dataWindow.maxMonth, locale),
                 })}
               </Badge>
-              <span className="hidden text-[0.6rem] font-medium text-muted-foreground sm:inline">
+              <span className="hidden text-[length:var(--text-xs)] font-medium text-muted-foreground sm:inline">
                 ·{" "}
                 {t("stats.transactions", {
                   count: formatNumber(manifest.counts.transactions, 0, locale),
                 })}
               </span>
               {dataQuality.lastSyncedAt ? (
-                <span className="hidden text-[0.6rem] font-medium text-muted-foreground lg:inline">
+                <span className="hidden text-[length:var(--text-xs)] font-medium text-muted-foreground lg:inline">
                   {" "}
                   · {t("stats.synced", { date: formatDateTime(dataQuality.lastSyncedAt, locale) })}
                 </span>
               ) : null}
               {sourceLabel ? (
-                <span className="hidden text-[0.6rem] font-medium text-muted-foreground xl:inline">
+                <span className="hidden text-[length:var(--text-xs)] font-medium text-muted-foreground xl:inline">
                   {" "}
                   · {t("stats.sources", { sources: sourceLabel })}
                 </span>
               ) : null}
               {dataQuality.syncState === "partial" ? (
-                <span className="text-[0.6rem] font-medium text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {" "}
                   · {t("stats.metadataPartial")}
                 </span>
               ) : null}
               {dataQuality.syncState === "missing" ? (
-                <span className="text-[0.6rem] font-medium text-muted-foreground">
+                <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {" "}
                   · {t("stats.metadataUnavailable")}
                 </span>
@@ -170,20 +170,20 @@ export function AppHeader({
                 <span className="size-1.5 shrink-0 rounded-full bg-success" aria-hidden="true" />
                 <span
                   data-testid="header-title"
-                  className="truncate text-[0.82rem] font-bold leading-tight"
+                  className="truncate text-[length:var(--text-sm)] font-bold leading-tight"
                 >
                   {t("app.title")}
                 </span>
               </span>
               <Badge
-                variant="outline"
-                className="h-5 w-fit border-border/35 bg-muted/30 px-1.5 text-[0.58rem] font-bold"
+                variant="secondary"
+                className="h-5 w-fit text-[length:var(--text-xs)] font-bold"
               >
                 {t("stats.dataThrough", {
                   month: formatMonth(manifest.dataWindow.maxMonth, locale),
                 })}
               </Badge>
-              <span className="text-[0.6rem] font-medium text-muted-foreground">
+              <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                 {t("stats.transactions", {
                   count: formatNumber(manifest.counts.transactions, 0, locale),
                 })}
@@ -222,7 +222,7 @@ export function AppHeader({
             onSelectSuggestion={onSelectSuggestion}
             suggestActive={isDesktop}
             t={t}
-            inputClassName="h-8 min-w-0 border-0 bg-transparent px-2 text-[0.72rem] shadow-none focus-visible:border-0 focus-visible:ring-0"
+            inputClassName="h-8 min-w-0 border-0 bg-transparent px-2 text-[0.75rem] shadow-none focus-visible:border-0 focus-visible:ring-0"
           />
         </div>
 
@@ -283,7 +283,7 @@ export function AppHeader({
           <button
             type="button"
             data-testid="header-search-scrim"
-            className="absolute inset-0 bg-background/55 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-background/55"
             aria-label={t("header.closeSearch")}
             onClick={closeMobileSearch}
           />

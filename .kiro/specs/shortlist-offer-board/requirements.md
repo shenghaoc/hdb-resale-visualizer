@@ -85,11 +85,21 @@
 - **R4.4** The item editor groups fields into logical sections:
   pricing/valuation, decision/workflow, and qualitative notes.
 
+- **R4.5** Removing an item presents a five-second, screen-reader-announced
+  Undo action so an accidental removal can be reversed without leaving the
+  shortlist workflow.
+
+- **R4.6** Undo restores the exact removed `ShortlistItem`, including every
+  buyer-entered offer-board field and note, at its previous list position.
+  The restored item follows the same local persistence and opt-in sync path as
+  any other shortlist mutation.
+
 ## R5 — Preservation of existing behavior
 
-- **R5.1** Shortlist capacity cap (`MAX_SHORTLIST_ITEMS`), add/remove
-  semantics, share payload encoding limits, and sync debounce cadence
-  remain unchanged.
+- **R5.1** Shortlist capacity cap (`MAX_SHORTLIST_ITEMS`), ordinary add/remove
+  semantics, share payload encoding limits, and sync debounce cadence remain
+  unchanged. Removal recovery uses an explicit restore operation rather than
+  reusing the add/remove toggle.
 
 - **R5.2** No new external API calls are introduced in `src/` or
   `functions/`. All data shown in the offer board comes from

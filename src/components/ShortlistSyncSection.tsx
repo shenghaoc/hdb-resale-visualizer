@@ -56,7 +56,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
   return (
     <section
       data-testid="shortlist-sync"
-      className="rounded-xl border border-border/40 bg-muted/20 p-3"
+      className="rounded-none border border-border/40 bg-muted/20 p-3"
     >
       <div className="flex items-center gap-1.5">
         <Cloud data-icon className="size-3.5 text-primary" aria-hidden="true" />
@@ -65,11 +65,11 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
 
       {sync.code ? (
         <div className="mt-2 flex flex-col gap-2">
-          <p className="text-[0.7rem] text-muted-foreground">{t("sync.linkHint")}</p>
+          <p className="text-[0.75rem] text-muted-foreground">{t("sync.linkHint")}</p>
           <div className="flex items-center gap-2">
             <code
               data-testid="sync-code"
-              className="flex-1 truncate rounded-lg border border-border/50 bg-card/80 px-2.5 py-1.5 text-sm font-bold tracking-wide"
+              className="flex-1 truncate rounded-none border border-border/50 bg-card px-2.5 py-1.5 text-sm font-bold tracking-wide"
             >
               {sync.code}
             </code>
@@ -105,7 +105,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
         </div>
       ) : (
         <div className="mt-2 flex flex-col gap-3">
-          <p className="text-[0.7rem] text-muted-foreground">{t("sync.intro")}</p>
+          <p className="text-[0.75rem] text-muted-foreground">{t("sync.intro")}</p>
           <Button
             type="button"
             size="sm"
@@ -154,7 +154,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
 
       <p
         data-testid="sync-status"
-        className="mt-2 text-[0.65rem] font-bold uppercase tracking-[0.1em] text-muted-foreground"
+        className="mt-2 text-[0.75rem] font-bold uppercase tracking-[0.1em] text-muted-foreground"
       >
         {t(STATUS_KEY[sync.status])}
       </p>
@@ -163,7 +163,7 @@ export function ShortlistSyncSection({ sync }: { sync: ShortlistSync }) {
         <p
           role="alert"
           data-testid="sync-error"
-          className="mt-1.5 rounded-lg bg-destructive/10 px-2 py-1.5 text-[0.7rem] font-medium text-destructive"
+          className="mt-1.5 rounded-none bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
         >
           {error}
         </p>

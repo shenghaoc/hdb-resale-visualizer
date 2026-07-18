@@ -165,7 +165,7 @@ export function MonthPicker({
           id={id}
           variant="outline"
           className={cn(
-            "group w-full justify-start text-left font-normal bg-background/50 px-3 hover:bg-background transition-all border-border/40",
+            "group w-full justify-start text-left font-normal bg-background px-3 hover:bg-muted transition-[color,background-color] border-border/40",
             !value && "text-muted-foreground",
           )}
         >
@@ -182,7 +182,7 @@ export function MonthPicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[280px] p-0 shadow-xl border-border/20 backdrop-blur-xl bg-popover/95"
+        className="w-[280px] p-0 shadow-sm border-border/20 bg-popover"
         align="start"
         aria-label={t("filters.selectMonth", { defaultValue: "Select month" })}
       >
@@ -254,9 +254,9 @@ export function MonthPicker({
                 aria-checked={isSelected}
                 tabIndex={focusableMonthIndex === index ? 0 : -1}
                 className={cn(
-                  "h-10 text-[0.7rem] font-bold uppercase tracking-wider w-full rounded-lg transition-all",
+                  "h-10 text-[0.75rem] font-bold uppercase tracking-wider w-full rounded-none transition-[color,background-color]",
                   isSelected
-                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
                     : "hover:bg-accent hover:text-accent-foreground text-muted-foreground",
                   isDisabled && "opacity-20 grayscale cursor-not-allowed",
                 )}
@@ -272,7 +272,7 @@ export function MonthPicker({
               type="button"
               variant="ghost"
               size="sm"
-              className="w-full text-[0.65rem] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 transition-colors"
+              className="w-full text-[0.75rem] font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground h-8 transition-colors"
               onClick={() => {
                 onChange(null);
                 setOpen(false);

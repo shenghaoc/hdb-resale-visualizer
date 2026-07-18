@@ -206,7 +206,7 @@ export function MobileTabBar({
         />
         <span>{savedLabel}</span>
         {shortlistCount > 0 ? (
-          <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[0.58rem]">
+          <Badge variant="outline" className="ml-0.5 h-4 min-w-4 px-1 text-[length:var(--text-xs)]">
             {shortlistCount}
           </Badge>
         ) : null}

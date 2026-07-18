@@ -82,6 +82,16 @@ describe("AmenityLayersControl", () => {
     );
   });
 
+  it("separates coarse-pointer hit areas from the visual switch tracks", () => {
+    renderControl();
+    const stationSwitch = screen.getByRole("switch", { name: "MRT Stations" });
+    const track = stationSwitch.firstElementChild;
+
+    expect(stationSwitch).toHaveAttribute("data-touch-target");
+    expect(stationSwitch).toHaveClass("h-7", "w-11");
+    expect(track).toHaveClass("h-6", "w-10", "rounded-full");
+  });
+
   it("disables the school overlay switch while loading", () => {
     renderControl({ schoolOverlayLoading: true });
 

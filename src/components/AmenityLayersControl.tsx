@@ -37,22 +37,27 @@ function LayerSwitch({
     <button
       type="button"
       role="switch"
+      data-touch-target
       aria-checked={active}
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={onToggle}
-      className={cn(
-        "relative h-6 w-10 shrink-0 rounded-full transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-45",
-        active ? "bg-primary" : "bg-muted-foreground/30",
-      )}
+      className="flex h-7 w-11 shrink-0 items-center justify-center bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-45"
     >
       <span
         className={cn(
-          "absolute top-[3px] left-[3px] size-[18px] rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
-          active ? "translate-x-4" : "translate-x-0",
+          "relative h-6 w-10 rounded-full transition-colors duration-300",
+          active ? "bg-primary" : "bg-muted-foreground/30",
         )}
         aria-hidden="true"
-      />
+      >
+        <span
+          className={cn(
+            "absolute left-[3px] top-[3px] size-[18px] rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
+            active ? "translate-x-4" : "translate-x-0",
+          )}
+        />
+      </span>
     </button>
   );
 
@@ -98,14 +103,16 @@ export function AmenityLayersControl({
   return (
     <div
       className={cn(
-        "pointer-events-auto flex flex-col gap-2 rounded-lg border bg-popover/90 p-2 text-[0.55rem] backdrop-blur-[20px] shadow-lg",
+        "v2-chrome pointer-events-auto flex flex-col gap-2 p-2 text-[length:var(--text-xs)]",
         className,
       )}
       style={style}
     >
       <div className="flex items-center gap-1.5 text-muted-foreground">
         <MapPin data-icon className="size-3" aria-hidden />
-        <span className="font-bold uppercase tracking-[0.1em]">{t("amenity.label")}</span>
+        <span className="font-bold uppercase tracking-[var(--tracking-label)]">
+          {t("amenity.label")}
+        </span>
       </div>
 
       <div className="flex flex-col gap-1.5">
@@ -154,15 +161,10 @@ export function AmenityLayersControl({
               schoolOverlayEnabled && schoolCanToggle ? "text-primary" : "text-muted-foreground",
             )}
           />
-          <span
-            className={cn(
-              "flex-1",
-              schoolCanToggle ? "text-muted-foreground" : "text-muted-foreground/60",
-            )}
-          >
+          <span className="flex-1 text-muted-foreground">
             {t("amenity.schools")}
             {!hasBlockSelection && (
-              <span className="ml-1 text-[0.5rem] italic opacity-60">
+              <span className="ml-1 text-[length:var(--text-xs)] italic">
                 ({t("amenity.schoolsHint")})
               </span>
             )}
