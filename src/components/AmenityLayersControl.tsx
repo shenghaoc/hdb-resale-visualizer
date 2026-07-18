@@ -157,14 +157,12 @@ export function AmenityLayersControl({
           <span
             className={cn(
               "flex-1",
-              schoolCanToggle ? "text-muted-foreground" : "text-muted-foreground/60",
+              schoolCanToggle ? "text-muted-foreground" : "text-muted-foreground",
             )}
           >
             {t("amenity.schools")}
             {!hasBlockSelection && (
-              <span className="ml-1 text-[0.5rem] italic opacity-60">
-                ({t("amenity.schoolsHint")})
-              </span>
+              <span className="ml-1 text-[0.5rem] italic">({t("amenity.schoolsHint")})</span>
             )}
           </span>
           <LayerSwitch
