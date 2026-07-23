@@ -622,6 +622,70 @@ describe("useShortlistSync", () => {
     expect(pushedAddressKeys).toContain("new");
   });
 
+  it("does not resurrect sync after disable cancels an in-flight queue flush", async () => {
+    const NEW_CODE = "NEW123abc123ABCD";
+    let resolvePush!: (value: { syncCode: string; items: ReturnType<typeof validItem>[] }) => void;
+    vi.mocked(pushShortlist).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolvePush = resolve;
+        }),
+    );
+    enqueuePendingShortlistPush(null, [validItem("queued")]);
+
+    const { result } = renderHook(() => useSyncHarness());
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.sync.disable();
+    });
+
+    await act(async () => {
+      resolvePush({ syncCode: NEW_CODE, items: [validItem("queued")] });
+      await vi.runAllTimersAsync();
+    });
+
+    expect(result.current.sync.code).toBeNull();
+    expect(result.current.sync.status).toBe("local");
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBeNull();
+    expect(result.current.local.items).toEqual([]);
+  });
+
+  it("ignores an in-flight enable after disable", async () => {
+    const NEW_CODE = "NEW123abc123ABCD";
+    let resolvePush!: (value: { syncCode: string; items: ReturnType<typeof validItem>[] }) => void;
+    vi.mocked(pushShortlist).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolvePush = resolve;
+        }),
+    );
+
+    const { result } = renderHook(() => useSyncHarness());
+    let enablePromise!: Promise<void>;
+    await act(async () => {
+      enablePromise = result.current.sync.enable();
+      await Promise.resolve();
+    });
+
+    act(() => {
+      result.current.sync.disable();
+    });
+
+    await act(async () => {
+      resolvePush({ syncCode: NEW_CODE, items: [] });
+      await enablePromise;
+    });
+
+    expect(result.current.sync.code).toBeNull();
+    expect(result.current.sync.status).toBe("local");
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBeNull();
+  });
+
   // --- disable / cleanup / cancellation ---
 
   it("disable removes the code but leaves local items untouched", async () => {
