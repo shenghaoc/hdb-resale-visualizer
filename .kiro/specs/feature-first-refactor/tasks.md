@@ -96,9 +96,12 @@
     `src/features/shortlist/useLocalShortlist.ts`.
   - Public `useShortlist` moved into feature ownership and now composes the local
     store with the unchanged cloud-sync state machine.
-  - Cloud-sync extraction and ranking/view-model orchestration remain pending.
+  - Cloud-sync orchestration extracted to
+    `src/features/shortlist/useShortlistSync.ts`.
+  - Public `useShortlist` now composes separate local and sync hooks.
+  - Ranking and drawer/view-model orchestration remain pending.
 - [ ] 7.2 Keep UI components as composition layers only.
-- [ ] 7.3 Preserve sync contract and retry/queue behavior unchanged.
+- [x] 7.3 Preserve sync contract and retry/queue behavior unchanged.
 - [ ] 7.4 Add/relocate tests next to feature logic and update existing shortlist tests.
 - [ ] 7.5 Validate:
   - `npm run test tests/unit/shortlist.test.ts tests/unit/shortlist-sync.test.ts`

@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
 import { I18nProvider } from "@/shared/lib/i18n/provider";
 import { SyncCodeNotFoundError } from "@/features/shortlist/cloudSync";
-import type { ShortlistSync } from "@/features/shortlist/useShortlist";
+import type { ShortlistSync } from "@/features/shortlist/useShortlistSync";
 
 function makeSync(overrides: Partial<ShortlistSync> = {}): ShortlistSync {
   return {
