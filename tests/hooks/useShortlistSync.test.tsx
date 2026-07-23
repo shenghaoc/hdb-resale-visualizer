@@ -219,6 +219,31 @@ describe("useShortlistSync", () => {
     expect(result.current.sync.status).toBe("synced");
   });
 
+  it("enable throws and surfaces error for non-retriable failures", async () => {
+    vi.mocked(pushShortlist).mockRejectedValue(new Error("Sync failed (400)"));
+
+    const { result } = renderHook(() => useSyncHarness());
+
+    act(() => {
+      result.current.local.toggle("local-1");
+    });
+
+    let thrown: unknown;
+    await act(async () => {
+      try {
+        await result.current.sync.enable();
+      } catch (error) {
+        thrown = error;
+      }
+    });
+
+    expect(thrown).toBeInstanceOf(Error);
+    expect((thrown as Error).message).toBe("Sync failed (400)");
+    expect(result.current.sync.status).toBe("error");
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBeNull();
+  });
+
   it("enable queues payload on rate limit", async () => {
     vi.mocked(pushShortlist).mockRejectedValue(new SyncRateLimitedError(2));
 
@@ -390,6 +415,53 @@ describe("useShortlistSync", () => {
 
     expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
     expect(vi.mocked(pushShortlist).mock.calls.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("defers null-code queue flush while offline and mints on reconnect", async () => {
+    // enable() mint path: queue has syncCode null and ready is still false, so
+    // the debounced push path cannot run — only flushPendingPush can mint.
+    const NEW_CODE = "OFF123abc123ABCD";
+    Object.defineProperty(window.navigator, "onLine", { configurable: true, value: false });
+
+    vi.mocked(pushShortlist)
+      .mockRejectedValueOnce(new TypeError("Failed to fetch"))
+      .mockResolvedValue({
+        syncCode: NEW_CODE,
+        items: [validItem("local-1")],
+      });
+
+    const { result } = renderHook(() => useSyncHarness());
+
+    act(() => {
+      result.current.local.toggle("local-1");
+    });
+
+    await act(async () => {
+      await result.current.sync.enable();
+    });
+
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).not.toBeNull();
+    expect(result.current.sync.code).toBeNull();
+    const pushesWhileQueued = vi.mocked(pushShortlist).mock.calls.length;
+
+    // Offline: queue flush must wait.
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(5000);
+    });
+    expect(vi.mocked(pushShortlist).mock.calls.length).toBe(pushesWhileQueued);
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).not.toBeNull();
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBeNull();
+
+    Object.defineProperty(window.navigator, "onLine", { configurable: true, value: true });
+    await act(async () => {
+      window.dispatchEvent(new Event("online"));
+      await vi.runAllTimersAsync();
+    });
+
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
+    expect(window.localStorage.getItem(SYNC_CODE_STORAGE_KEY)).toBe(NEW_CODE);
+    expect(result.current.sync.code).toBe(NEW_CODE);
+    expect(vi.mocked(pushShortlist).mock.calls.length).toBeGreaterThan(pushesWhileQueued);
   });
 
   it("backs off and retries when the server returns 429", async () => {

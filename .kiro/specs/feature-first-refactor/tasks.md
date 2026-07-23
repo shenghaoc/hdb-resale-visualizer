@@ -94,8 +94,6 @@
   - mutation paths for notes/target price.
   - Local persistence, URL import, and mutation paths extracted to
     `src/features/shortlist/useLocalShortlist.ts`.
-  - Public `useShortlist` moved into feature ownership and now composes the local
-    store with the unchanged cloud-sync state machine.
   - Cloud-sync orchestration extracted to
     `src/features/shortlist/useShortlistSync.ts`.
   - Public `useShortlist` now composes separate local and sync hooks.
