@@ -6,7 +6,7 @@ import { useShortlist } from "@/features/shortlist/useShortlist";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
 import { usePanelState } from "@/hooks/usePanelState";
-import { useShortlistArtifacts } from "@/hooks/useShortlistArtifacts";
+import { useShortlistArtifacts } from "@/features/shortlist/useShortlistArtifacts";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useHeaderState } from "@/hooks/useHeaderState";
 import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
@@ -46,7 +46,9 @@ const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
 );
 const ShortlistDrawer = lazy(() =>
-  import("@/components/ShortlistDrawer").then((m) => ({ default: m.ShortlistDrawer })),
+  import("@/features/shortlist/ShortlistDrawer").then((module) => ({
+    default: module.ShortlistDrawer,
+  })),
 );
 const ResultsPane = lazy(() =>
   import("@/components/ResultsPane").then((m) => ({ default: m.ResultsPane })),

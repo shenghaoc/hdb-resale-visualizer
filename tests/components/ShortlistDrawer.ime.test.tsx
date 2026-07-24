@@ -9,7 +9,7 @@
  */
 import { describe, expect, it, vi } from "vite-plus/test";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ShortlistDrawer } from "@/components/ShortlistDrawer";
+import { ShortlistDrawer } from "@/features/shortlist/ShortlistDrawer";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n/provider";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";

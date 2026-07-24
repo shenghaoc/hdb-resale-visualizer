@@ -9,10 +9,11 @@ import {
 } from "react";
 import { fetchAddressDetail, fetchComparisonArtifact } from "@/shared/lib/data";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
+import { buildShortlistRows, type ShortlistRow } from "@/features/shortlist/shortlistRows";
 
-type ShortlistRowsArgs = {
-  blocks: BlockSummary[];
-  items: ShortlistItem[];
+export type UseShortlistArtifactsOptions = {
+  blocks: readonly BlockSummary[];
+  items: readonly ShortlistItem[];
   savedVisible: boolean;
   selectedDetail: AddressDetail | null;
   selectedComparison: ComparisonArtifact | null;
@@ -38,7 +39,7 @@ async function processWithConcurrency<T>(
 
 function useMissingArtifactLoader<T>(
   enabled: boolean,
-  items: ShortlistItem[],
+  items: readonly ShortlistItem[],
   artifactsRef: MutableRefObject<Record<string, T | null>>,
   inFlightRef: MutableRefObject<Set<string>>,
   fetchArtifact: (key: string) => Promise<T | null>,
@@ -77,7 +78,7 @@ export function useShortlistArtifacts({
   selectedDetail,
   selectedComparison,
   isShortlistOpen,
-}: ShortlistRowsArgs) {
+}: UseShortlistArtifactsOptions): { shortlistRows: ShortlistRow[] } {
   const [shortlistDetails, setShortlistDetails] = useState<Record<string, AddressDetail | null>>(
     {},
   );
@@ -117,60 +118,27 @@ export function useShortlistArtifacts({
     setShortlistComparisons,
   );
 
-  const blocksByKey = useMemo(() => {
-    const map = new Map<string, BlockSummary>();
-    for (const block of blocks) {
-      map.set(block.addressKey, block);
-    }
-    return map;
-  }, [blocks]);
-
-  const shortlistRows = useMemo(() => {
-    if (!savedVisible) return [];
-    return items
-      .map((item) => {
-        const block = blocksByKey.get(item.addressKey);
-        if (!block) return null;
-        return {
-          item,
-          block,
-          detailSummary:
-            shortlistDetails[item.addressKey]?.summary ??
-            (selectedDetail?.summary.addressKey === item.addressKey
-              ? selectedDetail.summary
-              : null),
-          monthlyTrend:
-            shortlistDetails[item.addressKey]?.monthlyTrend ??
-            (selectedDetail?.summary.addressKey === item.addressKey
-              ? selectedDetail.monthlyTrend
-              : []),
-          comparison:
-            shortlistComparisons[item.addressKey] ??
-            (selectedComparison?.addressKey === item.addressKey ? selectedComparison : null),
-        };
-      })
-      .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
-      .sort((left, right) => {
-        const leftGap =
-          left.item.targetPrice !== null
-            ? Math.abs(left.item.targetPrice - left.block.medianPrice)
-            : Number.POSITIVE_INFINITY;
-        const rightGap =
-          right.item.targetPrice !== null
-            ? Math.abs(right.item.targetPrice - right.block.medianPrice)
-            : Number.POSITIVE_INFINITY;
-        if (leftGap !== rightGap) return leftGap - rightGap;
-        return left.item.addedAt.localeCompare(right.item.addedAt);
-      });
-  }, [
-    savedVisible,
-    items,
-    blocksByKey,
-    shortlistDetails,
-    shortlistComparisons,
-    selectedDetail,
-    selectedComparison,
-  ]);
+  const shortlistRows = useMemo(
+    () =>
+      buildShortlistRows({
+        blocks,
+        items,
+        savedVisible,
+        detailsByAddressKey: shortlistDetails,
+        comparisonsByAddressKey: shortlistComparisons,
+        selectedDetail,
+        selectedComparison,
+      }),
+    [
+      blocks,
+      items,
+      savedVisible,
+      shortlistDetails,
+      shortlistComparisons,
+      selectedDetail,
+      selectedComparison,
+    ],
+  );
 
   return { shortlistRows };
 }

@@ -5,3 +5,7 @@ export * from "./shortlist-ranking";
 export * from "./shortlistSyncQueue";
 export { useShortlist } from "./useShortlist";
 export type { ShortlistSync, SyncStatus } from "./useShortlistSync";
+export { ShortlistDrawer } from "./ShortlistDrawer";
+export { ShortlistSyncSection } from "./ShortlistSyncSection";
+export { useShortlistArtifacts } from "./useShortlistArtifacts";
+export type { ShortlistRow } from "./shortlistRows";

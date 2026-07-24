@@ -88,7 +88,7 @@
 
 ## 7) Move shortlist feature logic
 
-- [ ] 7.1 Move shortlist orchestration into `src/features/shortlist`:
+- [x] 7.1 Move shortlist orchestration into `src/features/shortlist`:
   - ranking helper calls,
   - local/local-sync adapter boundaries,
   - mutation paths for notes/target price.
@@ -97,10 +97,15 @@
   - Cloud-sync orchestration extracted to
     `src/features/shortlist/useShortlistSync.ts`.
   - Public `useShortlist` now composes separate local and sync hooks.
-  - This PR delivers the local/cloud adapter and cloud-sync extraction slice;
-    ranking and drawer/view-model orchestration are intentionally outside this
-    PR and remain pending.
-- [ ] 7.2 Keep UI components as composition layers only.
+  - Artifact loading and canonical shortlist-row construction now live in the
+    shortlist feature.
+- [x] 7.2 Keep UI components as composition layers only.
+  - Ranking, comparison, share, export, highlights, checklist coordination,
+    and drawer interaction state are owned by
+    `useShortlistDrawerController`.
+  - `ShortlistDrawer` and `ShortlistSyncSection` now live under
+    `src/features/shortlist`.
+  - The shortlist feature boundary is complete.
 - [x] 7.3 Preserve sync contract and retry/queue behavior unchanged.
   - Added operation/lifecycle invalidation so late hydration, enable/link,
     debounced-push, and queued-flush results cannot resurrect disabled or
