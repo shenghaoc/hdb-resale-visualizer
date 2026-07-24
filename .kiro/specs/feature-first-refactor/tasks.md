@@ -94,16 +94,33 @@
   - mutation paths for notes/target price.
   - Local persistence, URL import, and mutation paths extracted to
     `src/features/shortlist/useLocalShortlist.ts`.
-  - Public `useShortlist` moved into feature ownership and now composes the local
-    store with the unchanged cloud-sync state machine.
-  - Cloud-sync extraction and ranking/view-model orchestration remain pending.
+  - Cloud-sync orchestration extracted to
+    `src/features/shortlist/useShortlistSync.ts`.
+  - Public `useShortlist` now composes separate local and sync hooks.
+  - This PR delivers the local/cloud adapter and cloud-sync extraction slice;
+    ranking and drawer/view-model orchestration are intentionally outside this
+    PR and remain pending.
 - [ ] 7.2 Keep UI components as composition layers only.
-- [ ] 7.3 Preserve sync contract and retry/queue behavior unchanged.
-- [ ] 7.4 Add/relocate tests next to feature logic and update existing shortlist tests.
-- [ ] 7.5 Validate:
-  - `npm run test tests/unit/shortlist.test.ts tests/unit/shortlist-sync.test.ts`
-  - `npm run test tests/unit/shortlistSyncQueue.test.ts tests/unit/shortlist-ranking.test.ts tests/unit/shortlist-comparison.test.ts`
-  - `npm run test tests/components/ShortlistDrawer.test.tsx tests/components/ShortlistSyncSection.test.tsx`
+- [x] 7.3 Preserve sync contract and retry/queue behavior unchanged.
+  - Added operation/lifecycle invalidation so late hydration, enable/link,
+    debounced-push, and queued-flush results cannot resurrect disabled or
+    unmounted sync state or trigger a follow-up flush after unmount.
+  - Regression coverage verifies queue-flush cancellation on disable/unmount
+    and enable cancellation while preserving merge precedence, queue format,
+    and retry behavior.
+- [x] 7.4 Add/relocate tests next to feature logic and update existing shortlist tests.
+  - Moved sync state-machine coverage to
+    `tests/hooks/useShortlistSync.test.tsx` and added public-composition
+    coverage in `tests/hooks/useShortlist.test.tsx`.
+  - Existing shortlist unit, queue, drawer, and sync-section suites remain
+    green.
+- [x] 7.5 Validate:
+  - `vp test run tests/unit/shortlist.test.ts tests/unit/shortlist-sync.test.ts`
+  - `vp test run tests/unit/shortlistSyncQueue.test.ts tests/unit/shortlist-ranking.test.ts tests/unit/shortlist-comparison.test.ts`
+  - `vp test run tests/unit/ShortlistDrawer.test.tsx tests/components/ShortlistSyncSection.test.tsx`
+  - `vp test run tests/hooks/useShortlistSync.test.tsx tests/hooks/useShortlist.test.tsx tests/components/ShortlistSyncSection.test.tsx`
+  - Node 24 focused and full suites, format, lint, typecheck, build, and
+    exact-head CI checks all passed for this extraction slice.
 
 ## 8) Move map-explorer feature logic
 

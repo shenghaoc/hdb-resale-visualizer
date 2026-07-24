@@ -40,6 +40,9 @@ describe("useShortlist public composition", () => {
     const { result } = renderHook(() => useShortlist());
     expect(result.current.sync.code).toBeNull();
     expect(result.current.sync.status).toBe("local");
+    expect(typeof result.current.sync.enable).toBe("function");
+    expect(typeof result.current.sync.link).toBe("function");
+    expect(typeof result.current.sync.disable).toBe("function");
   });
 
   it("loads persisted items through the public hook", () => {

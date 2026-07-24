@@ -20,7 +20,9 @@ The final target structure is:
 
 The migration is intentionally incremental to reduce risk:
 
-- No behavior changes are permitted at any stage.
+- No intended user-visible behavior changes are permitted at any stage.
+- Correctness fixes that enforce an existing documented contract are allowed when
+  their scope is explicit and they have focused regression coverage.
 - Each phase is small and independently verifiable through tests.
 - Existing imports are kept stable through compatibility export points during transitions.
 - Rollback is possible at each phase.
@@ -54,7 +56,7 @@ Moving to feature-first structure improves:
 
 ## Scope rules
 
-1. Preserve behavior. Output, UI states, sorting, filtering, calculations, and persistence semantics must remain unchanged.
+1. Preserve intended behavior. Output, UI states, sorting, filtering, calculations, and persistence semantics must remain unchanged. A correctness fix may prevent stale asynchronous work from violating an existing contract, but it must not redefine that contract.
 2. Move pure business logic out of React components and into feature/entity modules.
 3. Keep listing-pricing, comparable, confidence, and caveat logic in pure TypeScript modules.
 4. Keep imports understandable:
@@ -90,3 +92,13 @@ Every phase must complete with:
   - search-profile and block-detail navigation and data rendering.
 
 No phase is complete without explicit behavioral verification against pre-refactor output.
+
+## Shortlist cloud-sync extraction slice
+
+The shortlist phase may extract cloud-sync orchestration into
+`src/features/shortlist/useShortlistSync.ts` while keeping the public
+`useShortlist` surface unchanged. Hydration, enable/link operations, debounced
+pushes, queued flushes, and rate-limit retries must ignore late results after
+sync is disabled, a newer sync operation starts, or the hook unmounts. These
+lifecycle guards protect the existing sync contract without changing API,
+schema, merge precedence, queue format, or retry semantics.
