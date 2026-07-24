@@ -186,7 +186,7 @@ jobs:
       # requirement (engines.node >= 24.0.0). Use setup-node to ensure the
       # correct version is on PATH.
       - name: Setup Node 24
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
       - name: Install pnpm
