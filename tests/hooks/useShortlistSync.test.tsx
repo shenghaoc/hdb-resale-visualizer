@@ -622,6 +622,39 @@ describe("useShortlistSync", () => {
     expect(pushedAddressKeys).toContain("new");
   });
 
+  it("does not reflush newer queued data after the in-flight flush unmounts", async () => {
+    let resolveFirst!: (value: { syncCode: string; items: ReturnType<typeof validItem>[] }) => void;
+    let callCount = 0;
+    vi.mocked(pushShortlist).mockImplementation((code, items) => {
+      callCount += 1;
+      if (callCount === 1) {
+        return new Promise((resolve) => {
+          resolveFirst = resolve;
+        });
+      }
+      return Promise.resolve({ syncCode: code ?? SYNC_CODE, items });
+    });
+
+    enqueuePendingShortlistPush(null, [validItem("old")]);
+
+    const { unmount } = renderHook(() => useSyncHarness());
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    enqueuePendingShortlistPush(null, [validItem("new")]);
+
+    unmount();
+
+    await act(async () => {
+      resolveFirst({ syncCode: "OLD123abc123ABCD", items: [validItem("old")] });
+      await vi.runAllTimersAsync();
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).not.toBeNull();
+  });
+
   it("does not resurrect sync after disable cancels an in-flight queue flush", async () => {
     const NEW_CODE = "NEW123abc123ABCD";
     let resolvePush!: (value: { syncCode: string; items: ReturnType<typeof validItem>[] }) => void;

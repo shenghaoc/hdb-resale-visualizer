@@ -104,9 +104,10 @@
 - [x] 7.3 Preserve sync contract and retry/queue behavior unchanged.
   - Added operation/lifecycle invalidation so late hydration, enable/link,
     debounced-push, and queued-flush results cannot resurrect disabled or
-    unmounted sync state.
-  - Regression coverage verifies queue-flush and enable cancellation while
-    preserving merge precedence, queue format, and retry behavior.
+    unmounted sync state or trigger a follow-up flush after unmount.
+  - Regression coverage verifies queue-flush cancellation on disable/unmount
+    and enable cancellation while preserving merge precedence, queue format,
+    and retry behavior.
 - [x] 7.4 Add/relocate tests next to feature logic and update existing shortlist tests.
   - Moved sync state-machine coverage to
     `tests/hooks/useShortlistSync.test.tsx` and added public-composition

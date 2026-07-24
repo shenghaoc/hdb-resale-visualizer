@@ -169,7 +169,11 @@ export function useShortlistSync({
         } else {
           // Newer data was enqueued during the push — re-flush once .finally()
           // resets flushInFlightRef (setTimeout defers to the next macrotask).
-          setTimeout(() => flushPendingPushRef.current(), 0);
+          setTimeout(() => {
+            if (isCurrentOperation(operationId)) {
+              flushPendingPushRef.current();
+            }
+          }, 0);
         }
         if (pending.syncCode === null) {
           safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
