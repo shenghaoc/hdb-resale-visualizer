@@ -3,7 +3,6 @@ import { NEAR_ME_SEARCH_QUERY } from "@/shared/lib/constants";
 import { filterPatchForSuggestion } from "@/features/search-profile/suggestActions";
 import type { FilterState, Suggestion } from "@/types/data";
 import type { LeftTab, PanelTab } from "@/hooks/usePanelState";
-import type { Coordinates } from "@/types/data";
 
 type UseAppShellControllerOptions = {
   filters: FilterState;
@@ -12,16 +11,11 @@ type UseAppShellControllerOptions = {
   setUseDefaultStartMonth: (next: boolean) => void;
   clearGeolocationError: () => void;
   cancelPendingGeolocationRequest: () => void;
-  locate: (onSuccess: (coords: Coordinates) => void, onCannotLocate?: () => void) => void;
-  setUserLocation: (coords: Coordinates) => void;
   isDesktop: boolean;
   setLeftTab: (tab: LeftTab) => void;
   setIsLeftPanelOpen: (next: boolean | ((current: boolean) => boolean)) => void;
   setMobileTab: (next: PanelTab | null | ((current: PanelTab | null) => PanelTab | null)) => void;
   setIsSavedPanelOpen: (next: boolean | ((current: boolean) => boolean)) => void;
-  hasInteractedWithMap: boolean;
-  setIsHeaderVisible: (next: boolean | ((current: boolean) => boolean)) => void;
-  setHasInteractedWithMap: (next: boolean | ((current: boolean) => boolean)) => void;
   toggleShortlist: (addressKey: string) => void;
   leftTab: LeftTab;
 };
@@ -33,16 +27,11 @@ export function useAppShellController({
   setUseDefaultStartMonth,
   clearGeolocationError,
   cancelPendingGeolocationRequest,
-  locate,
-  setUserLocation,
   isDesktop,
   setLeftTab,
   setIsLeftPanelOpen,
   setMobileTab,
   setIsSavedPanelOpen,
-  hasInteractedWithMap,
-  setIsHeaderVisible,
-  setHasInteractedWithMap,
   toggleShortlist,
   leftTab,
 }: UseAppShellControllerOptions) {
@@ -115,67 +104,6 @@ export function useAppShellController({
     ],
   );
 
-  const handleGeolocate = useCallback(
-    (coords: Coordinates) => {
-      setUserLocation(coords);
-      clearGeolocationError();
-      patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
-      if (isDesktop) {
-        setLeftTab("results");
-        setIsLeftPanelOpen(true);
-      }
-    },
-    [
-      setUserLocation,
-      clearGeolocationError,
-      patchFilters,
-      isDesktop,
-      setLeftTab,
-      setIsLeftPanelOpen,
-    ],
-  );
-
-  const handleUseCurrentLocation = useCallback(() => {
-    locate(
-      (coords) => {
-        patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
-        if (isDesktop) {
-          setLeftTab("results");
-          setIsLeftPanelOpen(true);
-        }
-        // Mobile: stay on map so nearby markers are visible once scope resolves.
-        // The geo hook already called setUserLocation before invoking this callback.
-        void coords;
-      },
-      () => handleChooseTown({ clearGeolocationError: false }),
-    );
-  }, [locate, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen, handleChooseTown]);
-
-  const handleMapInteract = useCallback(
-    (interactionType: "background" | "feature" = "background") => {
-      if (!hasInteractedWithMap) {
-        if (isDesktop) setIsHeaderVisible(false);
-        setHasInteractedWithMap(true);
-      }
-      if (interactionType === "feature") return;
-      if (isDesktop) {
-        setIsLeftPanelOpen(false);
-        setIsSavedPanelOpen(false);
-        return;
-      }
-      setMobileTab(null);
-    },
-    [
-      hasInteractedWithMap,
-      isDesktop,
-      setIsHeaderVisible,
-      setHasInteractedWithMap,
-      setIsLeftPanelOpen,
-      setIsSavedPanelOpen,
-      setMobileTab,
-    ],
-  );
-
   const handleOpenFilters = useCallback(() => {
     if (isDesktop) {
       setLeftTab("filters");
@@ -227,9 +155,6 @@ export function useAppShellController({
     handleSelectAddress,
     handleToggleShortlist,
     handleChooseTown,
-    handleGeolocate,
-    handleUseCurrentLocation,
-    handleMapInteract,
     handleOpenFilters,
     handleDesktopFiltersClick,
     handleDesktopResultsClick,

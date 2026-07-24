@@ -1,23 +1,21 @@
 import { useEffect, useMemo, useRef } from "react";
 import { Popup } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { toGeoJson } from "@/features/map-explorer/map";
+import { toGeoJson } from "./map";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { useMapTheme } from "@/hooks/useMapTheme";
-import { useMapRadiusLayer } from "@/hooks/useMapRadiusLayer";
-import { useMapInitialization } from "@/hooks/useMapInitialization";
-import { useMapLayers } from "@/hooks/useMapLayers";
-import { useMapFitBounds } from "@/hooks/useMapFitBounds";
-import { useMapDataSync } from "@/hooks/useMapDataSync";
-import { useMapInteractions } from "@/hooks/useMapInteractions";
-import { useMapSelectionSync } from "@/hooks/useMapSelectionSync";
-import { useMapMarkerVisibility } from "@/hooks/useMapMarkerVisibility";
-import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
-import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
-import {
-  primarySchoolsToGeoJson,
-  type PrimarySchoolWithBand,
-} from "@/features/map-explorer/school-proximity";
+import { useMapTheme } from "./useMapTheme";
+import { useMapRadiusLayer } from "./useMapRadiusLayer";
+import { useMapInitialization } from "./useMapInitialization";
+import { useMapLayers } from "./useMapLayers";
+import { useMapFitBounds } from "./useMapFitBounds";
+import { useMapDataSync } from "./useMapDataSync";
+import { useMapInteractions } from "./useMapInteractions";
+import { useMapSelectionSync } from "./useMapSelectionSync";
+import { useMapMarkerVisibility } from "./useMapMarkerVisibility";
+import { useMapPriceHeatmapSync } from "./useMapPriceHeatmapSync";
+import { useAmenityGeoSync } from "./useAmenityGeoSync";
+import { primarySchoolsToGeoJson, type PrimarySchoolWithBand } from "./school-proximity";
+import type { HeatmapMode } from "./usePriceHeatmap";
 import type { BlockSummary, Coordinates } from "@/types/data";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import type { GeographicSearchIntent } from "@/shared/lib/filtering";
@@ -34,7 +32,7 @@ type MapViewProps = {
   priceHeatmapOpacity?: number;
   mrtStationsEnabled?: boolean;
   mrtExitsEnabled?: boolean;
-  heatmapMode?: import("@/hooks/usePriceHeatmap").HeatmapMode;
+  heatmapMode?: HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
   schoolOverlayEnabled?: boolean;
   geographicIntent?: GeographicSearchIntent | null;

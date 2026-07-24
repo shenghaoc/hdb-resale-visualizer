@@ -61,7 +61,7 @@ vi.mock("@/components/FilterPanel", () => ({
   ),
 }));
 
-vi.mock("@/components/MapView", () => ({
+vi.mock("@/features/map-explorer/MapView", () => ({
   MapView: () => <div data-testid="map-view" data-theme="light" />,
 }));
 

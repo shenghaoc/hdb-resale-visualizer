@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { useMapLayers } from "@/hooks/useMapLayers";
+import { useMapLayers } from "@/features/map-explorer/useMapLayers";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
 type EventHandler = (...args: unknown[]) => void;

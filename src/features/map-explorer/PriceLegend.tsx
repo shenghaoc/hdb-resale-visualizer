@@ -5,7 +5,7 @@ import {
 } from "@/shared/lib/constants";
 import type { Translator } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/utils";
-import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
+import type { HeatmapMode } from "./usePriceHeatmap";
 
 type PriceLegendProps = {
   isDesktop: boolean;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
+import { classifyPrimarySchoolDistance } from "@/entities/block/school-proximity";
 import {
-  classifyPrimarySchoolDistance,
   getPrimarySchoolsForOverlay,
   primarySchoolsToGeoJson,
 } from "@/features/map-explorer/school-proximity";

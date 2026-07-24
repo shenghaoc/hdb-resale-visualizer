@@ -1,31 +1,15 @@
 import type { FeatureCollection, Point } from "geojson";
 import type { Coordinates, NearbySchool } from "../../types/data";
-
-const PRIMARY_SCHOOL_1KM_METERS = 1_000;
-const PRIMARY_SCHOOL_2KM_METERS = 2_000;
-
-export type SchoolDistanceBand = "within1km" | "within2km" | "beyond2km";
+import {
+  classifyPrimarySchoolDistance,
+  PRIMARY_SCHOOL_2KM_METERS,
+  type SchoolDistanceBand,
+} from "../../entities/block/school-proximity";
 
 export type PrimarySchoolWithBand = NearbySchool & {
   coordinates: Coordinates;
   distanceBand: SchoolDistanceBand;
 };
-
-export function classifyPrimarySchoolDistance(distanceMeters: number): SchoolDistanceBand | null {
-  if (!Number.isFinite(distanceMeters) || distanceMeters < 0) {
-    return null;
-  }
-
-  if (distanceMeters <= PRIMARY_SCHOOL_1KM_METERS) {
-    return "within1km";
-  }
-
-  if (distanceMeters <= PRIMARY_SCHOOL_2KM_METERS) {
-    return "within2km";
-  }
-
-  return "beyond2km";
-}
 
 export function getPrimarySchoolsForOverlay(
   schools: NearbySchool[],

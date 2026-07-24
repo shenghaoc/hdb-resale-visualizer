@@ -3,7 +3,7 @@ import { Flame } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
 import type { Translator } from "@/shared/lib/i18n";
-import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
+import type { HeatmapMode } from "./usePriceHeatmap";
 
 type PriceHeatmapControlProps = {
   isEnabled: boolean;

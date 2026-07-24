@@ -9,7 +9,7 @@ import {
   PRIMARY_SCHOOL_LAYER_IDS,
   PRIMARY_SCHOOL_SOURCE_ID,
 } from "@/shared/lib/constants";
-import { getAmenityMinZoom } from "@/features/map-explorer/amenity-visibility";
+import { getAmenityMinZoom } from "./amenity-visibility";
 import { MRT_LINE_FALLBACK_COLOR } from "@shared/mrt-colors";
 
 export function useMapLayers(map: MapLibreMap | null) {

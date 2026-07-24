@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vite-plus/test";
-import { useGeolocation } from "@/hooks/useGeolocation";
+import { useGeolocation } from "@/features/map-explorer/useGeolocation";
 import type { Translator } from "@/shared/lib/i18n";
 
 describe("useGeolocation", () => {

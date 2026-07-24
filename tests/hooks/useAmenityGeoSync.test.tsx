@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { useAmenityGeoSync } from "@/hooks/useAmenityGeoSync";
+import { useAmenityGeoSync } from "@/features/map-explorer/useAmenityGeoSync";
 
 type EventHandler = (...args: unknown[]) => void;
 

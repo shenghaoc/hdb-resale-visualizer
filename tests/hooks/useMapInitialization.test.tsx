@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { MAP_GLYPHS_URL } from "@/shared/lib/constants";
-import { useMapInitialization } from "@/hooks/useMapInitialization";
+import { useMapInitialization } from "@/features/map-explorer/useMapInitialization";
 
 const maplibreMocks = vi.hoisted(() => {
   const mapFactory = vi.fn();
