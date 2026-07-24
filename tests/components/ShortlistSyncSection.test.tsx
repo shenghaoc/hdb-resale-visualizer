@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
+import { ShortlistSyncSection } from "@/features/shortlist/ShortlistSyncSection";
 import { I18nProvider } from "@/shared/lib/i18n/provider";
 import { SyncCodeNotFoundError } from "@/features/shortlist/cloudSync";
 import type { ShortlistSync } from "@/features/shortlist/useShortlistSync";

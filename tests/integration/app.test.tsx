@@ -147,7 +147,7 @@ vi.mock("@/components/DetailDrawer", () => ({
   ),
 }));
 
-vi.mock("@/components/ShortlistDrawer", () => ({
+vi.mock("@/features/shortlist/ShortlistDrawer", () => ({
   ShortlistDrawer: () => <div data-testid="shortlist-drawer" />,
 }));
 

@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useId } from "react";
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -25,12 +25,7 @@ import {
   UtensilsCrossed,
   X,
 } from "lucide-react";
-import {
-  MAX_LEASE_DURATION,
-  MAX_SHORTLIST_ITEMS,
-  PRIMARY_BLUE,
-  getCurrentYear,
-} from "@/shared/lib/constants";
+import { MAX_LEASE_DURATION, MAX_SHORTLIST_ITEMS, getCurrentYear } from "@/shared/lib/constants";
 import { cn } from "@/shared/lib/utils";
 import { useI18n, type Translator } from "@/shared/lib/i18n";
 import { localizeTownName } from "@/shared/lib/i18n/domain";
@@ -44,42 +39,27 @@ import {
   formatNumber,
   formatRemainingLease,
 } from "@/shared/lib/format";
-import { rankShortlistRows, type CompareMode } from "@/features/shortlist/shortlist-ranking";
-import { useShortlistRemovalUndo } from "@/features/shortlist/useShortlistRemovalUndo";
 import {
   ninetyNineCoUrl,
   propertyGuruUrl,
   srxUrl,
 } from "@/features/listing-check/listingPortalLinks";
-import {
-  buildShortlistComparisonRows,
-  type ShortlistComparisonRow,
-} from "@/features/shortlist/shortlist-comparison";
-import { encodeShortlistForUrl } from "@/features/shortlist/shortlist";
-import { buildShortlistShareUrl } from "@/shared/lib/shareUrls";
-import { buildShortlistCsvContent } from "@/shared/lib/export";
+import type { ShortlistComparisonRow } from "@/features/shortlist/shortlist-comparison";
 import { ShareButton } from "@/components/ShareButton";
-import { buildLeaseSignals } from "@/features/block-detail/leaseSignals";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
-import { ShortlistSyncSection } from "@/components/ShortlistSyncSection";
+import { ShortlistSyncSection } from "./ShortlistSyncSection";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { BuyerChecklist } from "@/components/BuyerChecklist";
-import { useChecklist } from "@/hooks/useChecklist";
 import type { ChecklistItemId } from "@/features/listing-check/checklist";
+import { useShortlistDrawerController, type CompareMode } from "./useShortlistDrawerController";
+import type { ShortlistRow } from "./shortlistRows";
 import {
   getBlockDataQualityTag,
   QUALITY_LABEL_KEYS,
   QUALITY_HINT_KEYS,
 } from "@/shared/lib/listing-quality";
-import type {
-  AddressDetailSummary,
-  AddressTrendPoint,
-  BlockSummary,
-  ComparisonArtifact,
-  FilterState,
-  ShortlistItem,
-} from "@/types/data";
+import type { AddressTrendPoint, FilterState, ShortlistItem } from "@/types/data";
 import type { ShortlistSync } from "@/features/shortlist/useShortlistSync";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -117,16 +97,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-
-type ShortlistRow = {
-  item: ShortlistItem;
-  block: BlockSummary;
-  detailSummary: AddressDetailSummary | null;
-  monthlyTrend: AddressTrendPoint[];
-  comparison: ComparisonArtifact | null;
-};
-
-type ShortlistViewMode = "list" | "compare";
 
 type ShortlistDrawerProps = {
   isOpen: boolean;
@@ -1054,342 +1024,44 @@ export function ShortlistDrawer({
 }: ShortlistDrawerProps) {
   const { isDark } = useTheme();
   const { locale, t } = useI18n();
-  const { state: checklistState, toggle: toggleChecklist } = useChecklist();
-  const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
-  const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [shareError, setShareError] = useState<string | null>(null);
-  const [expandedKey, setExpandedKey] = useState<string | null>(rows[0]?.item.addressKey ?? null);
-  const [prevRowsCount, setPrevRowsCount] = useState(rows.length);
-  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
   const sortLabelId = useId();
-  const { pendingRemoval, remove, undo } = useShortlistRemovalUndo({ onRemove, onRestore });
-
-  const handleRemove = useCallback(
-    (addressKey: string) => {
-      const index = rows.findIndex((row) => row.item.addressKey === addressKey);
-      const row = rows[index];
-      if (row === undefined) {
-        onRemove(addressKey);
-        return;
-      }
-
-      const label = `${row.block.block} ${row.block.streetName}`;
-      remove({ item: row.item, index, label });
-    },
-    [onRemove, remove, rows],
-  );
-
-  if (isOpen !== prevIsOpen) {
-    setPrevIsOpen(isOpen);
-    if (!isOpen && shareError !== null) setShareError(null);
-  }
-
-  const currentYear = getCurrentYear();
-  const rankedRows = useMemo(() => rankShortlistRows(rows, compareMode), [rows, compareMode]);
-  const leaseSignalsByAddressKey = useMemo(
-    () =>
-      new Map(
-        rows.map((row) => [
-          row.item.addressKey,
-          buildLeaseSignals(row.block.leaseCommenceRange, currentYear, remainingLeaseMin),
-        ]),
-      ),
-    [currentYear, remainingLeaseMin, rows],
-  );
-  const comparisonViewRows = useMemo(() => buildShortlistComparisonRows(rankedRows), [rankedRows]);
-
-  const effectiveExpandedKey =
-    expandedKey === null
-      ? null
-      : rows.some((row) => row.item.addressKey === expandedKey)
-        ? expandedKey
-        : (rows[0]?.item.addressKey ?? null);
-
-  // Adjust expandedKey when rows change (e.g. handle first item added or expanded item removed)
-  if (rows.length !== prevRowsCount) {
-    setPrevRowsCount(rows.length);
-    if (shareError !== null) setShareError(null);
-    if (prevRowsCount === 0 && rows.length > 0 && expandedKey === null) {
-      // If we just added the first item and nothing is expanded, expand it for the cockpit experience
-      setExpandedKey(rows[0].item.addressKey);
-    } else if (expandedKey !== null && !rows.some((row) => row.item.addressKey === expandedKey)) {
-      // If the currently expanded item was removed, clear the stale key
-      setExpandedKey(rows[0]?.item.addressKey ?? null);
-    }
-  }
-
-  const showCopied = (key: string) => {
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2000);
-  };
-
-  function getRankingMetricLabel(row: ShortlistRow) {
-    if (compareMode === "target-gap") {
-      if (row.item.targetPrice === null) {
-        return t("shortlist.compare.metric.targetFit.noTarget");
-      }
-      return t("shortlist.compare.metric.targetFit.value", {
-        value: formatCurrency(Math.abs(row.item.targetPrice - row.block.medianPrice), locale),
-      });
-    }
-
-    if (compareMode === "median-asc" || compareMode === "median-desc") {
-      return t("shortlist.compare.metric.price.value", {
-        value: formatCurrency(row.block.medianPrice, locale),
-      });
-    }
-
-    if (compareMode === "lease") {
-      return t("shortlist.compare.metric.lease.value", {
-        value: getLeaseYears(row),
-      });
-    }
-
-    if (row.block.nearestMrt) {
-      return t("shortlist.compare.metric.mrt.value", {
-        value: formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale),
-      });
-    }
-
-    return t("shortlist.compare.metric.mrt.missing");
-  }
-
-  const shortlistShareUrl = useMemo(() => {
-    const encoded = encodeShortlistForUrl(rows.map((row) => row.item));
-    if (!encoded) {
-      return "";
-    }
-    return buildShortlistShareUrl(
-      encoded,
-      filters,
-      window.location.origin,
-      window.location.pathname,
-    );
-  }, [filters, rows]);
-
-  const shortlistShareBlocked = shortlistShareUrl === "";
-
-  const shortlistCsvExport = useMemo(
-    () => ({
-      filename: "hdb-shortlist.csv",
-      getContent: () =>
-        buildShortlistCsvContent(
-          [
-            t("shortlist.export.address"),
-            t("shortlist.export.medianPrice"),
-            t("shortlist.export.askingPrice"),
-            t("shortlist.export.fairRangeLow"),
-            t("shortlist.export.fairRangeMedian"),
-            t("shortlist.export.fairRangeHigh"),
-            t("shortlist.export.suggestedOfferCeiling"),
-            t("shortlist.export.buyerOpeningOffer"),
-            t("shortlist.export.valuationReceived"),
-            t("shortlist.export.estimatedCov"),
-            t("shortlist.export.viewingDate"),
-            t("shortlist.export.decisionStatus"),
-            t("shortlist.export.buyerNotes"),
-            t("shortlist.export.pros"),
-            t("shortlist.export.cons"),
-            t("shortlist.export.renovation"),
-            t("shortlist.export.noiseNotes"),
-            t("shortlist.export.transportNotes"),
-            t("shortlist.export.agentRemarks"),
-            t("shortlist.export.targetPrice"),
-            t("shortlist.export.schools1km"),
-            t("shortlist.export.hawkers1km"),
-            t("shortlist.export.supermarkets1km"),
-            t("shortlist.export.parks1km"),
-            t("shortlist.export.mrtDistance"),
-            t("shortlist.export.notes"),
-          ],
-          rankedRows.map((row) => ({
-            address: `${row.block.block} ${row.block.streetName}`,
-            medianPrice: row.block.medianPrice,
-            askingPrice: row.item.askingPrice ?? null,
-            fairRangeLow: row.item.fairRangeLow ?? null,
-            fairRangeMedian: row.item.fairRangeMedian ?? null,
-            fairRangeHigh: row.item.fairRangeHigh ?? null,
-            suggestedOfferCeiling: row.item.suggestedOfferCeiling ?? null,
-            buyerOpeningOffer: row.item.buyerOpeningOffer ?? null,
-            valuationReceived: row.item.valuationReceived ?? null,
-            estimatedCov: row.item.estimatedCov ?? null,
-            viewingDate: row.item.viewingDate ?? "",
-            decisionStatus: row.item.decisionStatus ?? "",
-            buyerNotes: row.item.buyerNotes ?? "",
-            pros: row.item.pros ?? "",
-            cons: row.item.cons ?? "",
-            renovation: row.item.renovation ?? "",
-            noiseNotes: row.item.noiseNotes ?? row.item.noise ?? "",
-            transportNotes: row.item.transportNotes ?? row.item.transport ?? "",
-            agentRemarks: row.item.agentRemarks ?? "",
-            targetPrice: row.item.targetPrice,
-            schools1km: row.comparison?.amenities.primarySchoolsWithin1km ?? "",
-            hawkers1km: row.comparison?.amenities.hawkerCentresWithin1km ?? "",
-            supermarkets1km: row.comparison?.amenities.supermarketsWithin1km ?? "",
-            parks1km: row.comparison?.amenities.parksWithin1km ?? "",
-            mrtDistanceMeters: row.block.nearestMrt?.distanceMeters ?? "",
-            notes: row.item.notes || "",
-          })),
-        ),
-    }),
-    [rankedRows, t],
-  );
-
-  function handleCopySummary() {
-    const header = `| Address | Median Price | Target Price | Lease | MRT | Schools (1km) | Hawkers (1km) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`;
-    const body = rows
-      .map((row) => {
-        const address = `${row.block.block} ${row.block.streetName}`;
-        const median = formatCurrency(row.block.medianPrice, locale);
-        const target =
-          row.item.targetPrice !== null ? formatCurrency(row.item.targetPrice, locale) : "-";
-        const lease = formatRemainingLease(row.block.leaseCommenceRange, t);
-        const mrt = row.block.nearestMrt
-          ? formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)
-          : "-";
-        const schools = row.comparison?.amenities.primarySchoolsWithin1km ?? "-";
-        const hawkers = row.comparison?.amenities.hawkerCentresWithin1km ?? "-";
-        return `| ${address} | ${median} | ${target} | ${lease} | ${mrt} | ${schools} | ${hawkers} |`;
-      })
-      .join("\n");
-
-    navigator.clipboard?.writeText(`${header}\n${body}`)?.then(
-      () => showCopied("summary"),
-      () => {},
-    );
-  }
-
-  function handleExportJson() {
-    const blob = new Blob(
-      [
-        JSON.stringify(
-          rankedRows.map((row) => row.item),
-          null,
-          2,
-        ),
-      ],
-      {
-        type: "application/json",
-      },
-    );
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "hdb-shortlist.json";
-    link.click();
-    URL.revokeObjectURL(url);
-  }
-
-  const highlights = useMemo(() => {
-    let bestValueRow: (typeof rows)[0] | null = null;
-    let longestLeaseRow: (typeof rows)[0] | null = null;
-    let closestMrtRow: (typeof rows)[0] | null = null;
-
-    let minPrice = Number.POSITIVE_INFINITY;
-    let maxLease = Number.NEGATIVE_INFINITY;
-    let minMrtDistance = Number.POSITIVE_INFINITY;
-
-    for (const row of rows) {
-      const price = row.block.medianPrice;
-      if (!bestValueRow || price < minPrice) {
-        bestValueRow = row;
-        minPrice = price;
-      }
-
-      const lease = row.block.leaseCommenceRange[1];
-      if (!longestLeaseRow || lease > maxLease) {
-        longestLeaseRow = row;
-        maxLease = lease;
-      }
-
-      const distance = row.block.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
-      if (!closestMrtRow || distance < minMrtDistance) {
-        closestMrtRow = row;
-        minMrtDistance = distance;
-      }
-    }
-
-    return [
-      {
-        label: t("shortlist.bestValue"),
-        row: bestValueRow,
-        sub: bestValueRow
-          ? formatCompactCurrency(bestValueRow.block.medianPrice, locale)
-          : t("shortlist.na"),
-      },
-      {
-        label: t("shortlist.highlights.longestLease"),
-        row: longestLeaseRow,
-        sub: longestLeaseRow
-          ? t("unit.years", { value: getLeaseYears(longestLeaseRow) })
-          : t("shortlist.na"),
-      },
-      {
-        label: t("shortlist.closestMrt"),
-        row: closestMrtRow,
-        sub: closestMrtRow?.block.nearestMrt
-          ? formatMinutesWalk(closestMrtRow.block.nearestMrt.walkingTimeSeconds, t, locale)
-          : t("shortlist.na"),
-      },
-    ];
-  }, [locale, rows, t]);
-
-  const trendChartRows = useMemo(() => rows.filter((row) => row.monthlyTrend.length > 0), [rows]);
-  const compareChart = useMemo(() => {
-    if (trendChartRows.length < 2) {
-      return null;
-    }
-
-    const monthSet = new Set<string>();
-    const seriesKeys: string[] = [];
-    const priceMaps: Map<string, number>[] = [];
-
-    for (const row of trendChartRows) {
-      seriesKeys.push(`${row.block.block} ${row.block.streetName}`);
-      const priceMap = new Map<string, number>();
-      for (const point of row.monthlyTrend) {
-        monthSet.add(point.month);
-        if (point.medianPrice != null && !Number.isNaN(point.medianPrice)) {
-          priceMap.set(point.month, point.medianPrice);
-        }
-      }
-      priceMaps.push(priceMap);
-    }
-
-    const months = [...monthSet].sort();
-
-    let maxPrice = 0;
-    const data = months.map((month) => {
-      const row: Record<string, string | number | undefined> = { month };
-      for (let i = 0; i < seriesKeys.length; i++) {
-        const price = priceMaps[i].get(month);
-        if (price != null) {
-          row[seriesKeys[i]] = price;
-          if (price > maxPrice) maxPrice = price;
-        } else {
-          row[seriesKeys[i]] = undefined;
-        }
-      }
-      return row;
-    });
-    const priceAxisWidth =
-      maxPrice > 0 ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4) : 48;
-
-    const palette = isDark
-      ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6"]
-      : [PRIMARY_BLUE, "#3a8a6f", "#d97706", "#c026d3"];
-
-    const colors = {
-      popover: isDark ? "#191f1d" : "#ffffff",
-      popoverForeground: isDark ? "#e4e7e4" : "#171c1f",
-      border: isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)",
-      splitLine: isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(0, 0, 0, 0.06)",
-      mutedForeground: isDark ? "#9baaa4" : "#6b7572",
-    };
-
-    return { data, seriesKeys, palette, colors, priceAxisWidth };
-  }, [trendChartRows, isDark]);
+  const {
+    compareMode,
+    setCompareMode,
+    viewMode,
+    setViewMode,
+    copiedKey,
+    shareError,
+    setShareError,
+    effectiveExpandedKey,
+    setExpandedKey,
+    pendingRemoval,
+    undoRemoval,
+    handleRemove,
+    rankedRows,
+    comparisonRows,
+    leaseSignalsByAddressKey,
+    shareUrl,
+    shareBlocked,
+    csvExport,
+    copySummary,
+    exportJson,
+    highlights,
+    compareChart,
+    checklistState,
+    toggleChecklist,
+    getRankingMetricLabel,
+  } = useShortlistDrawerController({
+    isOpen,
+    rows,
+    filters,
+    remainingLeaseMin,
+    isDark,
+    locale,
+    t,
+    onRemove,
+    onRestore,
+  });
 
   return (
     <section data-testid="shortlist-drawer" className="flex min-h-0 flex-1 flex-col">
@@ -1504,14 +1176,14 @@ export function ShortlistDrawer({
                 </Field>
 
                 <ShareButton
-                  url={shortlistShareUrl || window.location.href}
+                  url={shareUrl || window.location.href}
                   title={t("app.title")}
                   ariaLabel={t("shortlist.shareLinkLabel")}
                   ariaLabelCopied={t("shortlist.shareCopied")}
                   errorLabel={t("share.copyError")}
-                  shareDisabled={shortlistShareBlocked}
+                  shareDisabled={shareBlocked}
                   onShareBlocked={() => setShareError(t("shortlist.shareErrorTooLarge"))}
-                  csvExport={shortlistCsvExport}
+                  csvExport={csvExport}
                   exportAriaLabel={t("shortlist.export.csvLabel")}
                   exportAriaLabelDone={t("share.exportCsvDone")}
                   className="rounded-none border-border/50 bg-card"
@@ -1531,14 +1203,14 @@ export function ShortlistDrawer({
 
               <div className="min-w-0 overflow-x-auto v2-scrollbar">
                 <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border-border/50 [&>*]:bg-card">
-                  <Button variant="outline" size="xs" onClick={handleExportJson} type="button">
+                  <Button variant="outline" size="xs" onClick={exportJson} type="button">
                     <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
                     {t("shortlist.export.json")}
                   </Button>
                   <Button
                     variant="outline"
                     size="xs"
-                    onClick={handleCopySummary}
+                    onClick={copySummary}
                     type="button"
                     className={copiedKey === "summary" ? "text-primary" : undefined}
                   >
@@ -1686,7 +1358,7 @@ export function ShortlistDrawer({
 
                   {viewMode === "compare" ? (
                     <ShortlistComparisonTable
-                      comparisonRows={comparisonViewRows}
+                      comparisonRows={comparisonRows}
                       onSelectAddress={onSelectAddress}
                       budgetMin={budgetMin}
                       budgetMax={budgetMax}
@@ -2140,7 +1812,7 @@ export function ShortlistDrawer({
               variant="ghost"
               size="xs"
               className="shrink-0 rounded-none text-xs font-semibold text-primary hover:text-primary/80"
-              onClick={undo}
+              onClick={undoRemoval}
             >
               {t("shortlist.undo")}
             </Button>
