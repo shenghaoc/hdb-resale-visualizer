@@ -138,8 +138,11 @@
   - `useMapExplorerController` owns geolocation actions, overlay visibility,
     automatic fit-key derivation, map-background interaction behavior, and
     floating-control state.
-- [x] 8.2 Ensure pure map utilities and transforms are in entities/shared-lib.
-  - Existing pure GeoJSON, heatmap, amenity-visibility, and school-proximity
+- [x] 8.2 Separate reusable domain utilities from map-only transforms.
+  - Shared school-distance classification lives in
+    `src/entities/block/school-proximity.ts` and is consumed by both map
+    explorer and block detail.
+  - Map-only GeoJSON, heatmap, amenity-visibility, and overlay-selection
     modules remain feature-owned and React-free.
 - [x] 8.3 Consolidate feature-level UI shells for map and control interactions.
   - `MapView` and map-specific floating controls now live under the feature.
@@ -148,9 +151,12 @@
   - any unit tests for map state transitions.
   - Added `tests/hooks/useMapExplorerController.test.tsx`; updated map hook and
     component import paths to the feature boundary.
+  - `tests/unit/school-proximity.test.ts` covers the entity-owned distance
+    classification and the feature-owned overlay/GeoJSON transforms.
 - [x] 8.5 Validate:
-  - `npm run test tests/unit/mrt.test.ts tests/unit/amenity-visibility.test.ts`
-  - `npm run test tests/integration/map-interactions-flow.test.tsx tests/components/MapView.test.tsx`
+  - `vp test run tests/unit/school-proximity.test.ts tests/unit/fixture-comparisons.test.ts tests/unit/mrt.test.ts tests/unit/amenity-visibility.test.ts`
+  - `vp test run tests/hooks/useMapExplorerController.test.tsx tests/integration/map-interactions-flow.test.tsx tests/components/MapView.test.tsx`
+  - `CI=1 vp run check:pr` (matches the two-worker CI configuration)
   - The map-explorer feature boundary is complete.
 
 ## 9) Move search-profile feature logic

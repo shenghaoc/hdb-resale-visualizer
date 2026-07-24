@@ -93,7 +93,7 @@ import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
-import { classifyPrimarySchoolDistance } from "@/features/map-explorer/school-proximity";
+import { classifyPrimarySchoolDistance } from "@/entities/block/school-proximity";
 import { buildBlockExplanation } from "@/entities/block/block-explanation";
 import { deriveFlatTypePriceLadder } from "@/features/block-detail/flat-type-ladder";
 import { FlatTypePriceLadder } from "@/components/FlatTypePriceLadder";
