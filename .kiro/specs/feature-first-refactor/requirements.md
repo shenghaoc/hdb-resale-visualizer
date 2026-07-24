@@ -75,7 +75,9 @@ This includes `tests` adjacency for non-component behavior where practical.
 WHEN refactor code compiles and tests run,
 THEN there SHALL be:
 
-- No runtime behavior change.
+- No intended user-visible runtime behavior change. A correctness fix MAY
+  prevent stale asynchronous work from violating an existing documented
+  contract, but SHALL NOT redefine that contract.
 - No API contract changes.
 - No navigation/state regressions.
 - No pricing/logic output drift.
@@ -88,6 +90,18 @@ THEN:
 - Existing tests for that area remain passing.
 - Broader smoke checks pass for impacted surfaces.
 - No behavior delta is introduced before proceeding to the next migration step.
+
+### R10 — Shortlist sync lifecycle safety
+
+WHEN a shortlist sync request resolves after sync has been disabled, a newer
+sync operation has started, or the hook has unmounted,
+THEN the stale result SHALL NOT restore the sync code or status, apply stale
+items, clear newer queued data, or schedule a follow-up flush.
+
+WHEN cloud-sync orchestration is extracted into the shortlist feature,
+THEN hydration, enable/link, debounced push, queued flush, and rate-limit retry
+paths SHALL retain their existing merge, queue, and retry semantics while
+honouring this lifecycle-safety rule.
 
 ## Completion Criteria
 
