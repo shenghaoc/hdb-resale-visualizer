@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { FeatureCollection } from "geojson";
-import { useMapPriceHeatmapSync } from "@/hooks/useMapPriceHeatmapSync";
+import { useMapPriceHeatmapSync } from "@/features/map-explorer/useMapPriceHeatmapSync";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { HEATMAP_SOURCE_ID } from "@/features/map-explorer/priceHeatmap";
 

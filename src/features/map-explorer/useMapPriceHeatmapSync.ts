@@ -7,9 +7,9 @@ import {
   isHeatmapLayerPresent,
   removePriceHeatmapLayer,
   setHeatmapOpacity,
-} from "@/features/map-explorer/priceHeatmap";
+} from "./priceHeatmap";
 import { isGeoJsonDataSourceLike } from "@/types/map";
-import type { HeatmapMode } from "@/hooks/usePriceHeatmap";
+import type { HeatmapMode } from "./usePriceHeatmap";
 
 type UseMapPriceHeatmapSyncProps = {
   map: MapLibreMap | null;

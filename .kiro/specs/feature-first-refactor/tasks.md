@@ -129,18 +129,29 @@
 
 ## 8) Move map-explorer feature logic
 
-- [ ] 8.1 Move map explorer orchestration into `src/features/map-explorer`:
+- [x] 8.1 Move map explorer orchestration into `src/features/map-explorer`:
   - selected block state coordination,
   - map-layer visibility flow,
   - zoom/fit bounds and map interaction handlers.
-- [ ] 8.2 Ensure pure map utilities and transforms are in entities/shared-lib.
-- [ ] 8.3 Consolidate feature-level UI shells for map and control interactions.
-- [ ] 8.4 Update tests close to feature:
+  - MapLibre lifecycle, layer, fit, selection, interaction, radius, heatmap, and
+    amenity synchronization hooks now live in `src/features/map-explorer`.
+  - `useMapExplorerController` owns geolocation actions, overlay visibility,
+    automatic fit-key derivation, map-background interaction behavior, and
+    floating-control state.
+- [x] 8.2 Ensure pure map utilities and transforms are in entities/shared-lib.
+  - Existing pure GeoJSON, heatmap, amenity-visibility, and school-proximity
+    modules remain feature-owned and React-free.
+- [x] 8.3 Consolidate feature-level UI shells for map and control interactions.
+  - `MapView` and map-specific floating controls now live under the feature.
+- [x] 8.4 Update tests close to feature:
   - integration tests for map interactions,
   - any unit tests for map state transitions.
-- [ ] 8.5 Validate:
+  - Added `tests/hooks/useMapExplorerController.test.tsx`; updated map hook and
+    component import paths to the feature boundary.
+- [x] 8.5 Validate:
   - `npm run test tests/unit/mrt.test.ts tests/unit/amenity-visibility.test.ts`
   - `npm run test tests/integration/map-interactions-flow.test.tsx tests/components/MapView.test.tsx`
+  - The map-explorer feature boundary is complete.
 
 ## 9) Move search-profile feature logic
 

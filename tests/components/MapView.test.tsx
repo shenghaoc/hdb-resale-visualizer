@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vite-plus/test";
-import { MapView } from "@/components/MapView";
+import { MapView } from "@/features/map-explorer/MapView";
 import { toGeoJson } from "@/features/map-explorer/map";
 import type { BlockSummary } from "@/types/data";
 import type { Translator } from "@/shared/lib/i18n";
@@ -26,29 +26,33 @@ vi.mock("maplibre-gl", () => ({
   }),
 }));
 
-vi.mock("@/hooks/useMapInitialization", () => ({
+vi.mock("@/features/map-explorer/useMapInitialization", () => ({
   useMapInitialization: mapHooks.useMapInitialization,
 }));
-vi.mock("@/hooks/useMapLayers", () => ({ useMapLayers: mapHooks.useMapLayers }));
-vi.mock("@/hooks/useMapDataSync", () => ({ useMapDataSync: mapHooks.useMapDataSync }));
-vi.mock("@/hooks/useMapFitBounds", () => ({ useMapFitBounds: mapHooks.useMapFitBounds }));
-vi.mock("@/hooks/useMapInteractions", () => ({
+vi.mock("@/features/map-explorer/useMapLayers", () => ({ useMapLayers: mapHooks.useMapLayers }));
+vi.mock("@/features/map-explorer/useMapDataSync", () => ({
+  useMapDataSync: mapHooks.useMapDataSync,
+}));
+vi.mock("@/features/map-explorer/useMapFitBounds", () => ({
+  useMapFitBounds: mapHooks.useMapFitBounds,
+}));
+vi.mock("@/features/map-explorer/useMapInteractions", () => ({
   useMapInteractions: mapHooks.useMapInteractions,
 }));
-vi.mock("@/hooks/useMapSelectionSync", () => ({
+vi.mock("@/features/map-explorer/useMapSelectionSync", () => ({
   useMapSelectionSync: mapHooks.useMapSelectionSync,
 }));
-vi.mock("@/hooks/useMapMarkerVisibility", () => ({
+vi.mock("@/features/map-explorer/useMapMarkerVisibility", () => ({
   useMapMarkerVisibility: mapHooks.useMapMarkerVisibility,
 }));
-vi.mock("@/hooks/useMapPriceHeatmapSync", () => ({
+vi.mock("@/features/map-explorer/useMapPriceHeatmapSync", () => ({
   useMapPriceHeatmapSync: mapHooks.useMapPriceHeatmapSync,
 }));
-vi.mock("@/hooks/useAmenityGeoSync", () => ({
+vi.mock("@/features/map-explorer/useAmenityGeoSync", () => ({
   useAmenityGeoSync: mapHooks.useAmenityGeoSync,
 }));
-vi.mock("@/hooks/useMapTheme", () => ({ useMapTheme: mapHooks.useMapTheme }));
-vi.mock("@/hooks/useMapRadiusLayer", () => ({
+vi.mock("@/features/map-explorer/useMapTheme", () => ({ useMapTheme: mapHooks.useMapTheme }));
+vi.mock("@/features/map-explorer/useMapRadiusLayer", () => ({
   useMapRadiusLayer: mapHooks.useMapRadiusLayer,
 }));
 vi.mock("@/hooks/useDebouncedValue", () => ({

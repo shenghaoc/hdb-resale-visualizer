@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { Point } from "geojson";
 import type { Locale, Translator } from "@/shared/lib/i18n";
-import { useMapInteractions } from "@/hooks/useMapInteractions";
+import { useMapInteractions } from "@/features/map-explorer/useMapInteractions";
 import type { Map as MapLibreMap, Popup } from "maplibre-gl";
 
 type RegisteredHandlers = {

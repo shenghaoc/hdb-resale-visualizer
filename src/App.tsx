@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useMemo, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
@@ -7,9 +7,8 @@ import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
 import { usePanelState } from "@/hooks/usePanelState";
 import { useShortlistArtifacts } from "@/features/shortlist/useShortlistArtifacts";
-import { useGeolocation } from "@/hooks/useGeolocation";
+import { useGeolocation } from "@/features/map-explorer/useGeolocation";
 import { useHeaderState } from "@/hooks/useHeaderState";
-import { usePriceHeatmap } from "@/hooks/usePriceHeatmap";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
@@ -18,20 +17,20 @@ import { getSearchProfileChipDescriptors } from "@/features/search-profile/searc
 import { buildTownRecommendations } from "@/features/search-profile/town-recommendations";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
-import { MapLocaleControl } from "@/components/MapLocaleControl";
+import { MapLocaleControl } from "@/features/map-explorer/MapLocaleControl";
 import { SearchProfileWizard } from "@/components/SearchProfileWizard";
-import { AmenityLayersControl } from "@/components/AmenityLayersControl";
+import { AmenityLayersControl } from "@/features/map-explorer/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
 import { AppTabBars } from "@/components/AppTabBars";
 import { FilterChipsBar } from "@/components/FilterChipsBar";
 import { ScopePrompt } from "@/components/ScopePrompt";
 import { DrawerSkeleton } from "@/components/DrawerSkeleton";
 import { FilterPanel } from "@/components/FilterPanel";
-import { MapSkeleton } from "@/components/MapSkeleton";
-import { PriceHeatmapControl } from "@/components/PriceHeatmapControl";
-import { PriceLegend } from "@/components/PriceLegend";
+import { MapSkeleton } from "@/features/map-explorer/MapSkeleton";
+import { PriceHeatmapControl } from "@/features/map-explorer/PriceHeatmapControl";
+import { PriceLegend } from "@/features/map-explorer/PriceLegend";
+import { useMapExplorerController } from "@/features/map-explorer/useMapExplorerController";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPrimarySchoolsForOverlay } from "@/features/map-explorer/school-proximity";
 import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
 import { useSearchProfile } from "@/hooks/useSearchProfile";
 import { useListingCheckController } from "@/features/listing-check/useListingCheckController";
@@ -41,7 +40,11 @@ import { isDocsPath, navigate, usePathname, DOCS_PATH_PREFIX } from "@/features/
 const DocsPage = lazy(() =>
   import("@/features/docs/DocsPage").then((m) => ({ default: m.DocsPage })),
 );
-const MapView = lazy(() => import("@/components/MapView").then((m) => ({ default: m.MapView })));
+const MapView = lazy(() =>
+  import("@/features/map-explorer/MapView").then((module) => ({
+    default: module.MapView,
+  })),
+);
 const DetailDrawer = lazy(() =>
   import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
 );
@@ -68,11 +71,7 @@ function App() {
   const { filters, patchFilters, resetFilters } = useUrlFilters();
   const geo = useGeolocation({ t });
   const header = useHeaderState();
-  const heatmap = usePriceHeatmap();
-  const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
   const searchProfile = useSearchProfile();
-  const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
-  const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
 
   const pipeline = useFilterPipeline({
     manifest,
@@ -125,13 +124,6 @@ function App() {
   const detailVisible = Boolean(filters.selectedAddressKey);
   const detailLoading = detailVisible && isDetailLoading;
   const comparisonLoading = detailVisible && isComparisonLoading;
-  const primarySchoolsForOverlay = useMemo(
-    () => getPrimarySchoolsForOverlay(comparison?.amenities.nearestPrimarySchools ?? []),
-    [comparison],
-  );
-  const canShowSchoolOverlay = primarySchoolsForOverlay.length > 0;
-  const schoolOverlaySelectionActive = Boolean(filters.selectedAddressKey);
-  const schoolOverlayLoading = schoolOverlaySelectionActive && isComparisonLoading;
 
   const activeFilterChips = useMemo(() => {
     const filterChips = getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
@@ -225,9 +217,6 @@ function App() {
     handleSelectAddress,
     handleToggleShortlist,
     handleChooseTown,
-    handleGeolocate,
-    handleUseCurrentLocation,
-    handleMapInteract,
     handleOpenFilters,
     handleDesktopFiltersClick,
     handleDesktopResultsClick,
@@ -244,9 +233,25 @@ function App() {
     setUseDefaultStartMonth,
     clearGeolocationError: geo.clearError,
     cancelPendingGeolocationRequest: geo.cancelPendingRequest,
-    locate: geo.locate,
-    setUserLocation: geo.setUserLocation,
     isDesktop: panel.isDesktop,
+    setLeftTab: panel.setLeftTab,
+    setIsLeftPanelOpen: panel.setIsLeftPanelOpen,
+    setMobileTab: panel.setMobileTab,
+    setIsSavedPanelOpen: panel.setIsSavedPanelOpen,
+    toggleShortlist: shortlist.toggle,
+    leftTab: panel.leftTab,
+  });
+
+  const mapExplorer = useMapExplorerController({
+    filters,
+    patchFilters,
+    geographicIntent: pipeline.effectiveMapGeographicIntent,
+    mapSearch: pipeline.mapFilters.search,
+    hasMapMarkerScope: pipeline.hasMapMarkerScope,
+    selectedComparison: comparison,
+    isComparisonLoading,
+    isDesktop: panel.isDesktop,
+    controlsVisible: panel.isDesktop || panel.mobileTab === null,
     setLeftTab: panel.setLeftTab,
     setIsLeftPanelOpen: panel.setIsLeftPanelOpen,
     setMobileTab: panel.setMobileTab,
@@ -254,8 +259,8 @@ function App() {
     hasInteractedWithMap: header.hasInteractedWithMap,
     setIsHeaderVisible: header.setIsHeaderVisible,
     setHasInteractedWithMap: header.setHasInteractedWithMap,
-    toggleShortlist: shortlist.toggle,
-    leftTab: panel.leftTab,
+    geolocation: geo,
+    onCannotLocate: () => handleChooseTown({ clearGeolocationError: false }),
   });
 
   const resultsShareUrl = useMemo(
@@ -351,27 +356,19 @@ function App() {
           selectedAddressKey={filters.selectedAddressKey}
           townFilter={pipeline.mapFilters.town}
           flatType={filters.flatType}
-          autoFitKey={
-            pipeline.effectiveMapGeographicIntent?.type === "coordinates"
-              ? `coordinates:${pipeline.effectiveMapGeographicIntent.coordinates.lat},${pipeline.effectiveMapGeographicIntent.coordinates.lng}`
-              : pipeline.effectiveMapGeographicIntent?.type === "station"
-                ? `station:${pipeline.effectiveMapGeographicIntent.stationName.toLowerCase()}`
-                : pipeline.mapFilters.search.trim()
-                  ? `search:${pipeline.mapFilters.search.trim().toLowerCase()}`
-                  : null
-          }
+          autoFitKey={mapExplorer.autoFitKey}
           showBlockMarkers={pipeline.hasMapMarkerScope}
           isDarkMode={theme === "dark"}
-          priceHeatmapEnabled={heatmap.priceHeatmapEnabled}
-          priceHeatmapOpacity={heatmap.priceHeatmapOpacity}
-          mrtStationsEnabled={mrtStationsEnabled}
-          mrtExitsEnabled={mrtExitsEnabled}
-          heatmapMode={heatmap.heatmapMode}
-          primarySchools={primarySchoolsForOverlay}
-          schoolOverlayEnabled={schoolOverlayEnabled && canShowSchoolOverlay}
+          priceHeatmapEnabled={mapExplorer.priceHeatmapEnabled}
+          priceHeatmapOpacity={mapExplorer.priceHeatmapOpacity}
+          mrtStationsEnabled={mapExplorer.mrtStationsEnabled}
+          mrtExitsEnabled={mapExplorer.mrtExitsEnabled}
+          heatmapMode={mapExplorer.heatmapMode}
+          primarySchools={mapExplorer.primarySchoolsForOverlay}
+          schoolOverlayEnabled={mapExplorer.effectiveSchoolOverlayEnabled}
           geographicIntent={pipeline.effectiveMapGeographicIntent}
-          onMapInteract={handleMapInteract}
-          onGeolocate={handleGeolocate}
+          onMapInteract={mapExplorer.handleMapInteract}
+          onGeolocate={mapExplorer.handleGeolocate}
           locale={locale}
           t={t}
         />
@@ -564,66 +561,46 @@ function App() {
           />
         ) : null}
 
-        {(panel.isDesktop || panel.mobileTab === null) && (
-          <MapLocaleControl isDesktop={panel.isDesktop} />
-        )}
+        {mapExplorer.controlsVisible && <MapLocaleControl isDesktop={panel.isDesktop} />}
 
         {/* Price-colour legend — only when map is visible */}
         <PriceLegend
           isDesktop={panel.isDesktop}
-          isVisible={pipeline.hasMapMarkerScope && (panel.isDesktop || panel.mobileTab === null)}
-          mode={heatmap.heatmapMode}
+          isVisible={pipeline.hasMapMarkerScope && mapExplorer.controlsVisible}
+          mode={mapExplorer.heatmapMode}
           t={t}
         />
 
         {/* Price heatmap toggle */}
-        {(panel.isDesktop || panel.mobileTab === null) && (
+        {mapExplorer.controlsVisible && (
           <PriceHeatmapControl
-            isEnabled={heatmap.priceHeatmapEnabled}
-            opacity={heatmap.priceHeatmapOpacity}
-            mode={heatmap.heatmapMode}
-            onToggle={heatmap.togglePriceHeatmap}
-            onOpacityChange={heatmap.setPriceHeatmapOpacity}
-            onModeChange={heatmap.setHeatmapMode}
+            isEnabled={mapExplorer.priceHeatmapEnabled}
+            opacity={mapExplorer.priceHeatmapOpacity}
+            mode={mapExplorer.heatmapMode}
+            onToggle={mapExplorer.togglePriceHeatmap}
+            onOpacityChange={mapExplorer.setPriceHeatmapOpacity}
+            onModeChange={mapExplorer.setHeatmapMode}
             hasScope={pipeline.hasMapMarkerScope}
             t={t}
             className="absolute z-25"
-            style={{
-              bottom: panel.isDesktop
-                ? pipeline.hasMapMarkerScope
-                  ? "7.5rem"
-                  : "4rem"
-                : pipeline.hasMapMarkerScope
-                  ? "11.5rem"
-                  : "8rem",
-              right: panel.isDesktop ? "4.5rem" : "0.75rem",
-            }}
+            style={mapExplorer.heatmapControlStyle}
           />
         )}
 
-        {(panel.isDesktop || panel.mobileTab === null) && (
+        {mapExplorer.controlsVisible && (
           <AmenityLayersControl
-            mrtStationsEnabled={mrtStationsEnabled}
-            mrtExitsEnabled={mrtExitsEnabled}
-            schoolOverlayEnabled={schoolOverlayEnabled}
-            schoolOverlayAvailable={canShowSchoolOverlay}
-            schoolOverlayLoading={schoolOverlayLoading}
-            hasBlockSelection={schoolOverlaySelectionActive}
-            onToggleMrtStations={() => setMrtStationsEnabled((v) => !v)}
-            onToggleMrtExits={() => setMrtExitsEnabled((v) => !v)}
-            onToggleSchoolOverlay={() => setSchoolOverlayEnabled((v) => !v)}
+            mrtStationsEnabled={mapExplorer.mrtStationsEnabled}
+            mrtExitsEnabled={mapExplorer.mrtExitsEnabled}
+            schoolOverlayEnabled={mapExplorer.schoolOverlayEnabled}
+            schoolOverlayAvailable={mapExplorer.schoolOverlayAvailable}
+            schoolOverlayLoading={mapExplorer.schoolOverlayLoading}
+            hasBlockSelection={mapExplorer.hasBlockSelection}
+            onToggleMrtStations={mapExplorer.toggleMrtStations}
+            onToggleMrtExits={mapExplorer.toggleMrtExits}
+            onToggleSchoolOverlay={mapExplorer.toggleSchoolOverlay}
             t={t}
             className="absolute z-25 w-36"
-            style={{
-              bottom: panel.isDesktop
-                ? pipeline.hasMapMarkerScope
-                  ? "11rem"
-                  : "7.5rem"
-                : pipeline.hasMapMarkerScope
-                  ? "15rem"
-                  : "11.5rem",
-              right: panel.isDesktop ? "4.5rem" : "0.75rem",
-            }}
+            style={mapExplorer.amenityControlStyle}
           />
         )}
 
@@ -638,11 +615,11 @@ function App() {
 
         <ScopePrompt
           showScopePrompt={showScopePrompt}
-          geolocationError={geo.geolocationError}
+          geolocationError={mapExplorer.geolocationError}
           isDesktop={panel.isDesktop}
-          isLocating={geo.isLocating}
+          isLocating={mapExplorer.isLocating}
           t={t}
-          onUseCurrentLocation={handleUseCurrentLocation}
+          onUseCurrentLocation={mapExplorer.handleUseCurrentLocation}
           onChooseTown={() => handleChooseTown()}
           onCheckListing={openCheckPanel}
         />

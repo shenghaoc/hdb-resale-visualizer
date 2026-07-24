@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { FeatureCollection } from "geojson";
-import { useMapDataSync } from "@/hooks/useMapDataSync";
+import { useMapDataSync } from "@/features/map-explorer/useMapDataSync";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
 type EventHandler = (...args: unknown[]) => void;

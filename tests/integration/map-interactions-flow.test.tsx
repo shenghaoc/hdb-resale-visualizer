@@ -1,8 +1,8 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { Locale, Translator } from "@/shared/lib/i18n";
-import { useMapInteractions } from "@/hooks/useMapInteractions";
-import { useMapLayers } from "@/hooks/useMapLayers";
+import { useMapInteractions } from "@/features/map-explorer/useMapInteractions";
+import { useMapLayers } from "@/features/map-explorer/useMapLayers";
 import type { Map as MapLibreMap, Popup } from "maplibre-gl";
 
 type LoadHandler = () => void;

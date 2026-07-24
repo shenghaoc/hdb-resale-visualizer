@@ -1,5 +1,5 @@
 import type { FeatureCollection } from "geojson";
-import type { HeatmapMode } from "../../hooks/usePriceHeatmap";
+import type { HeatmapMode } from "./usePriceHeatmap";
 import type { Map as MapLibreMap } from "maplibre-gl";
 
 /**

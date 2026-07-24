@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { useMapFitBounds } from "@/hooks/useMapFitBounds";
+import { useMapFitBounds } from "@/features/map-explorer/useMapFitBounds";
 import { SINGAPORE_BOUNDS } from "@/shared/lib/constants";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { BlockSummary } from "@/types/data";
