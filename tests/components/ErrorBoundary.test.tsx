@@ -6,7 +6,7 @@ import {
   ERROR_BOUNDARY_FALLBACK_TEXT,
   ErrorBoundary,
   MAX_LOCAL_RECOVERY_ATTEMPTS,
-} from "@/components/ErrorBoundary";
+} from "@/shared-ui/ErrorBoundary";
 
 function ThrowingChild(): never {
   throw new Error("render boom");

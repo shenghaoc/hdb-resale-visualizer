@@ -9,7 +9,21 @@ inclusion: always
 - `.kiro/steering/`: persistent project rules.
 - `.kiro/specs/`: Kiro feature and bugfix specs.
 - `.kiro/skills/`: reusable agent skills.
-- `src/`: React application source. The current code is still mostly organized as `src/components`, `src/components/ui`, `src/hooks`, `src/lib`, and `src/types`.
+- `src/`: React application source, organized feature-first:
+  - `src/features/listing-check`
+  - `src/features/shortlist`
+  - `src/features/map-explorer`
+  - `src/features/search-profile`
+  - `src/features/block-detail`
+  - `src/entities/transaction`
+  - `src/entities/block`
+  - `src/entities/town`
+  - `src/shared-ui` — generic presentation only
+  - `src/shared/lib` — generic frontend helpers
+  - `src/components/ui` — shadcn primitives
+  - `src/components` — app-shell or HDB-aware components that do not belong to a single feature
+  - `src/hooks` — residual cross-feature app orchestration hooks
+  - `src/types` — frontend type re-exports and local types
 - `functions/api/`: runtime API route modules backed by D1.
 - `functions/_lib/`: D1 query, validation, shortlist, search, and rate-limit helpers.
 - `worker/`: Cloudflare Worker entry point, API dispatch, SEO routing, sitemap, OG image generation, and Worker-only helpers.
@@ -22,49 +36,59 @@ inclusion: always
 - `public/`: static assets only, including PWA icons, manifest, headers, OG fallback, and favicon.
 - `docs/`: screenshots and architecture reference material.
 
-## Desired Frontend Organization
+## Frontend Organization
 
-Move new and meaningfully touched frontend code toward a feature-first layout:
+Completed feature-first layout:
 
 ```text
 src/features/listing-check
 src/features/shortlist
 src/features/map-explorer
 src/features/search-profile
+src/features/block-detail
+
 src/entities/transaction
 src/entities/block
 src/entities/town
+
 src/shared-ui
+src/shared/lib
+src/components/ui
 ```
 
-Use this target structure for new modules when the change is not a narrow bugfix in existing files. Do not churn unrelated files just to migrate structure.
+New buyer workflows should land under the owning feature. Not every remaining multi-consumer component must move into `shared-ui` — only genuinely generic presentation belongs there. Domain-aware shared pieces (budget badges, MRT dots, lease warnings, buyer checklist, etc.) stay outside `shared-ui` intentionally.
 
 ## Feature Boundaries
 
-- `src/features/listing-check`: asking price checks, comparable ranges, affordability fit, lease financing panels, buyer checklist, negotiation prep, and confidence explanations.
+- `src/features/listing-check`: asking price checks, comparable ranges, affordability fit, buyer checklist composition, negotiation prep, and confidence explanations.
 - `src/features/shortlist`: saved blocks, notes, target prices, shortlist ranking/comparison, local persistence, cloud sync UI, and sync conflict handling.
 - `src/features/map-explorer`: MapLibre shell, map layers, amenity overlays, heatmap controls, marker visibility, map selection, and mobile/desktop map navigation.
 - `src/features/search-profile`: global search, suggest/typeahead, profile wizard, profile chips, query-state hydration, and buyer preference matching.
-- `src/entities/transaction`: transaction types, parsing, price-per-area calculations, trend points, comparable transaction utilities, and transaction-specific tests.
-- `src/entities/block`: block summary/detail models, block-level derived facts, lease signals, amenity visibility, similar-block scoring, and block tests.
-- `src/entities/town`: town profile, town comparison, town recommendations, town slugs, and town-flat-type trend logic.
-- `src/shared-ui`: reusable presentation components, shadcn wrappers, icons, layout primitives, loading states, and UI-only helpers that do not know HDB domain concepts.
+- `src/features/block-detail`: block detail drawer, lease financing panel, flat-type ladder, trend chart, and block-detail orchestration.
+- `src/entities/transaction`: transaction types, parsing, price-per-area calculations, trend points, comparable transaction utilities, confidence/caveat pure logic, and transaction-specific tests.
+- `src/entities/block`: block summary/detail models, block-level derived facts, lease signals, financing math, flat-type ladder, school proximity, similar-block scoring, and block tests.
+- `src/entities/town`: town profile, town comparison, town slugs, and town-flat-type trend logic.
+- `src/shared-ui`: generic presentation only (e.g. ErrorBoundary, ShareButton, DrawerSkeleton). No HDB domain concepts, no feature/entity imports.
+- `src/components/ui`: existing shadcn primitives (do not rename or relocate).
+- `src/components`: app-shell or HDB-aware components that span features without a single feature owner.
 
 ## Dependency Direction
 
-- Features may import entities, `src/shared-ui`, shared frontend utilities, and `shared/*`.
-- Entities must stay domain-focused and must not import from features.
-- `src/shared-ui` must not import HDB domain logic, D1/API helpers, or feature modules.
+- Features may import entities, `src/shared-ui`, `src/shared/lib`, `src/components` (including ui), and repository-level `shared/*`.
+- Entities must stay domain-focused and must not import features, shared-ui, or components.
+- `src/shared-ui` must not import features, entities, or HDB-domain type modules (`src/types/data`, `src/types/searchProfile`). It may import React, presentation libraries, `src/components/ui`, and `src/shared/lib`.
 - Cross-runtime code used by scripts, Worker/API, and frontend belongs in `shared/`, not `src/`.
 - Node-executed scripts must not import from `src/`; `pnpm check:boundaries` enforces this.
 - Runtime API modules under `functions/` should not import React UI code or browser-only modules.
+- Feature-internal files must not import their own feature barrel (`@/features/<name>`); use direct relative or explicit module paths.
+- The boundary checker enforces entity/shared-ui dependency direction and detects runtime import cycles under `src/` (type-only edges are excluded).
 
 ## Migration Guidance
 
-- For narrow fixes, edit the existing module in place.
-- For new buyer workflows, create a feature folder and colocate component, hook, lib, and tests around the workflow.
-- When extracting from `src/lib`, move domain-specific logic into the relevant entity or feature. Keep truly generic utilities in `src/lib` until there is a clearer shared home.
-- When extracting from `src/components`, put reusable UI-only pieces in `src/shared-ui`; put workflow-specific UI under the owning feature.
+- Feature-first migration (phases 1–13) is complete for the planned domains.
+- For narrow fixes, edit the owning feature/entity module in place.
+- For new buyer workflows, create or extend a feature folder and colocate component, hook, lib, and tests around the workflow.
+- Put reusable UI-only pieces in `src/shared-ui` only when they are free of HDB domain concepts.
 - Keep tests close in naming and ownership: feature tests should exercise the feature API, entity tests should exercise pure domain logic, and E2E should cover cross-feature buyer journeys.
 
 ## Naming Conventions

@@ -53,8 +53,20 @@ THEN related files SHALL live in `src/features/block-detail`.
 
 ### R5 — Shared UI and Utility Boundaries
 
-WHEN a UI abstraction is used by two+ features,
-THEN it SHALL be moved to `src/shared-ui` or `src/shared/lib` depending on its type.
+WHEN a UI abstraction is used by two+ features and is free of HDB domain concepts,
+THEN it SHALL live in `src/shared-ui` (presentation) or `src/shared/lib` (non-UI helpers).
+
+WHEN a multi-feature component presents HDB-specific concepts (budget match, MRT lines, lease warnings, buyer checklist, etc.),
+THEN it SHALL remain outside `src/shared-ui`.
+
+WHEN `src/shared-ui` modules import code,
+THEN they SHALL NOT import features, entities, or HDB-domain type modules.
+
+WHEN entity modules import code,
+THEN they SHALL NOT import features, shared-ui, or components.
+
+WHEN the boundary checker runs,
+THEN it SHALL reject forbidden dependency direction and runtime import cycles under `src/` (type-only edges excluded).
 
 ### R6 — Barrel exports policy
 

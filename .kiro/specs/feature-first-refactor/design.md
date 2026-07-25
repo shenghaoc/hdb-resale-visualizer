@@ -24,8 +24,8 @@ The migration is intentionally incremental to reduce risk:
 - Correctness fixes that enforce an existing documented contract are allowed when
   their scope is explicit and they have focused regression coverage.
 - Each phase is small and independently verifiable through tests.
-- Existing imports are kept stable through compatibility export points during transitions.
-- Rollback is possible at each phase.
+- Compatibility export points were used during transitions and removed once consumers pointed at canonical owners.
+- Rollback was possible at each phase; the migration is now complete for the planned domains.
 
 ## Why this direction
 
@@ -48,11 +48,13 @@ Moving to feature-first structure improves:
   - Owns hooks, components, and feature-specific selectors/DTO mapping.
   - Delegates pricing/comparable/confidence/caveat computations to `entities` or `shared/lib`.
 - `shared-ui/*`:
-  - Reusable, presentation-oriented UI primitives that span multiple features.
+  - Generic presentation only (no HDB domain concepts, no feature/entity imports).
+  - May import React, presentation libraries, `src/components/ui`, and `src/shared/lib`.
 - `shared/lib/*`:
   - Cross-cutting pure utilities used by multiple features/entities.
   - No runtime or framework side-effects.
-- `components/*` and `hooks/*` can continue to host legacy code during migration, but new work should land in target folders.
+- `components/*` holds app-shell or HDB-aware multi-feature UI that is not generic enough for `shared-ui`.
+- Dependency direction and runtime source cycles are enforced by `scripts/check-boundaries.ts`.
 
 ## Scope rules
 
@@ -75,9 +77,10 @@ Moving to feature-first structure improves:
 - Phase 3: Move feature logic
   - Relocate feature-specific orchestration and components by one feature at a time.
   - Keep UI untouched during domain extraction; move behavior in a later step only after pure logic is available.
-- Phase 4: Defer component churn and tighten imports
-  - Replace `components/*` and `hooks/*` imports with feature/entity imports.
-  - Drop compatibility exports when no consumers remain.
+- Phase 4: Shared UI, import cleanup, and architecture enforcement
+  - Move generic presentation into `src/shared-ui`.
+  - Drop obsolete compatibility paths.
+  - Enforce entity/shared-ui direction and runtime cycle freedom via the boundary checker.
 
 ## Test and verification strategy
 

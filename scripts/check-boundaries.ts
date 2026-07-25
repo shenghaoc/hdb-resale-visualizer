@@ -7,14 +7,27 @@ const SCRIPTS_DIR = path.join(ROOT_DIR, "scripts");
 const SHARED_DIR = path.join(ROOT_DIR, "shared");
 const SHARED_PRODUCT_DIR = path.join(ROOT_DIR, "shared", "product");
 const SRC_DIR = path.join(ROOT_DIR, "src");
+const ENTITIES_DIR = path.join(SRC_DIR, "entities");
+const FEATURES_DIR = path.join(SRC_DIR, "features");
+const SHARED_UI_DIR = path.join(SRC_DIR, "shared-ui");
+const COMPONENTS_DIR = path.join(SRC_DIR, "components");
 const SOURCE_EXTENSIONS = [".ts", ".tsx", ".mts", ".cts", ".js", ".mjs", ".cjs"] as const;
 const INDEX_FILENAMES = SOURCE_EXTENSIONS.map((extension) => `index${extension}`);
 const FORBIDDEN_RUNTIME_ALIASES = ["@/", "@shared/"] as const;
 const FORBIDDEN_SHARED_PRODUCT_IMPORTS = ["react", "react-dom", "maplibre-gl"] as const;
+const FORBIDDEN_SHARED_UI_DOMAIN_TYPES = [
+  path.join(SRC_DIR, "types", "data.ts"),
+  path.join(SRC_DIR, "types", "searchProfile.ts"),
+] as const;
 
 type Violation = {
   file: string;
   message: string;
+};
+
+type ModuleEdge = {
+  specifier: string;
+  isRuntime: boolean;
 };
 
 function toDisplayPath(filePath: string): string {
@@ -26,14 +39,18 @@ function isInside(parentDir: string, childPath: string): boolean {
   return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
 }
 
-function collectScriptFiles(dir: string): string[] {
+function collectSourceFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) {
+    return [];
+  }
+
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   const files: string[] = [];
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      files.push(...collectScriptFiles(fullPath));
+      files.push(...collectSourceFiles(fullPath));
       continue;
     }
 
@@ -45,12 +62,7 @@ function collectScriptFiles(dir: string): string[] {
   return files.sort();
 }
 
-function resolveSourceFile(fromFile: string, specifier: string): string | null {
-  if (!specifier.startsWith(".")) {
-    return null;
-  }
-
-  const basePath = path.resolve(path.dirname(fromFile), specifier);
+function resolveCandidates(basePath: string): string | null {
   const candidates = [
     basePath,
     ...SOURCE_EXTENSIONS.map((extension) => `${basePath}${extension}`),
@@ -63,16 +75,110 @@ function resolveSourceFile(fromFile: string, specifier: string): string | null {
   );
 }
 
-function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
-  const specifiers: string[] = [];
+/** Resolve relative imports only (Node script / shared graphs). */
+function resolveRelativeSourceFile(fromFile: string, specifier: string): string | null {
+  if (!specifier.startsWith(".")) {
+    return null;
+  }
+
+  return resolveCandidates(path.resolve(path.dirname(fromFile), specifier));
+}
+
+/**
+ * Resolve frontend-style imports under src/:
+ * relative paths, `@/` → src/, and `@shared/` → repository shared/.
+ */
+function resolveFrontendModule(fromFile: string, specifier: string): string | null {
+  if (specifier.startsWith("@/")) {
+    return resolveCandidates(path.join(SRC_DIR, specifier.slice(2)));
+  }
+
+  if (specifier.startsWith("@shared/")) {
+    return resolveCandidates(path.join(SHARED_DIR, specifier.slice("@shared/".length)));
+  }
+
+  if (specifier.startsWith(".")) {
+    return resolveCandidates(path.resolve(path.dirname(fromFile), specifier));
+  }
+
+  return null;
+}
+
+function isTypeOnlyImportDeclaration(node: ts.ImportDeclaration): boolean {
+  if (!node.importClause) {
+    // Side-effect import: `import "./foo"` — runtime.
+    return false;
+  }
+
+  if (node.importClause.isTypeOnly) {
+    return true;
+  }
+
+  // Default import is always a value import.
+  if (node.importClause.name) {
+    return false;
+  }
+
+  const { namedBindings } = node.importClause;
+  if (!namedBindings) {
+    return false;
+  }
+
+  if (ts.isNamespaceImport(namedBindings)) {
+    return false;
+  }
+
+  if (ts.isNamedImports(namedBindings)) {
+    // `import { type Foo }` is type-only; mixed value bindings are runtime.
+    return (
+      namedBindings.elements.length > 0 &&
+      namedBindings.elements.every((element) => element.isTypeOnly)
+    );
+  }
+
+  return false;
+}
+
+function isTypeOnlyExportDeclaration(node: ts.ExportDeclaration): boolean {
+  if (node.isTypeOnly) {
+    return true;
+  }
+
+  if (node.exportClause && ts.isNamedExports(node.exportClause)) {
+    return (
+      node.exportClause.elements.length > 0 &&
+      node.exportClause.elements.every((element) => element.isTypeOnly)
+    );
+  }
+
+  // `export * from` / `export * as ns from` re-export values at runtime.
+  return false;
+}
+
+function getModuleEdges(sourceFile: ts.SourceFile): ModuleEdge[] {
+  const edges: ModuleEdge[] = [];
 
   const visit = (node: ts.Node) => {
     if (
-      (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) &&
+      ts.isImportDeclaration(node) &&
       node.moduleSpecifier &&
       ts.isStringLiteralLike(node.moduleSpecifier)
     ) {
-      specifiers.push(node.moduleSpecifier.text);
+      edges.push({
+        specifier: node.moduleSpecifier.text,
+        isRuntime: !isTypeOnlyImportDeclaration(node),
+      });
+    }
+
+    if (
+      ts.isExportDeclaration(node) &&
+      node.moduleSpecifier &&
+      ts.isStringLiteralLike(node.moduleSpecifier)
+    ) {
+      edges.push({
+        specifier: node.moduleSpecifier.text,
+        isRuntime: !isTypeOnlyExportDeclaration(node),
+      });
     }
 
     if (
@@ -82,7 +188,7 @@ function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
     ) {
       const [specifier] = node.arguments;
       if (specifier && ts.isStringLiteralLike(specifier)) {
-        specifiers.push(specifier.text);
+        edges.push({ specifier: specifier.text, isRuntime: true });
       }
     }
 
@@ -94,7 +200,7 @@ function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
     ) {
       const [specifier] = node.arguments;
       if (specifier && ts.isStringLiteralLike(specifier)) {
-        specifiers.push(specifier.text);
+        edges.push({ specifier: specifier.text, isRuntime: true });
       }
     }
 
@@ -102,7 +208,12 @@ function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
   };
 
   visit(sourceFile);
-  return specifiers;
+  return edges;
+}
+
+/** Specifiers only (legacy helper used by script / shared-product walks). */
+function getModuleSpecifiers(sourceFile: ts.SourceFile): string[] {
+  return getModuleEdges(sourceFile).map((edge) => edge.specifier);
 }
 
 const visitedFiles = new Set<string>();
@@ -141,7 +252,7 @@ function visitSourceFile(file: string): void {
       continue;
     }
 
-    const resolvedFile = resolveSourceFile(normalizedFile, specifier);
+    const resolvedFile = resolveRelativeSourceFile(normalizedFile, specifier);
     if (!resolvedFile) {
       continue;
     }
@@ -158,7 +269,7 @@ function visitSourceFile(file: string): void {
   }
 }
 
-for (const entryFile of collectScriptFiles(SCRIPTS_DIR)) {
+for (const entryFile of collectSourceFiles(SCRIPTS_DIR)) {
   visitSourceFile(entryFile);
 }
 
@@ -199,7 +310,7 @@ function checkSharedProductFile(file: string): void {
       continue;
     }
 
-    const resolvedFile = resolveSourceFile(normalizedFile, specifier);
+    const resolvedFile = resolveRelativeSourceFile(normalizedFile, specifier);
     if (!resolvedFile) {
       continue;
     }
@@ -220,10 +331,162 @@ function checkSharedProductFile(file: string): void {
 }
 
 if (fs.existsSync(SHARED_PRODUCT_DIR)) {
-  for (const entryFile of collectScriptFiles(SHARED_PRODUCT_DIR)) {
+  for (const entryFile of collectSourceFiles(SHARED_PRODUCT_DIR)) {
     checkSharedProductFile(entryFile);
   }
 }
+
+// ── Frontend source architecture checks ────────────────────────────────
+
+function parseSourceFile(file: string): ts.SourceFile {
+  const sourceText = fs.readFileSync(file, "utf8");
+  return ts.createSourceFile(file, sourceText, ts.ScriptTarget.Latest, true);
+}
+
+function checkEntityDirection(): void {
+  for (const file of collectSourceFiles(ENTITIES_DIR)) {
+    const sourceFile = parseSourceFile(file);
+    for (const edge of getModuleEdges(sourceFile)) {
+      const resolved = resolveFrontendModule(file, edge.specifier);
+      if (!resolved) {
+        continue;
+      }
+
+      if (isInside(FEATURES_DIR, resolved)) {
+        recordViolation(
+          file,
+          `entities must not import features — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
+      } else if (isInside(SHARED_UI_DIR, resolved)) {
+        recordViolation(
+          file,
+          `entities must not import shared-ui — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
+      } else if (isInside(COMPONENTS_DIR, resolved)) {
+        recordViolation(
+          file,
+          `entities must not import components — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
+      }
+    }
+  }
+}
+
+function checkSharedUiDirection(): void {
+  for (const file of collectSourceFiles(SHARED_UI_DIR)) {
+    const sourceFile = parseSourceFile(file);
+    for (const edge of getModuleEdges(sourceFile)) {
+      const resolved = resolveFrontendModule(file, edge.specifier);
+      if (!resolved) {
+        continue;
+      }
+
+      if (isInside(FEATURES_DIR, resolved)) {
+        recordViolation(
+          file,
+          `shared-ui must not import features — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
+      } else if (isInside(ENTITIES_DIR, resolved)) {
+        recordViolation(
+          file,
+          `shared-ui must not import entities — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
+      } else {
+        const forbiddenDomainType = FORBIDDEN_SHARED_UI_DOMAIN_TYPES.find(
+          (domainType) => path.normalize(domainType) === path.normalize(resolved),
+        );
+        if (forbiddenDomainType) {
+          recordViolation(
+            file,
+            `shared-ui must not import HDB-domain types — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Build a runtime import graph for files under src/ and report cycles.
+ * Type-only imports/exports are excluded. Dynamic import() and require() are
+ * treated as runtime edges. `@shared/` edges that leave src/ are ignored for
+ * cycle detection.
+ */
+function checkSrcRuntimeCycles(): number {
+  const srcFiles = collectSourceFiles(SRC_DIR);
+  const graph = new Map<string, string[]>();
+
+  for (const file of srcFiles) {
+    const normalizedFile = path.normalize(file);
+    const sourceFile = parseSourceFile(normalizedFile);
+    const targets = new Set<string>();
+
+    for (const edge of getModuleEdges(sourceFile)) {
+      if (!edge.isRuntime) {
+        continue;
+      }
+
+      const resolved = resolveFrontendModule(normalizedFile, edge.specifier);
+      if (!resolved) {
+        continue;
+      }
+
+      const normalizedTarget = path.normalize(resolved);
+      if (!isInside(SRC_DIR, normalizedTarget)) {
+        continue;
+      }
+
+      targets.add(normalizedTarget);
+    }
+
+    graph.set(normalizedFile, [...targets].sort());
+  }
+
+  const visiting = new Set<string>();
+  const visited = new Set<string>();
+  const stack: string[] = [];
+  const reportedCycleKeys = new Set<string>();
+
+  const visit = (node: string): void => {
+    if (visited.has(node)) {
+      return;
+    }
+    if (visiting.has(node)) {
+      const cycleStart = stack.indexOf(node);
+      if (cycleStart === -1) {
+        return;
+      }
+      const cyclePath = [...stack.slice(cycleStart), node];
+      const cycleKey = cyclePath.map(toDisplayPath).join(" -> ");
+      if (!reportedCycleKeys.has(cycleKey)) {
+        reportedCycleKeys.add(cycleKey);
+        recordViolation(node, `Runtime source import cycle detected: ${cycleKey}.`);
+      }
+      return;
+    }
+
+    visiting.add(node);
+    stack.push(node);
+
+    for (const neighbor of graph.get(node) ?? []) {
+      visit(neighbor);
+    }
+
+    stack.pop();
+    visiting.delete(node);
+    visited.add(node);
+  };
+
+  for (const file of [...graph.keys()].sort()) {
+    visit(file);
+  }
+
+  return srcFiles.length;
+}
+
+checkEntityDirection();
+checkSharedUiDirection();
+const srcModuleCount = checkSrcRuntimeCycles();
 
 if (violations.length > 0) {
   console.error("Script boundary check failed:");
@@ -233,4 +496,6 @@ if (violations.length > 0) {
   process.exit(1);
 }
 
-console.log(`Script boundary check passed (${visitedFiles.size} reachable local modules scanned).`);
+console.log(
+  `Script boundary check passed (${visitedFiles.size} reachable local modules scanned; ${srcModuleCount} src modules architecture-checked).`,
+);

@@ -45,7 +45,7 @@ import {
   srxUrl,
 } from "@/features/listing-check/listingPortalLinks";
 import type { ShortlistComparisonRow } from "@/features/shortlist/shortlist-comparison";
-import { ShareButton } from "@/components/ShareButton";
+import { ShareButton } from "@/shared-ui/ShareButton";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
 import { ShortlistSyncSection } from "./ShortlistSyncSection";
 import { MrtLineDots } from "@/components/MrtLineDots";

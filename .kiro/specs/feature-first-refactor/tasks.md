@@ -193,30 +193,53 @@
 
 ## 11) Shared UI consolidation
 
-- [ ] 11.1 Move shared presentational UI from multiple features to `src/shared-ui` (e.g., reusable panel blocks, chips, list cells, labels where shared).
-- [ ] 11.2 Keep business logic out of shared-ui modules.
-- [ ] 11.3 Add/repoint exports and adjust imports.
-- [ ] 11.4 Validate a representative UI slice with render tests and lint.
+- [x] 11.1 Move shared presentational UI from multiple features to `src/shared-ui` (e.g., reusable panel blocks, chips, list cells, labels where shared).
+  - ErrorBoundary, ShareButton, and DrawerSkeleton now live in src/shared-ui.
+  - Domain-aware shared components remain outside shared-ui intentionally.
+- [x] 11.2 Keep business logic out of shared-ui modules.
+  - Shared UI imports only generic presentation dependencies.
+- [x] 11.3 Add/repoint exports and adjust imports.
+  - Canonical paths: `@/shared-ui/ErrorBoundary`, `@/shared-ui/ShareButton`, `@/shared-ui/DrawerSkeleton`.
+  - No compatibility files remain at old `src/components/` paths.
+- [x] 11.4 Validate a representative UI slice with render tests and lint.
+  - Representative render tests and lint/typecheck/build gates pass.
 
 ## 12) Import cleanup and compatibility removal
 
-- [ ] 12.1 Remove temporary compatibility re-export points one domain at a time.
-- [ ] 12.2 Replace ambiguous imports with feature/entity paths where readability improves.
-- [ ] 12.3 Ensure all moved modules have no cyclic dependencies.
-- [ ] 12.4 Re-run:
-  - `npm run lint`
-  - `npm run typecheck`
-  - `npm run test`
+- [x] 12.1 Remove temporary compatibility re-export points one domain at a time.
+  - Obsolete migration compatibility paths are removed.
+- [x] 12.2 Replace ambiguous imports with feature/entity paths where readability improves.
+  - Canonical feature/entity/shared-ui imports are used.
+  - Feature-internal self-barrel imports are removed.
+- [x] 12.3 Ensure all moved modules have no cyclic dependencies.
+  - Frontend boundary and runtime-cycle checks pass.
+- [x] 12.4 Re-run:
+  - `vp run lint`
+  - `vp run typecheck`
+  - `vp run test` / focused + full gates (recorded in task 13).
 
 ## 13) End-state checks
 
-- [ ] 13.1 Confirm acceptance criteria mapping:
-  - listing-check in `src/features/listing-check`
-  - transaction entities in `src/entities/transaction`
-  - shortlist in `src/features/shortlist`
-  - pricing/comparable/confidence/caveat logic in pure modules
-- [ ] 13.2 Run full parity verification:
-  - `npm run test`
-  - `npm run lint`
-  - `npm run build`
-- [ ] 13.3 Add final spec notes for any deferred follow-up tasks only (no behavior-critical work left in TODO).
+- [x] 13.1 Confirm acceptance criteria mapping:
+  - listing-check -> `src/features/listing-check`
+  - shortlist -> `src/features/shortlist`
+  - map explorer -> `src/features/map-explorer`
+  - search profile -> `src/features/search-profile`
+  - block detail -> `src/features/block-detail`
+  - transaction logic -> `src/entities/transaction`
+  - block logic -> `src/entities/block`
+  - town logic -> `src/entities/town`
+  - generic presentation -> `src/shared-ui`
+  - pricing/comparable/confidence/caveat logic in pure entity/shared modules
+- [x] 13.2 Run full parity verification:
+  - Unit: 165 test files, 1650 tests passed
+  - Playwright: 76 passed, 0 flaky, 0 failed
+  - Lint: 1 pre-existing warning (`useFilterPipeline` exhaustive-deps), 0 errors
+  - Typecheck: passed
+  - Boundaries: passed (26 script modules, 191 src modules architecture-checked; no runtime cycles)
+  - Build: passed
+  - Bundle: passed (9 modulepreloads, 81764 B gzip total)
+  - `CI=1 vp run check:pr` / `CI=1 pnpm run check:pr` passed
+- [x] 13.3 Add final spec notes for any deferred follow-up tasks only (no behavior-critical work left in TODO).
+  - Deferred (non-critical): domain-aware multi-feature components (`BudgetMatchBadge`, `MrtLineDots`, `LeaseWarningPanel`, `BuyerChecklist`) remain under `src/components` intentionally; residual app-shell hooks under `src/hooks` are not behavior-critical migration work.
+  - No behavior-critical migration TODO remains.
