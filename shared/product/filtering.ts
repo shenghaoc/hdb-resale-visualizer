@@ -9,7 +9,7 @@
  * `resetFilteringCachesForTests`.
  */
 
-import type { BlockSummary, Coordinates, FilterState } from "../data-types";
+import type { BlockFlatTypeCohort, BlockSummary, Coordinates, FilterState } from "../data-types";
 import { canonicalFlatType } from "../filter-options";
 import { resolveMultilingualSearchAliases } from "./search-aliases";
 import { MAX_LEASE_DURATION } from "./lease";
@@ -602,34 +602,127 @@ export function matchesGeographicSearchIntent(
  * for that type, use it instead of the overall block median — this prevents
  * blocks with mixed flat types from being incorrectly excluded.
  */
-export function getEffectiveMedianPrice(block: BlockSummary, flatType: string): number {
-  if (!flatType) {
-    return block.medianPrice;
-  }
+export type EffectiveMetric = {
+  value: number;
+  flatType: string;
+  isTypeSpecific: boolean;
+};
 
+export type EffectiveBlockCohort = BlockFlatTypeCohort & {
+  flatType: string;
+  isTypeSpecific: boolean;
+};
+
+function getCachedCanonicalFlatType(flatType: string): string {
   let canonicalSelectedFlatType = filterFlatTypeCache.get(flatType);
   if (canonicalSelectedFlatType === undefined) {
     canonicalSelectedFlatType = canonicalFlatType(flatType);
     filterFlatTypeCache.set(flatType, canonicalSelectedFlatType);
   }
-
-  const ftMedian = block.medianPriceByFlatType?.[canonicalSelectedFlatType];
-  return ftMedian ?? block.medianPrice;
+  return canonicalSelectedFlatType;
 }
 
-export function getEffectivePricePerSqmMedian(block: BlockSummary, flatType: string): number {
+export function resolveEffectiveMedianPrice(
+  block: Pick<BlockSummary, "medianPrice" | "medianPriceByFlatType">,
+  flatType: string,
+): EffectiveMetric {
   if (!flatType) {
-    return block.pricePerSqmMedian;
+    return { value: block.medianPrice, flatType: "", isTypeSpecific: false };
   }
 
-  let canonicalSelectedFlatType = filterFlatTypeCache.get(flatType);
-  if (canonicalSelectedFlatType === undefined) {
-    canonicalSelectedFlatType = canonicalFlatType(flatType);
-    filterFlatTypeCache.set(flatType, canonicalSelectedFlatType);
+  const canonicalSelectedFlatType = getCachedCanonicalFlatType(flatType);
+  const ftMedian = block.medianPriceByFlatType?.[canonicalSelectedFlatType];
+  return ftMedian === undefined
+    ? { value: block.medianPrice, flatType: canonicalSelectedFlatType, isTypeSpecific: false }
+    : { value: ftMedian, flatType: canonicalSelectedFlatType, isTypeSpecific: true };
+}
+
+export function getEffectiveMedianPrice(
+  block: Pick<BlockSummary, "medianPrice" | "medianPriceByFlatType">,
+  flatType: string,
+): number {
+  return resolveEffectiveMedianPrice(block, flatType).value;
+}
+
+export function resolveEffectivePricePerSqmMedian(
+  block: Pick<BlockSummary, "pricePerSqmMedian" | "medianPricePerSqmByFlatType">,
+  flatType: string,
+): EffectiveMetric {
+  if (!flatType) {
+    return { value: block.pricePerSqmMedian, flatType: "", isTypeSpecific: false };
   }
 
+  const canonicalSelectedFlatType = getCachedCanonicalFlatType(flatType);
   const ftMedian = block.medianPricePerSqmByFlatType?.[canonicalSelectedFlatType];
-  return ftMedian ?? block.pricePerSqmMedian;
+  return ftMedian === undefined
+    ? {
+        value: block.pricePerSqmMedian,
+        flatType: canonicalSelectedFlatType,
+        isTypeSpecific: false,
+      }
+    : { value: ftMedian, flatType: canonicalSelectedFlatType, isTypeSpecific: true };
+}
+
+export function getEffectivePricePerSqmMedian(
+  block: Pick<BlockSummary, "pricePerSqmMedian" | "medianPricePerSqmByFlatType">,
+  flatType: string,
+): number {
+  return resolveEffectivePricePerSqmMedian(block, flatType).value;
+}
+
+export function resolveEffectiveBlockCohort(
+  block: Pick<
+    BlockSummary,
+    "transactionCount" | "latestMonth" | "floorAreaRange" | "flatModels" | "flatTypeCohorts"
+  >,
+  flatType: string,
+): EffectiveBlockCohort {
+  if (flatType) {
+    const canonicalSelectedFlatType = getCachedCanonicalFlatType(flatType);
+    const cohort = block.flatTypeCohorts?.[canonicalSelectedFlatType];
+    if (cohort) {
+      return {
+        ...cohort,
+        flatType: canonicalSelectedFlatType,
+        isTypeSpecific: true,
+      };
+    }
+    return {
+      transactionCount: block.transactionCount,
+      latestMonth: block.latestMonth,
+      floorAreaRange: block.floorAreaRange,
+      flatModels: block.flatModels,
+      flatType: canonicalSelectedFlatType,
+      isTypeSpecific: false,
+    };
+  }
+
+  return {
+    transactionCount: block.transactionCount,
+    latestMonth: block.latestMonth,
+    floorAreaRange: block.floorAreaRange,
+    flatModels: block.flatModels,
+    flatType: "",
+    isTypeSpecific: false,
+  };
+}
+
+export function getCohortAlignedMedianPrice(
+  block: Pick<BlockSummary, "medianPrice" | "medianPriceByFlatType">,
+  flatType: string,
+): number {
+  return resolveEffectiveMedianPrice(block, flatType).value;
+}
+
+export function getCohortAlignedLatestMonth(
+  block: Pick<BlockSummary, "latestMonth" | "flatTypeCohorts">,
+  flatType: string,
+): string {
+  if (!flatType) {
+    return block.latestMonth;
+  }
+  const canonicalSelectedFlatType = getCachedCanonicalFlatType(flatType);
+  return block.flatTypeCohorts?.[canonicalSelectedFlatType]?.latestMonth ?? block.latestMonth;
 }
 
 // ── Filter evaluation context ────────────────────────────────────────────
@@ -653,8 +746,40 @@ export function matchesFilter(
     return false;
   }
 
-  // Use flat-type-specific median when flatType filter is active
-  const effectivePrice = getEffectiveMedianPrice(block, filters.flatType);
+  let canonicalSelectedFlatType = "";
+  if (filters.flatType) {
+    // Use a cached value for the filter's canonical flat type instead of re-evaluating
+    // .trim().toUpperCase() for every single block in the 10,000+ iteration loop.
+    canonicalSelectedFlatType = getCachedCanonicalFlatType(filters.flatType);
+    if (!getCanonicalFlatTypes(block).includes(canonicalSelectedFlatType)) {
+      return false;
+    }
+  }
+
+  const typeSpecificCohort = canonicalSelectedFlatType
+    ? block.flatTypeCohorts?.[canonicalSelectedFlatType]
+    : undefined;
+  const requiresTypeSpecificCohort = Boolean(
+    filters.flatType &&
+    (filters.flatModel ||
+      filters.areaMin !== null ||
+      filters.areaMax !== null ||
+      filters.startMonth !== null ||
+      filters.endMonth !== null),
+  );
+  if (requiresTypeSpecificCohort && !typeSpecificCohort) {
+    return false;
+  }
+
+  // Per-type price medians predate the richer cohort metadata and are already
+  // derived from the same recent source window. Keep using that truthful price
+  // on legacy rows while labelling count, recency, area, and models block-wide.
+  const effectivePrice = canonicalSelectedFlatType
+    ? (block.medianPriceByFlatType?.[canonicalSelectedFlatType] ?? block.medianPrice)
+    : block.medianPrice;
+  const effectiveFloorAreaRange = typeSpecificCohort?.floorAreaRange ?? block.floorAreaRange;
+  const effectiveLatestMonth = typeSpecificCohort?.latestMonth ?? block.latestMonth;
+  const effectiveFlatModels = typeSpecificCohort?.flatModels ?? block.flatModels;
 
   if (filters.budgetMin !== null && effectivePrice < filters.budgetMin) {
     return false;
@@ -664,11 +789,11 @@ export function matchesFilter(
     return false;
   }
 
-  if (filters.areaMin !== null && block.floorAreaRange[1] < filters.areaMin) {
+  if (filters.areaMin !== null && effectiveFloorAreaRange[1] < filters.areaMin) {
     return false;
   }
 
-  if (filters.areaMax !== null && block.floorAreaRange[0] > filters.areaMax) {
+  if (filters.areaMax !== null && effectiveFloorAreaRange[0] > filters.areaMax) {
     return false;
   }
 
@@ -683,11 +808,11 @@ export function matchesFilter(
     }
   }
 
-  if (filters.startMonth !== null && block.availableDateRange[1] < filters.startMonth) {
+  if (filters.startMonth !== null && effectiveLatestMonth < filters.startMonth) {
     return false;
   }
 
-  if (filters.endMonth !== null && block.availableDateRange[0] > filters.endMonth) {
+  if (filters.endMonth !== null && effectiveLatestMonth > filters.endMonth) {
     return false;
   }
 
@@ -703,21 +828,8 @@ export function matchesFilter(
     return false;
   }
 
-  if (filters.flatModel && !block.flatModels.includes(filters.flatModel)) {
+  if (filters.flatModel && !effectiveFlatModels.includes(filters.flatModel)) {
     return false;
-  }
-
-  if (filters.flatType) {
-    // Use a cached value for the filter's canonical flat type instead of re-evaluating
-    // .trim().toUpperCase() for every single block in the 10,000+ iteration loop.
-    let canonicalSelectedFlatType = filterFlatTypeCache.get(filters.flatType);
-    if (canonicalSelectedFlatType === undefined) {
-      canonicalSelectedFlatType = canonicalFlatType(filters.flatType);
-      filterFlatTypeCache.set(filters.flatType, canonicalSelectedFlatType);
-    }
-    if (!getCanonicalFlatTypes(block).includes(canonicalSelectedFlatType)) {
-      return false;
-    }
   }
 
   // The affordability check result is pre-computed by the caller (which owns the

@@ -18,7 +18,7 @@
 - [x] **T1.2** Map the buyer-critical test files to Vitest filename-filter
   patterns and verify with `vitest list --filesOnly <patterns>` that each
   pattern selects exactly the intended files and nothing extraneous.
-  → `listing AskingPriceCheck`, `comparable time-adjustment transaction-analysis
+  → `listing ListingCheckPanel`, `comparable time-adjustment transaction-analysis
   transaction-outliers`, and `shortlist buyer-first` resolve to the documented
   file sets. (R2.2, R3.2,
   R4.2)
@@ -27,8 +27,8 @@
 
 - [x] **T2.1** Add `test:listing-check` using the existing `test` prefix
   (`NODE_OPTIONS=--no-experimental-webstorage vitest run`) with filters
-  `listing AskingPriceCheck`.
-  → `npm run test:listing-check` runs the 6 listing/AskingPriceCheck files and
+  `listing ListingCheckPanel`.
+  → `npm run test:listing-check` runs the canonical listing-check files and
   passes. (R2.1, R2.2, R2.3)
 
 - [x] **T2.2** Add `test:comparables` with filters

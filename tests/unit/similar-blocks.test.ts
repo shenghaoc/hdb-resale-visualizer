@@ -18,6 +18,14 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2015-01", "2024-12"] as [string, string],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
+    flatTypeCohorts: {
+      "4 ROOM": {
+        transactionCount: 10,
+        latestMonth: "2024-12",
+        floorAreaRange: [90, 100],
+        flatModels: ["MODEL A"],
+      },
+    },
     nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 },
     nearbyMrts: [],
     postalCode: null,
@@ -33,6 +41,15 @@ const SOURCE = makeBlock({
   leaseCommenceRange: [2000, 2000],
   floorAreaRange: [90, 100],
   nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 500, walkingTimeSeconds: 400 },
+});
+
+const MIXED_SOURCE = makeBlock({
+  addressKey: "mixed-source",
+  flatTypes: ["4 ROOM", "5 ROOM"],
+  medianPrice: 600_000,
+  pricePerSqmMedian: 6300,
+  medianPriceByFlatType: { "4 ROOM": 800_000, "5 ROOM": 950_000 },
+  medianPricePerSqmByFlatType: { "4 ROOM": 8000, "5 ROOM": 9000 },
 });
 
 describe("scoreSimilarity", () => {
@@ -143,6 +160,115 @@ describe("rankSimilarBlocks", () => {
     const results = rankSimilarBlocks(SOURCE, candidates);
     expect(results.some((b) => b.addressKey === "noOverlap")).toBe(false);
     expect(results.some((b) => b.addressKey === "hasOverlap")).toBe(true);
+  });
+
+  it("requires the canonical selected flat type instead of any source-type overlap", () => {
+    const wrongType = makeBlock({
+      addressKey: "only-five-room",
+      flatTypes: ["5 ROOM"],
+      medianPriceByFlatType: { "4 ROOM": 805_000, "5 ROOM": 900_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8050, "5 ROOM": 9000 },
+    });
+    const matchingType = makeBlock({
+      addressKey: "has-four-room",
+      flatTypes: ["4 ROOM"],
+      medianPriceByFlatType: { "4 ROOM": 810_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8100 },
+    });
+
+    const results = rankSimilarBlocks(MIXED_SOURCE, [wrongType, matchingType], {
+      flatType: " 4 room ",
+    });
+
+    expect(results.map((block) => block.addressKey)).toEqual(["has-four-room"]);
+  });
+
+  it("excludes missing type-price metrics while retaining legacy type-price evidence", () => {
+    const missingMedian = makeBlock({
+      addressKey: "missing-median",
+      flatTypes: ["4 ROOM"],
+      medianPricePerSqmByFlatType: { "4 ROOM": 8050 },
+    });
+    const missingPpsm = makeBlock({
+      addressKey: "missing-ppsm",
+      flatTypes: ["4 ROOM"],
+      medianPriceByFlatType: { "4 ROOM": 805_000 },
+    });
+    const complete = makeBlock({
+      addressKey: "complete",
+      flatTypes: ["4 ROOM"],
+      medianPriceByFlatType: { "4 ROOM": 810_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8100 },
+    });
+    const missingCohort = makeBlock({
+      addressKey: "missing-cohort",
+      flatTypes: ["4 ROOM"],
+      medianPriceByFlatType: { "4 ROOM": 812_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8120 },
+      flatTypeCohorts: undefined,
+    });
+
+    const results = rankSimilarBlocks(
+      MIXED_SOURCE,
+      [missingMedian, missingPpsm, missingCohort, complete],
+      {
+        flatType: "4 ROOM",
+      },
+    );
+
+    expect(results.map((block) => block.addressKey)).toEqual(["complete", "missing-cohort"]);
+  });
+
+  it("ranks by the selected-type median price instead of the overall block median", () => {
+    const overallCloseTypeFar = makeBlock({
+      addressKey: "overall-close-type-far",
+      flatTypes: ["4 ROOM"],
+      medianPrice: 605_000,
+      medianPriceByFlatType: { "4 ROOM": 1_200_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8000 },
+    });
+    const overallFarTypeClose = makeBlock({
+      addressKey: "overall-far-type-close",
+      flatTypes: ["4 ROOM"],
+      medianPrice: 300_000,
+      medianPriceByFlatType: { "4 ROOM": 810_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8000 },
+    });
+    const candidates = [overallCloseTypeFar, overallFarTypeClose];
+
+    expect(rankSimilarBlocks(MIXED_SOURCE, candidates)[0]?.addressKey).toBe(
+      "overall-close-type-far",
+    );
+    expect(rankSimilarBlocks(MIXED_SOURCE, candidates, { flatType: "4 ROOM" })[0]?.addressKey).toBe(
+      "overall-far-type-close",
+    );
+  });
+
+  it("ranks by selected-type price per sqm instead of the overall block value", () => {
+    const overallCloseTypeFar = makeBlock({
+      addressKey: "overall-ppsm-close-type-far",
+      flatTypes: ["4 ROOM"],
+      medianPrice: 600_000,
+      pricePerSqmMedian: 6320,
+      medianPriceByFlatType: { "4 ROOM": 800_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 12_000 },
+    });
+    const overallFarTypeClose = makeBlock({
+      addressKey: "overall-ppsm-far-type-close",
+      flatTypes: ["4 ROOM"],
+      medianPrice: 600_000,
+      pricePerSqmMedian: 4000,
+      medianPriceByFlatType: { "4 ROOM": 800_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 8100 },
+    });
+    const candidates = [overallCloseTypeFar, overallFarTypeClose];
+
+    expect(rankSimilarBlocks(MIXED_SOURCE, candidates)[0]?.addressKey).toBe(
+      "overall-ppsm-close-type-far",
+    );
+    expect(rankSimilarBlocks(MIXED_SOURCE, candidates, { flatType: "4 ROOM" })[0]?.addressKey).toBe(
+      "overall-ppsm-far-type-close",
+    );
   });
 
   it("returns results in descending similarity order", () => {

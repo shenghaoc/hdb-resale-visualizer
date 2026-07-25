@@ -445,6 +445,9 @@ export function FilterPanel(props: FilterPanelProps) {
               <FieldLegend className="v2-section-title">
                 {t("filters.advancedRefinements")}
               </FieldLegend>
+              <p className="text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
+                {t("filters.advancedRefinementsHint")}
+              </p>
               <SelectField
                 allLabel={t("filters.allModels")}
                 label={t("filters.flatModel")}
@@ -523,6 +526,9 @@ export function FilterPanel(props: FilterPanelProps) {
                     {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
                   </Badge>
                 </div>
+                <p className="text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
+                  {t("filters.transactionWindowHint")}
+                </p>
                 <div className="grid gap-4 pt-2 lg:grid-cols-2">
                   <Field>
                     <FieldContent>

@@ -1,10 +1,14 @@
 # Requirements: Comparable Evidence Table
 
+> Current integration contract: `ListingCheckPanel` is the sole canonical
+> listing-check UI, and `ComparableEvidenceTable` is its sole
+> comparable-evidence surface. Legacy duplicate components are retired.
+
 ## R1 — Evidence table component
 
 - **R1.1** A new component `ComparableEvidenceTable` in
-  `src/components/ComparableEvidenceTable.tsx` renders a table of comparable
-  transactions with columns: month, block/street, flat type, storey range,
+  `src/features/listing-check/ComparableEvidenceTable.tsx` renders a table of
+  comparable transactions with columns: month, block/street, flat type, storey range,
   floor area sqm, lease commence year, resale price, price per sqm,
   original registered price when time adjustment is available, similarity
   score, and match reasons.
@@ -101,10 +105,10 @@
 
 - **R9.1** `ListingCheckPanel.tsx` renders `ComparableEvidenceTable` below
   the verdict card (after the distribution bar and caveats section).
-- **R9.2** The `ComparableTransactionsList` usage inside `ListingCheckPanel`
-  is removed and replaced by the new evidence table.
-- **R9.3** `ComparableTransactionsList.tsx` is preserved — it is still used
-  by `AskingPriceCheck.tsx` inside `DetailDrawer`.
+- **R9.2** `ComparableEvidenceTable` is the only comparable-evidence component
+  rendered by `ListingCheckPanel`.
+- **R9.3** No legacy compact-list or detail-drawer listing-check surface is
+  retained or reintroduced.
 - **R9.4** The verdict card, distribution bar, and caveat rendering inside
   the card remain unchanged.
 
@@ -139,10 +143,10 @@
   - Sorting a column header reorders rows.
   - Match reason badges visible.
 
-## R12 — Preservation
+## R12 — Canonical ownership
 
-- **R12.1** `ComparableTransactionsList.tsx` is not deleted.
-- **R12.2** `AskingPriceCheck.tsx` inside `DetailDrawer` is not modified.
+- **R12.1** `ListingCheckPanel.tsx` remains the sole listing-check UI.
+- **R12.2** `ComparableEvidenceTable.tsx` remains its sole evidence surface.
 - **R12.3** The comparable engine (`shared/comparable-engine.ts`) is not
   modified.
 - **R12.4** The API endpoint (`/api/comparable-transactions`) is not

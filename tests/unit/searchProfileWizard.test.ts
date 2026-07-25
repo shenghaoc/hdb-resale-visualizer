@@ -54,20 +54,12 @@ describe("search profile wizard logic", () => {
     expect(canSubmitSearchProfileDraft(makeDraft({ age: "20" }))).toBe(false);
   });
 
-  it("builds a v2 profile with no hidden stretch or exact MRT anchor", () => {
+  it("builds the commute-free v3 profile contract", () => {
     expect(buildSearchProfileFromWizard(makeDraft())).toEqual({
-      version: 2,
+      version: 3,
       mainFlatType: "4 ROOM",
-      alternativeFlatTypes: [],
       maxBudget: 700000,
-      commuteAnchorLabel: "",
-      commuteAnchorMrt: null,
-      maxComfortableCommuteMinutes: null,
-      commuteStretchMinutes: 0,
       minimumRemainingLeaseYears: 70,
-      budgetStretchPercent: 0,
-      showStretchOptions: false,
-      showAllBlocks: true,
       age: 35,
       coApplicantAge: 33,
       cpfOABalance: 120000,
@@ -88,7 +80,6 @@ describe("search profile wizard logic", () => {
     expect(parseOptionalNumber(" ")).toBeNull();
     expect(buildSearchProfileFromWizard(draft)).toMatchObject({
       maxBudget: null,
-      maxComfortableCommuteMinutes: null,
       age: null,
       coApplicantAge: null,
       cpfOABalance: null,

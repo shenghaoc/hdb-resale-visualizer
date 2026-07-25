@@ -76,16 +76,13 @@
       "profile": {
         "mainFlatType": "4 ROOM",
         "maxBudget": 700000,
-        "maxComfortableCommuteMinutes": 30,
-        "minimumRemainingLeaseYears": 60,
-        "budgetStretchPercent": 5,
-        "commuteStretchMinutes": 10
+        "minimumRemainingLeaseYears": 60
       },
       "currentYear": 2026,
       "expectedTier": "strong"
     },
     {
-      "name": "good-stretch-budget",
+      "name": "weak-budget-over-maximum",
       "block": {
         "addressKey": "good-block",
         "town": "TAMPINES",
@@ -112,24 +109,21 @@
       "profile": {
         "mainFlatType": "4 ROOM",
         "maxBudget": 700000,
-        "maxComfortableCommuteMinutes": 30,
-        "minimumRemainingLeaseYears": 60,
-        "budgetStretchPercent": 5,
-        "commuteStretchMinutes": 10
+        "minimumRemainingLeaseYears": 60
       },
       "currentYear": 2026,
-      "expectedTier": "good"
+      "expectedTier": "weak"
     },
     {
-      "name": "stretch-both-dimensions",
+      "name": "strong-despite-distant-mrt",
       "block": {
         "addressKey": "stretch-block",
         "town": "WOODLANDS",
         "block": "701",
         "streetName": "WOODLANDS AVE 4",
         "coordinates": { "lat": 1.437, "lng": 103.786 },
-        "medianPrice": 720000,
-        "pricePerSqmMedian": 7200,
+        "medianPrice": 650000,
+        "pricePerSqmMedian": 6500,
         "transactionCount": 6,
         "floorAreaRange": [90, 100],
         "leaseCommenceRange": [2015, 2017],
@@ -148,13 +142,10 @@
       "profile": {
         "mainFlatType": "4 ROOM",
         "maxBudget": 700000,
-        "maxComfortableCommuteMinutes": 30,
-        "minimumRemainingLeaseYears": 60,
-        "budgetStretchPercent": 5,
-        "commuteStretchMinutes": 30
+        "minimumRemainingLeaseYears": 60
       },
       "currentYear": 2026,
-      "expectedTier": "stretch"
+      "expectedTier": "strong"
     },
     {
       "name": "weak-flat-type-mismatch",
@@ -184,10 +175,7 @@
       "profile": {
         "mainFlatType": "4 ROOM",
         "maxBudget": 700000,
-        "maxComfortableCommuteMinutes": 30,
-        "minimumRemainingLeaseYears": 60,
-        "budgetStretchPercent": 5,
-        "commuteStretchMinutes": 10
+        "minimumRemainingLeaseYears": 60
       },
       "currentYear": 2026,
       "expectedTier": "weak"
@@ -216,9 +204,7 @@
       "profile": {
         "mainFlatType": "3 ROOM",
         "maxBudget": 500000,
-        "minimumRemainingLeaseYears": 60,
-        "budgetStretchPercent": 5,
-        "commuteStretchMinutes": 10
+        "minimumRemainingLeaseYears": 60
       },
       "currentYear": 2026,
       "expectedTier": "weak"
@@ -388,59 +374,6 @@
       "blockMedianPriceByFlatType": { "4 ROOM": 550000 },
       "filterFlatType": "",
       "expectedEffectivePrice": 500000
-    }
-  ],
-  "stretchBudgetScenarios": [
-    {
-      "name": "within-stretch-ceiling",
-      "maxBudget": 700000,
-      "budgetStretchPercent": 5,
-      "blockMedianPrice": 730000,
-      "expectedDimension": "stretch"
-    },
-    {
-      "name": "beyond-stretch-ceiling",
-      "maxBudget": 700000,
-      "budgetStretchPercent": 5,
-      "blockMedianPrice": 740000,
-      "expectedDimension": "fail"
-    },
-    {
-      "name": "within-primary-budget",
-      "maxBudget": 700000,
-      "budgetStretchPercent": 5,
-      "blockMedianPrice": 700000,
-      "expectedDimension": "pass"
-    }
-  ],
-  "commuteProxyScenarios": [
-    {
-      "name": "commute-pass",
-      "distanceMeters": 400,
-      "maxCommuteMinutes": 30,
-      "stretchMinutes": 10,
-      "expectedDimension": "pass"
-    },
-    {
-      "name": "commute-stretch",
-      "distanceMeters": 2500,
-      "maxCommuteMinutes": 30,
-      "stretchMinutes": 10,
-      "expectedDimension": "stretch"
-    },
-    {
-      "name": "commute-fail",
-      "distanceMeters": 4000,
-      "maxCommuteMinutes": 30,
-      "stretchMinutes": 10,
-      "expectedDimension": "fail"
-    },
-    {
-      "name": "commute-no-data-fail",
-      "distanceMeters": null,
-      "maxCommuteMinutes": 30,
-      "stretchMinutes": 10,
-      "expectedDimension": "fail"
     }
   ],
   "transactions": [

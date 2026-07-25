@@ -17,15 +17,20 @@
   "Deterministic historical comparisons. No AI valuation API."
   - Verification: present and visible in first fold. (R4.1)
 
-## Phase 2 — Buyer flow entry and sample/demo path
+## Phase 2 — Buyer flow entry and honest listing facts
 - [ ] **T2.1** Wire the `Check a listing price` action to jump directly to listing-check workflow.
   - Verification: user can start a check without map clicks. (R2.3, R1.3)
 
-- [ ] **T2.2** Add a sample/demo listing-check CTA in the no-input state of the check entry view.
-  - Verification: activating it pre-fills deterministic inputs and shows expected sample analysis output path. (R5.1, R5.2)
+- [ ] **T2.2** Keep the no-input state free of sample/demo listings and
+  synthetic defaults.
+  - Verification: the empty Check state has no sample CTA and does not populate
+    asking price, floor area, flat type, or storey range. (R5.1)
 
-- [ ] **T2.3** Add fallback messaging for unsupported/no-input states without forcing map interaction.
-  - Verification: empty state still encourages action and sample/demo usage. (R5.1)
+- [ ] **T2.3** Add concise empty-state guidance for selecting a real block and
+  entering the required listing facts without forcing map interaction.
+  - Verification: the submit action remains disabled until block, asking price,
+    floor area, flat type, and storey range are present; lease year is optional.
+    (R5.2, R5.3)
 
 ## Phase 3 — Map support role and retention
 - [ ] **T3.1** Keep map explorer mounted/available with unchanged existing functionality.
@@ -53,7 +58,8 @@
 - [ ] **T6.2** Add/update E2E tests for:
   - first-run clarity,
   - direct price check start (no map),
-  - sample/demo CTA,
+  - no sample/demo CTA or synthetic listing defaults,
+  - explicit entry of every required listing fact,
   - map preserved and functional for candidate search.
   - Verification: `Check a listing price`, `Find candidate blocks`, `Compare my shortlist` all usable from first screen. (R1.1, R1.2, R3.3)
 

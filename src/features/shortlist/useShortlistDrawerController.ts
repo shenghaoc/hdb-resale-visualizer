@@ -19,10 +19,12 @@ import type { FilterState, ShortlistItem } from "@/types/data";
 import type { ShortlistRow } from "@/features/shortlist/shortlistRows";
 
 export type ShortlistViewMode = "list" | "compare";
+export type ShortlistRemovalMode = "local-undo" | "external";
 
 export type UseShortlistDrawerControllerOptions = {
   isOpen: boolean;
   rows: ShortlistRow[];
+  unresolvedItems?: readonly ShortlistItem[];
   filters: FilterState;
   remainingLeaseMin: number | null;
   isDark: boolean;
@@ -30,6 +32,7 @@ export type UseShortlistDrawerControllerOptions = {
   t: Translator;
   onRemove: (addressKey: string) => void;
   onRestore: (item: ShortlistItem, index: number) => boolean;
+  removalMode?: ShortlistRemovalMode;
 };
 
 export type ShortlistCsvExport = {
@@ -69,9 +72,14 @@ function getLeaseYears(row: ShortlistRow) {
   return Math.max(0, MAX_LEASE_DURATION - (getCurrentYear() - row.block.leaseCommenceRange[1]));
 }
 
+function escapeMarkdownTableCell(value: string) {
+  return value.replaceAll("\\", "\\\\").replaceAll("|", "\\|").replace(/\r?\n/g, " ");
+}
+
 export function useShortlistDrawerController({
   isOpen,
   rows,
+  unresolvedItems = [],
   filters,
   remainingLeaseMin,
   isDark,
@@ -79,6 +87,7 @@ export function useShortlistDrawerController({
   t,
   onRemove,
   onRestore,
+  removalMode = "local-undo",
 }: UseShortlistDrawerControllerOptions) {
   const [compareMode, setCompareMode] = useState<CompareMode>("recent");
   const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
@@ -107,20 +116,37 @@ export function useShortlistDrawerController({
     previousIsOpenRef.current = isOpen;
   }, [isOpen]);
 
-  const rowKeys = useMemo(() => rows.map((row) => row.item.addressKey), [rows]);
+  const resolvedKeys = useMemo(() => new Set(rows.map((row) => row.item.addressKey)), [rows]);
+  const effectiveUnresolvedItems = useMemo(
+    () => unresolvedItems.filter((item) => !resolvedKeys.has(item.addressKey)),
+    [resolvedKeys, unresolvedItems],
+  );
+  const savedKeys = useMemo(
+    () => [
+      ...rows.map((row) => row.item.addressKey),
+      ...effectiveUnresolvedItems.map((item) => item.addressKey),
+    ],
+    [effectiveUnresolvedItems, rows],
+  );
 
   useEffect(() => {
     const previousKeys = previousRowKeysRef.current;
-    if (previousKeys !== null && !hasSameRowMembership(previousKeys, rowKeys)) {
+    if (previousKeys !== null && !hasSameRowMembership(previousKeys, savedKeys)) {
       setShareError(null);
 
-      if (expandedKey !== null && !rowKeys.includes(expandedKey)) {
+      if (expandedKey !== null && !resolvedKeys.has(expandedKey)) {
         setExpandedKey(null);
       }
     }
 
-    previousRowKeysRef.current = rowKeys;
-  }, [expandedKey, rowKeys]);
+    previousRowKeysRef.current = savedKeys;
+  }, [expandedKey, resolvedKeys, savedKeys]);
+
+  useEffect(() => {
+    if (rows.length < 2 && viewMode !== "list") {
+      setViewMode("list");
+    }
+  }, [rows.length, viewMode]);
 
   const { state: checklistState, toggle: toggleChecklist } = useChecklist();
   const {
@@ -135,17 +161,35 @@ export function useShortlistDrawerController({
 
   const handleRemove = useCallback(
     (addressKey: string) => {
-      const index = rows.findIndex((row) => row.item.addressKey === addressKey);
-      const row = rows[index];
-      if (row === undefined) {
+      if (removalMode === "external") {
         onRemove(addressKey);
         return;
       }
 
-      const label = `${row.block.block} ${row.block.streetName}`;
-      remove({ item: row.item, index, label });
+      const index = rows.findIndex((row) => row.item.addressKey === addressKey);
+      const row = rows[index];
+      if (row !== undefined) {
+        const label = `${row.block.block} ${row.block.streetName}`;
+        remove({ item: row.item, index, label });
+        return;
+      }
+
+      const unresolvedIndex = effectiveUnresolvedItems.findIndex(
+        (item) => item.addressKey === addressKey,
+      );
+      const unresolvedItem = effectiveUnresolvedItems[unresolvedIndex];
+      if (unresolvedItem !== undefined) {
+        remove({
+          item: unresolvedItem,
+          index: rows.length + unresolvedIndex,
+          label: unresolvedItem.addressKey,
+        });
+        return;
+      }
+
+      onRemove(addressKey);
     },
-    [onRemove, remove, rows],
+    [effectiveUnresolvedItems, onRemove, removalMode, remove, rows],
   );
 
   const currentYear = getCurrentYear();
@@ -220,7 +264,10 @@ export function useShortlistDrawerController({
   );
 
   const shareUrl = useMemo(() => {
-    const encoded = encodeShortlistForUrl(rows.map((row) => row.item));
+    const encoded = encodeShortlistForUrl([
+      ...rows.map((row) => row.item),
+      ...effectiveUnresolvedItems,
+    ]);
     if (!encoded) {
       return "";
     }
@@ -230,7 +277,7 @@ export function useShortlistDrawerController({
       window.location.origin,
       window.location.pathname,
     );
-  }, [filters, rows]);
+  }, [effectiveUnresolvedItems, filters, rows]);
 
   const shareBlocked = shareUrl === "";
 
@@ -240,6 +287,8 @@ export function useShortlistDrawerController({
       getContent: () =>
         buildShortlistCsvContent(
           [
+            t("shortlist.export.status"),
+            t("shortlist.export.addressKey"),
             t("shortlist.export.address"),
             t("shortlist.export.medianPrice"),
             t("shortlist.export.askingPrice"),
@@ -267,68 +316,105 @@ export function useShortlistDrawerController({
             t("shortlist.export.mrtDistance"),
             t("shortlist.export.notes"),
           ],
-          rankedRows.map((row) => ({
-            address: `${row.block.block} ${row.block.streetName}`,
-            medianPrice: row.block.medianPrice,
-            askingPrice: row.item.askingPrice ?? null,
-            fairRangeLow: row.item.fairRangeLow ?? null,
-            fairRangeMedian: row.item.fairRangeMedian ?? null,
-            fairRangeHigh: row.item.fairRangeHigh ?? null,
-            suggestedOfferCeiling: row.item.suggestedOfferCeiling ?? null,
-            buyerOpeningOffer: row.item.buyerOpeningOffer ?? null,
-            valuationReceived: row.item.valuationReceived ?? null,
-            estimatedCov: row.item.estimatedCov ?? null,
-            viewingDate: row.item.viewingDate ?? "",
-            decisionStatus: row.item.decisionStatus ?? "",
-            buyerNotes: row.item.buyerNotes ?? "",
-            pros: row.item.pros ?? "",
-            cons: row.item.cons ?? "",
-            renovation: row.item.renovation ?? "",
-            noiseNotes: row.item.noiseNotes ?? row.item.noise ?? "",
-            transportNotes: row.item.transportNotes ?? row.item.transport ?? "",
-            agentRemarks: row.item.agentRemarks ?? "",
-            targetPrice: row.item.targetPrice,
-            schools1km: row.comparison?.amenities.primarySchoolsWithin1km ?? "",
-            hawkers1km: row.comparison?.amenities.hawkerCentresWithin1km ?? "",
-            supermarkets1km: row.comparison?.amenities.supermarketsWithin1km ?? "",
-            parks1km: row.comparison?.amenities.parksWithin1km ?? "",
-            mrtDistanceMeters: row.block.nearestMrt?.distanceMeters ?? "",
-            notes: row.item.notes || "",
-          })),
+          [
+            ...rankedRows.map((row) => ({
+              status: t("shortlist.export.statusAvailable"),
+              addressKey: row.item.addressKey,
+              address: `${row.block.block} ${row.block.streetName}`,
+              medianPrice: row.block.medianPrice,
+              askingPrice: row.item.askingPrice ?? null,
+              fairRangeLow: row.item.fairRangeLow ?? null,
+              fairRangeMedian: row.item.fairRangeMedian ?? null,
+              fairRangeHigh: row.item.fairRangeHigh ?? null,
+              suggestedOfferCeiling: row.item.suggestedOfferCeiling ?? null,
+              buyerOpeningOffer: row.item.buyerOpeningOffer ?? null,
+              valuationReceived: row.item.valuationReceived ?? null,
+              estimatedCov: row.item.estimatedCov ?? null,
+              viewingDate: row.item.viewingDate ?? "",
+              decisionStatus: row.item.decisionStatus ?? "",
+              buyerNotes: row.item.buyerNotes ?? "",
+              pros: row.item.pros ?? "",
+              cons: row.item.cons ?? "",
+              renovation: row.item.renovation ?? "",
+              noiseNotes: row.item.noiseNotes ?? row.item.noise ?? "",
+              transportNotes: row.item.transportNotes ?? row.item.transport ?? "",
+              agentRemarks: row.item.agentRemarks ?? "",
+              targetPrice: row.item.targetPrice,
+              schools1km: row.comparison?.amenities.primarySchoolsWithin1km ?? "",
+              hawkers1km: row.comparison?.amenities.hawkerCentresWithin1km ?? "",
+              supermarkets1km: row.comparison?.amenities.supermarketsWithin1km ?? "",
+              parks1km: row.comparison?.amenities.parksWithin1km ?? "",
+              mrtDistanceMeters: row.block.nearestMrt?.distanceMeters ?? "",
+              notes: row.item.notes || "",
+            })),
+            ...effectiveUnresolvedItems.map((item) => ({
+              status: t("shortlist.export.statusUnavailable"),
+              addressKey: item.addressKey,
+              address: "",
+              medianPrice: "",
+              askingPrice: item.askingPrice ?? null,
+              fairRangeLow: item.fairRangeLow ?? null,
+              fairRangeMedian: item.fairRangeMedian ?? null,
+              fairRangeHigh: item.fairRangeHigh ?? null,
+              suggestedOfferCeiling: item.suggestedOfferCeiling ?? null,
+              buyerOpeningOffer: item.buyerOpeningOffer ?? null,
+              valuationReceived: item.valuationReceived ?? null,
+              estimatedCov: item.estimatedCov ?? null,
+              viewingDate: item.viewingDate ?? "",
+              decisionStatus: item.decisionStatus ?? "",
+              buyerNotes: item.buyerNotes ?? "",
+              pros: item.pros ?? "",
+              cons: item.cons ?? "",
+              renovation: item.renovation ?? "",
+              noiseNotes: item.noiseNotes ?? item.noise ?? "",
+              transportNotes: item.transportNotes ?? item.transport ?? "",
+              agentRemarks: item.agentRemarks ?? "",
+              targetPrice: item.targetPrice,
+              schools1km: "",
+              hawkers1km: "",
+              supermarkets1km: "",
+              parks1km: "",
+              mrtDistanceMeters: "",
+              notes: item.notes || "",
+            })),
+          ],
         ),
     }),
-    [rankedRows, t],
+    [effectiveUnresolvedItems, rankedRows, t],
   );
 
   const copySummary = useCallback(() => {
-    const header = `| Address | Median Price | Target Price | Lease | MRT | Schools (1km) | Hawkers (1km) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`;
-    const body = rows
-      .map((row) => {
-        const address = `${row.block.block} ${row.block.streetName}`;
-        const median = formatCurrency(row.block.medianPrice, locale);
-        const target =
-          row.item.targetPrice !== null ? formatCurrency(row.item.targetPrice, locale) : "-";
-        const lease = formatRemainingLease(row.block.leaseCommenceRange, t);
-        const mrt = row.block.nearestMrt
-          ? formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)
-          : "-";
-        const schools = row.comparison?.amenities.primarySchoolsWithin1km ?? "-";
-        const hawkers = row.comparison?.amenities.hawkerCentresWithin1km ?? "-";
-        return `| ${address} | ${median} | ${target} | ${lease} | ${mrt} | ${schools} | ${hawkers} |`;
-      })
-      .join("\n");
+    const header = `| ${t("shortlist.export.status")} | ${t("shortlist.export.addressKey")} | ${t("shortlist.export.address")} | ${t("shortlist.export.medianPrice")} | ${t("shortlist.export.targetPrice")} | ${t("shortlist.compare.col.lease")} | ${t("shortlist.compare.col.mrt")} | ${t("shortlist.export.schools1km")} | ${t("shortlist.export.hawkers1km")} |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |`;
+    const resolvedBody = rows.map((row) => {
+      const address = `${row.block.block} ${row.block.streetName}`;
+      const median = formatCurrency(row.block.medianPrice, locale);
+      const target =
+        row.item.targetPrice !== null ? formatCurrency(row.item.targetPrice, locale) : "-";
+      const lease = formatRemainingLease(row.block.leaseCommenceRange, t);
+      const mrt = row.block.nearestMrt
+        ? formatMinutesWalk(row.block.nearestMrt.walkingTimeSeconds, t, locale)
+        : "-";
+      const schools = row.comparison?.amenities.primarySchoolsWithin1km ?? "-";
+      const hawkers = row.comparison?.amenities.hawkerCentresWithin1km ?? "-";
+      return `| ${t("shortlist.export.statusAvailable")} | ${escapeMarkdownTableCell(row.item.addressKey)} | ${escapeMarkdownTableCell(address)} | ${median} | ${target} | ${lease} | ${mrt} | ${schools} | ${hawkers} |`;
+    });
+    const unresolvedBody = effectiveUnresolvedItems.map((item) => {
+      const target = item.targetPrice !== null ? formatCurrency(item.targetPrice, locale) : "-";
+      return `| ${t("shortlist.export.statusUnavailable")} | ${escapeMarkdownTableCell(item.addressKey)} | - | - | ${target} | - | - | - | - |`;
+    });
+    const body = [...resolvedBody, ...unresolvedBody].join("\n");
 
     navigator.clipboard?.writeText(`${header}\n${body}`)?.then(
       () => showCopied("summary"),
       () => {},
     );
-  }, [locale, rows, showCopied, t]);
+  }, [effectiveUnresolvedItems, locale, rows, showCopied, t]);
 
   const exportJson = useCallback(() => {
     const blob = new Blob(
       [
         JSON.stringify(
-          rankedRows.map((row) => row.item),
+          [...rankedRows.map((row) => row.item), ...effectiveUnresolvedItems],
           null,
           2,
         ),
@@ -343,7 +429,7 @@ export function useShortlistDrawerController({
     link.download = "hdb-shortlist.json";
     link.click();
     URL.revokeObjectURL(url);
-  }, [rankedRows]);
+  }, [effectiveUnresolvedItems, rankedRows]);
 
   const highlights = useMemo<ShortlistHighlight[]>(() => {
     if (rows.length < 2) {

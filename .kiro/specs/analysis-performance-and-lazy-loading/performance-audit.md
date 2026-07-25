@@ -28,7 +28,10 @@ npm run test: 133 files, 1,205 tests, 13.39s
 | createLucideIcon | 10.37 KiB | Eager (icons) |
 | TrendChart | 10.68 KiB | Lazy |
 | MapView | 6.29 KiB | Lazy |
-| AskingPriceCheck | 3.12 KiB | Lazy |
+| Legacy listing checker (retired; historical baseline only) | 3.12 KiB | Lazy |
+
+> Current UI contract: `ListingCheckPanel` is the sole listing-check surface,
+> with `ComparableEvidenceTable` as its comparable-evidence surface.
 
 ### Initial load budget
 
@@ -89,7 +92,7 @@ measurable frame drops during rapid interaction (not observed).
 
 ### 4. ComparableEvidenceTable — no virtualization
 
-**File:** `src/components/ComparableEvidenceTable.tsx`
+**File:** `src/features/listing-check/ComparableEvidenceTable.tsx`
 
 **Issue:** Renders all rows directly for both desktop table and mobile cards.
 

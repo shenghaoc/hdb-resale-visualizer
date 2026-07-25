@@ -7,6 +7,10 @@ import {
 import { isBlockAgeEligible as isBlockAgeEligibleForYear } from "@shared/product/lease";
 import type { AffordabilityMode, BlockSummary } from "@/types/data";
 import { getCurrentYear } from "./constants";
+import {
+  getCohortAlignedMedianPrice,
+  resolveEffectiveMedianPrice,
+} from "@shared/product/filtering";
 
 export {
   computeAffordabilityVerdict,
@@ -48,29 +52,38 @@ export function affordabilityProfileFingerprint(profile: AffordabilityProfile): 
 }
 
 let lastProfileRef: AffordabilityProfile | null = null;
-let verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
+let verdictCache = new WeakMap<BlockSummary, Map<string, AffordabilityStatus>>();
 let verdictCacheFingerprint = "";
 
 function getAffordabilityStatusCached(
   block: BlockSummary,
   profile: AffordabilityProfile,
+  flatType: string,
 ): AffordabilityStatus {
   // The profile reference is stable across a filter pass, so skip the
   // fingerprint string build unless the reference actually changes.
   if (profile !== lastProfileRef) {
     const fingerprint = affordabilityProfileFingerprint(profile);
     if (fingerprint !== verdictCacheFingerprint) {
-      verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
+      verdictCache = new WeakMap<BlockSummary, Map<string, AffordabilityStatus>>();
       verdictCacheFingerprint = fingerprint;
     }
     lastProfileRef = profile;
   }
-  const cached = verdictCache.get(block);
+  const priceResolution = resolveEffectiveMedianPrice(block, flatType);
+  const effectivePrice = getCohortAlignedMedianPrice(block, flatType);
+  const cacheKey = `${priceResolution.isTypeSpecific ? priceResolution.flatType : ""}|${effectivePrice}`;
+  const blockCache = verdictCache.get(block);
+  const cached = blockCache?.get(cacheKey);
   if (cached !== undefined) {
     return cached;
   }
-  const { status } = computeAffordabilityVerdict(profile, block.medianPrice);
-  verdictCache.set(block, status);
+  const { status } = computeAffordabilityVerdict(profile, effectivePrice);
+  const nextBlockCache = blockCache ?? new Map<string, AffordabilityStatus>();
+  nextBlockCache.set(cacheKey, status);
+  if (!blockCache) {
+    verdictCache.set(block, nextBlockCache);
+  }
   return status;
 }
 
@@ -85,10 +98,11 @@ export function passesAffordabilityMode(
   block: BlockSummary,
   profile: AffordabilityProfile,
   mode: AffordabilityMode,
+  flatType = "",
 ): boolean {
   if (mode === "") return true;
   if (!_isAffordabilityProfileComplete(profile)) return true;
-  const status = getAffordabilityStatusCached(block, profile);
+  const status = getAffordabilityStatusCached(block, profile, flatType);
   if (mode === "comfortable") return status === "comfortable";
   return status === "comfortable" || status === "stretch";
 }
@@ -101,15 +115,16 @@ export function passesAffordabilityMode(
 export function affordabilityHeadroom(
   block: BlockSummary,
   profile: AffordabilityProfile,
+  flatType = "",
 ): number | null {
   if (!_isAffordabilityProfileComplete(profile)) return null;
   const ceiling = maxAffordablePrice(profile);
-  return ceiling - block.medianPrice;
+  return ceiling - getCohortAlignedMedianPrice(block, flatType);
 }
 
 /** Test-only: drop the affordability verdict cache. */
 export function resetAffordabilityCacheForTests(): void {
   lastProfileRef = null;
-  verdictCache = new WeakMap<BlockSummary, AffordabilityStatus>();
+  verdictCache = new WeakMap<BlockSummary, Map<string, AffordabilityStatus>>();
   verdictCacheFingerprint = "";
 }

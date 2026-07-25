@@ -27,7 +27,8 @@
 
 ## Phase 4 — Contextual links
 - [x] **T4.1** Add troubleshooting link to empty results in `ResultsPane`. (R4.1)
-- [x] **T4.2** Add price-comparisons link in `AskingPriceCheck`. (R4.2)
+- [x] **T4.2** Add the price-comparisons link to the
+  `ListingCheckPanel` / `ComparableEvidenceTable` workflow. (R4.2)
 - [x] **T4.3** Add getting-started link in `LeaseWarningPanel`. (R4.3)
 - [x] **T4.4** Add troubleshooting link in data-load error state. (R4.4)
 

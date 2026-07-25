@@ -193,35 +193,41 @@ describe("matchesFilter — budget boundaries", () => {
   });
 });
 
-describe("matchesFilter — date range", () => {
+describe("matchesFilter — latest recorded sale", () => {
   beforeEach(() => resetFilteringCachesForTests());
 
-  it("excludes block whose latestTransaction is before startMonth", () => {
-    const block = makeBlock({ availableDateRange: ["2020-01", "2021-06"] });
+  it("excludes a block whose latest recorded sale is before startMonth", () => {
+    const block = makeBlock({ latestMonth: "2021-06" });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: "2022-01", endMonth: null })).toBe(
       false,
     );
   });
 
-  it("includes block whose latestTransaction is on or after startMonth", () => {
-    const block = makeBlock({ availableDateRange: ["2020-01", "2022-01"] });
+  it("includes a block whose latest recorded sale is on startMonth", () => {
+    const block = makeBlock({ latestMonth: "2022-01" });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: "2022-01", endMonth: null })).toBe(
       true,
     );
   });
 
-  it("excludes block whose earliestTransaction is after endMonth", () => {
-    const block = makeBlock({ availableDateRange: ["2023-01", "2024-12"] });
+  it("excludes a block whose latest recorded sale is after endMonth", () => {
+    const block = makeBlock({
+      latestMonth: "2024-12",
+      availableDateRange: ["2020-01", "2024-12"],
+    });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: null, endMonth: "2022-12" })).toBe(
       false,
     );
   });
 
-  it("includes block whose earliestTransaction is on or before endMonth", () => {
-    const block = makeBlock({ availableDateRange: ["2022-12", "2024-12"] });
+  it("includes a block whose latest recorded sale is on endMonth", () => {
+    const block = makeBlock({
+      latestMonth: "2022-12",
+      availableDateRange: ["2020-01", "2022-12"],
+    });
 
     expect(matchesFilter(block, { ...BASE_FILTERS, startMonth: null, endMonth: "2022-12" })).toBe(
       true,
@@ -279,6 +285,14 @@ describe("matchesFilter — combined filters short-circuit", () => {
       floorAreaRange: [85, 100],
       flatTypes: ["4 ROOM"],
       flatModels: ["MODEL A"],
+      flatTypeCohorts: {
+        "4 ROOM": {
+          transactionCount: 8,
+          latestMonth: "2025-06",
+          floorAreaRange: [85, 100],
+          flatModels: ["MODEL A"],
+        },
+      },
       nearestMrt: {
         stationName: "BEDOK MRT STATION",
         distanceMeters: 300,

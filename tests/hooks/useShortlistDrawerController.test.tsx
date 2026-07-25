@@ -6,6 +6,7 @@ import {
   useShortlistDrawerController,
   type UseShortlistDrawerControllerOptions,
 } from "@/features/shortlist/useShortlistDrawerController";
+import { decodeShortlistFromUrl } from "@/features/shortlist/shortlist";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import type { BlockSummary, ShortlistItem } from "@/types/data";
 import type { ShortlistRow } from "@/features/shortlist/shortlistRows";
@@ -226,6 +227,68 @@ describe("useShortlistDrawerController", () => {
     expect(result.current.restoreError).toBe(false);
   });
 
+  it("delegates removal without creating local undo state in external mode", () => {
+    const onRemove = vi.fn();
+    const onRestore = vi.fn(() => true);
+    const { result } = renderController(
+      makeOptions({
+        rows: [makeRow("addr-first")],
+        onRemove,
+        onRestore,
+        removalMode: "external",
+      }),
+    );
+
+    act(() => result.current.handleRemove("addr-first"));
+
+    expect(onRemove).toHaveBeenCalledWith("addr-first");
+    expect(onRestore).not.toHaveBeenCalled();
+    expect(result.current.pendingRemoval).toBeNull();
+  });
+
+  it("keeps unresolved saved items removable and restorable in local undo mode", () => {
+    const unresolvedItem = makeItem("retired-block");
+    const onRemove = vi.fn();
+    const onRestore = vi.fn(() => true);
+    const { result } = renderController(
+      makeOptions({
+        rows: [],
+        unresolvedItems: [unresolvedItem],
+        onRemove,
+        onRestore,
+      }),
+    );
+
+    act(() => result.current.handleRemove("retired-block"));
+
+    expect(onRemove).toHaveBeenCalledWith("retired-block");
+    expect(result.current.pendingRemoval).toMatchObject({
+      item: unresolvedItem,
+      index: 0,
+      label: "retired-block",
+    });
+
+    act(() => result.current.undoRemoval());
+
+    expect(onRestore).toHaveBeenCalledWith(unresolvedItem, 0);
+    expect(result.current.pendingRemoval).toBeNull();
+  });
+
+  it("returns to list view when fewer than two resolved rows remain", async () => {
+    const first = makeRow("addr-first");
+    const second = makeRow("addr-second");
+    const options = makeOptions({ rows: [first, second] });
+    const { result, rerender } = renderController(options);
+
+    act(() => result.current.setViewMode("compare"));
+    expect(result.current.viewMode).toBe("compare");
+
+    options.rows = [first];
+    rerender();
+
+    await waitFor(() => expect(result.current.viewMode).toBe("list"));
+  });
+
   it("builds a share URL with the existing filter state and blocks oversized payloads", () => {
     const shareOptions = makeOptions({
       filters: { ...DEFAULT_FILTERS, town: "BEDOK" },
@@ -243,21 +306,65 @@ describe("useShortlistDrawerController", () => {
     expect(oversizedResult.result.current.shareBlocked).toBe(true);
   });
 
-  it("retains the CSV filename and field order", () => {
-    const { result } = renderController(makeOptions());
-    const header = result.current.csvExport.getContent().split("\n", 1)[0] ?? "";
+  it("keeps unavailable entries in share links and blocks oversized unavailable payloads", () => {
+    const unavailable = {
+      ...makeItem("retired-block", 480_000),
+      notes: "Keep this buyer note",
+      askingPrice: 510_000,
+    };
+    const { result } = renderController(
+      makeOptions({
+        rows: [makeRow("addr-live")],
+        unresolvedItems: [unavailable],
+      }),
+    );
+    const encoded = new URL(result.current.shareUrl).searchParams.get("shortlist");
 
-    expect(result.current.csvExport.filename).toBe("hdb-shortlist.csv");
-    expect(header.split(",")).toHaveLength(26);
-    expect(header.indexOf('"Address"')).toBeLessThan(header.indexOf('"Median Price"'));
-    expect(header.indexOf('"Median Price"')).toBeLessThan(header.indexOf('"Asking Price"'));
-    expect(header.indexOf('"Asking Price"')).toBeLessThan(header.indexOf('"Notes"'));
+    expect(encoded).not.toBeNull();
+    expect(decodeShortlistFromUrl(encoded ?? "").map((item) => item.addressKey)).toEqual([
+      "addr-live",
+      "retired-block",
+    ]);
+    expect(decodeShortlistFromUrl(encoded ?? "")[1]).toMatchObject(unavailable);
+
+    const oversizedUnavailable = {
+      ...unavailable,
+      notes: "x".repeat(10_001),
+    };
+    const oversizedResult = renderController(
+      makeOptions({ rows: [], unresolvedItems: [oversizedUnavailable] }),
+    );
+    expect(oversizedResult.result.current.shareUrl).toBe("");
+    expect(oversizedResult.result.current.shareBlocked).toBe(true);
   });
 
-  it("keeps summary markdown format and the two-second copied state", async () => {
+  it("keeps unavailable entries and their saved fields in CSV", () => {
+    const unavailable = {
+      ...makeItem("retired-block", 480_000),
+      notes: "Keep this buyer note",
+      askingPrice: 510_000,
+    };
+    const { result } = renderController(makeOptions({ unresolvedItems: [unavailable] }));
+    const header = result.current.csvExport.getContent().split("\n", 1)[0] ?? "";
+    const csv = result.current.csvExport.getContent();
+
+    expect(result.current.csvExport.filename).toBe("hdb-shortlist.csv");
+    expect(header.split(",")).toHaveLength(28);
+    expect(header.indexOf('"Data Status"')).toBeLessThan(header.indexOf('"Saved Address Key"'));
+    expect(header.indexOf('"Saved Address Key"')).toBeLessThan(header.indexOf('"Address"'));
+    expect(header.indexOf('"Address"')).toBeLessThan(header.indexOf('"Block Median Price"'));
+    expect(header.indexOf('"Block Median Price"')).toBeLessThan(header.indexOf('"Asking Price"'));
+    expect(header.indexOf('"Asking Price"')).toBeLessThan(header.indexOf('"Notes"'));
+    expect(csv).toContain('"Unavailable in current data","retired-block",,,' + "510000");
+    expect(csv).toContain("480000");
+    expect(csv).toContain('"Keep this buyer note"');
+  });
+
+  it("keeps unavailable entries in the Markdown summary and the two-second copied state", async () => {
     vi.useFakeTimers();
     const writeText = installClipboard();
-    const { result } = renderController(makeOptions());
+    const unavailable = makeItem("retired|block", 480_000);
+    const { result } = renderController(makeOptions({ unresolvedItems: [unavailable] }));
 
     await act(async () => {
       result.current.copySummary();
@@ -265,7 +372,14 @@ describe("useShortlistDrawerController", () => {
     });
 
     expect(writeText).toHaveBeenCalledWith(
-      expect.stringContaining("| Address | Median Price | Target Price |"),
+      expect.stringContaining(
+        "| Data Status | Saved Address Key | Address | Block Median Price | Target Price |",
+      ),
+    );
+    expect(writeText).toHaveBeenCalledWith(
+      expect.stringContaining(
+        "| Unavailable in current data | retired\\|block | - | - | $480,000 |",
+      ),
     );
     expect(result.current.copiedKey).toBe("summary");
 
@@ -294,7 +408,7 @@ describe("useShortlistDrawerController", () => {
     expect(vi.getTimerCount()).toBe(0);
   });
 
-  it("exports JSON in current ranked-row order", async () => {
+  it("exports JSON in current ranked-row order without dropping unavailable entries", async () => {
     const blobs: Blob[] = [];
     Object.defineProperty(URL, "createObjectURL", {
       configurable: true,
@@ -313,13 +427,23 @@ describe("useShortlistDrawerController", () => {
       makeRow("addr-far", { medianPrice: 600_000 }, 550_000),
       makeRow("addr-close", {}, 490_000),
     ];
-    const { result } = renderController(makeOptions({ rows }));
+    const unavailable = {
+      ...makeItem("retired-block", 470_000),
+      notes: "Raw saved note",
+      askingPrice: 520_000,
+    };
+    const { result } = renderController(makeOptions({ rows, unresolvedItems: [unavailable] }));
 
     act(() => result.current.exportJson());
 
     expect(blobs).toHaveLength(1);
     const exported = JSON.parse(await blobs[0].text()) as ShortlistItem[];
-    expect(exported.map((item) => item.addressKey)).toEqual(["addr-close", "addr-far"]);
+    expect(exported.map((item) => item.addressKey)).toEqual([
+      "addr-close",
+      "addr-far",
+      "retired-block",
+    ]);
+    expect(exported[2]).toEqual(unavailable);
   });
 
   it("keeps highlight selection and trend chart model stable", () => {

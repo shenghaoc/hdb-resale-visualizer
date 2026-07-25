@@ -4,18 +4,10 @@ import { join } from "node:path";
 export default function globalSetup() {
   const storageStatePath = join(process.cwd(), "test-results/e2e-storage-state.json");
   const completedSearchProfile = {
-    version: 2,
+    version: 3,
     mainFlatType: "4 ROOM",
-    alternativeFlatTypes: [],
     maxBudget: 700000,
-    commuteAnchorLabel: "",
-    commuteAnchorMrt: null,
-    maxComfortableCommuteMinutes: null,
-    commuteStretchMinutes: 0,
     minimumRemainingLeaseYears: 65,
-    budgetStretchPercent: 0,
-    showStretchOptions: false,
-    showAllBlocks: true,
     age: 35,
     coApplicantAge: 33,
     cpfOABalance: 120000,
@@ -36,7 +28,7 @@ export default function globalSetup() {
             origin: "http://127.0.0.1:4173",
             localStorage: [
               {
-                name: "hdb_resale_search_profile_v2",
+                name: "hdb_resale_search_profile_v3",
                 value: JSON.stringify(completedSearchProfile),
               },
             ],

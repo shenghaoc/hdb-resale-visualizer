@@ -18,12 +18,13 @@ Removing a saved block shows an **Undo** action for five seconds. Undo restores 
 
 ## Comparing saved blocks
 
-The **compare view** lays saved blocks side by side: ask price, fair range, delta vs fair median, remaining lease, MRT context, confidence and caveats from the listing check, and a monthly payment estimate when available. Sort and rank by your preferred metric; decision status breaks ties. On mobile, compact cards keep everything scannable without horizontal scrolling.
+With at least two available blocks, the **compare view** lays them side by side: block-wide median, asking price, fair range, delta vs fair median, recent block-record volume, remaining lease, MRT context, decision status, caveats, target price, and notes. It does not claim to preserve a past listing-check verdict. On mobile, compact cards keep the same evidence scannable without horizontal scrolling.
 
 ## Export and share
 
 - **Export** your shortlist as CSV or JSON, including decision-board fields and notes. Hover over (or focus) the export button to see its tooltip.
 - **Share** generates a URL carrying the shortlist data (within size limits) so someone else can open the same board. Hover over (or focus) the share button to see its tooltip.
+- If an older saved address is no longer present in the current block dataset, exports and share links still include its saved address key and buyer-entered fields. Current block-derived fields are left blank instead of dropping the entry.
 
 ## Cloud sync (optional)
 
@@ -37,5 +38,5 @@ The sync code is the only identifier; anyone who has it can read the shortlist, 
 
 ## Things to keep in mind
 
-- Saved data (including fair ranges and verdicts) reflects the dataset **at the time you saved it**. Re-run a listing check before making an offer — see [Understanding price comparisons](/docs/understanding-price-comparisons).
+- Block metrics, nearby amenities, and factual data-quality labels refresh from the current dataset when Saved loads; your manually entered offer fields and notes remain as entered. Re-run a listing check before making an offer — see [Understanding price comparisons](/docs/understanding-price-comparisons).
 - Clearing browser site data deletes a local-only shortlist. Generate a sync code first if you want to keep it.

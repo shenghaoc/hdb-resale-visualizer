@@ -97,6 +97,62 @@ describe("shared/product/filter-pipeline", () => {
       expect(result).toHaveLength(2);
     });
 
+    it("uses the active flat-type median in the pure affordability fallback", () => {
+      const block = makeBlock({
+        addressKey: "mixed-flat-types",
+        medianPrice: 600_000,
+        flatTypes: ["3 ROOM", "5 ROOM"],
+        medianPriceByFlatType: {
+          "3 ROOM": 250_000,
+          "5 ROOM": 720_000,
+        },
+        flatTypeCohorts: {
+          "3 ROOM": {
+            transactionCount: 3,
+            latestMonth: "2024-11",
+            floorAreaRange: [65, 70],
+            flatModels: ["IMPROVED"],
+          },
+          "5 ROOM": {
+            transactionCount: 2,
+            latestMonth: "2024-12",
+            floorAreaRange: [110, 120],
+            flatModels: ["MODEL A"],
+          },
+        },
+      });
+      const profile = {
+        monthlyIncome: 8000,
+        cpfOABalance: 100_000,
+        age: 35,
+        coApplicantAge: null,
+      };
+
+      const threeRoomResult = filterScopedBlocks(
+        [block],
+        { ...BASE_FILTERS, flatType: "3 ROOM", affordable: "comfortable" },
+        null,
+        profile,
+        null,
+        null,
+        null,
+      );
+      const fiveRoomResult = filterScopedBlocks(
+        [block],
+        { ...BASE_FILTERS, flatType: "5 ROOM", affordable: "comfortable" },
+        null,
+        profile,
+        null,
+        null,
+        null,
+      );
+
+      expect(threeRoomResult.map((candidate) => candidate.addressKey)).toEqual([
+        "mixed-flat-types",
+      ]);
+      expect(fiveRoomResult).toEqual([]);
+    });
+
     it("requires an explicit evaluation context for remaining lease filters", () => {
       const block = makeBlock({ addressKey: "lease", leaseCommenceRange: [1990, 2000] });
       expect(() =>

@@ -295,7 +295,8 @@ ListingCheckPanel
   logic lives in a separate module (`shared/time-adjustment.ts`).
 - The existing `/api/comparable-transactions` endpoint continues to
   work for all current consumers (ListingCheckPanel, tests).
-- The block detail drawer's `AskingPriceCheck` (v1) is not affected.
+- `ListingCheckPanel` remains the sole listing-check UI, with adjusted
+  comparable prices rendered through `ComparableEvidenceTable`.
 
 ## Testing
 

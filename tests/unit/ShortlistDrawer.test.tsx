@@ -132,13 +132,7 @@ describe("ShortlistDrawer", () => {
     expect(screen.getByText("Amenities")).toBeInTheDocument();
     expect(screen.getByText("1H • 3S • 2P")).toBeInTheDocument();
 
-    // Check that percentile data is displayed
-    expect(screen.getByText("Price percentile")).toBeInTheDocument();
-    expect(screen.getByText("26th percentile")).toBeInTheDocument();
-
-    // Check that location percentiles are displayed
-    expect(screen.getByText("Location ranks")).toBeInTheDocument();
-    expect(screen.getByText("MRT: 60th • Lease: 76th")).toBeInTheDocument();
+    expect(screen.queryByText("Market position")).not.toBeInTheDocument();
     expect(screen.getByText("Strong data")).toBeInTheDocument();
     expect(screen.getByText("Recent block-level evidence")).toBeInTheDocument();
   });
@@ -173,8 +167,8 @@ describe("ShortlistDrawer", () => {
     // Basic block info should still be displayed (address in title)
     expect(screen.getAllByText(/101 Ang Mo Kio Ave 3/i).length).toBeGreaterThan(0);
 
-    // Compact v2 card should still expose the map action and target controls.
-    expect(screen.getByText("View on map")).toBeInTheDocument();
+    // Compact v2 card should still expose the detail action and target controls.
+    expect(screen.getByText("View details")).toBeInTheDocument();
     expect(screen.getByLabelText("Your target price")).toBeInTheDocument();
   });
 
@@ -201,7 +195,161 @@ describe("ShortlistDrawer", () => {
     ).toBeInTheDocument();
   });
 
-  it("edits target price and can select a saved block on the map", () => {
+  it("shows loading instead of a false empty state while saved rows resolve", () => {
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[]}
+          unresolvedItems={[mockShortlistItem]}
+          isResolvingRows={true}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={() => true}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getByTestId("shortlist-resolving")).toHaveTextContent("Loading saved homes");
+    expect(
+      screen.getByText("Matching your saved addresses to the latest block data."),
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Saved shortlist")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("shortlist-unresolved")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("shortlist-utilities")).not.toBeInTheDocument();
+  });
+
+  it("renders unavailable saved items with complete export paths so they can be removed or retained", () => {
+    const unresolvedItem = {
+      ...mockShortlistItem,
+      addressKey: "retired-block",
+    };
+    const onRemove = vi.fn();
+    const onRestore = vi.fn(() => true);
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[]}
+          unresolvedItems={[unresolvedItem]}
+          onToggleOpen={() => {}}
+          onRemove={onRemove}
+          onRestore={onRestore}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getByTestId("shortlist-unresolved")).toHaveTextContent(
+      "Some saved homes are unavailable",
+    );
+    expect(screen.getByTestId("shortlist-unresolved-item")).toHaveTextContent("retired-block");
+    expect(screen.getByTestId("shortlist-drawer")).toHaveTextContent("1");
+    expect(screen.getByTestId("shortlist-utilities")).toBeInTheDocument();
+    expect(screen.getByTestId("shortlist-export-unresolved-notice")).toHaveTextContent(
+      "Exports and share links include unavailable homes by their saved address key",
+    );
+    expect(screen.getByRole("button", { name: "Copy share link" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Export as CSV" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "JSON" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Copy summary" })).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Remove retired-block from shortlist",
+      }),
+    );
+
+    expect(onRemove).toHaveBeenCalledWith("retired-block");
+    expect(screen.getByRole("status")).toHaveTextContent("Removed: retired-block");
+
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
+    expect(onRestore).toHaveBeenCalledWith(unresolvedItem, 0);
+  });
+
+  it("delegates removal to an external undo owner without showing a local undo bar", () => {
+    const onRemove = vi.fn();
+    const onRestore = vi.fn(() => true);
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[mockRow]}
+          removalMode="external"
+          onToggleOpen={() => {}}
+          onRemove={onRemove}
+          onRestore={onRestore}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Remove 101 Ang Mo Kio Ave 3 from shortlist",
+      }),
+    );
+
+    expect(onRemove).toHaveBeenCalledWith("test-block");
+    expect(onRestore).not.toHaveBeenCalled();
+    expect(screen.queryByRole("button", { name: "Undo" })).not.toBeInTheDocument();
+  });
+
+  it("hides view and sort controls until two resolved homes are visible in an open drawer", () => {
+    const { rerender } = render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={() => true}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.queryByTestId("shortlist-view-toggle")).not.toBeInTheDocument();
+    expect(screen.queryByText("Sort by")).not.toBeInTheDocument();
+
+    rerender(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={false}
+          rows={[mockRow, mockRowTwo]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={() => true}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.queryByTestId("shortlist-view-toggle")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Show saved blocks as a comparison table" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("edits target price and can open a saved block's details", () => {
     const onUpdate = vi.fn();
     const onSelectAddress = vi.fn();
 
@@ -228,7 +376,7 @@ describe("ShortlistDrawer", () => {
     });
     expect(onUpdate).toHaveBeenCalledWith("test-block", { targetPrice: 490000 });
 
-    fireEvent.click(screen.getByRole("button", { name: "View on map" }));
+    fireEvent.click(screen.getByRole("button", { name: "View details" }));
     expect(onSelectAddress).toHaveBeenCalledWith("test-block");
   });
 
@@ -368,7 +516,8 @@ describe("ShortlistDrawer", () => {
     expect(screen.getByRole("table", { name: "Saved blocks comparison" })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: "Address" })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: "Town" })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: "$/sqm" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Block $/sqm" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "Recent block records" })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: "Nearest MRT" })).toBeInTheDocument();
     expect(screen.getByRole("columnheader", { name: "Notes" })).toBeInTheDocument();
 
@@ -419,6 +568,7 @@ describe("ShortlistDrawer", () => {
     expect(cards).toHaveLength(2);
     expect(cards[0]).toHaveTextContent(/Ang Mo Kio\s*·/); // station name + separator
     expect(cards[0]).toHaveTextContent("Test notes"); // buyer notes
+    expect(cards[0]).toHaveTextContent("10 recent block records");
   });
 
   it("keeps newly saved cards collapsed until the buyer opens one", () => {

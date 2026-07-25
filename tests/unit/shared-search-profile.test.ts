@@ -24,7 +24,11 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2015-01", "2025-01"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
-    nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
+    nearestMrt: {
+      stationName: "BEDOK MRT STATION",
+      distanceMeters: 400,
+      walkingTimeSeconds: 320,
+    },
     nearbyMrts: [],
     postalCode: null,
     ...overrides,
@@ -32,18 +36,10 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
 }
 
 const DEFAULT_PROFILE: SearchProfile = {
-  version: 2,
+  version: 3,
   mainFlatType: "",
-  alternativeFlatTypes: [],
   maxBudget: null,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 0,
-  showStretchOptions: false,
-  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
@@ -56,281 +52,126 @@ function makeProfile(overrides: Partial<SearchProfile> = {}): SearchProfile {
 
 describe("shared/product/search-profile", () => {
   describe("hasCompletedSearchProfile", () => {
-    it("returns true for a complete profile", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        minimumRemainingLeaseYears: 70,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(true);
-    });
-
-    it("returns false when mainFlatType is blank", () => {
-      const profile = makeProfile({
-        mainFlatType: "",
-        minimumRemainingLeaseYears: 70,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(false);
-    });
-
-    it("does not require an MRT anchor or walking preference", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        commuteAnchorMrt: null,
-        maxComfortableCommuteMinutes: null,
-        minimumRemainingLeaseYears: 70,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(true);
-    });
-
-    it("returns false when minimumRemainingLeaseYears is null", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        minimumRemainingLeaseYears: null,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(false);
-    });
-
-    it("returns false for default (empty) profile", () => {
-      expect(hasCompletedSearchProfile(makeProfile())).toBe(false);
-    });
-
-    it("returns false for nullish profile values", () => {
-      expect(hasCompletedSearchProfile(null)).toBe(false);
-      expect(hasCompletedSearchProfile(undefined)).toBe(false);
-    });
-
-    it("returns false for partial profile payloads with missing required fields", () => {
-      expect(hasCompletedSearchProfile({ mainFlatType: "4 ROOM" })).toBe(false);
-      expect(hasCompletedSearchProfile({ minimumRemainingLeaseYears: 70 })).toBe(false);
-    });
-
-    it("returns false for a whitespace-only flat type", () => {
+    it("requires a flat type and minimum remaining lease", () => {
       expect(
         hasCompletedSearchProfile(
-          makeProfile({
-            mainFlatType: "   ",
-            minimumRemainingLeaseYears: 70,
-          }),
+          makeProfile({ mainFlatType: "4 ROOM", minimumRemainingLeaseYears: 70 }),
+        ),
+      ).toBe(true);
+      expect(hasCompletedSearchProfile(makeProfile({ mainFlatType: "4 ROOM" }))).toBe(false);
+      expect(hasCompletedSearchProfile(makeProfile({ minimumRemainingLeaseYears: 70 }))).toBe(
+        false,
+      );
+      expect(
+        hasCompletedSearchProfile(
+          makeProfile({ mainFlatType: "   ", minimumRemainingLeaseYears: 70 }),
         ),
       ).toBe(false);
+    });
+
+    it("handles nullish and partial profile values", () => {
+      expect(hasCompletedSearchProfile(null)).toBe(false);
+      expect(hasCompletedSearchProfile(undefined)).toBe(false);
+      expect(hasCompletedSearchProfile({ mainFlatType: "4 ROOM" })).toBe(false);
     });
   });
 
   describe("computeRemainingLeaseYears", () => {
-    it("uses MAX_LEASE_DURATION minus elapsed years from upper bound", () => {
-      expect(computeRemainingLeaseYears([2000, 2000], 2025)).toBe(74);
+    it("uses the newest lease commencement year", () => {
+      expect(computeRemainingLeaseYears([2000, 2005], 2025)).toBe(79);
     });
 
-    it("handles future lease commence year", () => {
+    it("handles a future lease commencement year deterministically", () => {
       expect(computeRemainingLeaseYears([2025, 2030], 2026)).toBe(103);
     });
   });
 
-  describe("createProfileEvaluator", () => {
-    it("returns strong when no profile fields are set", () => {
-      const block = makeBlock({ addressKey: "x" });
+  describe("profile evaluation", () => {
+    it("returns strong when no profile preferences are set", () => {
       const evaluate = createProfileEvaluator(makeProfile(), 2026);
-      expect(evaluate(block).tier).toBe("strong");
+      expect(evaluate(makeBlock({ addressKey: "x" }))).toEqual({
+        tier: "strong",
+        flatType: "skip",
+        lease: "skip",
+        budget: "skip",
+      });
     });
 
-    it("returns a reusable evaluator for multiple blocks", () => {
-      const evaluate = createProfileEvaluator(
+    it("returns weak when the selected flat type is unavailable", () => {
+      const result = evaluateBlockForProfile(
+        makeBlock({ addressKey: "x", flatTypes: ["3 ROOM"] }),
+        makeProfile({ mainFlatType: "4 ROOM" }),
+        2026,
+      );
+      expect(result).toMatchObject({ tier: "weak", flatType: "fail" });
+    });
+
+    it("returns weak when remaining lease is below the minimum", () => {
+      const result = evaluateBlockForProfile(
+        makeBlock({ addressKey: "x", leaseCommenceRange: [1970, 1970] }),
+        makeProfile({ minimumRemainingLeaseYears: 70 }),
+        2026,
+      );
+      expect(result).toMatchObject({ tier: "weak", lease: "fail" });
+    });
+
+    it("uses the selected flat-type median for the hard budget maximum", () => {
+      const result = evaluateBlockForProfile(
+        makeBlock({
+          addressKey: "x",
+          medianPrice: 600_000,
+          medianPriceByFlatType: {
+            "3 ROOM": 550_000,
+            "4 ROOM": 750_000,
+          },
+        }),
         makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700_000 }),
         2026,
       );
-      const passing = makeBlock({
-        addressKey: "pass",
-        flatTypes: ["4 ROOM"],
-        medianPrice: 600_000,
-      });
-      const failing = makeBlock({
-        addressKey: "fail",
-        flatTypes: ["3 ROOM"],
-        medianPrice: 600_000,
-      });
-      expect(evaluate(passing).tier).toBe("strong");
-      expect(evaluate(failing).tier).toBe("weak");
-    });
-  });
-
-  describe("evaluateBlockForProfile", () => {
-    it("returns weak when the flat type is required but missing", () => {
-      const block = makeBlock({ addressKey: "x", flatTypes: ["3 ROOM"] });
-      const profile = makeProfile({ mainFlatType: "4 ROOM" });
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
+      expect(result).toMatchObject({ tier: "weak", budget: "fail" });
     });
 
-    it("returns weak when remaining lease is below the floor", () => {
-      const block = makeBlock({ addressKey: "x", leaseCommenceRange: [1970, 1970] });
-      const profile = makeProfile({ minimumRemainingLeaseYears: 70 });
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
-    });
-
-    it("returns strong when budget and commute both pass", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        medianPrice: 600_000,
-        nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
-      });
+    it("does not expose or rank on the retired commute proxy", () => {
       const profile = makeProfile({
         mainFlatType: "4 ROOM",
         maxBudget: 700_000,
-        maxComfortableCommuteMinutes: 30,
+        minimumRemainingLeaseYears: 60,
       });
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("strong");
-    });
-
-    it("uses routed walking time instead of a straight distance proxy", () => {
-      const block = makeBlock({
-        addressKey: "x",
+      const near = makeBlock({
+        addressKey: "near",
         nearestMrt: {
-          stationName: "X",
-          distanceMeters: 800,
-          walkingTimeSeconds: 15 * 60,
+          stationName: "BEDOK MRT STATION",
+          distanceMeters: 100,
+          walkingTimeSeconds: 80,
         },
       });
-      const profile = makeProfile({ maxComfortableCommuteMinutes: 10 });
+      const far = makeBlock({
+        addressKey: "far",
+        nearestMrt: null,
+        nearbyMrts: [],
+      });
 
-      const result = evaluateBlockForProfile(block, profile, 2026);
+      const nearResult = evaluateBlockForProfile(near, profile, 2026);
+      const farResult = evaluateBlockForProfile(far, profile, 2026);
 
-      expect(result.commute).toBe("fail");
-      expect(result.tier).toBe("weak");
+      expect(nearResult).toEqual(farResult);
+      expect(nearResult).not.toHaveProperty("commute");
     });
 
-    it("falls back to distance when routed walking time is unavailable", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        nearestMrt: {
-          stationName: "X",
-          distanceMeters: 800,
-          walkingTimeSeconds: Number.NaN,
-        },
-      });
-      const profile = makeProfile({ maxComfortableCommuteMinutes: 10 });
-
-      expect(evaluateBlockForProfile(block, profile, 2026).commute).toBe("pass");
-    });
-
-    it("uses the selected flat type median for the hard budget maximum", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        medianPrice: 600_000,
-        medianPriceByFlatType: {
-          "3 ROOM": 550_000,
-          "4 ROOM": 750_000,
-        },
-      });
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-      });
-
-      const result = evaluateBlockForProfile(block, profile, 2026);
-
-      expect(result.budget).toBe("fail");
-      expect(result.tier).toBe("weak");
-    });
-
-    it("treats one failed maximum as weak even when another dimension passes", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        medianPrice: 900_000,
-        nearestMrt: { stationName: "X", distanceMeters: 200, walkingTimeSeconds: 180 },
-      });
-      const profile = makeProfile({
-        maxBudget: 700_000,
-        maxComfortableCommuteMinutes: 10,
-      });
-
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
-    });
-
-    it("returns good when one dimension stretches and the other passes", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        medianPrice: 720_000,
-        nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
-      });
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-        budgetStretchPercent: 5,
-        maxComfortableCommuteMinutes: 30,
-      });
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("good");
-    });
-
-    it("treats alternative flat types as a stretch on the flat-type dimension", () => {
-      const block = makeBlock({ addressKey: "x", flatTypes: ["5 ROOM"] });
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        alternativeFlatTypes: ["5 ROOM"],
-      });
-      const result = evaluateBlockForProfile(block, profile, 2026);
-      expect(result.flatType).toBe("stretch");
-      expect(result.tier).toBe("stretch");
-    });
-
-    it("returns weak when both budget and commute fail (two soft failures)", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        medianPrice: 1_500_000,
-        nearestMrt: { stationName: "X", distanceMeters: 6000, walkingTimeSeconds: 4800 },
-      });
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-        maxComfortableCommuteMinutes: 30,
-      });
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
-    });
-
-    it("returns weak when budget stretches and commute fails with no passing soft signals", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        medianPrice: 720_000,
-        nearestMrt: { stationName: "X", distanceMeters: 6000, walkingTimeSeconds: 4800 },
-      });
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-        budgetStretchPercent: 5,
-        maxComfortableCommuteMinutes: 30,
-      });
-      // budget=stretch, commute=fail → failCount=1, stretchCount=1, passCount=0 → weak
-      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
-    });
-
-    it("fails commute when the block has no MRT data and a commute target is set", () => {
-      const block = makeBlock({ addressKey: "x", nearestMrt: null });
-      const profile = makeProfile({ maxComfortableCommuteMinutes: 30 });
-      expect(evaluateBlockForProfile(block, profile, 2026).commute).toBe("fail");
-    });
-
-    it("passes commute when the anchor MRT is in nearbyMrts and within the threshold", () => {
-      const block = makeBlock({
-        addressKey: "x",
-        nearestMrt: {
-          stationName: "OTHER MRT STATION",
-          distanceMeters: 5000,
-          walkingTimeSeconds: 4000,
-        },
-        nearbyMrts: [
-          { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
-        ],
-      });
-      const profile = makeProfile({
-        maxComfortableCommuteMinutes: 30,
-        commuteAnchorMrt: "BEDOK MRT STATION",
-      });
-      expect(evaluateBlockForProfile(block, profile, 2026).commute).toBe("pass");
-    });
-
-    it("all dimension values are deterministic with explicit currentYear", () => {
+    it("keeps local finance fields out of recommendation ranking", () => {
       const block = makeBlock({ addressKey: "x" });
-      const result1 = evaluateBlockForProfile(block, makeProfile(), 2026);
-      const result2 = evaluateBlockForProfile(block, makeProfile(), 2026);
-      expect(result1).toEqual(result2);
+      const withoutFinance = evaluateBlockForProfile(block, makeProfile(), 2026);
+      const withFinance = evaluateBlockForProfile(
+        block,
+        makeProfile({
+          age: 35,
+          coApplicantAge: 33,
+          cpfOABalance: 120_000,
+          monthlyIncome: 9_000,
+        }),
+        2026,
+      );
+      expect(withFinance).toEqual(withoutFinance);
     });
   });
 });

@@ -12,23 +12,24 @@
   primary navigation (the **Check** tab) without interacting with the map.
 - **R1.2** WHEN the Check tab is opened THEN the panel exposes the entry
   affordances: the "Check a listing price" primary action, a block search input,
-  the "Search and select a block …" hint, and the "Try sample listing check"
-  CTA.
+  and the "Search and select a block …" hint. It does not expose a sample
+  listing CTA or synthetic unit defaults.
 
 ## R2 — Enter listing facts and asking price
 
 - **R2.1** A buyer can arrive at the Check panel with a selected block and
   listing facts (floor area, flat type, storey range, lease commence year). The
   deterministic entry path is a deep link (`?checkAddress=…&checkSqm=…&…`), which
-  auto-opens the Check tab.
+  auto-opens the Check tab but does not submit the analysis.
 - **R2.2** The listing facts are captured in the form and remain editable; the
   entered floor area is visible in the floor-area field.
 - **R2.3** A buyer can type an asking price into the asking-price field.
 
 ## R3 — Verdict, confidence, fair range, comparable count
 
-- **R3.1** After facts + asking price are present, the verdict card renders a
-  verdict label (e.g. "In line with market").
+- **R3.1** After the required facts + asking price are present and the buyer
+  explicitly activates "Check this listing", the verdict card renders a verdict
+  label (e.g. "In line with market").
 - **R3.2** The verdict card shows a confidence label ("Confidence: …").
 - **R3.3** The verdict card shows the fair range and the comparable count
   (e.g. "8 comparable transactions").
@@ -39,13 +40,14 @@
   rows backing the verdict, including a sortable "Similarity" column (desktop)
   and per-row match-reason badges (e.g. "Same flat type").
 
-## R5 — Raw vs time-adjusted prices (conditional)
+## R5 — Time-adjusted evidence
 
-- **R5.1** IF the listing-check UI exposes a raw-vs-time-adjusted toggle THEN a
-  test covers toggling it. **As of this spec the `ListingCheckPanel` does not
-  render such a toggle** (the `adjustmentEnabled` state is permanently `false`
-  and never requests `?adjust=time`), so no toggle test is written. This is a
-  documented gap, not a covered case. See design §"Out of scope / gaps".
+- **R5.1** Submitting a listing check sends the comparable request to
+  `/api/comparable-transactions?adjust=time`. The UI has no raw-vs-adjusted
+  toggle; adjusted evidence is the default.
+- **R5.2** When adjustment metadata is available, the evidence shows adjusted
+  Price / $/sqm plus the original registered price. When adjustment is
+  unavailable, a caveat explains that raw prices are shown.
 
 ## R6 — Save to shortlist
 
@@ -56,14 +58,12 @@
 
 - **R7.1** WHEN a listing check is saved THEN the saved shortlist item is
   visible in the Saved panel by its block address.
-- **R7.2** The saved item preserves the asking price (persisted as the item's
-  target price and rendered, e.g. "$1.2M") and surfaces a confidence label.
-- **R7.3** **Known limitation:** the current `handleCheckSaveToShortlist` writes
-  only `targetPrice` + a `notes` JSON payload; it does not populate the
-  structured `fairRangeLow/Median/High` fields. The save-to-shortlist test
-  therefore asserts the asking price + confidence label + presence, and does NOT
-  assert structured fair-range columns (which would render as "—"). Enriching
-  the save payload is tracked as follow-up work, not part of this test spec.
+- **R7.2** The saved item preserves the seller's asking price in
+  `ShortlistItem.askingPrice`; it does not overwrite the buyer's `targetPrice`
+  or notes.
+- **R7.3** The save action does not persist a generic confidence verdict or
+  structured fair-range fields. The test asserts the address and asking price
+  that are genuinely preserved.
 
 ## R8 — Mobile coverage
 

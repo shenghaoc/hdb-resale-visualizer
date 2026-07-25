@@ -26,6 +26,7 @@ let blocksBySearchPromise: Promise<{
   blocks: BlockSummary[];
   truncated: boolean;
   limit: number;
+  cohortMetadataAvailable: boolean;
 }> | null = null;
 let blocksBySearchKey = "";
 let blocksBySearchSequence = 0;
@@ -269,7 +270,12 @@ export function resetBlocksBySearchCacheForTests(): void {
 
 export function fetchBlocksBySearch(
   params: CoarseSearchParams,
-): Promise<{ blocks: BlockSummary[]; truncated: boolean; limit: number }> {
+): Promise<{
+  blocks: BlockSummary[];
+  truncated: boolean;
+  limit: number;
+  cohortMetadataAvailable: boolean;
+}> {
   const search = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
     if (v != null && v !== "") search.set(k, String(v));

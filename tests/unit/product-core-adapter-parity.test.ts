@@ -41,18 +41,10 @@ import {
 // ── Test constants ───────────────────────────────────────────────────────
 
 const EMPTY_PROFILE: SearchProfile = {
-  version: 2,
+  version: 3,
   mainFlatType: "",
-  alternativeFlatTypes: [],
   maxBudget: null,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 0,
-  showStretchOptions: false,
-  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
@@ -160,10 +152,7 @@ describe("adapter-vs-shared parity", () => {
       const profile = makeProfile({
         mainFlatType: scenario.profile.mainFlatType ?? "",
         maxBudget: scenario.profile.maxBudget ?? null,
-        maxComfortableCommuteMinutes: scenario.profile.maxComfortableCommuteMinutes ?? null,
         minimumRemainingLeaseYears: scenario.profile.minimumRemainingLeaseYears ?? null,
-        budgetStretchPercent: scenario.profile.budgetStretchPercent ?? 5,
-        commuteStretchMinutes: scenario.profile.commuteStretchMinutes ?? 10,
       });
       const year = scenario.currentYear;
 
@@ -180,10 +169,7 @@ describe("adapter-vs-shared parity", () => {
       const profile = makeProfile({
         mainFlatType: scenario.profile.mainFlatType ?? "",
         maxBudget: scenario.profile.maxBudget ?? null,
-        maxComfortableCommuteMinutes: scenario.profile.maxComfortableCommuteMinutes ?? null,
         minimumRemainingLeaseYears: scenario.profile.minimumRemainingLeaseYears ?? null,
-        budgetStretchPercent: scenario.profile.budgetStretchPercent ?? 5,
-        commuteStretchMinutes: scenario.profile.commuteStretchMinutes ?? 10,
       });
       const year = scenario.currentYear;
 
@@ -194,9 +180,9 @@ describe("adapter-vs-shared parity", () => {
     }
   });
 
-  it("alternative flat types produce stretch match via adapter", () => {
+  it("MRT data does not add a hidden profile-matching dimension", () => {
     const block = makeBlock({
-      addressKey: "alt-test",
+      addressKey: "mrt-independent-test",
       medianPrice: 600000,
       pricePerSqmMedian: 6300,
       transactionCount: 10,
@@ -204,7 +190,7 @@ describe("adapter-vs-shared parity", () => {
       leaseCommenceRange: [2000, 2000],
       latestMonth: "2026-01",
       availableDateRange: ["2024-01", "2026-01"],
-      flatTypes: ["5 ROOM"],
+      flatTypes: ["4 ROOM"],
       flatModels: ["MODEL A"],
       nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
       nearbyMrts: [],
@@ -213,15 +199,16 @@ describe("adapter-vs-shared parity", () => {
 
     const profile = makeProfile({
       mainFlatType: "4 ROOM",
-      alternativeFlatTypes: ["5 ROOM"],
+      maxBudget: 700_000,
+      minimumRemainingLeaseYears: 60,
     });
 
     const sharedResult = sharedEvaluateBlockForProfile(block, profile, 2026);
     const adapterResult = adapterEvaluateBlockForProfile(block, profile, 2026);
 
     expect(adapterResult).toEqual(sharedResult);
-    expect(adapterResult.flatType).toBe("stretch");
-    expect(adapterResult.tier).toBe("stretch");
+    expect(adapterResult).not.toHaveProperty("commute");
+    expect(adapterResult.tier).toBe("strong");
   });
 
   // ── Town/budget filtering ──────────────────────────────────────────────
@@ -383,94 +370,6 @@ describe("adapter-vs-shared parity", () => {
       // Both should resolve to the same intent
       expect(adapterIntent).toEqual(sharedIntent);
     }
-  });
-
-  // ── Stretch budget dimension ───────────────────────────────────────────
-
-  it("stretch budget dimension matches shared core", () => {
-    for (const scenario of golden.stretchBudgetScenarios) {
-      const block = makeBlock({
-        medianPrice: scenario.blockMedianPrice,
-        flatTypes: ["4 ROOM"],
-      });
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: scenario.maxBudget,
-        budgetStretchPercent: scenario.budgetStretchPercent,
-      });
-
-      const sharedResult = sharedEvaluateBlockForProfile(block, profile, 2026);
-      const adapterResult = adapterEvaluateBlockForProfile(block, profile, 2026);
-
-      expect(adapterResult.budget).toBe(sharedResult.budget);
-    }
-  });
-
-  // ── Commute proxy dimension ────────────────────────────────────────────
-
-  it("commute proxy dimension matches shared core", () => {
-    for (const scenario of golden.commuteProxyScenarios) {
-      const block = makeBlock({
-        flatTypes: ["4 ROOM"],
-        medianPrice: 500000,
-        leaseCommenceRange: [2020, 2020],
-        nearestMrt:
-          scenario.distanceMeters !== null
-            ? {
-                stationName: "X",
-                distanceMeters: scenario.distanceMeters,
-                // avg walking speed ~1.25 m/s => seconds
-                walkingTimeSeconds: scenario.distanceMeters * 0.8,
-              }
-            : null,
-        nearbyMrts: [],
-      });
-      const profile = makeProfile({
-        maxComfortableCommuteMinutes: scenario.maxCommuteMinutes,
-        commuteStretchMinutes: scenario.stretchMinutes,
-      });
-
-      const sharedResult = sharedEvaluateBlockForProfile(block, profile, 2026);
-      const adapterResult = adapterEvaluateBlockForProfile(block, profile, 2026);
-
-      expect(adapterResult.commute).toBe(sharedResult.commute);
-    }
-  });
-
-  it("commute proxy with anchor MRT matches shared core", () => {
-    const block = makeBlock({
-      addressKey: "anchor-test",
-      medianPrice: 600000,
-      pricePerSqmMedian: 6300,
-      transactionCount: 10,
-      floorAreaRange: [90, 100],
-      leaseCommenceRange: [2020, 2020],
-      latestMonth: "2026-01",
-      availableDateRange: ["2024-01", "2026-01"],
-      flatTypes: ["4 ROOM"],
-      flatModels: ["MODEL A"],
-      nearestMrt: {
-        stationName: "OTHER MRT STATION",
-        distanceMeters: 5000,
-        walkingTimeSeconds: 4000,
-      },
-      nearbyMrts: [
-        { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
-        { stationName: "OTHER MRT STATION", distanceMeters: 5000, walkingTimeSeconds: 4000 },
-      ],
-      postalCode: null,
-    });
-
-    const profile = makeProfile({
-      maxComfortableCommuteMinutes: 30,
-      commuteAnchorMrt: "BEDOK MRT STATION",
-    });
-
-    const sharedResult = sharedEvaluateBlockForProfile(block, profile, 2026);
-    const adapterResult = adapterEvaluateBlockForProfile(block, profile, 2026);
-
-    expect(adapterResult).toEqual(sharedResult);
-    expect(adapterResult.commute).toBe("pass");
   });
 
   // ── Affordability integration ──────────────────────────────────────────

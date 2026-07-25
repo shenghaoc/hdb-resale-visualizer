@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export type LeftTab = "filters" | "results" | "check";
@@ -41,6 +41,40 @@ export function usePanelState() {
   const [mobileTab, setMobileTab] = useState<PanelTab | null>(null);
 
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
+  const previousIsDesktop = useRef(isDesktop);
+
+  useEffect(() => {
+    if (previousIsDesktop.current === isDesktop) {
+      return;
+    }
+
+    previousIsDesktop.current = isDesktop;
+
+    if (isDesktop) {
+      if (mobileTab === "saved") {
+        setIsLeftPanelOpen(false);
+        setIsSavedPanelOpen(true);
+        return;
+      }
+
+      setIsSavedPanelOpen(false);
+      if (mobileTab !== null) {
+        setLeftTab(mobileTab);
+        setIsLeftPanelOpen(true);
+      } else {
+        setIsLeftPanelOpen(false);
+      }
+      return;
+    }
+
+    if (isSavedPanelOpen) {
+      setMobileTab("saved");
+    } else if (isLeftPanelOpen) {
+      setMobileTab(leftTab);
+    } else {
+      setMobileTab(null);
+    }
+  }, [isDesktop, isLeftPanelOpen, isSavedPanelOpen, leftTab, mobileTab]);
 
   const resultsVisible = isDesktop
     ? isLeftPanelOpen && leftTab === "results"

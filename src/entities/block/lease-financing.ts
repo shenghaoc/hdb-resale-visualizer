@@ -62,9 +62,10 @@ export type LeaseFinancingAssessment = {
   /** Indicative max HDB loan-to-value after pro-ration, or null when unknown. */
   proratedLtvRatio: number | null;
   /**
-   * HDB concessionary loan tenure cap (years): the lower of the age cap
-   * (min(25, 65 − age)) and the lease cap (remaining lease − 20, so at least
-   * 20 years remain at loan end). Null when the buyer's age is unknown.
+   * HDB concessionary loan tenure cap (years): the lower of the applicant
+   * average-age cap (min(25, 65 − average age)) and the lease cap (remaining
+   * lease − 20, so at least 20 years remain at loan end). Null when the
+   * primary applicant's age is unknown.
    */
   loanTenureYears: number | null;
   /**
@@ -123,10 +124,13 @@ export function assessLeaseFinancing(params: {
 
   const requiredLeaseYears = youngest !== null ? Math.max(0, HDB_MAX_BUYER_AGE - youngest) : null;
 
-  // Loan tenure is the lower of the age cap (min(25, 65 − age)) and the lease
-  // cap (remaining − 20, so ≥ 20 years of lease survive the loan). HDB applies
-  // both; using age alone overstates the tenure on older flats.
-  const ageCapYears = youngest !== null ? computeLoanTenureYears(youngest) : null;
+  // The lease-to-95 rule uses the youngest applicant, while HDB's loan-tenure
+  // age cap uses the applicants' average age. Keep those two policy inputs
+  // separate instead of letting the younger applicant overstate the tenure.
+  const ageCapYears =
+    params.applicantAge !== null
+      ? computeLoanTenureYears(params.applicantAge, params.coApplicantAge ?? null)
+      : null;
   const leaseCapYears = Math.max(0, remaining - CPF_MIN_LEASE_YEARS);
   const loanTenureYears = ageCapYears !== null ? Math.min(ageCapYears, leaseCapYears) : null;
   // On a tie, attribute it to the lease — that's the constraint the buyer can't

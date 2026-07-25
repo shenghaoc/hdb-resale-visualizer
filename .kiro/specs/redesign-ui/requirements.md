@@ -62,7 +62,7 @@ Future deterministic comparisons, to be generated in `scripts/sync-data.ts` only
 
 1. Nearest primary schools and counts within 1 km and 2 km, using MOE school directory data plus cached geocoding.
 2. Nearest hawker centres, supermarkets, and parks, using official GeoJSON/static datasets.
-3. Town and flat-type percentile ranks for price, price per sqm, lease, MRT distance, liquidity, and recency.
+3. Comparison artifacts may power concise explanations, but the block and shortlist views must not expose a standalone multi-metric percentile dashboard.
 4. Trend slope and volatility based on historical transaction medians, with minimum sample-size guards.
 
 Not accepted until a reliable artifact exists:

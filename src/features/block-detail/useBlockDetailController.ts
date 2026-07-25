@@ -13,12 +13,20 @@ import {
   type RecentTransactionOutlier,
   type TrendRangeKey,
 } from "@/entities/transaction/transaction-analysis";
-import { computeAffordabilityVerdict } from "@/shared/lib/affordability";
+import {
+  computeAffordabilityVerdict,
+  isAffordabilityProfileComplete,
+} from "@/shared/lib/affordability";
 import { getCurrentYear } from "@/shared/lib/constants";
 import { getBlockDataQualityTag } from "@/shared/lib/listing-quality";
 import { buildBlockShareUrl } from "@/shared/lib/shareUrls";
 import { buildBlockExplanation } from "@/entities/block/block-explanation";
 import { deriveFlatTypePriceLadder } from "@/entities/block/flat-type-ladder";
+import {
+  resolveEffectiveBlockCohort,
+  resolveEffectiveMedianPrice,
+  resolveEffectivePricePerSqmMedian,
+} from "@shared/product/filtering";
 
 export type UseBlockDetailControllerOptions = {
   selectedBlock: BlockSummary | null;
@@ -48,17 +56,33 @@ export function useBlockDetailController({
 
   const currentYear = getCurrentYear();
   const currentSummary = detail?.summary ?? selectedBlock;
+  const medianPriceResolution = currentSummary
+    ? resolveEffectiveMedianPrice(currentSummary, filters.flatType)
+    : null;
+  const pricePerSqmResolution = currentSummary
+    ? resolveEffectivePricePerSqmMedian(currentSummary, filters.flatType)
+    : null;
+  const cohortResolution = currentSummary
+    ? resolveEffectiveBlockCohort(currentSummary, filters.flatType)
+    : null;
+  const effectiveMedianPrice = medianPriceResolution?.value ?? null;
+  const effectivePricePerSqmMedian = pricePerSqmResolution?.value ?? null;
 
   const dataQualityTag = useMemo(
     () =>
       currentSummary
         ? getBlockDataQualityTag({
-            transactionCount: currentSummary.transactionCount,
-            latestMonth: currentSummary.latestMonth,
+            transactionCount: cohortResolution?.transactionCount ?? currentSummary.transactionCount,
+            latestMonth: cohortResolution?.latestMonth ?? currentSummary.latestMonth,
             referenceMonth,
           })
         : null,
-    [currentSummary, referenceMonth],
+    [
+      cohortResolution?.latestMonth,
+      cohortResolution?.transactionCount,
+      currentSummary,
+      referenceMonth,
+    ],
   );
 
   const blockShareUrl = useMemo(() => {
@@ -81,27 +105,31 @@ export function useBlockDetailController({
   const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
 
   const similarBlocks = useMemo(
-    () => (selectedBlock ? rankSimilarBlocks(selectedBlock, allBlocks, { limit: 6 }) : []),
-    [selectedBlock, allBlocks],
+    () =>
+      selectedBlock
+        ? rankSimilarBlocks(selectedBlock, allBlocks, { limit: 6, flatType: filters.flatType })
+        : [],
+    [allBlocks, filters.flatType, selectedBlock],
   );
 
   const comparableRange = useMemo(
-    () => (selectedBlock ? computeComparableRange(selectedBlock, similarBlocks) : null),
-    [selectedBlock, similarBlocks],
+    () =>
+      selectedBlock ? computeComparableRange(selectedBlock, similarBlocks, filters.flatType) : null,
+    [filters.flatType, selectedBlock, similarBlocks],
   );
 
   const affordabilityVerdict = useMemo(() => {
-    if (!searchProfile || !currentSummary) return null;
-    return computeAffordabilityVerdict(
-      {
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      },
-      currentSummary.medianPrice,
-    );
-  }, [searchProfile, currentSummary]);
+    if (!searchProfile || effectiveMedianPrice === null) return null;
+    const profile = {
+      monthlyIncome: searchProfile.monthlyIncome,
+      cpfOABalance: searchProfile.cpfOABalance,
+      age: searchProfile.age,
+      coApplicantAge: searchProfile.coApplicantAge,
+    };
+    return isAffordabilityProfileComplete(profile)
+      ? computeAffordabilityVerdict(profile, effectiveMedianPrice)
+      : null;
+  }, [effectiveMedianPrice, searchProfile]);
 
   const trajectory = useMemo(
     () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
@@ -202,6 +230,11 @@ export function useBlockDetailController({
     isCopied,
     handleCopyAddress,
     currentSummary,
+    effectiveMedianPrice,
+    effectivePricePerSqmMedian,
+    medianPriceResolution,
+    pricePerSqmResolution,
+    cohortResolution,
     dataQualityTag,
     blockShareUrl,
     isDrawerOpen,

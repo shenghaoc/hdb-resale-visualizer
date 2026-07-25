@@ -198,8 +198,7 @@ describe("getActiveFilterChipDescriptors", () => {
     expect(chips).toHaveLength(1);
     expect(chips[0].key).toBe("transactionWindow");
     expect(chips[0].clearPatch).toEqual({ startMonth: null, endMonth: null });
-    // formatMonth produces locale-specific output; just verify the range separator is present
-    expect(chips[0].label).toContain("–");
+    expect(chips[0].label).toMatch(/^Latest sale .+–.+$/);
   });
 
   it("emits transactionWindow chip with only startMonth set", () => {
@@ -227,8 +226,7 @@ describe("getActiveFilterChipDescriptors", () => {
     expect(chips).toHaveLength(1);
     expect(chips[0].key).toBe("transactionWindow");
     expect(chips[0].clearPatch).toEqual({ startMonth: null, endMonth: null });
-    // Should show the formatted month without a range separator
-    expect(chips[0].label).not.toContain("–");
+    expect(chips[0].label).toMatch(/^Latest sale ≥ /);
   });
 
   it("emits area chip with only areaMax set", () => {
@@ -287,8 +285,7 @@ describe("getActiveFilterChipDescriptors", () => {
     expect(chips).toHaveLength(1);
     expect(chips[0].key).toBe("transactionWindow");
     expect(chips[0].clearPatch).toEqual({ startMonth: null, endMonth: null });
-    // Should show the formatted month without a range separator
-    expect(chips[0].label).not.toContain("–");
+    expect(chips[0].label).toMatch(/^Latest sale ≤ /);
   });
 
   it("clears flatModel via clearPatch", () => {

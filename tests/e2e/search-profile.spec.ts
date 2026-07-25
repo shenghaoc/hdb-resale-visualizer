@@ -50,24 +50,19 @@ test.describe("Search Profile Wizard", () => {
 
     // Verify local storage was populated correctly
     const profileJson = await page.evaluate(() =>
-      localStorage.getItem("hdb_resale_search_profile_v2"),
+      localStorage.getItem("hdb_resale_search_profile_v3"),
     );
     expect(profileJson).not.toBeNull();
     const profile = JSON.parse(profileJson!);
-    expect(profile.mainFlatType).toBe("4 ROOM");
-    expect(profile.maxBudget).toBe(700000);
-    expect(profile.version).toBe(2);
-    expect(profile.commuteAnchorLabel).toBe("");
-    expect(profile.commuteAnchorMrt).toBeNull();
-    expect(profile.maxComfortableCommuteMinutes).toBeNull();
-    expect(profile.commuteStretchMinutes).toBe(0);
-    expect(profile.budgetStretchPercent).toBe(0);
-    expect(profile.showStretchOptions).toBe(false);
-    expect(profile.showAllBlocks).toBe(true);
-    expect(profile.minimumRemainingLeaseYears).toBe(70);
-    expect(profile.age).toBe(38);
-    expect(profile.coApplicantAge).toBe(36);
-    expect(profile.cpfOABalance).toBe(120000);
-    expect(profile.monthlyIncome).toBe(9500);
+    expect(profile).toEqual({
+      version: 3,
+      mainFlatType: "4 ROOM",
+      maxBudget: 700000,
+      minimumRemainingLeaseYears: 70,
+      age: 38,
+      coApplicantAge: 36,
+      cpfOABalance: 120000,
+      monthlyIncome: 9500,
+    });
   });
 });

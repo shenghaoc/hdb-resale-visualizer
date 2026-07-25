@@ -84,18 +84,10 @@ export function canSubmitSearchProfileDraft(draft: SearchProfileWizardDraft): bo
 
 export function buildSearchProfileFromWizard(draft: SearchProfileWizardDraft): SearchProfile {
   return {
-    version: 2,
+    version: 3,
     mainFlatType: draft.mainFlatType.trim(),
-    alternativeFlatTypes: [],
     maxBudget: parseOptionalNumber(draft.maxBudget),
-    commuteAnchorLabel: "",
-    commuteAnchorMrt: null,
-    maxComfortableCommuteMinutes: null,
-    commuteStretchMinutes: 0,
     minimumRemainingLeaseYears: Number(draft.minLease),
-    budgetStretchPercent: 0,
-    showStretchOptions: false,
-    showAllBlocks: true,
     age: parseOptionalNumber(draft.age),
     coApplicantAge: parseOptionalNumber(draft.coApplicantAge),
     cpfOABalance: parseOptionalNumber(draft.cpfOABalance),

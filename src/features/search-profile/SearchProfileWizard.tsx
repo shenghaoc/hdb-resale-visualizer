@@ -7,7 +7,7 @@ import {
   SEARCH_PROFILE_MAX_APPLICANT_AGE,
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
 } from "@/shared/lib/constants";
-import { maxAffordablePrice } from "@/shared/lib/affordability";
+import { isAffordabilityProfileComplete, maxAffordablePrice } from "@/shared/lib/affordability";
 import { formatCurrency, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/utils";
@@ -100,16 +100,18 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
 
   const canContinueStep = canContinueSearchProfileStep(step, draft);
 
-  const affordabilityCeiling = useMemo(
-    () =>
-      maxAffordablePrice({
-        monthlyIncome: parseOptionalNumber(monthlyIncome),
-        cpfOABalance: parseOptionalNumber(cpfOABalance),
-        age: parseOptionalNumber(age),
-        coApplicantAge: parseOptionalNumber(coApplicantAge),
-      }),
-    [monthlyIncome, cpfOABalance, age, coApplicantAge],
-  );
+  const { affordabilityCeiling, affordabilityProfileComplete } = useMemo(() => {
+    const profile = {
+      monthlyIncome: parseOptionalNumber(monthlyIncome),
+      cpfOABalance: parseOptionalNumber(cpfOABalance),
+      age: parseOptionalNumber(age),
+      coApplicantAge: parseOptionalNumber(coApplicantAge),
+    };
+    return {
+      affordabilityCeiling: maxAffordablePrice(profile),
+      affordabilityProfileComplete: isAffordabilityProfileComplete(profile),
+    };
+  }, [monthlyIncome, cpfOABalance, age, coApplicantAge]);
 
   const canSubmit = canSubmitSearchProfileDraft(draft);
 
@@ -137,13 +139,19 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
         <DialogPrimitive.Overlay className="fixed inset-0 z-[100] bg-black/50" />
         <DialogPrimitive.Content
           aria-describedby={undefined}
-          className="fixed inset-0 z-[101] flex items-end justify-center px-4 pb-20 pt-6 outline-none lg:items-center lg:px-0 lg:pb-0"
+          className="fixed inset-0 z-[101] flex items-end justify-center overflow-hidden px-4 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+1rem)] pt-4 outline-none lg:items-center lg:px-0 lg:py-6"
         >
           <DialogPrimitive.Title className="sr-only">
             {t("searchProfile.setupTitle")}
           </DialogPrimitive.Title>
-          <Card className="wizard-panel-in relative w-full max-w-[calc(100vw-2rem)] overflow-visible rounded-none border bg-popover shadow-sm lg:w-[28.75rem] lg:max-w-[28.75rem]">
-            <CardContent className="overflow-hidden px-5 py-6 lg:px-8 lg:py-7">
+          <Card
+            data-testid="search-profile-wizard-card"
+            className="wizard-panel-in relative flex max-h-[calc(100dvh-6rem)] w-full max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-none border bg-popover shadow-sm lg:max-h-[calc(100dvh-3rem)] lg:w-[28.75rem] lg:max-w-[28.75rem]"
+          >
+            <CardContent
+              data-testid="search-profile-wizard-scroll-content"
+              className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 lg:px-8 lg:py-7"
+            >
               <div
                 className="mb-6 flex items-center justify-center gap-1.5"
                 role="progressbar"
@@ -481,23 +489,21 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                           </div>
                         ) : null}
                       </div>
-                      {age.trim() && cpfOABalance.trim() && affordabilityCeiling > 0 ? (
+                      {affordabilityProfileComplete && affordabilityCeiling > 0 ? (
                         <div className="mt-5 rounded-none border border-success/30 bg-success/[0.06] px-4 py-3 text-left">
                           <p className="text-[length:var(--text-xs)] font-extrabold uppercase tracking-[var(--tracking-label)] text-success">
                             {t("affordability.ceiling", {
                               price: formatCurrency(affordabilityCeiling, locale),
                             })}
                           </p>
-                          {monthlyIncome.trim() ? (
-                            <p className="mt-1 text-[0.75rem] font-semibold leading-snug text-muted-foreground">
-                              {t("affordability.summary", {
-                                cpf: formatCurrency(Number(cpfOABalance), locale),
-                                income: formatCurrency(Number(monthlyIncome), locale),
-                                age: Number(age),
-                                price: formatCurrency(affordabilityCeiling, locale),
-                              })}
-                            </p>
-                          ) : null}
+                          <p className="mt-1 text-[0.75rem] font-semibold leading-snug text-muted-foreground">
+                            {t("affordability.summary", {
+                              cpf: formatCurrency(Number(cpfOABalance), locale),
+                              income: formatCurrency(Number(monthlyIncome), locale),
+                              age: Number(age),
+                              price: formatCurrency(affordabilityCeiling, locale),
+                            })}
+                          </p>
                         </div>
                       ) : null}
                     </div>
@@ -505,36 +511,41 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                 </div>
               </div>
             </CardContent>
-            <div className="flex items-center justify-between gap-3 px-5 pb-6 pt-1 lg:px-8 lg:pb-7">
-              <div className="flex items-center gap-2">
-                {step > 0 ? (
+            <div
+              data-testid="search-profile-wizard-actions"
+              className="shrink-0 border-t bg-popover px-5 pb-4 pt-3 lg:px-8 lg:pb-5"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  {step > 0 ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setDirection(-1);
+                        setStep((prev) => Math.max(0, prev - 1));
+                      }}
+                      className="rounded-none bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    >
+                      {t("searchProfile.back")}
+                    </button>
+                  ) : null}
                   <button
                     type="button"
-                    onClick={() => {
-                      setDirection(-1);
-                      setStep((prev) => Math.max(0, prev - 1));
-                    }}
-                    className="rounded-none bg-secondary px-4 py-2.5 text-xs font-bold uppercase tracking-[0.06em] text-secondary-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    onClick={onSkip}
+                    className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-none"
                   >
-                    {t("searchProfile.back")}
+                    {t("searchProfile.skip")}
                   </button>
-                ) : null}
+                </div>
                 <button
                   type="button"
-                  onClick={onSkip}
-                  className="px-1 py-2 text-xs font-bold uppercase tracking-[0.06em] text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-none"
+                  onClick={handleContinue}
+                  disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
+                  className="rounded-none bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-[color,background-color,box-shadow] enabled:hover:bg-primary/80 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
-                  {t("searchProfile.skip")}
+                  {nextLabel}
                 </button>
               </div>
-              <button
-                type="button"
-                onClick={handleContinue}
-                disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-                className="rounded-none bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-[color,background-color,box-shadow] enabled:hover:bg-primary/80 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-              >
-                {nextLabel}
-              </button>
             </div>
           </Card>
         </DialogPrimitive.Content>

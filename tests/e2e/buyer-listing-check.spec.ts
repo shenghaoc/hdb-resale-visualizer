@@ -58,7 +58,6 @@ test("a first-time buyer can start a listing price check from the Check tab with
   await expect(check.getByRole("button", { name: /check a listing price/i })).toBeVisible();
   await expect(check.getByPlaceholder(/search for a block/i)).toBeVisible();
   await expect(check.getByText(/search and select a block/i)).toBeVisible();
-  await expect(check.getByRole("button", { name: /try sample listing check/i })).toBeVisible();
 });
 
 // ── 2–4, 6, 7. Happy path: enter facts → verdict → evidence → save ───────────
@@ -89,6 +88,7 @@ test("a buyer enters listing facts and asking price and sees a verdict, confiden
 
   // (2) Buyer enters the asking price.
   await check.getByRole("spinbutton", { name: /asking price/i }).fill("1200000");
+  await check.getByRole("button", { name: /check this listing/i }).click();
 
   // (3) Verdict, confidence, fair range, and comparable count are all surfaced.
   await expect(check.getByText(/in line with market/i).first()).toBeVisible({ timeout: 10_000 });
@@ -134,6 +134,7 @@ test("a buyer sees a low-confidence verdict and a caveat when only a few compara
   );
 
   const check = desktopCheckPanel(page);
+  await check.getByRole("button", { name: /check this listing/i }).click();
   // The count also appears inside the "Only N comparable transactions" caveat
   // (rendered in both the verdict and the evidence banner), so scope to first.
   await expect(check.getByText(/2 comparable transactions/i).first()).toBeVisible({
@@ -165,6 +166,7 @@ test.describe("mobile", () => {
     );
 
     const check = page.locator("#mobile-check-content");
+    await check.getByRole("button", { name: /check this listing/i }).click();
     await expect(check.getByText(/in line with market/i).first()).toBeVisible({ timeout: 15_000 });
     await expect(check.getByText(/8 comparable transactions/i).first()).toBeVisible();
 

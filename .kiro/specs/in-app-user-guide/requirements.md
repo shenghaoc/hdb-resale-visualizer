@@ -28,7 +28,8 @@
 
 ## R4 — Contextual help links
 - **R4.1** Empty results pane links to the Troubleshooting section.
-- **R4.2** `AskingPriceCheck` links to the Price comparisons section.
+- **R4.2** The canonical `ListingCheckPanel` evidence surface links to the
+  Price comparisons section.
 - **R4.3** `LeaseWarningPanel` links to the Getting started section.
 - **R4.4** Data-load error state links to the Troubleshooting section.
 

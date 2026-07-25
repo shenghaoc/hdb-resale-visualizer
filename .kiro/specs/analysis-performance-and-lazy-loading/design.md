@@ -94,7 +94,7 @@ comparisons + weighting). `buildComparableSet` performs at most 3 widening
 passes (block → street → town) with sort of ≤30 items each.
 
 **Browser path:** `buildComparablePayload` in
-`src/components/ListingCheckPanel.tsx:155-215` runs a single O(N) pass over
+`src/features/listing-check/ListingCheckPanel.tsx` runs a single O(N) pass over
 comparables (N≤30) to compute counts and map transactions. This is correctly
 memoized via `useMemo` keyed on `[comparableSet, detail]`.
 
@@ -129,7 +129,8 @@ interaction.
 
 ### Table rendering performance
 
-**ComparableEvidenceTable** (`src/components/ComparableEvidenceTable.tsx`):
+**ComparableEvidenceTable**
+(`src/features/listing-check/ComparableEvidenceTable.tsx`):
 - Sort is memoized via `useMemo` on `[comparables, sortKey, sortDirection]`.
 - Typical payload: 8–30 rows. No virtualization needed at this scale.
 - Desktop and mobile layouts render in parallel (`hidden sm:table` /
@@ -240,7 +241,7 @@ ResultsPane already has custom virtualization for >80 blocks.
    - Consider debouncing `styledata` handler if profiling shows it fires
      excessively during rapid pan/zoom (only if measurable).
 
-3. **`src/components/ComparableEvidenceTable.tsx`**
+3. **`src/features/listing-check/ComparableEvidenceTable.tsx`**
    - No changes needed at current scale (≤30 rows).
    - Add optional virtualization path if row cap increases.
 

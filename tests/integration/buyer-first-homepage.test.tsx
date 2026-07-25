@@ -52,6 +52,7 @@ vi.mock("@/features/shortlist/useShortlist", () => ({
     has: (addressKey: string) =>
       shortlistMocks.items.some((item) => item.addressKey === addressKey),
     toggle: vi.fn(),
+    restore: vi.fn(() => true),
     update: vi.fn(),
   }),
 }));
@@ -116,12 +117,10 @@ vi.mock("@/features/listing-check/ListingCheckPanel", () => ({
   ListingCheckPanel: ({
     selectedAddressKey,
     askingPrice,
-    onUseSampleCheck,
     shortlistFull,
   }: {
     selectedAddressKey: string | null;
     askingPrice: number | null;
-    onUseSampleCheck: () => void;
     shortlistFull: boolean;
   }) => (
     <div
@@ -129,11 +128,7 @@ vi.mock("@/features/listing-check/ListingCheckPanel", () => ({
       data-address-key={selectedAddressKey ?? ""}
       data-asking-price={askingPrice ?? ""}
       data-shortlist-full={String(shortlistFull)}
-    >
-      <button type="button" onClick={onUseSampleCheck}>
-        Try sample listing check
-      </button>
-    </div>
+    />
   ),
 }));
 
@@ -165,18 +160,10 @@ const manifest: Manifest = {
 };
 
 const completedSearchProfile = {
-  version: 2,
+  version: 3,
   mainFlatType: "4 ROOM",
-  alternativeFlatTypes: [],
   maxBudget: 700000,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: 65,
-  budgetStretchPercent: 0,
-  showStretchOptions: false,
-  showAllBlocks: true,
   age: 35,
   coApplicantAge: null,
   cpfOABalance: 100000,
@@ -240,28 +227,6 @@ describe("Buyer-first homepage", () => {
     });
   });
 
-  it("sample check pre-fills address state from fallback sample", async () => {
-    const user = userEvent.setup();
-    renderApp();
-
-    // Open check panel first
-    const checkButton = await screen.findByRole("button", { name: /check a listing price/i });
-    await user.click(checkButton);
-
-    await waitFor(() => {
-      expect(screen.getByTestId("listing-check-panel")).toBeVisible();
-    });
-
-    // Click sample check — handleUseSampleCheck sets checkAddressKey and askingPrice
-    await user.click(screen.getByRole("button", { name: /try sample listing check/i }));
-
-    await waitFor(() => {
-      const panel = screen.getByTestId("listing-check-panel");
-      expect(panel).toHaveAttribute("data-address-key", "406-ANG MO KIO AVE 10");
-      expect(panel).toHaveAttribute("data-asking-price", "450000");
-    });
-  });
-
   it("allows updating an already-saved listing when the shortlist is at capacity", async () => {
     const selectedAddressKey = "bedok-101-bedok-nth-ave-4";
     window.history.replaceState(
@@ -307,6 +272,26 @@ describe("Buyer-first homepage", () => {
     window.history.replaceState({}, "", "/?affordable=comfortable");
     vi.stubGlobal("localStorage", {
       getItem: vi.fn(() => null),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    });
+
+    renderApp();
+
+    await screen.findByTestId("map-view");
+    await waitFor(() => {
+      expect(new URLSearchParams(window.location.search).has("affordable")).toBe(false);
+    });
+  });
+
+  it("clears affordability mode when CPF is zero instead of marking every home over", async () => {
+    window.history.replaceState({}, "", "/?affordable=comfortable");
+    vi.stubGlobal("localStorage", {
+      getItem: vi.fn((key: string) =>
+        key === SEARCH_PROFILE_STORAGE_KEY
+          ? JSON.stringify({ ...completedSearchProfile, cpfOABalance: 0 })
+          : null,
+      ),
       setItem: vi.fn(),
       removeItem: vi.fn(),
     });

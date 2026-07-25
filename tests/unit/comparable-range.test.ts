@@ -18,6 +18,14 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
     availableDateRange: ["2015-01", "2025-01"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
+    flatTypeCohorts: {
+      "4 ROOM": {
+        transactionCount: 10,
+        latestMonth: "2025-01",
+        floorAreaRange: [90, 100],
+        flatModels: ["MODEL A"],
+      },
+    },
     nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
     nearbyMrts: [],
     postalCode: null,
@@ -68,5 +76,64 @@ describe("computeComparableRange", () => {
     ];
     const result = computeComparableRange(source, similar)!;
     expect(result.medianPrice).toBe(610_000);
+  });
+
+  it("uses flat-type medians for the source and comparable set when a type is active", () => {
+    const source = makeBlock({
+      addressKey: "src",
+      medianPrice: 400_000,
+      medianPriceByFlatType: { "4 ROOM": 700_000 },
+    });
+    const similar = [
+      makeBlock({
+        addressKey: "a",
+        medianPrice: 300_000,
+        medianPriceByFlatType: { "4 ROOM": 650_000 },
+      }),
+      makeBlock({
+        addressKey: "b",
+        medianPrice: 500_000,
+        medianPriceByFlatType: { "4 ROOM": 750_000 },
+      }),
+    ];
+
+    expect(computeComparableRange(source, similar, "4 ROOM")).toMatchObject({
+      minPrice: 650_000,
+      maxPrice: 750_000,
+      medianPrice: 700_000,
+      sourceMedian: 700_000,
+      deltaFromMedianPct: 0,
+    });
+  });
+
+  it("retains existing type-price medians when richer cohort metadata is unavailable", () => {
+    const source = makeBlock({
+      addressKey: "src",
+      medianPrice: 400_000,
+      medianPriceByFlatType: { "4 ROOM": 700_000 },
+      flatTypeCohorts: undefined,
+    });
+    const similar = [
+      makeBlock({
+        addressKey: "a",
+        medianPrice: 300_000,
+        medianPriceByFlatType: { "4 ROOM": 650_000 },
+        flatTypeCohorts: undefined,
+      }),
+      makeBlock({
+        addressKey: "b",
+        medianPrice: 500_000,
+        medianPriceByFlatType: { "4 ROOM": 750_000 },
+        flatTypeCohorts: undefined,
+      }),
+    ];
+
+    expect(computeComparableRange(source, similar, "4 ROOM")).toMatchObject({
+      minPrice: 650_000,
+      maxPrice: 750_000,
+      medianPrice: 700_000,
+      sourceMedian: 700_000,
+      deltaFromMedianPct: 0,
+    });
   });
 });

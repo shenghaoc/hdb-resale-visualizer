@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Search, X } from "lucide-react";
+import { CircleHelp, Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -22,8 +22,7 @@ type AppHeaderProps = {
   isMobileHeaderOpen: boolean;
   onToggleMobileHeader: () => void;
   onDismiss: () => void;
-  mobileTab: string | null;
-  onClearMobileTab?: () => void;
+  onOpenGuide: () => void;
 };
 
 const HEADER_SURFACE_CLASS = "v2-chrome";
@@ -39,8 +38,7 @@ export function AppHeader({
   isMobileHeaderOpen,
   onToggleMobileHeader,
   onDismiss,
-  mobileTab,
-  onClearMobileTab,
+  onOpenGuide,
 }: AppHeaderProps) {
   const dataQuality = deriveDataQualityState(manifest);
   const baseSourceLabel = dataQuality.sourceLabels.join(" + ");
@@ -66,11 +64,8 @@ export function AppHeader({
   );
 
   const openMobileSearch = useCallback(() => {
-    if (mobileTab != null) {
-      onClearMobileTab?.();
-    }
     setIsMobileSearchOpen(true);
-  }, [mobileTab, onClearMobileTab]);
+  }, []);
 
   useEffect(() => {
     if (!isMobileSearchOpen) {
@@ -227,7 +222,7 @@ export function AppHeader({
             value={search}
             onValueChange={onSearchChange}
             onSelectSuggestion={onSelectSuggestion}
-            suggestActive={isDesktop}
+            suggestActive={!isMobileSearchOpen}
             t={t}
             inputClassName="h-8 min-w-0 border-0 bg-transparent px-2 text-[0.75rem] shadow-none focus-visible:border-0 focus-visible:ring-0"
           />
@@ -255,6 +250,27 @@ export function AppHeader({
           <TooltipContent>{t("header.openSearch")}</TooltipContent>
         </Tooltip>
 
+        {!isDesktop ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                aria-label={t("app.openGuide")}
+                onClick={onOpenGuide}
+                className={cn(
+                  "pointer-events-auto size-9 shrink-0 p-0 text-muted-foreground hover:text-foreground",
+                  HEADER_SURFACE_CLASS,
+                )}
+              >
+                <CircleHelp data-icon="inline-start" className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t("app.openGuide")}</TooltipContent>
+          </Tooltip>
+        ) : null}
+
         {isDesktop ? (
           <div
             className={cn(
@@ -281,7 +297,7 @@ export function AppHeader({
         ) : null}
       </header>
 
-      {isMobileSearchOpen && mobileTab == null ? (
+      {isMobileSearchOpen ? (
         <div
           id={overlayContainerId}
           className="pointer-events-auto fixed inset-0 z-40 sm:hidden"

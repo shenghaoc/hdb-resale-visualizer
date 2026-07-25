@@ -21,7 +21,7 @@ This TypeScript layer is the **canonical logic reference**. It is the source of 
 | `lease.ts`                | Remaining-lease helpers, lease-to-95, age eligibility                                                                                                                                  |
 | `listing-check.ts`        | Listing confidence, asking-price assessment, caveats                                                                                                                                   |
 | `search-aliases.ts`       | Multilingual (CJK) search alias resolver — pure static data + string transform                                                                                                         |
-| `search-profile.ts`       | `SearchProfile` data contract, completion, and deterministic profile-matching evaluators; visible filtering remains in the canonical filter pipeline                                   |
+| `search-profile.ts`       | Commute-free `SearchProfile` v3 contract, completion, and deterministic flat-type/budget/lease matching; visible filtering remains in the canonical filter pipeline                    |
 | `transaction-analysis.ts` | Comparable transaction selection and summary calculations                                                                                                                              |
 
 ### Other shared modules
@@ -55,6 +55,19 @@ When shared-core modules provide the deterministic logic, `src/` modules act as 
 - `src/shared/lib/i18n/domain.ts` — re-exports `resolveMultilingualSearchAliases` from shared
 
 The hook `src/hooks/useFilterPipeline.ts` orchestrates React state, debouncing, URL inspection, and `useBlockLoading`, then delegates to shared pure functions for filtering.
+
+### Search profile v3 and stored-profile migration
+
+`SearchProfile` version 3 contains only values the current Buyer setup presents:
+
+- target flat type;
+- optional maximum budget;
+- minimum remaining lease;
+- optional local-only applicant ages, CPF OA balance, and household monthly income.
+
+The web parser accepts stored version 1 and version 2 payloads, copies those supported values into a version 3 profile, writes the migrated profile under `hdb_resale_search_profile_v3`, and removes the legacy key it consumed. Retired alternative-flat-type, stretch-visibility, commute-address, MRT-anchor, and commute-minute fields are deliberately discarded. They were not supported by the current setup and must not silently affect results after migration.
+
+The shared evaluator returns only flat-type, budget, and lease dimension results. MRT proximity remains an explicit map/filter fact and does not act as a commute proxy in profile ranking. Local finance inputs remain available to the separate affordability calculation and likewise do not change profile recommendations.
 
 ## Cloudflare/API-only code
 

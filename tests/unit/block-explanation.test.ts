@@ -17,6 +17,14 @@ const baseBlock: BlockSummary = {
   availableDateRange: ["2024-01", "2025-12"],
   flatTypes: ["4 ROOM"],
   flatModels: ["Model A"],
+  flatTypeCohorts: {
+    "4 ROOM": {
+      transactionCount: 8,
+      latestMonth: "2025-12",
+      floorAreaRange: [80, 100],
+      flatModels: ["Model A"],
+    },
+  },
   nearestMrt: { stationName: "Yio Chu Kang", distanceMeters: 550, walkingTimeSeconds: 440 },
 };
 
@@ -159,6 +167,48 @@ describe("buildBlockExplanation", () => {
 
     expect(belowMinimum).not.toContain("within-budget");
     expect(aboveMaximum).not.toContain("within-budget");
+  });
+
+  it("uses the active flat-type median and only matching comparison percentiles", () => {
+    const result = buildBlockExplanation({
+      block: {
+        ...baseBlock,
+        medianPriceByFlatType: { "4 ROOM": 600000 },
+      },
+      comparison: { ...comparison, flatType: "5 ROOM" },
+      filters: {
+        ...baseFilters,
+        flatType: "4 ROOM",
+        budgetMax: 550000,
+      },
+    });
+
+    expect(result).not.toContain("within-budget");
+    expect(result).not.toContain("below-town-median-price");
+  });
+
+  it("uses the active flat-type cohort instead of block-wide volume evidence", () => {
+    const result = buildBlockExplanation({
+      block: {
+        ...baseBlock,
+        transactionCount: 20,
+        flatTypeCohorts: {
+          "4 ROOM": {
+            transactionCount: 2,
+            latestMonth: "2025-12",
+            floorAreaRange: [90, 95],
+            flatModels: ["Model A"],
+          },
+        },
+      },
+      comparison,
+      filters: {
+        ...baseFilters,
+        flatType: "4 ROOM",
+      },
+    });
+
+    expect(result).not.toContain("high-transaction-volume");
   });
 
   it("does not emit within-mrt-threshold when nearest MRT exceeds the selected maximum", () => {

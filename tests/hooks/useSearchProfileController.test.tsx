@@ -44,9 +44,6 @@ const blocks = [
 const completedProfile: SearchProfile = {
   ...DEFAULT_SEARCH_PROFILE,
   mainFlatType: "4 ROOM",
-  commuteAnchorLabel: "Raffles Place",
-  commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-  maxComfortableCommuteMinutes: 30,
   minimumRemainingLeaseYears: 60,
 };
 

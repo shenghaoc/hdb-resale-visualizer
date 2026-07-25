@@ -21,6 +21,13 @@ const nearestMrtSchema = z.object({
   walkingTimeSeconds: z.number().nonnegative(),
 });
 
+const blockFlatTypeCohortSchema = z.object({
+  transactionCount: z.number().int().nonnegative(),
+  latestMonth: monthSchema,
+  floorAreaRange: z.tuple([z.number().positive(), z.number().positive()]),
+  flatModels: z.array(z.string()),
+});
+
 export const blockSummarySchema = z.object({
   addressKey: z.string(),
   town: z.string(),
@@ -45,6 +52,9 @@ export const blockSummarySchema = z.object({
   availableDateRange: z.tuple([monthSchema, monthSchema]),
   flatTypes: z.array(z.string()),
   flatModels: z.array(z.string()),
+  medianPriceByFlatType: z.record(z.string(), z.number().positive()).optional(),
+  medianPricePerSqmByFlatType: z.record(z.string(), z.number().positive()).optional(),
+  flatTypeCohorts: z.record(z.string(), blockFlatTypeCohortSchema).optional(),
   nearestMrt: nearestMrtSchema.nullable(),
   nearbyMrts: z.array(nearestMrtSchema).optional(),
   postalCode: z.string().nullable().optional(),
@@ -169,6 +179,10 @@ export const searchResponseSchema = z.object({
   blocks: z.array(blockSummarySchema),
   truncated: z.boolean(),
   limit: z.number().int().positive(),
+  // Absent on responses from an API deployed before the cohort column existed;
+  // treat that as "available" so the flag only ever suppresses results when the
+  // server explicitly says it could not honour a per-flat-type refinement.
+  cohortMetadataAvailable: z.boolean().optional().default(true),
 });
 
 const townSuggestionSchema = z.object({

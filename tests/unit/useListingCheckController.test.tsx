@@ -3,7 +3,7 @@ import { act, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useListingCheckController } from "@/features/listing-check/useListingCheckController";
 import type { ListingCheckUrlState } from "@/features/listing-check/useListingCheckUrlState";
-import type { BlockSummary, ShortlistItem } from "@/types/data";
+import type { ShortlistItem } from "@/types/data";
 
 const shareMocks = vi.hoisted(() => ({
   shareViaNavigator: vi.fn<(url: string, title: string) => Promise<"shared" | "copied">>(),
@@ -28,33 +28,11 @@ const VALID_STATE: ListingCheckUrlState = {
   leaseCommenceYear: 1989,
 };
 
-const BASE_BLOCK: BlockSummary = {
-  addressKey: "base-block",
-  town: "BEDOK",
-  block: "106",
-  streetName: "LENGKONG TIGA",
-  coordinates: { lat: 1.32, lng: 103.92 },
-  medianPrice: 500_000,
-  pricePerSqmMedian: 6_000,
-  transactionCount: 8,
-  floorAreaRange: [90, 100],
-  leaseCommenceRange: [1980, 1984],
-  latestMonth: "2026-04",
-  availableDateRange: ["2025-01", "2026-04"],
-  flatTypes: ["4 ROOM"],
-  flatModels: ["MODEL A"],
-  nearestMrt: null,
-};
-
 type ControllerOptions = Parameters<typeof useListingCheckController>[0];
 type ControllerResult = ReturnType<typeof useListingCheckController>;
 
 function StrictModeWrapper({ children }: PropsWithChildren) {
   return <StrictMode>{children}</StrictMode>;
-}
-
-function makeBlock(overrides: Partial<BlockSummary>): BlockSummary {
-  return { ...BASE_BLOCK, ...overrides };
 }
 
 function makeShortlistItem(addressKey: string, askingPrice?: number): ShortlistItem {
@@ -82,7 +60,6 @@ function setCheckUrl(state: ListingCheckUrlState, unrelatedParams = new URLSearc
 
 function makeOptions(overrides: Partial<ControllerOptions> = {}): ControllerOptions {
   return {
-    blocks: [],
     shortlistItems: [],
     toggleShortlist: vi.fn<ControllerOptions["toggleShortlist"]>(),
     updateShortlist: vi.fn<ControllerOptions["updateShortlist"]>(),
@@ -275,112 +252,6 @@ describe("useListingCheckController", () => {
     expect(toggleShortlist).not.toHaveBeenCalled();
     expect(updateShortlist).not.toHaveBeenCalled();
     expect(result.current.savedToShortlist).toBe(false);
-  });
-
-  const ineligibleByPrice = makeBlock({
-    addressKey: "000-ineligible-price",
-    medianPrice: 0,
-  });
-  const ineligibleByCount = makeBlock({
-    addressKey: "001-ineligible-count",
-    transactionCount: 0,
-  });
-  const laterEligible = makeBlock({
-    addressKey: "eligible-z",
-    medianPrice: 700_000,
-  });
-  const expectedEligible = makeBlock({
-    addressKey: "eligible-a",
-    medianPrice: 500_000.6,
-    floorAreaRange: [67, 68],
-    leaseCommenceRange: [1980, 1985],
-    flatTypes: ["5 ROOM", "3 ROOM", "4 ROOM"],
-  });
-  const sampleBlocks = [laterEligible, ineligibleByCount, expectedEligible, ineligibleByPrice];
-
-  it.each([
-    { label: "forward order", blocks: sampleBlocks },
-    { label: "reverse order", blocks: [...sampleBlocks].reverse() },
-  ])("selects the same deterministic eligible sample in $label", ({ blocks }) => {
-    const openCheckPanel = vi.fn();
-    const { result } = renderController({ blocks, openCheckPanel });
-
-    act(() => result.current.onUseSampleCheck());
-
-    expect(result.current.state).toEqual({
-      selectedAddressKey: "eligible-a",
-      askingPrice: 500_001,
-      floorAreaSqm: 68,
-      flatType: "3 ROOM",
-      storeyRange: null,
-      leaseCommenceYear: 1983,
-    });
-    expect(result.current.savedToShortlist).toBe(false);
-    expect(result.current.panelKey).toBe("eligible-a");
-    expect(openCheckPanel).toHaveBeenCalledOnce();
-  });
-
-  it("keeps incomplete sample facts null instead of crashing", () => {
-    const incompleteBlock = {
-      ...makeBlock({ addressKey: "eligible-incomplete" }),
-      floorAreaRange: null,
-      leaseCommenceRange: undefined,
-      flatTypes: undefined,
-    } as unknown as BlockSummary;
-    const openCheckPanel = vi.fn();
-    const { result } = renderController({ blocks: [incompleteBlock], openCheckPanel });
-
-    act(() => result.current.onUseSampleCheck());
-
-    expect(result.current.state).toEqual({
-      selectedAddressKey: "eligible-incomplete",
-      askingPrice: 500_000,
-      floorAreaSqm: null,
-      flatType: null,
-      storeyRange: null,
-      leaseCommenceYear: null,
-    });
-    expect(openCheckPanel).toHaveBeenCalledOnce();
-  });
-
-  it.each([
-    { label: "no blocks", blocks: [] },
-    { label: "no eligible blocks", blocks: [ineligibleByPrice, ineligibleByCount] },
-  ])("uses the exact fallback sample when there are $label", ({ blocks }) => {
-    const openCheckPanel = vi.fn();
-    const { result } = renderController({ blocks, openCheckPanel });
-
-    act(() => result.current.onUseSampleCheck());
-
-    expect(result.current.state).toEqual({
-      selectedAddressKey: "406-ANG MO KIO AVE 10",
-      askingPrice: 450_000,
-      floorAreaSqm: 68,
-      flatType: "4 ROOM",
-      storeyRange: null,
-      leaseCommenceYear: 1980,
-    });
-    expect(openCheckPanel).toHaveBeenCalledOnce();
-  });
-
-  it("resets a previously saved listing when applying the sample", () => {
-    const openCheckPanel = vi.fn();
-    const { result, rerenderWith } = renderController({ blocks: sampleBlocks, openCheckPanel });
-
-    act(() => {
-      result.current.onAddressSelect("original-address");
-      result.current.onAskingPriceChange(600_000);
-    });
-    saveListing(result.current);
-    rerenderWith({
-      shortlistItems: [makeShortlistItem("original-address", 600_000)],
-    });
-    expect(result.current.savedToShortlist).toBe(true);
-
-    act(() => result.current.onUseSampleCheck());
-
-    expect(result.current.savedToShortlist).toBe(false);
-    expect(openCheckPanel).toHaveBeenCalledOnce();
   });
 
   it("shares the current controller state with unrelated URL parameters and the caller title", async () => {

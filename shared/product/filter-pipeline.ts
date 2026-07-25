@@ -50,6 +50,7 @@ export function filterScopedBlocks(
         block,
         affordabilityProfile,
         filters.affordable,
+        filters.flatType,
       );
     }
 

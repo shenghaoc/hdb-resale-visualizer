@@ -160,13 +160,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(detailDrawer).toContainText("1 within 1km");
   await expect(detailDrawer).toContainText("Parks");
   await expect(detailDrawer).toContainText("4 within 1km");
-  await expect(detailDrawer).toContainText("Market Percentiles");
-  await expect(detailDrawer).toContainText("Price Rank");
-  await expect(detailDrawer).toContainText("65%");
-  await expect(detailDrawer).toContainText("Price/sqm Rank");
-  await expect(detailDrawer).toContainText("70%");
-  await expect(detailDrawer).toContainText("MRT Access Rank");
-  await expect(detailDrawer).toContainText("80%");
+  await expect(detailDrawer).not.toContainText("Market Percentiles");
 
   await page
     .getByTestId("detail-drawer")
@@ -185,10 +179,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(shortlistDrawer).toContainText("BEDOK PRIMARY SCHOOL: 250 m");
   await expect(shortlistDrawer).toContainText("Amenities");
   await expect(shortlistDrawer).toContainText("2H • 1S • 4P");
-  await expect(shortlistDrawer).toContainText("Price percentile");
-  await expect(shortlistDrawer).toContainText("65th percentile");
-  await expect(shortlistDrawer).toContainText("Location ranks");
-  await expect(shortlistDrawer).toContainText("MRT: 80th • Lease: 45th");
+  await expect(shortlistDrawer).not.toContainText("Market position");
 });
 
 test("shortlist items from prior sessions are visible without adding a new one", async ({

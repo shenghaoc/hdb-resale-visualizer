@@ -42,7 +42,7 @@ import type { SearchProfile } from "@/types/searchProfile";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import {
   Item,
@@ -71,13 +71,11 @@ import { classifyPrimarySchoolDistance } from "@/entities/block/school-proximity
 import { FlatTypePriceLadder } from "./FlatTypePriceLadder";
 import { ShareButton } from "@/components/ShareButton";
 import { useBlockDetailController } from "./useBlockDetailController";
+import { resolveEffectiveMedianPrice } from "@shared/product/filtering";
+import { canonicalFlatType } from "@shared/filter-options";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
-const AskingPriceCheck = lazy(() =>
-  import("@/features/listing-check/AskingPriceCheck").then((module) => ({
-    default: module.AskingPriceCheck,
-  })),
-);
+const SQM_TO_SQFT = 10.7639;
 
 type DetailDrawerProps = {
   selectedBlock: BlockSummary | null;
@@ -160,43 +158,6 @@ function TrajectoryBadge({
       <span className="text-[length:var(--text-xs)] text-muted-foreground/70 font-medium">
         {peakLabel}
       </span>
-    </div>
-  );
-}
-
-function PercentileBadge({
-  percentile,
-  invert = false,
-  label,
-}: {
-  percentile: number;
-  invert?: boolean;
-  label: string;
-}) {
-  const isGood = invert ? percentile >= 75 : percentile <= 25;
-  const isMid = invert ? percentile >= 25 : percentile <= 75;
-  const rounded = Math.round(percentile);
-
-  return (
-    <div className="flex flex-col gap-1.5 py-1">
-      <div className="flex items-center justify-between gap-2">
-        <span className="v2-field-label">{label}</span>
-        <Badge
-          variant={isGood ? "default" : isMid ? "secondary" : "outline"}
-          className="h-5 text-[length:var(--text-xs)] font-extrabold"
-        >
-          {rounded}%
-        </Badge>
-      </div>
-      <div className="h-1 overflow-hidden rounded-full bg-muted/50">
-        <div
-          className={cn(
-            "h-full rounded-full",
-            isGood ? "bg-success" : isMid ? "bg-primary" : "bg-destructive",
-          )}
-          style={{ width: `${Math.max(0, Math.min(100, rounded))}%` }}
-        />
-      </div>
     </div>
   );
 }
@@ -333,6 +294,11 @@ export function DetailDrawer({
     isCopied,
     handleCopyAddress,
     currentSummary,
+    effectiveMedianPrice,
+    effectivePricePerSqmMedian,
+    medianPriceResolution,
+    pricePerSqmResolution,
+    cohortResolution,
     dataQualityTag,
     blockShareUrl,
     isDrawerOpen,
@@ -425,7 +391,9 @@ export function DetailDrawer({
                   </Tooltip>
                 )}
               </div>
-              {trajectory && <TrajectoryBadge trajectory={trajectory} t={t} locale={locale} />}
+              {trajectory && !filters.flatType ? (
+                <TrajectoryBadge trajectory={trajectory} t={t} locale={locale} />
+              ) : null}
             </div>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -449,7 +417,7 @@ export function DetailDrawer({
               onValueChange={handleTabChange}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
-              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-none bg-muted/40 p-1">
+              <TabsList className="mb-4 grid w-full shrink-0 grid-cols-3 rounded-none bg-muted/40 p-1">
                 <TabsTrigger
                   value="overview"
                   className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
@@ -471,13 +439,6 @@ export function DetailDrawer({
                   <History data-icon className="size-3" aria-hidden="true" />
                   {t("detail.history")}
                 </TabsTrigger>
-                <TabsTrigger
-                  value="negotiate"
-                  className="gap-1.5 text-[0.75rem] font-semibold uppercase tracking-wider"
-                >
-                  <Scale data-icon className="size-3" aria-hidden="true" />
-                  {t("detail.negotiate")}
-                </TabsTrigger>
               </TabsList>
 
               <div className="min-h-0 flex-1 overflow-y-auto v2-scrollbar drawer-body-vt">
@@ -494,10 +455,24 @@ export function DetailDrawer({
                       </div>
                       <div className="flex flex-col">
                         <div className="font-heading text-xl font-extrabold tracking-tight v2-tabular">
-                          {currentSummary
-                            ? formatCurrency(currentSummary.medianPrice, locale)
+                          {effectiveMedianPrice !== null
+                            ? formatCurrency(effectiveMedianPrice, locale)
                             : "…"}
                         </div>
+                        {medianPriceResolution ? (
+                          <Badge
+                            variant={
+                              filters.flatType && medianPriceResolution.isTypeSpecific
+                                ? "secondary"
+                                : "outline"
+                            }
+                            className="mt-2 w-fit"
+                          >
+                            {filters.flatType && medianPriceResolution.isTypeSpecific
+                              ? localizeFlatType(medianPriceResolution.flatType, locale)
+                              : t("results.blockWideMedian")}
+                          </Badge>
+                        ) : null}
                         {currentSummary && dataQualityTag ? (
                           <>
                             <Badge
@@ -507,14 +482,18 @@ export function DetailDrawer({
                               {t(QUALITY_LABEL_KEYS[dataQualityTag])}
                             </Badge>
                             <div className="mt-1 text-[length:var(--text-xs)] font-semibold text-muted-foreground">
-                              {t(QUALITY_HINT_KEYS[dataQualityTag])}
+                              {t(
+                                cohortResolution?.isTypeSpecific && dataQualityTag === "strong"
+                                  ? "quality.hint.typeStrong"
+                                  : QUALITY_HINT_KEYS[dataQualityTag],
+                              )}
                             </div>
                           </>
                         ) : null}
-                        {currentSummary &&
+                        {effectiveMedianPrice !== null &&
                         (filters.budgetMin != null || filters.budgetMax != null) ? (
                           <BudgetMatchBadge
-                            medianPrice={currentSummary.medianPrice}
+                            medianPrice={effectiveMedianPrice}
                             budgetMin={filters.budgetMin}
                             budgetMax={filters.budgetMax}
                             t={t}
@@ -522,10 +501,15 @@ export function DetailDrawer({
                             className="mt-2"
                           />
                         ) : null}
-                        {detail?.summary.pricePerSqftMedian ? (
+                        {effectivePricePerSqmMedian &&
+                        (!filters.flatType || pricePerSqmResolution?.isTypeSpecific) ? (
                           <div className="mt-1 text-xs font-medium text-muted-foreground">
                             {t("unit.psf", {
-                              value: formatNumber(detail.summary.pricePerSqftMedian, 0, locale),
+                              value: formatNumber(
+                                effectivePricePerSqmMedian / SQM_TO_SQFT,
+                                0,
+                                locale,
+                              ),
                             })}
                           </div>
                         ) : null}
@@ -596,6 +580,9 @@ export function DetailDrawer({
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
                         {t("affordability.breakdownTitle")}
                       </div>
+                      <p className="mb-3 text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
+                        {t("affordability.caveat")}
+                      </p>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
                           <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
@@ -678,7 +665,7 @@ export function DetailDrawer({
                         </span>
                       </div>
                     </section>
-                  ) : searchProfile && searchProfile.monthlyIncome === null ? (
+                  ) : searchProfile ? (
                     <section className="rounded-none border border-border/40 bg-muted/20 p-3">
                       <div className="mb-2 flex items-center gap-2 v2-field-label">
                         <Coins data-icon className="size-3.5 text-primary/70" aria-hidden="true" />
@@ -713,6 +700,14 @@ export function DetailDrawer({
                     <h3 className="v2-section-title mb-3 flex items-center gap-2">
                       <Table data-icon className="size-4" aria-hidden="true" />
                       {t("detail.unitAttributes")}
+                      {filters.flatType && cohortResolution && !cohortResolution.isTypeSpecific ? (
+                        <Badge
+                          variant="outline"
+                          className="h-5 text-[length:var(--text-xs)] normal-case tracking-normal"
+                        >
+                          {t("detail.blockWideAttributes")}
+                        </Badge>
+                      ) : null}
                     </h3>
                     <Card className="v2-card rounded-none border-border/40 bg-card py-0 shadow-none">
                       <CardContent className="divide-y divide-border/40 p-0">
@@ -721,7 +716,10 @@ export function DetailDrawer({
                             {t("detail.availableLayouts")}
                           </span>
                           <div className="flex flex-wrap justify-end gap-1.5 max-w-[60%]">
-                            {currentSummary?.flatTypes.map((type) => (
+                            {(filters.flatType
+                              ? [canonicalFlatType(filters.flatType)]
+                              : (currentSummary?.flatTypes ?? [])
+                            ).map((type) => (
                               <Badge
                                 key={type}
                                 variant="outline"
@@ -737,15 +735,17 @@ export function DetailDrawer({
                             {t("filters.flatModel")}
                           </span>
                           <div className="flex flex-wrap justify-end gap-1.5 max-w-[60%]">
-                            {currentSummary?.flatModels.map((model) => (
-                              <Badge
-                                key={model}
-                                variant="secondary"
-                                className="h-5 text-[length:var(--text-xs)] font-bold uppercase tracking-tight"
-                              >
-                                {model}
-                              </Badge>
-                            ))}
+                            {(cohortResolution?.flatModels ?? currentSummary?.flatModels ?? []).map(
+                              (model) => (
+                                <Badge
+                                  key={model}
+                                  variant="secondary"
+                                  className="h-5 text-[length:var(--text-xs)] font-bold uppercase tracking-tight"
+                                >
+                                  {model}
+                                </Badge>
+                              ),
+                            )}
                           </div>
                         </div>
                         <div className="flex items-center justify-between p-3">
@@ -753,9 +753,9 @@ export function DetailDrawer({
                             {t("filters.floorAreaRange")}
                           </span>
                           <span className="font-heading text-sm font-bold">
-                            {currentSummary
-                              ? `${Math.round(currentSummary.floorAreaRange[0])} - ${Math.round(
-                                  currentSummary.floorAreaRange[1],
+                            {cohortResolution
+                              ? `${Math.round(cohortResolution.floorAreaRange[0])} - ${Math.round(
+                                  cohortResolution.floorAreaRange[1],
                                 )} ${t("unit.sqm", { value: "" }).trim()}`
                               : "…"}
                           </span>
@@ -881,58 +881,6 @@ export function DetailDrawer({
                   </section>
 
                   <section>
-                    <h3 className="v2-section-title mb-3 flex items-center gap-2">
-                      <TrendingUp data-icon className="size-4" aria-hidden="true" />
-                      {t("detail.marketPercentiles")}
-                    </h3>
-                    {isComparisonLoading ? (
-                      <div className="grid grid-cols-2 gap-3">
-                        {Array.from({ length: 6 }).map((_, i) => (
-                          <div
-                            key={i}
-                            className="h-16 w-full animate-pulse rounded-none bg-muted/40"
-                          />
-                        ))}
-                      </div>
-                    ) : comparison ? (
-                      <div className="grid grid-cols-2 gap-3">
-                        <PercentileBadge
-                          label={t("detail.rank.price")}
-                          percentile={comparison.percentileRanks.pricePercentile}
-                        />
-                        <PercentileBadge
-                          label={t("detail.rank.pricePerSqm")}
-                          percentile={comparison.percentileRanks.pricePerSqmPercentile}
-                        />
-                        <PercentileBadge
-                          label={t("detail.rank.lease")}
-                          percentile={comparison.percentileRanks.leasePercentile}
-                          invert
-                        />
-                        <PercentileBadge
-                          label={t("detail.rank.mrt")}
-                          percentile={comparison.percentileRanks.mrtDistancePercentile}
-                          invert
-                        />
-                        <PercentileBadge
-                          label={t("detail.rank.liquidity")}
-                          percentile={comparison.percentileRanks.transactionCountPercentile}
-                          invert
-                        />
-                        <PercentileBadge
-                          label={t("detail.rank.recency")}
-                          percentile={comparison.percentileRanks.recencyPercentile}
-                          invert
-                        />
-                      </div>
-                    ) : (
-                      <p className="py-4 text-sm text-muted-foreground italic">
-                        {t("detail.noPercentileData")}
-                      </p>
-                    )}
-                  </section>
-
-                  <section>
                     <div className="mb-3">
                       <h3 className="v2-section-title flex items-center gap-2">
                         <LayoutGrid data-icon className="size-4" aria-hidden="true" />
@@ -949,6 +897,7 @@ export function DetailDrawer({
                             key={block.addressKey}
                             block={block}
                             onSelect={onSelectBlock}
+                            flatType={filters.flatType}
                             t={t}
                             locale={locale}
                           />
@@ -991,6 +940,13 @@ export function DetailDrawer({
                         ))}
                       </div>
                     </div>
+                    <p className="mb-3 text-xs leading-relaxed text-muted-foreground">
+                      {filters.flatType
+                        ? t("trend.blockWideFilteredNote", {
+                            flatType: localizeFlatType(filters.flatType, locale),
+                          })
+                        : t("trend.blockWideNote")}
+                    </p>
                     <Card className="overflow-hidden border-border/40 bg-muted/10 shadow-none">
                       <CardContent className="p-0">
                         <div className="flex h-[280px] items-center justify-center pt-4">
@@ -1043,7 +999,7 @@ export function DetailDrawer({
                     {trajectory && (
                       <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
                         <StatPill
-                          label={t("results.medianResale")}
+                          label={t("results.blockWideMedian")}
                           value={formatCurrency(trajectory.currentMedian, locale)}
                         />
                         <StatPill
@@ -1068,39 +1024,6 @@ export function DetailDrawer({
                       </div>
                     )}
                   </section>
-
-                  <div className="grid grid-cols-1 gap-4">
-                    <Card className="border-border/40 bg-card shadow-sm transition-[border-color,box-shadow] hover:border-primary/20">
-                      <CardHeader className="p-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-col gap-1">
-                            <CardDescription className="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)]">
-                              {t("detail.marketRank")}
-                            </CardDescription>
-                            <CardTitle className="text-xl font-bold tracking-tight">
-                              {t("detail.townAverage", {
-                                town: currentSummary
-                                  ? localizeTownName(currentSummary.town, locale)
-                                  : "",
-                              })}
-                            </CardTitle>
-                          </div>
-                          <div className="rounded-none bg-primary/5 p-2 text-primary">
-                            <TrendingUp data-icon className="size-5" aria-hidden="true" />
-                          </div>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="px-4 pb-4 pt-0">
-                        <p className="text-xs text-muted-foreground leading-relaxed">
-                          {t("detail.marketRankDescription", {
-                            town: currentSummary
-                              ? localizeTownName(currentSummary.town, locale)
-                              : "",
-                          })}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
                 </TabsContent>
 
                 {/* ── HISTORY ── */}
@@ -1206,44 +1129,6 @@ export function DetailDrawer({
                     </ItemGroup>
                   </section>
                 </TabsContent>
-
-                {/* ── NEGOTIATE ── */}
-                <TabsContent value="negotiate" className="mt-0 pb-8 focus-visible:outline-none">
-                  {detail ? (
-                    <ErrorBoundary
-                      reloadOnRecovery={false}
-                      fallbackText={t("error.askingPriceFallback")}
-                      actionText={t("error.retry")}
-                    >
-                      <Suspense
-                        fallback={
-                          <div className="flex flex-col gap-3 py-12">
-                            {Array.from({ length: 3 }).map((_, i) => (
-                              <div
-                                key={i}
-                                className="h-20 w-full animate-pulse rounded-none bg-muted/40"
-                              />
-                            ))}
-                          </div>
-                        }
-                      >
-                        <AskingPriceCheck
-                          key={`${detail.summary.block}-${detail.summary.streetName}`}
-                          detail={detail}
-                        />
-                      </Suspense>
-                    </ErrorBoundary>
-                  ) : (
-                    <div className="flex flex-col gap-3 py-12">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="h-20 w-full animate-pulse rounded-none bg-muted/40"
-                        />
-                      ))}
-                    </div>
-                  )}
-                </TabsContent>
               </div>
             </Tabs>
           </div>
@@ -1326,15 +1211,21 @@ export function DetailDrawer({
 function SimilarBlockCard({
   block,
   onSelect,
+  flatType,
   t,
   locale,
 }: {
   block: BlockSummary;
   onSelect: (addressKey: string) => void;
+  flatType: string;
   t: Translator;
   locale: Locale;
 }) {
   const address = `${block.block} ${block.streetName}`;
+  const displayedFlatTypes = flatType ? [flatType] : block.flatTypes.slice(0, 2);
+  const medianResolution = resolveEffectiveMedianPrice(block, flatType);
+  const hasTypePrice = Boolean(flatType) && medianResolution.isTypeSpecific;
+  const effectiveMedianPrice = medianResolution.value;
   return (
     <button
       type="button"
@@ -1349,7 +1240,7 @@ function SimilarBlockCard({
             <span className="text-[length:var(--text-xs)] font-extrabold uppercase tracking-[0.1em] text-muted-foreground/70">
               {localizeTownName(block.town, locale)}
             </span>
-            {block.flatTypes.slice(0, 2).map((ft) => (
+            {displayedFlatTypes.map((ft) => (
               <Badge
                 key={ft}
                 variant="outline"
@@ -1362,8 +1253,13 @@ function SimilarBlockCard({
         </div>
         <div className="shrink-0 text-right">
           <div className="font-heading text-sm font-extrabold tabular-nums">
-            {formatCurrency(block.medianPrice, locale)}
+            {formatCurrency(effectiveMedianPrice, locale)}
           </div>
+          {!hasTypePrice ? (
+            <div className="text-[length:var(--text-xs)] font-semibold text-muted-foreground">
+              {t("results.blockWideMedian")}
+            </div>
+          ) : null}
           {block.nearestMrt && (
             <div
               className="mt-0.5 text-[length:var(--text-xs)] text-muted-foreground/70 tabular-nums"

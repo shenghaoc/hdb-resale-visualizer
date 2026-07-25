@@ -2,13 +2,13 @@
 
 HDB Resale Explorer is a free, buyer-first HDB due-diligence tool for Singapore resale transactions. It pulls official data from data.gov.sg and presents it on an interactive map so you can compare blocks, evaluate asking prices, and shortlist properties — all without creating an account.
 
-> **In-app user guide:** this guide also ships inside the app. Tap the **?** (User guide) button in the tab bar, or open `/docs` directly, to browse the same material with section navigation and local search — no need to leave the app. Sections live at `/docs/getting-started`, `/docs/understanding-price-comparisons`, `/docs/filters-and-map`, `/docs/shortlisting`, `/docs/faq`, and `/docs/troubleshooting` (content source: `src/features/docs/content/`).
+> **In-app user guide:** this guide also ships inside the app. On mobile, tap the **?** button in the header; on desktop, use **User guide** in the primary tab bar. You can also open `/docs` directly to browse the same material with section navigation and local search — no need to leave the app. Sections live at `/docs/getting-started`, `/docs/understanding-price-comparisons`, `/docs/filters-and-map`, `/docs/shortlisting`, `/docs/faq`, and `/docs/troubleshooting` (content source: `src/features/docs/content/`).
 
 ## Getting started
 
 The app opens directly to a task-first map prompt — no onboarding form blocks the first visit. Choose **Check a listing price**, **use your current location**, or **choose a town**.
 
-For personal recommendations or affordability estimates, open **Filters → Buyer setup**. This optional setup asks for a preferred flat type, optional maximum budget, minimum remaining lease, and optional local-only affordability inputs. It never asks for a work address, destination MRT, or commute estimate because the app does not model door-to-door commutes. You can exit from any step and reopen it later.
+For personal recommendations or a conservative CPF-based estimate, open **Filters → Buyer setup**. This optional setup asks for a preferred flat type, optional maximum budget, minimum remaining lease, and optional local-only finance inputs. It never asks for a work address, destination MRT, or commute estimate because the app does not model door-to-door commutes. You can exit from any step and reopen it later.
 
 Flat type, budget, and lease become ordinary URL-backed filters. CPF, income, and age remain in your browser and are not put into shared links.
 
@@ -36,21 +36,25 @@ Type an address, block number, street name, town, MRT station, or postal code in
 
 Open **Filters** to narrow results by:
 
-| Filter              | What it does                                                                                                               |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **Town**            | Restrict to a single town (e.g. Tampines, Clementi)                                                                        |
-| **Flat type**       | 2-Room, 3-Room, 4-Room, 5-Room, Executive, etc.                                                                            |
-| **Affordability**   | Toggle between "All blocks", "Affordable: comfortable", or "Affordable: comfortable + stretch" (requires a search profile) |
-| **Budget**          | Set a minimum and/or maximum resale price                                                                                  |
-| **Remaining lease** | Only show blocks with at least N years of lease left                                                                       |
-| **MRT proximity**   | Filter by maximum stored distance to the nearest MRT station                                                               |
-| **Flat model**      | Narrow to a specific flat model (e.g. Improved, New Generation, DBSS)                                                      |
-| **Floor area**      | Set a minimum and/or maximum floor area in square metres                                                                   |
-| **Date range**      | Limit transactions to a specific month window                                                                              |
+| Filter              | What it does                                                                                                                            |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Town**            | Restrict to a single town (e.g. Tampines, Clementi)                                                                                     |
+| **Flat type**       | 2-Room, 3-Room, 4-Room, 5-Room, Executive, etc.                                                                                         |
+| **CPF estimate**    | Optionally keep blocks within or near a conservative CPF-based estimate; excludes available cash, grants, other debts, and HFE outcomes |
+| **Budget**          | Set a minimum and/or maximum resale price                                                                                               |
+| **Remaining lease** | Only show blocks with at least N years of lease left                                                                                    |
+| **MRT proximity**   | Filter by maximum stored distance to the nearest MRT station                                                                            |
+| **Flat model**      | Narrow to a recorded model; with a flat type selected, the model must occur in that type's recent records                               |
+| **Floor area**      | Show blocks whose recorded area range overlaps your size; with a flat type selected, use that type's range                              |
+| **Latest sale**     | Filter by the latest recorded sale month for the selected flat type, or for the whole block when no type is selected                    |
+
+Flat type, model, floor area, price, record count, and latest-sale evidence stay on the same recent transaction cohort. Model and area filters confirm recorded evidence, not current unit availability.
 
 All filters combine — setting Town to "Tampines" and Flat type to "4-Room" shows only 4-Room blocks in Tampines.
 
 **Reset** clears every filter at once.
+
+The **Town-wide overview** is available only for an unrefined town scope. It intentionally summarizes all flat types; once buyer-specific filters are active, results stay in the block list so town-wide and filtered evidence are not mixed.
 
 ### Filter chips
 
@@ -86,17 +90,18 @@ Click a block dot on the map (or a row in the Results list) to open the **detail
 
 - **Block address** and town
 - **Median resale price** for the selected flat type
+- **Block-wide price history** — monthly medians combine every recorded flat type and are labelled separately from the selected-type price
 - **Transaction history** — individual transactions with price, floor area, storey range, and date
 - **Remaining lease** and lease commencement year
 - **Nearest MRT** station with walking time
 - **Nearby amenities** — MRT stations, primary schools
 - **Comparable blocks** — similar blocks in the area for quick comparison
 
-Use the **bookmark icon** to save the block to your shortlist.
+Use the **bookmark icon** to save the block. Saved comparisons are block-level, so their prices are explicitly labelled as block-wide medians rather than inheriting a temporary flat-type filter.
 
 ## Results list
 
-The **Results** tab shows all blocks matching your current filters as a scrollable list. Each row displays the block address, median price, flat types available, nearest MRT, and remaining lease.
+The **Results** tab shows all blocks matching your current filters as a scrollable list. Each row displays the block address, median price, recorded floor-area range, flat types available, nearest MRT, and remaining lease. When a flat-type filter is active, each row uses that type's recent price median. Floor-area range, record count, latest sale, quality tag, sorting, map popup, and CSV export use the same type cohort when it is available; older rows label any unavailable cohort attributes as block-wide instead of guessing.
 
 ### Sorting
 
@@ -106,7 +111,7 @@ Sort by:
 - **Remaining lease**
 - **MRT proximity**
 - **Most recent activity** (blocks with the most recent transactions first)
-- **Affordability score** (when a search profile is active)
+- **Most room within CPF estimate** (when positive CPF, income, and age inputs are available)
 
 ### Town profile
 
@@ -125,13 +130,10 @@ This is a **deterministic comparison**, not a black-box AI valuation.
 
 1. **Search for the block** — type the address to select it
 2. **Enter the asking price** — the listed price from PropertyGuru, 99.co, etc.
-3. Optionally enter **floor area**, **flat type**, **storey range**, and **lease year** for a more precise comparison
+3. Enter the listing's actual **floor area**, **flat type**, and **storey range**. These are required so the app never substitutes facts from a different unit.
+4. Optionally enter the **lease commencement year**, then choose **Check this listing**.
 
 Selecting a block in global search opens Results immediately. If you then open **Check**, that block carries over and any listing-specific facts from a previously checked block are cleared.
-
-If you have no block selected, you can use the sample path:
-
-4. **Try sample listing check** — pre-fills a known public sample block so you can see the same comparison flow without manually entering everything first.
 
 The tool returns a **verdict** — whether the asking price is well below, around, or above the median for comparable recent transactions. You will see:
 
@@ -205,13 +207,14 @@ Saved homes appear first. Sync, export, and sharing are secondary utilities belo
   - valuation, estimated COV, and viewing date
   - decision status (`considering`, `viewing booked`, `offered`, `kiv`, `rejected`, `dropped`)
   - pros, cons, renovation notes, noise notes, transport notes, agent remarks, and buyer notes
-- **Comparative decision view** — the compare mode now includes the shortlist’s ask price, fair range, delta vs fair median, remaining lease, MRT context, confidence, caveats, and monthly payment placeholder when available.
+- **Comparative decision view** — with at least two available blocks, compare mode includes block-wide median, ask price, fair range, delta vs fair median, recent block-record volume, remaining lease, MRT context, decision status, caveats, target price, and notes. It does not present a stored listing-check verdict.
 - **Notes and legacy compatibility** — old saved shortlist entries still load with data preserved.
   Existing `notes` continue to display and are mirrored into the new board where needed.
 - **Sort and rank** — recently saved is the default; choose another metric when you have enough data to compare.
 - **Safe removal** — removing a saved block shows an **Undo** action for five seconds. Undo restores the same block in its previous position with its asking price, offer fields, status, and notes intact.
 - **Export** — download your shortlist as CSV or JSON including offer-board fields and decision notes. Hover over the export button to see its tooltip.
 - **Share** — generate a URL to share your shortlist with all shortlist board data (within payload size limits). Hover over the share button to see its tooltip.
+- **Unavailable saved addresses** — if an older address is absent from the current block dataset, it remains visible and is still included in exports and share links by saved address key. Buyer-entered fields are preserved while current block-derived fields stay blank.
 - **Mobile-friendly compare** — mobile view uses compact cards so all required shortlist metrics remain scannable without horizontal clipping, including the nearest MRT station name with walking time and any buyer notes you have recorded.
 
 ### Cloud sync
@@ -231,9 +234,9 @@ A **buyer profile** provides optional ranking and affordability context. Open **
 - **Preferred flat type** (e.g. 4-Room)
 - **Maximum budget**
 - **Minimum remaining lease**
-- **CPF, income, and age** — optional, local-only inputs for affordability estimates
+- **CPF, income, and age** — optional, local-only inputs for a conservative CPF-based estimate
 
-Flat type, budget, and lease are copied into the normal filter system, where they appear as removable chips and are cleared by **Reset**. Finance inputs power affordability estimates only when you explicitly choose an affordability filter.
+Flat type, budget, and lease are copied into the normal filter system, where they appear as removable chips and are cleared by **Reset**. Positive finance inputs make a conservative estimate available in Buyer setup and block detail. They constrain Results only when you explicitly enable the CPF-based estimate filter. The estimate excludes available cash, grants, other debts, and your HFE outcome, so “above estimate” is not the same as “unaffordable.”
 
 The profile never acts as a second hidden visibility filter, and personal finance data is not included in filter or shortlist share URLs.
 
@@ -248,5 +251,5 @@ The profile never acts as a second hidden visibility filter, and personal financ
 - All transaction data comes from [data.gov.sg](https://data.gov.sg) and is refreshed nightly.
 - Map tiles and geocoding use [OneMap](https://www.onemap.gov.sg).
 - No account is required. Your filters, theme preference, buyer profile, and shortlist are stored in your browser's local storage.
-- Cloud sync (optional) uses an anonymous code — no email, no password, no personal data on the server.
+- Cloud sync (optional) uses an anonymous code — no account, email, or password. It uploads the saved board, including any notes you entered, so treat the code like a private link. Local buyer-profile finance inputs are not synced.
 - The app works offline as a Progressive Web App (PWA) after the first load.

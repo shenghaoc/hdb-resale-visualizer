@@ -3,6 +3,9 @@
 > Execution checklist. Order respects dependencies: types & helpers → table
 > component → integration → tests → cleanup. Each task names its acceptance
 > check.
+>
+> Current integration contract: `ListingCheckPanel` is the sole listing-check
+> UI and `ComparableEvidenceTable` is its sole comparable-evidence surface.
 
 ## Phase 1 — Types and sort helpers
 
@@ -24,8 +27,9 @@
 
 ## Phase 2 — Evidence table component (desktop)
 
-- [ ] **T2.1** Create `src/components/ComparableEvidenceTable.tsx` with the
-  props type: `{ comparables, referenceMonth, widenedSearch, caveats }`.
+- [ ] **T2.1** Create
+  `src/features/listing-check/ComparableEvidenceTable.tsx` with the props type:
+  `{ comparables, referenceMonth, widenedSearch, caveats }`.
   Scaffold the outer container, "Why these comparables?" collapsible
   section, caveat banner, and table skeleton with column headers. Use shadcn
   `Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`
@@ -97,10 +101,10 @@
   `comparableSet` state.
   → `npm run typecheck` passes. (R9.1)
 
-- [ ] **T4.2** Remove the `ComparableTransactionsList` import and usage
-  from `ListingCheckPanel.tsx`. Verify `ComparableTransactionsList.tsx`
-  file is preserved (still used by `AskingPriceCheck.tsx`).
-  → `npm run typecheck` passes; `AskingPriceCheck.tsx` still builds.
+- [ ] **T4.2** Remove the legacy compact comparable-list import, usage, and
+  component. Verify `ListingCheckPanel.tsx` renders only
+  `ComparableEvidenceTable` for transaction evidence.
+  → `npm run typecheck` passes; no duplicate listing-check surface builds.
   (R9.2, R9.3, R12.1)
 
 - [ ] **T4.3** Remove the `comparablesExpanded` state from
@@ -162,7 +166,7 @@
   - Resize to mobile width: card layout replaces table.
   - "Why these comparables?" collapsible expands and collapses.
   - Empty state visible when no comparables found.
-  - `AskingPriceCheck` inside `DetailDrawer` still works unchanged.
-- [ ] **T7.6** Verify `ComparableTransactionsList.tsx` is not deleted and
-  `AskingPriceCheck.tsx` still imports and renders it correctly.
+  - `ListingCheckPanel` remains the only listing-check workflow.
+- [ ] **T7.6** Verify `ComparableEvidenceTable` is the sole transaction-
+  evidence surface and no retired listing-check components remain.
   (R12.1, R12.2)

@@ -4,6 +4,9 @@ import {
   fetchBlockSummaries,
   fetchManifest,
   fetchTownFlatTypeTrends,
+  fetchBlocksBySearch,
+  resetBlockSummariesCacheForTests,
+  resetBlocksBySearchCacheForTests,
   resetFetchRetrySettingsForTests,
   resetTownFlatTypeTrendsCacheForTests,
   setFetchRetryDelayForTests,
@@ -15,6 +18,8 @@ function mockJsonResponse(payload: unknown, ok = true, status = 200): Response {
 
 describe("artifact fetch validation", () => {
   afterEach(() => {
+    resetBlockSummariesCacheForTests();
+    resetBlocksBySearchCacheForTests();
     resetTownFlatTypeTrendsCacheForTests();
     resetFetchRetrySettingsForTests();
     vi.unstubAllGlobals();
@@ -96,6 +101,70 @@ describe("artifact fetch validation", () => {
     await expect(fetchBlockSummaries()).rejects.toThrow(/Artifact contract violation/);
   });
 
+  it("preserves flat-type median maps from fetched block summaries", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        mockJsonResponse([
+          {
+            addressKey: "bedok-101-bedok-nth-ave-4",
+            town: "BEDOK",
+            block: "101",
+            streetName: "BEDOK NTH AVE 4",
+            coordinates: { lat: 1.3339, lng: 103.9372 },
+            medianPrice: 500000,
+            pricePerSqmMedian: 6000,
+            transactionCount: 10,
+            floorAreaRange: [45, 110],
+            leaseCommenceRange: [1980, 1980],
+            latestMonth: "2026-01",
+            availableDateRange: ["2020-01", "2026-01"],
+            flatTypes: ["2 ROOM", "4 ROOM"],
+            flatModels: ["MODEL A"],
+            medianPriceByFlatType: { "2 ROOM": 400000, "4 ROOM": 700000 },
+            medianPricePerSqmByFlatType: { "2 ROOM": 5500, "4 ROOM": 6500 },
+            flatTypeCohorts: {
+              "2 ROOM": {
+                transactionCount: 4,
+                latestMonth: "2025-12",
+                floorAreaRange: [45, 55],
+                flatModels: ["MODEL A"],
+              },
+              "4 ROOM": {
+                transactionCount: 6,
+                latestMonth: "2026-01",
+                floorAreaRange: [90, 110],
+                flatModels: ["MODEL B"],
+              },
+            },
+            nearestMrt: null,
+          },
+        ]),
+      ),
+    );
+
+    await expect(fetchBlockSummaries()).resolves.toMatchObject([
+      {
+        medianPriceByFlatType: { "2 ROOM": 400000, "4 ROOM": 700000 },
+        medianPricePerSqmByFlatType: { "2 ROOM": 5500, "4 ROOM": 6500 },
+        flatTypeCohorts: {
+          "2 ROOM": {
+            transactionCount: 4,
+            latestMonth: "2025-12",
+            floorAreaRange: [45, 55],
+            flatModels: ["MODEL A"],
+          },
+          "4 ROOM": {
+            transactionCount: 6,
+            latestMonth: "2026-01",
+            floorAreaRange: [90, 110],
+            flatModels: ["MODEL B"],
+          },
+        },
+      },
+    ]);
+  });
+
   it("recovers from transient 500 with automatic retry", async () => {
     setFetchRetryDelayForTests(0);
     const fetchMock = vi
@@ -156,5 +225,61 @@ describe("artifact fetch validation", () => {
 
     await expect(fetchTownFlatTypeTrends()).resolves.toHaveLength(1);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("preserves cohortMetadataAvailable=false so an unanswerable search is not read as zero matches", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          mockJsonResponse({
+            blocks: [],
+            truncated: false,
+            limit: 2000,
+            cohortMetadataAvailable: false,
+          }),
+        ),
+    );
+
+    const result = await fetchBlocksBySearch({
+      town: "",
+      flatType: "4 ROOM",
+      flatModel: "Improved",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+    });
+
+    expect(result.blocks).toEqual([]);
+    expect(result.cohortMetadataAvailable).toBe(false);
+  });
+
+  it("treats a response without cohortMetadataAvailable as answerable", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(mockJsonResponse({ blocks: [], truncated: false, limit: 2000 })),
+    );
+
+    const result = await fetchBlocksBySearch({
+      town: "BEDOK",
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+    });
+
+    expect(result.cohortMetadataAvailable).toBe(true);
   });
 });

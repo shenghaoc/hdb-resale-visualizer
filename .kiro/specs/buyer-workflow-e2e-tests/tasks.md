@@ -21,12 +21,14 @@
 
 - [x] **T2.1** `buyer-listing-check.spec.ts`: "start from the Check tab without
   the map" — open the Check tab from `.desktop-tab-bar`, assert the primary
-  action, block search input, select-block hint, and sample CTA.
+  action, block search input, and select-block hint; assert that no sample CTA
+  or synthetic listing defaults are present.
   → test passes. (R1)
 
 - [x] **T2.2** Happy path: deep-link facts, assert block info + entered floor
-  area, type the asking price, assert verdict ("In line with market"),
-  confidence label, fair range, and "8 comparable transactions".
+  area, type the asking price, explicitly click "Check this listing", then assert
+  verdict ("In line with market"), confidence label, fair range, and "8
+  comparable transactions".
   → test passes. (R2, R3)
 
 - [x] **T2.3** Evidence: assert "Why these comparables?", the "Similarity"
@@ -35,13 +37,13 @@
 
 - [x] **T2.4** Save-to-shortlist: click "Save to Shortlist", assert "Saved ✓",
   open the Saved tab, assert the saved block address and the preserved asking
-  price ("$1.2M").
+  price in the asking-price field ("$1.2M") without changing target price.
   → test passes. (R6, R7)
 
 - [x] **T2.5** Low-confidence / low-sample: deep-link with `lowSampleSet`
   mocked, assert "2 comparable transactions", "Confidence: Low", and the
   low-sample caveat ("directional only").
-  → test passes. (R3, R5 gap)
+  → test passes. (R3)
 
 ## Phase 3 — Mobile test
 
@@ -59,8 +61,10 @@
 
 ## Notes / follow-ups (not in this spec)
 
-- Time-adjusted toggle has no UI yet; `ListingCheckPanel` requests time
-  adjustment by default. Add a toggle test if/when the control ships.
+- `ListingCheckPanel` requests time-adjusted comparables by default and has no
+  raw-price toggle. Test the adjusted/original-price evidence contract instead
+  of expecting a toggle.
 - `handleCheckSaveToShortlist` could be enriched to persist structured
   `fairRangeLow/Median/High` (the schema already supports them) so the saved
-  item shows a fair range; the save test would then assert those columns.
+  item shows a fair range. The current save test asserts only the preserved
+  `askingPrice`.

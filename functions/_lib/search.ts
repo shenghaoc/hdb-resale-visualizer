@@ -132,9 +132,26 @@ export function validateSearchRequest(request: SearchRequest): string | null {
 export function buildSearchQuery(
   request: SearchRequest,
   currentYear: number = workerCurrentUtcYear(),
+  supportsFlatTypeCohorts = true,
 ): SearchQueryPlan {
+  if (
+    !supportsFlatTypeCohorts &&
+    request.flatType &&
+    (request.flatModel ||
+      request.areaMin !== null ||
+      request.areaMax !== null ||
+      request.startMonth !== null ||
+      request.endMonth !== null)
+  ) {
+    // During the additive migration window, never reinterpret a selected-type
+    // refinement against block-wide attributes. Return no guess until the
+    // cohort column is available; basic flat type and budget remain usable.
+    return { whereSql: "WHERE 0 = 1", bindings: [] };
+  }
+
   const where: string[] = [];
   const bindings: unknown[] = [];
+  let flatTypeCohortJsonPath: string | null = null;
 
   if (request.town) {
     where.push("town = ?");
@@ -149,6 +166,7 @@ export function buildSearchQuery(
     bindings.push(canonical);
 
     const jsonPath = `$.${JSON.stringify(canonical)}`;
+    flatTypeCohortJsonPath = supportsFlatTypeCohorts ? jsonPath : null;
     if (request.budgetMin !== null) {
       where.push(
         "COALESCE(CAST(json_extract(blocks.median_price_by_flat_type_json, ?) AS INTEGER), blocks.median_price) >= ?",
@@ -173,18 +191,35 @@ export function buildSearchQuery(
   }
 
   if (request.flatModel) {
-    where.push(
-      "EXISTS (SELECT 1 FROM json_each(blocks.flat_models_json) WHERE json_each.value = ? COLLATE NOCASE)",
-    );
-    bindings.push(request.flatModel);
+    if (flatTypeCohortJsonPath) {
+      where.push(
+        "EXISTS (SELECT 1 FROM json_each(blocks.flat_type_cohorts_json, ?) WHERE json_each.value = ? COLLATE NOCASE)",
+      );
+      bindings.push(`${flatTypeCohortJsonPath}.flatModels`, request.flatModel);
+    } else {
+      where.push(
+        "EXISTS (SELECT 1 FROM json_each(blocks.flat_models_json) WHERE json_each.value = ? COLLATE NOCASE)",
+      );
+      bindings.push(request.flatModel);
+    }
   }
   if (request.areaMin !== null) {
-    where.push("floor_area_max >= ?");
-    bindings.push(request.areaMin);
+    if (flatTypeCohortJsonPath) {
+      where.push("CAST(json_extract(blocks.flat_type_cohorts_json, ?) AS REAL) >= ?");
+      bindings.push(`${flatTypeCohortJsonPath}.floorAreaRange[1]`, request.areaMin);
+    } else {
+      where.push("floor_area_max >= ?");
+      bindings.push(request.areaMin);
+    }
   }
   if (request.areaMax !== null) {
-    where.push("floor_area_min <= ?");
-    bindings.push(request.areaMax);
+    if (flatTypeCohortJsonPath) {
+      where.push("CAST(json_extract(blocks.flat_type_cohorts_json, ?) AS REAL) <= ?");
+      bindings.push(`${flatTypeCohortJsonPath}.floorAreaRange[0]`, request.areaMax);
+    } else {
+      where.push("floor_area_min <= ?");
+      bindings.push(request.areaMax);
+    }
   }
   if (request.mrtMax !== null) {
     where.push("nearest_mrt_json IS NOT NULL");
@@ -196,12 +231,22 @@ export function buildSearchQuery(
     bindings.push(currentYear, MAX_LEASE_DURATION - request.remainingLeaseMin);
   }
   if (request.startMonth) {
-    where.push("available_max_month >= ?");
-    bindings.push(request.startMonth);
+    if (flatTypeCohortJsonPath) {
+      where.push("json_extract(blocks.flat_type_cohorts_json, ?) >= ?");
+      bindings.push(`${flatTypeCohortJsonPath}.latestMonth`, request.startMonth);
+    } else {
+      where.push("latest_month >= ?");
+      bindings.push(request.startMonth);
+    }
   }
   if (request.endMonth) {
-    where.push("available_min_month <= ?");
-    bindings.push(request.endMonth);
+    if (flatTypeCohortJsonPath) {
+      where.push("json_extract(blocks.flat_type_cohorts_json, ?) <= ?");
+      bindings.push(`${flatTypeCohortJsonPath}.latestMonth`, request.endMonth);
+    } else {
+      where.push("latest_month <= ?");
+      bindings.push(request.endMonth);
+    }
   }
 
   return {

@@ -5,7 +5,7 @@
  * dependency-free (no Node imports) so it runs in the Workers runtime.
  */
 
-import type { NearestMrt } from "../../shared/data-types";
+import type { BlockFlatTypeCohort, NearestMrt } from "../../shared/data-types";
 
 type JsonValue = unknown;
 
@@ -157,6 +157,7 @@ type BlockRow = {
   flat_models_json: string;
   median_price_by_flat_type_json: string | null;
   median_price_per_sqm_by_flat_type_json: string | null;
+  flat_type_cohorts_json?: string | null;
   nearest_mrt_json: string | null;
   nearby_mrts_json: string | null;
   postal_code: string | null;
@@ -199,6 +200,10 @@ export function rowToBlockSummary(row: BlockRow) {
       row.median_price_per_sqm_by_flat_type_json,
       undefined,
     ),
+    flatTypeCohorts: parseJsonOr<Record<string, BlockFlatTypeCohort> | undefined>(
+      row.flat_type_cohorts_json ?? null,
+      undefined,
+    ),
     nearestMrt: parseJsonOr<NearestMrt | null>(row.nearest_mrt_json, null),
     nearbyMrts: parseJsonOr<NearestMrt[]>(row.nearby_mrts_json, []),
     postalCode: row.postal_code,
@@ -207,9 +212,8 @@ export function rowToBlockSummary(row: BlockRow) {
 
 export { type BlockRow };
 
-/** Columns required by `rowToBlockSummary` (excludes large per-flat-type JSON blobs). */
-export const BLOCK_SUMMARY_SELECT_SQL =
-  "address_key, town, block, street_name, display_name, lat, lng, median_price, price_per_sqm_median, transaction_count, floor_area_min, floor_area_max, lease_commence_year, latest_month, available_min_month, available_max_month, flat_types_json, flat_models_json, median_price_by_flat_type_json, median_price_per_sqm_by_flat_type_json, nearest_mrt_json, nearby_mrts_json, postal_code";
+/** All columns required by `rowToBlockSummary`, including optional cohort JSON added by migrations. */
+export const BLOCK_SUMMARY_SELECT_SQL = "blocks.*";
 
 export { townFilenameToCanonical } from "../../shared/geo";
 

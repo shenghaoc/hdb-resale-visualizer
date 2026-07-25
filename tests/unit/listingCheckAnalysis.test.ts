@@ -7,7 +7,9 @@ import {
   buildListingAdjustmentMeta,
   deriveComparableQualityTag,
   deriveEvidenceCaveats,
+  deriveFlatTypeOptions,
   deriveListingCheckResult,
+  deriveStoreyOptions,
   type ListingAdjustmentMeta,
   type ListingComparableResponse,
 } from "@/features/listing-check/listingCheckAnalysis";
@@ -390,7 +392,40 @@ describe("listingCheckAnalysis", () => {
     }
   });
 
-  it("uses median floor-area midpoint when building request body without floor area", () => {
+  it("derives flat-type choices from the complete block summary", () => {
+    const detail = makeDetail({ flatTypes: ["5 ROOM", "4 ROOM", "EXECUTIVE", "4 ROOM"] });
+
+    expect(deriveFlatTypeOptions(detail)).toEqual(["4 ROOM", "5 ROOM", "EXECUTIVE"]);
+    expect(detail.recentTransactions.map((tx) => tx.flatType)).toEqual(["4 ROOM"]);
+  });
+
+  it("offers every canonical HDB storey band instead of only recent sampled ranges", () => {
+    const detail = makeDetail();
+
+    expect(deriveStoreyOptions(null)).toEqual([]);
+    expect(deriveStoreyOptions(detail)).toEqual([
+      "01 TO 03",
+      "04 TO 06",
+      "07 TO 09",
+      "10 TO 12",
+      "13 TO 15",
+      "16 TO 18",
+      "19 TO 21",
+      "22 TO 24",
+      "25 TO 27",
+      "28 TO 30",
+      "31 TO 33",
+      "34 TO 36",
+      "37 TO 39",
+      "40 TO 42",
+      "43 TO 45",
+      "46 TO 48",
+      "49 TO 51",
+    ]);
+    expect(detail.recentTransactions.map((tx) => tx.storeyRange)).toEqual(["07 TO 09"]);
+  });
+
+  it("does not build a request body without an explicit floor area", () => {
     const body = buildComparableRequestBody({
       detail: makeDetail({ floorAreaRange: [90, 96] }),
       flatType: "4 ROOM",
@@ -399,7 +434,6 @@ describe("listingCheckAnalysis", () => {
       leaseCommenceYear: 1990,
       referenceMonth: "2026-04",
     });
-    expect(body).not.toBeNull();
-    expect(body!.floorAreaSqm).toBe(93);
+    expect(body).toBeNull();
   });
 });

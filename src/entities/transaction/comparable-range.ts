@@ -1,5 +1,6 @@
 import { median } from "@/shared/lib/utils";
 import type { BlockSummary } from "@/types/data";
+import { getCohortAlignedMedianPrice } from "@shared/product/filtering";
 
 export type ComparableRange = {
   minPrice: number;
@@ -13,6 +14,7 @@ export type ComparableRange = {
 export function computeComparableRange(
   source: BlockSummary,
   similar: ReadonlyArray<BlockSummary>,
+  flatType = "",
 ): ComparableRange | null {
   if (similar.length === 0) return null;
 
@@ -20,22 +22,23 @@ export function computeComparableRange(
   let maxPrice = Number.NEGATIVE_INFINITY;
   const prices: number[] = [];
   for (const block of similar) {
-    const price = block.medianPrice;
+    const price = getCohortAlignedMedianPrice(block, flatType);
     if (price < minPrice) minPrice = price;
     if (price > maxPrice) maxPrice = price;
     prices.push(price);
   }
 
   const medianPrice = median(prices);
+  const sourceMedian = getCohortAlignedMedianPrice(source, flatType);
   const deltaFromMedianPct =
-    medianPrice > 0 ? ((source.medianPrice - medianPrice) / medianPrice) * 100 : 0;
+    medianPrice > 0 ? ((sourceMedian - medianPrice) / medianPrice) * 100 : 0;
 
   return {
     minPrice,
     maxPrice,
     medianPrice,
     sampleSize: similar.length,
-    sourceMedian: source.medianPrice,
+    sourceMedian,
     deltaFromMedianPct,
   };
 }

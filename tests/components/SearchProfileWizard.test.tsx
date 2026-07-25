@@ -34,6 +34,21 @@ async function clickPrimary(user: ReturnType<typeof userEvent.setup>, label: Reg
 }
 
 describe("SearchProfileWizard", () => {
+  it("keeps the form scrollable while pinning actions inside short viewports", () => {
+    renderWizard();
+
+    expect(screen.getByTestId("search-profile-wizard-card")).toHaveClass(
+      "max-h-[calc(100dvh-6rem)]",
+      "overflow-hidden",
+    );
+    expect(screen.getByTestId("search-profile-wizard-scroll-content")).toHaveClass(
+      "min-h-0",
+      "overflow-y-auto",
+      "overscroll-contain",
+    );
+    expect(screen.getByTestId("search-profile-wizard-actions")).toHaveClass("shrink-0");
+  });
+
   it("behaves as a modal dialog and dismisses with Escape", async () => {
     const user = userEvent.setup();
     const onSkip = vi.fn();
@@ -170,22 +185,15 @@ describe("SearchProfileWizard", () => {
     await clickPrimary(user, /next/i);
 
     expect(
-      screen.getByText(`Max affordable: ${formatCurrency(expectedCeiling)}`),
+      screen.getByText(`Estimated ceiling (excluding cash): ${formatCurrency(expectedCeiling)}`),
     ).toBeInTheDocument();
 
     await clickPrimary(user, /apply setup/i);
 
     expect(onComplete).toHaveBeenCalledWith(
       expect.objectContaining({
-        version: 2,
+        version: 3,
         mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "",
-        commuteAnchorMrt: null,
-        maxComfortableCommuteMinutes: null,
-        commuteStretchMinutes: 0,
-        budgetStretchPercent: 0,
-        showStretchOptions: false,
-        showAllBlocks: true,
         minimumRemainingLeaseYears: 70,
         age,
         coApplicantAge: 33,
@@ -193,6 +201,23 @@ describe("SearchProfileWizard", () => {
         monthlyIncome,
       }),
     );
+  });
+
+  it("does not show an affordability ceiling for incomplete financial inputs", async () => {
+    const user = userEvent.setup();
+    renderWizard();
+
+    await user.click(screen.getByRole("button", { name: "4 ROOM" }));
+    await clickPrimary(user, /next/i);
+    await clickPrimary(user, /next/i);
+    await user.click(screen.getByRole("button", { name: /70 yr/i }));
+    await clickPrimary(user, /next/i);
+
+    await user.type(screen.getByLabelText(/^your age$/i), "35");
+    await user.type(screen.getByLabelText(/cpf oa balance/i), "120000");
+    await clickPrimary(user, /next/i);
+
+    expect(screen.queryByText(/estimated ceiling/i)).not.toBeInTheDocument();
   });
 
   it("rejects applicant age below the minimum on the affordability step", async () => {

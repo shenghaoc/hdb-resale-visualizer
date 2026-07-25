@@ -24,9 +24,15 @@
   "Deterministic historical comparisons. No AI valuation API."
 - **R4.2** No text should imply AI-based valuation, prediction, or black-box scoring.
 
-## R5 — Sample/demo check when no data entered
-- **R5.1** A sample or demo listing check CTA is visible when no check inputs are present.
-- **R5.2** Activating sample/demo pre-fills listing-check state with deterministic sample values and produces the same flow/outputs as normal user-driven checks.
+## R5 — Honest listing-check entry
+- **R5.1** The empty Check state does not offer a sample/demo listing or prefill
+  synthetic unit facts.
+- **R5.2** A check requires a real selected block plus an explicitly entered
+  asking price, floor area, flat type, and storey range. Lease commencement year
+  remains optional.
+- **R5.3** When a block carries over from Results or block detail, only the block
+  identity is carried over. Listing-specific facts remain empty until the buyer
+  enters them.
 
 ## R6 — Mobile-first first-run usability
 - **R6.1** On mobile, the three actions and key copy appear in a top-first order before map-heavy content.

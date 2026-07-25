@@ -15,8 +15,13 @@ export type { GeographicSearchIntent, FilterEvaluationContext } from "@shared/pr
 
 export {
   matchesGeographicSearchIntent,
+  getCohortAlignedLatestMonth,
+  getCohortAlignedMedianPrice,
   getEffectiveMedianPrice,
   getEffectivePricePerSqmMedian,
+  resolveEffectiveBlockCohort,
+  resolveEffectiveMedianPrice,
+  resolveEffectivePricePerSqmMedian,
   resetFilteringCachesForTests,
 } from "@shared/product/filtering";
 
@@ -61,7 +66,12 @@ export function matchesFilter(
   // Pre-compute affordability pass/fail using the web's cached verdict layer.
   let passesAffordability: boolean | null = null;
   if (filters.affordable && affordabilityProfile) {
-    passesAffordability = passesAffordabilityMode(block, affordabilityProfile, filters.affordable);
+    passesAffordability = passesAffordabilityMode(
+      block,
+      affordabilityProfile,
+      filters.affordable,
+      filters.flatType,
+    );
   }
   const effectiveEvaluationContext =
     filters.remainingLeaseMin !== null

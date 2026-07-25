@@ -23,7 +23,7 @@
   unit/component tests via Vitest filename filtering against the existing
   Vitest config.
 - **R2.2** It selects the listing verdict, listing confidence (and adapter),
-  listing caveats, listing portal links, and `AskingPriceCheck` component
+  listing caveats, listing portal links, and `ListingCheckPanel` component
   tests.
 - **R2.3** It uses the same `NODE_OPTIONS=--no-experimental-webstorage` prefix
   as the existing `test` script so storage-dependent tests behave identically.

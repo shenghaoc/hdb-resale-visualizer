@@ -106,14 +106,13 @@
   per-caveat messages from the API response.
   → `npm run typecheck` passes. (R6.4)
 
-- [ ] **T5.4** Update the expandable comparable transactions list to show
-  match reasons per comparable (e.g. small tags: "Same block", "Similar floor
-  area").
+- [ ] **T5.4** Update `ComparableEvidenceTable` to show match reasons per
+  comparable (e.g. small tags: "Same block", "Similar floor area").
   → `npm run typecheck` passes. (R6.5)
 
-- [ ] **T5.5** Verify `AskingPriceCheck.tsx` inside `DetailDrawer` still
-  works unchanged (imports v1 `findComparableTransactions`). No regression.
-  → Manual smoke: open block detail drawer, Asking Price tab shows verdict.
+- [ ] **T5.5** Verify `ListingCheckPanel.tsx` is the sole listing-check UI and
+  renders transaction evidence through `ComparableEvidenceTable`.
+  → Manual smoke: open Check, submit exact listing facts, and inspect evidence.
   (R6.6, R8.1)
 
 ## Phase 6 — Unit tests (shared engine)
@@ -193,4 +192,4 @@
   - "Check This Listing" triggers API call, loading state visible
   - Verdict card renders with comparables and match reasons
   - Low-sample block triggers widening caveats
-  - Block detail drawer Asking Price tab still works unchanged
+  - No duplicate block-detail listing-check surface is present

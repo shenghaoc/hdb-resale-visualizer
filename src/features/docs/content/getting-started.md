@@ -4,9 +4,9 @@
 
 The app opens directly to the task-first map prompt — no onboarding form blocks the first visit. Choose **Check a listing price**, **use current location**, or **choose a town**.
 
-If you want personal recommendations or affordability estimates, open **Filters → Buyer setup**. The optional setup asks for a preferred flat type, optional maximum budget, minimum remaining lease, and optional CPF/income inputs. It does not ask for a work address, destination station, or commute estimate because the app has no door-to-door commute model. You can exit from any step.
+If you want personal recommendations or a conservative CPF-based estimate, open **Filters → Buyer setup**. The optional setup asks for a preferred flat type, optional maximum budget, minimum remaining lease, and optional CPF/income inputs. It does not ask for a work address, destination station, or commute estimate because the app has no door-to-door commute model. You can exit from any step.
 
-Flat type, budget, and lease choices become normal URL-backed filters that you can remove or reset. CPF, income, and age are stored only in this browser and are never included in shared filter links. Reopen **Buyer setup** to change them.
+Flat type, budget, and lease choices become normal URL-backed filters that you can remove or reset. Positive CPF, income, and age inputs make a conservative estimate available in Buyer setup and block detail; they constrain Results only when you explicitly enable the CPF-based estimate filter. The estimate excludes available cash, grants, other debts, and HFE outcomes. These inputs are stored only in this browser and are never included in shared filter links. Reopen **Buyer setup** to change them.
 
 Choose the task that matches what you already know:
 
@@ -22,7 +22,7 @@ On **desktop** the interface has three zones:
 - **Centre** — the interactive map
 - **Block detail** — replaces the active Results content when you select a block
 
-On **mobile**, a bottom tab bar switches between Filters, Results, Check, Saved, and the Map. The same bar holds the theme toggle and this user guide.
+On **mobile**, a bottom tab bar switches between Filters, Results, Check, Saved, and the Map. The same bar holds the theme toggle; the **?** user-guide action lives in the mobile header.
 
 ## Quick search
 
@@ -36,7 +36,7 @@ Click a dot on the map (or a row in Results) to open the **detail drawer** with 
 
 - The **moon/sun button** in the tab bar toggles light and dark mode.
 - The **language control** on the map switches between English and 中文.
-- The **? button** in the tab bar opens this guide at any time. Use **Back to app** (or your browser's back button) to return exactly where you were — your filters and selection are kept in the URL.
+- On mobile, the **? button** in the header opens this guide; on desktop, use **User guide** in the primary tab bar. Use **Back to app** (or your browser's back button) to return exactly where you were — your filters and selection are kept in the URL.
 
 ## Sharing
 

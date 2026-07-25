@@ -72,6 +72,8 @@ describe("buildCsvContent", () => {
 describe("buildShortlistCsvContent", () => {
   it("exports shortlist rows with sanitized notes", () => {
     const baseRow = {
+      status: "Available in current data",
+      addressKey: "blk-1",
       address: "Blk 1",
       medianPrice: 500000,
       askingPrice: null,
@@ -109,6 +111,48 @@ describe("buildShortlistCsvContent", () => {
       ],
     );
     expect(csv).toContain('"\'@import"');
+  });
+
+  it("keeps unavailable rows with saved fields and blank live-data cells", () => {
+    const csv = buildShortlistCsvContent(
+      ["Data Status", "Saved Address Key", "Address", "Block Median Price", "Notes"],
+      [
+        {
+          status: "Unavailable in current data",
+          addressKey: "=retired-block",
+          address: "",
+          medianPrice: "",
+          askingPrice: 610000,
+          fairRangeLow: null,
+          fairRangeMedian: null,
+          fairRangeHigh: null,
+          suggestedOfferCeiling: null,
+          buyerOpeningOffer: null,
+          valuationReceived: null,
+          estimatedCov: null,
+          viewingDate: "",
+          decisionStatus: "",
+          buyerNotes: "Saved buyer note",
+          pros: "",
+          cons: "",
+          renovation: "",
+          noiseNotes: "",
+          transportNotes: "",
+          agentRemarks: "",
+          targetPrice: 590000,
+          schools1km: "",
+          hawkers1km: "",
+          supermarkets1km: "",
+          parks1km: "",
+          mrtDistanceMeters: "",
+          notes: "Keep me",
+        },
+      ],
+    );
+
+    expect(csv).toContain('"Unavailable in current data","\'=retired-block",,');
+    expect(csv).toContain("610000");
+    expect(csv).toContain('"Keep me"');
   });
 });
 

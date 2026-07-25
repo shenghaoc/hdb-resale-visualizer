@@ -110,6 +110,11 @@ describe("computeLoanTenureYears", () => {
     expect(computeLoanTenureYears(40)).toBe(25);
   });
 
+  it("uses the applicants' average age when a co-applicant is provided", () => {
+    expect(computeLoanTenureYears(50, 60)).toBe(10);
+    expect(computeLoanTenureYears(45, 50)).toBe(17.5);
+  });
+
   it("reduces linearly for age 40+", () => {
     expect(computeLoanTenureYears(45)).toBe(20);
     expect(computeLoanTenureYears(55)).toBe(10);
@@ -302,31 +307,28 @@ describe("computeAffordabilityVerdict", () => {
     expect(verdict.loanAmount).toBe(0);
   });
 
-  it("zero-income buyer (e.g. retiree) still gets a verdict from CPF balance", () => {
-    // monthlyIncome 0 (explicitly set, not null) → no loan but CPF can cover price.
-    // ceiling = CPF = 200k, medianPrice 150k < 200k * 0.8 = 160k → comfortable.
+  it("returns unknown when income is zero because cash-only capacity is not captured", () => {
     const verdict = computeAffordabilityVerdict(
       makeProfile({ monthlyIncome: 0, cpfOABalance: 200000, age: 35 }),
       150000,
     );
-    expect(verdict.status).toBe("comfortable");
+    expect(verdict.status).toBe("unknown");
     expect(verdict.loanAmount).toBe(0);
     expect(verdict.monthlyRepayment).toBe(0);
-    expect(verdict.downPaymentFromCpf).toBe(150000);
+    expect(verdict.downPaymentFromCpf).toBe(0);
     expect(verdict.cashOutlay).toBe(0);
     expect(verdict.maxAffordablePrice).toBe(200000);
   });
 
-  it("zero-income buyer with insufficient CPF — status over", () => {
-    // monthlyIncome 0, CPF 100k, medianPrice 150k → ceiling = 100k, cashOutlay = 50k.
+  it("returns unknown when CPF is zero instead of marking every home over", () => {
     const verdict = computeAffordabilityVerdict(
-      makeProfile({ monthlyIncome: 0, cpfOABalance: 100000, age: 35 }),
+      makeProfile({ monthlyIncome: 8000, cpfOABalance: 0, age: 35 }),
       150000,
     );
-    expect(verdict.status).toBe("over");
+    expect(verdict.status).toBe("unknown");
     expect(verdict.loanAmount).toBe(0);
-    expect(verdict.downPaymentFromCpf).toBe(100000);
-    expect(verdict.cashOutlay).toBe(50000);
+    expect(verdict.downPaymentFromCpf).toBe(0);
+    expect(verdict.cashOutlay).toBe(0);
   });
 
   it("cash outlay when CPF covers full 25% down-payment", () => {
@@ -497,10 +499,15 @@ describe("isAffordabilityProfileComplete", () => {
     ).toBe(false);
   });
 
-  it("treats explicit zero values as set, not missing", () => {
+  it("treats zero income or CPF as incomplete because available cash is unknown", () => {
     expect(
       isAffordabilityProfileComplete(makeProfile({ monthlyIncome: 0, cpfOABalance: 0, age: 35 })),
-    ).toBe(true);
+    ).toBe(false);
+    expect(
+      isAffordabilityProfileComplete(
+        makeProfile({ monthlyIncome: 8000, cpfOABalance: 0, age: 35 }),
+      ),
+    ).toBe(false);
   });
 });
 

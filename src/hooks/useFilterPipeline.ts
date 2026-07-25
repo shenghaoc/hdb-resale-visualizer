@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
-  getDefaultTransactionStartMonth,
   NEAR_ME_SEARCH_QUERY,
 } from "@/shared/lib/constants";
 import {
@@ -44,41 +43,9 @@ export function useFilterPipeline({
   searchProfile,
   t,
 }: UseFilterPipelineOptions) {
-  // Tracks whether the start month is still at its default (not explicitly set
-  // by the user). When true, effectiveFilters injects the computed default so
-  // the URL stays clean while the filter still operates correctly.
-  const [useDefaultStartMonth, setUseDefaultStartMonth] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return !new URLSearchParams(window.location.search).has("startMonth");
-  });
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const handlePopState = () => {
-      setUseDefaultStartMonth(!new URLSearchParams(window.location.search).has("startMonth"));
-    };
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
-
-  const defaultStartMonth = useMemo(
-    () =>
-      manifest
-        ? getDefaultTransactionStartMonth(
-            manifest.dataWindow.minMonth,
-            manifest.dataWindow.maxMonth,
-          )
-        : null,
-    [manifest],
-  );
-
-  const effectiveFilters = useMemo(
-    () =>
-      useDefaultStartMonth && defaultStartMonth && rawFilters.startMonth === null
-        ? { ...rawFilters, startMonth: defaultStartMonth }
-        : rawFilters,
-    [defaultStartMonth, rawFilters, useDefaultStartMonth],
-  );
+  // URL-backed filters are the complete result contract. Never inject a hidden
+  // date constraint: null means no latest-sale cutoff.
+  const effectiveFilters = rawFilters;
 
   // Hide the "near me" sentinel from the search input so it looks empty.
   const filterPanelFilters = useMemo(
@@ -117,9 +84,6 @@ export function useFilterPipeline({
   const profileReadyForRecommendations =
     resultsVisible && hasCompletedSearchProfile(searchProfile) && !hasInitialScope;
 
-  // Use rawFilters for startMonth/endMonth so the coarse-search trigger only
-  // fires on user-set values, not the injected defaultStartMonth. All other
-  // fields come from effectiveFilters (the two are identical for those fields).
   const coarseSearchParams = useMemo(
     () => ({
       flatType: effectiveFilters.flatType,
@@ -129,8 +93,8 @@ export function useFilterPipeline({
       areaMin: effectiveFilters.areaMin,
       areaMax: effectiveFilters.areaMax,
       remainingLeaseMin: effectiveFilters.remainingLeaseMin,
-      startMonth: rawFilters.startMonth,
-      endMonth: rawFilters.endMonth,
+      startMonth: effectiveFilters.startMonth,
+      endMonth: effectiveFilters.endMonth,
       mrtMax: effectiveFilters.mrtMax,
     }),
     [
@@ -141,13 +105,19 @@ export function useFilterPipeline({
       effectiveFilters.areaMin,
       effectiveFilters.areaMax,
       effectiveFilters.remainingLeaseMin,
-      rawFilters.startMonth,
-      rawFilters.endMonth,
+      effectiveFilters.startMonth,
+      effectiveFilters.endMonth,
       effectiveFilters.mrtMax,
     ],
   );
 
-  const { blocks, loadError, searchTruncated } = useBlockLoading({
+  const {
+    blocks,
+    loadError,
+    searchTruncated,
+    refinementUnsupported,
+    isLoading: blocksLoading,
+  } = useBlockLoading({
     manifest,
     townFilter: effectiveFilters.town,
     debouncedSearch,
@@ -223,9 +193,14 @@ export function useFilterPipeline({
   const passesAffordabilityForBlock = useCallback(
     (block: BlockSummary) =>
       stableFilters.affordable
-        ? passesAffordabilityMode(block, affordabilityProfile, stableFilters.affordable)
+        ? passesAffordabilityMode(
+            block,
+            affordabilityProfile,
+            stableFilters.affordable,
+            stableFilters.flatType,
+          )
         : null,
-    [affordabilityProfile, stableFilters.affordable],
+    [affordabilityProfile, stableFilters.affordable, stableFilters.flatType],
   );
 
   const resultsFuseMatchedKeys = useMemo(
@@ -338,8 +313,6 @@ export function useFilterPipeline({
 
   return useMemo(
     () => ({
-      useDefaultStartMonth,
-      setUseDefaultStartMonth,
       effectiveFilters,
       filterPanelFilters,
       resolvedSearch,
@@ -352,14 +325,15 @@ export function useFilterPipeline({
       hasResultScope,
       hasMapMarkerScope,
       blocks,
+      blocksLoading,
       loadError,
       searchTruncated,
+      refinementUnsupported,
       filteredBlocks,
       mapFilteredBlocks,
       blocksByKey,
     }),
     [
-      useDefaultStartMonth,
       effectiveFilters,
       filterPanelFilters,
       resolvedSearch,
@@ -372,8 +346,10 @@ export function useFilterPipeline({
       hasResultScope,
       hasMapMarkerScope,
       blocks,
+      blocksLoading,
       loadError,
       searchTruncated,
+      refinementUnsupported,
       filteredBlocks,
       mapFilteredBlocks,
       blocksByKey,

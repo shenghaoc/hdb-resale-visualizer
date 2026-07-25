@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import type { Map as MapLibreMap, MapLayerMouseEvent, MapMouseEvent, Popup } from "maplibre-gl";
 import type { Point, Geometry } from "geojson";
 import { formatCompactCurrency } from "@/shared/lib/format";
-import { localizeTownName } from "@/shared/lib/i18n/domain";
+import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { isGeoJsonDataSourceLike } from "@/types/map";
 
@@ -158,8 +158,23 @@ export function useMapInteractions({
 
       const infoEl = document.createElement("p");
       const medianPrice = readNumberProperty(props, "median_price") ?? 0;
+      const priceBasis = readStringProperty(props, "price_basis") ?? "";
       const transactionCount = readNumberProperty(props, "transaction_count") ?? 0;
-      infoEl.textContent = `${tRef.current("map.median", { value: formatCompactCurrency(medianPrice) })} · ${tRef.current("map.txns", { count: transactionCount })}`;
+      const medianLabel =
+        priceBasis === "__BLOCK_WIDE__"
+          ? tRef.current("map.blockWideMedian", {
+              value: formatCompactCurrency(medianPrice),
+            })
+          : priceBasis
+            ? tRef.current("map.flatTypeMedian", {
+                flatType: localizeFlatType(priceBasis, localeRef.current),
+                value: formatCompactCurrency(medianPrice),
+              })
+            : tRef.current("map.median", { value: formatCompactCurrency(medianPrice) });
+      infoEl.textContent = `${medianLabel} · ${tRef.current(
+        priceBasis && priceBasis !== "__BLOCK_WIDE__" ? "map.typeTxns" : "map.txns",
+        { count: transactionCount },
+      )}`;
       container.appendChild(infoEl);
 
       popup

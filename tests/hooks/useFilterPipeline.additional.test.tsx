@@ -1,4 +1,4 @@
-import { act, renderHook } from "@testing-library/react";
+import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi, beforeEach } from "vite-plus/test";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
@@ -8,7 +8,12 @@ import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/shared/lib/i18n";
 
 vi.mock("@/hooks/useBlockLoading", () => ({
-  useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null, searchTruncated: false })),
+  useBlockLoading: vi.fn(() => ({
+    blocks: [],
+    loadError: null,
+    searchTruncated: false,
+    isLoading: false,
+  })),
 }));
 
 const t = vi.fn((key: string) => key) as unknown as Translator;
@@ -70,6 +75,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       blocks: [],
       loadError: null,
       searchTruncated: false,
+      isLoading: false,
     });
     vi.clearAllMocks();
     mockLocation("");
@@ -203,6 +209,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        isLoading: false,
       });
 
       const { result } = renderHook(() =>
@@ -229,6 +236,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        isLoading: false,
       });
 
       const { result } = renderHook(() =>
@@ -256,6 +264,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        isLoading: false,
       });
 
       const { result } = renderHook(() =>
@@ -284,6 +293,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        isLoading: false,
       });
 
       const { result } = renderHook(() =>
@@ -311,6 +321,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        isLoading: false,
       });
 
       const { result } = renderHook(() =>
@@ -331,11 +342,11 @@ describe("useFilterPipeline — additional edge cases", () => {
     });
   });
 
-  describe("defaultStartMonth injection", () => {
-    it("does not inject when manifest is null", () => {
+  describe("visible date-filter contract", () => {
+    it("keeps a missing start month null even when a manifest is loaded", () => {
       const { result } = renderHook(() =>
         useFilterPipeline({
-          manifest: null,
+          manifest,
           rawFilters: baseFilters,
           userLocation: null,
           resultsVisible: true,
@@ -349,7 +360,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       expect(result.current.effectiveFilters.startMonth).toBeNull();
     });
 
-    it("keeps user-supplied startMonth even when useDefaultStartMonth would be set", () => {
+    it("keeps a user-supplied start month", () => {
       mockLocation("");
 
       const { result } = renderHook(() =>
@@ -365,37 +376,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         }),
       );
 
-      // Even though the URL has no startMonth param, rawFilters.startMonth is not null
-      // so effectiveFilters should use it as-is (useDefaultStartMonth only injects when startMonth is null)
       expect(result.current.effectiveFilters.startMonth).toBe("2022-06");
-    });
-  });
-
-  describe("popstate listener updates useDefaultStartMonth", () => {
-    it("sets useDefaultStartMonth false when popstate fires with startMonth in URL", () => {
-      mockLocation("");
-
-      const { result } = renderHook(() =>
-        useFilterPipeline({
-          manifest,
-          rawFilters: baseFilters,
-          userLocation: null,
-          resultsVisible: true,
-          savedVisible: false,
-          shortlistCount: 0,
-          searchProfile: DEFAULT_SEARCH_PROFILE,
-          t,
-        }),
-      );
-
-      expect(result.current.useDefaultStartMonth).toBe(true);
-
-      act(() => {
-        mockLocation("?startMonth=2021-01");
-        window.dispatchEvent(new PopStateEvent("popstate"));
-      });
-
-      expect(result.current.useDefaultStartMonth).toBe(false);
     });
   });
 

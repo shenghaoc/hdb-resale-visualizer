@@ -44,18 +44,10 @@ const DEFAULT_FILTERS: FilterState = {
 };
 
 const EMPTY_PROFILE: SearchProfile = {
-  version: 2,
+  version: 3,
   mainFlatType: "",
-  alternativeFlatTypes: [],
   maxBudget: null,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 0,
-  showStretchOptions: false,
-  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
@@ -145,56 +137,10 @@ describe("shared product core golden parity", () => {
         ...EMPTY_PROFILE,
         mainFlatType: scenario.profile.mainFlatType ?? "",
         maxBudget: scenario.profile.maxBudget ?? null,
-        maxComfortableCommuteMinutes: scenario.profile.maxComfortableCommuteMinutes ?? null,
         minimumRemainingLeaseYears: scenario.profile.minimumRemainingLeaseYears ?? null,
-        budgetStretchPercent: scenario.profile.budgetStretchPercent ?? 5,
-        commuteStretchMinutes: scenario.profile.commuteStretchMinutes ?? 10,
       };
       const result = evaluateBlockForProfile(block, profile, scenario.currentYear);
       expect(result.tier).toBe(scenario.expectedTier);
-    }
-  });
-
-  it("keeps stretch budget dimension stable", () => {
-    for (const scenario of golden.stretchBudgetScenarios) {
-      const block = {
-        medianPrice: scenario.blockMedianPrice,
-        flatTypes: ["4 ROOM"],
-      } as unknown as BlockSummary;
-      const profile: SearchProfile = {
-        ...EMPTY_PROFILE,
-        mainFlatType: "4 ROOM",
-        maxBudget: scenario.maxBudget,
-        budgetStretchPercent: scenario.budgetStretchPercent,
-      };
-      const result = evaluateBlockForProfile(block, profile, 2026);
-      expect(result.budget).toBe(scenario.expectedDimension);
-    }
-  });
-
-  it("keeps commute proxy dimension stable", () => {
-    for (const scenario of golden.commuteProxyScenarios) {
-      const block = {
-        flatTypes: ["4 ROOM"],
-        medianPrice: 500000,
-        leaseCommenceRange: [2020, 2020] as [number, number],
-        nearestMrt:
-          scenario.distanceMeters !== null
-            ? {
-                stationName: "X",
-                distanceMeters: scenario.distanceMeters,
-                walkingTimeSeconds: scenario.distanceMeters * 0.8,
-              }
-            : null,
-        nearbyMrts: [],
-      } as unknown as BlockSummary;
-      const profile: SearchProfile = {
-        ...EMPTY_PROFILE,
-        maxComfortableCommuteMinutes: scenario.maxCommuteMinutes,
-        commuteStretchMinutes: scenario.stretchMinutes,
-      };
-      const result = evaluateBlockForProfile(block, profile, 2026);
-      expect(result.commute).toBe(scenario.expectedDimension);
     }
   });
 

@@ -12,28 +12,35 @@ const selectedSuggestion: Suggestion = {
   addressKey: "bedok-101-bedok-north-avenue-4",
 };
 
+const observedSuggestActive: boolean[] = [];
+
 vi.mock("@/components/SearchCombobox", () => ({
   SearchCombobox: ({
     onSelectSuggestion,
+    suggestActive,
     "data-testid": dataTestId,
   }: {
     onSelectSuggestion: (suggestion: Suggestion) => void;
+    suggestActive?: boolean;
     "data-testid"?: string;
-  }) => (
-    <button
-      type="button"
-      data-testid={dataTestId}
-      onClick={() =>
-        onSelectSuggestion({
-          group: "block",
-          label: "101 BEDOK NORTH AVENUE 4",
-          addressKey: "bedok-101-bedok-north-avenue-4",
-        })
-      }
-    >
-      Select block suggestion
-    </button>
-  ),
+  }) => {
+    observedSuggestActive.push(Boolean(suggestActive));
+    return (
+      <button
+        type="button"
+        data-testid={dataTestId}
+        onClick={() =>
+          onSelectSuggestion({
+            group: "block",
+            label: "101 BEDOK NORTH AVENUE 4",
+            addressKey: "bedok-101-bedok-north-avenue-4",
+          })
+        }
+      >
+        Select block suggestion
+      </button>
+    );
+  },
 }));
 
 const manifest: Manifest = {
@@ -83,7 +90,7 @@ describe("AppHeader mobile search", () => {
           isMobileHeaderOpen={false}
           onToggleMobileHeader={vi.fn()}
           onDismiss={vi.fn()}
-          mobileTab={null}
+          onOpenGuide={vi.fn()}
         />
       </TooltipProvider>,
     );
@@ -97,5 +104,85 @@ describe("AppHeader mobile search", () => {
     await waitFor(() => {
       expect(screen.queryByTestId("header-search-overlay")).not.toBeInTheDocument();
     });
+  });
+
+  it("opens and cancels search without clearing the current mobile panel", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <TooltipProvider>
+        <div data-testid="mobile-results-panel" />
+        <AppHeader
+          manifest={manifest}
+          isDesktop={false}
+          locale="en-SG"
+          t={t}
+          search=""
+          onSearchChange={vi.fn()}
+          onSelectSuggestion={vi.fn()}
+          isMobileHeaderOpen={false}
+          onToggleMobileHeader={vi.fn()}
+          onDismiss={vi.fn()}
+          onOpenGuide={vi.fn()}
+        />
+      </TooltipProvider>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "header.openSearch" }));
+    expect(screen.getByTestId("header-search-overlay")).toBeInTheDocument();
+
+    await user.click(screen.getByTestId("header-search-scrim"));
+    expect(screen.queryByTestId("header-search-overlay")).not.toBeInTheDocument();
+    expect(screen.getByTestId("mobile-results-panel")).toBeInTheDocument();
+  });
+
+  it("keeps inline search suggestions active below the desktop panel breakpoint", () => {
+    observedSuggestActive.length = 0;
+
+    render(
+      <TooltipProvider>
+        <AppHeader
+          manifest={manifest}
+          isDesktop={false}
+          locale="en-SG"
+          t={t}
+          search=""
+          onSearchChange={vi.fn()}
+          onSelectSuggestion={vi.fn()}
+          isMobileHeaderOpen={false}
+          onToggleMobileHeader={vi.fn()}
+          onDismiss={vi.fn()}
+          onOpenGuide={vi.fn()}
+        />
+      </TooltipProvider>,
+    );
+
+    expect(observedSuggestActive).toContain(true);
+  });
+
+  it("exposes the Guide from the mobile header", async () => {
+    const user = userEvent.setup();
+    const onOpenGuide = vi.fn();
+
+    render(
+      <TooltipProvider>
+        <AppHeader
+          manifest={manifest}
+          isDesktop={false}
+          locale="en-SG"
+          t={t}
+          search=""
+          onSearchChange={vi.fn()}
+          onSelectSuggestion={vi.fn()}
+          isMobileHeaderOpen={false}
+          onToggleMobileHeader={vi.fn()}
+          onDismiss={vi.fn()}
+          onOpenGuide={onOpenGuide}
+        />
+      </TooltipProvider>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "app.openGuide" }));
+    expect(onOpenGuide).toHaveBeenCalledTimes(1);
   });
 });

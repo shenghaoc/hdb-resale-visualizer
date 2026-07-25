@@ -55,8 +55,10 @@ export function downloadCsv(filename: string, content: string): void {
 }
 
 export type ShortlistCsvRowInput = {
+  status: string;
+  addressKey: string;
   address: string;
-  medianPrice: number;
+  medianPrice: number | string;
   askingPrice: number | null;
   fairRangeLow: number | null;
   fairRangeMedian: number | null;
@@ -85,6 +87,8 @@ export type ShortlistCsvRowInput = {
 
 export function buildShortlistCsvContent(headers: string[], rows: ShortlistCsvRowInput[]): string {
   const dataRows = rows.map((row) => [
+    row.status,
+    row.addressKey,
     row.address,
     row.medianPrice,
     row.askingPrice ?? "",

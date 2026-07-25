@@ -19,6 +19,25 @@ import {
   type ComparableQualityTag,
 } from "@/shared/lib/listing-quality";
 
+const HDB_LOWEST_STOREY = 1;
+const HDB_HIGHEST_STOREY = 51;
+const HDB_STOREY_RANGE_SIZE = 3;
+
+/**
+ * Canonical three-storey bands used by the HDB resale dataset.
+ *
+ * Keep these independent of a selected block's recent-transaction sample:
+ * that sample is intentionally capped and may not contain the listing's
+ * actual storey range.
+ */
+const HDB_STOREY_RANGE_OPTIONS: readonly string[] = Object.freeze(
+  Array.from({ length: HDB_HIGHEST_STOREY / HDB_STOREY_RANGE_SIZE }, (_, index) => {
+    const firstStorey = HDB_LOWEST_STOREY + index * HDB_STOREY_RANGE_SIZE;
+    const lastStorey = firstStorey + HDB_STOREY_RANGE_SIZE - 1;
+    return `${String(firstStorey).padStart(2, "0")} TO ${String(lastStorey).padStart(2, "0")}`;
+  }),
+);
+
 // ── Types ───────────────────────────────────────────────────────────────────
 
 export type ListingAdjustmentInfo = {
@@ -302,29 +321,20 @@ export function deriveEvidenceCaveats(
 }
 
 /**
- * Flat-type options derived from address detail recent transactions.
+ * Flat-type options derived from the complete block summary rather than the
+ * capped recent-transaction sample.
  */
 export function deriveFlatTypeOptions(detail: AddressDetail | null): string[] {
   if (!detail) return [];
-  return Array.from(new Set(detail.recentTransactions.map((tx) => tx.flatType)));
+  return Array.from(new Set(detail.summary.flatTypes)).sort();
 }
 
 /**
- * Storey-range options derived from address detail recent transactions.
+ * Complete HDB storey-range options for a loaded block.
  */
 export function deriveStoreyOptions(detail: AddressDetail | null): string[] {
   if (!detail) return [];
-  return Array.from(new Set(detail.recentTransactions.map((tx) => tx.storeyRange))).sort();
-}
-
-/**
- * Median floor-area midpoint fallback when the user has not entered a value.
- */
-export function deriveFallbackFloorArea(detail: AddressDetail): number | null {
-  if (detail.summary.floorAreaRange[0] != null && detail.summary.floorAreaRange[1] != null) {
-    return (detail.summary.floorAreaRange[0] + detail.summary.floorAreaRange[1]) / 2;
-  }
-  return null;
+  return [...HDB_STOREY_RANGE_OPTIONS];
 }
 
 /**
@@ -342,10 +352,9 @@ export function buildComparableRequestBody(options: {
   const { detail, flatType, storeyRange, floorAreaSqm, leaseCommenceYear, referenceMonth } =
     options;
 
-  const effectiveFloorArea = floorAreaSqm ?? deriveFallbackFloorArea(detail);
   const effectiveReferenceMonth = referenceMonth ?? detail.summary.latestMonth;
 
-  if (effectiveFloorArea == null || effectiveFloorArea <= 0 || !effectiveReferenceMonth) {
+  if (floorAreaSqm == null || floorAreaSqm <= 0 || !effectiveReferenceMonth) {
     return null;
   }
 
@@ -355,7 +364,7 @@ export function buildComparableRequestBody(options: {
     streetName: detail.summary.streetName,
     flatType,
     storeyRange,
-    floorAreaSqm: effectiveFloorArea,
+    floorAreaSqm,
     leaseCommenceYear: leaseCommenceYear ?? null,
     referenceMonth: effectiveReferenceMonth,
   };

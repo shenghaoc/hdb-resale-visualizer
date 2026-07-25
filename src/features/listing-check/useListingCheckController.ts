@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { shareViaNavigator } from "@/shared/lib/shareUrls";
-import type { BlockSummary, ShortlistItem } from "@/types/data";
+import type { ShortlistItem } from "@/types/data";
 import {
   buildCheckShareUrl,
   type ListingCheckUrlState,
@@ -17,35 +17,14 @@ type ListingCheckControllerAction =
   | { type: "changeFloorArea"; floorAreaSqm: number | null }
   | { type: "changeFlatType"; flatType: string | null }
   | { type: "changeStoreyRange"; storeyRange: string | null }
-  | { type: "changeLeaseYear"; leaseCommenceYear: number | null }
-  | { type: "applySample"; form: ListingCheckUrlState };
-
-type SampleListingBlock = Pick<
-  BlockSummary,
-  | "addressKey"
-  | "medianPrice"
-  | "transactionCount"
-  | "floorAreaRange"
-  | "leaseCommenceRange"
-  | "flatTypes"
->;
+  | { type: "changeLeaseYear"; leaseCommenceYear: number | null };
 
 type UseListingCheckControllerOptions = {
-  blocks: readonly BlockSummary[];
   shortlistItems: readonly ShortlistItem[];
   toggleShortlist: (addressKey: string) => void;
   updateShortlist: (addressKey: string, patch: Partial<ShortlistItem>) => void;
   openCheckPanel: () => void;
   shareTitle: string;
-};
-
-const FALLBACK_SAMPLE: SampleListingBlock = {
-  addressKey: "406-ANG MO KIO AVE 10",
-  medianPrice: 450000,
-  transactionCount: 1,
-  floorAreaRange: [68, 68],
-  leaseCommenceRange: [1980, 1980],
-  flatTypes: ["4 ROOM"],
 };
 
 function createInitialState(form: ListingCheckUrlState): ListingCheckControllerState {
@@ -99,54 +78,10 @@ function listingCheckReducer(
       return state.form.leaseCommenceYear === action.leaseCommenceYear
         ? state
         : updateFormField(state, { leaseCommenceYear: action.leaseCommenceYear });
-    case "applySample":
-      return { form: action.form };
   }
-}
-
-function chooseSampleBlock(blocks: readonly BlockSummary[]): SampleListingBlock {
-  let best: BlockSummary | null = null;
-
-  for (const block of blocks) {
-    if (
-      block.medianPrice > 0 &&
-      block.transactionCount > 0 &&
-      (!best || block.addressKey < best.addressKey)
-    ) {
-      best = block;
-    }
-  }
-
-  return best ?? FALLBACK_SAMPLE;
-}
-
-function sampleFormState(block: SampleListingBlock): ListingCheckUrlState {
-  const [minArea, maxArea] = block.floorAreaRange ?? [];
-  const [minLease, maxLease] = block.leaseCommenceRange ?? [];
-  const flatType =
-    block.flatTypes?.reduce<string | null>(
-      (lowest, candidate) => (lowest == null || candidate < lowest ? candidate : lowest),
-      null,
-    ) ?? null;
-  const floorAreaSqm =
-    minArea != null && maxArea != null ? Math.round((minArea + maxArea) / 2) : null;
-  const leaseCommenceYear =
-    minLease != null && maxLease != null && minLease > 0 && maxLease > 0
-      ? Math.round((minLease + maxLease) / 2)
-      : null;
-
-  return {
-    selectedAddressKey: block.addressKey,
-    askingPrice: Math.round(block.medianPrice),
-    floorAreaSqm,
-    flatType,
-    storeyRange: null,
-    leaseCommenceYear,
-  };
 }
 
 export function useListingCheckController({
-  blocks,
   shortlistItems,
   toggleShortlist,
   updateShortlist,
@@ -197,11 +132,6 @@ export function useListingCheckController({
     dispatch({ type: "changeLeaseYear", leaseCommenceYear });
   }, []);
 
-  const onUseSampleCheck = useCallback(() => {
-    dispatch({ type: "applySample", form: sampleFormState(chooseSampleBlock(blocks)) });
-    openCheckPanel();
-  }, [blocks, openCheckPanel]);
-
   const onSaveToShortlist = useCallback(() => {
     const { selectedAddressKey, askingPrice } = controllerState.form;
     if (!selectedAddressKey || askingPrice == null) {
@@ -243,7 +173,6 @@ export function useListingCheckController({
     onFlatTypeChange,
     onStoreyRangeChange,
     onLeaseYearChange,
-    onUseSampleCheck,
     onSaveToShortlist,
     onShare,
   };

@@ -97,6 +97,45 @@ describe("pipeline artifacts", () => {
     });
   });
 
+  it("emits one coherent evidence cohort per canonical flat type", () => {
+    const base = fixtureTransactions[0]!;
+    const artifacts = buildFixtureArtifacts([
+      ...fixtureTransactions,
+      {
+        ...base,
+        id: "alpha-multi-1",
+        month: "2025-11",
+        flatType: "MULTI GENERATION",
+        floorAreaSqm: 130,
+        flatModel: "MODEL A",
+        resalePrice: 800000,
+        pricePerSqm: 6153.85,
+      },
+      {
+        ...base,
+        id: "alpha-multi-2",
+        month: "2026-03",
+        flatType: "MULTI-GENERATION",
+        floorAreaSqm: 135,
+        flatModel: "MODEL B",
+        resalePrice: 850000,
+        pricePerSqm: 6296.3,
+      },
+    ]);
+    const summary = artifacts.blockSummaries.find(
+      (block) => block.addressKey === makeAddressKey("ANG MO KIO", "406", "ANG MO KIO AVE 10"),
+    );
+
+    expect(summary?.flatTypes).toContain("MULTI-GENERATION");
+    expect(summary?.flatTypeCohorts?.["MULTI-GENERATION"]).toEqual({
+      transactionCount: 2,
+      latestMonth: "2026-03",
+      floorAreaRange: [130, 135],
+      flatModels: ["MODEL A", "MODEL B"],
+    });
+    expect(summary?.medianPriceByFlatType?.["MULTI-GENERATION"]).toBe(825000);
+  });
+
   it("rejects an empty transaction dataset before producing an invalid manifest", () => {
     expect(() => buildFixtureArtifacts([])).toThrow(
       "Cannot build artifacts without at least one resale transaction",

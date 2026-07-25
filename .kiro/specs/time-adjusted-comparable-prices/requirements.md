@@ -98,7 +98,8 @@
 - **R7.2** `shared/comparable-engine.ts` is not modified.
 - **R7.3** `src/lib/transaction-analysis.ts`, `src/lib/listing-verdict.ts`,
   `listing-confidence.ts`, and `listing-caveats.ts` are not modified.
-- **R7.4** The block detail drawer's `AskingPriceCheck` is not affected.
+- **R7.4** `ListingCheckPanel` remains the sole listing-check UI and
+  `ComparableEvidenceTable` remains its sole evidence surface.
 - **R7.5** Existing tests continue to pass.
 
 ## R8 — Tests

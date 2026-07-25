@@ -1,6 +1,7 @@
 import { z } from "zod";
 import {
   LEGACY_SEARCH_PROFILE_STORAGE_KEY,
+  LEGACY_SEARCH_PROFILE_V2_STORAGE_KEY,
   SEARCH_PROFILE_MAX_APPLICANT_AGE,
   SEARCH_PROFILE_MAX_MONETARY_VALUE,
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
@@ -20,106 +21,99 @@ export const applicantAgeSchema = z
   .nullable();
 export const monetarySchema = z.number().min(0).max(SEARCH_PROFILE_MAX_MONETARY_VALUE).nullable();
 
-const searchProfileSchema = z.object({
-  version: z.literal(2),
+const supportedSearchProfileFields = {
   mainFlatType: z.string().trim().catch(""),
-  alternativeFlatTypes: z.array(z.string()).catch([]),
   maxBudget: z.number().int().positive().nullable().catch(null),
-  commuteAnchorLabel: z.string().trim().catch(""),
-  commuteAnchorMrt: z.string().trim().min(1).nullable().catch(null),
-  maxComfortableCommuteMinutes: z.number().int().positive().nullable().catch(null),
-  commuteStretchMinutes: z.number().int().min(0).max(60).catch(0),
   minimumRemainingLeaseYears: z.number().int().min(0).max(99).nullable().catch(null),
-  budgetStretchPercent: z.number().int().min(0).max(30).catch(0),
-  showStretchOptions: z.boolean().catch(false),
-  showAllBlocks: z.boolean().catch(true),
   age: applicantAgeSchema.catch(null),
   coApplicantAge: applicantAgeSchema.catch(null),
   cpfOABalance: monetarySchema.catch(null),
   monthlyIncome: monetarySchema.catch(null),
-});
+};
 
-const legacySearchProfileSchema = z.object({
+const searchProfileSchema = z.object({
+  version: z.literal(3),
+  ...supportedSearchProfileFields,
+});
+const legacySearchProfileV2Schema = z.object({
+  version: z.literal(2),
+  ...supportedSearchProfileFields,
+});
+const legacySearchProfileV1Schema = z.object({
   version: z.literal(1),
-  mainFlatType: z.string().trim().catch(""),
-  alternativeFlatTypes: z.array(z.string()).catch([]),
-  maxBudget: z.number().int().positive().nullable().catch(null),
-  minimumRemainingLeaseYears: z.number().int().min(0).max(99).nullable().catch(null),
-  age: applicantAgeSchema.catch(null),
-  coApplicantAge: applicantAgeSchema.catch(null),
-  cpfOABalance: monetarySchema.catch(null),
-  monthlyIncome: monetarySchema.catch(null),
+  ...supportedSearchProfileFields,
 });
 
 export const DEFAULT_SEARCH_PROFILE: SearchProfile = {
-  version: 2,
+  version: 3,
   mainFlatType: "",
-  alternativeFlatTypes: [],
   maxBudget: null,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 0,
-  showStretchOptions: false,
-  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
   monthlyIncome: null,
 };
 
+type SupportedSearchProfileFields = Omit<SearchProfile, "version">;
+
+function toCurrentSearchProfile(data: SupportedSearchProfileFields): SearchProfile {
+  return {
+    version: 3,
+    mainFlatType: data.mainFlatType,
+    maxBudget: data.maxBudget,
+    minimumRemainingLeaseYears: data.minimumRemainingLeaseYears,
+    age: data.age,
+    coApplicantAge: data.coApplicantAge,
+    cpfOABalance: data.cpfOABalance,
+    monthlyIncome: data.monthlyIncome,
+  };
+}
+
 export function parseSearchProfile(raw: unknown): SearchProfile {
   const parsed = searchProfileSchema.safeParse(raw);
-  if (parsed.success) {
-    return {
-      ...DEFAULT_SEARCH_PROFILE,
-      mainFlatType: parsed.data.mainFlatType,
-      maxBudget: parsed.data.maxBudget,
-      minimumRemainingLeaseYears: parsed.data.minimumRemainingLeaseYears,
-      age: parsed.data.age,
-      coApplicantAge: parsed.data.coApplicantAge,
-      cpfOABalance: parsed.data.cpfOABalance,
-      monthlyIncome: parsed.data.monthlyIncome,
-    };
-  }
+  if (parsed.success) return toCurrentSearchProfile(parsed.data);
 
-  const legacy = legacySearchProfileSchema.safeParse(raw);
-  if (!legacy.success) return DEFAULT_SEARCH_PROFILE;
+  const legacyV2 = legacySearchProfileV2Schema.safeParse(raw);
+  if (legacyV2.success) return toCurrentSearchProfile(legacyV2.data);
 
-  return {
-    ...DEFAULT_SEARCH_PROFILE,
-    mainFlatType: legacy.data.mainFlatType,
-    maxBudget: legacy.data.maxBudget,
-    minimumRemainingLeaseYears: legacy.data.minimumRemainingLeaseYears,
-    age: legacy.data.age,
-    coApplicantAge: legacy.data.coApplicantAge,
-    cpfOABalance: legacy.data.cpfOABalance,
-    monthlyIncome: legacy.data.monthlyIncome,
-  };
+  const legacyV1 = legacySearchProfileV1Schema.safeParse(raw);
+  return legacyV1.success ? toCurrentSearchProfile(legacyV1.data) : DEFAULT_SEARCH_PROFILE;
 }
 
 export function loadSearchProfile(): SearchProfile {
   const value = safeStorage.getItem(SEARCH_PROFILE_STORAGE_KEY);
   if (value) {
     try {
-      return parseSearchProfile(JSON.parse(value));
+      const stored = JSON.parse(value) as unknown;
+      const parsed = parseSearchProfile(stored);
+      if (JSON.stringify(stored) !== JSON.stringify(parsed)) {
+        saveSearchProfile(parsed);
+      }
+      return parsed;
     } catch {
       return DEFAULT_SEARCH_PROFILE;
     }
   }
 
-  const legacyValue = safeStorage.getItem(LEGACY_SEARCH_PROFILE_STORAGE_KEY);
-  if (!legacyValue) return DEFAULT_SEARCH_PROFILE;
-  try {
-    const migrated = parseSearchProfile(JSON.parse(legacyValue));
-    saveSearchProfile(migrated);
-    safeStorage.removeItem(LEGACY_SEARCH_PROFILE_STORAGE_KEY);
-    return migrated;
-  } catch {
-    return DEFAULT_SEARCH_PROFILE;
+  for (const legacyKey of [
+    LEGACY_SEARCH_PROFILE_V2_STORAGE_KEY,
+    LEGACY_SEARCH_PROFILE_STORAGE_KEY,
+  ]) {
+    const legacyValue = safeStorage.getItem(legacyKey);
+    if (!legacyValue) continue;
+    try {
+      const migrated = parseSearchProfile(JSON.parse(legacyValue));
+      saveSearchProfile(migrated);
+      safeStorage.removeItem(legacyKey);
+      return migrated;
+    } catch {
+      // A malformed older payload must not prevent fallback to another
+      // supported legacy key.
+    }
   }
+
+  return DEFAULT_SEARCH_PROFILE;
 }
 
 export function saveSearchProfile(profile: SearchProfile): void {

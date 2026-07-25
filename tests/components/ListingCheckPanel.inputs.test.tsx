@@ -1,3 +1,4 @@
+import { type ComponentProps } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
@@ -58,7 +59,10 @@ function makeDetail(): AddressDetail {
   };
 }
 
-function renderPanel(shortlistFull = false) {
+function renderPanel(
+  shortlistFull = false,
+  overrides: Partial<ComponentProps<typeof ListingCheckPanel>> = {},
+) {
   const callbacks = {
     onAddressSelect: vi.fn(),
     onAskingPriceChange: vi.fn(),
@@ -66,7 +70,6 @@ function renderPanel(shortlistFull = false) {
     onFlatTypeChange: vi.fn(),
     onStoreyRangeChange: vi.fn(),
     onLeaseYearChange: vi.fn(),
-    onUseSampleCheck: vi.fn(),
     onSaveToShortlist: vi.fn(),
     onShare: vi.fn(),
   };
@@ -84,6 +87,7 @@ function renderPanel(shortlistFull = false) {
         shortlistFull={shortlistFull}
         referenceMonth="2026-04"
         {...callbacks}
+        {...overrides}
       />
     </I18nProvider>,
   );
@@ -157,6 +161,38 @@ describe("ListingCheckPanel input clearing", () => {
     );
   });
 
+  it("waits for an explicit Check submission before fetching comparables", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+
+    await screen.findByLabelText(/asking price/i);
+    expect(fetch).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole("button", { name: /check this listing/i }));
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+  });
+
+  it.each([
+    { label: "asking price", overrides: { askingPrice: null } },
+    { label: "floor area", overrides: { floorAreaSqm: null } },
+    { label: "flat type", overrides: { flatType: null } },
+    { label: "storey", overrides: { storeyRange: null } },
+  ])("requires an explicit $label before enabling Check", async ({ overrides }) => {
+    renderPanel(false, overrides);
+
+    const button = await screen.findByRole("button", { name: /check this listing/i });
+    expect(button).toBeDisabled();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("shows a flat-type selector even when the block has one option and never selects it", async () => {
+    const callbacks = renderPanel(false, { flatType: null });
+
+    await screen.findByLabelText(/flat type/i);
+    expect(callbacks.onFlatTypeChange).not.toHaveBeenCalled();
+  });
+
   it("does not repeat candidate and shortlist navigation inside the check workflow", async () => {
     renderPanel();
 
@@ -169,8 +205,10 @@ describe("ListingCheckPanel input clearing", () => {
   });
 
   it("explains when the shortlist limit prevents another save", async () => {
+    const user = userEvent.setup();
     renderPanel(true);
 
+    await user.click(await screen.findByRole("button", { name: /check this listing/i }));
     const button = await screen.findByRole("button", { name: /shortlist full/i });
     expect(button).toBeDisabled();
   });

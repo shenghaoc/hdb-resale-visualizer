@@ -137,7 +137,12 @@ export function getActiveFilterChipDescriptors(
     const hi = filters.endMonth !== null ? formatMonth(filters.endMonth, locale) : "";
     chips.push({
       key: "transactionWindow",
-      label: lo && hi ? `${lo}–${hi}` : lo || hi,
+      label:
+        lo && hi
+          ? t("filters.chip.latestSaleRange", { from: lo, to: hi })
+          : lo
+            ? t("filters.chip.latestSaleFrom", { value: lo })
+            : t("filters.chip.latestSaleTo", { value: hi }),
       clearPatch: { startMonth: null, endMonth: null },
     });
   }

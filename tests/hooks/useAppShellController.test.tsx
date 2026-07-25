@@ -10,7 +10,6 @@ function makeOptions(overrides: Partial<Options> = {}): Options {
     filters: DEFAULT_FILTERS,
     patchFilters: vi.fn(),
     resetFilters: vi.fn(),
-    setUseDefaultStartMonth: vi.fn(),
     clearGeolocationError: vi.fn(),
     cancelPendingGeolocationRequest: vi.fn(),
     isDesktop: true,
@@ -95,5 +94,14 @@ describe("useAppShellController", () => {
 
     expect(options.setIsSavedPanelOpen).toHaveBeenCalledWith(true);
     expect(options.setIsLeftPanelOpen).toHaveBeenCalledWith(false);
+  });
+
+  it("returns directly to the map on mobile", () => {
+    const options = makeOptions({ isDesktop: false });
+    const { result } = renderHook(() => useAppShellController(options));
+
+    act(() => result.current.handleMobileMapClick());
+
+    expect(options.setMobileTab).toHaveBeenCalledWith(null);
   });
 });

@@ -2,6 +2,7 @@ import type {
   AddressDetail,
   AddressDetailSummary,
   AddressDetailTransaction,
+  BlockFlatTypeCohort,
   BlockSummary,
   ComparisonArtifact,
   Manifest,
@@ -664,7 +665,7 @@ export function buildArtifacts({
     // Math.min/Math.max spread can exhaust the call stack on large arrays; single-pass avoids the intermediate allocation too.
     let minFloorArea = Infinity;
     let maxFloorArea = -Infinity;
-    for (const transaction of sortedTransactions) {
+    for (const transaction of sourceWindow) {
       const area = transaction.floorAreaSqm;
       if (area < minFloorArea) {
         minFloorArea = area;
@@ -698,20 +699,54 @@ export function buildArtifacts({
     // Compute per-flat-type median prices and PPSM for accurate budget filtering and heatmap
     const medianPriceByFlatType: Record<string, number> = {};
     const medianPricePerSqmByFlatType: Record<string, number> = {};
-    const transactionsByFlatType = new Map<string, { prices: number[]; ppsmValues: number[] }>();
+    const flatTypeCohorts: Record<string, BlockFlatTypeCohort> = {};
+    const transactionsByFlatType = new Map<
+      string,
+      {
+        prices: number[];
+        ppsmValues: number[];
+        latestMonth: string;
+        minFloorArea: number;
+        maxFloorArea: number;
+        flatModels: Set<string>;
+      }
+    >();
     for (const transaction of sourceWindow) {
-      const ft = transactionsByFlatType.get(transaction.flatType) ?? { prices: [], ppsmValues: [] };
-      ft.prices.push(transaction.resalePrice);
-      ft.ppsmValues.push(transaction.pricePerSqm);
-      transactionsByFlatType.set(transaction.flatType, ft);
+      const flatType = canonicalFlatType(transaction.flatType);
+      const cohort = transactionsByFlatType.get(flatType) ?? {
+        prices: [],
+        ppsmValues: [],
+        latestMonth: transaction.month,
+        minFloorArea: transaction.floorAreaSqm,
+        maxFloorArea: transaction.floorAreaSqm,
+        flatModels: new Set<string>(),
+      };
+      cohort.prices.push(transaction.resalePrice);
+      cohort.ppsmValues.push(transaction.pricePerSqm);
+      if (transaction.month > cohort.latestMonth) {
+        cohort.latestMonth = transaction.month;
+      }
+      if (transaction.floorAreaSqm < cohort.minFloorArea) {
+        cohort.minFloorArea = transaction.floorAreaSqm;
+      }
+      if (transaction.floorAreaSqm > cohort.maxFloorArea) {
+        cohort.maxFloorArea = transaction.floorAreaSqm;
+      }
+      cohort.flatModels.add(transaction.flatModel);
+      transactionsByFlatType.set(flatType, cohort);
     }
     for (const [
       flatType,
-      { prices: ftPrices, ppsmValues: ftPpsm },
+      { prices: ftPrices, ppsmValues: ftPpsm, latestMonth, minFloorArea, maxFloorArea, flatModels },
     ] of transactionsByFlatType.entries()) {
-      const key = canonicalFlatType(flatType);
-      medianPriceByFlatType[key] = Math.round(median(ftPrices));
-      medianPricePerSqmByFlatType[key] = Number(median(ftPpsm).toFixed(2));
+      medianPriceByFlatType[flatType] = Math.round(median(ftPrices));
+      medianPricePerSqmByFlatType[flatType] = Number(median(ftPpsm).toFixed(2));
+      flatTypeCohorts[flatType] = {
+        transactionCount: ftPrices.length,
+        latestMonth,
+        floorAreaRange: [minFloorArea, maxFloorArea],
+        flatModels: [...flatModels].sort(),
+      };
     }
 
     const summary: BlockSummary = {
@@ -731,12 +766,11 @@ export function buildArtifacts({
         sortedTransactions[sortedTransactions.length - 1].month,
         sortedTransactions[0].month,
       ],
-      flatTypes: [...new Set(sortedTransactions.map((transaction) => transaction.flatType))].sort(),
-      flatModels: [
-        ...new Set(sortedTransactions.map((transaction) => transaction.flatModel)),
-      ].sort(),
+      flatTypes: Object.keys(flatTypeCohorts).sort(),
+      flatModels: [...new Set(sourceWindow.map((transaction) => transaction.flatModel))].sort(),
       medianPriceByFlatType,
       medianPricePerSqmByFlatType,
+      flatTypeCohorts,
       nearestMrt,
       nearbyMrts,
       postalCode: geocode.postalCode ?? null,

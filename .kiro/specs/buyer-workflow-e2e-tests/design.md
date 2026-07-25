@@ -22,22 +22,22 @@ touched, so the existing suite is unaffected.
 
 ### Reaching the panel deterministically
 
-Three candidate entry paths were considered:
+Two candidate entry paths were considered:
 
 1. **Block search combobox** — rejected. The staged `suggest.json` fixture has
    only `town` and `mrt` suggestions; `ListingCheckPanel.handleSelectSuggestion`
    acts only on `group === "block"`, so no block can be selected this way.
-2. **"Try sample listing check" CTA** — rejected for the data-driven flow. The
-   sample block is the alphabetically-first entry of `pipeline.blocks`, which is
-   empty until map scope loads; at cold start it falls back to
-   `406-ANG MO KIO AVE 10`, which has **no** detail fixture, producing an error
-   state. (The CTA's mere presence is still asserted in the entry test.)
-3. **Deep link** — chosen. The app reads `?checkAddress=…&checkPrice=…&…` via
+2. **Deep link** — chosen. The app reads `?checkAddress=…&checkPrice=…&…` via
    `useListingCheckUrlState` and an effect auto-opens the Check tab when
    `checkAddress` is present. We deep-link to `bedok-106-lengkong-tiga`, which
    has a staged detail fixture (`tests/fixtures/public-data/details/…`) and a
    block-summaries entry (so the shortlist row resolves after saving). This is
-   fully under test control and independent of map scope.
+   fully under test control and independent of map scope. The deep link hydrates
+   only the facts encoded in the URL; the test still activates "Check this
+   listing" explicitly.
+
+The entry test also protects the honest empty state: there is no sample/demo CTA
+and no synthetic listing facts are populated.
 
 ### Mocking the comparable engine
 
@@ -104,20 +104,19 @@ no `playwright.config.ts` change is needed. Horizontal scroll is asserted via
 | Test | Requirements |
 | --- | --- |
 | Start from Check tab without the map | R1 |
-| Enter facts + asking price → verdict/confidence/fair range/count → evidence → save → saved-item preservation | R2, R3, R4, R6, R7 |
-| Low-confidence / low-sample verdict + caveat | R3, R5 (gap noted) |
+| Enter facts + asking price → explicit submit → verdict/confidence/fair range/count → evidence → save → asking-price preservation | R2, R3, R4, R6, R7 |
+| Low-confidence / low-sample verdict + caveat | R3 |
 | Mobile flow without horizontal scroll | R8 |
 
 ## Out of scope / gaps
 
-- **Time-adjusted toggle (R5):** `ListingCheckPanel` does not render a
-  raw-vs-time-adjusted toggle today; it requests time adjustment by default.
-  The evidence table shows adjusted values in **Price** / **$/sqm** and shows
-  **Orig. Price** only when the response carries raw registered values. No
-  toggle test is written; documented as a gap.
-- **Structured fair-range persistence (R7.3):** the check-save path persists
-  `targetPrice` + a `notes` JSON blob, not the structured
+- **Raw-price toggle (R5):** `ListingCheckPanel` intentionally has no
+  raw-vs-time-adjusted toggle; it requests time adjustment by default. The
+  evidence table shows adjusted values in **Price** / **$/sqm** and shows
+  **Orig. Price** only when the response carries raw registered values.
+- **Structured fair-range persistence (R7.3):** the check-save path persists the
+  seller's `askingPrice`, not a stored confidence verdict or the structured
   `fairRangeLow/Median/High` fields. The save test asserts only what is
-  genuinely preserved. Enriching the save payload is a potential follow-up.
+  genuinely preserved.
 - Coverage is intentionally targeted (happy path, low-sample, save, one mobile
   flow) rather than exhaustive.

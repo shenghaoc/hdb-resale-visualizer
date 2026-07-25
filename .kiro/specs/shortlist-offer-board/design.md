@@ -54,8 +54,8 @@ Three specific gaps:
 - New API endpoints (the existing `/api/shortlist` sync endpoint accepts
   arbitrary JSON in `items_json`; new fields need no server-side changes
   beyond Zod schema validation).
-- Monthly payment calculation (the column exists as a placeholder;
-  implementing the calculation is a separate feature).
+- Monthly payment calculation. The comparison does not reserve an empty
+  placeholder column for an unimplemented feature.
 - Changes to the comparable engine or block-level data pipeline.
 
 ## Architecture
@@ -144,7 +144,7 @@ Design decisions:
   independently defaulted. A version flag would add complexity for no
   benefit since the normalization is already field-level.
 
-### 3. Comparison Row Schema: `src/lib/shortlist-comparison.ts`
+### 3. Comparison Row Schema: `src/features/shortlist/shortlist-comparison.ts`
 
 `ShortlistComparisonRow` is extended with fields derived from the item's
 buyer inputs and the block summary:
@@ -161,9 +161,10 @@ type ShortlistComparisonRow = {
   medianPrice: number;
   medianPricePerSqm: number | null;
   medianPricePerSqft: number | null;
-  leaseCommenceRange: [number, number] | null;
+  recentTransactionCount: number;
+  leaseCommenceRange: [number, number];
+  remainingLeaseYears: { min: number; max: number };
   nearestMrt: { stationName: string; distanceMeters: number; walkingTimeSeconds: number | null } | null;
-  monthlyPaymentEstimate: number | null;
 
   // Buyer inputs (from ShortlistItem)
   askingPrice: number | null;
@@ -172,12 +173,12 @@ type ShortlistComparisonRow = {
   fairRangeHigh: number | null;
   targetPrice: number | null;
   notes: string;
-  decisionStatus: ShortlistItem["decisionStatus"] | null;
+  buyerNotes: string;
+  decisionStatus?: ShortlistItem["decisionStatus"];
 
   // Computed fields
   deltaVsFairMedian: { amount: number; tone: "below" | "above" | "match" } | null;
   targetGap: { amount: number; tone: "below" | "above" | "match" } | null;
-  confidenceLevelLabel: string;
   caveatKeys: string[];
 };
 ```
@@ -186,9 +187,14 @@ type ShortlistComparisonRow = {
 both values exist. The `tone` classification uses the same threshold
 logic as `targetGap`.
 
+`recentTransactionCount` is deliberately factual. The comparison does not
+persist or reconstruct a generic listing-check confidence verdict. Elsewhere in
+the shortlist, a derived data-quality label/hint may summarize record volume and
+recency, but the underlying evidence remains visible.
+
 ### 4. Desktop Comparison Table
 
-The `ShortlistComparisonTable` component renders a `<Table>` with 16
+The `ShortlistComparisonTable` component renders a `<Table>` with 15
 columns inside a `hidden md:block overflow-x-auto` wrapper:
 
 | # | Column | Source |
@@ -201,14 +207,13 @@ columns inside a `hidden md:block overflow-x-auto` wrapper:
 | 6 | Asking Price | Buyer input |
 | 7 | Fair Range | Buyer input (low — median — high) |
 | 8 | Delta vs Fair Median | Computed |
-| 9 | Confidence | Block transaction count |
+| 9 | Recent Block Records | Block transaction count |
 | 10 | Remaining Lease | Block summary |
 | 11 | Nearest MRT | Walking time cache |
-| 12 | Monthly Payment | Placeholder (null) |
-| 13 | Decision Status | Buyer input |
-| 14 | Caveats | Computed from confidence + data quality |
-| 15 | Target Price | Buyer input |
-| 16 | Notes | Buyer input |
+| 12 | Decision Status | Buyer input |
+| 13 | Caveats | Explicit missing-fair-range / missing-MRT facts |
+| 14 | Target Price | Buyer input |
+| 15 | Notes | Buyer input |
 
 The table uses `min-w-[60rem]` to ensure horizontal scroll rather than
 column cramming.
@@ -220,10 +225,11 @@ card stack instead of a table. Each card shows:
 
 - Rank number and address (as a clickable button to navigate to block)
 - Flat type label
-- Key metrics as `Badge` chips: median price, confidence level, decision
-  status
+- Key metrics as `Badge` chips: median price, recent block-record volume, and
+  decision status
 - Two-column grid of secondary metrics: asking price, price/sqm, target
-  price, lease, MRT, monthly payment, fair range, delta
+  price, lease, MRT, fair range, and delta
+- Explicit caveats and buyer notes
 
 This avoids horizontal scrolling and keeps all metrics scannable in a
 single vertical scroll.
@@ -291,7 +297,8 @@ status labels.
 2. **`tests/unit/shortlist-comparison.test.ts`** — Comparison rows:
    - `deltaVsFairMedian` computed correctly for all tone values
    - Fair range formatting with partial/complete/missing data
-   - Confidence and caveat propagation from block data
+   - Recent block-record volume from the block summary
+   - Explicit missing-fair-range and missing-MRT caveats
    - Decision status passthrough
 
 3. **`tests/unit/shortlist-sync.test.ts`** — Sync compatibility:
@@ -343,7 +350,7 @@ status labels.
   an anonymous, opt-in sync feature with no conflict resolution beyond
   "last write wins".
 
-- **Monthly payment placeholder**: the comparison table includes a
-  monthly payment column that always shows "—". This is intentional —
-  the column exists for the eventual implementation. Removing it later
-  would be more disruptive than leaving it empty now.
+- **Evidence can be sparse**: record volume and explicit caveats may reveal that
+  a saved block has weak or missing evidence. Showing those facts is preferable
+  to filling the gap with a generic confidence label or an empty future-feature
+  column.

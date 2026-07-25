@@ -218,7 +218,7 @@ describe("buildShortlistComparisonRows", () => {
     expect(row.deltaVsFairMedian).toEqual({ amount: 20000, tone: "above" });
   });
 
-  it("builds confidence and caveat metadata", () => {
+  it("keeps evidence volume factual and limits caveats to missing buyer evidence", () => {
     const [row] = buildShortlistComparisonRows([
       makeRow({
         item: {
@@ -233,11 +233,10 @@ describe("buildShortlistComparisonRows", () => {
       }),
     ]);
 
-    expect(row.confidenceLevelLabel).toBe("confidence.low.label");
+    expect(row.recentTransactionCount).toBe(2);
     expect(row.caveatKeys).toEqual([
       "shortlist.compare.caveat.noFairRange",
       "shortlist.compare.caveat.noMrt",
-      "shortlist.compare.caveat.lowConfidence",
     ]);
   });
 });

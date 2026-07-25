@@ -3,6 +3,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
 import { useShortlist } from "@/features/shortlist/useShortlist";
+import { useShortlistRemovalUndo } from "@/features/shortlist/useShortlistRemovalUndo";
+import { ShortlistUndoToast } from "@/features/shortlist/ShortlistUndoToast";
 import { useSelectedBlockArtifacts } from "@/hooks/useSelectedBlockArtifacts";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
 import { usePanelState } from "@/hooks/usePanelState";
@@ -73,6 +75,15 @@ function App() {
   const { theme, toggleTheme } = useTheme();
   const { manifest, error } = useManifestData();
   const shortlist = useShortlist();
+  const {
+    pendingRemoval: pendingShortlistRemoval,
+    restoreError: shortlistRestoreError,
+    remove: removeShortlistWithUndo,
+    undo: undoShortlistRemoval,
+  } = useShortlistRemovalUndo({
+    onRemove: shortlist.toggle,
+    onRestore: shortlist.restore,
+  });
   const panel = usePanelState();
   const { filters, patchFilters, resetFilters } = useUrlFilters();
   const geo = useGeolocation({ t });
@@ -109,7 +120,6 @@ function App() {
     t,
   });
 
-  const { setUseDefaultStartMonth } = pipeline;
   const totalBlocks = manifest?.counts.blocks ?? 0;
   const searchProfile = useSearchProfileControllerView(searchProfileState, {
     blocks: pipeline.blocks,
@@ -117,6 +127,22 @@ function App() {
     hasResultScope: pipeline.hasResultScope,
     effectiveTown: pipeline.effectiveFilters.town || null,
   });
+  const townOverviewTown =
+    pipeline.effectiveFilters.town &&
+    !pipeline.effectiveFilters.search &&
+    !pipeline.effectiveFilters.flatType &&
+    !pipeline.effectiveFilters.flatModel &&
+    pipeline.effectiveFilters.budgetMin === null &&
+    pipeline.effectiveFilters.budgetMax === null &&
+    pipeline.effectiveFilters.areaMin === null &&
+    pipeline.effectiveFilters.areaMax === null &&
+    pipeline.effectiveFilters.remainingLeaseMin === null &&
+    activeFilters.startMonth === null &&
+    activeFilters.endMonth === null &&
+    pipeline.effectiveFilters.mrtMax === null &&
+    !pipeline.effectiveFilters.affordable
+      ? pipeline.effectiveFilters.town
+      : null;
 
   const { detail, comparison, isDetailLoading, isComparisonLoading } = useSelectedBlockArtifacts(
     activeFilters.selectedAddressKey,
@@ -130,6 +156,36 @@ function App() {
     selectedComparison: comparison,
     isShortlistOpen: panel.isShortlistOpen,
   });
+  const isShortlistResolving =
+    panel.savedVisible &&
+    shortlist.items.length > 0 &&
+    (pipeline.blocksLoading ||
+      manifest === null ||
+      pipeline.blocks.length < manifest.counts.blocks);
+  const unresolvedShortlistItems = useMemo(() => {
+    if (isShortlistResolving) return [];
+    const resolvedKeys = new Set(shortlistRows.map((row) => row.item.addressKey));
+    return shortlist.items.filter((item) => !resolvedKeys.has(item.addressKey));
+  }, [isShortlistResolving, shortlist.items, shortlistRows]);
+
+  const handleShortlistToggle = useCallback(
+    (addressKey: string) => {
+      const index = shortlist.items.findIndex((item) => item.addressKey === addressKey);
+      if (index < 0) {
+        shortlist.toggle(addressKey);
+        return;
+      }
+
+      const item = shortlist.items[index];
+      const block = pipeline.blocksByKey.get(addressKey);
+      removeShortlistWithUndo({
+        item,
+        index,
+        label: block ? `${block.block} ${block.streetName}` : addressKey,
+      });
+    },
+    [pipeline.blocksByKey, removeShortlistWithUndo, shortlist],
+  );
 
   const selectedBlock = useMemo(
     () =>
@@ -210,9 +266,8 @@ function App() {
   ]);
 
   const listingCheck = useListingCheckController({
-    blocks: pipeline.blocks,
     shortlistItems: shortlist.items,
-    toggleShortlist: shortlist.toggle,
+    toggleShortlist: handleShortlistToggle,
     updateShortlist: shortlist.update,
     openCheckPanel,
     shareTitle: t("app.title"),
@@ -230,6 +285,7 @@ function App() {
     handleDesktopResultsClick,
     handleDesktopCheckClick,
     handleDesktopSavedClick,
+    handleMobileMapClick,
     handleMobileFiltersClick,
     handleMobileResultsClick,
     handleMobileCheckClick,
@@ -238,7 +294,6 @@ function App() {
     filters: activeFilters,
     patchFilters,
     resetFilters,
-    setUseDefaultStartMonth,
     clearGeolocationError: geo.clearError,
     cancelPendingGeolocationRequest: geo.cancelPendingRequest,
     isDesktop: panel.isDesktop,
@@ -249,7 +304,7 @@ function App() {
     isSavedPanelOpen: panel.isSavedPanelOpen,
     listingCheckAddressKey: listingCheck.state.selectedAddressKey,
     prepareListingCheckForAddress: listingCheck.onAddressSelect,
-    toggleShortlist: shortlist.toggle,
+    toggleShortlist: handleShortlistToggle,
     leftTab: panel.leftTab,
   });
 
@@ -403,7 +458,7 @@ function App() {
             searchProfile={searchProfile.profile}
             onClose={() => patchFilters({ selectedAddressKey: null })}
             onToggleShortlist={() => {
-              if (selectedBlock) shortlist.toggle(selectedBlock.addressKey);
+              if (selectedBlock) handleShortlistToggle(selectedBlock.addressKey);
             }}
             onSelectBlock={handleSelectAddress}
           />
@@ -432,6 +487,7 @@ function App() {
             shortlistKeys={shortlistKeySet}
             shortlistFull={shortlist.isFull}
             isCompact
+            flatType={pipeline.effectiveFilters.flatType}
             budgetMin={activeFilters.budgetMin}
             budgetMax={activeFilters.budgetMax}
             searchProfile={searchProfile.profile}
@@ -439,7 +495,7 @@ function App() {
             onClearAffordabilityFilter={() => patchUserFilters({ affordable: "" })}
             sortMode={activeFilters.sort}
             onSortChange={(sort) => patchUserFilters({ sort })}
-            profileTown={pipeline.effectiveFilters.town || null}
+            profileTown={townOverviewTown}
             profileTownBlocks={searchProfile.townProfileBlocks}
             profileDataWindow={manifest.dataWindow}
             profileStartMonth={pipeline.effectiveFilters.startMonth}
@@ -453,6 +509,16 @@ function App() {
               patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })
             }
             searchTruncated={pipeline.searchTruncated}
+            refinementUnsupported={pipeline.refinementUnsupported}
+            onClearUnsupportedRefinements={() =>
+              patchUserFilters({
+                flatModel: "",
+                areaMin: null,
+                areaMax: null,
+                startMonth: null,
+                endMonth: null,
+              })
+            }
             shareUrl={shareableResultsUrl}
           />
         </Suspense>
@@ -472,14 +538,15 @@ function App() {
           isOpen={panel.isShortlistOpen}
           filters={activeFilters}
           onSelectAddress={handleSelectAddress}
-          onRemove={(addressKey) => shortlist.toggle(addressKey)}
+          onRemove={handleShortlistToggle}
           onRestore={shortlist.restore}
           onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
           onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
           rows={shortlistRows}
+          unresolvedItems={unresolvedShortlistItems}
+          isResolvingRows={isShortlistResolving}
+          removalMode="external"
           remainingLeaseMin={activeFilters.remainingLeaseMin}
-          budgetMin={activeFilters.budgetMin}
-          budgetMax={activeFilters.budgetMax}
           referenceMonth={manifest.dataWindow.maxMonth}
           sync={shortlist.sync}
         />
@@ -507,7 +574,6 @@ function App() {
         onShare={() => {
           void listingCheck.onShare();
         }}
-        onUseSampleCheck={listingCheck.onUseSampleCheck}
         savedToShortlist={listingCheck.savedToShortlist}
         shortlistFull={
           shortlist.isFull &&
@@ -525,7 +591,10 @@ function App() {
 
   const showFloatingHeader = header.isHeaderVisible;
   const showScopePrompt = Boolean(
-    !pipeline.hasResultScope && (panel.isDesktop || panel.mobileTab === null),
+    !pipeline.hasResultScope &&
+    (panel.isDesktop
+      ? !panel.isLeftPanelOpen && !panel.isSavedPanelOpen
+      : panel.mobileTab === null),
   );
 
   // ── Render ───────────────────────────────────────────────────────────────
@@ -566,8 +635,7 @@ function App() {
             isMobileHeaderOpen={header.isMobileHeaderOpen}
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}
-            mobileTab={panel.mobileTab}
-            onClearMobileTab={() => panel.setMobileTab(null)}
+            onOpenGuide={() => navigate(DOCS_PATH_PREFIX)}
           />
         ) : null}
 
@@ -674,12 +742,18 @@ function App() {
         onDesktopResultsClick={handleDesktopResultsClick}
         onDesktopCheckClick={handleDesktopCheckClick}
         onDesktopSavedClick={handleDesktopSavedClick}
+        onMobileMapClick={handleMobileMapClick}
         onMobileFiltersClick={handleMobileFiltersClick}
         onMobileResultsClick={handleMobileResultsClick}
         onMobileCheckClick={handleMobileCheckClick}
         onMobileSavedClick={handleMobileSavedClick}
         onToggleTheme={toggleTheme}
         onOpenGuide={() => navigate(DOCS_PATH_PREFIX)}
+      />
+      <ShortlistUndoToast
+        pendingRemoval={pendingShortlistRemoval}
+        restoreError={shortlistRestoreError}
+        onUndo={undoShortlistRemoval}
       />
     </>
   );

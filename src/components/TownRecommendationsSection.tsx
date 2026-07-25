@@ -67,50 +67,47 @@ export const TownRecommendationsSection = memo(function TownRecommendationsSecti
         <p className="text-xs text-muted-foreground">{t("townRecommendations.subtitle")}</p>
       </header>
       <ul className="flex flex-col gap-2">
-        {recommendations.map((rec) => {
-          const matchedCount = rec.strongCount + rec.goodCount + rec.stretchCount;
-          return (
-            <li key={rec.town}>
-              <Card className="border-border/40 bg-card shadow-none">
-                <CardContent className="flex flex-wrap items-center gap-3 p-3">
-                  <div className="min-w-0 flex-1">
-                    <strong className="block truncate font-heading text-sm font-extrabold uppercase tracking-wider">
-                      {localizeTownName(rec.town, locale)}
-                    </strong>
-                    <span className="block text-[0.75rem] text-muted-foreground">
-                      {t("townRecommendations.matchCount", {
-                        matched: formatNumber(matchedCount, 0, locale),
-                        total: formatNumber(rec.totalBlocks, 0, locale),
-                      })}
-                    </span>
-                  </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="font-heading text-sm font-extrabold v2-tabular">
-                      {formatCompactCurrency(rec.medianPrice, locale)}
-                    </span>
-                    <Badge
-                      variant="outline"
-                      className="text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
-                    >
-                      {t("townRecommendations.townMedian")}
-                    </Badge>
-                  </div>
-                  <Button
-                    type="button"
-                    size="xs"
-                    variant="secondary"
-                    onClick={() => onSelectTown(rec.town)}
-                    aria-label={t("townRecommendations.exploreAria", {
-                      town: localizeTownName(rec.town, locale),
+        {recommendations.map((rec) => (
+          <li key={rec.town}>
+            <Card className="border-border/40 bg-card shadow-none">
+              <CardContent className="flex flex-wrap items-center gap-3 p-3">
+                <div className="min-w-0 flex-1">
+                  <strong className="block truncate font-heading text-sm font-extrabold uppercase tracking-wider">
+                    {localizeTownName(rec.town, locale)}
+                  </strong>
+                  <span className="block text-[0.75rem] text-muted-foreground">
+                    {t("townRecommendations.matchCount", {
+                      matched: formatNumber(rec.matchingBlocks, 0, locale),
+                      total: formatNumber(rec.totalBlocks, 0, locale),
                     })}
+                  </span>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="font-heading text-sm font-extrabold v2-tabular">
+                    {formatCompactCurrency(rec.medianPrice, locale)}
+                  </span>
+                  <Badge
+                    variant="outline"
+                    className="text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
                   >
-                    {t("townRecommendations.explore")}
-                  </Button>
-                </CardContent>
-              </Card>
-            </li>
-          );
-        })}
+                    {t("townRecommendations.townMedian")}
+                  </Badge>
+                </div>
+                <Button
+                  type="button"
+                  size="xs"
+                  variant="secondary"
+                  onClick={() => onSelectTown(rec.town)}
+                  aria-label={t("townRecommendations.exploreAria", {
+                    town: localizeTownName(rec.town, locale),
+                  })}
+                >
+                  {t("townRecommendations.explore")}
+                </Button>
+              </CardContent>
+            </Card>
+          </li>
+        ))}
       </ul>
     </section>
   );

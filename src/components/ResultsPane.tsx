@@ -44,6 +44,14 @@ import type {
 } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import type { Locale, Translator } from "@/shared/lib/i18n";
+import {
+  getCohortAlignedLatestMonth,
+  getCohortAlignedMedianPrice,
+  resolveEffectiveBlockCohort,
+  resolveEffectiveMedianPrice,
+  resolveEffectivePricePerSqmMedian,
+} from "@shared/product/filtering";
+import { canonicalFlatType } from "@shared/filter-options";
 import { TownProfileSection } from "@/components/TownProfileSection";
 import { TownCompareSection } from "@/components/TownCompareSection";
 import { TownRecommendationsSection } from "@/components/TownRecommendationsSection";
@@ -148,6 +156,7 @@ type ResultsPaneProps = {
   onToggleShortlist: (addressKey: string) => void;
   scrollParent?: HTMLElement | null;
   isCompact?: boolean;
+  flatType?: string;
   budgetMin?: number | null;
   budgetMax?: number | null;
   searchProfile?: SearchProfile | null;
@@ -171,6 +180,13 @@ type ResultsPaneProps = {
   townRecommendationsLoading?: boolean;
   onSelectTown?: (town: string) => void;
   searchTruncated?: boolean;
+  /**
+   * The server could not evaluate a per-flat-type refinement (model, size, or
+   * sale window) because the cohort data it needs is not deployed yet, so the
+   * empty result set means "unanswerable", not "no matches".
+   */
+  refinementUnsupported?: boolean;
+  onClearUnsupportedRefinements?: () => void;
   /** Deep-link URL that restores the current filters and location scope. */
   shareUrl?: string;
 };
@@ -250,6 +266,7 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist,
   budgetMin,
   budgetMax,
+  activeFlatType = "",
   searchProfile,
   profileDataWindow = null,
   t,
@@ -265,35 +282,58 @@ const BlockCard = memo(function BlockCard({
   onToggleShortlist: (addressKey: string) => void;
   budgetMin: number | null;
   budgetMax: number | null;
+  activeFlatType?: string;
   searchProfile?: SearchProfile | null;
   profileDataWindow?: { minMonth: string; maxMonth: string } | null;
   t: Translator;
   locale: Locale;
 }) {
   const shortlistSaveBlocked = shortlistFull && !isSaved;
+  const cohortResolution = resolveEffectiveBlockCohort(block, activeFlatType);
+  const medianResolution = resolveEffectiveMedianPrice(block, activeFlatType);
+  const effectiveMedianPrice = medianResolution.value;
+  const displayedFlatTypes = activeFlatType
+    ? [canonicalFlatType(activeFlatType)]
+    : block.flatTypes.slice(0, 3);
+  const priceBasisLabel = activeFlatType
+    ? medianResolution.isTypeSpecific
+      ? localizeFlatType(medianResolution.flatType, locale)
+      : t("results.blockWideMedian")
+    : t("results.blockWideMedian");
   const affordVerdict = useMemo(() => {
     if (!searchProfile) return null;
-    return computeAffordabilityVerdict(
-      {
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      },
-      block.medianPrice,
-    );
+    const profile = {
+      monthlyIncome: searchProfile.monthlyIncome,
+      cpfOABalance: searchProfile.cpfOABalance,
+      age: searchProfile.age,
+      coApplicantAge: searchProfile.coApplicantAge,
+    };
+    return isAffordabilityProfileComplete(profile)
+      ? computeAffordabilityVerdict(profile, effectiveMedianPrice)
+      : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps -- null check is covered by optional-chained deps becoming undefined
   }, [
     searchProfile?.monthlyIncome,
     searchProfile?.cpfOABalance,
     searchProfile?.age,
-    block.medianPrice,
+    searchProfile?.coApplicantAge,
+    effectiveMedianPrice,
   ]);
 
   if (isCompact) {
     const currentYear = getCurrentYear();
     const leaseYears = MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]);
-    const sqm = Math.round((block.floorAreaRange[0] + block.floorAreaRange[1]) / 2);
+    const [floorAreaMin, floorAreaMax] = cohortResolution.floorAreaRange;
+    const rawFloorAreaLabel =
+      floorAreaMin === floorAreaMax
+        ? formatSqm(floorAreaMin, t, locale)
+        : t("unit.sqm", {
+            value: `${formatNumber(floorAreaMin, 0, locale)}–${formatNumber(floorAreaMax, 0, locale)}`,
+          });
+    const floorAreaLabel =
+      activeFlatType && !cohortResolution.isTypeSpecific
+        ? t("results.blockWideArea", { value: rawFloorAreaLabel })
+        : rawFloorAreaLabel;
     const mrtDist = block.nearestMrt?.distanceMeters;
     const mrtWalkSeconds = block.nearestMrt?.walkingTimeSeconds;
     const nearestMrtColor = block.nearestMrt
@@ -328,19 +368,17 @@ const BlockCard = memo(function BlockCard({
             </strong>
             <span className="block truncate v2-section-title">
               {localizeTownName(block.town, locale)}
-              {block.flatTypes.length > 0
-                ? ` · ${localizeFlatType(block.flatTypes[0], locale)}`
-                : ""}
+              {priceBasisLabel ? ` · ${priceBasisLabel}` : ""}
             </span>
           </div>
           <div className="flex shrink-0 items-start gap-2">
             <div className="text-right">
               <strong className="block font-heading text-[length:var(--text-base)] font-extrabold leading-snug tracking-tight v2-tabular">
-                {formatCompactCurrency(block.medianPrice, locale)}
+                {formatCompactCurrency(effectiveMedianPrice, locale)}
               </strong>
               <div className="flex items-center justify-end gap-1.5">
                 <BudgetMatchBadge
-                  medianPrice={block.medianPrice}
+                  medianPrice={effectiveMedianPrice}
                   budgetMin={budgetMin ?? null}
                   budgetMax={budgetMax ?? null}
                   t={t}
@@ -365,7 +403,9 @@ const BlockCard = memo(function BlockCard({
                   />
                 ) : null}
                 <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
-                  {t("stats.txns", { count: formatNumber(block.transactionCount, 0, locale) })}
+                  {t(cohortResolution.isTypeSpecific ? "stats.typeTxns" : "stats.txns", {
+                    count: formatNumber(cohortResolution.transactionCount, 0, locale),
+                  })}
                 </span>
               </div>
             </div>
@@ -421,7 +461,7 @@ const BlockCard = memo(function BlockCard({
         </div>
 
         <div className="mt-2 flex w-full min-w-0 items-center gap-3 text-[length:var(--text-xs)] font-medium text-muted-foreground">
-          <span>{formatSqm(sqm, t, locale)}</span>
+          <span>{floorAreaLabel}</span>
           {mrtDist != null && mrtWalkSeconds != null && (
             <span
               className="flex items-center gap-1"
@@ -518,12 +558,20 @@ const BlockCard = memo(function BlockCard({
             {t("results.medianResale")}
           </span>
           <strong className="font-heading text-2xl font-extrabold v2-tabular">
-            {formatCompactCurrency(block.medianPrice, locale)}
+            {formatCompactCurrency(effectiveMedianPrice, locale)}
           </strong>
+          {medianResolution ? (
+            <Badge
+              variant={activeFlatType && medianResolution.isTypeSpecific ? "secondary" : "outline"}
+              className="w-fit"
+            >
+              {priceBasisLabel}
+            </Badge>
+          ) : null}
           {(() => {
             const qualityTag = getBlockDataQualityTag({
-              transactionCount: block.transactionCount,
-              latestMonth: block.latestMonth,
+              transactionCount: cohortResolution.transactionCount,
+              latestMonth: cohortResolution.latestMonth,
               referenceMonth: profileDataWindow?.maxMonth ?? null,
             });
             return (
@@ -535,7 +583,11 @@ const BlockCard = memo(function BlockCard({
                   {t(QUALITY_LABEL_KEYS[qualityTag])}
                 </Badge>
                 <span className="text-[length:var(--text-xs)] font-semibold text-muted-foreground">
-                  {t(QUALITY_HINT_KEYS[qualityTag])}
+                  {t(
+                    cohortResolution.isTypeSpecific && qualityTag === "strong"
+                      ? "quality.hint.typeStrong"
+                      : QUALITY_HINT_KEYS[qualityTag],
+                  )}
                 </span>
               </>
             );
@@ -611,22 +663,24 @@ const BlockCard = memo(function BlockCard({
         <div className="flex flex-col gap-1">
           <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
             <Clock3 data-icon className="size-3.5" aria-hidden="true" />
-            {t("results.latestMonth")}
+            {t(cohortResolution.isTypeSpecific ? "results.latestTypeMonth" : "results.latestMonth")}
           </span>
           <strong className="text-sm font-semibold uppercase tracking-[var(--tracking-label)]">
-            {formatMonth(block.latestMonth, locale)}
+            {formatMonth(cohortResolution.latestMonth, locale)}
           </strong>
         </div>
       </div>
 
       <ItemFooter className="flex-wrap gap-2 border-t border-border/60 pt-4">
-        {block.flatTypes.slice(0, 3).map((flatType) => (
+        {displayedFlatTypes.map((flatType) => (
           <Badge key={flatType} variant="secondary">
             {localizeFlatType(flatType, locale)}
           </Badge>
         ))}
         <ItemDescription className="ml-auto text-right">
-          {t("results.transactions", { count: formatNumber(block.transactionCount, 0, locale) })}
+          {t(cohortResolution.isTypeSpecific ? "stats.typeTxns" : "stats.txns", {
+            count: formatNumber(cohortResolution.transactionCount, 0, locale),
+          })}
         </ItemDescription>
       </ItemFooter>
     </Item>
@@ -643,6 +697,7 @@ export function ResultsPane({
   onToggleShortlist,
   scrollParent,
   isCompact = false,
+  flatType = "",
   budgetMin = null,
   budgetMax = null,
   searchProfile = null,
@@ -662,6 +717,8 @@ export function ResultsPane({
   townRecommendationsLoading = false,
   onSelectTown,
   searchTruncated = false,
+  refinementUnsupported = false,
+  onClearUnsupportedRefinements,
   shareUrl,
 }: ResultsPaneProps) {
   const { locale, t } = useI18n();
@@ -694,22 +751,42 @@ export function ResultsPane({
             t("results.export.mrtDistance"),
             t("results.export.flatTypes"),
           ],
-          blocks.map((block) => ({
-            address: `${block.block} ${block.streetName}`,
-            town: block.town,
-            medianPrice: block.medianPrice,
-            pricePerSqm: block.pricePerSqmMedian,
-            transactionCount: block.transactionCount,
-            remainingLeaseYears: Math.max(
-              0,
-              MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]),
-            ),
-            mrtDistanceMeters: block.nearestMrt?.distanceMeters ?? "",
-            flatTypes: block.flatTypes.join("; "),
-          })),
+          blocks.map((block) => {
+            const priceResolution = resolveEffectiveMedianPrice(block, flatType);
+            const ppsmResolution = resolveEffectivePricePerSqmMedian(block, flatType);
+            const cohortResolution = resolveEffectiveBlockCohort(block, flatType);
+            const hasTypePricePair =
+              priceResolution.isTypeSpecific && ppsmResolution.isTypeSpecific;
+            const hasCompleteTypeEvidence = hasTypePricePair && cohortResolution.isTypeSpecific;
+            return {
+              address: `${block.block} ${block.streetName}`,
+              town: block.town,
+              medianPrice: hasTypePricePair ? priceResolution.value : block.medianPrice,
+              pricePerSqm: hasTypePricePair ? ppsmResolution.value : block.pricePerSqmMedian,
+              transactionCount: cohortResolution.isTypeSpecific
+                ? cohortResolution.transactionCount
+                : block.transactionCount,
+              remainingLeaseYears: Math.max(
+                0,
+                MAX_LEASE_DURATION - (currentYear - block.leaseCommenceRange[1]),
+              ),
+              mrtDistanceMeters: block.nearestMrt?.distanceMeters ?? "",
+              flatTypes: flatType
+                ? hasCompleteTypeEvidence
+                  ? priceResolution.flatType
+                  : hasTypePricePair
+                    ? t("results.export.partialTypeEvidence", {
+                        flatType: priceResolution.flatType,
+                      })
+                    : t("results.export.blockWideFallback", {
+                        flatType: canonicalFlatType(flatType),
+                      })
+                : block.flatTypes.join("; "),
+            };
+          }),
         ),
     };
-  }, [blocks, currentYear, hasResultScope, t]);
+  }, [blocks, currentYear, flatType, hasResultScope, t]);
 
   const sortOptions: SortOption[] = useMemo(
     () => [
@@ -945,11 +1022,11 @@ export function ResultsPane({
     const ceiling = maxAffordablePrice(profile);
     const map = new Map<string, number>();
     for (const block of blocks) {
-      map.set(block.addressKey, ceiling - block.medianPrice);
+      map.set(block.addressKey, ceiling - getCohortAlignedMedianPrice(block, flatType));
     }
     return map;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blocks, sortMode, affordabilitySortReady, affordabilityFingerprint]);
+  }, [blocks, sortMode, affordabilitySortReady, affordabilityFingerprint, flatType]);
 
   const sortedBlocks = useMemo(() => {
     if (blocks.length === 0) return EMPTY_ARRAY;
@@ -959,13 +1036,23 @@ export function ResultsPane({
     // This avoids O(N log N) function calls and condition evaluations, speeding up sort by ~15-20%.
     if (sortMode === "latest-desc") {
       return sorted.sort((left, right) => {
-        if (left.latestMonth === right.latestMonth) return 0;
-        return left.latestMonth < right.latestMonth ? 1 : -1;
+        const leftLatestMonth = getCohortAlignedLatestMonth(left, flatType);
+        const rightLatestMonth = getCohortAlignedLatestMonth(right, flatType);
+        if (leftLatestMonth === rightLatestMonth) return 0;
+        return leftLatestMonth < rightLatestMonth ? 1 : -1;
       });
     } else if (sortMode === "median-asc") {
-      return sorted.sort((left, right) => left.medianPrice - right.medianPrice);
+      return sorted.sort(
+        (left, right) =>
+          getCohortAlignedMedianPrice(left, flatType) -
+          getCohortAlignedMedianPrice(right, flatType),
+      );
     } else if (sortMode === "median-desc") {
-      return sorted.sort((left, right) => right.medianPrice - left.medianPrice);
+      return sorted.sort(
+        (left, right) =>
+          getCohortAlignedMedianPrice(right, flatType) -
+          getCohortAlignedMedianPrice(left, flatType),
+      );
     } else if (sortMode === "lease-desc") {
       // ⚡ Bolt: Simplified lease logic from -(MAX_LEASE_DURATION - (currentYear - x)) to just x
       return sorted.sort((left, right) => right.leaseCommenceRange[1] - left.leaseCommenceRange[1]);
@@ -985,8 +1072,11 @@ export function ResultsPane({
       });
     }
 
-    return sorted.sort((left, right) => left.medianPrice - right.medianPrice);
-  }, [blocks, sortMode, affordabilityHeadroomByKey]);
+    return sorted.sort(
+      (left, right) =>
+        getCohortAlignedMedianPrice(left, flatType) - getCohortAlignedMedianPrice(right, flatType),
+    );
+  }, [blocks, sortMode, affordabilityHeadroomByKey, flatType]);
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
 
   useEffect(() => {
@@ -1322,7 +1412,32 @@ export function ResultsPane({
               ) : null}
               {resultsView === "blocks" && blocks.length === 0 ? (
                 <div className="flex flex-1 items-start pt-2">
-                  {affordabilityMode && onClearAffordabilityFilter ? (
+                  {refinementUnsupported ? (
+                    <Card
+                      data-testid="refinement-unsupported-card"
+                      className="w-full border-border/50 bg-card"
+                    >
+                      <CardHeader>
+                        <CardTitle>{t("results.refinementUnsupported.title")}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex flex-col gap-3">
+                        <p className="text-sm text-muted-foreground">
+                          {t("results.refinementUnsupported.hint")}
+                        </p>
+                        {onClearUnsupportedRefinements ? (
+                          <Button
+                            type="button"
+                            variant="default"
+                            size="sm"
+                            className="w-fit"
+                            onClick={onClearUnsupportedRefinements}
+                          >
+                            {t("results.refinementUnsupported.clear")}
+                          </Button>
+                        ) : null}
+                      </CardContent>
+                    </Card>
+                  ) : affordabilityMode && onClearAffordabilityFilter ? (
                     <Card
                       data-testid="affordability-empty-card"
                       className="w-full border-border/50 bg-card"
@@ -1380,6 +1495,7 @@ export function ResultsPane({
                           onToggleShortlist={onToggleShortlist}
                           budgetMin={budgetMin ?? null}
                           budgetMax={budgetMax ?? null}
+                          activeFlatType={flatType}
                           searchProfile={searchProfile ?? null}
                           profileDataWindow={profileDataWindow}
                           t={t}

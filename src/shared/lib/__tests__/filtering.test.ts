@@ -29,6 +29,20 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
     availableDateRange: ["2021-01", "2024-06"],
     flatTypes: ["3 ROOM", "5 ROOM"],
     flatModels: ["NEW GENERATION", "IMPROVED"],
+    flatTypeCohorts: {
+      "3 ROOM": {
+        transactionCount: 4,
+        latestMonth: "2024-05",
+        floorAreaRange: [65, 80],
+        flatModels: ["NEW GENERATION"],
+      },
+      "5 ROOM": {
+        transactionCount: 6,
+        latestMonth: "2024-06",
+        floorAreaRange: [105, 120],
+        flatModels: ["IMPROVED"],
+      },
+    },
     nearestMrt: { stationName: "Bedok", distanceMeters: 500, walkingTimeSeconds: 400 },
     nearbyMrts: [{ stationName: "Bedok", distanceMeters: 500, walkingTimeSeconds: 400 }],
     postalCode: "460100",
@@ -260,6 +274,31 @@ describe("budget filter × affordability filter layering", () => {
       profile,
     );
     expect(result).toBe(true);
+  });
+
+  it("keeps cached affordability verdicts distinct when the same block switches flat type", () => {
+    const block = makeBlock({
+      medianPrice: 600000,
+      flatTypes: ["3 ROOM", "5 ROOM"],
+      medianPriceByFlatType: {
+        "3 ROOM": 250000,
+        "5 ROOM": 720000,
+      },
+    });
+
+    const threeRoomFilters = {
+      ...DEFAULT_FILTERS,
+      flatType: "3 ROOM",
+      affordable: "comfortable" as const,
+    };
+    const fiveRoomFilters = {
+      ...threeRoomFilters,
+      flatType: "5 ROOM",
+    };
+
+    expect(matchesFilter(block, threeRoomFilters, null, profile)).toBe(true);
+    expect(matchesFilter(block, fiveRoomFilters, null, profile)).toBe(false);
+    expect(matchesFilter(block, threeRoomFilters, null, profile)).toBe(true);
   });
 
   it("a typed budget higher than the affordability ceiling is intentional — affordability still filters", () => {

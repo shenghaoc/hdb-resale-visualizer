@@ -8,7 +8,6 @@ type UseAppShellControllerOptions = {
   filters: FilterState;
   patchFilters: (patch: Partial<FilterState>) => void;
   resetFilters: () => void;
-  setUseDefaultStartMonth: (next: boolean) => void;
   clearGeolocationError: () => void;
   cancelPendingGeolocationRequest: () => void;
   isDesktop: boolean;
@@ -27,7 +26,6 @@ export function useAppShellController({
   filters,
   patchFilters,
   resetFilters,
-  setUseDefaultStartMonth,
   clearGeolocationError,
   cancelPendingGeolocationRequest,
   isDesktop,
@@ -43,9 +41,6 @@ export function useAppShellController({
 }: UseAppShellControllerOptions) {
   const patchUserFilters = useCallback(
     (patch: Partial<FilterState>) => {
-      if ("startMonth" in patch) {
-        setUseDefaultStartMonth(false);
-      }
       if ("search" in patch || "town" in patch || "selectedAddressKey" in patch) {
         clearGeolocationError();
       }
@@ -55,7 +50,7 @@ export function useAppShellController({
           : patch;
       patchFilters(resolved);
     },
-    [patchFilters, setUseDefaultStartMonth, clearGeolocationError, filters.search],
+    [patchFilters, clearGeolocationError, filters.search],
   );
 
   const handleSelectSuggestion = useCallback(
@@ -82,10 +77,9 @@ export function useAppShellController({
   );
 
   const handleResetFilters = useCallback(() => {
-    setUseDefaultStartMonth(true);
     clearGeolocationError();
     resetFilters();
-  }, [setUseDefaultStartMonth, clearGeolocationError, resetFilters]);
+  }, [clearGeolocationError, resetFilters]);
 
   const handleSelectAddress = useCallback(
     (addressKey: string) => {
@@ -180,6 +174,10 @@ export function useAppShellController({
     setMobileTab((current) => (current === "filters" ? null : "filters"));
   }, [setMobileTab]);
 
+  const handleMobileMapClick = useCallback(() => {
+    setMobileTab(null);
+  }, [setMobileTab]);
+
   const handleMobileResultsClick = useCallback(() => {
     setMobileTab((current) => (current === "results" ? null : "results"));
   }, [setMobileTab]);
@@ -212,6 +210,7 @@ export function useAppShellController({
     handleDesktopResultsClick,
     handleDesktopCheckClick,
     handleDesktopSavedClick,
+    handleMobileMapClick,
     handleMobileFiltersClick,
     handleMobileResultsClick,
     handleMobileCheckClick,
