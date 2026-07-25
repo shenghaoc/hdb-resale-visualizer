@@ -119,6 +119,15 @@ export function useBlockLoading({
           );
         }
 
+        // Both notices describe the last coarse-search response. Clear them as
+        // soon as there is no coarse search, otherwise removing the last filter
+        // leaves a "showing the first 2,000" banner over a result set that was
+        // never truncated — including on the early-return paths below.
+        if (!hasCoarseSearchFilters) {
+          setSearchTruncated(false);
+          setRefinementUnsupported(false);
+        }
+
         if (needsAllBlocks) {
           if (hasFullCorpus) return;
           setIsLoading(true);

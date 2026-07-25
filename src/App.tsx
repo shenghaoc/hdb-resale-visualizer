@@ -34,6 +34,7 @@ import { MapSkeleton } from "@/features/map-explorer/MapSkeleton";
 import { PriceHeatmapControl } from "@/features/map-explorer/PriceHeatmapControl";
 import { PriceLegend } from "@/features/map-explorer/PriceLegend";
 import { useMapExplorerController } from "@/features/map-explorer/useMapExplorerController";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
 import { isAffordabilityProfileComplete } from "@/shared/lib/affordability";
@@ -225,9 +226,14 @@ function App() {
     (profile: SearchProfile) => {
       searchProfile.replaceProfile(profile);
       patchFilters({
-        flatType: profile.mainFlatType,
-        budgetMax: profile.maxBudget,
-        remainingLeaseMin: profile.minimumRemainingLeaseYears,
+        ...(profile.mainFlatType ? { flatType: profile.mainFlatType } : {}),
+        // Budget and lease are optional wizard steps. Writing the blank answer
+        // through would silently erase a budget or lease the user had already
+        // set in Filters, so only apply what they actually answered.
+        ...(profile.maxBudget !== null ? { budgetMax: profile.maxBudget } : {}),
+        ...(profile.minimumRemainingLeaseYears !== null
+          ? { remainingLeaseMin: profile.minimumRemainingLeaseYears }
+          : {}),
         affordable: isAffordabilityProfileComplete({
           monthlyIncome: profile.monthlyIncome,
           cpfOABalance: profile.cpfOABalance,
@@ -356,8 +362,16 @@ function App() {
               {t("app.missingData")} · {error ?? pipeline.loadError}
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col gap-2 pt-2 text-sm text-muted-foreground">
+          <CardContent className="flex flex-col items-start gap-3 pt-2 text-sm text-muted-foreground">
             <span>{t("app.devFunctionsHint")}</span>
+            {/*
+              Without this the screen is a dead end: every filter control lives
+              past this early return, and the filters that caused the failure
+              are already in the URL, so a reload reproduces it forever.
+            */}
+            <Button type="button" variant="default" size="sm" onClick={handleResetFilters}>
+              {t("app.resetFiltersAndRetry")}
+            </Button>
             <DocsLink slug="troubleshooting">{t("docs.linkTroubleshooting")}</DocsLink>
           </CardContent>
         </Card>
@@ -418,7 +432,10 @@ function App() {
           autoFitKey={mapExplorer.autoFitKey}
           showBlockMarkers={pipeline.hasMapMarkerScope}
           isDarkMode={theme === "dark"}
-          priceHeatmapEnabled={mapExplorer.priceHeatmapEnabled}
+          // Same gate as PriceHeatmapControl. Without it the layer keeps
+          // rendering after map scope is lost, while the switch reads OFF and
+          // is disabled — leaving a heat blob the user cannot turn off.
+          priceHeatmapEnabled={mapExplorer.priceHeatmapEnabled && pipeline.hasMapMarkerScope}
           priceHeatmapOpacity={mapExplorer.priceHeatmapOpacity}
           mrtEnabled={mapExplorer.mrtEnabled}
           heatmapMode={mapExplorer.heatmapMode}
@@ -646,7 +663,14 @@ function App() {
         <PriceLegend
           isDesktop={panel.isDesktop}
           isVisible={pipeline.hasMapMarkerScope && mapExplorer.controlsVisible && !showScopePrompt}
-          mode={mapExplorer.heatmapMode}
+          // The dots are always coloured by median price; only the heatmap
+          // honours $/sqm. Showing the $/sqm ramp with no heatmap on screen
+          // mislabels the markers it sits next to.
+          mode={
+            mapExplorer.priceHeatmapEnabled && pipeline.hasMapMarkerScope
+              ? mapExplorer.heatmapMode
+              : "price"
+          }
           t={t}
         />
 

@@ -20,7 +20,7 @@ describe("queryState", () => {
       selectedAddressKey: "foo",
       compareTown: "ANG MO KIO",
       affordable: "comfortable",
-      sort: "affordability",
+      sort: "median-desc",
     });
 
     expect(parseFilters(search)).toEqual({
@@ -39,7 +39,7 @@ describe("queryState", () => {
       selectedAddressKey: "foo",
       compareTown: "ANG MO KIO",
       affordable: "comfortable",
-      sort: "affordability",
+      sort: "median-desc",
     });
   });
 
@@ -130,5 +130,21 @@ describe("queryState", () => {
 
     // Both town and compareTown truncate to the same value → same-town guard clears compareTown.
     expect(parsed.compareTown).toBe("");
+  });
+
+  it("clamps out-of-range numeric filters to what the search API accepts", () => {
+    const parsed = parseFilters(
+      "?town=BEDOK&mrtMax=25000&remainingLeaseMin=150&budgetMin=-5&areaMax=999999",
+    );
+    // Sending any of these unclamped returns a 400, which the app surfaces as a
+    // fatal error screen that a reload reproduces.
+    expect(parsed.mrtMax).toBe(20_000);
+    expect(parsed.remainingLeaseMin).toBe(99);
+    expect(parsed.budgetMin).toBe(0);
+    expect(parsed.areaMax).toBe(100_000);
+  });
+
+  it("falls back to the default sort for the retired affordability mode", () => {
+    expect(parseFilters("?sort=affordability").sort).toBe("");
   });
 });

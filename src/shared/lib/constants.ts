@@ -172,5 +172,4 @@ export const BLOCK_SORT_MODES = [
   "lease-desc",
   "mrt-asc",
   "latest-desc",
-  "affordability",
 ] as const;

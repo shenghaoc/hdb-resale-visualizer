@@ -1,6 +1,6 @@
 import { startTransition, useCallback, useEffect, useRef, useState } from "react";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
-import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
+import { clampFilterRanges, parseFilters, serializeFilters } from "@/shared/lib/queryState";
 import type { FilterState } from "@/types/data";
 
 export function useUrlFilters() {
@@ -30,7 +30,9 @@ export function useUrlFilters() {
 
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     startTransition(() => {
-      setFilters((current) => ({ ...current, ...patch }));
+      // Clamp on every write, not just on URL restore: a number typed straight
+      // into a filter field would otherwise reach the API unbounded.
+      setFilters((current) => clampFilterRanges({ ...current, ...patch }));
     });
   }, []);
 

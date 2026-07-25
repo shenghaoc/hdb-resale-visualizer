@@ -208,6 +208,7 @@ export function ListingCheckPanel({
             onSelectSuggestion={handleSelectSuggestion}
             t={t}
             placeholder={t("check.blockPlaceholder")}
+            aria-label={t("check.blockSearchLabel")}
           />
         </div>
 

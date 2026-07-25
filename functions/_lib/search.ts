@@ -1,10 +1,10 @@
 import { canonicalFlatType } from "../../shared/filter-options";
 import { requiresFlatTypeCohortMetadata } from "../../shared/product/flat-type-cohort";
+import { MAX_LEASE_DURATION_YEARS, MAX_MRT_DISTANCE_METERS } from "../../shared/search-bounds";
 import { workerCurrentUtcYear } from "./worker-time";
 
-const MAX_LEASE_DURATION = 99;
+const MAX_LEASE_DURATION = MAX_LEASE_DURATION_YEARS;
 const MAX_SEARCH_QUERY_LENGTH = 256;
-const MAX_MRT_DISTANCE_METERS = 20_000;
 const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 export const SEARCH_RESULT_LIMIT = 2000;

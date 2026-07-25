@@ -5,7 +5,34 @@ import {
   MAX_SEARCH_QUERY_LENGTH,
   QUERY_VERSION,
 } from "./constants";
+import {
+  MAX_BUDGET_SGD,
+  MAX_FLOOR_AREA_SQM,
+  MAX_LEASE_DURATION_YEARS,
+  MAX_MRT_DISTANCE_METERS,
+  clampNullableNumber,
+} from "../../../shared/search-bounds";
 import type { AffordabilityMode, BlockSortMode, FilterState } from "../../types/data";
+
+/**
+ * Force the numeric filters into the range the search API accepts.
+ *
+ * Applied to every filter value the app holds, from whatever source — typed
+ * input, a restored deep link, or a shared URL. Without this an out-of-range
+ * value produces a 400 that the app surfaces as a fatal, reload-persistent
+ * error screen with no controls left to correct it.
+ */
+export function clampFilterRanges(filters: FilterState): FilterState {
+  return {
+    ...filters,
+    budgetMin: clampNullableNumber(filters.budgetMin, 0, MAX_BUDGET_SGD),
+    budgetMax: clampNullableNumber(filters.budgetMax, 0, MAX_BUDGET_SGD),
+    areaMin: clampNullableNumber(filters.areaMin, 0, MAX_FLOOR_AREA_SQM),
+    areaMax: clampNullableNumber(filters.areaMax, 0, MAX_FLOOR_AREA_SQM),
+    remainingLeaseMin: clampNullableNumber(filters.remainingLeaseMin, 0, MAX_LEASE_DURATION_YEARS),
+    mrtMax: clampNullableNumber(filters.mrtMax, 0, MAX_MRT_DISTANCE_METERS),
+  };
+}
 
 function parseNumber(value: string | null): number | null {
   if (!value) {
@@ -67,7 +94,7 @@ export function parseFilters(search: string): FilterState {
   const compareTown =
     town && !isSameTown(rawCompareTown, town) ? rawCompareTown : DEFAULT_FILTERS.compareTown;
 
-  return {
+  return clampFilterRanges({
     search: safeParam(params.get("search"), DEFAULT_FILTERS.search),
     town,
     flatType: safeParam(params.get("flatType"), DEFAULT_FILTERS.flatType),
@@ -88,7 +115,7 @@ export function parseFilters(search: string): FilterState {
       DEFAULT_FILTERS.affordable,
     ),
     sort: parseEnum<BlockSortMode>(params.get("sort"), BLOCK_SORT_MODES, DEFAULT_FILTERS.sort),
-  };
+  });
 }
 
 export function serializeFilters(filters: FilterState): string {

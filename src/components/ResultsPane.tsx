@@ -29,10 +29,8 @@ import { MrtLineDots } from "@/components/MrtLineDots";
 import { DocsLink } from "@/features/docs/DocsLink";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import {
-  affordabilityProfileFingerprint,
   computeAffordabilityVerdict,
   isAffordabilityProfileComplete,
-  maxAffordablePrice,
 } from "@/shared/lib/affordability";
 import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/shared/lib/data";
 import { isSameTown } from "@/shared/lib/queryState";
@@ -724,15 +722,6 @@ export function ResultsPane({
   const { locale, t } = useI18n();
   const currentYear = getCurrentYear();
 
-  const affordabilitySortReady = searchProfile
-    ? isAffordabilityProfileComplete({
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      })
-    : false;
-
   const resultsCsvExport = useMemo(() => {
     if (!hasResultScope || blocks.length === 0) {
       return undefined;
@@ -795,25 +784,17 @@ export function ResultsPane({
       { value: "lease-desc", label: t("results.sort.longestLease") },
       { value: "mrt-asc", label: t("results.sort.nearestMrt") },
       { value: "latest-desc", label: t("results.sort.recentActivity") },
-      {
-        value: "affordability",
-        label: t("affordability.sort.bestFit"),
-        disabled: !affordabilitySortReady,
-        tooltip: affordabilitySortReady ? undefined : t("affordability.sort.disabledTooltip"),
-      },
     ],
-    [t, affordabilitySortReady],
+    [t],
   );
 
   // Controlled (URL) or uncontrolled (local state) sort. Tests omit the prop
   // and rely on the internal default; App.tsx always passes it.
   const [internalSortMode, setInternalSortMode] = useState<SortMode>(DEFAULT_SORT_MODE);
   const incomingSort: SortMode | null = sortModeProp ? sortModeProp : null;
-  // If URL asks for affordability sort but the profile is incomplete, silently
-  // fall back so the list doesn't render with a nonsense ordering.
-  const effectiveExternalSort: SortMode | null =
-    incomingSort === "affordability" && !affordabilitySortReady ? DEFAULT_SORT_MODE : incomingSort;
-  const sortMode: SortMode = effectiveExternalSort ?? internalSortMode;
+  // A retired sort mode in an older shared link is normalized to the default by
+  // parseFilters' allowlist before it reaches here.
+  const sortMode: SortMode = incomingSort ?? internalSortMode;
   const setSortMode = (next: SortMode) => {
     setInternalSortMode(next);
     onSortChange?.(next === DEFAULT_SORT_MODE ? "" : next);
@@ -994,40 +975,6 @@ export function ResultsPane({
     compareBlocksSnap.status === "failed" &&
     compareBlocksSnap.requestedTown === activeCompareTown;
 
-  // Keyed on the fingerprint, not on the whole profile object, to avoid
-  // recomputing when unrelated profile fields change.
-  const affordabilityFingerprint = searchProfile
-    ? affordabilityProfileFingerprint({
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      })
-    : "";
-
-  // Precompute affordability headroom once per profile change. Re-running the
-  // verdict math inside .sort() would multiply CPF/loan calculations by O(N log N).
-  const affordabilityHeadroomByKey = useMemo(() => {
-    if (sortMode !== "affordability" || !searchProfile || !affordabilitySortReady) {
-      return null;
-    }
-    const profile = {
-      monthlyIncome: searchProfile.monthlyIncome,
-      cpfOABalance: searchProfile.cpfOABalance,
-      age: searchProfile.age,
-      coApplicantAge: searchProfile.coApplicantAge,
-    };
-    // The profile is constant for this loop (the guard above ensures it is
-    // complete), so compute the price ceiling once instead of per block.
-    const ceiling = maxAffordablePrice(profile);
-    const map = new Map<string, number>();
-    for (const block of blocks) {
-      map.set(block.addressKey, ceiling - getCohortAlignedMedianPrice(block, flatType));
-    }
-    return map;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blocks, sortMode, affordabilitySortReady, affordabilityFingerprint, flatType]);
-
   const sortedBlocks = useMemo(() => {
     if (blocks.length === 0) return EMPTY_ARRAY;
     const sorted = [...blocks];
@@ -1062,21 +1009,13 @@ export function ResultsPane({
         const rightDist = right.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
         return leftDist - rightDist;
       });
-    } else if (sortMode === "affordability" && affordabilityHeadroomByKey) {
-      return sorted.sort((left, right) => {
-        const leftHeadroom =
-          affordabilityHeadroomByKey.get(left.addressKey) ?? Number.NEGATIVE_INFINITY;
-        const rightHeadroom =
-          affordabilityHeadroomByKey.get(right.addressKey) ?? Number.NEGATIVE_INFINITY;
-        return rightHeadroom - leftHeadroom;
-      });
     }
 
     return sorted.sort(
       (left, right) =>
         getCohortAlignedMedianPrice(left, flatType) - getCohortAlignedMedianPrice(right, flatType),
     );
-  }, [blocks, sortMode, affordabilityHeadroomByKey, flatType]);
+  }, [blocks, sortMode, flatType]);
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
 
   useEffect(() => {
