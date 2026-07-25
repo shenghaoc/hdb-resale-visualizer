@@ -1,15 +1,5 @@
-import {
-  type CSSProperties,
-  lazy,
-  startTransition,
-  Suspense,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { type CSSProperties, lazy, Suspense } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { flushSync } from "react-dom";
 import {
   AlertTriangle,
   ArrowDown,
@@ -49,9 +39,6 @@ import type { Locale, Translator } from "@/shared/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
-import { rankSimilarBlocks } from "@/entities/block/similar-blocks";
-import { computeComparableRange } from "@/entities/transaction/comparable-range";
-import { computeAffordabilityVerdict } from "@/shared/lib/affordability";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -68,36 +55,22 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
-  computeBlockTrajectory,
-  detectRecentTransactionOutliers,
   RECENT_TRANSACTION_OUTLIER_IQR_MULTIPLIER,
   RECENT_TRANSACTION_OUTLIER_MEDIAN_PCT_THRESHOLD,
   RECENT_TRANSACTION_OUTLIER_MIN_SAMPLE_SIZE,
-  type RecentTransactionOutlier,
-  sliceTrendByRange,
+  type BlockTrajectory,
   type TrendRangeKey,
 } from "@/entities/transaction/transaction-analysis";
-import { buildLeaseSignals } from "@/features/block-detail/leaseSignals";
-import {
-  assessLeaseFinancing,
-  computeRemainingLeaseYears,
-} from "@/features/block-detail/lease-financing";
-import { DEFAULT_FILTERS, getCurrentYear } from "@/shared/lib/constants";
-import { buildBlockShareUrl } from "@/shared/lib/shareUrls";
-import {
-  getBlockDataQualityTag,
-  QUALITY_LABEL_KEYS,
-  QUALITY_HINT_KEYS,
-} from "@/shared/lib/listing-quality";
+import { DEFAULT_FILTERS } from "@/shared/lib/constants";
+import { QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
 import { LeaseWarningPanel } from "@/components/LeaseWarningPanel";
-import { LeaseFinancingPanel } from "@/components/LeaseFinancingPanel";
+import { LeaseFinancingPanel } from "./LeaseFinancingPanel";
 import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/entities/block/school-proximity";
-import { buildBlockExplanation } from "@/entities/block/block-explanation";
-import { deriveFlatTypePriceLadder } from "@/features/block-detail/flat-type-ladder";
-import { FlatTypePriceLadder } from "@/components/FlatTypePriceLadder";
+import { FlatTypePriceLadder } from "./FlatTypePriceLadder";
 import { ShareButton } from "@/components/ShareButton";
+import { useBlockDetailController } from "./useBlockDetailController";
 
 const TrendChart = lazy(() => import("./TrendChart").then((m) => ({ default: m.TrendChart })));
 const AskingPriceCheck = lazy(() =>
@@ -131,7 +104,7 @@ function TrajectoryBadge({
   t,
   locale,
 }: {
-  trajectory: ReturnType<typeof computeBlockTrajectory>;
+  trajectory: BlockTrajectory | null;
   t: Translator;
   locale: Locale;
 }) {
@@ -349,131 +322,39 @@ export function DetailDrawer({
   onSelectBlock,
 }: DetailDrawerProps) {
   const { locale, t } = useI18n();
-  const [activeTab, setActiveTab] = useState("overview");
-  const [isCopied, setIsCopied] = useState(false);
-  const [trendRange, setTrendRange] = useState<TrendRangeKey>("5y");
-  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const currentYear = getCurrentYear();
-  const currentSummary = detail?.summary ?? selectedBlock;
-
-  const blockShareUrl = useMemo(() => {
-    if (!currentSummary) return "";
-    const shareFilters: FilterState = {
-      ...filters,
-      selectedAddressKey: currentSummary.addressKey,
-    };
-    return buildBlockShareUrl(shareFilters, `${window.location.origin}${window.location.pathname}`);
-  }, [currentSummary, filters]);
-  const isDrawerOpen = Boolean(currentSummary || filters?.selectedAddressKey);
-  const explanationCodes = useMemo(
-    () =>
-      currentSummary ? buildBlockExplanation({ block: currentSummary, comparison, filters }) : [],
-    [comparison, currentSummary, filters],
-  );
-  const nearbyStations = (currentSummary?.nearbyMrts ?? []).slice(0, 3);
-
-  const similarBlocks = useMemo(
-    () => (selectedBlock ? rankSimilarBlocks(selectedBlock, allBlocks, { limit: 6 }) : []),
-    [selectedBlock, allBlocks],
-  );
-
-  const comparableRange = useMemo(
-    () => (selectedBlock ? computeComparableRange(selectedBlock, similarBlocks) : null),
-    [selectedBlock, similarBlocks],
-  );
-
-  const affordabilityVerdict = useMemo(() => {
-    if (!searchProfile || !currentSummary) return null;
-    return computeAffordabilityVerdict(
-      {
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      },
-      currentSummary.medianPrice,
-    );
-  }, [searchProfile, currentSummary]);
-
-  const trajectory = useMemo(
-    () => (detail ? computeBlockTrajectory(detail.monthlyTrend) : null),
-    [detail],
-  );
-
-  const leaseSignals = useMemo(
-    () =>
-      currentSummary
-        ? buildLeaseSignals(currentSummary.leaseCommenceRange, currentYear, remainingLeaseMin)
-        : [],
-    [currentSummary, currentYear, remainingLeaseMin],
-  );
-
-  const leaseFinancing = useMemo(() => {
-    if (!currentSummary) return null;
-    // Guard against malformed data: a missing lease-commence year would
-    // propagate as NaN and render garbage rather than a useful verdict.
-    const leaseCommence = currentSummary.leaseCommenceRange?.[0];
-    if (leaseCommence == null) return null;
-    // Use the block's oldest units (fewest remaining years) so the CPF/loan
-    // fit and decay clock reflect the buyer-protective worst case.
-    const remainingLeaseYears = computeRemainingLeaseYears(leaseCommence, currentYear);
-    return assessLeaseFinancing({
-      remainingLeaseYears,
-      applicantAge: searchProfile?.age ?? null,
-      coApplicantAge: searchProfile?.coApplicantAge ?? null,
-    });
-  }, [currentSummary, currentYear, searchProfile?.age, searchProfile?.coApplicantAge]);
-
-  const flatTypeLadder = useMemo(() => {
-    if (!currentSummary || !detail?.recentTransactions) return [];
-    return deriveFlatTypePriceLadder(currentSummary.flatTypes, detail.recentTransactions);
-  }, [currentSummary, detail]);
-
-  const trendPoints = useMemo(() => {
-    if (!detail) return [];
-    return sliceTrendByRange(detail.monthlyTrend, trendRange);
-  }, [detail, trendRange]);
-  const recentTransactionOutliers = useMemo(
-    () =>
-      detail
-        ? detectRecentTransactionOutliers(detail.recentTransactions)
-        : new Map<string, RecentTransactionOutlier>(),
-    [detail],
-  );
-
-  const peakMonthInView = useMemo(() => {
-    if (!trajectory) return null;
-    const inView = trendPoints.some((p) => p.month === trajectory.peakMonth);
-    return inView ? trajectory.peakMonth : null;
-  }, [trajectory, trendPoints]);
-
-  useEffect(() => {
-    return () => {
-      if (copyTimeoutRef.current) {
-        clearTimeout(copyTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  const handleCopyAddress = () => {
-    if (!currentSummary) {
-      return;
-    }
-
-    void navigator.clipboard
-      .writeText(`${currentSummary.block} ${currentSummary.streetName} Singapore`)
-      .then(() => {
-        setIsCopied(true);
-        if (copyTimeoutRef.current) {
-          clearTimeout(copyTimeoutRef.current);
-        }
-        copyTimeoutRef.current = setTimeout(() => setIsCopied(false), 2000);
-      })
-      .catch(() => {
-        setIsCopied(false);
-      });
-  };
+  const {
+    activeTab,
+    handleTabChange,
+    trendRange,
+    setTrendRange,
+    isCopied,
+    handleCopyAddress,
+    currentSummary,
+    dataQualityTag,
+    blockShareUrl,
+    isDrawerOpen,
+    explanationCodes,
+    nearbyStations,
+    similarBlocks,
+    comparableRange,
+    affordabilityVerdict,
+    trajectory,
+    leaseSignals,
+    leaseFinancing,
+    flatTypeLadder,
+    trendPoints,
+    recentTransactionOutliers,
+    peakMonthInView,
+  } = useBlockDetailController({
+    selectedBlock,
+    detail,
+    comparison,
+    allBlocks,
+    remainingLeaseMin,
+    referenceMonth,
+    filters,
+    searchProfile,
+  });
 
   return (
     <Drawer open={isDrawerOpen} onClose={onClose}>
@@ -562,20 +443,7 @@ export function DetailDrawer({
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden px-4 py-4 sm:px-6">
             <Tabs
               value={activeTab}
-              onValueChange={(v) => {
-                // View Transitions API needs the DOM committed before its
-                // callback resolves so it can snapshot the "after" state.
-                // startTransition defers the commit, so we use flushSync here
-                // to force a synchronous render; fall back to startTransition
-                // when the API is unavailable.
-                if (typeof document !== "undefined" && document.startViewTransition) {
-                  document.startViewTransition(() => {
-                    flushSync(() => setActiveTab(v));
-                  });
-                } else {
-                  startTransition(() => setActiveTab(v));
-                }
-              }}
+              onValueChange={handleTabChange}
               className="flex min-h-0 flex-1 flex-col overflow-hidden"
             >
               <TabsList className="mb-4 grid w-full shrink-0 grid-cols-4 rounded-none bg-muted/40 p-1">
@@ -627,28 +495,19 @@ export function DetailDrawer({
                             ? formatCurrency(currentSummary.medianPrice, locale)
                             : "…"}
                         </div>
-                        {currentSummary
-                          ? (() => {
-                              const qualityTag = getBlockDataQualityTag({
-                                transactionCount: currentSummary.transactionCount,
-                                latestMonth: currentSummary.latestMonth,
-                                referenceMonth,
-                              });
-                              return (
-                                <>
-                                  <Badge
-                                    variant="outline"
-                                    className="mt-2 w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
-                                  >
-                                    {t(QUALITY_LABEL_KEYS[qualityTag])}
-                                  </Badge>
-                                  <div className="mt-1 text-[length:var(--text-xs)] font-semibold text-muted-foreground">
-                                    {t(QUALITY_HINT_KEYS[qualityTag])}
-                                  </div>
-                                </>
-                              );
-                            })()
-                          : null}
+                        {currentSummary && dataQualityTag ? (
+                          <>
+                            <Badge
+                              variant="outline"
+                              className="mt-2 w-fit text-[length:var(--text-xs)] font-bold uppercase tracking-wider"
+                            >
+                              {t(QUALITY_LABEL_KEYS[dataQualityTag])}
+                            </Badge>
+                            <div className="mt-1 text-[length:var(--text-xs)] font-semibold text-muted-foreground">
+                              {t(QUALITY_HINT_KEYS[dataQualityTag])}
+                            </div>
+                          </>
+                        ) : null}
                         {currentSummary &&
                         (filters.budgetMin != null || filters.budgetMax != null) ? (
                           <BudgetMatchBadge

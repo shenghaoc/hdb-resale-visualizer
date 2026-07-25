@@ -161,23 +161,35 @@
 
 ## 9) Move search-profile feature logic
 
-- [ ] 9.1 Move search-profile orchestration into `src/features/search-profile`.
-- [ ] 9.2 Keep i18n, suggestions, and profile serialization deterministic and test-backed.
-- [ ] 9.3 Ensure UI components consume entities/shared libs for profile matching and parsing.
-- [ ] 9.4 Update/add tests near the feature.
-- [ ] 9.5 Validate:
+- [x] 9.1 Move search-profile orchestration into `src/features/search-profile`.
+  - Search-profile persistence and orchestration now live in the feature.
+- [x] 9.2 Keep i18n, suggestions, and profile serialization deterministic and test-backed.
+  - Wizard validation and payload construction are deterministic pure functions.
+- [x] 9.3 Ensure UI components consume entities/shared libs for profile matching and parsing.
+  - `SearchProfileWizard` is feature-owned and consumes the pure wizard logic module.
+- [x] 9.4 Update/add tests near the feature.
+  - Added controller and wizard-logic coverage under `tests/hooks` and `tests/unit`.
+  - Town recommendation and profile-chip composition are owned by
+    `useSearchProfileController`.
+- [x] 9.5 Validate:
   - `npm run test tests/unit/search-profile.test.ts tests/unit/match-profile.test.ts tests/unit/search-handler.test.ts`
   - `npm run test tests/unit/suggest-lib.test.ts tests/unit/suggest-handler.test.ts tests/unit/search-query.test.ts`
+  - The search-profile feature boundary is complete.
 
 ## 10) Move block-detail feature logic
 
-- [ ] 10.1 Move block detail orchestration into `src/features/block-detail`.
-- [ ] 10.2 Move any pure block-detail-only calculations to `src/entities/block`.
-- [ ] 10.3 Keep render-only behavior in feature components.
-- [ ] 10.4 Update feature-adjacent tests.
-- [ ] 10.5 Validate:
+- [x] 10.1 Move block detail orchestration into `src/features/block-detail`.
+  - `DetailDrawer` and block-detail-specific UI now live in the feature.
+- [x] 10.2 Move any pure block-detail-only calculations to `src/entities/block`.
+  - Pure lease, financing, and flat-type ladder calculations now live in `src/entities/block`.
+- [x] 10.3 Keep render-only behavior in feature components.
+  - `useBlockDetailController` owns block-detail state and derived analysis.
+- [x] 10.4 Update feature-adjacent tests.
+  - Shared multi-feature UI remains outside the feature for the final shared-UI cleanup phase.
+- [x] 10.5 Validate:
   - `npm run test tests/unit/DetailDrawer.test.tsx tests/unit/town-compare.test.ts`
   - `npm run test tests/unit/search-regression.test.ts tests/unit/block-explanation.test.ts`
+  - The block-detail feature boundary is complete.
 
 ## 11) Shared UI consolidation
 

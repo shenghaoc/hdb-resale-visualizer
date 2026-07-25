@@ -1,7 +1,7 @@
 import { AlertTriangle, Info } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import type { Translator } from "@/shared/lib/i18n";
-import type { LeaseSignal } from "@/features/block-detail/leaseSignals";
+import type { LeaseSignal } from "@/entities/block/leaseSignals";
 import { DocsLink } from "@/features/docs/DocsLink";
 
 type Props = {

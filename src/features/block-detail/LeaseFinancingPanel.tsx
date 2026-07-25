@@ -4,7 +4,7 @@ import type { Translator } from "@/shared/lib/i18n";
 import {
   TYPICAL_HOLD_YEARS,
   type LeaseFinancingAssessment,
-} from "@/features/block-detail/lease-financing";
+} from "@/entities/block/lease-financing";
 
 type Props = {
   assessment: LeaseFinancingAssessment;

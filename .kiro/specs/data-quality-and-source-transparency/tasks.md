@@ -71,7 +71,7 @@
 
 ## Phase 5 — Cross-view caveat consistency
 
-- [x] **T5.1** Update `src/components/DetailDrawer.tsx`:
+- [x] **T5.1** Update `src/features/block-detail/DetailDrawer.tsx`:
   - Show compact data-quality tag and caveat summary from shared adapter.
   -> `npm run test` passes. (R5.1, R5.4)
 

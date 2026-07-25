@@ -69,7 +69,7 @@ vi.mock("@/components/ResultsPane", () => ({
   ResultsPane: () => <div data-testid="results-pane" />,
 }));
 
-vi.mock("@/components/DetailDrawer", () => ({
+vi.mock("@/features/block-detail/DetailDrawer", () => ({
   DetailDrawer: () => <div data-testid="detail-drawer" />,
 }));
 

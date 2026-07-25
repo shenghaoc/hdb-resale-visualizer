@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { DetailDrawer } from "@/components/DetailDrawer";
+import { DetailDrawer } from "@/features/block-detail/DetailDrawer";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, ComparisonArtifact } from "@/types/data";
