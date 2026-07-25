@@ -57,6 +57,13 @@ export function AppHeader({
   const closeMobileSearch = useCallback(() => {
     setIsMobileSearchOpen(false);
   }, []);
+  const handleMobileSelectSuggestion = useCallback(
+    (suggestion: Suggestion) => {
+      closeMobileSearch();
+      onSelectSuggestion(suggestion);
+    },
+    [closeMobileSearch, onSelectSuggestion],
+  );
 
   const openMobileSearch = useCallback(() => {
     if (mobileTab != null) {
@@ -306,7 +313,7 @@ export function AppHeader({
                 aria-label={t("filters.searchLabel")}
                 value={search}
                 onValueChange={onSearchChange}
-                onSelectSuggestion={onSelectSuggestion}
+                onSelectSuggestion={handleMobileSelectSuggestion}
                 suggestActive={isMobileSearchOpen}
                 t={t}
                 inputClassName="h-10 min-w-0 border-0 bg-transparent px-1 text-sm shadow-none focus-visible:border-0 focus-visible:ring-0"

@@ -179,6 +179,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   const shortlistDrawer = page.getByTestId("shortlist-drawer");
 
   await expect(shortlistDrawer).toContainText(rowAddress ?? "");
+  await shortlistDrawer.locator("[role='listitem'] button[aria-expanded]").first().click();
   await expect(shortlistDrawer).toContainText("Primary schools");
   await expect(shortlistDrawer).toContainText("3 within 1km, 8 within 2km");
   await expect(shortlistDrawer).toContainText("BEDOK PRIMARY SCHOOL: 250 m");

@@ -9,7 +9,6 @@ import {
 
 type ListingCheckControllerState = {
   form: ListingCheckUrlState;
-  savedToShortlist: boolean;
 };
 
 type ListingCheckControllerAction =
@@ -19,8 +18,7 @@ type ListingCheckControllerAction =
   | { type: "changeFlatType"; flatType: string | null }
   | { type: "changeStoreyRange"; storeyRange: string | null }
   | { type: "changeLeaseYear"; leaseCommenceYear: number | null }
-  | { type: "applySample"; form: ListingCheckUrlState }
-  | { type: "markSaved" };
+  | { type: "applySample"; form: ListingCheckUrlState };
 
 type SampleListingBlock = Pick<
   BlockSummary,
@@ -39,7 +37,6 @@ type UseListingCheckControllerOptions = {
   updateShortlist: (addressKey: string, patch: Partial<ShortlistItem>) => void;
   openCheckPanel: () => void;
   shareTitle: string;
-  nowISOString?: () => string;
 };
 
 const FALLBACK_SAMPLE: SampleListingBlock = {
@@ -51,12 +48,8 @@ const FALLBACK_SAMPLE: SampleListingBlock = {
   flatTypes: ["4 ROOM"],
 };
 
-function defaultNowISOString(): string {
-  return new Date().toISOString();
-}
-
 function createInitialState(form: ListingCheckUrlState): ListingCheckControllerState {
-  return { form, savedToShortlist: false };
+  return { form };
 }
 
 function updateFormField(
@@ -65,7 +58,6 @@ function updateFormField(
 ): ListingCheckControllerState {
   return {
     form: { ...state.form, ...patch },
-    savedToShortlist: false,
   };
 }
 
@@ -77,7 +69,16 @@ function listingCheckReducer(
     case "selectAddress":
       return state.form.selectedAddressKey === action.addressKey
         ? state
-        : updateFormField(state, { selectedAddressKey: action.addressKey });
+        : {
+            form: {
+              selectedAddressKey: action.addressKey,
+              askingPrice: null,
+              floorAreaSqm: null,
+              flatType: null,
+              storeyRange: null,
+              leaseCommenceYear: null,
+            },
+          };
     case "changeAskingPrice":
       return state.form.askingPrice === action.askingPrice
         ? state
@@ -99,9 +100,7 @@ function listingCheckReducer(
         ? state
         : updateFormField(state, { leaseCommenceYear: action.leaseCommenceYear });
     case "applySample":
-      return { form: action.form, savedToShortlist: false };
-    case "markSaved":
-      return state.savedToShortlist ? state : { ...state, savedToShortlist: true };
+      return { form: action.form };
   }
 }
 
@@ -153,7 +152,6 @@ export function useListingCheckController({
   updateShortlist,
   openCheckPanel,
   shareTitle,
-  nowISOString = defaultNowISOString,
 }: UseListingCheckControllerOptions) {
   const { initialCheckState, syncToUrl } = useListingCheckUrlState();
   const [controllerState, dispatch] = useReducer(
@@ -205,34 +203,26 @@ export function useListingCheckController({
   }, [blocks, openCheckPanel]);
 
   const onSaveToShortlist = useCallback(() => {
-    const {
-      selectedAddressKey,
-      askingPrice,
-      floorAreaSqm,
-      flatType,
-      storeyRange,
-      leaseCommenceYear,
-    } = controllerState.form;
+    const { selectedAddressKey, askingPrice } = controllerState.form;
     if (!selectedAddressKey || askingPrice == null) {
       return;
     }
 
-    const notes = JSON.stringify({
-      type: "listingCheck",
-      askingPrice,
-      floorAreaSqm,
-      flatType,
-      storeyRange,
-      leaseCommenceYear,
-      timestamp: nowISOString(),
-    });
     const alreadySaved = shortlistItems.some((item) => item.addressKey === selectedAddressKey);
     if (!alreadySaved) {
       toggleShortlist(selectedAddressKey);
     }
-    updateShortlist(selectedAddressKey, { notes, targetPrice: askingPrice });
-    dispatch({ type: "markSaved" });
-  }, [controllerState.form, nowISOString, shortlistItems, toggleShortlist, updateShortlist]);
+    updateShortlist(selectedAddressKey, { askingPrice });
+  }, [controllerState.form, shortlistItems, toggleShortlist, updateShortlist]);
+
+  const savedToShortlist =
+    controllerState.form.selectedAddressKey != null &&
+    controllerState.form.askingPrice != null &&
+    shortlistItems.some(
+      (item) =>
+        item.addressKey === controllerState.form.selectedAddressKey &&
+        item.askingPrice === controllerState.form.askingPrice,
+    );
 
   const onShare = useCallback(async () => {
     const url = buildCheckShareUrl(controllerState.form);
@@ -245,7 +235,7 @@ export function useListingCheckController({
 
   return {
     state: controllerState.form,
-    savedToShortlist: controllerState.savedToShortlist,
+    savedToShortlist,
     panelKey: controllerState.form.selectedAddressKey ?? "__none__",
     onAddressSelect,
     onAskingPriceChange,

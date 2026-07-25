@@ -16,11 +16,7 @@ import {
   computeRemainingLeaseYears as _computeRemainingLeaseYears,
   createProfileEvaluator as _createProfileEvaluator,
   evaluateBlockForProfile as _evaluateBlockForProfile,
-  isProfileVisibilityActive,
-  applyProfileVisibility as _applyProfileVisibility,
 } from "@shared/product/search-profile";
-
-export { isProfileVisibilityActive };
 
 export function computeRemainingLeaseYears(
   leaseCommenceRange: readonly [number, number],
@@ -42,12 +38,4 @@ export function evaluateBlockForProfile(
   currentYear: number = getCurrentYear(),
 ): import("@shared/product/search-profile").ProfileEvaluation {
   return _evaluateBlockForProfile(block, profile, currentYear);
-}
-
-export function applyProfileVisibility(
-  blocks: BlockSummary[],
-  profile: SearchProfile,
-  currentYear: number = getCurrentYear(),
-): BlockSummary[] {
-  return _applyProfileVisibility(blocks, profile, currentYear);
 }

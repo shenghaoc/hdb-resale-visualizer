@@ -99,6 +99,29 @@ describe("DetailDrawer", () => {
     vi.restoreAllMocks();
   });
 
+  it("explains when an unsaved block cannot be added to a full shortlist", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          shortlistFull={true}
+          remainingLeaseMin={null}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getByRole("button", { name: "Shortlist full" })).toBeDisabled();
+  });
+
   it("renders amenity sections when comparison data is available", () => {
     render(
       <I18nProvider>

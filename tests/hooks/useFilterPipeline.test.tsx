@@ -179,4 +179,43 @@ describe("useFilterPipeline", () => {
     expect(result.current.mapFilteredBlocks.map((b) => b.addressKey)).toContain("block-2");
     expect(result.current.mapFilteredBlocks.length).toBe(2);
   });
+
+  it("uses only canonical filters for visible results, not hidden profile preferences", () => {
+    const blocks = [
+      {
+        addressKey: "four-room",
+        town: "BEDOK",
+        flatTypes: ["4 ROOM"],
+        availableDateRange: ["2020-01", "2024-12"],
+      },
+      {
+        addressKey: "five-room",
+        town: "BEDOK",
+        flatTypes: ["5 ROOM"],
+        availableDateRange: ["2020-01", "2024-12"],
+      },
+    ] as unknown as BlockSummary[];
+    vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
+
+    const { result } = renderHook(() =>
+      useFilterPipeline({
+        manifest,
+        rawFilters: { ...initialFilters, town: "BEDOK" },
+        userLocation: null,
+        savedVisible: false,
+        shortlistCount: 0,
+        searchProfile: {
+          ...DEFAULT_SEARCH_PROFILE,
+          mainFlatType: "4 ROOM",
+          showAllBlocks: false,
+        },
+        t,
+      }),
+    );
+
+    expect(result.current.filteredBlocks.map((block) => block.addressKey)).toEqual([
+      "four-room",
+      "five-room",
+    ]);
+  });
 });

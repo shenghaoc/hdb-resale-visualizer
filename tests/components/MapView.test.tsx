@@ -63,6 +63,14 @@ const t: Translator = (key) => {
   if (key === "map.ariaLabel") return "Singapore HDB resale map";
   if (key === "map.unavailableTitle") return "Map unavailable";
   if (key === "map.unavailableDescription") return "Map failed to load.";
+  if (key === "amenity.mrtLoading") return "Loading MRT stations and exits.";
+  if (key === "amenity.mrtUnavailable") return "MRT stations and exits could not be loaded.";
+  if (key === "amenity.mrtStationsUnavailable") {
+    return "MRT exits are available, but station markers could not be loaded.";
+  }
+  if (key === "amenity.mrtExitsUnavailable") {
+    return "MRT stations are available, but exit points could not be loaded.";
+  }
   return key;
 };
 
@@ -100,6 +108,12 @@ describe("MapView", () => {
     mapHooks.useMapInitialization.mockReturnValue({
       mapInstance: { id: "map-stub" },
       mapError: null,
+    });
+    mapHooks.useAmenityGeoSync.mockReturnValue({
+      error: null,
+      isLoading: false,
+      stationsFailed: false,
+      exitsFailed: false,
     });
     mapHooks.useDebouncedValue.mockImplementation((value: unknown) => value);
   });
@@ -145,5 +159,33 @@ describe("MapView", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Map unavailable");
     expect(screen.getByText(/map failed to load/i)).toBeInTheDocument();
     expect(screen.getByTestId("map-view")).toHaveAttribute("data-theme", "dark");
+  });
+
+  it("surfaces MRT loading and partial failures without blocking map interaction", () => {
+    mapHooks.useAmenityGeoSync.mockReturnValue({
+      error: null,
+      isLoading: true,
+      stationsFailed: false,
+      exitsFailed: false,
+    });
+    const { rerender } = render(<MapView {...defaultProps} mrtEnabled={true} />);
+
+    expect(screen.getByTestId("mrt-layer-status")).toHaveAttribute("role", "status");
+    expect(screen.getByTestId("mrt-layer-status")).toHaveTextContent(
+      "Loading MRT stations and exits.",
+    );
+
+    mapHooks.useAmenityGeoSync.mockReturnValue({
+      error: "Failed to load exits",
+      isLoading: false,
+      stationsFailed: false,
+      exitsFailed: true,
+    });
+    rerender(<MapView {...defaultProps} mrtEnabled={true} />);
+
+    expect(screen.getByTestId("mrt-layer-status")).toHaveAttribute("role", "alert");
+    expect(screen.getByTestId("mrt-layer-status")).toHaveTextContent(
+      "MRT stations are available, but exit points could not be loaded.",
+    );
   });
 });

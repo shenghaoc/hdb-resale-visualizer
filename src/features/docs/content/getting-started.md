@@ -2,31 +2,35 @@
 
 ## First visit
 
-When you first open the app, a short **search profile wizard** offers to capture your situation — preferred flat type, budget, an MRT station you need nearby (with max walk time to it), minimum remaining lease, and optional CPF/income for affordability estimates. You can skip it; everything works without a profile. With a profile, blocks gain affordability scores and the app can recommend towns.
+The app opens directly to the task-first map prompt — no onboarding form blocks the first visit. Choose **Check a listing price**, **use current location**, or **choose a town**.
 
-After that, the start screen offers three entry paths:
+If you want personal recommendations or affordability estimates, open **Filters → Buyer setup**. The optional setup asks for a preferred flat type, optional maximum budget, minimum remaining lease, and optional CPF/income inputs. It does not ask for a work address, destination station, or commute estimate because the app has no door-to-door commute model. You can exit from any step.
 
-1. **Check a listing price** — best if you already have a specific unit in mind. Enter the block and asking price to compare it against real transactions.
-2. **Find candidate blocks** — scope the map by your current location or a town, then filter and browse.
-3. **Compare my shortlist** — jump straight to blocks you saved earlier.
+Flat type, budget, and lease choices become normal URL-backed filters that you can remove or reset. CPF, income, and age are stored only in this browser and are never included in shared filter links. Reopen **Buyer setup** to change them.
+
+Choose the task that matches what you already know:
+
+1. **Check a listing price** if you already have a specific unit and asking price.
+2. **Use current location** or **choose a town** to browse candidate blocks.
+3. Open **Saved** from the primary tab bar when you want to continue a shortlist.
 
 ## The layout
 
 On **desktop** the interface has three zones:
 
-- **Left panel** — tabs for Filters, Results, Check, and your Saved list
+- **Work panel** — one primary destination at a time: Filters, Results, Check, or Saved
 - **Centre** — the interactive map
-- **Right side** — a block detail drawer that appears when you select a block
+- **Block detail** — replaces the active Results content when you select a block
 
 On **mobile**, a bottom tab bar switches between Filters, Results, Check, Saved, and the Map. The same bar holds the theme toggle and this user guide.
 
 ## Quick search
 
-Type an address, block number, street name, town, MRT station, or postal code into the **search bar** in the header. The typeahead suggests matches across all of these categories — pick one to jump straight there.
+Type an address, block number, street name, town, MRT station, or postal code into the **search bar** in the header. The typeahead suggests matches across all of these categories. Selecting a block opens it in Results immediately.
 
 ## Selecting a block
 
-Click a dot on the map (or a row in Results) to open the **detail drawer** with the block's median price, transaction history, remaining lease, nearest MRT with walking time, nearby amenities, and comparable blocks. How to read those numbers is covered in [Understanding price comparisons](/docs/understanding-price-comparisons).
+Click a dot on the map (or a row in Results) to open the **detail drawer** with the block's median price, transaction history, remaining lease, nearest MRT with walking time, nearby amenities, and comparable blocks. If you then open **Check**, the selected block carries over while listing-specific inputs such as asking price remain separate. How to read those numbers is covered in [Understanding price comparisons](/docs/understanding-price-comparisons).
 
 ## Theme, language, and this guide
 
@@ -36,4 +40,4 @@ Click a dot on the map (or a row in Results) to open the **detail drawer** with 
 
 ## Sharing
 
-Most state lives in the URL: filters, the selected block, and listing checks can all be shared with the **share** buttons. Whoever opens the link sees the same view.
+Canonical filters, the selected block, and listing checks can be shared with the **share** buttons. Personal affordability mode is available only when local CPF/income inputs exist, so it is deliberately excluded from shared filter and shortlist links.

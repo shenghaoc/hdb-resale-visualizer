@@ -53,7 +53,13 @@ type LocalShortlistStore = {
   items: ShortlistItem[];
   isFull: boolean;
   toggle: (addressKey: string) => void;
-  restore: (item: ShortlistItem, index?: number) => void;
+  /**
+   * Restores an item when capacity allows it.
+   *
+   * Returns true when the requested address is present after the operation,
+   * including when it was already re-added through another surface.
+   */
+  restore: (item: ShortlistItem, index?: number) => boolean;
   update: (addressKey: string, patch: Partial<ShortlistItem>) => void;
   has: (addressKey: string) => boolean;
 };
@@ -73,7 +79,8 @@ export function useLocalShortlist(): UseLocalShortlistResult {
   const [initialState] = useState(readInitialShortlist);
   const [items, setItems] = useState<ShortlistItem[]>(initialState.items);
   // Mirrors `items` for use inside async sync callbacks/effects without making
-  // them depend on `items`. Updated in the persistence effect below.
+  // them depend on `items`. Mutations update it synchronously; the persistence
+  // effect also reconciles it after React commits.
   const itemsRef = useRef(items);
 
   useEffect(() => {
@@ -103,15 +110,31 @@ export function useLocalShortlist(): UseLocalShortlistResult {
   }, []);
 
   const toggle = useCallback((addressKey: string) => {
-    setItems((current) => toggleShortlistItem(current, addressKey));
+    const nextItems = toggleShortlistItem(itemsRef.current, addressKey);
+    if (nextItems === itemsRef.current) {
+      return;
+    }
+
+    itemsRef.current = nextItems;
+    setItems(nextItems);
   }, []);
 
   const restore = useCallback((item: ShortlistItem, index?: number) => {
-    setItems((current) => restoreShortlistItem(current, item, index));
+    const currentItems = itemsRef.current;
+    const nextItems = restoreShortlistItem(currentItems, item, index);
+    if (nextItems === currentItems) {
+      return currentItems.some((current) => current.addressKey === item.addressKey);
+    }
+
+    itemsRef.current = nextItems;
+    setItems(nextItems);
+    return true;
   }, []);
 
   const update = useCallback((addressKey: string, patch: Partial<ShortlistItem>) => {
-    setItems((current) => updateShortlistItem(current, addressKey, patch));
+    const nextItems = updateShortlistItem(itemsRef.current, addressKey, patch);
+    itemsRef.current = nextItems;
+    setItems(nextItems);
   }, []);
 
   const has = useCallback(

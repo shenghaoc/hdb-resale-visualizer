@@ -21,7 +21,7 @@ This TypeScript layer is the **canonical logic reference**. It is the source of 
 | `lease.ts`                | Remaining-lease helpers, lease-to-95, age eligibility                                                                                                                                  |
 | `listing-check.ts`        | Listing confidence, asking-price assessment, caveats                                                                                                                                   |
 | `search-aliases.ts`       | Multilingual (CJK) search alias resolver — pure static data + string transform                                                                                                         |
-| `search-profile.ts`       | `SearchProfile` types, profile matching (flat type / lease / budget / commute), profile visibility                                                                                     |
+| `search-profile.ts`       | `SearchProfile` data contract, completion, and deterministic profile-matching evaluators; visible filtering remains in the canonical filter pipeline                                   |
 | `transaction-analysis.ts` | Comparable transaction selection and summary calculations                                                                                                                              |
 
 ### Other shared modules
@@ -120,5 +120,5 @@ Golden fixtures are the cross-language contract. When the TypeScript core change
 
 - A native implementation that produces different outputs than the golden fixtures in `tests/fixtures/platform-parity/product-core-golden.json`.
 - A native implementation that hardcodes affordability constants or thresholds that diverge from `shared/product/affordability`.
-- A native implementation that uses different stretch/budget/commute thresholds than the shared core.
+- A native implementation that uses different affordability, budget, lease, or listing-check thresholds than the shared core.
 - Any module under `shared/product/` that imports from `src/`, React, MapLibre, or browser globals.

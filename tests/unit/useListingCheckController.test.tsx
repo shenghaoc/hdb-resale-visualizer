@@ -17,7 +17,6 @@ vi.mock("@/shared/lib/shareUrls", async (importOriginal) => {
   };
 });
 
-const FIXED_NOW = "2026-07-16T01:02:03Z";
 const SHARE_TITLE = "HDB Resale Visualizer";
 
 const VALID_STATE: ListingCheckUrlState = {
@@ -58,10 +57,12 @@ function makeBlock(overrides: Partial<BlockSummary>): BlockSummary {
   return { ...BASE_BLOCK, ...overrides };
 }
 
-function makeShortlistItem(addressKey: string): ShortlistItem {
+function makeShortlistItem(addressKey: string, askingPrice?: number): ShortlistItem {
   return {
     addressKey,
+    askingPrice,
     notes: "keep existing notes",
+    buyerNotes: "keep exact buyer notes",
     targetPrice: 1_100_000,
     addedAt: "2026-07-01T00:00:00Z",
   };
@@ -87,7 +88,6 @@ function makeOptions(overrides: Partial<ControllerOptions> = {}): ControllerOpti
     updateShortlist: vi.fn<ControllerOptions["updateShortlist"]>(),
     openCheckPanel: vi.fn<ControllerOptions["openCheckPanel"]>(),
     shareTitle: SHARE_TITLE,
-    nowISOString: () => FIXED_NOW,
     ...overrides,
   };
 }
@@ -100,7 +100,11 @@ function renderController(
   const rendered = renderHook(() => useListingCheckController(options), {
     wrapper: strict ? StrictModeWrapper : undefined,
   });
-  return { ...rendered, options };
+  const rerenderWith = (nextOptions: Partial<ControllerOptions>) => {
+    Object.assign(options, nextOptions);
+    rendered.rerender();
+  };
+  return { ...rendered, options, rerenderWith };
 }
 
 function saveListing(controller: ControllerResult): void {
@@ -156,22 +160,6 @@ describe("useListingCheckController", () => {
       apply: (controller) => controller.onAskingPriceChange(1_250_000),
     },
     {
-      label: "floor area",
-      apply: (controller) => controller.onFloorAreaChange(151),
-    },
-    {
-      label: "flat type",
-      apply: (controller) => controller.onFlatTypeChange("5 ROOM"),
-    },
-    {
-      label: "storey range",
-      apply: (controller) => controller.onStoreyRangeChange("04 TO 06"),
-    },
-    {
-      label: "lease year",
-      apply: (controller) => controller.onLeaseYearChange(1990),
-    },
-    {
       label: "address",
       apply: (controller) => controller.onAddressSelect("bedok-108-lengkong-tiga"),
     },
@@ -181,7 +169,10 @@ describe("useListingCheckController", () => {
     "invalidates the saved state when the $label changes",
     ({ apply }) => {
       setCheckUrl(VALID_STATE);
-      const existingItem = makeShortlistItem(VALID_STATE.selectedAddressKey!);
+      const existingItem = makeShortlistItem(
+        VALID_STATE.selectedAddressKey!,
+        VALID_STATE.askingPrice!,
+      );
       const { result } = renderController({ shortlistItems: [existingItem] });
 
       saveListing(result.current);
@@ -192,63 +183,39 @@ describe("useListingCheckController", () => {
     },
   );
 
-  it("adds and updates a new shortlist item with the exact listing-check notes", () => {
+  it("adds a new shortlist item and saves the seller's asking price only", () => {
     setCheckUrl(VALID_STATE);
     const toggleShortlist = vi.fn<ControllerOptions["toggleShortlist"]>();
     const updateShortlist = vi.fn<ControllerOptions["updateShortlist"]>();
-    const { result } = renderController({ toggleShortlist, updateShortlist });
+    const { result, rerenderWith } = renderController({ toggleShortlist, updateShortlist });
 
     saveListing(result.current);
 
     expect(toggleShortlist).toHaveBeenCalledOnce();
     expect(toggleShortlist).toHaveBeenCalledWith(VALID_STATE.selectedAddressKey);
     expect(updateShortlist).toHaveBeenCalledOnce();
-    const [addressKey, patch] = updateShortlist.mock.calls[0]!;
-    expect(addressKey).toBe(VALID_STATE.selectedAddressKey);
-    expect(patch.targetPrice).toBe(VALID_STATE.askingPrice);
-    const notes: unknown = JSON.parse(String(patch.notes));
-    expect(notes).toEqual({
-      type: "listingCheck",
+    expect(updateShortlist).toHaveBeenCalledWith(VALID_STATE.selectedAddressKey, {
       askingPrice: VALID_STATE.askingPrice,
-      floorAreaSqm: VALID_STATE.floorAreaSqm,
-      flatType: VALID_STATE.flatType,
-      storeyRange: VALID_STATE.storeyRange,
-      leaseCommenceYear: VALID_STATE.leaseCommenceYear,
-      timestamp: FIXED_NOW,
+    });
+    expect(result.current.savedToShortlist).toBe(false);
+
+    rerenderWith({
+      shortlistItems: [
+        makeShortlistItem(VALID_STATE.selectedAddressKey!, VALID_STATE.askingPrice!),
+      ],
     });
     expect(result.current.savedToShortlist).toBe(true);
+
+    rerenderWith({ shortlistItems: [] });
+    expect(result.current.savedToShortlist).toBe(false);
   });
 
-  it("retains null listing facts as explicit keys in saved notes", () => {
-    const minimalState: ListingCheckUrlState = {
-      selectedAddressKey: VALID_STATE.selectedAddressKey,
-      askingPrice: VALID_STATE.askingPrice,
-      floorAreaSqm: null,
-      flatType: null,
-      storeyRange: null,
-      leaseCommenceYear: null,
-    };
-    setCheckUrl(minimalState);
-    const updateShortlist = vi.fn<ControllerOptions["updateShortlist"]>();
-    const { result } = renderController({ updateShortlist });
-
-    saveListing(result.current);
-
-    const notes: unknown = JSON.parse(String(updateShortlist.mock.calls[0]![1].notes));
-    expect(notes).toEqual({
-      type: "listingCheck",
-      askingPrice: VALID_STATE.askingPrice,
-      floorAreaSqm: null,
-      flatType: null,
-      storeyRange: null,
-      leaseCommenceYear: null,
-      timestamp: FIXED_NOW,
-    });
-  });
-
-  it("updates an existing shortlist item without toggling it off", () => {
+  it("updates an existing shortlist item without overwriting buyer notes or target price", () => {
     setCheckUrl(VALID_STATE);
-    const existingItem = makeShortlistItem(VALID_STATE.selectedAddressKey!);
+    const existingItem = makeShortlistItem(
+      VALID_STATE.selectedAddressKey!,
+      VALID_STATE.askingPrice!,
+    );
     const toggleShortlist = vi.fn<ControllerOptions["toggleShortlist"]>();
     const updateShortlist = vi.fn<ControllerOptions["updateShortlist"]>();
     const { result } = renderController({
@@ -261,11 +228,31 @@ describe("useListingCheckController", () => {
 
     expect(toggleShortlist).not.toHaveBeenCalled();
     expect(updateShortlist).toHaveBeenCalledOnce();
-    expect(updateShortlist).toHaveBeenCalledWith(
-      VALID_STATE.selectedAddressKey,
-      expect.objectContaining({ targetPrice: VALID_STATE.askingPrice }),
-    );
+    expect(updateShortlist).toHaveBeenCalledWith(VALID_STATE.selectedAddressKey, {
+      askingPrice: VALID_STATE.askingPrice,
+    });
+    expect(existingItem).toMatchObject({
+      notes: "keep existing notes",
+      buyerNotes: "keep exact buyer notes",
+      targetPrice: 1_100_000,
+    });
     expect(result.current.savedToShortlist).toBe(true);
+  });
+
+  it("clears stale listing facts when a different block is selected", () => {
+    setCheckUrl(VALID_STATE);
+    const { result } = renderController();
+
+    act(() => result.current.onAddressSelect("bedok-108-lengkong-tiga"));
+
+    expect(result.current.state).toEqual({
+      selectedAddressKey: "bedok-108-lengkong-tiga",
+      askingPrice: null,
+      floorAreaSqm: null,
+      flatType: null,
+      storeyRange: null,
+      leaseCommenceYear: null,
+    });
   });
 
   it.each([
@@ -281,14 +268,12 @@ describe("useListingCheckController", () => {
     setCheckUrl(state);
     const toggleShortlist = vi.fn<ControllerOptions["toggleShortlist"]>();
     const updateShortlist = vi.fn<ControllerOptions["updateShortlist"]>();
-    const nowISOString = vi.fn(() => FIXED_NOW);
-    const { result } = renderController({ toggleShortlist, updateShortlist, nowISOString });
+    const { result } = renderController({ toggleShortlist, updateShortlist });
 
     saveListing(result.current);
 
     expect(toggleShortlist).not.toHaveBeenCalled();
     expect(updateShortlist).not.toHaveBeenCalled();
-    expect(nowISOString).not.toHaveBeenCalled();
     expect(result.current.savedToShortlist).toBe(false);
   });
 
@@ -380,13 +365,16 @@ describe("useListingCheckController", () => {
 
   it("resets a previously saved listing when applying the sample", () => {
     const openCheckPanel = vi.fn();
-    const { result } = renderController({ blocks: sampleBlocks, openCheckPanel });
+    const { result, rerenderWith } = renderController({ blocks: sampleBlocks, openCheckPanel });
 
     act(() => {
       result.current.onAddressSelect("original-address");
       result.current.onAskingPriceChange(600_000);
     });
     saveListing(result.current);
+    rerenderWith({
+      shortlistItems: [makeShortlistItem("original-address", 600_000)],
+    });
     expect(result.current.savedToShortlist).toBe(true);
 
     act(() => result.current.onUseSampleCheck());

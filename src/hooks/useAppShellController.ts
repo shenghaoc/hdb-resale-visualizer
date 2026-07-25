@@ -16,6 +16,9 @@ type UseAppShellControllerOptions = {
   setIsLeftPanelOpen: (next: boolean | ((current: boolean) => boolean)) => void;
   setMobileTab: (next: PanelTab | null | ((current: PanelTab | null) => PanelTab | null)) => void;
   setIsSavedPanelOpen: (next: boolean | ((current: boolean) => boolean)) => void;
+  isSavedPanelOpen: boolean;
+  listingCheckAddressKey: string | null;
+  prepareListingCheckForAddress: (addressKey: string) => void;
   toggleShortlist: (addressKey: string) => void;
   leftTab: LeftTab;
 };
@@ -32,6 +35,9 @@ export function useAppShellController({
   setIsLeftPanelOpen,
   setMobileTab,
   setIsSavedPanelOpen,
+  isSavedPanelOpen,
+  listingCheckAddressKey,
+  prepareListingCheckForAddress,
   toggleShortlist,
   leftTab,
 }: UseAppShellControllerOptions) {
@@ -54,9 +60,25 @@ export function useAppShellController({
 
   const handleSelectSuggestion = useCallback(
     (suggestion: Suggestion) => {
+      if (suggestion.group === "block") {
+        if (isDesktop) {
+          setLeftTab("results");
+          setIsLeftPanelOpen(true);
+          setIsSavedPanelOpen(false);
+        } else {
+          setMobileTab("results");
+        }
+      }
       patchUserFilters(filterPatchForSuggestion(suggestion));
     },
-    [patchUserFilters],
+    [
+      isDesktop,
+      patchUserFilters,
+      setIsLeftPanelOpen,
+      setIsSavedPanelOpen,
+      setLeftTab,
+      setMobileTab,
+    ],
   );
 
   const handleResetFilters = useCallback(() => {
@@ -70,12 +92,13 @@ export function useAppShellController({
       if (isDesktop) {
         setIsLeftPanelOpen(true);
         setLeftTab("results");
+        setIsSavedPanelOpen(false);
       } else {
         setMobileTab("results");
       }
       patchFilters({ selectedAddressKey: addressKey });
     },
-    [isDesktop, setIsLeftPanelOpen, setLeftTab, setMobileTab, patchFilters],
+    [isDesktop, setIsLeftPanelOpen, setIsSavedPanelOpen, setLeftTab, setMobileTab, patchFilters],
   );
 
   const handleToggleShortlist = useCallback(
@@ -90,6 +113,7 @@ export function useAppShellController({
       if (isDesktop) {
         setLeftTab("filters");
         setIsLeftPanelOpen(true);
+        setIsSavedPanelOpen(false);
         return;
       }
       setMobileTab("filters");
@@ -100,6 +124,7 @@ export function useAppShellController({
       isDesktop,
       setLeftTab,
       setIsLeftPanelOpen,
+      setIsSavedPanelOpen,
       setMobileTab,
     ],
   );
@@ -108,29 +133,48 @@ export function useAppShellController({
     if (isDesktop) {
       setLeftTab("filters");
       setIsLeftPanelOpen(true);
+      setIsSavedPanelOpen(false);
       return;
     }
     setMobileTab("filters");
-  }, [isDesktop, setLeftTab, setIsLeftPanelOpen, setMobileTab]);
+  }, [isDesktop, setLeftTab, setIsLeftPanelOpen, setIsSavedPanelOpen, setMobileTab]);
 
   const handleDesktopFiltersClick = useCallback(() => {
+    setIsSavedPanelOpen(false);
     setLeftTab("filters");
     setIsLeftPanelOpen((current) => (leftTab === "filters" ? !current : true));
-  }, [setLeftTab, setIsLeftPanelOpen, leftTab]);
+  }, [setIsSavedPanelOpen, setLeftTab, setIsLeftPanelOpen, leftTab]);
 
   const handleDesktopResultsClick = useCallback(() => {
+    setIsSavedPanelOpen(false);
     setLeftTab("results");
     setIsLeftPanelOpen((current) => (leftTab === "results" ? !current : true));
-  }, [setLeftTab, setIsLeftPanelOpen, leftTab]);
+  }, [setIsSavedPanelOpen, setLeftTab, setIsLeftPanelOpen, leftTab]);
 
   const handleDesktopSavedClick = useCallback(() => {
-    setIsSavedPanelOpen((current) => !current);
-  }, [setIsSavedPanelOpen]);
+    const next = !isSavedPanelOpen;
+    setIsSavedPanelOpen(next);
+    if (next) {
+      setIsLeftPanelOpen(false);
+    }
+  }, [isSavedPanelOpen, setIsLeftPanelOpen, setIsSavedPanelOpen]);
 
   const handleDesktopCheckClick = useCallback(() => {
+    if (filters.selectedAddressKey && !listingCheckAddressKey) {
+      prepareListingCheckForAddress(filters.selectedAddressKey);
+    }
+    setIsSavedPanelOpen(false);
     setLeftTab("check");
     setIsLeftPanelOpen((current) => (leftTab === "check" ? !current : true));
-  }, [setLeftTab, setIsLeftPanelOpen, leftTab]);
+  }, [
+    filters.selectedAddressKey,
+    leftTab,
+    listingCheckAddressKey,
+    prepareListingCheckForAddress,
+    setIsLeftPanelOpen,
+    setIsSavedPanelOpen,
+    setLeftTab,
+  ]);
 
   const handleMobileFiltersClick = useCallback(() => {
     setMobileTab((current) => (current === "filters" ? null : "filters"));
@@ -141,8 +185,16 @@ export function useAppShellController({
   }, [setMobileTab]);
 
   const handleMobileCheckClick = useCallback(() => {
+    if (filters.selectedAddressKey && !listingCheckAddressKey) {
+      prepareListingCheckForAddress(filters.selectedAddressKey);
+    }
     setMobileTab((current) => (current === "check" ? null : "check"));
-  }, [setMobileTab]);
+  }, [
+    filters.selectedAddressKey,
+    listingCheckAddressKey,
+    prepareListingCheckForAddress,
+    setMobileTab,
+  ]);
 
   const handleMobileSavedClick = useCallback(() => {
     setMobileTab((current) => (current === "saved" ? null : "saved"));

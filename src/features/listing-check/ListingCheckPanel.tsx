@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AlertTriangle, Bookmark, Info, List, Search, Scale, Sparkles } from "lucide-react";
+import { AlertTriangle, Info, Scale, Sparkles } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
@@ -48,11 +48,10 @@ type ListingCheckPanelProps = {
   onStoreyRangeChange: (storeyRange: string | null) => void;
   onLeaseYearChange: (year: number | null) => void;
   onUseSampleCheck: () => void;
-  onOpenCandidates: () => void;
-  onOpenShortlist: () => void;
   onSaveToShortlist: () => void;
   onShare: () => void;
   savedToShortlist: boolean;
+  shortlistFull: boolean;
   referenceMonth?: string;
 };
 
@@ -85,17 +84,14 @@ export function ListingCheckPanel({
   onStoreyRangeChange,
   onLeaseYearChange,
   onUseSampleCheck,
-  onOpenCandidates,
-  onOpenShortlist,
   onSaveToShortlist,
   onShare,
   savedToShortlist,
+  shortlistFull,
   referenceMonth,
 }: ListingCheckPanelProps) {
   const { locale, t } = useI18n();
 
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const askingPriceInputRef = useRef<HTMLInputElement | null>(null);
   const verdictRef = useRef<HTMLDivElement>(null);
 
   // ── Search combobox state ──────────────────────────────────────────────────
@@ -185,20 +181,6 @@ export function ListingCheckPanel({
   // ── Check button enabled ──────────────────────────────────────────────────
   const canCheck = selectedAddressKey != null && askingPrice != null;
 
-  const handlePrimaryAction = useCallback(() => {
-    if (!selectedAddressKey) {
-      searchInputRef.current?.focus();
-      return;
-    }
-
-    if (!comparableSetLoading && canCheck) {
-      handleCheckClick();
-      return;
-    }
-
-    askingPriceInputRef.current?.focus();
-  }, [canCheck, comparableSetLoading, selectedAddressKey, handleCheckClick]);
-
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <section className="flex flex-col gap-5">
@@ -217,45 +199,12 @@ export function ListingCheckPanel({
           </div>
         </div>
 
-        <div className="grid gap-2">
-          <Button
-            type="button"
-            size="lg"
-            className="h-12 w-full justify-start"
-            onClick={handlePrimaryAction}
-          >
-            <Search data-icon className="size-4" aria-hidden="true" />
-            <span>{t("check.primaryAction")}</span>
-          </Button>
-          <div className="grid gap-2 sm:grid-cols-2">
-            <Button
-              type="button"
-              variant="outline"
-              className="h-10 w-full justify-start"
-              onClick={onOpenCandidates}
-            >
-              <List data-icon className="size-4" aria-hidden="true" />
-              <span>{t("check.findCandidates")}</span>
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-10 w-full justify-start"
-              onClick={onOpenShortlist}
-            >
-              <Bookmark data-icon className="size-4" aria-hidden="true" />
-              <span>{t("check.compareShortlist")}</span>
-            </Button>
-          </div>
-        </div>
-
         {/* ── Block search ─────────────────────────────────────────────── */}
         <div className="mb-4">
           <SearchCombobox
             value={searchValue}
             onValueChange={setSearchValue}
             onSelectSuggestion={handleSelectSuggestion}
-            ref={searchInputRef}
             t={t}
             placeholder={t("check.blockPlaceholder")}
           />
@@ -309,7 +258,6 @@ export function ListingCheckPanel({
             <label className="flex flex-col gap-1">
               <span className="v2-field-label">{t("askingCheck.askingPrice")}</span>
               <Input
-                ref={askingPriceInputRef}
                 type="number"
                 inputMode="numeric"
                 enterKeyHint="done"
@@ -628,9 +576,13 @@ export function ListingCheckPanel({
                 size="sm"
                 className="flex-1"
                 onClick={onSaveToShortlist}
-                disabled={savedToShortlist}
+                disabled={savedToShortlist || shortlistFull}
               >
-                {savedToShortlist ? t("check.saved") : t("check.saveToShortlist")}
+                {savedToShortlist
+                  ? t("check.saved")
+                  : shortlistFull
+                    ? t("shortlist.full")
+                    : t("check.saveToShortlist")}
               </Button>
               <Button
                 type="button"

@@ -93,11 +93,12 @@ async function runMobileListingCheckFlow(page: Page) {
   const shortlistDrawer = page.getByTestId("shortlist-drawer");
   await expect(shortlistDrawer).toBeVisible();
 
-  // First shortlist item is expanded by default — cockpit inputs should be
-  // visible. Use the exact "Offer ceiling" label so it can't also match the
-  // offer board's "Suggested offer ceiling" field (both editable on the card).
-  const offerCeilingInput = shortlistDrawer.getByLabel("Offer ceiling", { exact: true });
-  const notesInput = shortlistDrawer.getByLabel("Notes", { exact: true });
+  // Offer preparation is intentionally collapsed until the buyer opens it.
+  await shortlistDrawer.locator("[role='listitem'] button[aria-expanded]").first().click();
+  const offerCeilingInput = shortlistDrawer.getByLabel("Suggested offer ceiling", {
+    exact: true,
+  });
+  const notesInput = shortlistDrawer.getByLabel("Buyer notes", { exact: true });
   await expect(offerCeilingInput).toBeVisible({ timeout: 10_000 });
   await offerCeilingInput.fill("490000");
   await notesInput.fill("Mobile shortlist note");

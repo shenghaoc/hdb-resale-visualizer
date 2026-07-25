@@ -30,7 +30,7 @@ describe("useShortlistRemovalUndo", () => {
 
   it("restores the complete pending item and original index", () => {
     const onRemove = vi.fn();
-    const onRestore = vi.fn();
+    const onRestore = vi.fn(() => true);
     const { result } = renderHook(() => useShortlistRemovalUndo({ onRemove, onRestore }));
 
     act(() => {
@@ -44,11 +44,12 @@ describe("useShortlistRemovalUndo", () => {
 
     expect(onRestore).toHaveBeenCalledWith(firstItem, 3);
     expect(result.current.pendingRemoval).toBeNull();
+    expect(result.current.restoreError).toBe(false);
   });
 
   it("expires the Undo action after five seconds", () => {
     const { result } = renderHook(() =>
-      useShortlistRemovalUndo({ onRemove: vi.fn(), onRestore: vi.fn() }),
+      useShortlistRemovalUndo({ onRemove: vi.fn(), onRestore: vi.fn(() => true) }),
     );
 
     act(() => {
@@ -64,7 +65,7 @@ describe("useShortlistRemovalUndo", () => {
   });
 
   it("replaces the pending action when removals repeat", () => {
-    const onRestore = vi.fn();
+    const onRestore = vi.fn(() => true);
     const { result } = renderHook(() => useShortlistRemovalUndo({ onRemove: vi.fn(), onRestore }));
 
     act(() => {
@@ -77,5 +78,39 @@ describe("useShortlistRemovalUndo", () => {
 
     expect(onRestore).toHaveBeenCalledOnce();
     expect(onRestore).toHaveBeenCalledWith(secondItem, 1);
+  });
+
+  it("keeps the pending removal when capacity blocks restore and allows a retry", () => {
+    let hasCapacity = false;
+    const onRemove = vi.fn();
+    const onRestore = vi.fn(() => hasCapacity);
+    const { result } = renderHook(() => useShortlistRemovalUndo({ onRemove, onRestore }));
+
+    act(() => {
+      result.current.remove({ item: firstItem, index: 3, label: "First" });
+    });
+    act(() => {
+      result.current.undo();
+    });
+
+    expect(result.current.pendingRemoval?.item).toBe(firstItem);
+    expect(result.current.restoreError).toBe(true);
+
+    act(() => {
+      result.current.remove({ item: secondItem, index: 1, label: "Second" });
+    });
+
+    expect(onRemove).toHaveBeenLastCalledWith("second");
+    expect(result.current.pendingRemoval?.item).toBe(firstItem);
+    expect(result.current.restoreError).toBe(false);
+
+    hasCapacity = true;
+    act(() => {
+      result.current.undo();
+    });
+
+    expect(onRestore).toHaveBeenCalledTimes(2);
+    expect(result.current.pendingRemoval).toBeNull();
+    expect(result.current.restoreError).toBe(false);
   });
 });

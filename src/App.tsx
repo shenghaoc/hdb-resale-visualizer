@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useMemo } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo } from "react";
 import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import { useManifestData } from "@/hooks/useManifestData";
@@ -34,9 +34,12 @@ import { PriceLegend } from "@/features/map-explorer/PriceLegend";
 import { useMapExplorerController } from "@/features/map-explorer/useMapExplorerController";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
+import { isAffordabilityProfileComplete } from "@/shared/lib/affordability";
 import { useListingCheckController } from "@/features/listing-check/useListingCheckController";
 import { DocsLink } from "@/features/docs/DocsLink";
 import { isDocsPath, navigate, usePathname, DOCS_PATH_PREFIX } from "@/features/docs/docsRouter";
+import type { FilterState } from "@/types/data";
+import type { SearchProfile } from "@/types/searchProfile";
 
 const DocsPage = lazy(() =>
   import("@/features/docs/DocsPage").then((m) => ({ default: m.DocsPage })),
@@ -75,10 +78,29 @@ function App() {
   const geo = useGeolocation({ t });
   const header = useHeaderState();
   const searchProfileState = useSearchProfileControllerState();
+  const affordabilityProfileComplete = isAffordabilityProfileComplete({
+    monthlyIncome: searchProfileState.profile.monthlyIncome,
+    cpfOABalance: searchProfileState.profile.cpfOABalance,
+    age: searchProfileState.profile.age,
+    coApplicantAge: searchProfileState.profile.coApplicantAge,
+  });
+  const activeFilters = useMemo<FilterState>(
+    () =>
+      filters.affordable && !affordabilityProfileComplete
+        ? { ...filters, affordable: "" }
+        : filters,
+    [affordabilityProfileComplete, filters],
+  );
+
+  useEffect(() => {
+    if (filters.affordable && !affordabilityProfileComplete) {
+      patchFilters({ affordable: "" });
+    }
+  }, [affordabilityProfileComplete, filters.affordable, patchFilters]);
 
   const pipeline = useFilterPipeline({
     manifest,
-    rawFilters: filters,
+    rawFilters: activeFilters,
     userLocation: geo.userLocation,
     resultsVisible: panel.resultsVisible,
     savedVisible: panel.savedVisible,
@@ -94,12 +116,10 @@ function App() {
     totalBlocks,
     hasResultScope: pipeline.hasResultScope,
     effectiveTown: pipeline.effectiveFilters.town || null,
-    locale,
-    t,
   });
 
   const { detail, comparison, isDetailLoading, isComparisonLoading } = useSelectedBlockArtifacts(
-    filters.selectedAddressKey,
+    activeFilters.selectedAddressKey,
   );
 
   const { shortlistRows } = useShortlistArtifacts({
@@ -113,14 +133,14 @@ function App() {
 
   const selectedBlock = useMemo(
     () =>
-      filters.selectedAddressKey
-        ? (pipeline.blocksByKey.get(filters.selectedAddressKey) ?? null)
+      activeFilters.selectedAddressKey
+        ? (pipeline.blocksByKey.get(activeFilters.selectedAddressKey) ?? null)
         : null,
-    [pipeline.blocksByKey, filters.selectedAddressKey],
+    [activeFilters.selectedAddressKey, pipeline.blocksByKey],
   );
 
   useDeepLinkPanelInit({
-    selectedAddressKey: filters.selectedAddressKey,
+    selectedAddressKey: activeFilters.selectedAddressKey,
     selectedBlock,
     isDesktop: panel.isDesktop,
     setLeftTab: panel.setLeftTab,
@@ -133,18 +153,37 @@ function App() {
     [shortlist.items],
   );
 
-  const detailVisible = Boolean(filters.selectedAddressKey);
+  const detailVisible = Boolean(activeFilters.selectedAddressKey);
   const detailLoading = detailVisible && isDetailLoading;
   const comparisonLoading = detailVisible && isComparisonLoading;
 
   const activeFilterChips = useMemo(() => {
-    const filterChips = getActiveFilterChipDescriptors(filters, locale, t).map((chip) => ({
+    return getActiveFilterChipDescriptors(activeFilters, locale, t).map((chip) => ({
       key: chip.key,
       label: chip.label,
       onRemove: () => patchFilters(chip.clearPatch),
     }));
-    return [...searchProfile.profileChips, ...filterChips];
-  }, [filters, locale, patchFilters, searchProfile.profileChips, t]);
+  }, [activeFilters, locale, patchFilters, t]);
+
+  const handleCompleteSearchProfile = useCallback(
+    (profile: SearchProfile) => {
+      searchProfile.replaceProfile(profile);
+      patchFilters({
+        flatType: profile.mainFlatType,
+        budgetMax: profile.maxBudget,
+        remainingLeaseMin: profile.minimumRemainingLeaseYears,
+        affordable: isAffordabilityProfileComplete({
+          monthlyIncome: profile.monthlyIncome,
+          cpfOABalance: profile.cpfOABalance,
+          age: profile.age,
+          coApplicantAge: profile.coApplicantAge,
+        })
+          ? activeFilters.affordable
+          : "",
+      });
+    },
+    [activeFilters.affordable, patchFilters, searchProfile],
+  );
 
   // ── Listing check workflow ───────────────────────────────────────────────
   const {
@@ -152,15 +191,23 @@ function App() {
     setLeftTab: setPanelLeftTab,
     setIsLeftPanelOpen: setPanelLeftPanelOpen,
     setMobileTab: setPanelMobileTab,
+    setIsSavedPanelOpen: setPanelSavedPanelOpen,
   } = panel;
   const openCheckPanel = useCallback(() => {
     if (isPanelDesktop) {
       setPanelLeftTab("check");
       setPanelLeftPanelOpen(true);
+      setPanelSavedPanelOpen(false);
       return;
     }
     setPanelMobileTab("check");
-  }, [isPanelDesktop, setPanelLeftPanelOpen, setPanelLeftTab, setPanelMobileTab]);
+  }, [
+    isPanelDesktop,
+    setPanelLeftPanelOpen,
+    setPanelLeftTab,
+    setPanelMobileTab,
+    setPanelSavedPanelOpen,
+  ]);
 
   const listingCheck = useListingCheckController({
     blocks: pipeline.blocks,
@@ -170,24 +217,6 @@ function App() {
     openCheckPanel,
     shareTitle: t("app.title"),
   });
-
-  const handleOpenCandidates = useCallback(() => {
-    const tab = pipeline.hasResultScope ? "results" : "filters";
-    if (panel.isDesktop) {
-      panel.setLeftTab(tab);
-      panel.setIsLeftPanelOpen(true);
-      return;
-    }
-    panel.setMobileTab(tab);
-  }, [panel, pipeline.hasResultScope]);
-
-  const handleOpenShortlist = useCallback(() => {
-    if (panel.isDesktop) {
-      panel.setIsSavedPanelOpen(true);
-      return;
-    }
-    panel.setMobileTab("saved");
-  }, [panel]);
 
   const {
     patchUserFilters,
@@ -206,7 +235,7 @@ function App() {
     handleMobileCheckClick,
     handleMobileSavedClick,
   } = useAppShellController({
-    filters,
+    filters: activeFilters,
     patchFilters,
     resetFilters,
     setUseDefaultStartMonth,
@@ -217,12 +246,15 @@ function App() {
     setIsLeftPanelOpen: panel.setIsLeftPanelOpen,
     setMobileTab: panel.setMobileTab,
     setIsSavedPanelOpen: panel.setIsSavedPanelOpen,
+    isSavedPanelOpen: panel.isSavedPanelOpen,
+    listingCheckAddressKey: listingCheck.state.selectedAddressKey,
+    prepareListingCheckForAddress: listingCheck.onAddressSelect,
     toggleShortlist: shortlist.toggle,
     leftTab: panel.leftTab,
   });
 
   const mapExplorer = useMapExplorerController({
-    filters,
+    filters: activeFilters,
     patchFilters,
     geographicIntent: pipeline.effectiveMapGeographicIntent,
     mapSearch: pipeline.mapFilters.search,
@@ -243,9 +275,11 @@ function App() {
   });
 
   const resultsShareUrl = useMemo(
-    () => buildFilterShareUrl(filters, `${window.location.origin}${window.location.pathname}`),
-    [filters],
+    () =>
+      buildFilterShareUrl(activeFilters, `${window.location.origin}${window.location.pathname}`),
+    [activeFilters],
   );
+  const shareableResultsUrl = activeFilters.affordable ? undefined : resultsShareUrl;
 
   const handleShareFilters = useCallback(async () => {
     try {
@@ -291,16 +325,6 @@ function App() {
     );
   }
 
-  if (searchProfile.shouldShowWizard) {
-    return (
-      <SearchProfileWizard
-        options={manifest.filterOptions}
-        onComplete={(profile) => searchProfile.replaceProfile(profile)}
-        onSkip={searchProfile.dismissWizard}
-      />
-    );
-  }
-
   // ── Shared content blocks ────────────────────────────────────────────────
 
   const filterContent = (
@@ -317,6 +341,7 @@ function App() {
           : undefined
       }
       searchProfile={searchProfile.profile}
+      onOpenBuyerSetup={searchProfile.openWizard}
     />
   );
 
@@ -332,9 +357,9 @@ function App() {
         <MapView
           blocks={pipeline.mapFilteredBlocks}
           onSelect={handleSelectAddress}
-          selectedAddressKey={filters.selectedAddressKey}
+          selectedAddressKey={activeFilters.selectedAddressKey}
           townFilter={pipeline.mapFilters.town}
-          flatType={filters.flatType}
+          flatType={activeFilters.flatType}
           autoFitKey={mapExplorer.autoFitKey}
           showBlockMarkers={pipeline.hasMapMarkerScope}
           isDarkMode={theme === "dark"}
@@ -367,12 +392,13 @@ function App() {
             detail={detail}
             comparison={comparison}
             selectedBlock={selectedBlock}
-            filters={filters}
+            filters={activeFilters}
             allBlocks={pipeline.blocks}
             isLoading={detailLoading}
             isComparisonLoading={comparisonLoading}
             isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
-            remainingLeaseMin={filters.remainingLeaseMin}
+            shortlistFull={shortlist.isFull}
+            remainingLeaseMin={activeFilters.remainingLeaseMin}
             referenceMonth={manifest.dataWindow.maxMonth}
             searchProfile={searchProfile.profile}
             onClose={() => patchFilters({ selectedAddressKey: null })}
@@ -402,22 +428,23 @@ function App() {
             hasResultScope={pipeline.hasResultScope}
             onSelect={handleSelectAddress}
             onToggleShortlist={handleToggleShortlist}
-            selectedAddressKey={filters.selectedAddressKey}
+            selectedAddressKey={activeFilters.selectedAddressKey}
             shortlistKeys={shortlistKeySet}
+            shortlistFull={shortlist.isFull}
             isCompact
-            budgetMin={filters.budgetMin}
-            budgetMax={filters.budgetMax}
+            budgetMin={activeFilters.budgetMin}
+            budgetMax={activeFilters.budgetMax}
             searchProfile={searchProfile.profile}
-            affordabilityMode={filters.affordable}
+            affordabilityMode={activeFilters.affordable}
             onClearAffordabilityFilter={() => patchUserFilters({ affordable: "" })}
-            sortMode={filters.sort}
+            sortMode={activeFilters.sort}
             onSortChange={(sort) => patchUserFilters({ sort })}
             profileTown={pipeline.effectiveFilters.town || null}
             profileTownBlocks={searchProfile.townProfileBlocks}
             profileDataWindow={manifest.dataWindow}
             profileStartMonth={pipeline.effectiveFilters.startMonth}
             profileEndMonth={pipeline.effectiveFilters.endMonth}
-            compareTown={filters.compareTown || null}
+            compareTown={activeFilters.compareTown || null}
             availableTowns={manifest.filterOptions.towns}
             onChangeCompareTown={(compareTown) => patchFilters({ compareTown })}
             townRecommendations={searchProfile.townRecommendations}
@@ -426,7 +453,7 @@ function App() {
               patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })
             }
             searchTruncated={pipeline.searchTruncated}
-            shareUrl={resultsShareUrl}
+            shareUrl={shareableResultsUrl}
           />
         </Suspense>
       </ErrorBoundary>
@@ -443,16 +470,16 @@ function App() {
       <Suspense fallback={<DrawerSkeleton label={t("app.loadingShortlist")} />}>
         <ShortlistDrawer
           isOpen={panel.isShortlistOpen}
-          filters={filters}
+          filters={activeFilters}
           onSelectAddress={handleSelectAddress}
           onRemove={(addressKey) => shortlist.toggle(addressKey)}
           onRestore={shortlist.restore}
           onToggleOpen={() => panel.setIsShortlistOpen((c) => !c)}
           onUpdate={(addressKey, patch) => shortlist.update(addressKey, patch)}
           rows={shortlistRows}
-          remainingLeaseMin={filters.remainingLeaseMin}
-          budgetMin={filters.budgetMin}
-          budgetMax={filters.budgetMax}
+          remainingLeaseMin={activeFilters.remainingLeaseMin}
+          budgetMin={activeFilters.budgetMin}
+          budgetMax={activeFilters.budgetMax}
           referenceMonth={manifest.dataWindow.maxMonth}
           sync={shortlist.sync}
         />
@@ -481,9 +508,14 @@ function App() {
           void listingCheck.onShare();
         }}
         onUseSampleCheck={listingCheck.onUseSampleCheck}
-        onOpenCandidates={handleOpenCandidates}
-        onOpenShortlist={handleOpenShortlist}
         savedToShortlist={listingCheck.savedToShortlist}
+        shortlistFull={
+          shortlist.isFull &&
+          !(
+            listingCheck.state.selectedAddressKey &&
+            shortlist.has(listingCheck.state.selectedAddressKey)
+          )
+        }
         referenceMonth={manifest?.dataWindow.maxMonth}
       />
     </Suspense>
@@ -539,18 +571,20 @@ function App() {
           />
         ) : null}
 
-        {mapExplorer.controlsVisible && <MapLocaleControl isDesktop={panel.isDesktop} />}
+        {mapExplorer.controlsVisible && !showScopePrompt && (
+          <MapLocaleControl isDesktop={panel.isDesktop} />
+        )}
 
         {/* Price-colour legend — only when map is visible */}
         <PriceLegend
           isDesktop={panel.isDesktop}
-          isVisible={pipeline.hasMapMarkerScope && mapExplorer.controlsVisible}
+          isVisible={pipeline.hasMapMarkerScope && mapExplorer.controlsVisible && !showScopePrompt}
           mode={mapExplorer.heatmapMode}
           t={t}
         />
 
         {/* Price heatmap toggle */}
-        {mapExplorer.controlsVisible && (
+        {mapExplorer.controlsVisible && !showScopePrompt && (
           <PriceHeatmapControl
             isEnabled={mapExplorer.priceHeatmapEnabled}
             opacity={mapExplorer.priceHeatmapOpacity}
@@ -565,7 +599,7 @@ function App() {
           />
         )}
 
-        {mapExplorer.controlsVisible && (
+        {mapExplorer.controlsVisible && !showScopePrompt && (
           <AmenityLayersControl
             mrtEnabled={mapExplorer.mrtEnabled}
             schoolOverlayEnabled={mapExplorer.schoolOverlayEnabled}
@@ -585,7 +619,7 @@ function App() {
           isDesktop={panel.isDesktop}
           t={t}
           onOpenFilters={handleOpenFilters}
-          onShare={handleShareFilters}
+          onShare={activeFilters.affordable ? undefined : handleShareFilters}
           hidden={detailVisible && panel.isDesktop}
         />
 
@@ -618,6 +652,15 @@ function App() {
           onShowHeader={() => header.setIsHeaderVisible(true)}
           showHeaderLabel={t("app.showHeader")}
         />
+
+        {searchProfile.shouldShowWizard ? (
+          <SearchProfileWizard
+            options={manifest.filterOptions}
+            initialProfile={searchProfile.profile}
+            onComplete={handleCompleteSearchProfile}
+            onSkip={searchProfile.dismissWizard}
+          />
+        ) : null}
       </main>
 
       <AppTabBars

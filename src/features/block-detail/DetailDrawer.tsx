@@ -87,6 +87,7 @@ type DetailDrawerProps = {
   isLoading: boolean;
   isComparisonLoading: boolean;
   isSaved: boolean;
+  shortlistFull?: boolean;
   remainingLeaseMin: number | null;
   referenceMonth?: string;
   filters?: FilterState;
@@ -313,6 +314,7 @@ export function DetailDrawer({
   isLoading,
   isComparisonLoading,
   isSaved,
+  shortlistFull = false,
   remainingLeaseMin,
   referenceMonth,
   filters = DEFAULT_FILTERS,
@@ -322,6 +324,7 @@ export function DetailDrawer({
   onSelectBlock,
 }: DetailDrawerProps) {
   const { locale, t } = useI18n();
+  const shortlistSaveBlocked = shortlistFull && !isSaved;
   const {
     activeTab,
     handleTabChange,
@@ -1253,8 +1256,14 @@ export function DetailDrawer({
                 onClick={onToggleShortlist}
                 variant={isSaved ? "secondary" : "default"}
                 aria-pressed={isSaved}
-                aria-label={t("detail.save")}
-                disabled={!currentSummary}
+                aria-label={
+                  shortlistSaveBlocked
+                    ? t("shortlist.full")
+                    : isSaved
+                      ? t("detail.saved")
+                      : t("detail.save")
+                }
+                disabled={!currentSummary || shortlistSaveBlocked}
               >
                 <Bookmark
                   data-icon="inline-start"
@@ -1263,10 +1272,18 @@ export function DetailDrawer({
                 />
                 <span className="truncate">
                   <span className="sm:hidden">
-                    {isSaved ? t("results.saved") : t("results.save")}
+                    {shortlistSaveBlocked
+                      ? t("shortlist.full")
+                      : isSaved
+                        ? t("results.saved")
+                        : t("results.save")}
                   </span>
                   <span className="hidden sm:inline">
-                    {isSaved ? t("detail.saved") : t("detail.save")}
+                    {shortlistSaveBlocked
+                      ? t("shortlist.full")
+                      : isSaved
+                        ? t("detail.saved")
+                        : t("detail.save")}
                   </span>
                 </span>
               </Button>

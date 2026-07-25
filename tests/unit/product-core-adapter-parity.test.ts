@@ -17,7 +17,6 @@ import type { SearchProfile } from "@shared/product/search-profile";
 // ── Shared core (canonical logic) ────────────────────────────────────────
 import {
   evaluateBlockForProfile as sharedEvaluateBlockForProfile,
-  applyProfileVisibility as sharedApplyProfileVisibility,
   createProfileEvaluator as sharedCreateProfileEvaluator,
 } from "@shared/product/search-profile";
 import {
@@ -31,7 +30,6 @@ import { passesAffordabilityMode as sharedPassesAffordabilityMode } from "@share
 // ── Web adapters ─────────────────────────────────────────────────────────
 import {
   evaluateBlockForProfile as adapterEvaluateBlockForProfile,
-  applyProfileVisibility as adapterApplyProfileVisibility,
   createProfileEvaluator as adapterCreateProfileEvaluator,
 } from "@/features/search-profile/matchProfile";
 import {
@@ -43,18 +41,18 @@ import {
 // ── Test constants ───────────────────────────────────────────────────────
 
 const EMPTY_PROFILE: SearchProfile = {
-  version: 1,
+  version: 2,
   mainFlatType: "",
   alternativeFlatTypes: [],
   maxBudget: null,
   commuteAnchorLabel: "",
   commuteAnchorMrt: null,
   maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 10,
+  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
+  budgetStretchPercent: 0,
+  showStretchOptions: false,
+  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
@@ -224,48 +222,6 @@ describe("adapter-vs-shared parity", () => {
     expect(adapterResult).toEqual(sharedResult);
     expect(adapterResult.flatType).toBe("stretch");
     expect(adapterResult.tier).toBe("stretch");
-  });
-
-  // ── Profile visibility filtering ───────────────────────────────────────
-
-  it("profile visibility filtering matches shared core across visibility states", () => {
-    const blocks = [
-      makeBlock({ addressKey: "pass", flatTypes: ["4 ROOM"], medianPrice: 600000 }),
-      makeBlock({ addressKey: "stretch", flatTypes: ["4 ROOM"], medianPrice: 720000 }),
-      makeBlock({ addressKey: "weak", flatTypes: ["3 ROOM"], medianPrice: 600000 }),
-    ];
-    const profiles = [
-      makeProfile(),
-      makeProfile({ maxBudget: 700000 }),
-      makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700000 }),
-      makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700000, showStretchOptions: false }),
-      makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700000, showAllBlocks: true }),
-    ];
-    const year = 2026;
-
-    for (const profile of profiles) {
-      const sharedResult = sharedApplyProfileVisibility(blocks, profile, year);
-      const adapterResult = adapterApplyProfileVisibility(blocks, profile, year);
-
-      expect(adapterResult.map((b) => b.addressKey)).toEqual(sharedResult.map((b) => b.addressKey));
-    }
-  });
-
-  it("applyProfileVisibility matches shared core", () => {
-    const blocks = golden.searchProfileScenarios.map((s) => makeBlock(s.block));
-    const profile = makeProfile({
-      mainFlatType: "4 ROOM",
-      maxBudget: 700000,
-      budgetStretchPercent: 5,
-      maxComfortableCommuteMinutes: 30,
-      commuteStretchMinutes: 10,
-    });
-    const year = 2026;
-
-    const sharedResult = sharedApplyProfileVisibility(blocks, profile, year);
-    const adapterResult = adapterApplyProfileVisibility(blocks, profile, year);
-
-    expect(adapterResult.map((b) => b.addressKey)).toEqual(sharedResult.map((b) => b.addressKey));
   });
 
   // ── Town/budget filtering ──────────────────────────────────────────────

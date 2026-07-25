@@ -1,6 +1,6 @@
 # Shortlisting
 
-The **Saved** tab holds blocks you bookmarked — up to **20**. Save a block with the bookmark icon in the detail drawer or a results row, or save a listing check directly from the Check tab (the asking price and inputs are kept with it).
+The **Saved** tab holds blocks you bookmarked — up to **20**. Saved homes appear before sync, export, and other secondary utilities. Save a block with the bookmark icon in the detail drawer or a results row, or save a listing check directly from the Check tab. A saved check records the seller's asking price without overwriting your buyer target price or notes.
 
 ## Decision board
 
@@ -11,6 +11,8 @@ Each saved block can carry richer context for your decision:
 - valuation, estimated COV, and viewing date
 - decision status — `considering`, `viewing booked`, `offered`, `kiv`, `rejected`, `dropped`
 - pros, cons, renovation notes, noise notes, transport notes, agent remarks, and free-form buyer notes
+
+Offer preparation starts collapsed. Open it only when you are ready; the board exposes one offer-ceiling field and one buyer-notes field rather than duplicate inputs. Comparison highlights appear only when at least two homes can actually be compared, and the default order is recently saved.
 
 Removing a saved block shows an **Undo** action for five seconds. Undo restores the exact saved entry in its previous position, including its asking price, offer fields, decision status, and notes.
 

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vite-plus/test";
 import { SearchProfileWizard } from "@/features/search-profile/SearchProfileWizard";
@@ -6,7 +6,9 @@ import { I18nProvider } from "@/shared/lib/i18n";
 import { maxAffordablePrice } from "@/shared/lib/affordability";
 import { formatCurrency } from "@/shared/lib/format";
 import { SEARCH_PROFILE_MAX_MONETARY_VALUE } from "@/shared/lib/constants";
+import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
 import type { FilterOptions } from "@/types/data";
+import type { SearchProfile } from "@/types/searchProfile";
 
 const options: FilterOptions = {
   towns: ["BEDOK"],
@@ -14,10 +16,15 @@ const options: FilterOptions = {
   flatModels: ["Model A"],
 };
 
-function renderWizard(onComplete = vi.fn(), onSkip = vi.fn()) {
+function renderWizard(onComplete = vi.fn(), onSkip = vi.fn(), initialProfile?: SearchProfile) {
   return render(
     <I18nProvider>
-      <SearchProfileWizard options={options} onComplete={onComplete} onSkip={onSkip} />
+      <SearchProfileWizard
+        options={options}
+        initialProfile={initialProfile}
+        onComplete={onComplete}
+        onSkip={onSkip}
+      />
     </I18nProvider>,
   );
 }
@@ -27,20 +34,90 @@ async function clickPrimary(user: ReturnType<typeof userEvent.setup>, label: Reg
 }
 
 describe("SearchProfileWizard", () => {
-  it("calls onSkip from the welcome step", async () => {
+  it("behaves as a modal dialog and dismisses with Escape", async () => {
     const user = userEvent.setup();
     const onSkip = vi.fn();
     renderWizard(vi.fn(), onSkip);
 
+    const dialog = screen.getByRole("dialog", { name: "Buyer setup" });
+    await waitFor(() => {
+      expect(within(dialog).getByRole("button", { name: "4 ROOM" })).toHaveFocus();
+    });
+
+    await user.keyboard("{Escape}");
+    expect(onSkip).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls onSkip from the first preference step", async () => {
+    const user = userEvent.setup();
+    const onSkip = vi.fn();
+    renderWizard(vi.fn(), onSkip);
+
+    expect(screen.getByText(/what type of flat/i)).toBeInTheDocument();
     await clickPrimary(user, /skip for now/i);
     expect(onSkip).toHaveBeenCalledTimes(1);
+  });
+
+  it("exposes the current setup step to assistive technology", async () => {
+    const user = userEvent.setup();
+    renderWizard();
+
+    const progress = screen.getByRole("progressbar", {
+      name: /buyer setup step 1 of 5/i,
+    });
+    expect(progress).toHaveAttribute("aria-valuenow", "1");
+    expect(progress).toHaveAttribute("aria-valuemax", "5");
+
+    await user.click(screen.getByRole("button", { name: "4 ROOM" }));
+    await clickPrimary(user, /next/i);
+    expect(screen.getByRole("progressbar", { name: /buyer setup step 2 of 5/i })).toHaveAttribute(
+      "aria-valuenow",
+      "2",
+    );
+  });
+
+  it("keeps setup skippable after advancing", async () => {
+    const user = userEvent.setup();
+    const onSkip = vi.fn();
+    renderWizard(vi.fn(), onSkip);
+
+    await user.click(screen.getByRole("button", { name: "4 ROOM" }));
+    await clickPrimary(user, /next/i);
+    expect(screen.getByText(/what's your budget/i)).toBeInTheDocument();
+
+    await clickPrimary(user, /skip for now/i);
+    expect(onSkip).toHaveBeenCalledTimes(1);
+  });
+
+  it("prefills every retained value when editing an existing profile", async () => {
+    const user = userEvent.setup();
+    renderWizard(vi.fn(), vi.fn(), {
+      ...DEFAULT_SEARCH_PROFILE,
+      mainFlatType: "4 ROOM",
+      maxBudget: 700_000,
+      minimumRemainingLeaseYears: 70,
+      age: 35,
+      coApplicantAge: 33,
+      cpfOABalance: 120_000,
+      monthlyIncome: 9_000,
+    });
+
+    expect(screen.getByRole("button", { name: "4 ROOM" })).toHaveAttribute("aria-pressed", "true");
+    await clickPrimary(user, /next/i);
+    expect(screen.getByPlaceholderText(/e\.g\. 750000/i)).toHaveValue(700_000);
+    await clickPrimary(user, /next/i);
+    expect(screen.getByPlaceholderText(/e\.g\. 65/i)).toHaveValue(70);
+    await clickPrimary(user, /next/i);
+    expect(screen.getByLabelText(/^your age$/i)).toHaveValue(35);
+    expect(screen.getByLabelText(/co-applicant age/i)).toHaveValue(33);
+    expect(screen.getByLabelText(/cpf oa balance/i)).toHaveValue(120_000);
+    expect(screen.getByLabelText(/household monthly income/i)).toHaveValue(9_000);
   });
 
   it("blocks advancing on the flat-type step until a type is selected", async () => {
     const user = userEvent.setup();
     renderWizard();
 
-    await clickPrimary(user, /get started/i);
     expect(screen.getByText(/what type of flat/i)).toBeInTheDocument();
 
     const nextButton = screen.getByRole("button", { name: /next/i });
@@ -54,7 +131,6 @@ describe("SearchProfileWizard", () => {
     const user = userEvent.setup();
     renderWizard();
 
-    await clickPrimary(user, /get started/i);
     await user.click(screen.getByRole("button", { name: "4 ROOM" }));
     await clickPrimary(user, /next/i);
 
@@ -79,19 +155,14 @@ describe("SearchProfileWizard", () => {
     });
     expect(expectedCeiling).toBeGreaterThan(0);
 
-    await clickPrimary(user, /get started/i);
     await user.click(screen.getByRole("button", { name: "4 ROOM" }));
     await clickPrimary(user, /next/i);
-    await clickPrimary(user, /next/i);
-
-    await user.click(screen.getByRole("button", { name: /select mrt station/i }));
-    await user.click(screen.getByRole("option", { name: "Bedok" }));
-    await user.click(screen.getByRole("button", { name: /10 min/i }));
     await clickPrimary(user, /next/i);
 
     await user.click(screen.getByRole("button", { name: /70 yr/i }));
     await clickPrimary(user, /next/i);
 
+    expect(screen.getByText(/stored only in this browser/i)).toBeInTheDocument();
     await user.type(screen.getByLabelText(/^your age$/i), String(age));
     await user.type(screen.getByLabelText(/co-applicant age/i), "33");
     await user.type(screen.getByLabelText(/cpf oa balance/i), String(cpfOABalance));
@@ -102,15 +173,19 @@ describe("SearchProfileWizard", () => {
       screen.getByText(`Max affordable: ${formatCurrency(expectedCeiling)}`),
     ).toBeInTheDocument();
 
-    await clickPrimary(user, /continue to map/i);
+    await clickPrimary(user, /apply setup/i);
 
     expect(onComplete).toHaveBeenCalledWith(
       expect.objectContaining({
-        version: 1,
+        version: 2,
         mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "Bedok",
-        commuteAnchorMrt: "BEDOK MRT STATION",
-        maxComfortableCommuteMinutes: 10,
+        commuteAnchorLabel: "",
+        commuteAnchorMrt: null,
+        maxComfortableCommuteMinutes: null,
+        commuteStretchMinutes: 0,
+        budgetStretchPercent: 0,
+        showStretchOptions: false,
+        showAllBlocks: true,
         minimumRemainingLeaseYears: 70,
         age,
         coApplicantAge: 33,
@@ -124,14 +199,8 @@ describe("SearchProfileWizard", () => {
     const user = userEvent.setup();
     renderWizard();
 
-    await clickPrimary(user, /get started/i);
     await user.click(screen.getByRole("button", { name: "4 ROOM" }));
     await clickPrimary(user, /next/i);
-    await clickPrimary(user, /next/i);
-
-    await user.click(screen.getByRole("button", { name: /select mrt station/i }));
-    await user.click(screen.getByRole("option", { name: "Bedok" }));
-    await user.click(screen.getByRole("button", { name: /10 min/i }));
     await clickPrimary(user, /next/i);
 
     await user.click(screen.getByRole("button", { name: /70 yr/i }));

@@ -1,11 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  applyProfileVisibility,
   computeRemainingLeaseYears,
   createProfileEvaluator,
   evaluateBlockForProfile,
   hasCompletedSearchProfile,
-  isProfileVisibilityActive,
 } from "@shared/product/search-profile";
 import type { BlockSummary } from "@shared/data-types";
 import type { SearchProfile } from "@shared/product/search-profile";
@@ -34,18 +32,18 @@ function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): B
 }
 
 const DEFAULT_PROFILE: SearchProfile = {
-  version: 1,
+  version: 2,
   mainFlatType: "",
   alternativeFlatTypes: [],
   maxBudget: null,
   commuteAnchorLabel: "",
   commuteAnchorMrt: null,
   maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 10,
+  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
+  budgetStretchPercent: 0,
+  showStretchOptions: false,
+  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
@@ -61,9 +59,6 @@ describe("shared/product/search-profile", () => {
     it("returns true for a complete profile", () => {
       const profile = makeProfile({
         mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "Raffles Place",
-        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-        maxComfortableCommuteMinutes: 30,
         minimumRemainingLeaseYears: 70,
       });
       expect(hasCompletedSearchProfile(profile)).toBe(true);
@@ -72,53 +67,24 @@ describe("shared/product/search-profile", () => {
     it("returns false when mainFlatType is blank", () => {
       const profile = makeProfile({
         mainFlatType: "",
-        commuteAnchorLabel: "Raffles Place",
-        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-        maxComfortableCommuteMinutes: 30,
         minimumRemainingLeaseYears: 70,
       });
       expect(hasCompletedSearchProfile(profile)).toBe(false);
     });
 
-    it("does not require commuteAnchorLabel when MRT and walk time are set", () => {
+    it("does not require an MRT anchor or walking preference", () => {
       const profile = makeProfile({
         mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "",
-        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-        maxComfortableCommuteMinutes: 30,
+        commuteAnchorMrt: null,
+        maxComfortableCommuteMinutes: null,
         minimumRemainingLeaseYears: 70,
       });
       expect(hasCompletedSearchProfile(profile)).toBe(true);
     });
 
-    it("returns false when commuteAnchorMrt is null", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "Raffles Place",
-        commuteAnchorMrt: null,
-        maxComfortableCommuteMinutes: 30,
-        minimumRemainingLeaseYears: 70,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(false);
-    });
-
-    it("returns false when maxComfortableCommuteMinutes is null", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "Raffles Place",
-        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-        maxComfortableCommuteMinutes: null,
-        minimumRemainingLeaseYears: 70,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(false);
-    });
-
     it("returns false when minimumRemainingLeaseYears is null", () => {
       const profile = makeProfile({
         mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "Raffles Place",
-        commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-        maxComfortableCommuteMinutes: 30,
         minimumRemainingLeaseYears: null,
       });
       expect(hasCompletedSearchProfile(profile)).toBe(false);
@@ -135,50 +101,18 @@ describe("shared/product/search-profile", () => {
 
     it("returns false for partial profile payloads with missing required fields", () => {
       expect(hasCompletedSearchProfile({ mainFlatType: "4 ROOM" })).toBe(false);
-      expect(
-        hasCompletedSearchProfile({
-          mainFlatType: "4 ROOM",
-          commuteAnchorLabel: "Raffles Place",
-          commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-          maxComfortableCommuteMinutes: 30,
-        }),
-      ).toBe(false);
+      expect(hasCompletedSearchProfile({ minimumRemainingLeaseYears: 70 })).toBe(false);
     });
 
-    it("returns false for whitespace-only string fields", () => {
+    it("returns false for a whitespace-only flat type", () => {
       expect(
         hasCompletedSearchProfile(
           makeProfile({
             mainFlatType: "   ",
-            commuteAnchorLabel: "Raffles Place",
-            commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-            maxComfortableCommuteMinutes: 30,
             minimumRemainingLeaseYears: 70,
           }),
         ),
       ).toBe(false);
-      expect(
-        hasCompletedSearchProfile(
-          makeProfile({
-            mainFlatType: "4 ROOM",
-            commuteAnchorLabel: "Raffles Place",
-            commuteAnchorMrt: "   ",
-            maxComfortableCommuteMinutes: 30,
-            minimumRemainingLeaseYears: 70,
-          }),
-        ),
-      ).toBe(false);
-    });
-
-    it("returns false when commuteAnchorMrt is empty string", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "Raffles Place",
-        commuteAnchorMrt: "",
-        maxComfortableCommuteMinutes: 30,
-        minimumRemainingLeaseYears: 70,
-      });
-      expect(hasCompletedSearchProfile(profile)).toBe(false);
     });
   });
 
@@ -244,6 +178,71 @@ describe("shared/product/search-profile", () => {
         maxComfortableCommuteMinutes: 30,
       });
       expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("strong");
+    });
+
+    it("uses routed walking time instead of a straight distance proxy", () => {
+      const block = makeBlock({
+        addressKey: "x",
+        nearestMrt: {
+          stationName: "X",
+          distanceMeters: 800,
+          walkingTimeSeconds: 15 * 60,
+        },
+      });
+      const profile = makeProfile({ maxComfortableCommuteMinutes: 10 });
+
+      const result = evaluateBlockForProfile(block, profile, 2026);
+
+      expect(result.commute).toBe("fail");
+      expect(result.tier).toBe("weak");
+    });
+
+    it("falls back to distance when routed walking time is unavailable", () => {
+      const block = makeBlock({
+        addressKey: "x",
+        nearestMrt: {
+          stationName: "X",
+          distanceMeters: 800,
+          walkingTimeSeconds: Number.NaN,
+        },
+      });
+      const profile = makeProfile({ maxComfortableCommuteMinutes: 10 });
+
+      expect(evaluateBlockForProfile(block, profile, 2026).commute).toBe("pass");
+    });
+
+    it("uses the selected flat type median for the hard budget maximum", () => {
+      const block = makeBlock({
+        addressKey: "x",
+        medianPrice: 600_000,
+        medianPriceByFlatType: {
+          "3 ROOM": 550_000,
+          "4 ROOM": 750_000,
+        },
+      });
+      const profile = makeProfile({
+        mainFlatType: "4 ROOM",
+        maxBudget: 700_000,
+      });
+
+      const result = evaluateBlockForProfile(block, profile, 2026);
+
+      expect(result.budget).toBe("fail");
+      expect(result.tier).toBe("weak");
+    });
+
+    it("treats one failed maximum as weak even when another dimension passes", () => {
+      const block = makeBlock({
+        addressKey: "x",
+        medianPrice: 900_000,
+        nearestMrt: { stationName: "X", distanceMeters: 200, walkingTimeSeconds: 180 },
+      });
+      const profile = makeProfile({
+        maxBudget: 700_000,
+        maxComfortableCommuteMinutes: 10,
+      });
+
+      expect(evaluateBlockForProfile(block, profile, 2026).tier).toBe("weak");
     });
 
     it("returns good when one dimension stretches and the other passes", () => {
@@ -332,80 +331,6 @@ describe("shared/product/search-profile", () => {
       const result1 = evaluateBlockForProfile(block, makeProfile(), 2026);
       const result2 = evaluateBlockForProfile(block, makeProfile(), 2026);
       expect(result1).toEqual(result2);
-    });
-  });
-
-  describe("isProfileVisibilityActive", () => {
-    it("returns false when showAllBlocks is true", () => {
-      expect(
-        isProfileVisibilityActive(makeProfile({ mainFlatType: "4 ROOM", showAllBlocks: true })),
-      ).toBe(false);
-    });
-
-    it("returns false when no profile fields are set", () => {
-      expect(isProfileVisibilityActive(makeProfile())).toBe(false);
-    });
-
-    it("returns true when at least one filter dimension is set", () => {
-      expect(isProfileVisibilityActive(makeProfile({ maxBudget: 700_000 }))).toBe(true);
-    });
-  });
-
-  describe("applyProfileVisibility", () => {
-    const passing = makeBlock({
-      addressKey: "pass",
-      flatTypes: ["4 ROOM"],
-      medianPrice: 600_000,
-      nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
-    });
-    const stretching = makeBlock({
-      addressKey: "stretch",
-      flatTypes: ["4 ROOM"],
-      medianPrice: 720_000,
-      nearestMrt: { stationName: "X", distanceMeters: 3000, walkingTimeSeconds: 2400 },
-    });
-    const weak = makeBlock({ addressKey: "weak", flatTypes: ["3 ROOM"], medianPrice: 600_000 });
-
-    it("hides weak matches by default", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-        budgetStretchPercent: 5,
-        maxComfortableCommuteMinutes: 30,
-        commuteStretchMinutes: 30,
-      });
-      const result = applyProfileVisibility([passing, stretching, weak], profile, 2026);
-      expect(result.map((b) => b.addressKey)).toEqual(["pass", "stretch"]);
-    });
-
-    it("hides stretch matches when showStretchOptions is false", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-        budgetStretchPercent: 5,
-        maxComfortableCommuteMinutes: 30,
-        commuteStretchMinutes: 30,
-        showStretchOptions: false,
-      });
-      const result = applyProfileVisibility([passing, stretching, weak], profile, 2026);
-      expect(result.map((b) => b.addressKey)).toEqual(["pass"]);
-    });
-
-    it("returns the original list when showAllBlocks is true", () => {
-      const profile = makeProfile({
-        mainFlatType: "4 ROOM",
-        maxBudget: 700_000,
-        showAllBlocks: true,
-      });
-      const input = [passing, stretching, weak];
-      expect(applyProfileVisibility(input, profile, 2026)).toBe(input);
-    });
-
-    it("is deterministic with explicit currentYear", () => {
-      const profile = makeProfile({ mainFlatType: "4 ROOM", maxBudget: 700_000 });
-      const r1 = applyProfileVisibility([passing, weak], profile, 2026);
-      const r2 = applyProfileVisibility([passing, weak], profile, 2026);
-      expect(r1.map((b) => b.addressKey)).toEqual(r2.map((b) => b.addressKey));
     });
   });
 });

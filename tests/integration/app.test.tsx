@@ -208,18 +208,18 @@ const blocks: BlockSummary[] = [
 ];
 
 const completedSearchProfile = {
-  version: 1,
+  version: 2,
   mainFlatType: "4 ROOM",
   alternativeFlatTypes: [],
   maxBudget: 700000,
-  commuteAnchorLabel: "Bedok MRT",
-  commuteAnchorMrt: "BEDOK MRT STATION",
-  maxComfortableCommuteMinutes: 30,
-  commuteStretchMinutes: 10,
+  commuteAnchorLabel: "",
+  commuteAnchorMrt: null,
+  maxComfortableCommuteMinutes: null,
+  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: 65,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
+  budgetStretchPercent: 0,
+  showStretchOptions: false,
+  showAllBlocks: true,
 };
 
 function createDeferredPromise<T>() {
@@ -268,6 +268,20 @@ describe("App detail loading", () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+  });
+
+  it("starts with the map prompt unobstructed instead of opening filters automatically", async () => {
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+    expect(document.querySelector("#desktop-left-panel")).toHaveAttribute("data-open", "false");
+    expect(screen.getByText(/start with location/i)).toBeInTheDocument();
   });
 
   it("clears loading and shows results again when selection is removed mid-request", async () => {
@@ -343,6 +357,7 @@ describe("App detail loading", () => {
       expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "2023-04");
     });
 
+    await user.click(screen.getByRole("button", { name: "Filters" }));
     await user.click(screen.getByRole("button", { name: "Clear start month" }));
 
     await waitFor(() => {
@@ -615,6 +630,7 @@ describe("App detail loading", () => {
     );
 
     await screen.findByTestId("filter-panel");
+    await user.click(screen.getByRole("button", { name: "Filters" }));
     await user.click(screen.getByRole("button", { name: "Choose Bedok" }));
 
     await waitFor(() => {

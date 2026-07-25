@@ -3,6 +3,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { ShortlistDrawer } from "@/features/shortlist/ShortlistDrawer";
 import { DEFAULT_FILTERS, MAX_SHORTLIST_ITEMS } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n/provider";
+import type { ShortlistSync } from "@/features/shortlist/useShortlistSync";
 import type { BlockSummary, ComparisonArtifact, ShortlistItem } from "@/types/data";
 
 const mockBlock: BlockSummary = {
@@ -96,6 +97,12 @@ const mockRowTwo = {
     : null,
 };
 
+function expandRow(name: RegExp) {
+  const button = screen.getByRole("button", { name, expanded: false });
+  fireEvent.click(button);
+  return button;
+}
+
 describe("ShortlistDrawer", () => {
   it("displays comparison data when available", () => {
     render(
@@ -107,12 +114,14 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
       </I18nProvider>,
     );
+
+    expandRow(/101 Ang Mo Kio Ave 3/i);
 
     // Check that primary schools data is displayed
     expect(screen.getByText("Primary schools")).toBeInTheDocument();
@@ -149,12 +158,14 @@ describe("ShortlistDrawer", () => {
           rows={[rowWithoutComparison]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
       </I18nProvider>,
     );
+
+    expandRow(/101 Ang Mo Kio Ave 3/i);
 
     // Should not show loading state - comparison data sections are simply omitted
     expect(screen.queryByText("Loading comparison data…")).not.toBeInTheDocument();
@@ -177,7 +188,7 @@ describe("ShortlistDrawer", () => {
           rows={[]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -203,12 +214,14 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={onUpdate}
           onSelectAddress={onSelectAddress}
         />
       </I18nProvider>,
     );
+
+    expandRow(/101 Ang Mo Kio Ave 3/i);
 
     fireEvent.change(screen.getByLabelText("Your target price"), {
       target: { value: "490000" },
@@ -221,7 +234,7 @@ describe("ShortlistDrawer", () => {
 
   it("restores the exact removed shortlist item through the explicit restore path", () => {
     const onRemove = vi.fn();
-    const onRestore = vi.fn();
+    const onRestore = vi.fn(() => true);
     const itemWithBuyerData: ShortlistItem = {
       ...mockShortlistItem,
       askingPrice: 612345,
@@ -262,6 +275,42 @@ describe("ShortlistDrawer", () => {
     expect(onRemove).toHaveBeenCalledTimes(1);
   });
 
+  it("keeps Undo available and explains when shortlist capacity blocks restore", () => {
+    const onRestore = vi.fn().mockReturnValueOnce(false).mockReturnValueOnce(true);
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={onRestore}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Remove 101 Ang Mo Kio Ave 3 from shortlist",
+      }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
+
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Shortlist is full. Remove another saved home, then try Undo again.",
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Undo" }));
+
+    expect(onRestore).toHaveBeenCalledTimes(2);
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  });
+
   it("uses the same exact target copy in the card view as the comparison table", () => {
     render(
       <I18nProvider>
@@ -277,7 +326,7 @@ describe("ShortlistDrawer", () => {
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -300,7 +349,7 @@ describe("ShortlistDrawer", () => {
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={onSelectAddress}
         />
@@ -324,8 +373,8 @@ describe("ShortlistDrawer", () => {
     expect(screen.getByRole("columnheader", { name: "Notes" })).toBeInTheDocument();
 
     const tableRows = screen.getAllByTestId("shortlist-comparison-row");
-    expect(tableRows[0]).toHaveTextContent("101 Ang Mo Kio Ave 3");
-    expect(tableRows[1]).toHaveTextContent("202 Bedok North St 1");
+    expect(tableRows[0]).toHaveTextContent("202 Bedok North St 1");
+    expect(tableRows[1]).toHaveTextContent("101 Ang Mo Kio Ave 3");
     expect(tableRows[0]).toHaveTextContent("Ang Mo Kio");
     expect(tableRows[0]).toHaveTextContent("Test notes");
     expect(tableRows[1]).toHaveTextContent("Test notes");
@@ -351,7 +400,7 @@ describe("ShortlistDrawer", () => {
           remainingLeaseMin={null}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -372,7 +421,7 @@ describe("ShortlistDrawer", () => {
     expect(cards[0]).toHaveTextContent("Test notes"); // buyer notes
   });
 
-  it("keeps a valid card expanded when shortlist rows change", () => {
+  it("keeps newly saved cards collapsed until the buyer opens one", () => {
     const { rerender } = render(
       <I18nProvider>
         <ShortlistDrawer
@@ -382,7 +431,7 @@ describe("ShortlistDrawer", () => {
           rows={[]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -398,7 +447,7 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -407,8 +456,11 @@ describe("ShortlistDrawer", () => {
 
     const firstCardButton = screen.getByRole("button", {
       name: /101 Ang Mo Kio Ave 3/i,
-      expanded: true,
+      expanded: false,
     });
+    expect(firstCardButton).toHaveAttribute("aria-expanded", "false");
+
+    fireEvent.click(firstCardButton);
     expect(firstCardButton).toHaveAttribute("aria-expanded", "true");
 
     rerender(
@@ -420,25 +472,7 @@ describe("ShortlistDrawer", () => {
           rows={[mockRow, mockRowTwo]}
           onToggleOpen={() => {}}
           onRemove={() => {}}
-          onRestore={() => {}}
-          onUpdate={() => {}}
-          onSelectAddress={() => {}}
-        />
-      </I18nProvider>,
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: /202 Bedok North St 1/i, expanded: false }));
-
-    rerender(
-      <I18nProvider>
-        <ShortlistDrawer
-          filters={DEFAULT_FILTERS}
-          remainingLeaseMin={null}
-          isOpen={true}
-          rows={[mockRow]}
-          onToggleOpen={() => {}}
-          onRemove={() => {}}
-          onRestore={() => {}}
+          onRestore={() => true}
           onUpdate={() => {}}
           onSelectAddress={() => {}}
         />
@@ -448,5 +482,93 @@ describe("ShortlistDrawer", () => {
     expect(
       screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i, expanded: true }),
     ).toHaveAttribute("aria-expanded", "true");
+    expect(
+      screen.getByRole("button", { name: /202 Bedok North St 1/i, expanded: false }),
+    ).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("does not show comparative superlatives for a single saved home", () => {
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={() => true}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.queryByText("Best value")).not.toBeInTheDocument();
+    expect(screen.queryByText("Longest lease")).not.toBeInTheDocument();
+    expect(screen.queryByText("Closest MRT")).not.toBeInTheDocument();
+  });
+
+  it("shows one offer ceiling and one buyer-notes field", () => {
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={() => true}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expandRow(/101 Ang Mo Kio Ave 3/i);
+
+    expect(screen.getAllByLabelText("Suggested offer ceiling")).toHaveLength(1);
+    expect(screen.queryByLabelText("Offer ceiling", { exact: true })).not.toBeInTheDocument();
+    expect(screen.getAllByLabelText("Buyer notes")).toHaveLength(1);
+    expect(screen.queryByLabelText("Notes", { exact: true })).not.toBeInTheDocument();
+  });
+
+  it("renders saved homes before export and sync utilities", () => {
+    const sync: ShortlistSync = {
+      code: null,
+      status: "local",
+      enable: vi.fn().mockResolvedValue(undefined),
+      link: vi.fn().mockResolvedValue(undefined),
+      disable: vi.fn(),
+    };
+
+    render(
+      <I18nProvider>
+        <ShortlistDrawer
+          filters={DEFAULT_FILTERS}
+          remainingLeaseMin={null}
+          isOpen={true}
+          rows={[mockRow]}
+          onToggleOpen={() => {}}
+          onRemove={() => {}}
+          onRestore={() => true}
+          onUpdate={() => {}}
+          onSelectAddress={() => {}}
+          sync={sync}
+        />
+      </I18nProvider>,
+    );
+
+    const savedHome = screen.getByRole("listitem");
+    const utilities = screen.getByTestId("shortlist-utilities");
+    const syncSection = screen.getByTestId("shortlist-sync");
+
+    expect(
+      savedHome.compareDocumentPosition(utilities) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      savedHome.compareDocumentPosition(syncSection) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 });

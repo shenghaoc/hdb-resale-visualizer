@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  applyProfileVisibility,
   computeRemainingLeaseYears,
   evaluateBlockForProfile,
-  isProfileVisibilityActive,
 } from "@/features/search-profile/matchProfile";
 import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
@@ -197,80 +195,5 @@ describe("evaluateBlockForProfile", () => {
       commuteAnchorMrt: null,
     });
     expect(evaluateBlockForProfile(block, profile).commute).toBe("pass");
-  });
-});
-
-describe("isProfileVisibilityActive", () => {
-  it("returns false when showAllBlocks is true", () => {
-    const profile = makeProfile({ mainFlatType: "4 ROOM", showAllBlocks: true });
-    expect(isProfileVisibilityActive(profile)).toBe(false);
-  });
-
-  it("returns false when no profile fields are set", () => {
-    expect(isProfileVisibilityActive(makeProfile())).toBe(false);
-  });
-
-  it("returns true when at least one filter dimension is set", () => {
-    expect(isProfileVisibilityActive(makeProfile({ maxBudget: 700_000 }))).toBe(true);
-  });
-});
-
-describe("applyProfileVisibility", () => {
-  const passing = makeBlock({
-    addressKey: "pass",
-    flatTypes: ["4 ROOM"],
-    medianPrice: 600_000,
-    nearestMrt: { stationName: "X", distanceMeters: 400, walkingTimeSeconds: 320 },
-  });
-  const stretching = makeBlock({
-    addressKey: "stretch",
-    flatTypes: ["4 ROOM"],
-    medianPrice: 720_000,
-    nearestMrt: { stationName: "X", distanceMeters: 3000, walkingTimeSeconds: 2400 },
-  });
-  const weak = makeBlock({
-    addressKey: "weak",
-    flatTypes: ["3 ROOM"],
-    medianPrice: 600_000,
-  });
-
-  it("hides weak matches by default and keeps strong + stretch", () => {
-    const profile = makeProfile({
-      mainFlatType: "4 ROOM",
-      maxBudget: 700_000,
-      budgetStretchPercent: 5,
-      maxComfortableCommuteMinutes: 30,
-      commuteStretchMinutes: 30,
-    });
-    const result = applyProfileVisibility([passing, stretching, weak], profile);
-    expect(result.map((b) => b.addressKey)).toEqual(["pass", "stretch"]);
-  });
-
-  it("hides stretch matches when showStretchOptions is false", () => {
-    const profile = makeProfile({
-      mainFlatType: "4 ROOM",
-      maxBudget: 700_000,
-      budgetStretchPercent: 5,
-      maxComfortableCommuteMinutes: 30,
-      commuteStretchMinutes: 30,
-      showStretchOptions: false,
-    });
-    const result = applyProfileVisibility([passing, stretching, weak], profile);
-    expect(result.map((b) => b.addressKey)).toEqual(["pass"]);
-  });
-
-  it("returns the original list when showAllBlocks is true", () => {
-    const profile = makeProfile({
-      mainFlatType: "4 ROOM",
-      maxBudget: 700_000,
-      showAllBlocks: true,
-    });
-    const input = [passing, stretching, weak];
-    expect(applyProfileVisibility(input, profile)).toBe(input);
-  });
-
-  it("returns the original list when no profile field is set", () => {
-    const input = [passing, stretching, weak];
-    expect(applyProfileVisibility(input, makeProfile())).toBe(input);
   });
 });

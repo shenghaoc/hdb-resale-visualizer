@@ -7,7 +7,7 @@ Empty results almost always mean the **filter combination is too strict**, not t
 1. Check the **filter chips** under the header — each chip is an active constraint. Remove the most restrictive ones first (budget, remaining lease, MRT distance).
 2. Watch for combinations that quietly exclude everything, e.g. a low budget **plus** a long remaining-lease minimum, or a small town **plus** a rare flat model.
 3. A narrow **date range** hides blocks whose transactions fall outside it — widen it or clear it.
-4. The **affordability filter** needs a search profile; with a tight budget profile it can exclude every block. Use its "clear" button in the empty state.
+4. The **affordability filter** needs local CPF, income, and age inputs. Use its "clear" button in the empty state if that additional constraint is too strict.
 5. Still nothing? Press **Reset** in the filter panel and reapply filters one at a time to find the culprit.
 
 The map only shows block markers once a location scope is set — pick a town, search, or use your location first.
@@ -40,8 +40,9 @@ That badge means the newest _comparable transaction_ is over 12 months old — t
 
 ## Confusing filter behaviour
 
-- Filters and the search profile **combine**. Profile chips (budget, flat type, lease) constrain results even when the filter panel looks empty — remove profile chips below the header if results seem inexplicably narrow.
-- Town selection from the **search bar**, the **wizard**, and the **filter panel** all set the same town filter; the chips row is the source of truth for what is active.
+- Only URL-backed filter chips constrain visible results. Buyer-setup choices for flat type, budget, and lease become those same normal filters; **Reset** clears them. There is no second hidden profile-filter layer.
+- Local finance inputs power affordability estimates only when you explicitly turn on the affordability filter; Buyer setup never silently filters ordinary results.
+- Town selection from the **search bar** and **filter panel** sets the same town filter; the chips row is the source of truth for what is active.
 - The **date range** affects medians and trends, not just visibility: a short window means fewer transactions and noisier numbers.
 
 ## A check found no comparables

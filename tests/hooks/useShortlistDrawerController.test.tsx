@@ -37,17 +37,22 @@ function makeBlock(
   };
 }
 
-function makeItem(addressKey: string, targetPrice: number | null = null): ShortlistItem {
-  return { addressKey, notes: "", targetPrice, addedAt: `${addressKey}-added` };
+function makeItem(
+  addressKey: string,
+  targetPrice: number | null = null,
+  addedAt = "2026-01-01T00:00:00Z",
+): ShortlistItem {
+  return { addressKey, notes: "", targetPrice, addedAt };
 }
 
 function makeRow(
   addressKey: string,
   options: Parameters<typeof makeBlock>[1] = {},
   targetPrice: number | null = null,
+  addedAt?: string,
 ): ShortlistRow {
   return {
-    item: makeItem(addressKey, targetPrice),
+    item: makeItem(addressKey, targetPrice, addedAt),
     block: makeBlock(addressKey, options),
     detailSummary: null,
     monthlyTrend: [],
@@ -65,7 +70,7 @@ function makeOptions(overrides: Partial<TestOptions> = {}): TestOptions {
     remainingLeaseMin: null,
     isDark: false,
     onRemove: vi.fn(),
-    onRestore: vi.fn(),
+    onRestore: vi.fn(() => true),
     ...overrides,
   };
 }
@@ -99,18 +104,18 @@ describe("useShortlistDrawerController", () => {
     vi.useRealTimers();
   });
 
-  it("starts in list view and target-gap ranking mode", () => {
+  it("starts in list view with the most recently saved row first", () => {
     const rows = [
-      makeRow("addr-far", { medianPrice: 600_000 }, 550_000),
-      makeRow("addr-close", {}, 490_000),
+      makeRow("addr-older", { medianPrice: 600_000 }, 550_000, "2026-01-01T00:00:00Z"),
+      makeRow("addr-newer", {}, 490_000, "2026-02-01T00:00:00Z"),
     ];
     const { result } = renderController(makeOptions({ rows }));
 
     expect(result.current.viewMode).toBe("list");
-    expect(result.current.compareMode).toBe("target-gap");
+    expect(result.current.compareMode).toBe("recent");
     expect(result.current.rankedRows.map((row) => row.item.addressKey)).toEqual([
-      "addr-close",
-      "addr-far",
+      "addr-newer",
+      "addr-older",
     ]);
   });
 
@@ -142,7 +147,7 @@ describe("useShortlistDrawerController", () => {
     ).toEqual(["lease.signal.veryShort", "lease.signal.oldCommence", "lease.signal.belowFilter"]);
   });
 
-  it("expands the first row initially and after an empty-to-non-empty transition", async () => {
+  it("keeps offer forms collapsed initially and after an empty-to-non-empty transition", async () => {
     const options = makeOptions({ rows: [] });
     const { result, rerender } = renderController(options);
 
@@ -151,10 +156,10 @@ describe("useShortlistDrawerController", () => {
     options.rows = [makeRow("addr-first")];
     rerender();
 
-    await waitFor(() => expect(result.current.effectiveExpandedKey).toBe("addr-first"));
+    await waitFor(() => expect(result.current.effectiveExpandedKey).toBeNull());
   });
 
-  it("selects the first remaining row when the expanded row is removed", async () => {
+  it("collapses the offer form when its expanded row is removed", async () => {
     const first = makeRow("addr-first");
     const second = makeRow("addr-second");
     const options = makeOptions({ rows: [first, second] });
@@ -164,7 +169,7 @@ describe("useShortlistDrawerController", () => {
     options.rows = [first];
     rerender();
 
-    await waitFor(() => expect(result.current.effectiveExpandedKey).toBe("addr-first"));
+    await waitFor(() => expect(result.current.effectiveExpandedKey).toBeNull());
   });
 
   it("keeps a deliberate collapse across unrelated rerenders", () => {
@@ -200,7 +205,7 @@ describe("useShortlistDrawerController", () => {
     const first = makeRow("addr-first");
     const second = makeRow("addr-second");
     const onRemove = vi.fn();
-    const onRestore = vi.fn();
+    const onRestore = vi.fn(() => true);
     const { result } = renderController(
       makeOptions({ rows: [first, second], onRemove, onRestore }),
     );
@@ -218,6 +223,7 @@ describe("useShortlistDrawerController", () => {
 
     expect(onRestore).toHaveBeenCalledWith(second.item, 1);
     expect(result.current.pendingRemoval).toBeNull();
+    expect(result.current.restoreError).toBe(false);
   });
 
   it("builds a share URL with the existing filter state and blocks oversized payloads", () => {
@@ -361,6 +367,12 @@ describe("useShortlistDrawerController", () => {
       ],
       palette: ["#2563eb", "#3a8a6f", "#d97706", "#c026d3"],
     });
+  });
+
+  it("suppresses comparative superlatives until at least two homes are saved", () => {
+    const { result } = renderController(makeOptions({ rows: [makeRow("addr-only")] }));
+
+    expect(result.current.highlights).toEqual([]);
   });
 
   it("keeps checklist state and toggling wired through the controller", () => {

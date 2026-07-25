@@ -16,7 +16,6 @@ import {
 } from "@shared/product/filter-pipeline";
 import { passesAffordabilityMode } from "@/shared/lib/affordability";
 import { getFuseMatchedKeys } from "@/features/search-profile/searchFuse";
-import { applyProfileVisibility } from "@/features/search-profile/matchProfile";
 import { hasCompletedSearchProfile } from "@/features/search-profile/searchProfile";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
@@ -284,7 +283,7 @@ export function useFilterPipeline({
 
   const filteredBlocks = useMemo(() => {
     if (!resultsVisible) return [];
-    const scoped = filterScopedBlocksCore(
+    return filterScopedBlocksCore(
       blocks,
       stableFilters,
       geographicIntent,
@@ -293,7 +292,6 @@ export function useFilterPipeline({
       filterEvaluationContext,
       passesAffordabilityForBlock,
     );
-    return applyProfileVisibility(scoped, searchProfile);
   }, [
     affordabilityProfile,
     blocks,
@@ -301,7 +299,6 @@ export function useFilterPipeline({
     geographicIntent,
     passesAffordabilityForBlock,
     resultsVisible,
-    searchProfile,
     stableFilters,
     resultsFuseMatchedKeys,
   ]);
@@ -320,7 +317,6 @@ export function useFilterPipeline({
       mapFilters,
       effectiveMapGeographicIntent,
       affordabilityProfile,
-      searchProfile,
       mapFuseMatchedKeys,
       selectedAddressKey,
       blocksByKey,
@@ -332,10 +328,10 @@ export function useFilterPipeline({
     blocksByKey,
     blocks,
     effectiveMapGeographicIntent,
+    filterEvaluationContext?.currentYear,
     hasMapMarkerScope,
     mapFilters,
     passesAffordabilityForBlock,
-    searchProfile,
     selectedAddressKey,
     mapFuseMatchedKeys,
   ]);

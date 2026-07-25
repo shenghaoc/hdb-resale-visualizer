@@ -1,11 +1,5 @@
 import { useEffect, useRef } from "react";
-import type {
-  Map as MapLibreMap,
-  MapLayerMouseEvent,
-  MapLibreEvent,
-  MapMouseEvent,
-  Popup,
-} from "maplibre-gl";
+import type { Map as MapLibreMap, MapLayerMouseEvent, MapMouseEvent, Popup } from "maplibre-gl";
 import type { Point, Geometry } from "geojson";
 import { formatCompactCurrency } from "@/shared/lib/format";
 import { localizeTownName } from "@/shared/lib/i18n/domain";
@@ -210,14 +204,6 @@ export function useMapInteractions({
       });
     };
 
-    const handleMoveStart = (
-      event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>,
-    ) => {
-      if (event.originalEvent) {
-        onMapInteractRef.current?.("background");
-      }
-    };
-
     map.on("click", "unclustered-point", handleClickUnclustered);
     map.on("click", "clusters", handleClickCluster);
     map.on("mouseenter", "unclustered-point", handleMouseEnterUnclustered);
@@ -226,7 +212,6 @@ export function useMapInteractions({
     map.on("mouseleave", "clusters", handleMouseLeaveClusters);
     map.on("click", handleMapClick);
     map.on("dblclick", handleDblClick);
-    map.on("movestart", handleMoveStart);
 
     return () => {
       isActive = false;
@@ -238,7 +223,6 @@ export function useMapInteractions({
       map.off("mouseleave", "clusters", handleMouseLeaveClusters);
       map.off("click", handleMapClick);
       map.off("dblclick", handleDblClick);
-      map.off("movestart", handleMoveStart);
     };
   }, [map, popup, prefersReducedMotion]);
 }

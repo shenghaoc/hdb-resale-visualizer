@@ -11,7 +11,7 @@ Open **Filters** to narrow results:
 | **Affordability**   | Toggle between "All blocks", "Affordable: comfortable", or "Affordable: comfortable + stretch" (requires a search profile) |
 | **Budget**          | Set a minimum and/or maximum resale price                                                                                  |
 | **Remaining lease** | Only show blocks with at least N years of lease left                                                                       |
-| **MRT proximity**   | Filter by walking distance to the nearest MRT station                                                                      |
+| **MRT proximity**   | Filter by maximum stored distance to the nearest MRT station                                                               |
 | **Flat model**      | Narrow to a specific flat model (e.g. Improved, New Generation, DBSS)                                                      |
 | **Floor area**      | Set a minimum and/or maximum floor area in square metres                                                                   |
 | **Date range**      | Limit transactions to a specific month window                                                                              |
@@ -20,7 +20,7 @@ All filters **combine** — Town "Tampines" plus Flat type "4-Room" shows only 4
 
 ### Filter chips
 
-Active filters appear as **chips** below the header. Remove a chip to clear that single filter, or tap the **share icon** to copy a link reproducing your exact filter set. Search-profile chips appear alongside and can be removed the same way.
+Active URL-backed filters appear as **chips** below the header. They are the source of truth for visible constraints: remove a chip to clear that filter, or tap the **share icon** to copy a reproducible filter link. The share action is unavailable while the local-only affordability filter is active because CPF, income, and age are never put into URLs.
 
 ## The map
 
@@ -37,8 +37,10 @@ Blocks appear as **coloured dots**. Colour encodes the median resale price — c
 
 From the **layer control** on the right side of the map:
 
-- **MRT** — station markers and exit points for judging proximity and walking access
-- **Primary schools** — available after selecting a block; shows nearby schools
+- **MRT** — one switch controls both station markers and exit points; detailed markers appear as you zoom in
+- **Primary schools** — available after selecting a block; shows up to three nearby schools
+
+Layer and heatmap controls stay out of the way until you choose a location scope. Selecting a result brings that block into view; ordinary panning and zooming no longer dismiss your active work panel.
 
 ### Price heatmap
 

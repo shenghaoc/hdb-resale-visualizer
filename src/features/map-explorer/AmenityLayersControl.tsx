@@ -20,23 +20,25 @@ type AmenityLayersControlProps = {
 function LayerSwitch({
   enabled,
   disabled,
+  busy = false,
   ariaLabel,
   tooltip,
   onToggle,
 }: {
   enabled: boolean;
   disabled: boolean;
+  busy?: boolean;
   ariaLabel: string;
   tooltip?: string;
   onToggle: () => void;
 }) {
-  const active = enabled && !disabled;
   const switchButton = (
     <button
       type="button"
       role="switch"
       data-touch-target
-      aria-checked={active}
+      aria-checked={enabled}
+      aria-busy={busy || undefined}
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={onToggle}
@@ -45,14 +47,14 @@ function LayerSwitch({
       <span
         className={cn(
           "relative h-6 w-10 rounded-full transition-colors duration-300",
-          active ? "bg-primary" : "bg-muted-foreground/30",
+          enabled ? "bg-primary" : "bg-muted-foreground/30",
         )}
         aria-hidden="true"
       >
         <span
           className={cn(
             "absolute left-[3px] top-[3px] size-[18px] rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
-            active ? "translate-x-4" : "translate-x-0",
+            enabled ? "translate-x-4" : "translate-x-0",
           )}
         />
       </span>
@@ -136,7 +138,7 @@ export function AmenityLayersControl({
             aria-hidden="true"
             className={cn(
               "size-3 shrink-0 transition-colors duration-200",
-              schoolOverlayEnabled && schoolCanToggle ? "text-primary" : "text-muted-foreground",
+              schoolOverlayEnabled ? "text-primary" : "text-muted-foreground",
             )}
           />
           <span className="flex-1 text-muted-foreground">
@@ -150,6 +152,7 @@ export function AmenityLayersControl({
           <LayerSwitch
             enabled={schoolOverlayEnabled}
             disabled={!schoolCanToggle}
+            busy={schoolOverlayLoading}
             ariaLabel={schoolAriaLabel}
             tooltip={schoolAriaLabel}
             onToggle={onToggleSchoolOverlay}

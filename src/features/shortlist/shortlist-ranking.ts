@@ -1,7 +1,8 @@
-export type CompareMode = "median-asc" | "median-desc" | "lease" | "mrt" | "target-gap";
+export type CompareMode = "recent" | "median-asc" | "median-desc" | "lease" | "mrt" | "target-gap";
 
 type SortableShortlistRow = {
   item: {
+    addedAt?: string;
     targetPrice: number | null;
     decisionStatus?: "considering" | "viewing booked" | "offered" | "rejected" | "kiv" | "dropped";
   };
@@ -15,6 +16,10 @@ type SortableShortlistRow = {
 };
 
 function getPrimaryCompareValue(row: SortableShortlistRow, compareMode: CompareMode) {
+  if (compareMode === "recent") {
+    return 0;
+  }
+
   if (compareMode === "median-asc") {
     return row.block.medianPrice;
   }
@@ -75,6 +80,13 @@ export function rankShortlistRows<T extends SortableShortlistRow>(
   compareMode: CompareMode,
 ) {
   return [...rows].sort((left, right) => {
+    if (compareMode === "recent") {
+      const byAddedAt = (right.item.addedAt ?? "").localeCompare(left.item.addedAt ?? "");
+      if (byAddedAt !== 0) {
+        return byAddedAt;
+      }
+    }
+
     const primary = comparePrimaryValues(
       getPrimaryCompareValue(left, compareMode),
       getPrimaryCompareValue(right, compareMode),

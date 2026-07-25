@@ -38,4 +38,4 @@ Yes — the language control on the map switches between English and 中文. Gui
 
 ## How do I share what I'm seeing?
 
-Filters, the selected block, listing checks, and the shortlist all have share buttons that produce URLs reproducing your view.
+Canonical filters, the selected block, listing checks, and the shortlist have share actions that produce reproducible URLs. Local-only affordability mode is omitted because CPF, income, and age are never included in shared links.

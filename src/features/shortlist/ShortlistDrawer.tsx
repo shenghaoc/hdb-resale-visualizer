@@ -108,7 +108,7 @@ type ShortlistDrawerProps = {
   referenceMonth?: string;
   onToggleOpen: () => void;
   onRemove: (addressKey: string) => void;
-  onRestore: (item: ShortlistItem, index: number) => void;
+  onRestore: (item: ShortlistItem, index: number) => boolean;
   onUpdate: (addressKey: string, patch: Partial<ShortlistItem>) => void;
   onSelectAddress: (addressKey: string) => void;
   sync?: ShortlistSync;
@@ -128,6 +128,7 @@ type GapInfo = {
 };
 
 const compareModeLabels: Record<CompareMode, string> = {
+  recent: "shortlist.compare.recent",
   "target-gap": "shortlist.compare.targetFit",
   "median-asc": "shortlist.compare.priceLow",
   "median-desc": "shortlist.compare.priceHigh",
@@ -906,7 +907,7 @@ function ShortlistRowEditor({
         />
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         <CurrencyEditor
           id={`estimated-cov-${item.addressKey}`}
           label={t("shortlist.estimatedCov")}
@@ -921,14 +922,6 @@ function ShortlistRowEditor({
           value={item.viewingDate ?? ""}
           placeholder={t("shortlist.viewingDatePlaceholder")}
           onChange={(val) => onUpdate(item.addressKey, { viewingDate: val || undefined })}
-        />
-        <CurrencyEditor
-          id={`offer-${item.addressKey}`}
-          label={t("shortlist.offerCeiling")}
-          value={item.suggestedOfferCeiling ?? null}
-          placeholder={t("shortlist.offerCeilingPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { suggestedOfferCeiling: val ?? undefined })}
-          t={t}
         />
       </div>
 
@@ -980,20 +973,13 @@ function ShortlistRowEditor({
         />
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3">
         <NotesEditor
           id={`agent-${item.addressKey}`}
           label={t("shortlist.agentRemarks")}
           value={item.agentRemarks ?? ""}
           placeholder={t("shortlist.agentRemarksPlaceholder")}
           onChange={(val) => onUpdate(item.addressKey, { agentRemarks: val })}
-        />
-        <NotesEditor
-          id={`notes-${item.addressKey}`}
-          label={t("shortlist.notes")}
-          value={item.notes}
-          placeholder={t("shortlist.notesPlaceholder")}
-          onChange={(val) => onUpdate(item.addressKey, { notes: val })}
         />
       </div>
 
@@ -1036,6 +1022,7 @@ export function ShortlistDrawer({
     effectiveExpandedKey,
     setExpandedKey,
     pendingRemoval,
+    restoreError,
     undoRemoval,
     handleRemove,
     rankedRows,
@@ -1137,8 +1124,8 @@ export function ShortlistDrawer({
                   {t("shortlist.view.compare")}
                 </Button>
               </ButtonGroup>
-              <div className="flex min-w-0 items-center gap-2">
-                <Field className="min-w-0 flex-1 flex-row items-center gap-2">
+              <div className="flex min-w-0 items-center">
+                <Field className="min-w-0 flex-1 flex-row items-center">
                   <FieldLabel id={sortLabelId} className="sr-only">
                     {t("shortlist.sortBy")}
                   </FieldLabel>
@@ -1159,6 +1146,7 @@ export function ShortlistDrawer({
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
+                        <SelectItem value="recent">{t(compareModeLabels.recent)}</SelectItem>
                         <SelectItem value="target-gap">
                           {t(compareModeLabels["target-gap"])}
                         </SelectItem>
@@ -1174,56 +1162,6 @@ export function ShortlistDrawer({
                     </SelectContent>
                   </Select>
                 </Field>
-
-                <ShareButton
-                  url={shareUrl || window.location.href}
-                  title={t("app.title")}
-                  ariaLabel={t("shortlist.shareLinkLabel")}
-                  ariaLabelCopied={t("shortlist.shareCopied")}
-                  errorLabel={t("share.copyError")}
-                  shareDisabled={shareBlocked}
-                  onShareBlocked={() => setShareError(t("shortlist.shareErrorTooLarge"))}
-                  csvExport={csvExport}
-                  exportAriaLabel={t("shortlist.export.csvLabel")}
-                  exportAriaLabelDone={t("share.exportCsvDone")}
-                  className="rounded-none border-border/50 bg-card"
-                  size="icon-xs"
-                  variant="outline"
-                />
-              </div>
-
-              {shareError && (
-                <div
-                  role="alert"
-                  className="rounded-none bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
-                >
-                  {shareError}
-                </div>
-              )}
-
-              <div className="min-w-0 overflow-x-auto v2-scrollbar">
-                <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border-border/50 [&>*]:bg-card">
-                  <Button variant="outline" size="xs" onClick={exportJson} type="button">
-                    <Download data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                    {t("shortlist.export.json")}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="xs"
-                    onClick={copySummary}
-                    type="button"
-                    className={copiedKey === "summary" ? "text-primary" : undefined}
-                  >
-                    {copiedKey === "summary" ? (
-                      <Check data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                    ) : (
-                      <Copy data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-                    )}
-                    {copiedKey === "summary"
-                      ? t("shortlist.summaryCopiedShort")
-                      : t("shortlist.copySummary")}
-                  </Button>
-                </ButtonGroup>
               </div>
             </div>
           ) : null}
@@ -1234,46 +1172,46 @@ export function ShortlistDrawer({
             id="shortlist-content"
             className="flex min-h-0 flex-1 flex-col overflow-hidden px-3 py-3 sm:px-4"
           >
-            {sync ? (
-              <div className="mb-3 shrink-0">
-                <ShortlistSyncSection sync={sync} />
-              </div>
-            ) : null}
             {rows.length === 0 ? (
-              <Empty role="status" className="empty-state overflow-y-auto px-6 pt-16 pb-0">
-                <EmptyHeader className="gap-1">
-                  <EmptyMedia
-                    variant="icon"
-                    className="mb-1 size-14 rounded-full bg-muted/50 text-muted-foreground/60 [&_svg:not([class*='size-'])]:size-6"
-                  >
-                    <Bookmark aria-hidden="true" />
-                  </EmptyMedia>
-                  <EmptyTitle className="text-sm font-semibold normal-case tracking-normal text-foreground">
-                    {t("shortlist.emptyStateTitle")}
-                  </EmptyTitle>
-                  <EmptyDescription className="text-xs leading-relaxed">
-                    {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
-                  </EmptyDescription>
-                </EmptyHeader>
-              </Empty>
+              <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto v2-scrollbar">
+                <Empty role="status" className="empty-state px-6 pt-16 pb-0">
+                  <EmptyHeader className="gap-1">
+                    <EmptyMedia
+                      variant="icon"
+                      className="mb-1 size-14 rounded-full bg-muted/50 text-muted-foreground/60 [&_svg:not([class*='size-'])]:size-6"
+                    >
+                      <Bookmark aria-hidden="true" />
+                    </EmptyMedia>
+                    <EmptyTitle className="text-sm font-semibold normal-case tracking-normal text-foreground">
+                      {t("shortlist.emptyStateTitle")}
+                    </EmptyTitle>
+                    <EmptyDescription className="text-xs leading-relaxed">
+                      {t("shortlist.emptyState", { count: MAX_SHORTLIST_ITEMS })}
+                    </EmptyDescription>
+                  </EmptyHeader>
+                </Empty>
+                {sync ? <ShortlistSyncSection sync={sync} /> : null}
+              </div>
             ) : (
               <div className="flex min-h-0 flex-1 flex-col overflow-y-auto pr-1 v2-scrollbar">
                 <div className="flex flex-col gap-3 pb-8">
-                  <div className="grid overflow-hidden rounded-none border border-border/40 bg-border/50 sm:grid-cols-3">
-                    {highlights.map((highlight) => (
-                      <div key={highlight.label} className="min-w-0 bg-muted/35 p-3">
-                        <div className="v2-kicker">{highlight.label}</div>
-                        <strong className="mt-1 block truncate text-xs font-extrabold tracking-tight">
-                          {highlight.row
-                            ? `${highlight.row.block.block} ${highlight.row.block.streetName}`
-                            : t("shortlist.na")}
-                        </strong>
-                        <span className="mt-0.5 block text-[0.75rem] font-extrabold text-primary">
-                          {highlight.sub}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  {highlights.length > 0 ? (
+                    <div className="grid overflow-hidden rounded-none border border-border/40 bg-border/50 sm:grid-cols-3">
+                      {highlights.map((highlight) => (
+                        <div key={highlight.label} className="min-w-0 bg-muted/35 p-3">
+                          <div className="v2-kicker">{highlight.label}</div>
+                          <strong className="mt-1 block truncate text-xs font-extrabold tracking-tight">
+                            {highlight.row
+                              ? `${highlight.row.block.block} ${highlight.row.block.streetName}`
+                              : t("shortlist.na")}
+                          </strong>
+                          <span className="mt-0.5 block text-[0.75rem] font-extrabold text-primary">
+                            {highlight.sub}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
 
                   {viewMode === "list" && compareChart ? (
                     <Card size="sm" className="v2-card gap-3 rounded-none py-3 shadow-none">
@@ -1791,6 +1729,74 @@ export function ShortlistDrawer({
                       })}
                     </div>
                   ) : null}
+
+                  <div
+                    className="mt-2 flex flex-col gap-3 border-t border-border/40 pt-3"
+                    data-testid="shortlist-utilities"
+                  >
+                    <div className="flex min-w-0 items-center gap-2 overflow-x-auto v2-scrollbar">
+                      <ShareButton
+                        url={shareUrl || window.location.href}
+                        title={t("app.title")}
+                        ariaLabel={t("shortlist.shareLinkLabel")}
+                        ariaLabelCopied={t("shortlist.shareCopied")}
+                        errorLabel={t("share.copyError")}
+                        shareDisabled={shareBlocked}
+                        onShareBlocked={() => setShareError(t("shortlist.shareErrorTooLarge"))}
+                        csvExport={csvExport}
+                        exportAriaLabel={t("shortlist.export.csvLabel")}
+                        exportAriaLabelDone={t("share.exportCsvDone")}
+                        className="shrink-0 rounded-none border-border/50 bg-card"
+                        size="icon-xs"
+                        variant="outline"
+                      />
+                      <ButtonGroup className="w-max flex-nowrap gap-1.5 [&>*]:rounded-none [&>*]:border-border/50 [&>*]:bg-card">
+                        <Button variant="outline" size="xs" onClick={exportJson} type="button">
+                          <Download
+                            data-icon="inline-start"
+                            className="size-3.5"
+                            aria-hidden="true"
+                          />
+                          {t("shortlist.export.json")}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="xs"
+                          onClick={copySummary}
+                          type="button"
+                          className={copiedKey === "summary" ? "text-primary" : undefined}
+                        >
+                          {copiedKey === "summary" ? (
+                            <Check
+                              data-icon="inline-start"
+                              className="size-3.5"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <Copy
+                              data-icon="inline-start"
+                              className="size-3.5"
+                              aria-hidden="true"
+                            />
+                          )}
+                          {copiedKey === "summary"
+                            ? t("shortlist.summaryCopiedShort")
+                            : t("shortlist.copySummary")}
+                        </Button>
+                      </ButtonGroup>
+                    </div>
+
+                    {shareError ? (
+                      <div
+                        role="alert"
+                        className="rounded-none bg-destructive/10 px-2 py-1.5 text-[0.75rem] font-medium text-destructive"
+                      >
+                        {shareError}
+                      </div>
+                    ) : null}
+
+                    {sync ? <ShortlistSyncSection sync={sync} /> : null}
+                  </div>
                 </div>
               </div>
             )}
@@ -1804,8 +1810,15 @@ export function ShortlistDrawer({
           aria-live="polite"
         >
           <div className="flex items-center justify-between gap-2">
-            <span className="truncate text-xs text-muted-foreground">
-              {t("shortlist.removed")}: {pendingRemoval.label}
+            <span
+              className={cn(
+                "min-w-0 text-xs",
+                restoreError ? "font-medium text-destructive" : "truncate text-muted-foreground",
+              )}
+            >
+              {restoreError
+                ? t("shortlist.undoFull")
+                : `${t("shortlist.removed")}: ${pendingRemoval.label}`}
             </span>
             <Button
               type="button"

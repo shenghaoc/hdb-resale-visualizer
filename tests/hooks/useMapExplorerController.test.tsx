@@ -250,6 +250,7 @@ describe("useMapExplorerController", () => {
     const patchFilters = vi.fn();
     const setLeftTab = vi.fn();
     const setIsLeftPanelOpen = vi.fn();
+    const setIsSavedPanelOpen = vi.fn();
     const { result } = renderHook(() =>
       useMapExplorerController(
         makeOptions({
@@ -257,6 +258,7 @@ describe("useMapExplorerController", () => {
           patchFilters,
           setLeftTab,
           setIsLeftPanelOpen,
+          setIsSavedPanelOpen,
           geolocation: makeGeolocation({ setUserLocation, clearError }),
         }),
       ),
@@ -273,6 +275,7 @@ describe("useMapExplorerController", () => {
       town: "",
       selectedAddressKey: null,
     });
+    expect(setIsSavedPanelOpen).toHaveBeenCalledWith(false);
     expect(setLeftTab).toHaveBeenCalledWith("results");
     expect(setIsLeftPanelOpen).toHaveBeenCalledWith(true);
   });
@@ -280,6 +283,7 @@ describe("useMapExplorerController", () => {
   it("mobile geolocate does not force a panel open", () => {
     const setLeftTab = vi.fn();
     const setIsLeftPanelOpen = vi.fn();
+    const setIsSavedPanelOpen = vi.fn();
     const setMobileTab = vi.fn();
     const { result } = renderHook(() =>
       useMapExplorerController(
@@ -287,6 +291,7 @@ describe("useMapExplorerController", () => {
           isDesktop: false,
           setLeftTab,
           setIsLeftPanelOpen,
+          setIsSavedPanelOpen,
           setMobileTab,
         }),
       ),
@@ -298,6 +303,7 @@ describe("useMapExplorerController", () => {
 
     expect(setLeftTab).not.toHaveBeenCalled();
     expect(setIsLeftPanelOpen).not.toHaveBeenCalled();
+    expect(setIsSavedPanelOpen).not.toHaveBeenCalled();
     expect(setMobileTab).not.toHaveBeenCalled();
   });
 
@@ -305,6 +311,7 @@ describe("useMapExplorerController", () => {
     const patchFilters = vi.fn();
     const setLeftTab = vi.fn();
     const setIsLeftPanelOpen = vi.fn();
+    const setIsSavedPanelOpen = vi.fn();
     const locate = vi.fn((onSuccess: (coords: Coordinates) => void) => {
       onSuccess({ lat: 1.31, lng: 103.81 });
     });
@@ -315,6 +322,7 @@ describe("useMapExplorerController", () => {
           patchFilters,
           setLeftTab,
           setIsLeftPanelOpen,
+          setIsSavedPanelOpen,
           geolocation: makeGeolocation({ locate }),
         }),
       ),
@@ -330,6 +338,7 @@ describe("useMapExplorerController", () => {
       town: "",
       selectedAddressKey: null,
     });
+    expect(setIsSavedPanelOpen).toHaveBeenCalledWith(false);
     expect(setLeftTab).toHaveBeenCalledWith("results");
     expect(setIsLeftPanelOpen).toHaveBeenCalledWith(true);
   });

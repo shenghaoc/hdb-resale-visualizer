@@ -31,10 +31,10 @@ export const DESKTOP_PANEL_LAYOUT = {
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  // Desktop: left panel (filters/results) is mutually exclusive;
-  // saved panel is independent and tiles alongside the left panel.
+  // Desktop starts with the map and first-action prompt unobstructed. The
+  // primary destinations are mutually exclusive through the shell controller.
   const [leftTab, setLeftTab] = useState<LeftTab>("filters");
-  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false);
   const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
 
   // Mobile: single tab at a time (unchanged)

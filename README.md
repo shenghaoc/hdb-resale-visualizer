@@ -47,7 +47,7 @@ A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-gui
 - Visualizes resale blocks as address points on a Singapore map
 - Filters by town, flat type, flat model, budget, floor area, lease year, date window, and MRT distance
 - Shows block-level median pricing, recent transactions, and 12–24 month price trends
-- Overlays MRT stations, MRT exits, schools, hawker centres, supermarkets, and parks as toggleable amenity layers
+- Uses one MRT overlay switch for stations and exits, plus selection-scoped nearby school markers
 - Price heatmap mode colors the map by median $/sqm for at-a-glance comparisons
 - Budget match badges highlight blocks within your target range
 - Block detail drawer shows lease remaining, floor area range, transaction history, and a trend chart

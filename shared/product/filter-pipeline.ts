@@ -14,7 +14,6 @@ import {
   matchesFilter,
   matchesGeographicSearchIntent,
 } from "./filtering";
-import { applyProfileVisibility, type SearchProfile } from "./search-profile";
 import { passesAffordabilityMode, type AffordabilityProfile } from "./affordability";
 
 // ── Pure pipeline functions ──────────────────────────────────────────────
@@ -81,7 +80,6 @@ export function computeMapFilteredBlocks(
   mapFilters: FilterState & { selectedAddressKey: null },
   geographicIntent: GeographicSearchIntent | null | undefined,
   affordabilityProfile: AffordabilityProfile | null | undefined,
-  searchProfile: SearchProfile,
   fuseMatchedKeys: ReadonlySet<string> | null | undefined,
   selectedAddressKey: string | null,
   blocksByKey: Map<string, BlockSummary>,
@@ -94,18 +92,14 @@ export function computeMapFilteredBlocks(
   const evaluationContext =
     mapFilters.remainingLeaseMin !== null ? createFilterEvaluationContext(currentYear) : null;
 
-  const scopedBlocks = applyProfileVisibility(
-    filterScopedBlocks(
-      blocks,
-      mapFilters,
-      geographicIntent,
-      affordabilityProfile,
-      fuseMatchedKeys,
-      evaluationContext,
-      passesAffordabilityForBlock,
-    ),
-    searchProfile,
-    currentYear,
+  const scopedBlocks = filterScopedBlocks(
+    blocks,
+    mapFilters,
+    geographicIntent,
+    affordabilityProfile,
+    fuseMatchedKeys,
+    evaluationContext,
+    passesAffordabilityForBlock,
   );
 
   if (!selectedAddressKey) return scopedBlocks;

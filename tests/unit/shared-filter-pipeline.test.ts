@@ -7,7 +7,6 @@ import {
 } from "@shared/product/filter-pipeline";
 import { resetFilteringCachesForTests } from "@shared/product/filtering";
 import type { BlockSummary, FilterState } from "@shared/data-types";
-import type { SearchProfile } from "@shared/product/search-profile";
 
 const BASE_FILTERS: FilterState & { selectedAddressKey: null } = {
   search: "",
@@ -26,25 +25,6 @@ const BASE_FILTERS: FilterState & { selectedAddressKey: null } = {
   compareTown: "",
   affordable: "",
   sort: "",
-};
-
-const DEFAULT_PROFILE: SearchProfile = {
-  version: 1,
-  mainFlatType: "",
-  alternativeFlatTypes: [],
-  maxBudget: null,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 10,
-  minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
-  age: null,
-  coApplicantAge: null,
-  cpfOABalance: null,
-  monthlyIncome: null,
 };
 
 function makeBlock(overrides: Partial<BlockSummary> & { addressKey: string }): BlockSummary {
@@ -109,13 +89,11 @@ describe("shared/product/filter-pipeline", () => {
       expect(result.map((b) => b.addressKey)).toEqual(["cheap"]);
     });
 
-    it("applies profile visibility when profile has active dimensions", () => {
+    it("keeps visibility governed only by explicit filters", () => {
       const pass = makeBlock({ addressKey: "pass", flatTypes: ["4 ROOM"], medianPrice: 500_000 });
       const weak = makeBlock({ addressKey: "weak", flatTypes: ["3 ROOM"], medianPrice: 500_000 });
       const result = filterScopedBlocks([pass, weak], BASE_FILTERS, null, null, null, null, null);
-      // Profile visibility is NOT applied by filterScopedBlocks — it's applied
-      // separately by the caller (or by computeMapFilteredBlocks).
-      // So both blocks pass the filter, but the caller applies visibility.
+      // Buyer setup must not act as a second hidden filter layer.
       expect(result).toHaveLength(2);
     });
 
@@ -151,7 +129,6 @@ describe("shared/product/filter-pipeline", () => {
         { ...BASE_FILTERS, town: "BEDOK" },
         null,
         null,
-        DEFAULT_PROFILE,
         null,
         "selected",
         blocksByKey,
@@ -173,7 +150,6 @@ describe("shared/product/filter-pipeline", () => {
         { ...BASE_FILTERS, town: "BEDOK" },
         null,
         null,
-        DEFAULT_PROFILE,
         null,
         "match",
         blocksByKey,
@@ -193,7 +169,6 @@ describe("shared/product/filter-pipeline", () => {
         BASE_FILTERS,
         null,
         null,
-        DEFAULT_PROFILE,
         null,
         null,
         blocksByKey,
@@ -218,7 +193,6 @@ describe("shared/product/filter-pipeline", () => {
           filters,
           null,
           null,
-          DEFAULT_PROFILE,
           null,
           null,
           blocksByKey,
@@ -228,18 +202,7 @@ describe("shared/product/filter-pipeline", () => {
       ).toEqual(["lease"]);
 
       expect(
-        computeMapFilteredBlocks(
-          blocks,
-          filters,
-          null,
-          null,
-          DEFAULT_PROFILE,
-          null,
-          null,
-          blocksByKey,
-          2027,
-          null,
-        ),
+        computeMapFilteredBlocks(blocks, filters, null, null, null, null, blocksByKey, 2027, null),
       ).toEqual([]);
     });
   });

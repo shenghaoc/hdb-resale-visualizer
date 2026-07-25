@@ -10,12 +10,12 @@ const t: Translator = (key) => {
   const messages: Record<string, string> = {
     "amenity.label": "Amenities",
     "amenity.mrt": "MRT",
-    "amenity.schools": "Schools",
+    "amenity.schools": "Up to 3 primary schools",
     "amenity.schoolsHint": "select a block",
     "schoolOverlay.loading": "Loading nearby schools for the selected block.",
-    "schoolOverlay.enable": "Show nearby primary school markers",
-    "schoolOverlay.disable": "Hide nearby primary school markers",
-    "schoolOverlay.unavailable": "Select a block to show nearby primary school markers.",
+    "schoolOverlay.enable": "Show up to 3 nearest primary school markers",
+    "schoolOverlay.disable": "Hide up to 3 nearest primary school markers",
+    "schoolOverlay.unavailable": "Select a block to show up to 3 nearest primary school markers.",
     "schoolOverlay.noSchoolsNearby":
       "No primary schools within 2km with map coordinates for this block.",
   };
@@ -93,19 +93,18 @@ describe("AmenityLayersControl", () => {
     });
     expect(schoolSwitch).toBeDisabled();
     expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
+    expect(schoolSwitch).toHaveAttribute("aria-busy", "true");
   });
 
-  it("reports the school switch as unchecked while loading even when enabled", () => {
+  it("preserves the enabled school state while loading", () => {
     renderControl({ schoolOverlayEnabled: true, schoolOverlayLoading: true });
 
     const schoolSwitch = screen.getByRole("switch", {
       name: "Loading nearby schools for the selected block.",
     });
     expect(schoolSwitch).toBeDisabled();
-    // active = enabled && !disabled, so loading forces aria-checked "false"
-    // despite schoolOverlayEnabled=true — the component reports the opposite of
-    // its enabled state under load.
-    expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
+    expect(schoolSwitch).toHaveAttribute("aria-checked", "true");
+    expect(schoolSwitch).toHaveAttribute("aria-busy", "true");
   });
 
   it("shows the unavailable school label when no block is selected", () => {
@@ -117,7 +116,7 @@ describe("AmenityLayersControl", () => {
     expect(screen.getByText(/select a block/i)).toBeInTheDocument();
     expect(
       screen.getByRole("switch", {
-        name: "Select a block to show nearby primary school markers.",
+        name: "Select a block to show up to 3 nearest primary school markers.",
       }),
     ).toBeDisabled();
   });

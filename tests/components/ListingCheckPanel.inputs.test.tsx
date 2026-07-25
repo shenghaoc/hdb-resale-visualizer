@@ -58,7 +58,7 @@ function makeDetail(): AddressDetail {
   };
 }
 
-function renderPanel() {
+function renderPanel(shortlistFull = false) {
   const callbacks = {
     onAddressSelect: vi.fn(),
     onAskingPriceChange: vi.fn(),
@@ -67,8 +67,6 @@ function renderPanel() {
     onStoreyRangeChange: vi.fn(),
     onLeaseYearChange: vi.fn(),
     onUseSampleCheck: vi.fn(),
-    onOpenCandidates: vi.fn(),
-    onOpenShortlist: vi.fn(),
     onSaveToShortlist: vi.fn(),
     onShare: vi.fn(),
   };
@@ -83,6 +81,7 @@ function renderPanel() {
         storeyRange="07 TO 09"
         leaseCommenceYear={1990}
         savedToShortlist={false}
+        shortlistFull={shortlistFull}
         referenceMonth="2026-04"
         {...callbacks}
       />
@@ -102,11 +101,27 @@ describe("ListingCheckPanel input clearing", () => {
       "fetch",
       vi.fn(async () =>
         Response.json({
-          comparables: [],
-          sameBlockCount: 0,
-          sameStreetCount: 0,
-          sameTownCount: 0,
-          newestComparableAgeMonths: null,
+          comparables: [
+            {
+              transactionId: "cmp-1",
+              month: "2026-03",
+              town: "ANG MO KIO",
+              block: "123A",
+              streetName: "ANG MO KIO AVE 1",
+              flatType: "4 ROOM",
+              storeyRange: "07 TO 09",
+              floorAreaSqm: 93,
+              leaseCommenceDate: 1990,
+              resalePrice: 620000,
+              pricePerSqm: 6667,
+              similarity: 0.95,
+              matchReasons: ["Same block", "Same flat type"],
+            },
+          ],
+          sameBlockCount: 1,
+          sameStreetCount: 1,
+          sameTownCount: 1,
+          newestComparableAgeMonths: 1,
           widenedSearch: false,
           caveats: [],
           adjustmentApplied: false,
@@ -140,5 +155,23 @@ describe("ListingCheckPanel input clearing", () => {
     await waitFor(() =>
       expect(dataMocks.fetchAddressDetail).toHaveBeenCalledWith("ang-mo-kio-123a"),
     );
+  });
+
+  it("does not repeat candidate and shortlist navigation inside the check workflow", async () => {
+    renderPanel();
+
+    await screen.findByLabelText(/asking price/i);
+    expect(screen.getAllByText(/check a listing price/i)).toHaveLength(1);
+    expect(
+      screen.queryByRole("button", { name: /find candidate blocks/i }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /compare my shortlist/i })).not.toBeInTheDocument();
+  });
+
+  it("explains when the shortlist limit prevents another save", async () => {
+    renderPanel(true);
+
+    const button = await screen.findByRole("button", { name: /shortlist full/i });
+    expect(button).toBeDisabled();
   });
 });

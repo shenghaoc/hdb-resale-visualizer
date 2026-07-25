@@ -1,6 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vite-plus/test";
-import { I18nProvider, useI18n } from "@/shared/lib/i18n";
 import {
   useSearchProfileController,
   type UseSearchProfileControllerOptions,
@@ -51,16 +50,10 @@ const completedProfile: SearchProfile = {
   minimumRemainingLeaseYears: 60,
 };
 
-type TestOptions = Omit<UseSearchProfileControllerOptions, "locale" | "t">;
+type TestOptions = UseSearchProfileControllerOptions;
 
 function renderController(options: TestOptions) {
-  return renderHook(
-    () => {
-      const { locale, t } = useI18n();
-      return useSearchProfileController({ ...options, locale, t });
-    },
-    { wrapper: I18nProvider },
-  );
+  return renderHook(() => useSearchProfileController(options));
 }
 
 function makeOptions(overrides: Partial<TestOptions> = {}): TestOptions {
@@ -83,6 +76,11 @@ describe("useSearchProfileController", () => {
 
     expect(result.current.profile).toEqual(DEFAULT_SEARCH_PROFILE);
     expect(result.current.completed).toBe(false);
+    expect(result.current.shouldShowWizard).toBe(false);
+
+    act(() => {
+      result.current.openWizard();
+    });
     expect(result.current.shouldShowWizard).toBe(true);
 
     act(() => {
@@ -91,6 +89,7 @@ describe("useSearchProfileController", () => {
     expect(result.current.shouldShowWizard).toBe(false);
 
     act(() => {
+      result.current.openWizard();
       result.current.replaceProfile(completedProfile);
     });
     expect(result.current.profile).toEqual(completedProfile);
@@ -98,7 +97,7 @@ describe("useSearchProfileController", () => {
     expect(result.current.shouldShowWizard).toBe(false);
   });
 
-  it("owns profile-chip clearing and the active-town block slice", () => {
+  it("owns the active-town block slice without creating a second filter-chip system", () => {
     const { result } = renderController(makeOptions());
 
     act(() => {
@@ -110,16 +109,7 @@ describe("useSearchProfileController", () => {
       "bedok-2",
       "bedok-3",
     ]);
-    expect(result.current.profileChips.map((chip) => chip.key)).toEqual([
-      "profile-flat-type",
-      "profile-commute",
-      "profile-lease",
-    ]);
-
-    act(() => {
-      result.current.profileChips.find((chip) => chip.key === "profile-flat-type")?.onRemove();
-    });
-    expect(result.current.profile.mainFlatType).toBe("");
+    expect(result.current).not.toHaveProperty("profileChips");
   });
 
   it("gates recommendations on completion, scope, and the full block corpus", () => {

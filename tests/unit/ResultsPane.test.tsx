@@ -102,6 +102,31 @@ describe("ResultsPane", () => {
     expect(screen.getByText("勿洛 · BEDOK · 四房式 · 4 ROOM")).toBeInTheDocument();
   });
 
+  it("explains when an unsaved result cannot be added to a full shortlist", () => {
+    render(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          shortlistFull={true}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact={true}
+        />
+      </I18nProvider>,
+    );
+
+    const button = screen.getByRole("button", { name: "候选列表已满" });
+    expect(button).toBeDisabled();
+    expect(button.parentElement).toHaveAttribute("tabindex", "0");
+    expect(button.parentElement).toHaveAttribute(
+      "aria-describedby",
+      `shortlist-full-${block.addressKey}`,
+    );
+  });
+
   it("renders nearby MRT stations with distances in full mode", () => {
     render(
       <I18nProvider>

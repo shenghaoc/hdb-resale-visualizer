@@ -143,6 +143,7 @@ type ResultsPaneProps = {
   hasResultScope: boolean;
   selectedAddressKey: string | null;
   shortlistKeys: Set<string>;
+  shortlistFull?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
   scrollParent?: HTMLElement | null;
@@ -243,6 +244,7 @@ const BlockCard = memo(function BlockCard({
   index,
   isFeatured = false,
   isSaved,
+  shortlistFull = false,
   isCompact = false,
   onSelect,
   onToggleShortlist,
@@ -257,6 +259,7 @@ const BlockCard = memo(function BlockCard({
   index: number;
   isFeatured?: boolean;
   isSaved: boolean;
+  shortlistFull?: boolean;
   isCompact?: boolean;
   onSelect: (addressKey: string) => void;
   onToggleShortlist: (addressKey: string) => void;
@@ -267,6 +270,7 @@ const BlockCard = memo(function BlockCard({
   t: Translator;
   locale: Locale;
 }) {
+  const shortlistSaveBlocked = shortlistFull && !isSaved;
   const affordVerdict = useMemo(() => {
     if (!searchProfile) return null;
     return computeAffordabilityVerdict(
@@ -367,26 +371,51 @@ const BlockCard = memo(function BlockCard({
             </div>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  size="xs"
-                  variant={isSaved ? "secondary" : "ghost"}
+                <span
+                  className="shrink-0"
+                  tabIndex={shortlistSaveBlocked ? 0 : undefined}
+                  aria-label={shortlistSaveBlocked ? t("shortlist.full") : undefined}
+                  aria-describedby={
+                    shortlistSaveBlocked ? `shortlist-full-${block.addressKey}` : undefined
+                  }
                   onClick={(event) => {
-                    event.stopPropagation();
-                    onToggleShortlist(block.addressKey);
+                    if (shortlistSaveBlocked) event.stopPropagation();
                   }}
-                  type="button"
-                  className="size-7 shrink-0 rounded-none p-0 sm:size-9"
-                  aria-pressed={isSaved}
-                  aria-label={t("results.save")}
                 >
-                  <Bookmark
-                    data-icon
-                    className={cn("size-3.5", isSaved && "fill-current")}
-                    aria-hidden="true"
-                  />
-                </Button>
+                  <Button
+                    size="xs"
+                    variant={isSaved ? "secondary" : "ghost"}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      onToggleShortlist(block.addressKey);
+                    }}
+                    disabled={shortlistSaveBlocked}
+                    type="button"
+                    className="size-7 shrink-0 rounded-none p-0 sm:size-9"
+                    aria-pressed={isSaved}
+                    aria-label={
+                      shortlistSaveBlocked
+                        ? t("shortlist.full")
+                        : isSaved
+                          ? t("results.saved")
+                          : t("results.save")
+                    }
+                  >
+                    <Bookmark
+                      data-icon
+                      className={cn("size-3.5", isSaved && "fill-current")}
+                      aria-hidden="true"
+                    />
+                  </Button>
+                </span>
               </TooltipTrigger>
-              <TooltipContent>{isSaved ? t("results.saved") : t("results.save")}</TooltipContent>
+              <TooltipContent id={`shortlist-full-${block.addressKey}`}>
+                {shortlistSaveBlocked
+                  ? t("shortlist.full")
+                  : isSaved
+                    ? t("results.saved")
+                    : t("results.save")}
+              </TooltipContent>
             </Tooltip>
           </div>
         </div>
@@ -461,12 +490,23 @@ const BlockCard = memo(function BlockCard({
               event.stopPropagation();
               onToggleShortlist(block.addressKey);
             }}
+            disabled={shortlistSaveBlocked}
             type="button"
             aria-pressed={isSaved}
-            aria-label={t("results.save")}
+            aria-label={
+              shortlistSaveBlocked
+                ? t("shortlist.full")
+                : isSaved
+                  ? t("results.saved")
+                  : t("results.save")
+            }
           >
             <Bookmark data-icon="inline-start" className="size-3.5" aria-hidden="true" />
-            {isSaved ? t("results.saved") : t("results.save")}
+            {shortlistSaveBlocked
+              ? t("shortlist.full")
+              : isSaved
+                ? t("results.saved")
+                : t("results.save")}
           </Button>
         </ItemActions>
       </ItemHeader>
@@ -598,6 +638,7 @@ export function ResultsPane({
   hasResultScope,
   selectedAddressKey,
   shortlistKeys,
+  shortlistFull = false,
   onSelect,
   onToggleShortlist,
   scrollParent,
@@ -1333,6 +1374,7 @@ export function ResultsPane({
                           block={block}
                           isFeatured={block.addressKey === selectedAddressKey}
                           isSaved={shortlistKeys.has(block.addressKey)}
+                          shortlistFull={shortlistFull}
                           isCompact={isCompact}
                           onSelect={onSelect}
                           onToggleShortlist={onToggleShortlist}

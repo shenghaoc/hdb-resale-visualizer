@@ -70,6 +70,7 @@ function createMapStub() {
 
   return {
     map: mapStub as unknown as MapLibreMap,
+    on: mapStub.on,
     queryRenderedFeatures: mapStub.queryRenderedFeatures,
     easeTo: mapStub.easeTo,
     mapClickHandler: () => handlers.mapClick,
@@ -150,6 +151,25 @@ describe("useMapInteractions map click guard", () => {
 
     expect(mapStub.queryRenderedFeatures).toHaveBeenCalledTimes(1);
     expect(onMapInteract).toHaveBeenCalledWith("background");
+  });
+
+  it("does not treat zooming or panning as a background click", () => {
+    const mapStub = createMapStub();
+
+    renderHook(() =>
+      useMapInteractions({
+        map: mapStub.map,
+        popup: createPopupStub(),
+        onSelect,
+        onMapInteract,
+        t,
+        locale,
+        prefersReducedMotion: false,
+      }),
+    );
+
+    expect(mapStub.on).not.toHaveBeenCalledWith("movestart", expect.any(Function));
+    expect(onMapInteract).not.toHaveBeenCalled();
   });
 
   it("does not dispatch background interaction when a feature is hit", () => {

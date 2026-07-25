@@ -12,10 +12,7 @@ import {
   remainingLeaseYears,
   summarizeComparables,
 } from "../../shared/product";
-import {
-  evaluateBlockForProfile,
-  isProfileVisibilityActive,
-} from "../../shared/product/search-profile";
+import { evaluateBlockForProfile } from "../../shared/product/search-profile";
 import {
   matchesFilter,
   resolveGeographicSearchIntent,
@@ -47,18 +44,18 @@ const DEFAULT_FILTERS: FilterState = {
 };
 
 const EMPTY_PROFILE: SearchProfile = {
-  version: 1,
+  version: 2,
   mainFlatType: "",
   alternativeFlatTypes: [],
   maxBudget: null,
   commuteAnchorLabel: "",
   commuteAnchorMrt: null,
   maxComfortableCommuteMinutes: null,
-  commuteStretchMinutes: 10,
+  commuteStretchMinutes: 0,
   minimumRemainingLeaseYears: null,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
+  budgetStretchPercent: 0,
+  showStretchOptions: false,
+  showAllBlocks: true,
   age: null,
   coApplicantAge: null,
   cpfOABalance: null,
@@ -378,20 +375,5 @@ describe("shared product core golden parity", () => {
         scenario.expectedEffectivePrice,
       );
     }
-  });
-
-  // ── Profile visibility parity ─────────────────────────────────────────
-
-  it("keeps profile visibility semantics stable", () => {
-    // No active profile → visibility inactive
-    expect(isProfileVisibilityActive(EMPTY_PROFILE)).toBe(false);
-
-    // Active profile with one dimension → visibility active
-    expect(isProfileVisibilityActive({ ...EMPTY_PROFILE, maxBudget: 700000 })).toBe(true);
-
-    // showAllBlocks overrides everything
-    expect(
-      isProfileVisibilityActive({ ...EMPTY_PROFILE, mainFlatType: "4 ROOM", showAllBlocks: true }),
-    ).toBe(false);
   });
 });

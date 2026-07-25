@@ -29,7 +29,7 @@ export type UseShortlistDrawerControllerOptions = {
   locale: Locale;
   t: Translator;
   onRemove: (addressKey: string) => void;
-  onRestore: (item: ShortlistItem, index: number) => void;
+  onRestore: (item: ShortlistItem, index: number) => boolean;
 };
 
 export type ShortlistCsvExport = {
@@ -80,13 +80,11 @@ export function useShortlistDrawerController({
   onRemove,
   onRestore,
 }: UseShortlistDrawerControllerOptions) {
-  const [compareMode, setCompareMode] = useState<CompareMode>("target-gap");
+  const [compareMode, setCompareMode] = useState<CompareMode>("recent");
   const [viewMode, setViewMode] = useState<ShortlistViewMode>("list");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [shareError, setShareError] = useState<string | null>(null);
-  const [expandedKey, setExpandedKey] = useState<string | null>(
-    () => rows[0]?.item.addressKey ?? null,
-  );
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
   const previousRowKeysRef = useRef<string[] | null>(null);
   const previousIsOpenRef = useRef(isOpen);
   const copiedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -116,10 +114,8 @@ export function useShortlistDrawerController({
     if (previousKeys !== null && !hasSameRowMembership(previousKeys, rowKeys)) {
       setShareError(null);
 
-      if (previousKeys.length === 0 && rowKeys.length > 0 && expandedKey === null) {
-        setExpandedKey(rowKeys[0]);
-      } else if (expandedKey !== null && !rowKeys.includes(expandedKey)) {
-        setExpandedKey(rowKeys[0] ?? null);
+      if (expandedKey !== null && !rowKeys.includes(expandedKey)) {
+        setExpandedKey(null);
       }
     }
 
@@ -129,6 +125,7 @@ export function useShortlistDrawerController({
   const { state: checklistState, toggle: toggleChecklist } = useChecklist();
   const {
     pendingRemoval,
+    restoreError,
     remove,
     undo: undoRemoval,
   } = useShortlistRemovalUndo({
@@ -170,7 +167,7 @@ export function useShortlistDrawerController({
       ? null
       : rows.some((row) => row.item.addressKey === expandedKey)
         ? expandedKey
-        : (rows[0]?.item.addressKey ?? null);
+        : null;
 
   const showCopied = useCallback(
     (key: string) => {
@@ -186,6 +183,10 @@ export function useShortlistDrawerController({
 
   const getRankingMetricLabel = useCallback(
     (row: ShortlistRow) => {
+      if (compareMode === "recent") {
+        return t("shortlist.compare.metric.recent.value");
+      }
+
       if (compareMode === "target-gap") {
         if (row.item.targetPrice === null) {
           return t("shortlist.compare.metric.targetFit.noTarget");
@@ -345,6 +346,10 @@ export function useShortlistDrawerController({
   }, [rankedRows]);
 
   const highlights = useMemo<ShortlistHighlight[]>(() => {
+    if (rows.length < 2) {
+      return [];
+    }
+
     let bestValueRow: ShortlistRow | null = null;
     let longestLeaseRow: ShortlistRow | null = null;
     let closestMrtRow: ShortlistRow | null = null;
@@ -465,6 +470,7 @@ export function useShortlistDrawerController({
     effectiveExpandedKey,
     setExpandedKey,
     pendingRemoval,
+    restoreError,
     undoRemoval,
     handleRemove,
     rankedRows,

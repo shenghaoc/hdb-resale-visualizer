@@ -104,6 +104,7 @@ export function useMapExplorerController({
       clearGeolocationError();
       patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
       if (isDesktop) {
+        setIsSavedPanelOpen(false);
         setLeftTab("results");
         setIsLeftPanelOpen(true);
       }
@@ -113,6 +114,7 @@ export function useMapExplorerController({
       clearGeolocationError,
       patchFilters,
       isDesktop,
+      setIsSavedPanelOpen,
       setLeftTab,
       setIsLeftPanelOpen,
     ],
@@ -123,6 +125,7 @@ export function useMapExplorerController({
       (coords) => {
         patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
         if (isDesktop) {
+          setIsSavedPanelOpen(false);
           setLeftTab("results");
           setIsLeftPanelOpen(true);
         }
@@ -132,7 +135,15 @@ export function useMapExplorerController({
       },
       () => onCannotLocate(),
     );
-  }, [locate, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen, onCannotLocate]);
+  }, [
+    locate,
+    patchFilters,
+    isDesktop,
+    setIsSavedPanelOpen,
+    setLeftTab,
+    setIsLeftPanelOpen,
+    onCannotLocate,
+  ]);
 
   const handleMapInteract = useCallback(
     (interactionType: "background" | "feature" = "background") => {

@@ -91,9 +91,8 @@ export const SYNC_CODE_STORAGE_KEY = "hdb_resale_sync_code_v1";
  */
 export const MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH = 10_000;
 export const HEADER_DISMISSED_STORAGE_KEY = "hdb_resale_header_dismissed_v1";
-export const SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v1";
-export const SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY =
-  "hdb_resale_search_profile_wizard_dismissed_v1";
+export const SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v2";
+export const LEGACY_SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v1";
 
 /**
  * Base path for the runtime data API served by the Cloudflare Worker

@@ -1,8 +1,8 @@
 /**
  * Integration tests — ShortlistDrawer IME composition handling.
  *
- * Renders ShortlistDrawer with a single expanded row, simulates IME
- * composition on the notes textarea and target price input, and verifies
+ * Renders ShortlistDrawer with a single row, opens the offer form, simulates
+ * IME composition on the buyer-notes textarea and target price input, and verifies
  * that onUpdate is NOT called during composition but IS called once on commit.
  *
  * _Requirements: 2.2, 2.3, 3.2, 3.3_
@@ -88,22 +88,24 @@ function renderDrawer(onUpdate = vi.fn()) {
         rows={[mockRow]}
         onToggleOpen={() => {}}
         onRemove={() => {}}
-        onRestore={() => {}}
+        onRestore={() => true}
         onUpdate={onUpdate}
         onSelectAddress={() => {}}
       />
     </I18nProvider>,
   );
 
+  fireEvent.click(screen.getByRole("button", { name: /101 Ang Mo Kio Ave 3/i, expanded: false }));
+
   return { ...result, onUpdate };
 }
 
-describe("ShortlistDrawer — IME composition on notes textarea", () => {
+describe("ShortlistDrawer — IME composition on buyer-notes textarea", () => {
   it("does not call onUpdate during composition, calls once on commit", () => {
     const onUpdate = vi.fn();
     renderDrawer(onUpdate);
 
-    const notesTextarea = screen.getByLabelText("Notes");
+    const notesTextarea = screen.getByLabelText("Buyer notes");
 
     // Start IME composition
     fireEvent.compositionStart(notesTextarea);
@@ -125,7 +127,7 @@ describe("ShortlistDrawer — IME composition on notes textarea", () => {
 
     // onUpdate should be called exactly once with the committed value
     expect(onUpdate).toHaveBeenCalledTimes(1);
-    expect(onUpdate).toHaveBeenCalledWith("test-block", { notes: "한글" });
+    expect(onUpdate).toHaveBeenCalledWith("test-block", { buyerNotes: "한글" });
   });
 });
 
