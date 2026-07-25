@@ -12,6 +12,7 @@ vi.mock("@/hooks/useBlockLoading", () => ({
     blocks: [],
     loadError: null,
     searchTruncated: false,
+    refinementUnsupported: false,
     isLoading: false,
   })),
 }));
@@ -75,6 +76,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       blocks: [],
       loadError: null,
       searchTruncated: false,
+      refinementUnsupported: false,
       isLoading: false,
     });
     vi.clearAllMocks();
@@ -209,6 +211,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        refinementUnsupported: false,
         isLoading: false,
       });
 
@@ -236,6 +239,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        refinementUnsupported: false,
         isLoading: false,
       });
 
@@ -264,6 +268,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        refinementUnsupported: false,
         isLoading: false,
       });
 
@@ -293,6 +298,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        refinementUnsupported: false,
         isLoading: false,
       });
 
@@ -321,6 +327,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         blocks,
         loadError: null,
         searchTruncated: false,
+        refinementUnsupported: false,
         isLoading: false,
       });
 

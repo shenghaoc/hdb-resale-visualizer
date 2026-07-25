@@ -268,9 +268,7 @@ export function resetBlocksBySearchCacheForTests(): void {
   blocksBySearchSequence = 0;
 }
 
-export function fetchBlocksBySearch(
-  params: CoarseSearchParams,
-): Promise<{
+export function fetchBlocksBySearch(params: CoarseSearchParams): Promise<{
   blocks: BlockSummary[];
   truncated: boolean;
   limit: number;

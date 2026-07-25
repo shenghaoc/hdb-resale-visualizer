@@ -230,16 +230,14 @@ describe("artifact fetch validation", () => {
   it("preserves cohortMetadataAvailable=false so an unanswerable search is not read as zero matches", async () => {
     vi.stubGlobal(
       "fetch",
-      vi
-        .fn()
-        .mockResolvedValue(
-          mockJsonResponse({
-            blocks: [],
-            truncated: false,
-            limit: 2000,
-            cohortMetadataAvailable: false,
-          }),
-        ),
+      vi.fn().mockResolvedValue(
+        mockJsonResponse({
+          blocks: [],
+          truncated: false,
+          limit: 2000,
+          cohortMetadataAvailable: false,
+        }),
+      ),
     );
 
     const result = await fetchBlocksBySearch({

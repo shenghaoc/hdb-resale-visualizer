@@ -11,6 +11,7 @@ vi.mock("@/hooks/useBlockLoading", () => ({
     blocks: [],
     loadError: null,
     searchTruncated: false,
+    refinementUnsupported: false,
     isLoading: false,
   })),
 }));
@@ -165,6 +166,7 @@ describe("useFilterPipeline", () => {
       blocks,
       loadError: null,
       searchTruncated: false,
+      refinementUnsupported: false,
       isLoading: false,
     });
 
@@ -206,6 +208,7 @@ describe("useFilterPipeline", () => {
       blocks,
       loadError: null,
       searchTruncated: false,
+      refinementUnsupported: false,
       isLoading: false,
     });
 
