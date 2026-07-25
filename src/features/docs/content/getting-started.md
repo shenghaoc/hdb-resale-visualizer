@@ -2,7 +2,7 @@
 
 ## First visit
 
-When you first open the app, a short **search profile wizard** offers to capture your situation — preferred flat type, budget, commute MRT station, minimum remaining lease, and optional CPF/income for affordability estimates. You can skip it; everything works without a profile. With a profile, blocks gain affordability scores and the app can recommend towns.
+When you first open the app, a short **search profile wizard** offers to capture your situation — preferred flat type, budget, an MRT station you need nearby (with max walk time to it), minimum remaining lease, and optional CPF/income for affordability estimates. You can skip it; everything works without a profile. With a profile, blocks gain affordability scores and the app can recommend towns.
 
 After that, the start screen offers three entry paths:
 

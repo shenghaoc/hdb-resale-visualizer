@@ -75,7 +75,6 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const { locale, t } = useI18n();
   const [mainFlatType, setMainFlatType] = useState("");
   const [maxBudget, setMaxBudget] = useState("");
-  const [commuteAnchorLabel, setCommuteAnchorLabel] = useState("");
   const [commuteAnchorMrt, setCommuteAnchorMrt] = useState("");
   const [maxCommute, setMaxCommute] = useState("");
   const [minLease, setMinLease] = useState("");
@@ -89,13 +88,13 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const [stationPickerOpen, setStationPickerOpen] = useState(false);
   const mrtStations = getKnownMrtStationNames();
   const budgetPresets = [500000, 700000, 900000, 1200000];
-  const commutePresets = [20, 30, 40, 50];
+  // Walk-to-station minutes (matcher uses walking distance, not door-to-door train time).
+  const commutePresets = [5, 10, 15, 20];
   const leasePresets = [50, 60, 70, 80];
   const totalSteps = 7;
   const draft: SearchProfileWizardDraft = {
     mainFlatType,
     maxBudget,
-    commuteAnchorLabel,
     commuteAnchorMrt,
     maxCommute,
     minLease,
@@ -293,19 +292,6 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
                     </div>
                   </div>
                   <div className="flex flex-col gap-4">
-                    <div>
-                      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
-                        {t("searchProfile.commuteDestination")}
-                      </p>
-                      <div className="rounded-none border bg-muted/40 px-4">
-                        <Input
-                          value={commuteAnchorLabel}
-                          onChange={(e) => setCommuteAnchorLabel(e.target.value)}
-                          placeholder={t("searchProfile.commuteAnchorPlaceholder")}
-                          className="h-12 border-0 px-0 py-0 text-[length:var(--text-base)] font-semibold focus-visible:border-0"
-                        />
-                      </div>
-                    </div>
                     <div>
                       <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground">
                         {t("searchProfile.commuteMrtStation")}

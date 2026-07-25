@@ -9,8 +9,7 @@ import type { Translator } from "@/shared/lib/i18n";
 const t: Translator = (key) => {
   const messages: Record<string, string> = {
     "amenity.label": "Amenities",
-    "amenity.mrtStations": "MRT Stations",
-    "amenity.mrtExits": "MRT Exits",
+    "amenity.mrt": "MRT",
     "amenity.schools": "Schools",
     "amenity.schoolsHint": "select a block",
     "schoolOverlay.loading": "Loading nearby schools for the selected block.",
@@ -24,21 +23,18 @@ const t: Translator = (key) => {
 };
 
 function renderControl(overrides: Partial<ComponentProps<typeof AmenityLayersControl>> = {}) {
-  const onToggleMrtStations = vi.fn();
-  const onToggleMrtExits = vi.fn();
+  const onToggleMrt = vi.fn();
   const onToggleSchoolOverlay = vi.fn();
 
   const result = render(
     <TooltipProvider>
       <AmenityLayersControl
-        mrtStationsEnabled={false}
-        mrtExitsEnabled={false}
+        mrtEnabled={false}
         schoolOverlayEnabled={false}
         schoolOverlayAvailable={true}
         schoolOverlayLoading={false}
         hasBlockSelection={true}
-        onToggleMrtStations={onToggleMrtStations}
-        onToggleMrtExits={onToggleMrtExits}
+        onToggleMrt={onToggleMrt}
         onToggleSchoolOverlay={onToggleSchoolOverlay}
         t={t}
         {...overrides}
@@ -46,49 +42,46 @@ function renderControl(overrides: Partial<ComponentProps<typeof AmenityLayersCon
     </TooltipProvider>,
   );
 
-  return { ...result, onToggleMrtStations, onToggleMrtExits, onToggleSchoolOverlay };
+  return { ...result, onToggleMrt, onToggleSchoolOverlay };
 }
 
 describe("AmenityLayersControl", () => {
-  it("toggles MRT station layer and reflects aria-checked state", async () => {
+  it("toggles a single MRT layer control and reflects aria-checked state", async () => {
     const user = userEvent.setup();
-    const { onToggleMrtStations, rerender } = renderControl({ mrtStationsEnabled: false });
+    const { onToggleMrt, rerender } = renderControl({ mrtEnabled: false });
 
-    const stationSwitch = screen.getByRole("switch", { name: "MRT Stations" });
-    expect(stationSwitch).toHaveAttribute("aria-checked", "false");
+    const mrtSwitch = screen.getByRole("switch", { name: "MRT" });
+    expect(mrtSwitch).toHaveAttribute("aria-checked", "false");
+    expect(screen.queryByRole("switch", { name: /MRT Stations/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("switch", { name: /MRT Exits/i })).not.toBeInTheDocument();
 
-    await user.click(stationSwitch);
-    expect(onToggleMrtStations).toHaveBeenCalledTimes(1);
+    await user.click(mrtSwitch);
+    expect(onToggleMrt).toHaveBeenCalledTimes(1);
 
     rerender(
       <TooltipProvider>
         <AmenityLayersControl
-          mrtStationsEnabled={true}
-          mrtExitsEnabled={false}
+          mrtEnabled={true}
           schoolOverlayEnabled={false}
           schoolOverlayAvailable={true}
           schoolOverlayLoading={false}
           hasBlockSelection={true}
-          onToggleMrtStations={onToggleMrtStations}
-          onToggleMrtExits={vi.fn()}
+          onToggleMrt={onToggleMrt}
           onToggleSchoolOverlay={vi.fn()}
           t={t}
         />
       </TooltipProvider>,
     );
-    expect(screen.getByRole("switch", { name: "MRT Stations" })).toHaveAttribute(
-      "aria-checked",
-      "true",
-    );
+    expect(screen.getByRole("switch", { name: "MRT" })).toHaveAttribute("aria-checked", "true");
   });
 
   it("separates coarse-pointer hit areas from the visual switch tracks", () => {
     renderControl();
-    const stationSwitch = screen.getByRole("switch", { name: "MRT Stations" });
-    const track = stationSwitch.firstElementChild;
+    const mrtSwitch = screen.getByRole("switch", { name: "MRT" });
+    const track = mrtSwitch.firstElementChild;
 
-    expect(stationSwitch).toHaveAttribute("data-touch-target");
-    expect(stationSwitch).toHaveClass("h-7", "w-11");
+    expect(mrtSwitch).toHaveAttribute("data-touch-target");
+    expect(mrtSwitch).toHaveClass("h-7", "w-11");
     expect(track).toHaveClass("h-6", "w-10", "rounded-full");
   });
 
@@ -100,17 +93,6 @@ describe("AmenityLayersControl", () => {
     });
     expect(schoolSwitch).toBeDisabled();
     expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
-  });
-
-  it("toggles MRT exits layer and reflects aria-checked state", async () => {
-    const user = userEvent.setup();
-    const { onToggleMrtExits } = renderControl({ mrtExitsEnabled: false });
-
-    const exitsSwitch = screen.getByRole("switch", { name: "MRT Exits" });
-    expect(exitsSwitch).toHaveAttribute("aria-checked", "false");
-
-    await user.click(exitsSwitch);
-    expect(onToggleMrtExits).toHaveBeenCalledTimes(1);
   });
 
   it("reports the school switch as unchecked while loading even when enabled", () => {

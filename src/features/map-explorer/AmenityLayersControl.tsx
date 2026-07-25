@@ -5,14 +5,12 @@ import { cn } from "@/shared/lib/utils";
 import type { Translator } from "@/shared/lib/i18n";
 
 type AmenityLayersControlProps = {
-  mrtStationsEnabled: boolean;
-  mrtExitsEnabled: boolean;
+  mrtEnabled: boolean;
   schoolOverlayEnabled: boolean;
   schoolOverlayAvailable: boolean;
   schoolOverlayLoading: boolean;
   hasBlockSelection: boolean;
-  onToggleMrtStations: () => void;
-  onToggleMrtExits: () => void;
+  onToggleMrt: () => void;
   onToggleSchoolOverlay: () => void;
   t: Translator;
   className?: string;
@@ -76,14 +74,12 @@ function LayerSwitch({
 }
 
 export function AmenityLayersControl({
-  mrtStationsEnabled,
-  mrtExitsEnabled,
+  mrtEnabled,
   schoolOverlayEnabled,
   schoolOverlayAvailable,
   schoolOverlayLoading,
   hasBlockSelection,
-  onToggleMrtStations,
-  onToggleMrtExits,
+  onToggleMrt,
   onToggleSchoolOverlay,
   t,
   className,
@@ -122,33 +118,15 @@ export function AmenityLayersControl({
             aria-hidden="true"
             className={cn(
               "size-3 shrink-0 transition-colors duration-200",
-              mrtStationsEnabled ? "text-primary" : "text-muted-foreground",
+              mrtEnabled ? "text-primary" : "text-muted-foreground",
             )}
           />
-          <span className="flex-1 text-muted-foreground">{t("amenity.mrtStations")}</span>
+          <span className="flex-1 text-muted-foreground">{t("amenity.mrt")}</span>
           <LayerSwitch
-            enabled={mrtStationsEnabled}
+            enabled={mrtEnabled}
             disabled={false}
-            ariaLabel={t("amenity.mrtStations")}
-            onToggle={onToggleMrtStations}
-          />
-        </div>
-
-        <div className="flex items-center gap-1.5">
-          <TrainFront
-            data-icon
-            aria-hidden="true"
-            className={cn(
-              "size-3 shrink-0 transition-colors duration-200",
-              mrtExitsEnabled ? "text-primary" : "text-muted-foreground",
-            )}
-          />
-          <span className="flex-1 text-muted-foreground">{t("amenity.mrtExits")}</span>
-          <LayerSwitch
-            enabled={mrtExitsEnabled}
-            disabled={false}
-            ariaLabel={t("amenity.mrtExits")}
-            onToggle={onToggleMrtExits}
+            ariaLabel={t("amenity.mrt")}
+            onToggle={onToggleMrt}
           />
         </div>
 

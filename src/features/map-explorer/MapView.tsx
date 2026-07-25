@@ -30,8 +30,7 @@ type MapViewProps = {
   isDarkMode: boolean;
   priceHeatmapEnabled?: boolean;
   priceHeatmapOpacity?: number;
-  mrtStationsEnabled?: boolean;
-  mrtExitsEnabled?: boolean;
+  mrtEnabled?: boolean;
   heatmapMode?: HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
   schoolOverlayEnabled?: boolean;
@@ -53,8 +52,7 @@ export function MapView({
   isDarkMode,
   priceHeatmapEnabled = false,
   priceHeatmapOpacity = 0.7,
-  mrtStationsEnabled = false,
-  mrtExitsEnabled = false,
+  mrtEnabled = false,
   heatmapMode = "price",
   primarySchools = [],
   schoolOverlayEnabled = false,
@@ -146,8 +144,7 @@ export function MapView({
 
   useAmenityGeoSync({
     map: mapInstance,
-    mrtStationsEnabled,
-    mrtExitsEnabled,
+    mrtEnabled,
   });
 
   useMapTheme(mapInstance, isDarkMode);

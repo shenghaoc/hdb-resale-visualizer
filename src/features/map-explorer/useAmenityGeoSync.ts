@@ -37,19 +37,17 @@ async function fetchFeatureCollection(url: string, label: string): Promise<Featu
 
 export function useAmenityGeoSync({
   map,
-  mrtStationsEnabled,
-  mrtExitsEnabled,
+  mrtEnabled,
 }: {
   map: MapLibreMap | null;
-  mrtStationsEnabled: boolean;
-  mrtExitsEnabled: boolean;
+  mrtEnabled: boolean;
 }) {
   const [stationsGeoJson, setStationsGeoJson] = useState<FeatureCollection | null>(null);
   const [exitsGeoJson, setExitsGeoJson] = useState<FeatureCollection | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (mrtStationsEnabled && !stationsGeoJson) {
+    if (mrtEnabled && !stationsGeoJson) {
       void fetchFeatureCollection(`${API_BASE_PATH}/mrt-stations`, "stations")
         .then((data: FeatureCollection) =>
           setStationsGeoJson(enrichMrtFeaturesWithLineColors(data, "stationName")),
@@ -58,10 +56,10 @@ export function useAmenityGeoSync({
           setError(e instanceof Error ? e.message : "Failed to load MRT stations"),
         );
     }
-  }, [mrtStationsEnabled, stationsGeoJson]);
+  }, [mrtEnabled, stationsGeoJson]);
 
   useEffect(() => {
-    if (mrtExitsEnabled && !exitsGeoJson) {
+    if (mrtEnabled && !exitsGeoJson) {
       void fetchFeatureCollection(`${API_BASE_PATH}/mrt-exits`, "exits")
         .then((data: FeatureCollection) =>
           setExitsGeoJson(enrichMrtFeaturesWithLineColors(data, "STATION_NA")),
@@ -70,7 +68,7 @@ export function useAmenityGeoSync({
           setError(e instanceof Error ? e.message : "Failed to load MRT exits"),
         );
     }
-  }, [mrtExitsEnabled, exitsGeoJson]);
+  }, [mrtEnabled, exitsGeoJson]);
 
   // Sync station data to map source with deferred-apply
   useEffect(() => {
@@ -129,14 +127,14 @@ export function useAmenityGeoSync({
     const apply = () => {
       if (!map.isStyleLoaded()) return;
 
+      const visible = mrtEnabled ? "visible" : "none";
+
       if (map.getLayer("mrt-stations-points")) {
-        const visible = mrtStationsEnabled ? "visible" : "none";
         map.setLayoutProperty("mrt-stations-points", "visibility", visible);
         map.setLayoutProperty("mrt-stations-labels", "visibility", visible);
       }
 
       if (map.getLayer("mrt-exits-points")) {
-        const visible = mrtExitsEnabled ? "visible" : "none";
         map.setLayoutProperty("mrt-exits-points", "visibility", visible);
       }
     };
@@ -152,7 +150,7 @@ export function useAmenityGeoSync({
       map.off("load", apply);
       map.off("styledata", apply);
     };
-  }, [map, mrtStationsEnabled, mrtExitsEnabled]);
+  }, [map, mrtEnabled]);
 
   return { error };
 }

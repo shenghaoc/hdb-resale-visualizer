@@ -43,14 +43,13 @@ describe("useAmenityGeoSync", () => {
     vi.clearAllMocks();
   });
 
-  it("keeps enabled MRT layers layout-visible below minzoom so MapLibre can reveal them after zooming", () => {
+  it("keeps enabled MRT station and exit layers layout-visible together", () => {
     const map = createMapStub();
 
     renderHook(() =>
       useAmenityGeoSync({
         map,
-        mrtStationsEnabled: true,
-        mrtExitsEnabled: true,
+        mrtEnabled: true,
       }),
     );
 
@@ -68,43 +67,18 @@ describe("useAmenityGeoSync", () => {
     expect(map.getZoom).not.toHaveBeenCalled();
   });
 
-  it("sets visibility to none when layers are disabled", () => {
+  it("sets station and exit visibility to none when MRT is disabled", () => {
     const map = createMapStub();
 
     renderHook(() =>
       useAmenityGeoSync({
         map,
-        mrtStationsEnabled: false,
-        mrtExitsEnabled: false,
+        mrtEnabled: false,
       }),
     );
 
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-points", "visibility", "none");
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-labels", "visibility", "none");
-    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
-  });
-
-  it("handles partial state: stations enabled, exits disabled", () => {
-    const map = createMapStub();
-
-    renderHook(() =>
-      useAmenityGeoSync({
-        map,
-        mrtStationsEnabled: true,
-        mrtExitsEnabled: false,
-      }),
-    );
-
-    expect(map.setLayoutProperty).toHaveBeenCalledWith(
-      "mrt-stations-points",
-      "visibility",
-      "visible",
-    );
-    expect(map.setLayoutProperty).toHaveBeenCalledWith(
-      "mrt-stations-labels",
-      "visibility",
-      "visible",
-    );
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
   });
 
@@ -115,8 +89,7 @@ describe("useAmenityGeoSync", () => {
     renderHook(() =>
       useAmenityGeoSync({
         map,
-        mrtStationsEnabled: true,
-        mrtExitsEnabled: true,
+        mrtEnabled: true,
       }),
     );
 

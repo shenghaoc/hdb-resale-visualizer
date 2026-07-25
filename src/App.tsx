@@ -340,8 +340,7 @@ function App() {
           isDarkMode={theme === "dark"}
           priceHeatmapEnabled={mapExplorer.priceHeatmapEnabled}
           priceHeatmapOpacity={mapExplorer.priceHeatmapOpacity}
-          mrtStationsEnabled={mapExplorer.mrtStationsEnabled}
-          mrtExitsEnabled={mapExplorer.mrtExitsEnabled}
+          mrtEnabled={mapExplorer.mrtEnabled}
           heatmapMode={mapExplorer.heatmapMode}
           primarySchools={mapExplorer.primarySchoolsForOverlay}
           schoolOverlayEnabled={mapExplorer.effectiveSchoolOverlayEnabled}
@@ -568,14 +567,12 @@ function App() {
 
         {mapExplorer.controlsVisible && (
           <AmenityLayersControl
-            mrtStationsEnabled={mapExplorer.mrtStationsEnabled}
-            mrtExitsEnabled={mapExplorer.mrtExitsEnabled}
+            mrtEnabled={mapExplorer.mrtEnabled}
             schoolOverlayEnabled={mapExplorer.schoolOverlayEnabled}
             schoolOverlayAvailable={mapExplorer.schoolOverlayAvailable}
             schoolOverlayLoading={mapExplorer.schoolOverlayLoading}
             hasBlockSelection={mapExplorer.hasBlockSelection}
-            onToggleMrtStations={mapExplorer.toggleMrtStations}
-            onToggleMrtExits={mapExplorer.toggleMrtExits}
+            onToggleMrt={mapExplorer.toggleMrt}
             onToggleSchoolOverlay={mapExplorer.toggleSchoolOverlay}
             t={t}
             className="absolute z-25 w-36"

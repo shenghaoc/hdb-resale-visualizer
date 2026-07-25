@@ -12,9 +12,8 @@ function makeDraft(overrides: Partial<SearchProfileWizardDraft> = {}): SearchPro
   return {
     mainFlatType: "4 ROOM",
     maxBudget: "700000",
-    commuteAnchorLabel: "  CBD Office  ",
     commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-    maxCommute: "30",
+    maxCommute: "10",
     minLease: "70",
     age: "35",
     coApplicantAge: "33",
@@ -38,8 +37,7 @@ describe("search profile wizard logic", () => {
     expect(canContinueSearchProfileStep(2, makeDraft({ maxBudget: "700000" }))).toBe(true);
   });
 
-  it("requires a destination, station, and positive commute limit", () => {
-    expect(canContinueSearchProfileStep(3, makeDraft({ commuteAnchorLabel: " " }))).toBe(false);
+  it("requires a station and positive walk-time limit without a free-text destination", () => {
     expect(canContinueSearchProfileStep(3, makeDraft({ commuteAnchorMrt: "" }))).toBe(false);
     expect(canContinueSearchProfileStep(3, makeDraft({ maxCommute: "0" }))).toBe(false);
     expect(canContinueSearchProfileStep(3, makeDraft())).toBe(true);
@@ -58,20 +56,20 @@ describe("search profile wizard logic", () => {
 
   it("uses the same complete-draft validation for submission", () => {
     expect(canSubmitSearchProfileDraft(makeDraft())).toBe(true);
-    expect(canSubmitSearchProfileDraft(makeDraft({ commuteAnchorLabel: "" }))).toBe(false);
+    expect(canSubmitSearchProfileDraft(makeDraft({ commuteAnchorMrt: "" }))).toBe(false);
     expect(canSubmitSearchProfileDraft(makeDraft({ age: "20" }))).toBe(false);
   });
 
-  it("builds the exact persisted profile defaults and trims the commute label", () => {
+  it("builds the exact persisted profile defaults and derives the commute label from MRT", () => {
     expect(buildSearchProfileFromWizard(makeDraft())).toEqual({
       version: 1,
       mainFlatType: "4 ROOM",
       alternativeFlatTypes: [],
       maxBudget: 700000,
-      commuteAnchorLabel: "CBD Office",
+      commuteAnchorLabel: "Raffles Place",
       commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-      maxComfortableCommuteMinutes: 30,
-      commuteStretchMinutes: 10,
+      maxComfortableCommuteMinutes: 10,
+      commuteStretchMinutes: 5,
       minimumRemainingLeaseYears: 70,
       budgetStretchPercent: 5,
       showStretchOptions: true,

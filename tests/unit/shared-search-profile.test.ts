@@ -80,7 +80,7 @@ describe("shared/product/search-profile", () => {
       expect(hasCompletedSearchProfile(profile)).toBe(false);
     });
 
-    it("returns false when commuteAnchorLabel is blank", () => {
+    it("does not require commuteAnchorLabel when MRT and walk time are set", () => {
       const profile = makeProfile({
         mainFlatType: "4 ROOM",
         commuteAnchorLabel: "",
@@ -88,7 +88,7 @@ describe("shared/product/search-profile", () => {
         maxComfortableCommuteMinutes: 30,
         minimumRemainingLeaseYears: 70,
       });
-      expect(hasCompletedSearchProfile(profile)).toBe(false);
+      expect(hasCompletedSearchProfile(profile)).toBe(true);
     });
 
     it("returns false when commuteAnchorMrt is null", () => {
@@ -151,17 +151,6 @@ describe("shared/product/search-profile", () => {
           makeProfile({
             mainFlatType: "   ",
             commuteAnchorLabel: "Raffles Place",
-            commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
-            maxComfortableCommuteMinutes: 30,
-            minimumRemainingLeaseYears: 70,
-          }),
-        ),
-      ).toBe(false);
-      expect(
-        hasCompletedSearchProfile(
-          makeProfile({
-            mainFlatType: "4 ROOM",
-            commuteAnchorLabel: "   ",
             commuteAnchorMrt: "RAFFLES PLACE MRT STATION",
             maxComfortableCommuteMinutes: 30,
             minimumRemainingLeaseYears: 70,

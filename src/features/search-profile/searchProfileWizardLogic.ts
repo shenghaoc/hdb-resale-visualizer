@@ -8,7 +8,6 @@ import type { SearchProfile } from "@/types/searchProfile";
 export type SearchProfileWizardDraft = {
   mainFlatType: string;
   maxBudget: string;
-  commuteAnchorLabel: string;
   commuteAnchorMrt: string;
   maxCommute: string;
   minLease: string;
@@ -50,11 +49,9 @@ export function canContinueSearchProfileStep(
     return isOptionalInRange(draft.maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE);
   }
   if (step === 3) {
-    return (
-      draft.commuteAnchorLabel.trim().length > 0 &&
-      draft.commuteAnchorMrt.length > 0 &&
-      Number(draft.maxCommute) > 0
-    );
+    // Matching only uses the MRT station + walk-time threshold. Free-text
+    // destinations are not geocoded, so they must not gate progress.
+    return draft.commuteAnchorMrt.length > 0 && Number(draft.maxCommute) > 0;
   }
   if (step === 4) return Number(draft.minLease) > 0;
   if (step === 5) {
@@ -81,7 +78,6 @@ export function canSubmitSearchProfileDraft(draft: SearchProfileWizardDraft): bo
   return (
     draft.mainFlatType.length > 0 &&
     isOptionalInRange(draft.maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
-    draft.commuteAnchorLabel.trim().length > 0 &&
     draft.commuteAnchorMrt.length > 0 &&
     Number(draft.maxCommute) > 0 &&
     Number(draft.minLease) > 0 &&
@@ -106,10 +102,11 @@ export function buildSearchProfileFromWizard(draft: SearchProfileWizardDraft): S
     mainFlatType: draft.mainFlatType,
     alternativeFlatTypes: [],
     maxBudget: parseOptionalNumber(draft.maxBudget),
-    commuteAnchorLabel: draft.commuteAnchorLabel.trim(),
+    // Display-only label derived from the station the matcher actually uses.
+    commuteAnchorLabel: formatStationLabel(draft.commuteAnchorMrt),
     commuteAnchorMrt: draft.commuteAnchorMrt,
     maxComfortableCommuteMinutes: Number(draft.maxCommute),
-    commuteStretchMinutes: 10,
+    commuteStretchMinutes: 5,
     minimumRemainingLeaseYears: Number(draft.minLease),
     budgetStretchPercent: 5,
     showStretchOptions: true,

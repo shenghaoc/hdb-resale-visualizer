@@ -2,6 +2,7 @@ import type { SearchProfile } from "@/types/searchProfile";
 import { formatNumber } from "@/shared/lib/format";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { localizeFlatType } from "@/shared/lib/i18n/domain";
+import { formatStationLabel } from "./searchProfileWizardLogic";
 
 export type SearchProfileChip = {
   key: string;
@@ -34,11 +35,14 @@ export function getSearchProfileChipDescriptors(
       clearPatch: { maxBudget: null },
     });
   }
-  if (profile.commuteAnchorLabel) {
+  if (profile.commuteAnchorMrt || profile.commuteAnchorLabel) {
+    const stationLabel =
+      profile.commuteAnchorLabel.trim() ||
+      (profile.commuteAnchorMrt ? formatStationLabel(profile.commuteAnchorMrt) : "");
     chips.push({
       key: "profile-commute",
       label: t("searchProfile.chip.commute", {
-        label: profile.commuteAnchorLabel,
+        label: stationLabel,
         minutes:
           profile.maxComfortableCommuteMinutes === null
             ? t("shortlist.na")

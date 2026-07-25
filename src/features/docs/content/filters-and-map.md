@@ -37,8 +37,7 @@ Blocks appear as **coloured dots**. Colour encodes the median resale price — c
 
 From the **layer control** on the right side of the map:
 
-- **MRT stations** — station markers for judging proximity
-- **MRT exits** — individual exit points for finer walking-time estimates
+- **MRT** — station markers and exit points for judging proximity and walking access
 - **Primary schools** — available after selecting a block; shows nearby schools
 
 ### Price heatmap

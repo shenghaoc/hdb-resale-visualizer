@@ -69,8 +69,7 @@ Blocks appear as **coloured dots** on the map. The colour indicates the median r
 
 Toggle these from the **layer control** on the right side of the map:
 
-- **MRT stations** — shows station markers so you can judge proximity
-- **MRT exits** — individual exit points for finer-grained walking-time estimates
+- **MRT** — station markers and exit points so you can judge proximity and walking access
 - **Primary schools** — appears after selecting a block; shows nearby schools
 
 ### Price heatmap
@@ -223,7 +222,7 @@ A **search profile** lets the app personalise results to your situation. When yo
 
 - **Preferred flat type** (e.g. 4-Room)
 - **Budget range**
-- **Commute destination** — an MRT station you commute to
+- **MRT walk anchor** — an MRT station you need nearby, plus how far you will walk to it (walking time to that station, not door-to-door train commute)
 - **Minimum remaining lease** — based on your age or preference
 - **CPF and income** — for affordability estimates
 

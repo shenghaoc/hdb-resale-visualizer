@@ -27,9 +27,8 @@ test.describe("Search Profile Wizard", () => {
     await budgetBtn.click();
     await page.getByRole("button", { name: "Next" }).click();
 
-    // 4. Commute Step
-    await expect(page.getByText("Where do you commute?")).toBeVisible();
-    await page.getByPlaceholder("e.g. Raffles Place MRT").fill("Raffles Place");
+    // 4. Commute Step — station + walk time only (no free-text destination)
+    await expect(page.getByText("Which MRT station do you need nearby?")).toBeVisible();
 
     // Open MRT picker
     const pickerTrigger = page.getByRole("button", { name: "Select MRT station" });
@@ -41,8 +40,8 @@ test.describe("Search Profile Wizard", () => {
     await expect(option).toBeVisible();
     await option.click();
 
-    // Select commute time preset
-    await page.getByRole("button", { name: "30 min", exact: true }).click();
+    // Select walk-to-station preset
+    await page.getByRole("button", { name: "10 min", exact: true }).click();
     await page.getByRole("button", { name: "Next" }).click();
 
     // 5. Lease Step
@@ -63,7 +62,7 @@ test.describe("Search Profile Wizard", () => {
     await expect(page.getByText("4 ROOM")).toBeVisible();
     await expect(page.getByText("S$700,000")).toBeVisible();
     await expect(page.getByText("Raffles Place")).toBeVisible();
-    await expect(page.getByText("30 min")).toBeVisible();
+    await expect(page.getByText("10 min")).toBeVisible();
     await expect(page.getByText("70 years")).toBeVisible();
 
     const continueBtn = page.getByRole("button", { name: "Continue to map" });
@@ -82,7 +81,7 @@ test.describe("Search Profile Wizard", () => {
     expect(profile.maxBudget).toBe(700000);
     expect(profile.commuteAnchorLabel).toBe("Raffles Place");
     expect(profile.commuteAnchorMrt).toBe("RAFFLES PLACE MRT STATION");
-    expect(profile.maxComfortableCommuteMinutes).toBe(30);
+    expect(profile.maxComfortableCommuteMinutes).toBe(10);
     expect(profile.minimumRemainingLeaseYears).toBe(70);
     expect(profile.age).toBe(38);
     expect(profile.coApplicantAge).toBe(36);

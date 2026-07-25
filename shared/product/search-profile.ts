@@ -198,9 +198,12 @@ export function evaluateBlockForProfile(
 }
 
 /**
- * Returns `true` when all five required search-profile fields are populated:
- * main flat type, commute anchor label, commute anchor MRT, max comfortable
- * commute minutes, and minimum remaining lease years.
+ * Returns `true` when all four required search-profile fields are populated:
+ * main flat type, commute anchor MRT, max walk-to-station minutes, and
+ * minimum remaining lease years.
+ *
+ * `commuteAnchorLabel` is display-only (derived from the station name) and is
+ * not required for matching or completion.
  *
  * Accepts `Partial<SearchProfile> | null | undefined` so callers with
  * incomplete profile state (e.g. during wizard construction) can test
@@ -211,7 +214,6 @@ export function hasCompletedSearchProfile(
 ): boolean {
   return Boolean(
     profile?.mainFlatType?.trim() &&
-    profile?.commuteAnchorLabel?.trim() &&
     profile?.commuteAnchorMrt?.trim() &&
     profile?.maxComfortableCommuteMinutes != null &&
     profile?.minimumRemainingLeaseYears != null,

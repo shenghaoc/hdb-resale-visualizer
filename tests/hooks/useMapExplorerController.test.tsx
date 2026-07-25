@@ -89,44 +89,34 @@ describe("useMapExplorerController", () => {
     expect(result.current.heatmapMode).toBe("price");
   });
 
-  it("starts with MRT stations, exits, and school overlay disabled", () => {
+  it("starts with MRT and school overlay disabled", () => {
     const { result } = renderHook(() => useMapExplorerController(makeOptions()));
-    expect(result.current.mrtStationsEnabled).toBe(false);
-    expect(result.current.mrtExitsEnabled).toBe(false);
+    expect(result.current.mrtEnabled).toBe(false);
     expect(result.current.schoolOverlayEnabled).toBe(false);
   });
 
-  it("toggles each layer independently", () => {
+  it("toggles heatmap, MRT, and school overlay independently", () => {
     const { result } = renderHook(() => useMapExplorerController(makeOptions()));
 
     act(() => {
       result.current.togglePriceHeatmap();
     });
     expect(result.current.priceHeatmapEnabled).toBe(true);
-    expect(result.current.mrtStationsEnabled).toBe(false);
-    expect(result.current.mrtExitsEnabled).toBe(false);
+    expect(result.current.mrtEnabled).toBe(false);
     expect(result.current.schoolOverlayEnabled).toBe(false);
 
     act(() => {
-      result.current.toggleMrtStations();
+      result.current.toggleMrt();
     });
     expect(result.current.priceHeatmapEnabled).toBe(true);
-    expect(result.current.mrtStationsEnabled).toBe(true);
-    expect(result.current.mrtExitsEnabled).toBe(false);
-    expect(result.current.schoolOverlayEnabled).toBe(false);
-
-    act(() => {
-      result.current.toggleMrtExits();
-    });
-    expect(result.current.mrtExitsEnabled).toBe(true);
+    expect(result.current.mrtEnabled).toBe(true);
     expect(result.current.schoolOverlayEnabled).toBe(false);
 
     act(() => {
       result.current.toggleSchoolOverlay();
     });
     expect(result.current.schoolOverlayEnabled).toBe(true);
-    expect(result.current.mrtStationsEnabled).toBe(true);
-    expect(result.current.mrtExitsEnabled).toBe(true);
+    expect(result.current.mrtEnabled).toBe(true);
     expect(result.current.priceHeatmapEnabled).toBe(true);
   });
 

@@ -84,10 +84,9 @@ describe("SearchProfileWizard", () => {
     await clickPrimary(user, /next/i);
     await clickPrimary(user, /next/i);
 
-    await user.type(screen.getByPlaceholderText(/raffles place mrt/i), "CBD Office");
     await user.click(screen.getByRole("button", { name: /select mrt station/i }));
     await user.click(screen.getByRole("option", { name: "Bedok" }));
-    await user.click(screen.getByRole("button", { name: /30 min/i }));
+    await user.click(screen.getByRole("button", { name: /10 min/i }));
     await clickPrimary(user, /next/i);
 
     await user.click(screen.getByRole("button", { name: /70 yr/i }));
@@ -109,9 +108,9 @@ describe("SearchProfileWizard", () => {
       expect.objectContaining({
         version: 1,
         mainFlatType: "4 ROOM",
-        commuteAnchorLabel: "CBD Office",
+        commuteAnchorLabel: "Bedok",
         commuteAnchorMrt: "BEDOK MRT STATION",
-        maxComfortableCommuteMinutes: 30,
+        maxComfortableCommuteMinutes: 10,
         minimumRemainingLeaseYears: 70,
         age,
         coApplicantAge: 33,
@@ -130,10 +129,9 @@ describe("SearchProfileWizard", () => {
     await clickPrimary(user, /next/i);
     await clickPrimary(user, /next/i);
 
-    await user.type(screen.getByPlaceholderText(/raffles place mrt/i), "Office");
     await user.click(screen.getByRole("button", { name: /select mrt station/i }));
     await user.click(screen.getByRole("option", { name: "Bedok" }));
-    await user.click(screen.getByRole("button", { name: /30 min/i }));
+    await user.click(screen.getByRole("button", { name: /10 min/i }));
     await clickPrimary(user, /next/i);
 
     await user.click(screen.getByRole("button", { name: /70 yr/i }));
