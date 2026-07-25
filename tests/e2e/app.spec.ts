@@ -228,7 +228,7 @@ test("shortlist items from prior sessions are visible without adding a new one",
   });
   await page
     .getByTestId("shortlist-drawer")
-    .getByRole("button", { name: "Expand details for 104A ANG MO KIO ST 11" })
+    .getByRole("button", { name: /104A ANG MO KIO ST 11/i, expanded: false })
     .click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText("Prior session note");
 });
