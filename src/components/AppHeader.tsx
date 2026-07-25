@@ -10,6 +10,7 @@ import type { Locale, Translator } from "@/shared/lib/i18n";
 import type { Manifest } from "@/types/data";
 import { cn } from "@/shared/lib/utils";
 import { deriveDataQualityState } from "@/shared/lib/dataQuality";
+import type { PanelTab } from "@/hooks/usePanelState";
 
 type AppHeaderProps = {
   manifest: Manifest;
@@ -23,6 +24,12 @@ type AppHeaderProps = {
   onToggleMobileHeader: () => void;
   onDismiss: () => void;
   onOpenGuide: () => void;
+  /**
+   * Active mobile destination. The mobile tab bar sits above the search
+   * overlay's scrim, so navigating while the overlay is open would otherwise
+   * leave a full-screen scrim swallowing taps on the destination underneath.
+   */
+  mobileTab?: PanelTab | null;
 };
 
 const HEADER_SURFACE_CLASS = "v2-chrome";
@@ -39,6 +46,7 @@ export function AppHeader({
   onToggleMobileHeader,
   onDismiss,
   onOpenGuide,
+  mobileTab = null,
 }: AppHeaderProps) {
   const dataQuality = deriveDataQualityState(manifest);
   const baseSourceLabel = dataQuality.sourceLabels.join(" + ");
@@ -66,6 +74,15 @@ export function AppHeader({
   const openMobileSearch = useCallback(() => {
     setIsMobileSearchOpen(true);
   }, []);
+
+  const previousMobileTabRef = useRef(mobileTab);
+  useEffect(() => {
+    if (previousMobileTabRef.current === mobileTab) {
+      return;
+    }
+    previousMobileTabRef.current = mobileTab;
+    closeMobileSearch();
+  }, [mobileTab, closeMobileSearch]);
 
   useEffect(() => {
     if (!isMobileSearchOpen) {

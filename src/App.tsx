@@ -636,6 +636,7 @@ function App() {
             onToggleMobileHeader={() => header.setIsMobileHeaderOpen((o) => !o)}
             onDismiss={() => header.setIsHeaderVisible(false)}
             onOpenGuide={() => navigate(DOCS_PATH_PREFIX)}
+            mobileTab={panel.mobileTab}
           />
         ) : null}
 

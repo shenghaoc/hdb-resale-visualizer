@@ -185,4 +185,43 @@ describe("AppHeader mobile search", () => {
     await user.click(screen.getByRole("button", { name: "app.openGuide" }));
     expect(onOpenGuide).toHaveBeenCalledTimes(1);
   });
+
+  it("closes the mobile search overlay when the user navigates to another tab", async () => {
+    const user = userEvent.setup();
+
+    const props = {
+      manifest,
+      isDesktop: false,
+      locale: "en-SG" as const,
+      t,
+      search: "",
+      onSearchChange: vi.fn(),
+      onSelectSuggestion: vi.fn(),
+      isMobileHeaderOpen: false,
+      onToggleMobileHeader: vi.fn(),
+      onDismiss: vi.fn(),
+      onOpenGuide: vi.fn(),
+    };
+
+    const { rerender } = render(
+      <TooltipProvider>
+        <AppHeader {...props} mobileTab={null} />
+      </TooltipProvider>,
+    );
+
+    await user.click(screen.getByRole("button", { name: "header.openSearch" }));
+    expect(screen.getByTestId("header-search-overlay")).toBeInTheDocument();
+
+    // The mobile tab bar renders above the overlay scrim, so a destination
+    // change must dismiss the overlay or its scrim swallows every tap.
+    rerender(
+      <TooltipProvider>
+        <AppHeader {...props} mobileTab="results" />
+      </TooltipProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.queryByTestId("header-search-overlay")).not.toBeInTheDocument();
+    });
+  });
 });
