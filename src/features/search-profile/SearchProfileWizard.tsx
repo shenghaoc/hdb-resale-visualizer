@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   SEARCH_PROFILE_MAX_APPLICANT_AGE,
-  SEARCH_PROFILE_MAX_MONETARY_VALUE,
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
 } from "@/shared/lib/constants";
 import { maxAffordablePrice } from "@/shared/lib/affordability";
@@ -24,26 +23,20 @@ import { getKnownMrtStationNames } from "@shared/mrt-station-details";
 import { cn } from "@/shared/lib/utils";
 import type { FilterOptions } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
+import {
+  buildSearchProfileFromWizard,
+  canContinueSearchProfileStep,
+  canSubmitSearchProfileDraft,
+  formatStationLabel,
+  parseOptionalNumber,
+  type SearchProfileWizardDraft,
+} from "./searchProfileWizardLogic";
 
 type Props = {
   options: FilterOptions;
   onComplete: (profile: SearchProfile) => void;
   onSkip: () => void;
 };
-
-function formatStationLabel(stationName: string) {
-  return stationName
-    .replace(/ MRT STATION$/u, "")
-    .toLowerCase()
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-}
-
-const isOptionalInRange = (value: string, min: number, max: number) =>
-  value.trim().length === 0 || (Number(value) >= min && Number(value) <= max);
-
-const isOptionalIntegerInRange = (value: string, min: number, max: number) =>
-  value.trim().length === 0 ||
-  (Number.isInteger(Number(value)) && Number(value) >= min && Number(value) <= max);
 
 const WIZARD_ICONS = {
   welcome: Search,
@@ -99,99 +92,38 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
   const commutePresets = [20, 30, 40, 50];
   const leasePresets = [50, 60, 70, 80];
   const totalSteps = 7;
+  const draft: SearchProfileWizardDraft = {
+    mainFlatType,
+    maxBudget,
+    commuteAnchorLabel,
+    commuteAnchorMrt,
+    maxCommute,
+    minLease,
+    age,
+    coApplicantAge,
+    cpfOABalance,
+    monthlyIncome,
+  };
   const filteredStations = useMemo(() => {
     const query = stationSearch.trim().toUpperCase();
     if (!query) return mrtStations;
     return mrtStations.filter((station) => station.includes(query));
   }, [stationSearch, mrtStations]);
 
-  const canContinueStep = useMemo(() => {
-    if (step === 0) return true;
-    if (step === 1) return mainFlatType.length > 0;
-    if (step === 2) return isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE);
-    if (step === 3)
-      return (
-        commuteAnchorLabel.trim().length > 0 &&
-        commuteAnchorMrt.length > 0 &&
-        Number(maxCommute) > 0
-      );
-    if (step === 4) return Number(minLease) > 0;
-    if (step === 5) {
-      return (
-        isOptionalIntegerInRange(
-          age,
-          SEARCH_PROFILE_MIN_APPLICANT_AGE,
-          SEARCH_PROFILE_MAX_APPLICANT_AGE,
-        ) &&
-        isOptionalIntegerInRange(
-          coApplicantAge,
-          SEARCH_PROFILE_MIN_APPLICANT_AGE,
-          SEARCH_PROFILE_MAX_APPLICANT_AGE,
-        ) &&
-        isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
-        isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
-      );
-    }
-    if (step === 6) return true;
-    return false;
-  }, [
-    step,
-    mainFlatType,
-    maxBudget,
-    commuteAnchorLabel,
-    commuteAnchorMrt,
-    maxCommute,
-    minLease,
-    age,
-    coApplicantAge,
-    cpfOABalance,
-    monthlyIncome,
-  ]);
+  const canContinueStep = canContinueSearchProfileStep(step, draft);
 
   const affordabilityCeiling = useMemo(
     () =>
       maxAffordablePrice({
-        monthlyIncome: monthlyIncome.trim() ? Number(monthlyIncome) : null,
-        cpfOABalance: cpfOABalance.trim() ? Number(cpfOABalance) : null,
-        age: age.trim() ? Number(age) : null,
-        coApplicantAge: coApplicantAge.trim() ? Number(coApplicantAge) : null,
+        monthlyIncome: parseOptionalNumber(monthlyIncome),
+        cpfOABalance: parseOptionalNumber(cpfOABalance),
+        age: parseOptionalNumber(age),
+        coApplicantAge: parseOptionalNumber(coApplicantAge),
       }),
     [monthlyIncome, cpfOABalance, age, coApplicantAge],
   );
 
-  const canSubmit = useMemo(() => {
-    return (
-      mainFlatType.length > 0 &&
-      isOptionalInRange(maxBudget, 1, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
-      commuteAnchorLabel.trim().length > 0 &&
-      commuteAnchorMrt.length > 0 &&
-      Number(maxCommute) > 0 &&
-      Number(minLease) > 0 &&
-      isOptionalIntegerInRange(
-        age,
-        SEARCH_PROFILE_MIN_APPLICANT_AGE,
-        SEARCH_PROFILE_MAX_APPLICANT_AGE,
-      ) &&
-      isOptionalIntegerInRange(
-        coApplicantAge,
-        SEARCH_PROFILE_MIN_APPLICANT_AGE,
-        SEARCH_PROFILE_MAX_APPLICANT_AGE,
-      ) &&
-      isOptionalInRange(cpfOABalance, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE) &&
-      isOptionalInRange(monthlyIncome, 0, SEARCH_PROFILE_MAX_MONETARY_VALUE)
-    );
-  }, [
-    mainFlatType,
-    maxBudget,
-    commuteAnchorLabel,
-    commuteAnchorMrt,
-    maxCommute,
-    minLease,
-    age,
-    coApplicantAge,
-    cpfOABalance,
-    monthlyIncome,
-  ]);
+  const canSubmit = canSubmitSearchProfileDraft(draft);
 
   const nextLabel =
     step === 0
@@ -208,26 +140,7 @@ export function SearchProfileWizard({ options, onComplete, onSkip }: Props) {
     }
 
     if (!canSubmit) return;
-    const parseOptionalNumber = (value: string): number | null =>
-      value.trim() !== "" ? Number(value) : null;
-    onComplete({
-      version: 1,
-      mainFlatType,
-      alternativeFlatTypes: [],
-      maxBudget: parseOptionalNumber(maxBudget),
-      commuteAnchorLabel: commuteAnchorLabel.trim(),
-      commuteAnchorMrt,
-      maxComfortableCommuteMinutes: Number(maxCommute),
-      commuteStretchMinutes: 10,
-      minimumRemainingLeaseYears: Number(minLease),
-      budgetStretchPercent: 5,
-      showStretchOptions: true,
-      showAllBlocks: false,
-      age: parseOptionalNumber(age),
-      coApplicantAge: parseOptionalNumber(coApplicantAge),
-      cpfOABalance: parseOptionalNumber(cpfOABalance),
-      monthlyIncome: parseOptionalNumber(monthlyIncome),
-    });
+    onComplete(buildSearchProfileFromWizard(draft));
   };
 
   return (

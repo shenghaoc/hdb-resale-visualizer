@@ -13,12 +13,14 @@ import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
-import { getSearchProfileChipDescriptors } from "@/features/search-profile/searchProfileChips";
-import { buildTownRecommendations } from "@/features/search-profile/town-recommendations";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
 import { MapLocaleControl } from "@/features/map-explorer/MapLocaleControl";
-import { SearchProfileWizard } from "@/components/SearchProfileWizard";
+import { SearchProfileWizard } from "@/features/search-profile/SearchProfileWizard";
+import {
+  useSearchProfileControllerState,
+  useSearchProfileControllerView,
+} from "@/features/search-profile/useSearchProfileController";
 import { AmenityLayersControl } from "@/features/map-explorer/AmenityLayersControl";
 import { AppPanelShell } from "@/components/AppPanelShell";
 import { AppTabBars } from "@/components/AppTabBars";
@@ -32,7 +34,6 @@ import { PriceLegend } from "@/features/map-explorer/PriceLegend";
 import { useMapExplorerController } from "@/features/map-explorer/useMapExplorerController";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { buildFilterShareUrl, shareViaNavigator } from "@/shared/lib/shareUrls";
-import { useSearchProfile } from "@/hooks/useSearchProfile";
 import { useListingCheckController } from "@/features/listing-check/useListingCheckController";
 import { DocsLink } from "@/features/docs/DocsLink";
 import { isDocsPath, navigate, usePathname, DOCS_PATH_PREFIX } from "@/features/docs/docsRouter";
@@ -46,7 +47,9 @@ const MapView = lazy(() =>
   })),
 );
 const DetailDrawer = lazy(() =>
-  import("@/components/DetailDrawer").then((m) => ({ default: m.DetailDrawer })),
+  import("@/features/block-detail/DetailDrawer").then((module) => ({
+    default: module.DetailDrawer,
+  })),
 );
 const ShortlistDrawer = lazy(() =>
   import("@/features/shortlist/ShortlistDrawer").then((module) => ({
@@ -71,7 +74,7 @@ function App() {
   const { filters, patchFilters, resetFilters } = useUrlFilters();
   const geo = useGeolocation({ t });
   const header = useHeaderState();
-  const searchProfile = useSearchProfile();
+  const searchProfileState = useSearchProfileControllerState();
 
   const pipeline = useFilterPipeline({
     manifest,
@@ -80,11 +83,20 @@ function App() {
     resultsVisible: panel.resultsVisible,
     savedVisible: panel.savedVisible,
     shortlistCount: shortlist.items.length,
-    searchProfile: searchProfile.profile,
+    searchProfile: searchProfileState.profile,
     t,
   });
 
   const { setUseDefaultStartMonth } = pipeline;
+  const totalBlocks = manifest?.counts.blocks ?? 0;
+  const searchProfile = useSearchProfileControllerView(searchProfileState, {
+    blocks: pipeline.blocks,
+    totalBlocks,
+    hasResultScope: pipeline.hasResultScope,
+    effectiveTown: pipeline.effectiveFilters.town || null,
+    locale,
+    t,
+  });
 
   const { detail, comparison, isDetailLoading, isComparisonLoading } = useSelectedBlockArtifacts(
     filters.selectedAddressKey,
@@ -131,41 +143,8 @@ function App() {
       label: chip.label,
       onRemove: () => patchFilters(chip.clearPatch),
     }));
-    const profileChips = getSearchProfileChipDescriptors(searchProfile.profile, locale, t).map(
-      (chip) => ({
-        key: chip.key,
-        label: chip.label,
-        onRemove: () => searchProfile.patchProfile(chip.clearPatch),
-      }),
-    );
-    return [...profileChips, ...filterChips];
-  }, [filters, locale, patchFilters, searchProfile, t]);
-
-  const townProfileBlocks = useMemo(
-    () =>
-      pipeline.effectiveFilters.town
-        ? pipeline.blocks.filter((b) => b.town === pipeline.effectiveFilters.town)
-        : [],
-    [pipeline.blocks, pipeline.effectiveFilters.town],
-  );
-
-  const totalBlocks = manifest?.counts.blocks ?? 0;
-  const hasAllBlocksLoaded = totalBlocks > 0 && pipeline.blocks.length >= totalBlocks;
-  const townRecommendations = useMemo(() => {
-    if (!searchProfile.completed) return [];
-    if (pipeline.hasResultScope) return [];
-    if (!hasAllBlocksLoaded) return [];
-    return buildTownRecommendations(searchProfile.profile, pipeline.blocks);
-  }, [
-    searchProfile.completed,
-    searchProfile.profile,
-    pipeline.blocks,
-    pipeline.hasResultScope,
-    hasAllBlocksLoaded,
-  ]);
-
-  const townRecommendationsLoading =
-    Boolean(manifest) && searchProfile.completed && !pipeline.hasResultScope && !hasAllBlocksLoaded;
+    return [...searchProfile.profileChips, ...filterChips];
+  }, [filters, locale, patchFilters, searchProfile.profileChips, t]);
 
   // ── Listing check workflow ───────────────────────────────────────────────
   const {
@@ -435,15 +414,15 @@ function App() {
             sortMode={filters.sort}
             onSortChange={(sort) => patchUserFilters({ sort })}
             profileTown={pipeline.effectiveFilters.town || null}
-            profileTownBlocks={townProfileBlocks}
+            profileTownBlocks={searchProfile.townProfileBlocks}
             profileDataWindow={manifest.dataWindow}
             profileStartMonth={pipeline.effectiveFilters.startMonth}
             profileEndMonth={pipeline.effectiveFilters.endMonth}
             compareTown={filters.compareTown || null}
             availableTowns={manifest.filterOptions.towns}
             onChangeCompareTown={(compareTown) => patchFilters({ compareTown })}
-            townRecommendations={townRecommendations}
-            townRecommendationsLoading={townRecommendationsLoading}
+            townRecommendations={searchProfile.townRecommendations}
+            townRecommendationsLoading={searchProfile.townRecommendationsLoading}
             onSelectTown={(town) =>
               patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })
             }

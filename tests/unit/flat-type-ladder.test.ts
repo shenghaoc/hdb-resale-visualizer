@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { deriveFlatTypePriceLadder, median } from "@/features/block-detail/flat-type-ladder";
+import { deriveFlatTypePriceLadder, median } from "@/entities/block/flat-type-ladder";
 import type { AddressDetailTransaction } from "@/types/data";
 
 function tx(

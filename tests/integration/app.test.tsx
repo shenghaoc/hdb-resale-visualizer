@@ -136,7 +136,7 @@ vi.mock("@/components/ResultsPane", () => ({
   ),
 }));
 
-vi.mock("@/components/DetailDrawer", () => ({
+vi.mock("@/features/block-detail/DetailDrawer", () => ({
   DetailDrawer: ({ isLoading, onClose }: { isLoading: boolean; onClose: () => void }) => (
     <div data-testid="detail-drawer">
       <span>{isLoading ? "Loading detail" : "Loaded detail"}</span>

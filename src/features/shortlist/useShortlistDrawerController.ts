@@ -6,7 +6,7 @@ import {
   formatMinutesWalk,
   formatRemainingLease,
 } from "@/shared/lib/format";
-import { buildLeaseSignals } from "@/features/block-detail/leaseSignals";
+import { buildLeaseSignals } from "@/entities/block/leaseSignals";
 import { buildShortlistComparisonRows } from "@/features/shortlist/shortlist-comparison";
 import { encodeShortlistForUrl } from "@/features/shortlist/shortlist";
 import { rankShortlistRows, type CompareMode } from "@/features/shortlist/shortlist-ranking";

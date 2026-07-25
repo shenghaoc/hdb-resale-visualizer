@@ -4,7 +4,7 @@ import {
   computeRemainingLeaseYears,
   CPF_MIN_LEASE_YEARS,
   TYPICAL_HOLD_YEARS,
-} from "../lease-financing";
+} from "@/entities/block/lease-financing";
 import { HDB_MAX_BUYER_AGE, HDB_MAX_LTV_RATIO, MAX_LEASE_DURATION } from "@/shared/lib/constants";
 
 describe("computeRemainingLeaseYears", () => {

@@ -1,4 +1,4 @@
-import type { FlatTypeLadderEntry } from "@/features/block-detail/flat-type-ladder";
+import type { FlatTypeLadderEntry } from "@/entities/block/flat-type-ladder";
 import { formatCompactCurrency } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
 import { localizeFlatType } from "@/shared/lib/i18n/domain";
