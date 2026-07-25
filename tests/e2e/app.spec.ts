@@ -226,5 +226,9 @@ test("shortlist items from prior sessions are visible without adding a new one",
   await expect(page.getByTestId("shortlist-drawer")).toContainText("104A ANG MO KIO ST 11", {
     timeout: 10_000,
   });
+  await page
+    .getByTestId("shortlist-drawer")
+    .getByRole("button", { name: "Expand details for 104A ANG MO KIO ST 11" })
+    .click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText("Prior session note");
 });

@@ -225,6 +225,7 @@ describe("Buyer-first homepage", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: /check a listing price/i })).toBeVisible();
     });
+    expect(screen.getByTestId("map-locale-control")).toBeVisible();
   });
 
   it("'Check a listing price' CTA in scope prompt opens the check panel", async () => {

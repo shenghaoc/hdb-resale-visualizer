@@ -571,9 +571,7 @@ function App() {
           />
         ) : null}
 
-        {mapExplorer.controlsVisible && !showScopePrompt && (
-          <MapLocaleControl isDesktop={panel.isDesktop} />
-        )}
+        {mapExplorer.controlsVisible && <MapLocaleControl isDesktop={panel.isDesktop} />}
 
         {/* Price-colour legend — only when map is visible */}
         <PriceLegend
