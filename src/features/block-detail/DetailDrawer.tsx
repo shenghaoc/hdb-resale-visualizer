@@ -354,8 +354,6 @@ export function DetailDrawer({
     referenceMonth,
     filters,
     searchProfile,
-    locale,
-    t,
   });
 
   return (

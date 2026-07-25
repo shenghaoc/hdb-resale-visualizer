@@ -1,6 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { I18nProvider, useI18n } from "@/shared/lib/i18n";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import {
   useBlockDetailController,
@@ -148,16 +147,10 @@ const filters: FilterState = {
   mrtMax: 500,
 };
 
-type TestOptions = Omit<UseBlockDetailControllerOptions, "locale" | "t">;
+type TestOptions = UseBlockDetailControllerOptions;
 
 function renderController(options: TestOptions) {
-  return renderHook(
-    () => {
-      const { locale, t } = useI18n();
-      return useBlockDetailController({ ...options, locale, t });
-    },
-    { wrapper: I18nProvider },
-  );
+  return renderHook(() => useBlockDetailController(options));
 }
 
 function makeOptions(overrides: Partial<TestOptions> = {}): TestOptions {

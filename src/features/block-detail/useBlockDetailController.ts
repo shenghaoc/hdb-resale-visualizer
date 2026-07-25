@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, startTransition } from "react";
 import { flushSync } from "react-dom";
-import type { Locale, Translator } from "@/shared/lib/i18n";
 import type { AddressDetail, BlockSummary, ComparisonArtifact, FilterState } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import { rankSimilarBlocks } from "@/entities/block/similar-blocks";
@@ -30,8 +29,6 @@ export type UseBlockDetailControllerOptions = {
   referenceMonth?: string;
   filters: FilterState;
   searchProfile: SearchProfile | null;
-  locale: Locale;
-  t: Translator;
 };
 
 export function useBlockDetailController({
