@@ -975,6 +975,7 @@ export function DetailDrawer({
                                 <TrendChart
                                   points={trendPoints}
                                   t={t}
+                                  locale={locale}
                                   peakMonth={peakMonthInView}
                                   height={260}
                                 />

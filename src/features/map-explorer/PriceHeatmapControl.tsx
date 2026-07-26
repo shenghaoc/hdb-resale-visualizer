@@ -46,6 +46,35 @@ export function PriceHeatmapControl({
       ? t("heatmap.disable")
       : t("heatmap.enable")
     : t("heatmap.disabledHint");
+  const selectModeAndFocus = (nextMode: HeatmapMode) => {
+    onModeChange(nextMode);
+    (nextMode === "price" ? priceRadioRef : perSqmRadioRef).current?.focus();
+  };
+  const handleModeKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    currentMode: HeatmapMode,
+  ) => {
+    let nextMode: HeatmapMode | null = null;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextMode = currentMode === "price" ? "perSqm" : "price";
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextMode = currentMode === "price" ? "perSqm" : "price";
+        break;
+      case "Home":
+        nextMode = "price";
+        break;
+      case "End":
+        nextMode = "perSqm";
+        break;
+    }
+    if (!nextMode) return;
+    event.preventDefault();
+    selectModeAndFocus(nextMode);
+  };
 
   return (
     <div
@@ -119,15 +148,7 @@ export function PriceHeatmapControl({
               tabIndex={mode === "price" ? 0 : -1}
               onClick={() => onModeChange("price")}
               ref={priceRadioRef}
-              onKeyDown={(e) => {
-                if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-                  e.preventDefault();
-                  // Roving tabindex moves the tab stop, so focus must follow the
-                  // selection or the user is left on a tabIndex={-1} button.
-                  onModeChange("perSqm");
-                  perSqmRadioRef.current?.focus();
-                }
-              }}
+              onKeyDown={(event) => handleModeKeyDown(event, "price")}
               className={cn(
                 "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "price"
@@ -145,13 +166,7 @@ export function PriceHeatmapControl({
               tabIndex={mode === "perSqm" ? 0 : -1}
               onClick={() => onModeChange("perSqm")}
               ref={perSqmRadioRef}
-              onKeyDown={(e) => {
-                if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-                  e.preventDefault();
-                  onModeChange("price");
-                  priceRadioRef.current?.focus();
-                }
-              }}
+              onKeyDown={(event) => handleModeKeyDown(event, "perSqm")}
               className={cn(
                 "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "perSqm"

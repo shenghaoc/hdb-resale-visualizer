@@ -1,15 +1,16 @@
 # Design: Transaction-Level Comparable Engine v2
 
-> Status: Draft. Replace block-scoped comparable filtering with a
-> transaction-level similarity engine that searches across all HDB resale
-> transactions, ranks by non-price factors, and supports widening fallback.
+> Status: Implemented. The transaction-level similarity engine searches the
+> normalized D1 transaction corpus, ranks by non-price factors, and supports
+> deterministic widening fallback.
 
 ## Problem
 
-The current comparable engine (`findComparableTransactions` in
-`src/lib/transaction-analysis.ts`) operates on a single block's transaction
-history. It filters by flat type, storey midpoint ±3 floors, and floor area
-±5 sqm — all within the same address. This creates two fundamental issues:
+Before v2, `findComparableTransactions` (retained in
+`shared/product/transaction-analysis.ts` for block-level analysis) operated on
+a single block's transaction history. It filtered by flat type, storey
+midpoint ±3 floors, and floor area ±5 sqm — all within one address. That
+created two fundamental issues:
 
 1. **Circular price selection**: When the candidate block has very few
    transactions (e.g. a new BTO just reaching MOP, or a small block), the
@@ -350,8 +351,8 @@ transactions, which the v2 engine now provides from the API.
 
 `shared/comparable-engine.ts`:
 - The `parseStoreyMidpoint` logic moves here from
-  `src/lib/transaction-analysis.ts` (or is duplicated in `shared/`) so the
-  sync pipeline can compute midpoints without importing from `src/`.
+  the web adapter so the sync pipeline can compute midpoints without importing
+  from `src/`.
 
 ### 6. Type Definitions
 
@@ -422,7 +423,7 @@ engine's public API).
 
 ### Component Tests (updated)
 
-4. `tests/components/ListingCheckPanel.test.tsx`
+4. Listing Check hook/component suites
    - Mock the API call; verify loading → result transition
    - Verify widened search indicator renders
    - Verify match reasons appear in comparable list

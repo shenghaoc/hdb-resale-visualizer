@@ -374,7 +374,7 @@ describe("listingCheckAnalysis", () => {
     expect(response.comparables![0]!.resalePrice).toBe(500000);
   });
 
-  it("builds evidence caveats from result messages when available", () => {
+  it("keeps structured evidence caveats when a result is available", () => {
     const comparableSet = makeComparableSet({ caveats: ["API_ONLY"] });
     const result = deriveListingCheckResult({
       comparableSet,
@@ -386,7 +386,7 @@ describe("listingCheckAnalysis", () => {
     });
     const evidence = deriveEvidenceCaveats(result, comparableSet, null);
     if (result && result.caveats.length > 0) {
-      expect(evidence).toEqual(result.caveats.map((c) => c.message));
+      expect(evidence).toEqual(result.caveats);
     } else {
       expect(evidence).toContain("API_ONLY");
     }

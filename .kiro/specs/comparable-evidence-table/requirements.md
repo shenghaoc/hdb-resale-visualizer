@@ -1,154 +1,98 @@
 # Requirements: Comparable Evidence Table
 
-> Current integration contract: `ListingCheckPanel` is the sole canonical
-> listing-check UI, and `ComparableEvidenceTable` is its sole
-> comparable-evidence surface. Legacy duplicate components are retired.
+> Status: Implemented. `ListingCheckPanel` owns the only listing-check
+> workflow, and `ComparableEvidenceTable` owns its only transaction evidence
+> surface.
 
-## R1 — Evidence table component
+## R1 — Evidence component
 
-- **R1.1** A new component `ComparableEvidenceTable` in
-  `src/features/listing-check/ComparableEvidenceTable.tsx` renders a table of
-  comparable transactions with columns: month, block/street, flat type, storey range,
-  floor area sqm, lease commence year, resale price, price per sqm,
-  original registered price when time adjustment is available, similarity
-  score, and match reasons.
-- **R1.2** The component accepts props: `comparables` (readonly array of
-  `ComparableTransaction`), `referenceMonth` (string), `widenedSearch`
-  (boolean), and `caveats` (readonly array of string).
-- **R1.3** WHEN the `comparables` array is empty THEN the component renders
-  an empty state message ("No comparable transactions found") with an info
-  icon.
-- **R1.4** The component does not fetch data — it receives all data via props
-  from `ListingCheckPanel`.
+- **R1.1** `src/features/listing-check/ComparableEvidenceTable.tsx` renders
+  month, block/street, flat type, storey, floor area, lease year, price, price
+  per sqm, conditional original price, similarity, and match reasons.
+- **R1.2** Props are readonly display comparables, reference month,
+  `widenedSearch`, structured-or-raw evidence caveats, and optional
+  `adjustmentApplied`.
+- **R1.3** The component performs no fetch and receives all evidence from
+  `ListingCheckPanel`.
+- **R1.4** An empty comparable array renders an explicit empty state and no
+  table.
 
 ## R2 — Sorting
 
-- **R2.1** The default sort is by similarity descending (strongest
-  comparables first).
-- **R2.2** The user can sort by: month, floor area sqm, resale price, price
-  per sqm, and similarity. Each sortable column header is clickable.
-- **R2.3** WHEN a sortable column header is clicked THEN the table sorts by
-  that column. If the column is already the active sort, the direction
-  toggles. If it is a new column, the default direction is: descending for
-  price, price per sqm, and similarity; ascending for month and floor area.
-- **R2.4** The sorted array is computed in a `useMemo` keyed on
-  `[comparables, sortKey, sortDirection]`. No array mutation or allocation
-  occurs inside the render path.
-- **R2.5** The active sort column header displays a directional chevron icon
-  and uses `text-foreground` instead of `text-muted-foreground`.
-- **R2.6** Sortable column headers include `aria-sort` attributes
-  (`ascending`, `descending`, or `none`) for accessibility.
+- **R2.1** Default order is similarity descending.
+- **R2.2** Month, floor area, resale price, price per sqm, and similarity are
+  sortable.
+- **R2.3** A repeated click toggles direction. A newly selected key defaults
+  to descending for prices/similarity and ascending for month/area.
+- **R2.4** Sorting copies rather than mutates the input and uses similarity
+  descending then month descending as tie-breakers.
+- **R2.5** One memoized sorted array drives desktop rows and mobile cards.
+- **R2.6** Active and inactive sort states are visually distinct and desktop
+  headers expose `aria-sort`.
 
-## R3 — Mobile card layout
+## R3 — Desktop and mobile presentation
 
-- **R3.1** Below the `sm:` breakpoint (640px), the table is replaced with a
-  stacked card layout. Each card shows all columns in a vertical arrangement.
-- **R3.2** The desktop table has `hidden sm:table` and the mobile card list
-  has `sm:hidden`. No JavaScript media query or resize observer is used.
-- **R3.3** Mobile cards display: price + area + $/sqm on the first line,
-  original registered price when time adjustment is available, block + street
-  on the second line, flat type + storey + lease on the third line, month, a
-  similarity bar with percentage, and match reason badges.
-- **R3.4** Mobile cards use `<article>` elements with an `aria-label`
-  summarising the transaction.
+- **R3.1** The desktop branch uses a semantic table inside a
+  `hidden sm:block` container.
+- **R3.2** The mobile branch uses a `sm:hidden` card list with no JavaScript
+  breakpoint logic.
+- **R3.3** Each mobile article preserves price, area, price per sqm,
+  conditional original price, location, flat type, storey, lease, month,
+  similarity, and match reasons.
+- **R3.4** Mobile sort controls change the same shared sort state.
+- **R3.5** Each mobile card has a factual, localized `aria-label`.
 
-## R4 — Similarity display
+## R4 — Evidence interpretation
 
-- **R4.1** The similarity score is displayed as a percentage (0–100%),
-  computed as `Math.round(similarity * 100)`.
-- **R4.2** A micro progress bar (4px height) visualises the similarity score
-  using `bg-primary` fill with width proportional to the score.
-- **R4.3** Match reasons are rendered as small inline badges
-  (`Badge variant="outline"`, smaller font) next to or below the similarity
-  score.
+- **R4.1** Similarity is displayed as
+  `Math.round(similarity * 100)` with a proportional micro bar.
+- **R4.2** Match reasons render as compact outline badges.
+- **R4.3** The engine's eight English match-reason identifiers stay unchanged
+  in data and are translated only when badges render.
+- **R4.4** The collapsed explainer distinguishes normal and widened searches,
+  identifies low samples, shows reference-month context, and states that price
+  is not used to select comparables.
+- **R4.5** Non-empty caveats render above the evidence. Structured caveats use
+  code/value translation; known raw fallbacks are localized; unknown text
+  remains visible.
 
-## R5 — "Why these comparables?" explainer
+## R5 — Adjusted and original price
 
-- **R5.1** A collapsible section above the table explains how comparables
-  were selected. Default state is collapsed.
-- **R5.2** WHEN `widenedSearch` is false THEN the explainer states that
-  comparables are from the same block, ranked by non-price similarity.
-- **R5.3** WHEN `widenedSearch` is true THEN the explainer mentions that the
-  search was widened and explains why.
-- **R5.4** WHEN the comparable count is below the low-sample threshold THEN
-  the explainer mentions the low count and advises treating the result as
-  directional.
-- **R5.5** The explainer explicitly states that price is never used to select
-  comparables.
+- **R5.1** Adjusted `resalePrice` and `pricePerSqm` are the primary displayed
+  values when time adjustment applies.
+- **R5.2** "Orig. Price" appears only when `adjustmentApplied` is true and at
+  least one row has `rawResalePrice`.
+- **R5.3** A row without a raw value displays an em dash in that conditional
+  column.
 
-## R6 — Caveat banner
+## R6 — Bounded direct rendering
 
-- **R6.1** WHEN `caveats` is non-empty THEN a caveat banner renders above
-  the table showing each caveat as a warning-styled item.
-- **R6.2** The caveat banner is a reinforcing duplicate of the verdict card
-  caveats — it remains visible when the verdict card scrolls out of view.
+- **R6.1** The comparable engine caps results at `MAX_COMPARABLES = 30`.
+- **R6.2** All bounded rows render directly; this component has no
+  virtualization threshold, virtualizer path, or virtualization dependency.
+- **R6.3** Raising the engine cap materially requires a separate measured
+  rendering decision.
 
-## R7 — Original price column for adjusted comparables
+## R7 — Canonical integration and localization
 
-- **R7.1** WHEN any comparable includes `rawResalePrice` THEN the "Orig. Price"
-  column is present in the table header.
-- **R7.2** WHEN a comparable transaction includes `rawResalePrice` THEN the
-  cell displays the registered resale price before time adjustment.
-- **R7.3** WHEN no comparable in the dataset has `rawResalePrice` THEN the
-  entire column is hidden to avoid a column of dashes.
+- **R7.1** `ListingCheckPanel.tsx` renders `ComparableEvidenceTable` below the
+  verdict content.
+- **R7.2** No compact-list or detail-drawer listing evaluator is retained.
+- **R7.3** `ComparableEvidenceTable` does not change verdict calculation or
+  evidence selection.
+- **R7.4** Currency, number, month, explainer, caveat, column, and badge text
+  follow the selected locale without changing analysis identifiers.
 
-## R8 — Virtualisation readiness
+## R8 — Tests
 
-- **R8.1** A named constant `VIRTUALIZATION_THRESHOLD` (default 50) is
-  defined in the component file.
-- **R8.2** The current implementation renders all rows directly (no
-  virtualisation library) because `MAX_COMPARABLES = 30` is below the
-  threshold.
-- **R8.3** No new npm dependency is added for virtualisation in this spec.
-
-## R9 — Integration into ListingCheckPanel
-
-- **R9.1** `ListingCheckPanel.tsx` renders `ComparableEvidenceTable` below
-  the verdict card (after the distribution bar and caveats section).
-- **R9.2** `ComparableEvidenceTable` is the only comparable-evidence component
-  rendered by `ListingCheckPanel`.
-- **R9.3** No legacy compact-list or detail-drawer listing-check surface is
-  retained or reintroduced.
-- **R9.4** The verdict card, distribution bar, and caveat rendering inside
-  the card remain unchanged.
-
-## R10 — Styling and accessibility
-
-- **R10.1** Table headers use the existing label style: `text-[0.62rem]
-  font-extrabold uppercase tracking-[0.14em] text-muted-foreground`.
-- **R10.2** Numeric cells use `tabular-nums` for alignment.
-- **R10.3** The table uses semantic `<table>` / `<thead>` / `<tbody>`
-  elements via shadcn `Table` primitives.
-- **R10.4** Sortable column headers use `<button>` inside `<th>` with
-  `aria-sort` attributes.
-- **R10.5** Match reason badges use `Badge variant="outline"` with a smaller
-  font (`text-[0.55rem]`).
-
-## R11 — Tests
-
-- **R11.1** Vitest component tests for `ComparableEvidenceTable`:
-  - Renders all column headers.
-  - Renders correct row count for a given comparables array.
-  - Default sort: first row has highest similarity.
-  - Sorting by price: click header → re-sorts descending; click again →
-    ascending.
-  - Empty state: shows "no comparables" message when array is empty.
-  - Low-confidence state: shows caveat banner when caveats are non-empty.
-  - Match reason badges render for each comparable.
-  - Similarity percentage displays correctly (0.87 → "87%").
-  - "Why these comparables?" explainer renders different text for widened vs
-    non-widened search.
-- **R11.2** E2E tests (updated `tests/e2e/listing-check.spec.ts`):
-  - Evidence table visible after a listing check completes.
-  - Sorting a column header reorders rows.
-  - Match reason badges visible.
-
-## R12 — Canonical ownership
-
-- **R12.1** `ListingCheckPanel.tsx` remains the sole listing-check UI.
-- **R12.2** `ComparableEvidenceTable.tsx` remains its sole evidence surface.
-- **R12.3** The comparable engine (`shared/comparable-engine.ts`) is not
-  modified.
-- **R12.4** The API endpoint (`/api/comparable-transactions`) is not
-  modified.
-- **R12.5** Existing tests continue to pass.
+- **R8.1** `tests/components/ComparableEvidenceTable.test.tsx` covers columns,
+  row count, default and interactive sort order, empty/caveat states,
+  adjusted/original prices, similarity, badges, explainer variants, mobile
+  cards, mobile sorting, and `aria-sort`.
+- **R8.2** Locale-focused unit/component tests cover structured caveats, all
+  eight match reasons, compact prices, and unchanged engine identifiers.
+- **R8.3** `tests/e2e/buyer-listing-check.spec.ts` proves desktop evidence and
+  match reasons render after a listing check and that mobile uses visible
+  cards with the desktop table hidden and no horizontal overflow.
+- **R8.4** Evidence-table sorting is component-tested; it is not represented
+  as existing E2E coverage.

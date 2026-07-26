@@ -1,5 +1,6 @@
 import type { AskingPriceAssessment } from "@/entities/transaction/transaction-analysis";
 import { formatCompactCurrency } from "@/shared/lib/format";
+import { useI18n } from "@/shared/lib/i18n";
 
 export type DistributionBarProps = {
   assessment: AskingPriceAssessment;
@@ -7,6 +8,7 @@ export type DistributionBarProps = {
 };
 
 export function DistributionBar({ assessment, askingPrice }: DistributionBarProps) {
+  const { locale } = useI18n();
   const { summary } = assessment;
   const min = Math.min(summary.minPrice, askingPrice);
   const max = Math.max(summary.maxPrice, askingPrice);
@@ -47,8 +49,8 @@ export function DistributionBar({ assessment, askingPrice }: DistributionBarProp
         </div>
       </div>
       <div className="mt-1 flex justify-between text-[length:var(--text-xs)] font-mono uppercase tracking-wider text-muted-foreground">
-        <span>{formatCompactCurrency(min)}</span>
-        <span>{formatCompactCurrency(max)}</span>
+        <span>{formatCompactCurrency(min, locale)}</span>
+        <span>{formatCompactCurrency(max, locale)}</span>
       </div>
     </div>
   );

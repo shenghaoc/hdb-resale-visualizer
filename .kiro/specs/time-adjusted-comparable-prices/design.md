@@ -1,9 +1,10 @@
 # Design: Time-Adjusted Comparable Prices
 
-> Status: Draft. Adds optional deterministic time adjustment to comparable
-> transaction prices using observed historical HDB resale medians from the
-> existing `town_flat_type_trends` D1 table. No new tables, no sync changes,
-> no AI.
+> Status: Implemented. Listing checks request deterministic time adjustment
+> using observed historical HDB resale medians from the existing
+> `town_flat_type_trends` D1 table. Adjusted evidence is the single default
+> presentation; raw registered prices remain visible as provenance. No new
+> tables, no sync changes, no AI.
 
 ## Problem
 
@@ -19,17 +20,17 @@ or prediction.
 
 ## Goals
 
-- Add optional time adjustment to each comparable transaction using
+- Add deterministic time adjustment to each comparable transaction using
   observed town × flat type × month median price per sqm from the existing
   `town_flat_type_trends` D1 table.
 - The adjustment is a **deterministic ratio**: latest available median ÷
   transaction month median. This is not a forecast — it's a mechanical
   restatement of observed historical data.
-- Show raw and adjusted prices side by side in the comparable list.
-- Let users toggle between raw and adjusted views.
+- Use adjusted prices for the verdict and primary evidence when the API can
+  compute them, while preserving raw registered prices in the evidence table.
 - Fall back gracefully when trend data is missing, insufficient, or
   unavailable for the transaction's specific month.
-- Keep the adjustment optional — the default view remains raw prices.
+- Fall back to raw prices with a visible caveat when adjustment is unavailable.
 
 ## Non-goals
 
@@ -87,8 +88,11 @@ export type TimeAdjustmentResult = {
   adjustedPricePerSqm: number | null;
   /** The computed adjustment factor, or null if unavailable. */
   adjustmentFactor: number | null;
-  /** Human-readable explanation. */
-  adjustmentLabel: string | null;
+  /** Structured label translated by the client. */
+  adjustmentLabel:
+    | { type: "at_latest" }
+    | { type: "adjusted_from"; month: string }
+    | null;
 };
 
 export type TrendLookup = Map<string, TrendPoint[]>;
@@ -154,22 +158,11 @@ town × flat type group, making the ratio more stable.
 
 #### TrendLookup Construction
 
-The API handler queries all rows from `town_flat_type_trends` and builds a
-`Map<string, TrendPoint[]>` keyed by `"${town}__${flatType}"`. Each value
-array is sorted by month ascending. This lookup is built once per request
-and reused for all comparables in the response.
-
-This matches the existing `/api/trends/town-flat-type` endpoint's query
-pattern. The handler can either:
-- Call the existing endpoint internally (adds a sub-request), or
-- Query D1 directly (simpler, one less hop)
-
-**Decision: query D1 directly.** The trends dataset is bounded (one row per
-town × flat type × month since 1990 — roughly 30 towns × 10 flat types ×
-360 months ≈ 100k rows in the worst case, but actual data is much sparser
-before ~2015). A single `SELECT town, flat_type, month, median_price_per_sqm,
-transaction_count FROM town_flat_type_trends` query is fast enough for a
-synchronous response and avoids the complexity of an internal fetch.
+The API handler collects the unique town × flat-type pairs in the selected
+comparables, queries only those trend rows with a parameterized tuple `IN`
+clause, and builds a `Map<string, TrendPoint[]>` keyed by
+`"${town}__${flatType}"`. Each value array is sorted by month ascending and
+reused for all comparables in the response.
 
 ### 3. API Changes: `POST /api/comparable-transactions`
 
@@ -208,8 +201,8 @@ type TimeAdjustedComparable = ComparableTransaction & {
   adjustedPricePerSqm: number | null;
   /** The computed adjustment factor, or null. */
   adjustmentFactor: number | null;
-  /** Human-readable label: "Adjusted from 2022-03 median" or null. */
-  adjustmentLabel: string | null;
+  /** Structured label translated by the client, or null. */
+  adjustmentLabel: AdjustmentLabel | null;
 };
 ```
 
@@ -226,41 +219,24 @@ today — returns the existing `ListingComparableSet` with `ComparableTransactio
 6. **New**: aggregate any adjustment caveats.
 7. Return the extended response.
 
-**Performance**: Step 4 adds a single D1 query (≤ 100k rows, ~50–100ms).
-Step 5 is an O(n) pass over at most 30 comparables, each doing two map
-lookups. Total overhead < 100ms.
+**Performance**: Step 4 adds one scoped D1 query for the unique pairs in at
+most 30 comparables. Step 5 is an O(n) pass with map lookups and binary-search
+month lookup.
 
 ### 4. Frontend Changes
 
-#### 4.1 Data Layer
+`useListingCheckAnalysis` always requests
+`/api/comparable-transactions?adjust=time` after an explicit listing-check
+submission. There is no raw/adjusted preference toggle: two price modes would
+make the verdict and evidence basis ambiguous.
 
-`src/lib/data.ts` (or the component that calls the comparable API):
-- Add a query parameter when the toggle is active.
-- The response type is extended to include adjusted fields.
+When adjustment succeeds, the listing verdict and primary Price / $/sqm
+columns use adjusted values. `ComparableEvidenceTable` also shows the original
+registered price so the transformation remains auditable. When adjustment is
+unavailable for a row or for the set, the UI uses the raw price and surfaces
+the API caveat instead of inventing an adjusted value.
 
-#### 4.2 Toggle Component
-
-A new toggle (e.g., a `Switch` from shadcn or a segmented control) in the
-comparable results panel switches between raw and adjusted views. Default
-position: off (raw prices).
-
-Label: "Show time-adjusted prices" with a tooltip or subtitle:
-"Prices adjusted using observed historical resale medians. This is not a
-price forecast."
-
-#### 4.3 Comparable Row Display
-
-When the toggle is on and a comparable has adjusted prices:
-- Show both figures side by side: ~~`$520,000`~~ → `$545,000`
-  (strikethrough original, bold adjusted)
-- Show the adjustment label: "Adjusted from 2022-03 median"
-- For comparables where adjustment is unavailable (null), show raw price
-  only with a small "no adjustment data" indicator.
-
-When the toggle is off (default):
-- Show raw prices only, as today.
-
-#### 4.4 Caveats Display
+#### 4.1 Caveats Display
 
 Adjustment-specific caveats from the API response are shown below the
 verdict card (same area as existing widening caveats):
@@ -277,13 +253,10 @@ verdict card (same area as existing widening caveats):
 ```
 ListingCheckPanel
 ├── VerdictCard (unchanged)
-├── AdjustmentToggle (new)          ← Switch: raw ↔ adjusted
-│   └── tooltip / subtitle explaining non-forecast nature
-├── ComparableList
-│   └── ComparableRow (updated)     ← shows raw + adjusted side by side
-│       ├── RawPriceDisplay
-│       ├── AdjustedPriceDisplay    ← new, strikethrough + bold pattern
-│       └── AdjustmentLabel         ← new, small muted text
+├── ComparableEvidenceTable
+│   ├── AdjustedPriceDisplay        ← primary when available
+│   ├── OriginalRegisteredPrice     ← provenance when adjusted
+│   └── RawPriceFallback            ← used when adjustment is unavailable
 └── CaveatsSection (updated)        ← includes adjustment caveats
 ```
 
@@ -320,12 +293,12 @@ ListingCheckPanel
 8. **Mixed results**: some comparables have adjustments, some don't →
    aggregate caveats correctly.
 
-### Component Tests (`tests/components/ListingCheckPanel.test.tsx`)
+### Frontend Tests
 
-9. Toggle off → raw prices shown, adjusted hidden.
-10. Toggle on → adjusted prices shown with strikethrough raw.
-11. Toggle on with no adjusted data → raw prices shown, "no adjustment
-    data" indicator visible.
+9. Adjusted values are used as the primary evidence when
+   `adjustmentApplied` is true.
+10. Original registered prices remain visible beside adjusted evidence.
+11. Raw values remain primary when adjustment data is unavailable.
 12. Adjustment caveats render correctly.
 
 ### API Integration Tests (`tests/unit/comparable-transactions-api.test.ts`)

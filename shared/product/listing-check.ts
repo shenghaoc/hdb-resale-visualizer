@@ -4,7 +4,11 @@ import {
   type ConfidenceInput,
   type ConfidenceLevel,
 } from "../confidence-system";
-import { generateCaveats as generateEvidenceCaveats, type CaveatCode } from "../caveat-codes";
+import {
+  generateCaveats as generateEvidenceCaveats,
+  type CaveatCode,
+  type CaveatValues,
+} from "../caveat-codes";
 import {
   assessAskingPrice,
   findComparableTransactions,
@@ -26,6 +30,7 @@ export type ListingCaveat = {
   code: CaveatCode;
   severity: "info" | "warning";
   message: string;
+  values?: CaveatValues;
 };
 
 export type Caveat = ListingCaveat;
@@ -98,6 +103,7 @@ export function generateListingCaveats(params: {
     code: caveat.code,
     severity: caveat.severity === "critical" ? "warning" : caveat.severity,
     message: caveat.message,
+    ...(caveat.values ? { values: caveat.values } : {}),
   }));
 }
 

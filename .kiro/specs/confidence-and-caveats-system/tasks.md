@@ -1,105 +1,72 @@
 # Tasks: Confidence & Caveats System
 
-> Execution checklist. Order respects dependencies: shared types →
-> confidence engine → caveat codes → adapters → component wiring →
-> tests. Each task names its acceptance check.
+> Status: Implementation complete. Final stacked-PR gates remain separate from
+> this implementation checklist so they are not claimed before they run.
 
-## Phase 1 — Shared confidence engine
+## Phase 1 — Shared engines
 
-- [ ] **T1.1** Create `shared/confidence-system.ts`: export
-  `ConfidenceInput`, `ConfidenceAssessment`, `ConfidenceLevel` types
-  and `computeConfidence(input: ConfidenceInput): ConfidenceAssessment`
-  function. Implement weighted sub-signal scoring (sample 0.35,
-  recency 0.25, scope 0.25, match 0.15), tier mapping (0.70/0.40),
-  override rules (count < 3 → low, age > 18 → medium cap,
-  no same-block/street → medium cap), and summary builder.
-  → `npm run typecheck` passes. (R1.1, R1.2, R1.3, R2.1–R2.4, R6.1, R6.2)
+- [x] **T1.1** Implement `shared/confidence-system.ts` with typed inputs,
+  weighted sample/recency/scope/match signals, `0.70`/`0.40` tiers, and
+  low/medium caps. (R1)
+- [x] **T1.2** Add `tests/unit/confidence-system.test.ts` coverage for signal
+  boundaries, representative tiers, all caps, integration cases, output
+  shape, and stable summaries. (R6.1)
+- [x] **T1.3** Implement `shared/caveat-codes.ts` with all 17 codes, including
+  `TIME_ADJUSTMENT_UNAVAILABLE`, structured values, API mapping,
+  deduplication, and severity rules. (R2)
+- [x] **T1.4** Add `tests/unit/caveat-codes.test.ts` coverage for every code,
+  trigger boundaries, structured values, API mapping, deduplication, and
+  severity. (R6.2)
 
-- [ ] **T1.2** Vitest `tests/unit/confidence-system.test.ts`: cover
-  each sub-signal at boundaries (0, saturation, 1), tier thresholds
-  at exact values (0.3999/0.40/0.6999/0.70), all three override
-  rules, verify overrides only cap (never raise), integration cases
-  (same-block heavy → high, town-wide stale → low), summary non-empty.
-  → `npm run test` passes. (R7.1, R7.2, R7.3)
+## Phase 2 — Current adapters and ownership
 
-## Phase 2 — Caveat codes
+- [x] **T2.1** Keep compatibility logic in
+  `shared/product/listing-check.ts`, including shared confidence/caveat
+  delegation and the `critical` to `warning` compatibility mapping. (R3.1)
+- [x] **T2.2** Expose the frontend adapters from
+  `src/entities/transaction/listing-confidence.ts` and
+  `src/entities/transaction/listing-caveats.ts`. (R3.2)
+- [x] **T2.3** Preserve the shared verdict contract through
+  `src/features/listing-check/listing-verdict.ts`. (R3.3)
+- [x] **T2.4** Route the count-only confidence helper in
+  `src/features/listing-check/confidence.ts` through the shared engine and
+  stable locale keys. (R3.4)
+- [x] **T2.5** Cover compatibility exports and behavior in
+  `tests/unit/listing-confidence-adapter.test.ts`,
+  `tests/unit/listing-confidence.test.ts`,
+  `tests/unit/listing-caveats.test.ts`,
+  `tests/unit/listing-verdict.test.ts`, and
+  `tests/unit/confidence.test.ts`. (R6.3)
 
-- [ ] **T2.1** Create `shared/caveat-codes.ts`: export `CaveatCode`
-  union, `CaveatSeverity`, `Caveat` type, and
-  `generateCaveats(params): Caveat[]`. Implement all 16 caveat
-  triggers per the design (NO_COMPARABLES through SMALL_TREND_SAMPLE).
-  Include `apiCaveats` string-to-code mapper and deduplication by code.
-  → `npm run typecheck` passes. (R3.1, R3.2, R3.3, R3.4, R6.1)
+## Phase 3 — Full-signal Listing Check
 
-- [ ] **T2.2** Vitest `tests/unit/caveat-codes.test.ts`: cover every
-  caveat code at its trigger threshold and below, deduplication,
-  `critical` severity only for `NO_COMPARABLES`, clean input produces
-  empty array, `apiCaveats` mapping.
-  → `npm run test` passes. (R7.4, R7.5)
+- [x] **T3.1** Assemble `ConfidenceInput` in
+  `src/features/listing-check/listingCheckAnalysis.ts` from comparable count,
+  recency, cumulative scope counts, and stable flat-type/floor-area/storey
+  match identifiers. (R3.5)
+- [x] **T3.2** Generate structured result caveats from percentile, lease,
+  widening, and time-adjustment evidence, including the unavailable-adjustment
+  branch. (R2.5, R3.5)
+- [x] **T3.3** Cover full-signal derivation and identifier counting in
+  `tests/unit/listingCheckAnalysis.test.ts`. (R6.4)
 
-## Phase 3 — Adapter layers
+## Phase 4 — Localized presentation
 
-- [ ] **T3.1** Update `src/lib/listing-confidence.ts`: delegate to
-  `shared/confidence-system.ts` internally while preserving the
-  existing `computeConfidence` signature and `ConfidenceResult` shape.
-  Build `ConfidenceInput` from `AddressDetailTransaction[]` by
-  deriving match counts from property comparison (exact flat type,
-  floor area ±10 sqm, storey range overlap).
-  → `npm run typecheck` passes; existing tests pass. (R4.1)
+- [x] **T4.1** Implement
+  `src/features/listing-check/listingCheckPresentation.ts` so confidence
+  summaries are rebuilt from structured input and caveats are translated from
+  code plus values. (R4.1, R4.2)
+- [x] **T4.2** Translate all eight stable match-reason identifiers only when
+  their badges render; preserve unknown reasons and raw caveats. (R4.3, R4.4)
+- [x] **T4.3** Carry the selected locale through Listing Check compact
+  currencies and evidence ranges. (R4)
+- [x] **T4.4** Cover both locales, all 17 caveats, all eight match reasons,
+  structured interpolation, confidence summary branches, and unchanged engine
+  identifiers in focused unit/component tests. (R6.4, R6.5)
 
-- [ ] **T3.2** Update `src/lib/listing-caveats.ts`: delegate to
-  `shared/caveat-codes.ts` internally while preserving the existing
-  `generateCaveats` signature and `{ severity, message }` shape. Map
-  `critical` → `warning` in adapter output. Remove the `Date.now()`
-  fallback.
-  → `npm run typecheck` passes; existing tests pass. (R4.2, R6.2)
+## Phase 5 — Final verification
 
-- [ ] **T3.3** Update `src/lib/confidence.ts`: route
-  `getDataConfidenceLevel` through the shared engine with
-  `sameBlockCount = recentTransactionCount` (all transactions are
-  same-block at the block level).
-  → `npm run typecheck` passes; existing tests pass. (R4.3)
-
-- [ ] **T3.4** Vitest `tests/unit/listing-confidence-adapter.test.ts`:
-  verify adapter output shape matches `ConfidenceResult`, level
-  agrees with shared engine, `reason` is populated from `summary`.
-  → `npm run test` passes. (R7.6)
-
-- [ ] **T3.5** Verify `listing-verdict.ts` works without changes:
-  `performListingCheck` returns the same shape via the adapter.
-  → Existing `tests/unit/listing-verdict.test.ts` passes. (R4.4)
-
-## Phase 4 — Component wiring
-
-- [ ] **T4.1** Update `ListingCheckPanel.tsx`: when
-  `ListingComparableSet` is available from the API, build a full
-  `ConfidenceInput` from it (extracting match counts from
-  `matchReasons`). Import `computeConfidence` from
-  `shared/confidence-system.ts` and `generateCaveats` from
-  `shared/caveat-codes.ts` directly for the enriched path. Display
-  the `ConfidenceAssessment.summary` in the confidence badge tooltip.
-  Render caveats with `critical` severity using a distinct style.
-  → `npm run typecheck` passes. (R5.1, R5.2, R5.3)
-
-- [ ] **T4.2** Verify `DetailDrawer.tsx` and `ShortlistDrawer.tsx`
-  display the same confidence tier labels via the updated
-  `getDataConfidenceLevel` adapter. No component changes needed if
-  the adapter output is correct.
-  → Manual smoke test; existing component tests pass. (R5.1)
-
-## Phase 5 — Verification
-
-- [ ] **T5.1** Run `npm run typecheck` — clean.
-
-- [ ] **T5.2** Run `npm run lint` — clean.
-
-- [ ] **T5.3** Run `npm run test` — all unit tests pass, including
-  updated threshold tests in `listing-confidence.test.ts` and
-  `listing-caveats.test.ts`. (R7.7)
-
-- [ ] **T5.4** Run `npm run build` — production build succeeds.
-
-- [ ] **T5.5** Manual smoke via `npm run dev:functions`: verify
-  listing check shows enriched confidence badge, caveats render with
-  correct severity styles, block detail drawer and shortlist rows
-  show consistent confidence labels.
+- [ ] **T5.1** Run the exact-head package gate: `vp run check`.
+- [ ] **T5.2** Run the exact-head browser/E2E gate: `vp run check:pr`.
+- [ ] **T5.3** Complete the final deployed-preview smoke for Listing Check
+  confidence, caveats, evidence badges, and both locales.

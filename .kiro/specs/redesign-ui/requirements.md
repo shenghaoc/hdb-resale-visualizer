@@ -41,7 +41,9 @@ The map is always present, but block markers and visual aids should be contextua
 3. Selected block state: always show the selected block highlight even if ordinary markers are hidden.
 4. **Visual Proximity Context**: when a block is selected, render shaded 1km and 2km concentric circles on the map to provide visual grounding for the "Nearby Amenities" counts.
 5. **User Orientation**: provide a "Find my location" control to help users orient themselves relative to target blocks.
-6. Background pan/zoom: dismiss overlays that block exploration, but do not reset filters.
+6. A deliberate click on empty map background may dismiss overlays that block
+   exploration, but ordinary pan/zoom preserves the active work panel and all
+   filters.
 7. Feature click: select the block, keep the results workflow open, and show the detail drawer.
 
 OneMap attribution must remain visible whenever the map is rendered.
@@ -83,4 +85,5 @@ Data portability should extend beyond files:
 4. Search-scoped map results fit to the matching blocks, not the full island.
 5. Placeholder detail cards for unavailable EIP, orientation, schools, and amenities are removed until real artifacts exist.
 6. Selecting a block triggers visual 1km/2km radius circles on the map.
-7. Type checking, linting, unit tests, e2e tests, and production build pass with Node.js 26 + npm.
+7. Type checking, linting, unit tests, e2e tests, and the production build pass
+   with Node.js 24 + Vite+ using the pnpm lockfile.

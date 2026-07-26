@@ -11,18 +11,19 @@ import {
 } from "recharts";
 import { formatCompactCurrency } from "@/shared/lib/format";
 import type { AddressTrendPoint } from "@/types/data";
-import type { Translator } from "@/shared/lib/i18n/types";
+import type { Locale, Translator } from "@/shared/lib/i18n/types";
 import { useTheme } from "@/hooks/useTheme";
 import { PRIMARY_BLUE } from "@/shared/lib/constants";
 
 type TrendChartProps = {
   points: AddressTrendPoint[];
   t: Translator;
+  locale: Locale;
   peakMonth?: string | null;
   height?: number;
 };
 
-export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartProps) {
+export function TrendChart({ points, t, locale, peakMonth, height = 200 }: TrendChartProps) {
   const { isDark } = useTheme();
 
   const { data, yMin, priceAxisWidth, countAxisWidth, colors } = useMemo(() => {
@@ -49,7 +50,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
     const range = maxPrice - minPrice;
     const yMin = Math.floor(Math.max(0, minPrice - range * 0.5) / 10000) * 10000;
     const priceAxisWidth = hasValidPrice
-      ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4)
+      ? Math.max(48, formatCompactCurrency(maxPrice, locale).length * 8 + 4)
       : 48;
     const countAxisWidth = Math.max(32, String(maxCount).length * 8 + 4);
 
@@ -73,7 +74,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
         border: isDark ? "rgba(255, 255, 255, 0.08)" : "#c3c6d7",
       },
     };
-  }, [points, isDark]);
+  }, [points, isDark, locale]);
 
   const priceLabel = t("trend.medianPrice");
   const txnLabel = t("trend.transactions");
@@ -92,7 +93,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
           <YAxis
             yAxisId="price"
             domain={[yMin, "auto"]}
-            tickFormatter={(v: number) => formatCompactCurrency(v)}
+            tickFormatter={(v: number) => formatCompactCurrency(v, locale)}
             tick={{ fill: colors.mutedForeground, fontSize: 12 }}
             axisLine={false}
             tickLine={false}
@@ -119,7 +120,7 @@ export function TrendChart({ points, t, peakMonth, height = 200 }: TrendChartPro
               const numValue = typeof value === "number" ? value : NaN;
               if (name === priceLabel) {
                 return [
-                  Number.isNaN(numValue) ? "–" : formatCompactCurrency(numValue),
+                  Number.isNaN(numValue) ? "–" : formatCompactCurrency(numValue, locale),
                   String(name),
                 ];
               }

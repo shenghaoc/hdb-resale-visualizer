@@ -12,6 +12,7 @@ import {
   deriveListingCheckResult,
   deriveStoreyOptions,
   type DisplayComparable,
+  type EvidenceCaveat,
   type ListingAdjustmentMeta,
   type ListingCheckAnalysisResult,
   type ListingComparableResponse,
@@ -41,7 +42,7 @@ export type ListingCheckAnalysisState = {
   comparables: DisplayComparable[];
   adjustmentMeta: ListingAdjustmentMeta | null;
   qualityTag: ReturnType<typeof deriveComparableQualityTag>;
-  evidenceCaveats: string[];
+  evidenceCaveats: EvidenceCaveat[];
   canSubmit: boolean;
   retryDetail: () => void;
   submit: () => boolean;

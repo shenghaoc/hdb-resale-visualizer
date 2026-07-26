@@ -2,7 +2,7 @@
 
 > Status: Implemented. Replaces the single-file `GuideDialog` modal with a
 > full in-app docs view rendered from bundled markdown, navigable at `/docs`
-> and six subsection routes.
+> and six subsection routes (seven sections including the overview).
 
 ## Problem
 
@@ -14,7 +14,8 @@ entire document.
 
 ## Goals
 
-- Full-page docs view at `/docs` with sidebar navigation and six subsections.
+- Full-page docs view at `/docs` with seven sections: the overview plus six
+  subsection routes.
 - Local Fuse.js search over heading-level chunks with ranked results.
 - Contextual help links from empty results, listing-check panel, lease warnings,
   and data-load error states.

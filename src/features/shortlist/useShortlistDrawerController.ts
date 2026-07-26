@@ -528,7 +528,7 @@ export function useShortlistDrawerController({
       return row;
     });
     const priceAxisWidth =
-      maxPrice > 0 ? Math.max(48, formatCompactCurrency(maxPrice).length * 8 + 4) : 48;
+      maxPrice > 0 ? Math.max(48, formatCompactCurrency(maxPrice, locale).length * 8 + 4) : 48;
 
     const palette = isDark
       ? ["#79a6ff", "#7ecb63", "#ffb86c", "#ff79c6"]
@@ -543,7 +543,7 @@ export function useShortlistDrawerController({
     };
 
     return { data, seriesKeys, palette, colors, priceAxisWidth };
-  }, [isDark, trendChartRows]);
+  }, [isDark, locale, trendChartRows]);
 
   return {
     compareMode,

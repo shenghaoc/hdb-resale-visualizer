@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { Point } from "geojson";
 import type { Locale, Translator } from "@/shared/lib/i18n";
 import { useMapInteractions } from "@/features/map-explorer/useMapInteractions";
+import { formatCompactCurrency } from "@/shared/lib/format";
 import type { Map as MapLibreMap, Popup } from "maplibre-gl";
 
 type RegisteredHandlers = {
@@ -11,6 +12,12 @@ type RegisteredHandlers = {
     features?: Array<{
       geometry: Point;
       properties: { cluster_id: number };
+    }>;
+  }) => void;
+  unclusteredMouseEnter?: (event: {
+    features?: Array<{
+      geometry: Point;
+      properties: Record<string, string | number>;
     }>;
   }) => void;
 };
@@ -42,6 +49,10 @@ function createMapStub() {
         }
         if (eventName === "click" && layerOrHandler === "clusters" && maybeHandler) {
           handlers.clusterClick = maybeHandler as RegisteredHandlers["clusterClick"];
+        }
+        if (eventName === "mouseenter" && layerOrHandler === "unclustered-point" && maybeHandler) {
+          handlers.unclusteredMouseEnter =
+            maybeHandler as RegisteredHandlers["unclusteredMouseEnter"];
         }
         if (eventName === "click" && typeof layerOrHandler === "string" && maybeHandler) {
           return mapStub;
@@ -75,6 +86,7 @@ function createMapStub() {
     easeTo: mapStub.easeTo,
     mapClickHandler: () => handlers.mapClick,
     clusterClickHandler: () => handlers.clusterClick,
+    unclusteredMouseEnterHandler: () => handlers.unclusteredMouseEnter,
     resolveClusterZoom,
     setLayers,
   };
@@ -232,5 +244,44 @@ describe("useMapInteractions map click guard", () => {
     });
 
     expect(mapStub.easeTo).not.toHaveBeenCalled();
+  });
+
+  it("formats popup currency with the active locale", () => {
+    const mapStub = createMapStub();
+    const popup = createPopupStub();
+    const popupSetContent = vi.mocked(popup.setDOMContent);
+    const localizedTranslator: Translator = (key, values) =>
+      `${key}:${values?.value ?? ""}:${values?.count ?? ""}`;
+
+    renderHook(() =>
+      useMapInteractions({
+        map: mapStub.map,
+        popup,
+        onSelect,
+        onMapInteract,
+        t: localizedTranslator,
+        locale: "zh-SG",
+        prefersReducedMotion: false,
+      }),
+    );
+
+    mapStub.unclusteredMouseEnterHandler()?.({
+      features: [
+        {
+          geometry: { type: "Point", coordinates: [103.8, 1.33] },
+          properties: {
+            address: "101 BEDOK NTH AVE 4",
+            town: "BEDOK",
+            median_price: 500_000,
+            price_basis: "__BLOCK_WIDE__",
+            transaction_count: 3,
+          },
+        },
+      ],
+    });
+
+    expect(popupSetContent).toHaveBeenCalledTimes(1);
+    const content = popupSetContent.mock.calls[0]?.[0];
+    expect(content).toHaveTextContent(formatCompactCurrency(500_000, "zh-SG"));
   });
 });

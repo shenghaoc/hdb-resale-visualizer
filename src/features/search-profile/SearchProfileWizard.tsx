@@ -8,7 +8,7 @@ import {
   SEARCH_PROFILE_MIN_APPLICANT_AGE,
 } from "@/shared/lib/constants";
 import { isAffordabilityProfileComplete, maxAffordablePrice } from "@/shared/lib/affordability";
-import { formatCurrency, formatNumber } from "@/shared/lib/format";
+import { formatCompactCurrency, formatCurrency, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
 import { cn } from "@/shared/lib/utils";
 import type { FilterOptions } from "@/types/data";
@@ -242,6 +242,7 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                         <div className="flex items-center">
                           <span className="pr-2 text-sm font-bold text-muted-foreground">S$</span>
                           <Input
+                            aria-label={t("searchProfile.maxBudget")}
                             inputMode="numeric"
                             enterKeyHint="done"
                             type="number"
@@ -268,9 +269,7 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                                   : "border-border bg-secondary text-secondary-foreground hover:bg-secondary/80",
                               )}
                             >
-                              {preset >= 1000000
-                                ? `S$${(preset / 1000000).toFixed(1)}M`
-                                : `S$${Math.round(preset / 1000)}K`}
+                              {formatCompactCurrency(preset, locale)}
                             </button>
                           );
                         })}
@@ -294,6 +293,7 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                       <div className="rounded-none border bg-muted/40 px-4">
                         <div className="flex items-center">
                           <Input
+                            aria-label={t("searchProfile.minLease")}
                             inputMode="numeric"
                             enterKeyHint="done"
                             type="number"

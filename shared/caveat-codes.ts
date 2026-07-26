@@ -21,10 +21,13 @@ export type CaveatCode =
 
 export type CaveatSeverity = "info" | "warning" | "critical";
 
+export type CaveatValues = Readonly<Record<string, string | number>>;
+
 export type Caveat = {
   code: CaveatCode;
   severity: CaveatSeverity;
   message: string;
+  values?: CaveatValues;
 };
 
 export type GenerateCaveatsParams = {
@@ -60,10 +63,15 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
   const seen = new Set<CaveatCode>();
   const caveats: Caveat[] = [];
 
-  function add(code: CaveatCode, severity: CaveatSeverity, message: string): void {
+  function add(
+    code: CaveatCode,
+    severity: CaveatSeverity,
+    message: string,
+    values?: CaveatValues,
+  ): void {
     if (seen.has(code)) return;
     seen.add(code);
-    caveats.push({ code, severity, message });
+    caveats.push(values ? { code, severity, message, values } : { code, severity, message });
   }
 
   // --- Sample size ---
@@ -78,12 +86,14 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
       "VERY_LOW_SAMPLE",
       "warning",
       `Only ${inp.comparableCount} comparable transaction${inp.comparableCount === 1 ? "" : "s"} found — this assessment is unreliable.`,
+      { count: inp.comparableCount },
     );
   } else if (inp.comparableCount < 5) {
     add(
       "LOW_SAMPLE",
       "warning",
       `Only ${inp.comparableCount} comparable transactions found — this assessment is directional only.`,
+      { count: inp.comparableCount },
     );
   }
 
@@ -179,6 +189,7 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
           "LEASE_MISMATCH",
           "warning",
           `Your flat's lease began in ${leaseCommenceYear}, but most comparable transactions have leases starting around ${medianLeaseYear} (>10 year difference). The historical median may overstate or understate fair value for this specific flat.`,
+          { leaseCommenceYear, medianLeaseYear },
         );
       }
     }
@@ -214,6 +225,7 @@ export function generateCaveats(params: GenerateCaveatsParams): Caveat[] {
       "SMALL_TREND_SAMPLE",
       "warning",
       `Time adjustment is based on only ${inp.trendSampleSize} data point${inp.trendSampleSize === 1 ? "" : "s"} — the trend estimate may be unreliable.`,
+      { count: inp.trendSampleSize },
     );
   }
 

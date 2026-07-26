@@ -18,15 +18,15 @@
   - Verification: present and visible in first fold. (R4.1)
 
 ## Phase 2 — Buyer flow entry and honest listing facts
-- [ ] **T2.1** Wire the `Check a listing price` action to jump directly to listing-check workflow.
+- [x] **T2.1** Wire the `Check a listing price` action to jump directly to listing-check workflow.
   - Verification: user can start a check without map clicks. (R2.3, R1.3)
 
-- [ ] **T2.2** Keep the no-input state free of sample/demo listings and
+- [x] **T2.2** Keep the no-input state free of sample/demo listings and
   synthetic defaults.
   - Verification: the empty Check state has no sample CTA and does not populate
     asking price, floor area, flat type, or storey range. (R5.1)
 
-- [ ] **T2.3** Add concise empty-state guidance for selecting a real block and
+- [x] **T2.3** Add concise empty-state guidance for selecting a real block and
   entering the required listing facts without forcing map interaction.
   - Verification: the submit action remains disabled until block, asking price,
     floor area, flat type, and storey range are present; lease year is optional.
@@ -64,11 +64,11 @@
   - Verification: `Check a listing price`, `Find candidate blocks`, `Compare my shortlist` all usable from first screen. (R1.1, R1.2, R3.3)
 
 - [ ] **T6.3** Run app validation commands before handoff:
-  - `npm run typecheck`
-  - `npm run lint`
-  - `npm run test`
-  - `npm run test:e2e`
-  - `npm run build`
+  - `vp run typecheck`
+  - `vp run lint`
+  - `vp run test`
+  - `vp run test:e2e`
+  - `vp run build`
 
 - [ ] **T6.4** Manual smoke checklist:
   - First-time path starts with price check without map,

@@ -8,6 +8,7 @@ import {
 } from "@/features/shortlist/useShortlistDrawerController";
 import { decodeShortlistFromUrl } from "@/features/shortlist/shortlist";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
+import { formatCompactCurrency } from "@/shared/lib/format";
 import type { BlockSummary, ShortlistItem } from "@/types/data";
 import type { ShortlistRow } from "@/features/shortlist/shortlistRows";
 
@@ -491,6 +492,24 @@ describe("useShortlistDrawerController", () => {
       ],
       palette: ["#2563eb", "#3a8a6f", "#d97706", "#c026d3"],
     });
+  });
+
+  it("sizes the trend price axis from the active locale's compact currency", () => {
+    localStorage.setItem("hdb-resale-locale", "zh-SG");
+    const first = makeRow("addr-first");
+    const second = makeRow("addr-second");
+    first.monthlyTrend = [
+      { month: "2026-01", medianPrice: 1_200_000, transactionCount: 1, medianPricePerSqm: 9000 },
+    ];
+    second.monthlyTrend = [
+      { month: "2026-01", medianPrice: 900_000, transactionCount: 1, medianPricePerSqm: 8000 },
+    ];
+
+    const { result } = renderController(makeOptions({ rows: [first, second] }));
+
+    expect(result.current.compareChart?.priceAxisWidth).toBe(
+      Math.max(48, formatCompactCurrency(1_200_000, "zh-SG").length * 8 + 4),
+    );
   });
 
   it("suppresses comparative superlatives until at least two homes are saved", () => {

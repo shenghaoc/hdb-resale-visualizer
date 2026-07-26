@@ -1,122 +1,90 @@
 # Requirements: Confidence & Caveats System
 
-## R1 — Unified confidence engine
+> Status: Implemented. These requirements describe the current engine,
+> compatibility adapters, and localized Listing Check presentation.
 
-- **R1.1** A single `computeConfidence` function in `shared/` produces
-  the confidence level for all surfaces: listing checks, comparable
-  tables, shortlist rows, and block detail views.
+## R1 — Deterministic confidence
 
-- **R1.2** The function accepts a `ConfidenceInput` struct with:
-  comparable count, same-block count, same-street count, same-town
-  count, newest comparable age in months, flat type match count,
-  floor area match count, storey match count, whether the search
-  widened, whether time-adjustment was applied, and trend sample size.
+- **R1.1** `shared/confidence-system.ts` is the canonical confidence engine.
+- **R1.2** `ConfidenceInput` contains comparable count; cumulative same-block,
+  same-street, and same-town counts; newest comparable age; flat-type,
+  floor-area, and storey match counts; time-adjustment status; and trend sample
+  size.
+- **R1.3** `ConfidenceAssessment` contains `level`, raw `score`, the four
+  normalized signals, a stable English `summary`, and the echoed `input`.
+- **R1.4** Confidence is a weighted sum of sample `0.35`, recency `0.25`,
+  scope `0.25`, and match `0.15`.
+- **R1.5** Tier thresholds are `high >= 0.70`, `medium >= 0.40`, and `low`
+  below `0.40`.
+- **R1.6** Fewer than three comparables caps the tier at `low`; evidence older
+  than 18 months or with neither same-block nor same-street matches caps it at
+  `medium`. A cap never raises the computed tier.
 
-- **R1.3** The function returns a `ConfidenceAssessment` containing:
-  tier (`high | medium | low`), raw 0–1 evidence score, per-signal
-  breakdown (sample, recency, scope, match), a human-readable
-  summary, and the echoed input.
+## R2 — Structured caveats
 
-## R2 — Evidence-based scoring
+- **R2.1** Every caveat carries a stable code, severity, stable English
+  fallback message, and optional structured interpolation values.
+- **R2.2** The fixed 17-code union is:
+  `NO_COMPARABLES`, `VERY_LOW_SAMPLE`, `LOW_SAMPLE`, `STALE_DATA`,
+  `NO_SAME_BLOCK`, `NO_SAME_STREET`, `WIDENED_TO_STREET`,
+  `WIDENED_TO_TOWN`, `FLAT_TYPE_MISMATCH`, `FLOOR_AREA_MISMATCH`,
+  `STOREY_MISMATCH`, `LEASE_MISMATCH`, `EXTREME_OUTLIER_LOW`,
+  `EXTREME_OUTLIER_HIGH`, `TIME_ADJUSTMENT_APPLIED`,
+  `TIME_ADJUSTMENT_UNAVAILABLE`, and `SMALL_TREND_SAMPLE`.
+- **R2.3** Caveats are deduplicated by code.
+- **R2.4** Only `NO_COMPARABLES` uses `critical`; compatibility adapters map
+  it to `warning`.
+- **R2.5** Recognized widening and missing-trend API messages map to structured
+  codes. `TIME_ADJUSTMENT_UNAVAILABLE` suppresses
+  `TIME_ADJUSTMENT_APPLIED`.
 
-- **R2.1** Confidence is computed as a weighted sum of four normalized
-  sub-signals: sample size (0.35), recency (0.25), scope proximity
-  (0.25), and match quality (0.15). All signals are [0, 1].
+## R3 — Current ownership and compatibility
 
-- **R2.2** Tier thresholds: `high` at ≥ 0.70, `medium` at ≥ 0.40,
-  `low` below 0.40.
+- **R3.1** Shared product compatibility behavior lives in
+  `shared/product/listing-check.ts`.
+- **R3.2** Frontend entity entry points live at
+  `src/entities/transaction/listing-confidence.ts` and
+  `src/entities/transaction/listing-caveats.ts`.
+- **R3.3** `src/features/listing-check/listing-verdict.ts` preserves the
+  shared `performListingCheck` contract.
+- **R3.4** `src/features/listing-check/confidence.ts` derives count-only
+  compatibility levels through the shared engine and returns stable locale
+  keys.
+- **R3.5** The canonical full-signal path is
+  `src/features/listing-check/listingCheckAnalysis.ts`; it derives match counts
+  and caveats from the comparable response without querying new data.
 
-- **R2.3** Hard override rules cap the tier regardless of score:
-  - `comparableCount < 3` → cap at `low`
-  - `newestComparableAgeMonths > 18` → cap at `medium`
-  - `sameBlockCount === 0 && sameStreetCount === 0` → cap at `medium`
+## R4 — Localization boundary
 
-- **R2.4** Overrides only cap (lower) the tier — they never raise it.
+- **R4.1** Shared engines retain stable English summaries, caveat messages,
+  codes, and match-reason identifiers.
+- **R4.2** `src/features/listing-check/listingCheckPresentation.ts` translates
+  confidence from structured level/input and caveats from code/values.
+- **R4.3** The eight match-reason identifiers remain unchanged in engine and
+  API data and are translated only when badges render.
+- **R4.4** Known raw API caveats are localized at the presentation boundary;
+  unknown raw text remains visible as a truthful fallback.
+- **R4.5** Changing locale must not change confidence inputs, evidence counts,
+  scores, or caveat codes.
 
-## R3 — Machine-readable caveats
+## R5 — Architecture
 
-- **R3.1** Every caveat carries a `code` (string literal from a fixed
-  union type), a `severity` (`info | warning | critical`), and a
-  human-readable `message`.
+- **R5.1** `shared/confidence-system.ts` and `shared/caveat-codes.ts` are pure
+  TypeScript and do not import from `src/`, `functions/`, or platform APIs.
+- **R5.2** Confidence and caveat logic does not call `Date.now()`, external
+  APIs, AI services, or runtime geocoding.
+- **R5.3** Callers supply explicit time and evidence inputs.
 
-- **R3.2** The caveat code union covers at minimum: `NO_COMPARABLES`,
-  `VERY_LOW_SAMPLE`, `LOW_SAMPLE`, `STALE_DATA`, `NO_SAME_BLOCK`,
-  `NO_SAME_STREET`, `WIDENED_TO_STREET`, `WIDENED_TO_TOWN`,
-  `FLAT_TYPE_MISMATCH`, `FLOOR_AREA_MISMATCH`, `STOREY_MISMATCH`,
-  `LEASE_MISMATCH`, `EXTREME_OUTLIER_LOW`, `EXTREME_OUTLIER_HIGH`,
-  `TIME_ADJUSTMENT_APPLIED`, `SMALL_TREND_SAMPLE`.
+## R6 — Test contract
 
-- **R3.3** Caveats are deduplicated by code — no duplicate codes in a
-  single result.
-
-- **R3.4** `critical` severity is reserved for conditions that
-  fundamentally undermine the verdict (e.g. zero comparables).
-
-## R4 — Backward compatibility
-
-- **R4.1** `src/lib/listing-confidence.ts` continues to export
-  `computeConfidence` with the existing `ConfidenceResult` shape.
-  It delegates to the shared engine internally.
-
-- **R4.2** `src/lib/listing-caveats.ts` continues to export
-  `generateCaveats` with the existing `{ severity, message }` shape.
-  The `critical` severity is mapped to `warning` in the v1 adapter.
-
-- **R4.3** `src/lib/confidence.ts` continues to export
-  `getDataConfidenceLevel` and `getDataConfidenceLabelKey` with the
-  same signatures. Block-level confidence is routed through the
-  shared engine.
-
-- **R4.4** `listing-verdict.ts` (`performListingCheck`) continues to
-  work without changes via the adapter layer.
-
-## R5 — Consistency
-
-- **R5.1** All surfaces that display confidence use the same tier
-  labels: "High confidence", "Medium confidence", "Low confidence".
-
-- **R5.2** All surfaces that display caveats use the same message
-  text for the same code — text is defined once in the caveat module,
-  not in UI components.
-
-- **R5.3** The confidence summary string is built by the shared
-  engine, not by individual components.
-
-## R6 — Architecture constraints
-
-- **R6.1** The shared modules (`shared/confidence-system.ts`,
-  `shared/caveat-codes.ts`) are pure TypeScript with no imports from
-  `src/`, `functions/`, or Node/browser APIs. They run in Workers,
-  browser, and Vitest.
-
-- **R6.2** No `Date.now()` or `new Date()` in confidence or caveat
-  code. All time references use explicit `referenceMonth` or
-  `newestComparableAgeMonths` parameters.
-
-- **R6.3** No AI, prediction models, or external API calls.
-
-- **R6.4** Confidence inputs are assembled by callers from existing
-  data structures — the engine does not query or compute comparables.
-
-## R7 — Tests
-
-- **R7.1** Vitest covers each sub-signal at boundary values (0, 1,
-  and the saturation point).
-
-- **R7.2** Vitest covers tier thresholds at exact boundaries (score
-  = 0.3999 → low, 0.40 → medium, 0.6999 → medium, 0.70 → high).
-
-- **R7.3** Vitest covers all three override rules and verifies they
-  only cap (never raise) the tier.
-
-- **R7.4** Vitest covers every caveat code: each triggers at its
-  documented threshold and does not trigger below it.
-
-- **R7.5** Vitest covers caveat deduplication: no duplicate codes.
-
-- **R7.6** Vitest covers the adapter layers: output shape matches
-  the legacy `ConfidenceResult` and `Caveat` types.
-
-- **R7.7** Existing tests in `listing-confidence.test.ts` and
-  `listing-caveats.test.ts` pass (with threshold updates where the
-  multi-signal engine shifts an edge case).
+- **R6.1** Unit tests cover signal boundaries, all three caps, representative
+  low/medium/high tiers, output shape, and summaries.
+- **R6.2** Unit tests cover all 17 caveat codes, threshold boundaries,
+  deduplication, recognized API mappings, structured values, and severity.
+- **R6.3** Adapter tests cover the entity exports, shared product compatibility
+  shape, verdict path, and count-only confidence labels.
+- **R6.4** Analysis tests prove stable English match reasons are counted before
+  presentation.
+- **R6.5** Presentation tests cover both locales, all 17 caveat codes, all
+  eight match reasons, confidence summary branches, interpolation values, and
+  truthful unknown fallbacks.

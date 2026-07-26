@@ -31,6 +31,7 @@ import {
   getListingVerdictStyles,
   LISTING_VERDICT_THEMES,
 } from "./listingVerdictPresentation";
+import { formatListingCaveat, formatListingConfidenceSummary } from "./listingCheckPresentation";
 
 const CHECK_SUGGEST_GROUPS: readonly SuggestionGroup[] = ["block"];
 
@@ -176,6 +177,7 @@ export function ListingCheckPanel({
   const theme = result ? LISTING_VERDICT_THEMES[result.assessment.verdict] : null;
   const styles = theme ? getListingVerdictStyles(theme.tone) : getListingVerdictStyles("muted");
   const VerdictIcon = theme?.icon ?? Sparkles;
+  const confidenceSummary = result ? formatListingConfidenceSummary(result.confidence, t) : null;
 
   // ── SearchCombobox handlers ───────────────────────────────────────────────
   const handleSelectSuggestion = useCallback(
@@ -465,14 +467,14 @@ export function ListingCheckPanel({
                     </Badge>
                   </TooltipTrigger>
                   <TooltipContent side="bottom" className="max-w-60 text-xs">
-                    {result.confidence.summary}
+                    {confidenceSummary}
                   </TooltipContent>
                 </Tooltip>
                 <p
                   className="text-[length:var(--text-xs)] leading-snug text-muted-foreground sm:hidden"
                   data-testid="listing-check-confidence-summary"
                 >
-                  {result.confidence.summary}
+                  {confidenceSummary}
                 </p>
                 {qualityTag ? (
                   <Tooltip>
@@ -496,7 +498,7 @@ export function ListingCheckPanel({
             <div className="grid grid-cols-1 gap-2 rounded-none bg-card p-3 text-xs sm:grid-cols-2">
               <DataRow
                 label={t("check.fairRange")}
-                value={`${formatCompactCurrency(result.assessment.summary.p25Price)} – ${formatCompactCurrency(result.assessment.summary.p75Price)}`}
+                value={`${formatCompactCurrency(result.assessment.summary.p25Price, locale)} – ${formatCompactCurrency(result.assessment.summary.p75Price, locale)}`}
               />
               <DataRow
                 label={t("check.askingPerSqm")}
@@ -516,11 +518,11 @@ export function ListingCheckPanel({
               />
               <DataRow
                 label={t("check.p25")}
-                value={formatCompactCurrency(result.assessment.summary.p25Price)}
+                value={formatCompactCurrency(result.assessment.summary.p25Price, locale)}
               />
               <DataRow
                 label={t("check.p75")}
-                value={formatCompactCurrency(result.assessment.summary.p75Price)}
+                value={formatCompactCurrency(result.assessment.summary.p75Price, locale)}
               />
               {result.assessment.pricePerSqmDeltaPct != null && (
                 <DataRow
@@ -574,7 +576,7 @@ export function ListingCheckPanel({
                       ) : (
                         <Info data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
                       )}
-                      <span>{caveat.message}</span>
+                      <span>{formatListingCaveat(caveat, t)}</span>
                     </li>
                   ))}
                 </ul>

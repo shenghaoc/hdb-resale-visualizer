@@ -36,19 +36,23 @@ inclusion: always
 
 ## Standard Scripts
 
-- `pnpm dev`: start Vite on `localhost:5173` for UI-only iteration.
-- `pnpm dev:functions`: build and run `wrangler dev` for the Worker/API/D1 stack.
-- `pnpm check:boundaries`: enforce script/runtime boundaries.
-- `pnpm typecheck`: TypeScript verification.
-- `pnpm lint` / `pnpm lint:fast`: typed Oxlint or faster syntax-focused lint.
-- `pnpm test`: Vitest unit and integration tests with `NODE_OPTIONS=--no-experimental-webstorage`.
-- `pnpm test:e2e`: Playwright Chromium E2E against a production build and fixture API.
-- `pnpm build`: production build with boundary check, TypeScript build, Vite build, and bundle check.
-- `pnpm build:deploy`: Cloudflare deployment build path.
-- `pnpm build:full`: maintainer-only path that includes remote `pnpm sync-data`.
-- `pnpm db:migrate:local` / `pnpm db:migrate:remote`: D1 migrations.
-- `pnpm sync-data`: official dataset refresh into remote D1, requiring Cloudflare and upstream credentials.
+- `vp dev`: start Vite on `localhost:5173` for UI-only iteration.
+- `vp run dev:functions`: build and run `wrangler dev` for the Worker/API/D1 stack.
+- `vp run check:boundaries`: enforce script/runtime boundaries.
+- `vp run typecheck`: TypeScript verification.
+- `vp run lint`: typed Oxlint.
+- `vp run test`: Vitest unit and integration tests with `NODE_OPTIONS=--no-experimental-webstorage`.
+- `vp run test:e2e`: Playwright Chromium E2E against a production build and fixture API.
+- `vp run build`: production build with boundary check, TypeScript build, Vite build, and bundle check.
+- `vp run build:deploy`: Cloudflare deployment build path.
+- `vp run build:full`: maintainer-only path that includes remote data sync.
+- `vp run db:migrate:local` / `vp run db:migrate:remote`: D1 migrations.
+- `vp run sync-data`: official dataset refresh into remote D1, requiring Cloudflare and upstream credentials.
 
 ## CI Reality
 
-GitHub CI uses Node 24 and pnpm. The `quality` job runs `pnpm install`, `pnpm typecheck`, `pnpm lint`, and `pnpm test`. Conditional jobs run `pnpm test:e2e` and `pnpm build:deploy` when relevant paths change. Local validation should mirror this instead of inventing substitute commands.
+GitHub CI uses Node 24 and Vite+ with the pnpm lockfile. The base job runs
+`vp install` followed by the package-defined full gate, `vp run check`.
+Conditional jobs run the Playwright smoke suite and Vitest Browser Mode in
+Chromium when UI-affecting paths change. Local validation should use the same
+package scripts instead of inventing substitute commands.

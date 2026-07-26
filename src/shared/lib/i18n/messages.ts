@@ -532,6 +532,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       "Uses the selected flat type's latest sale, or the whole block when no type is selected. It does not recalculate price medians.",
     "filters.startMonth": "From",
     "filters.endMonth": "To",
+    "filters.rangeTo": "to",
     "filters.selectMonth": "Select month",
     "filters.clearSelection": "Clear selection",
     "filters.maxMrtDistance": "Max MRT distance",
@@ -711,6 +712,54 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.confidence.high": "High",
     "check.confidence.medium": "Medium",
     "check.confidence.low": "Low",
+    "check.confidence.summary.noComparables":
+      "{level} confidence — no comparable transactions found",
+    "check.confidence.summary.details": "{level} confidence — {details}",
+    "check.confidence.summary.comparable.one": "{count} comparable",
+    "check.confidence.summary.comparable": "{count} comparables",
+    "check.confidence.summary.sameBlock": "{count} same-block",
+    "check.confidence.summary.thisMonth": "newest this month",
+    "check.confidence.summary.monthAgo.one": "newest {count} month ago",
+    "check.confidence.summary.monthAgo": "newest {count} months ago",
+    "check.confidence.summary.separator": ", ",
+    "check.caveat.NO_COMPARABLES":
+      "No comparable transactions found — a verdict cannot be produced.",
+    "check.caveat.VERY_LOW_SAMPLE.one":
+      "Only {count} comparable transaction found — this assessment is unreliable.",
+    "check.caveat.VERY_LOW_SAMPLE":
+      "Only {count} comparable transactions found — this assessment is unreliable.",
+    "check.caveat.LOW_SAMPLE":
+      "Only {count} comparable transactions found — this assessment is directional only.",
+    "check.caveat.STALE_DATA":
+      "No comparable transaction within the last 12 months — the market may have moved since the most recent data point.",
+    "check.caveat.NO_SAME_BLOCK":
+      "No comparable transactions from the same block — comparisons are drawn from nearby blocks on the same street.",
+    "check.caveat.NO_SAME_STREET":
+      "No comparable transactions from the same block or street — comparisons are drawn from the wider town.",
+    "check.caveat.WIDENED_TO_STREET":
+      "Few comparable transactions in the same block — search widened to the same street.",
+    "check.caveat.WIDENED_TO_TOWN":
+      "Few comparable transactions on the same street — search widened to the entire town.",
+    "check.caveat.FLAT_TYPE_MISMATCH":
+      "Fewer than half of the comparables match the flat type — price differences may reflect unit size rather than market conditions.",
+    "check.caveat.FLOOR_AREA_MISMATCH":
+      "Fewer than half of the comparables have a similar floor area — per-sqm prices may be more relevant than absolute prices.",
+    "check.caveat.STOREY_MISMATCH":
+      "Fewer than half of the comparables are on a similar storey — higher floors typically command a premium.",
+    "check.caveat.LEASE_MISMATCH":
+      "Your flat's lease began in {leaseCommenceYear}, but most comparable transactions have leases starting around {medianLeaseYear} (>10 year difference). The historical median may overstate or understate fair value for this specific flat.",
+    "check.caveat.EXTREME_OUTLIER_LOW":
+      "The asking price is below all comparable transactions in the dataset — verify the listing details are correct.",
+    "check.caveat.EXTREME_OUTLIER_HIGH":
+      "The asking price exceeds all comparable transactions in the dataset — this may be an unrealistic or aspirational listing.",
+    "check.caveat.TIME_ADJUSTMENT_APPLIED":
+      "Comparable prices have been time-adjusted to reflect recent market trends.",
+    "check.caveat.TIME_ADJUSTMENT_UNAVAILABLE":
+      "Time adjustment could not be fully applied — recent trend data was missing for part or all of this comparable set.",
+    "check.caveat.SMALL_TREND_SAMPLE.one":
+      "Time adjustment is based on only {count} data point — the trend estimate may be unreliable.",
+    "check.caveat.SMALL_TREND_SAMPLE":
+      "Time adjustment is based on only {count} data points — the trend estimate may be unreliable.",
     "check.share": "Share",
     "check.shareCopied": "URL copied",
     "check.saveToShortlist": "Save to Shortlist",
@@ -752,6 +801,14 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "evidence.col.adjPrice": "Orig. Price",
     "evidence.col.similarity": "Similarity",
     "evidence.col.matchReasons": "Match Reasons",
+    "evidence.matchReason.sameBlock": "Same block",
+    "evidence.matchReason.sameStreet": "Same street",
+    "evidence.matchReason.sameTown": "Same town",
+    "evidence.matchReason.sameFlatType": "Same flat type",
+    "evidence.matchReason.similarFloorArea": "Similar floor area (±{difference} sqm)",
+    "evidence.matchReason.similarStorey": "Similar storey",
+    "evidence.matchReason.similarLease": "Similar lease",
+    "evidence.matchReason.recentTransaction": "Recent transaction",
     "lease.signals.title": "Lease Notes",
     "lease.signal.veryShort": "Very short remaining lease — under 30 years.",
     "lease.signal.short": "Short remaining lease — under 60 years.",
@@ -1359,6 +1416,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       "已选择房型时按该房型最近成交筛选，否则按整座组屋最近成交筛选；不会重新计算价格中位数。",
     "filters.startMonth": "从",
     "filters.endMonth": "至",
+    "filters.rangeTo": "至",
     "filters.selectMonth": "选择月份",
     "filters.clearSelection": "清除选择",
     "filters.maxMrtDistance": "地铁距离上限",
@@ -1516,7 +1574,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.apiError": "无法完成检查",
     "check.apiErrorDetail": "未能取得该组屋的成交数据，请稍后再试。",
     "check.blockSearchLabel": "搜索要检查的组屋",
-    "check.leaseYear": "组屋建成年份（选填）",
+    "check.leaseYear": "地契开始年份（选填）",
     "check.leaseYearPlaceholder": "如 1995",
     "check.checkButton": "检查此房源",
     "check.selectBlockHint": "在上方搜索并选择组屋以开始。将使用该组屋的历史交易数据来评估开价。",
@@ -1525,6 +1583,39 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.confidence.high": "高",
     "check.confidence.medium": "中",
     "check.confidence.low": "低",
+    "check.confidence.summary.noComparables": "{level}可信度 — 未找到可比交易",
+    "check.confidence.summary.details": "{level}可信度 — {details}",
+    "check.confidence.summary.comparable.one": "{count} 笔可比交易",
+    "check.confidence.summary.comparable": "{count} 笔可比交易",
+    "check.confidence.summary.sameBlock": "{count} 笔来自同一栋组屋",
+    "check.confidence.summary.thisMonth": "最新交易在本月",
+    "check.confidence.summary.monthAgo.one": "最新交易在 {count} 个月前",
+    "check.confidence.summary.monthAgo": "最新交易在 {count} 个月前",
+    "check.confidence.summary.separator": "，",
+    "check.caveat.NO_COMPARABLES": "未找到可比交易，无法得出结论。",
+    "check.caveat.VERY_LOW_SAMPLE.one": "仅找到 {count} 笔可比交易，此评估可靠性不足。",
+    "check.caveat.VERY_LOW_SAMPLE": "仅找到 {count} 笔可比交易，此评估可靠性不足。",
+    "check.caveat.LOW_SAMPLE": "仅找到 {count} 笔可比交易，此评估仅供参考。",
+    "check.caveat.STALE_DATA": "过去 12 个月内没有可比交易；自最近数据点以来，市场可能已有变化。",
+    "check.caveat.NO_SAME_BLOCK": "同一栋组屋没有可比交易，比较数据来自同一街道的附近组屋。",
+    "check.caveat.NO_SAME_STREET": "同一栋组屋或街道没有可比交易，比较数据来自更广的市镇范围。",
+    "check.caveat.WIDENED_TO_STREET": "同一栋组屋的可比交易太少，搜索范围已扩大到同一街道。",
+    "check.caveat.WIDENED_TO_TOWN": "同一街道的可比交易太少，搜索范围已扩大到整个市镇。",
+    "check.caveat.FLAT_TYPE_MISMATCH":
+      "少于一半的可比交易与房型相同；价格差异可能反映单位面积，而非市场状况。",
+    "check.caveat.FLOOR_AREA_MISMATCH":
+      "少于一半的可比交易面积相近；每平米单价可能比总价更具参考价值。",
+    "check.caveat.STOREY_MISMATCH": "少于一半的可比交易楼层相近；较高楼层通常会有溢价。",
+    "check.caveat.LEASE_MISMATCH":
+      "您的单位地契始于 {leaseCommenceYear} 年，但大多数可比交易的地契约始于 {medianLeaseYear} 年（相差超过 10 年）。历史中位价可能高估或低估该单位的合理价值。",
+    "check.caveat.EXTREME_OUTLIER_LOW": "开价低于数据集中的所有可比交易，请核实房源资料是否正确。",
+    "check.caveat.EXTREME_OUTLIER_HIGH":
+      "开价高于数据集中的所有可比交易，可能是不切实际或试探性的报价。",
+    "check.caveat.TIME_ADJUSTMENT_APPLIED": "可比价格已按近期市场趋势进行时间调整。",
+    "check.caveat.TIME_ADJUSTMENT_UNAVAILABLE":
+      "无法完整应用时间调整；部分或全部可比交易缺少近期趋势数据。",
+    "check.caveat.SMALL_TREND_SAMPLE.one": "时间调整仅基于 {count} 个数据点，趋势估算可能不可靠。",
+    "check.caveat.SMALL_TREND_SAMPLE": "时间调整仅基于 {count} 个数据点，趋势估算可能不可靠。",
     "check.share": "分享",
     "check.shareCopied": "链接已复制",
     "check.saveToShortlist": "保存到候选列表",
@@ -1564,6 +1655,14 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "evidence.col.adjPrice": "原价",
     "evidence.col.similarity": "相似度",
     "evidence.col.matchReasons": "匹配原因",
+    "evidence.matchReason.sameBlock": "同一栋组屋",
+    "evidence.matchReason.sameStreet": "同一街道",
+    "evidence.matchReason.sameTown": "同一市镇",
+    "evidence.matchReason.sameFlatType": "相同房型",
+    "evidence.matchReason.similarFloorArea": "面积相近（±{difference} 平米）",
+    "evidence.matchReason.similarStorey": "楼层相近",
+    "evidence.matchReason.similarLease": "地契年期相近",
+    "evidence.matchReason.recentTransaction": "近期交易",
     "lease.signals.title": "地契说明",
     "lease.signal.veryShort": "剩余地契极短——不足30年。",
     "lease.signal.short": "剩余地契较短——不足60年。",

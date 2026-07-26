@@ -2,12 +2,12 @@
 
 # HDB Resale Visualizer
 
-Map-first Singapore HDB resale explorer built for real buying decisions, not price prediction. The app uses official public datasets, persists them in Cloudflare D1, and serves a fast React UI through Cloudflare Pages Functions.
+Map-first Singapore HDB resale explorer built for real buying decisions, not price prediction. The app uses official public datasets, persists them in Cloudflare D1, and serves a fast React UI through a Cloudflare Worker that reuses the handlers under `functions/api/*`.
 
 ## Stack
 
 - Vite + React 19 + TypeScript (frontend)
-- Cloudflare Pages Functions (`functions/api/*`) backed by Cloudflare D1 (runtime API)
+- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - Recharts for block-level trend charts
@@ -52,7 +52,7 @@ A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-gui
 - Budget match badges highlight blocks within your target range
 - Block detail drawer shows lease remaining, floor area range, transaction history, and a trend chart
 - Stores a browser-local shortlist with per-block notes and target prices
-- Reads all live data through Cloudflare Pages Functions over Cloudflare D1; the frontend never touches data.gov.sg or OneMap at runtime
+- Reads all live data through same-origin Worker API routes over Cloudflare D1; the frontend never touches data.gov.sg or OneMap at runtime
 
 ## Official data sources
 
@@ -80,13 +80,15 @@ For pure UI iteration that does not require live data, start Vite:
 vp dev
 ```
 
-This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404 because no Pages Functions are running — wire mock data per spec or use the full local stack below.
+This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404
+because the Worker API is not running — wire mock data per spec or use the full
+local stack below.
 
-For a full local stack (UI + Pages Functions + local D1 emulator):
+For a full local stack (built UI + Worker API + local D1 emulator):
 
 ```bash
 vp run db:migrate:local     # one-time: create the local D1 schema
-vp run dev:functions        # runs `wrangler pages dev` against the local D1
+vp run dev:functions        # builds, then runs `wrangler dev` against local D1
 ```
 
 You can seed the local D1 from `tests/fixtures/public-data/` using `wrangler d1 execute hdb-resale --local --file=<sql>` if needed.
@@ -98,7 +100,7 @@ Run `vp run sync-data` to refresh live data from data.gov.sg and OneMap into **r
 ```bash
 vp install             # clean install from the lockfile (what CI runs)
 vp dev                 # Vite dev server (UI-only)
-vp run dev:functions   # Wrangler Pages dev (UI + /api/* + local D1)
+vp run dev:functions   # build + Wrangler dev (UI + /api/* + local D1)
 vp run check:boundaries # script/runtime import boundary check
 vp run build           # production build (no D1 dependency)
 vp run build:full      # build + remote D1 sync (maintainers only)
@@ -125,7 +127,7 @@ The targeted `test:*` scripts reuse the existing Vitest config and filter by
 filename — they are fast feedback loops for buyer-critical listing-check and
 comparable-engine work. Run `vp run check:pr` once before opening a pull
 request; it is a plain package script with no Kiro-specific behaviour. Base CI
-runs `vp install` followed by `vp check`, so the local gate matches the
+runs `vp install` followed by `vp run check`, so the local gate matches the
 per-PR CI checks exactly (plus the Playwright suite).
 
 The repo has three testing tiers:
@@ -157,7 +159,11 @@ run them explicitly or via CI.
 7. Computes block-level summaries, address details, comparisons, and town × flat-type trend aggregates.
 8. Writes generated artifacts back to D1 (`manifest`, `blocks`, `block_details`, `comparisons`, `town_flat_type_trends`, `mrt_geojson`).
 
-Pages Functions under `functions/api/*` then serve those tables on every request. Schema for both halves lives in `migrations/0001_initial.sql`.
+The Worker routes requests to the handlers under `functions/api/*`, which read
+those tables on every request. The forward-only schema is the ordered set of
+files in `migrations/*.sql`; later migrations add normalized transactions,
+search indexes, shortlist storage, and per-flat-type cohort metadata to the
+initial schema.
 
 ## Environment
 
@@ -180,7 +186,7 @@ CLOUDFLARE_D1_DATABASE_ID=...
 ## Deployment
 
 - **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `vp run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
-- **CI** (`.github/workflows/ci.yml`): `vp install` then `vp check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
+- **CI** (`.github/workflows/ci.yml`): `vp install` then `vp run check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
 - **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `vp run sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
 
 ## Notes
@@ -197,4 +203,6 @@ Run `vp run check:boundaries` to see script/runtime import violations. Common fi
 
 ### `/api/*` returns 404 locally
 
-You are running `vp dev` (Vite only). Switch to `vp run dev:functions` to bring up Wrangler Pages dev with the D1 binding, or run the unit tests against fixtures instead.
+You are running `vp dev` (Vite only). Switch to `vp run dev:functions` to build
+and start `wrangler dev` with the D1 binding, or run the unit tests against
+fixtures instead.
