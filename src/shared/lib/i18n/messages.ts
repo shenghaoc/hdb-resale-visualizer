@@ -14,7 +14,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "app.loadingData": "Loading static data",
     "app.loadingDescription": "Preparing block summaries, detail files, and the market map.",
     "app.skipToContent": "Skip to main content",
-    "app.missingData": "Static data missing",
+    "app.missingData": "Data unavailable",
+    "app.manifestLoadFailed": "The app could not load its data index.",
+    "app.resultsLoadFailed": "Results could not be loaded for these filters.",
     "app.devFunctionsHint":
       "Run `pnpm dev:functions` to start the full-stack dev server with API routes.",
     "app.mapTitle": "Singapore resale map",
@@ -692,6 +694,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       "Check whether an asking price is fair using historical HDB resale transactions.",
     "check.trustStatement": "Deterministic historical comparisons. No AI valuation API.",
     "check.blockPlaceholder": "Search for a block (e.g. 123 Ang Mo Kio Ave 3)",
+    "check.blockSearchLabel": "Search for a block to check",
     "check.leaseYear": "Lease commence year (optional)",
     "check.leaseYearPlaceholder": "e.g. 1995",
     "check.checkButton": "Check This Listing",
@@ -700,7 +703,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.apiError": "Unable to load comparable transactions",
     "check.apiErrorDetail":
       "The comparable engine is temporarily unavailable. Your inputs have been preserved — try again.",
-    "check.widenedSearch": "Search widened",
     "check.selectBlockHint":
       "Search and select a block above to begin. The historical transaction data for that block will be used to evaluate the asking price.",
     "check.noDetail":
@@ -836,13 +838,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "affordability.filter.empty.hint":
       "Clear this conservative estimate before deciding: available cash, grants and HFE outcomes are not included.",
     "affordability.filter.empty.clear": "Clear CPF-based estimate",
+    "app.resetFiltersAndRetry": "Reset filters and try again",
     "results.refinementUnsupported.title": "Cannot filter this precisely yet",
     "results.refinementUnsupported.hint":
       "Flat model, size and sale-date filters for a single flat type need per-flat-type data that has not been published yet. Rather than show blocks matched on the whole building, no results are shown. Flat type and budget still work.",
     "results.refinementUnsupported.clear": "Clear model, size and date filters",
-    "affordability.sort.bestFit": "Most room within CPF estimate",
-    "affordability.sort.disabledTooltip":
-      "Set a positive CPF OA balance, income and age in Buyer setup to use this estimate.",
   },
   "zh-SG": {
     "language.label": "语言",
@@ -855,7 +855,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "app.loadingData": "加载数据中",
     "app.loadingDescription": "正在准备组屋摘要、详细信息与市场地图。",
     "app.skipToContent": "跳至主要内容",
-    "app.missingData": "数据缺失",
+    "app.missingData": "数据暂不可用",
+    "app.manifestLoadFailed": "无法载入应用的数据索引。",
+    "app.resultsLoadFailed": "无法载入这些筛选条件的结果。",
     "app.devFunctionsHint": "运行 `pnpm dev:functions` 启动全栈开发服务器。",
     "app.mapTitle": "新加坡转售地图",
     "app.lowerMedian": "价格较低",
@@ -1508,6 +1510,11 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.valueStatement": "用历史组屋转售成交记录，判断卖家开价是否合理。",
     "check.trustStatement": "采用可追溯的历史比较，不使用 AI 估值 API。",
     "check.blockPlaceholder": "搜索组屋（如 宏茂桥3道123号）",
+    "check.loading": "检查中…",
+    "check.analyzingComparables": "正在分析可比成交…",
+    "check.apiError": "无法完成检查",
+    "check.apiErrorDetail": "未能取得该组屋的成交数据，请稍后再试。",
+    "check.blockSearchLabel": "搜索要检查的组屋",
     "check.leaseYear": "组屋建成年份（选填）",
     "check.leaseYearPlaceholder": "如 1995",
     "check.checkButton": "检查此房源",
@@ -1629,11 +1636,10 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "affordability.filter.empty.title": "没有符合CPF估算与其他筛选的组屋",
     "affordability.filter.empty.hint": "决定前请清除此保守估算；它不包括可用现金、津贴与HFE结果。",
     "affordability.filter.empty.clear": "清除CPF估算",
+    "app.resetFiltersAndRetry": "重置筛选并重试",
     "results.refinementUnsupported.title": "暂时无法这样精确筛选",
     "results.refinementUnsupported.hint":
       "针对单一户型的房型、面积与成交时间筛选需要按户型统计的数据，该数据尚未发布。为避免用整栋楼的数据充数，这里不显示任何结果。户型与预算筛选仍然可用。",
     "results.refinementUnsupported.clear": "清除房型、面积与时间筛选",
-    "affordability.sort.bestFit": "CPF估算余裕最大优先",
-    "affordability.sort.disabledTooltip": "请先在买家设定中填写正数的CPF OA、月收入与年龄。",
   },
 };

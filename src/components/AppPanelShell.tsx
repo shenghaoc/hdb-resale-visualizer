@@ -47,8 +47,19 @@ export function AppPanelShell({
 }: AppPanelShellProps) {
   return (
     <div className="pointer-events-none absolute inset-0 z-20 flex h-full flex-col gap-3 overflow-hidden p-3 pb-[calc(var(--mobile-tab-bar-height)+env(safe-area-inset-bottom,0px)+0.5rem)] sm:p-4 lg:gap-4 lg:p-6 lg:pb-6">
-      {isDesktop && !isHeaderVisible ? (
-        <div className="pointer-events-auto absolute left-6 top-6 z-30">
+      {/*
+        Rendered on both platforms. The dismissal is persisted per-origin, so a
+        header hidden on desktop is still hidden after narrowing the window —
+        and on mobile the header holds the only search box and the only guide
+        entry point, so a desktop-only restore control strands the user.
+      */}
+      {!isHeaderVisible ? (
+        <div
+          className={cn(
+            "pointer-events-auto absolute z-30",
+            isDesktop ? "left-6 top-6" : "left-3 top-3",
+          )}
+        >
           <Button
             variant="outline"
             size="xs"

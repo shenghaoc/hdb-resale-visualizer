@@ -123,8 +123,7 @@ export type BlockSortMode =
   | "median-desc"
   | "lease-desc"
   | "mrt-asc"
-  | "latest-desc"
-  | "affordability";
+  | "latest-desc";
 
 export type FilterState = {
   search: string;

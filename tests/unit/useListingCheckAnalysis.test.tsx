@@ -368,6 +368,27 @@ describe("useListingCheckAnalysis", () => {
     expect(result.current.detailLoading).toBe(false);
   });
 
+  it("retries a transient detail failure for the same selected block", async () => {
+    dataMocks.fetchAddressDetail
+      .mockRejectedValueOnce(new Error("network"))
+      .mockResolvedValueOnce(makeDetail({ addressKey: "retry-key" }));
+    const { result } = renderAnalysis({ selectedAddressKey: "retry-key" });
+
+    await waitFor(() => {
+      expect(result.current.detailError).toBe(true);
+    });
+
+    act(() => {
+      result.current.retryDetail();
+    });
+
+    await waitFor(() => {
+      expect(result.current.detail?.summary.addressKey).toBe("retry-key");
+    });
+    expect(result.current.detailError).toBe(false);
+    expect(dataMocks.fetchAddressDetail).toHaveBeenCalledTimes(2);
+  });
+
   it("derives options without auto-selecting missing or invalid listing facts", async () => {
     dataMocks.fetchAddressDetail.mockResolvedValueOnce(
       makeDetail({ flatTypes: ["EXECUTIVE", "5 ROOM", "4 ROOM"] }),

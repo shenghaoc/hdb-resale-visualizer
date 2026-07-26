@@ -29,10 +29,8 @@ import { MrtLineDots } from "@/components/MrtLineDots";
 import { DocsLink } from "@/features/docs/DocsLink";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import {
-  affordabilityProfileFingerprint,
   computeAffordabilityVerdict,
   isAffordabilityProfileComplete,
-  maxAffordablePrice,
 } from "@/shared/lib/affordability";
 import { fetchBlocksByTown, fetchTownFlatTypeTrends } from "@/shared/lib/data";
 import { isSameTown } from "@/shared/lib/queryState";
@@ -388,19 +386,27 @@ const BlockCard = memo(function BlockCard({
                 {affordVerdict && affordVerdict.status !== "unknown" ? (
                   <span
                     className={cn(
-                      "h-2 w-2 shrink-0 rounded-full",
-                      affordVerdict.status === "comfortable" && "bg-success",
-                      affordVerdict.status === "stretch" && "bg-warning",
-                      affordVerdict.status === "over" && "bg-destructive",
+                      "inline-flex shrink-0 items-center gap-1 text-[0.65rem] font-bold uppercase tracking-wide",
+                      affordVerdict.status === "comfortable" && "text-success",
+                      affordVerdict.status === "stretch" && "text-warning",
+                      affordVerdict.status === "over" && "text-destructive",
                     )}
-                    title={
-                      affordVerdict.status === "comfortable"
-                        ? t("affordability.comfortable")
-                        : affordVerdict.status === "stretch"
-                          ? t("affordability.stretch")
-                          : t("affordability.over")
-                    }
-                  />
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "h-1.5 w-1.5 rounded-full",
+                        affordVerdict.status === "comfortable" && "bg-success",
+                        affordVerdict.status === "stretch" && "bg-warning",
+                        affordVerdict.status === "over" && "bg-destructive",
+                      )}
+                    />
+                    {affordVerdict.status === "comfortable"
+                      ? t("affordability.comfortable")
+                      : affordVerdict.status === "stretch"
+                        ? t("affordability.stretch")
+                        : t("affordability.over")}
+                  </span>
                 ) : null}
                 <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {t(cohortResolution.isTypeSpecific ? "stats.typeTxns" : "stats.txns", {
@@ -724,15 +730,6 @@ export function ResultsPane({
   const { locale, t } = useI18n();
   const currentYear = getCurrentYear();
 
-  const affordabilitySortReady = searchProfile
-    ? isAffordabilityProfileComplete({
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      })
-    : false;
-
   const resultsCsvExport = useMemo(() => {
     if (!hasResultScope || blocks.length === 0) {
       return undefined;
@@ -795,27 +792,19 @@ export function ResultsPane({
       { value: "lease-desc", label: t("results.sort.longestLease") },
       { value: "mrt-asc", label: t("results.sort.nearestMrt") },
       { value: "latest-desc", label: t("results.sort.recentActivity") },
-      {
-        value: "affordability",
-        label: t("affordability.sort.bestFit"),
-        disabled: !affordabilitySortReady,
-        tooltip: affordabilitySortReady ? undefined : t("affordability.sort.disabledTooltip"),
-      },
     ],
-    [t, affordabilitySortReady],
+    [t],
   );
 
   // Controlled (URL) or uncontrolled (local state) sort. Tests omit the prop
   // and rely on the internal default; App.tsx always passes it.
   const [internalSortMode, setInternalSortMode] = useState<SortMode>(DEFAULT_SORT_MODE);
-  const incomingSort: SortMode | null = sortModeProp ? sortModeProp : null;
-  // If URL asks for affordability sort but the profile is incomplete, silently
-  // fall back so the list doesn't render with a nonsense ordering.
-  const effectiveExternalSort: SortMode | null =
-    incomingSort === "affordability" && !affordabilitySortReady ? DEFAULT_SORT_MODE : incomingSort;
-  const sortMode: SortMode = effectiveExternalSort ?? internalSortMode;
+  const sortControlled = sortModeProp !== undefined;
+  // A retired sort mode in an older shared link is normalized to the default by
+  // parseFilters' allowlist before it reaches here.
+  const sortMode: SortMode = sortControlled ? sortModeProp || DEFAULT_SORT_MODE : internalSortMode;
   const setSortMode = (next: SortMode) => {
-    setInternalSortMode(next);
+    if (!sortControlled) setInternalSortMode(next);
     onSortChange?.(next === DEFAULT_SORT_MODE ? "" : next);
   };
   const [resultsView, setResultsView] = useState<ResultsViewMode>("blocks");
@@ -838,9 +827,12 @@ export function ResultsPane({
   const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
   const compareBlocksMountedRef = useRef(true);
   const compareBlocksFetchedTownRef = useRef<string | null>(null);
+  const compareBlocksRequestSequenceRef = useRef(0);
+  const [compareBlocksRetryGeneration, setCompareBlocksRetryGeneration] = useState(0);
+  const [townTrendRetryGeneration, setTownTrendRetryGeneration] = useState(0);
 
   type CompareBlocksSnap = {
-    status: "idle" | "loaded" | "failed";
+    status: "idle" | "loading" | "loaded" | "failed";
     requestedTown: string;
     blocks: BlockSummary[];
   };
@@ -867,6 +859,7 @@ export function ResultsPane({
 
   useEffect(() => {
     if (!showTownCompare || !activeCompareTown) {
+      compareBlocksRequestSequenceRef.current += 1;
       compareBlocksFetchedTownRef.current = null;
       return;
     }
@@ -874,18 +867,29 @@ export function ResultsPane({
       return;
     }
     const requestedTown = activeCompareTown;
+    const requestSequence = ++compareBlocksRequestSequenceRef.current;
+    // Mark the request in flight before awaiting so a render caused by other
+    // state cannot start a duplicate request for the same town.
+    compareBlocksFetchedTownRef.current = requestedTown;
+    setCompareBlocksSnap({ status: "loading", requestedTown, blocks: [] });
     void fetchBlocksByTown(requestedTown)
       .then((blocks) => {
-        if (!compareBlocksMountedRef.current) return;
-        compareBlocksFetchedTownRef.current = requestedTown;
+        if (
+          !compareBlocksMountedRef.current ||
+          compareBlocksRequestSequenceRef.current !== requestSequence
+        )
+          return;
         setCompareBlocksSnap({ status: "loaded", requestedTown, blocks });
       })
       .catch(() => {
-        if (!compareBlocksMountedRef.current) return;
-        compareBlocksFetchedTownRef.current = requestedTown;
+        if (
+          !compareBlocksMountedRef.current ||
+          compareBlocksRequestSequenceRef.current !== requestSequence
+        )
+          return;
         setCompareBlocksSnap({ status: "failed", requestedTown, blocks: [] });
       });
-  }, [activeCompareTown, showTownCompare]);
+  }, [activeCompareTown, compareBlocksRetryGeneration, showTownCompare]);
 
   useEffect(() => {
     if (!showTownProfile || !profileTown) {
@@ -922,7 +926,13 @@ export function ResultsPane({
         }
         setTrendSnap({ status: "failed", requestedTown, rows: [] });
       });
-  }, [profileTown, showTownProfile, trendSnap.requestedTown, trendSnap.status]);
+  }, [
+    profileTown,
+    showTownProfile,
+    townTrendRetryGeneration,
+    trendSnap.requestedTown,
+    trendSnap.status,
+  ]);
 
   const townTrendRows = useMemo(
     () => (trendSnap.status === "loaded" ? trendSnap.rows : EMPTY_ARRAY),
@@ -988,45 +998,25 @@ export function ResultsPane({
   const compareBlocksLoading =
     showTownCompare &&
     Boolean(activeCompareTown) &&
-    (compareBlocksSnap.status === "idle" || compareBlocksSnap.requestedTown !== activeCompareTown);
+    (compareBlocksSnap.status === "idle" ||
+      compareBlocksSnap.status === "loading" ||
+      compareBlocksSnap.requestedTown !== activeCompareTown);
   const compareBlocksFailed =
     showTownCompare &&
     compareBlocksSnap.status === "failed" &&
     compareBlocksSnap.requestedTown === activeCompareTown;
-
-  // Keyed on the fingerprint, not on the whole profile object, to avoid
-  // recomputing when unrelated profile fields change.
-  const affordabilityFingerprint = searchProfile
-    ? affordabilityProfileFingerprint({
-        monthlyIncome: searchProfile.monthlyIncome,
-        cpfOABalance: searchProfile.cpfOABalance,
-        age: searchProfile.age,
-        coApplicantAge: searchProfile.coApplicantAge,
-      })
-    : "";
-
-  // Precompute affordability headroom once per profile change. Re-running the
-  // verdict math inside .sort() would multiply CPF/loan calculations by O(N log N).
-  const affordabilityHeadroomByKey = useMemo(() => {
-    if (sortMode !== "affordability" || !searchProfile || !affordabilitySortReady) {
-      return null;
+  const retryTownComparison = () => {
+    if (compareBlocksFailed) {
+      compareBlocksFetchedTownRef.current = null;
+      setCompareBlocksSnap({ status: "idle", requestedTown: "", blocks: [] });
+      setCompareBlocksRetryGeneration((current) => current + 1);
     }
-    const profile = {
-      monthlyIncome: searchProfile.monthlyIncome,
-      cpfOABalance: searchProfile.cpfOABalance,
-      age: searchProfile.age,
-      coApplicantAge: searchProfile.coApplicantAge,
-    };
-    // The profile is constant for this loop (the guard above ensures it is
-    // complete), so compute the price ceiling once instead of per block.
-    const ceiling = maxAffordablePrice(profile);
-    const map = new Map<string, number>();
-    for (const block of blocks) {
-      map.set(block.addressKey, ceiling - getCohortAlignedMedianPrice(block, flatType));
+    if (townTrendFailed) {
+      townTrendRequestRef.current = null;
+      setTrendSnap({ status: "idle", requestedTown: "", rows: [] });
+      setTownTrendRetryGeneration((current) => current + 1);
     }
-    return map;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blocks, sortMode, affordabilitySortReady, affordabilityFingerprint, flatType]);
+  };
 
   const sortedBlocks = useMemo(() => {
     if (blocks.length === 0) return EMPTY_ARRAY;
@@ -1062,21 +1052,13 @@ export function ResultsPane({
         const rightDist = right.nearestMrt?.distanceMeters ?? Number.POSITIVE_INFINITY;
         return leftDist - rightDist;
       });
-    } else if (sortMode === "affordability" && affordabilityHeadroomByKey) {
-      return sorted.sort((left, right) => {
-        const leftHeadroom =
-          affordabilityHeadroomByKey.get(left.addressKey) ?? Number.NEGATIVE_INFINITY;
-        const rightHeadroom =
-          affordabilityHeadroomByKey.get(right.addressKey) ?? Number.NEGATIVE_INFINITY;
-        return rightHeadroom - leftHeadroom;
-      });
     }
 
     return sorted.sort(
       (left, right) =>
         getCohortAlignedMedianPrice(left, flatType) - getCohortAlignedMedianPrice(right, flatType),
     );
-  }, [blocks, sortMode, affordabilityHeadroomByKey, flatType]);
+  }, [blocks, sortMode, flatType]);
   const shouldVirtualize = isCompact && sortedBlocks.length > 80;
 
   useEffect(() => {
@@ -1389,6 +1371,7 @@ export function ResultsPane({
                     trendsFailed={townTrendFailed}
                     compareBlocksLoading={compareBlocksLoading}
                     compareBlocksFailed={compareBlocksFailed}
+                    onRetry={retryTownComparison}
                     onChangeCompareTown={(next) => onChangeCompareTown?.(next)}
                   />
                   {!activeCompareTown ? (

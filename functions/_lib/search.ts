@@ -1,11 +1,15 @@
 import { canonicalFlatType } from "../../shared/filter-options";
 import { requiresFlatTypeCohortMetadata } from "../../shared/product/flat-type-cohort";
+import {
+  MAX_LEASE_DURATION_YEARS,
+  MAX_MRT_DISTANCE_METERS,
+  orderNullableNumberRange,
+} from "../../shared/search-bounds";
+import { isYearMonth } from "../../shared/yearMonth";
 import { workerCurrentUtcYear } from "./worker-time";
 
-const MAX_LEASE_DURATION = 99;
+const MAX_LEASE_DURATION = MAX_LEASE_DURATION_YEARS;
 const MAX_SEARCH_QUERY_LENGTH = 256;
-const MAX_MRT_DISTANCE_METERS = 20_000;
-const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 export const SEARCH_RESULT_LIMIT = 2000;
 
@@ -93,16 +97,11 @@ export function parseSearchRequest(url: URL): ParsedSearchRequest {
     endMonth,
   };
 
-  if (
-    request.budgetMin !== null &&
-    request.budgetMax !== null &&
-    request.budgetMin > request.budgetMax
-  ) {
-    [request.budgetMin, request.budgetMax] = [request.budgetMax, request.budgetMin];
-  }
-  if (request.areaMin !== null && request.areaMax !== null && request.areaMin > request.areaMax) {
-    [request.areaMin, request.areaMax] = [request.areaMax, request.areaMin];
-  }
+  [request.budgetMin, request.budgetMax] = orderNullableNumberRange(
+    request.budgetMin,
+    request.budgetMax,
+  );
+  [request.areaMin, request.areaMax] = orderNullableNumberRange(request.areaMin, request.areaMax);
   if (request.startMonth && request.endMonth && request.startMonth > request.endMonth) {
     [request.startMonth, request.endMonth] = [request.endMonth, request.startMonth];
   }
@@ -124,9 +123,8 @@ export function validateSearchRequest(request: SearchRequest): string | null {
   ) {
     return "invalid remainingLeaseMin";
   }
-  if (request.startMonth && !YEAR_MONTH_PATTERN.test(request.startMonth))
-    return "invalid startMonth";
-  if (request.endMonth && !YEAR_MONTH_PATTERN.test(request.endMonth)) return "invalid endMonth";
+  if (request.startMonth && !isYearMonth(request.startMonth)) return "invalid startMonth";
+  if (request.endMonth && !isYearMonth(request.endMonth)) return "invalid endMonth";
   return null;
 }
 

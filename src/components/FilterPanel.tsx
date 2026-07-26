@@ -4,6 +4,7 @@ import { formatMonth } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
 import { localizeFlatType, localizeTownName } from "@/shared/lib/i18n/domain";
 import { isAffordabilityProfileComplete } from "@/shared/lib/affordability";
+import { orderNullableNumberRange } from "@shared/search-bounds";
 import type { AffordabilityMode, FilterOptions, FilterState } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import { cn } from "@/shared/lib/utils";
@@ -241,6 +242,18 @@ export function FilterPanel(props: FilterPanelProps) {
     onOpenBuyerSetup,
   } = props;
   const { locale, t } = useI18n();
+  const commitBudgetRangeOrder = () => {
+    const [budgetMin, budgetMax] = orderNullableNumberRange(filters.budgetMin, filters.budgetMax);
+    if (budgetMin !== filters.budgetMin || budgetMax !== filters.budgetMax) {
+      onChange({ budgetMin, budgetMax });
+    }
+  };
+  const commitAreaRangeOrder = () => {
+    const [areaMin, areaMax] = orderNullableNumberRange(filters.areaMin, filters.areaMax);
+    if (areaMin !== filters.areaMin || areaMax !== filters.areaMax) {
+      onChange({ areaMin, areaMax });
+    }
+  };
 
   const affordabilityEnabled = searchProfile
     ? isAffordabilityProfileComplete({
@@ -350,6 +363,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ budgetMin: parseOptionalNumberValue(event.target.value) })
                           }
+                          onBlur={commitBudgetRangeOrder}
                           aria-description={t("filters.a11y.minBudget")}
                         />
                       </InputGroup>
@@ -376,6 +390,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ budgetMax: parseOptionalNumberValue(event.target.value) })
                           }
+                          onBlur={commitBudgetRangeOrder}
                           aria-description={t("filters.a11y.maxBudget")}
                         />
                       </InputGroup>
@@ -482,6 +497,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ areaMin: parseOptionalNumberValue(event.target.value) })
                           }
+                          onBlur={commitAreaRangeOrder}
                           aria-description={t("filters.a11y.minFloorArea")}
                         />
                       </InputGroup>
@@ -508,6 +524,7 @@ export function FilterPanel(props: FilterPanelProps) {
                           onChange={(event) =>
                             onChange({ areaMax: parseOptionalNumberValue(event.target.value) })
                           }
+                          onBlur={commitAreaRangeOrder}
                           aria-description={t("filters.a11y.maxFloorArea")}
                         />
                       </InputGroup>

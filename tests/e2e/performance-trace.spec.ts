@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
 test.describe.configure({
+  mode: "serial",
   timeout: 90_000,
 });
 
@@ -107,13 +108,17 @@ test.describe("performance traces", () => {
     // towns only), otherwise the wait for a result item hangs.
     const latencies: number[] = [];
     for (const query of ["BEDOK", "ANG MO KIO", "LENGKONG TIGA"]) {
-      const latency = await measureFilterLatency(page, query);
-      latencies.push(latency);
-    }
-
-    // No single query should take more than 5s (generous for CI)
-    for (const latency of latencies) {
-      expect(latency).toBeLessThan(5000);
+      // Browser automation can be descheduled briefly while another Playwright
+      // worker is active. Use the median of repeated samples for the variance
+      // signal, but still require every individual interaction to stay below
+      // the absolute latency ceiling.
+      const samples: number[] = [];
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const latency = await measureFilterLatency(page, query);
+        expect(latency).toBeLessThan(5000);
+        samples.push(latency);
+      }
+      latencies.push(median(samples));
     }
 
     // Variance between queries should be reasonable (no query > 3x the fastest)
@@ -122,6 +127,11 @@ test.describe("performance traces", () => {
     expect(max).toBeLessThan(min * 3 + 500);
   });
 });
+
+function median(values: number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)] ?? Number.POSITIVE_INFINITY;
+}
 
 async function measureFilterLatency(page: Page, query: string): Promise<number> {
   const searchInput = page.getByTestId("header-search-input");

@@ -1,6 +1,6 @@
-import { startTransition, useCallback, useEffect, useRef, useState } from "react";
+import { startTransition, useCallback, useEffect, useState } from "react";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
-import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
+import { clampFilterRanges, mergeFiltersIntoSearch, parseFilters } from "@/shared/lib/queryState";
 import type { FilterState } from "@/types/data";
 
 export function useUrlFilters() {
@@ -15,22 +15,24 @@ export function useUrlFilters() {
     };
   });
 
-  const isInitialMount = useRef(true);
-
   useEffect(() => {
-    // Skip the initial mount — the URL already reflects the current filters.
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
+    const nextSearch = mergeFiltersIntoSearch(window.location.search, filters);
+    if (nextSearch === window.location.search) {
       return;
     }
 
-    const nextSearch = serializeFilters(filters);
-    window.history.replaceState({}, "", `${window.location.pathname}${nextSearch}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}${nextSearch}${window.location.hash}`,
+    );
   }, [filters]);
 
   const patchFilters = useCallback((patch: Partial<FilterState>) => {
     startTransition(() => {
-      setFilters((current) => ({ ...current, ...patch }));
+      // Clamp on every write, not just on URL restore: a number typed straight
+      // into a filter field would otherwise reach the API unbounded.
+      setFilters((current) => clampFilterRanges({ ...current, ...patch }));
     });
   }, []);
 

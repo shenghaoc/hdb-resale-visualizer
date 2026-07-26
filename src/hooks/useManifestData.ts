@@ -1,16 +1,25 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchManifest } from "@/shared/lib/data";
 import type { Manifest } from "@/types/data";
 
 export function useManifestData() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [requestGeneration, setRequestGeneration] = useState(0);
+
+  const retry = useCallback(() => {
+    setManifest(null);
+    setError(null);
+    setRequestGeneration((current) => current + 1);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
     void fetchManifest()
       .then((nextManifest) => {
-        if (isMounted) setManifest(nextManifest);
+        if (!isMounted) return;
+        setManifest(nextManifest);
+        setError(null);
       })
       .catch((loadError) => {
         if (!isMounted) return;
@@ -19,7 +28,7 @@ export function useManifestData() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [requestGeneration]);
 
-  return { manifest, error };
+  return { manifest, error, retry };
 }

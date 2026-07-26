@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vite-plus/test";
-import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
+import {
+  clampFilterRanges,
+  mergeFiltersIntoSearch,
+  normalizeNumericFilterRangeOrder,
+  parseFilters,
+  serializeFilters,
+} from "@/shared/lib/queryState";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 
 describe("queryState", () => {
@@ -20,7 +26,7 @@ describe("queryState", () => {
       selectedAddressKey: "foo",
       compareTown: "ANG MO KIO",
       affordable: "comfortable",
-      sort: "affordability",
+      sort: "median-desc",
     });
 
     expect(parseFilters(search)).toEqual({
@@ -39,7 +45,7 @@ describe("queryState", () => {
       selectedAddressKey: "foo",
       compareTown: "ANG MO KIO",
       affordable: "comfortable",
-      sort: "affordability",
+      sort: "median-desc",
     });
   });
 
@@ -124,11 +130,128 @@ describe("queryState", () => {
 
     expect(parsed.selectedAddressKey).toBe("a".repeat(256));
 
-    expect(parsed.startMonth).toBe("a".repeat(256));
+    expect(parsed.startMonth).toBeNull();
 
-    expect(parsed.endMonth).toBe("a".repeat(256));
+    expect(parsed.endMonth).toBeNull();
 
     // Both town and compareTown truncate to the same value → same-town guard clears compareTown.
     expect(parsed.compareTown).toBe("");
+  });
+
+  it("clamps out-of-range numeric filters to what the search API accepts", () => {
+    const parsed = parseFilters(
+      "?town=BEDOK&mrtMax=25000&remainingLeaseMin=150&budgetMin=-5&areaMax=999999",
+    );
+    // Sending any of these unclamped returns a 400, which the app surfaces as a
+    // fatal error screen that a reload reproduces.
+    expect(parsed.mrtMax).toBe(20_000);
+    expect(parsed.remainingLeaseMin).toBe(99);
+    expect(parsed.budgetMin).toBe(0);
+    expect(parsed.areaMax).toBe(100_000);
+  });
+
+  it.each(["2026-00", "2026-13", "2026-1", "not-a-month", "a".repeat(300)])(
+    "drops invalid calendar month %s from deep links",
+    (month) => {
+      expect(
+        parseFilters(`?town=BEDOK&startMonth=${month}&endMonth=${month}`).startMonth,
+      ).toBeNull();
+      expect(parseFilters(`?town=BEDOK&startMonth=${month}&endMonth=${month}`).endMonth).toBeNull();
+    },
+  );
+
+  it("normalizes patched month values and inverted ranges before API use", () => {
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        startMonth: "2026-13",
+        endMonth: "2025-01",
+      }),
+    ).toMatchObject({ startMonth: null, endMonth: "2025-01" });
+
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        startMonth: "2026-02",
+        endMonth: "2025-01",
+      }),
+    ).toMatchObject({ startMonth: "2025-01", endMonth: "2026-02" });
+  });
+
+  it("normalizes inverted numeric deep links without rewriting the field being edited", () => {
+    expect(parseFilters("?budgetMin=800000&budgetMax=500000&areaMin=120&areaMax=80")).toMatchObject(
+      {
+        budgetMin: 500000,
+        budgetMax: 800000,
+        areaMin: 80,
+        areaMax: 120,
+      },
+    );
+
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        budgetMin: 600000,
+        budgetMax: 500000,
+        areaMin: 100,
+        areaMax: 80,
+      }),
+    ).toMatchObject({
+      budgetMin: 600000,
+      budgetMax: 500000,
+      areaMin: 100,
+      areaMax: 80,
+    });
+
+    expect(
+      normalizeNumericFilterRangeOrder({
+        ...DEFAULT_FILTERS,
+        budgetMin: 600000,
+        budgetMax: 500000,
+        areaMin: 100,
+        areaMax: 80,
+      }),
+    ).toMatchObject({
+      budgetMin: 500000,
+      budgetMax: 600000,
+      areaMin: 80,
+      areaMax: 100,
+    });
+  });
+
+  it("falls back to the default sort for the retired affordability mode", () => {
+    expect(parseFilters("?sort=affordability").sort).toBe("");
+  });
+
+  it("removes invalid filter values while preserving unrelated deep-link parameters", () => {
+    const current =
+      "?town=BEDOK&sort=affordability&checkAddress=bedok-10d-bedok-sth-ave-2&utm_source=share";
+    const search = mergeFiltersIntoSearch(current, parseFilters(current));
+    const params = new URLSearchParams(search);
+
+    expect(params.get("town")).toBe("BEDOK");
+    expect(params.get("sort")).toBeNull();
+    expect(params.get("v")).toBe("1");
+    expect(params.get("checkAddress")).toBe("bedok-10d-bedok-sth-ave-2");
+    expect(params.get("utm_source")).toBe("share");
+  });
+
+  it("updates filter-owned parameters without erasing other product state", () => {
+    const search = mergeFiltersIntoSearch(
+      "?town=BEDOK&selected=old-block&v=0&checkAskingPrice=650000",
+      {
+        ...DEFAULT_FILTERS,
+        town: "TAMPINES",
+        selectedAddressKey: "new-block",
+        sort: "median-desc",
+      },
+    );
+    const params = new URLSearchParams(search);
+
+    expect(params.get("town")).toBe("TAMPINES");
+    expect(params.get("selected")).toBe("new-block");
+    expect(params.get("sort")).toBe("median-desc");
+    expect(params.get("v")).toBe("1");
+    expect(params.get("checkAskingPrice")).toBe("650000");
   });
 });

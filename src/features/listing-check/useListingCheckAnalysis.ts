@@ -43,6 +43,7 @@ export type ListingCheckAnalysisState = {
   qualityTag: ReturnType<typeof deriveComparableQualityTag>;
   evidenceCaveats: string[];
   canSubmit: boolean;
+  retryDetail: () => void;
   submit: () => boolean;
 };
 
@@ -66,6 +67,7 @@ export function useListingCheckAnalysis({
   const [detail, setDetail] = useState<AddressDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState(false);
+  const [detailRequestGeneration, setDetailRequestGeneration] = useState(0);
   const [comparableSet, setComparableSet] = useState<ListingComparableSet | null>(null);
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
@@ -107,6 +109,12 @@ export function useListingCheckAnalysis({
     return () => {
       cancelled = true;
     };
+  }, [detailRequestGeneration, selectedAddressKey]);
+
+  const retryDetail = useCallback(() => {
+    if (!selectedAddressKey) return;
+    setDetailError(false);
+    setDetailRequestGeneration((current) => current + 1);
   }, [selectedAddressKey]);
 
   // ── Derived options ───────────────────────────────────────────────────────
@@ -275,6 +283,7 @@ export function useListingCheckAnalysis({
     qualityTag,
     evidenceCaveats,
     canSubmit: askingPrice != null && comparableRequestBody != null,
+    retryDetail,
     submit,
   };
 }

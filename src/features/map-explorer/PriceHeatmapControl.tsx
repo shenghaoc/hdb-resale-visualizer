@@ -56,7 +56,7 @@ export function PriceHeatmapControl({
           aria-hidden="true"
           className={cn(
             "size-3 shrink-0 transition-colors duration-200",
-            isEnabled ? "text-primary" : "text-muted-foreground",
+            isEnabled && hasScope ? "text-primary" : "text-muted-foreground",
           )}
         />
         <p className="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-label)] text-muted-foreground leading-none flex-1">
