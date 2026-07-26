@@ -71,12 +71,14 @@ test.describe("Accessibility (axe)", () => {
       await page.getByRole("button", { name: "4 ROOM" }).click();
       await page.getByRole("button", { name: "Next" }).click();
       await expect(page.getByRole("spinbutton", { name: "Max budget (SGD)" })).toBeVisible();
+      await page.getByRole("button", { name: "Next" }).hover();
       await expectNoSeriousOrCriticalViolations(page);
 
       await page.getByRole("button", { name: "Next" }).click();
       await expect(
         page.getByRole("spinbutton", { name: "Minimum remaining lease (years)" }),
       ).toBeVisible();
+      await page.getByRole("button", { name: "Next" }).hover();
       await expectNoSeriousOrCriticalViolations(page);
     });
   });

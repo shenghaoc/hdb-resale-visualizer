@@ -22,7 +22,9 @@ architecture the repository actually runs.
 4. The heatmap radiogroup did not provide complete wrapping arrow-key
    navigation.
 5. The lazy map fallback kept an English-only loading label in zh-SG.
-6. CI invoked a bare Vite+ command instead of the package-defined `check`
+6. Primary buttons diluted their background on hover while keeping white
+   11px labels, dropping the light-mode contrast ratio below WCAG AA.
+7. CI invoked a bare Vite+ command instead of the package-defined `check`
    script. README, AGENTS, architecture docs, and older Kiro specs repeated
    stale package-manager, browser, local-server, migration, and interaction
    claims.
@@ -39,7 +41,10 @@ architecture the repository actually runs.
 4. The heatmap mode radiogroup SHALL support wrapping ArrowLeft/ArrowRight and
    ArrowUp/ArrowDown navigation, with Home/End selecting the first/last option.
 5. The map loading fallback SHALL use the active locale.
-6. Base CI SHALL run `vp install` then `vp run check`. Documentation SHALL
+6. Primary-button hover states SHALL preserve at least WCAG AA text contrast
+   in both color schemes, including shared buttons, the buyer wizard, and the
+   selected month control.
+7. Base CI SHALL run `vp install` then `vp run check`. Documentation SHALL
    describe Node 24, pnpm/Vite+, Chromium, `wrangler dev`, forward-only
    migrations, Worker-routed APIs, and per-flat-type cohort readiness
    accurately.

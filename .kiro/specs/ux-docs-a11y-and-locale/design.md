@@ -23,6 +23,12 @@ The two heatmap modes form one radiogroup with a roving tab stop. All four
 arrow keys wrap between the options; Home and End move to deterministic
 endpoints. Keyboard input uses the same mode-change callback as pointer input.
 
+Primary actions retain the existing cyan surface and foreground pair on hover
+without diluting the surface below the small-text WCAG AA threshold. The same
+opaque-enough hover treatment applies to shared primary buttons, the buyer
+wizard action, and the selected month control. The Buyer setup axe path
+explicitly hovers the persistent action before each post-navigation scan.
+
 ## Repository Truth
 
 The base workflow calls the package full gate (`vp run check`). The separate

@@ -13,6 +13,9 @@
   heatmap mode radiogroup.
 - [x] Add focused English/Chinese presentation, form-label, and heatmap
   keyboard regressions, plus accessibility smoke coverage for Buyer setup.
+- [x] Preserve WCAG AA small-text contrast across shared, Buyer setup, and
+  selected-month primary hover states; exercise the hovered wizard action in
+  axe smoke coverage.
 - [x] Make base CI invoke `vp run check` and correct the separate E2E workflow
   comments.
 - [x] Align README, AGENTS, steering, architecture docs, and affected Kiro

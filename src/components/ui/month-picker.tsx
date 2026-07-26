@@ -256,7 +256,7 @@ export function MonthPicker({
                 className={cn(
                   "h-10 text-[0.75rem] font-bold uppercase tracking-wider w-full rounded-none transition-[color,background-color]",
                   isSelected
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                    ? "bg-primary text-primary-foreground hover:bg-primary/95"
                     : "hover:bg-accent hover:text-accent-foreground text-muted-foreground",
                   isDisabled && "opacity-20 grayscale cursor-not-allowed",
                 )}
