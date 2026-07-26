@@ -338,6 +338,72 @@ describe("useBlockDetailController", () => {
     expect(result.current.peakMonthInView).toBe("2026-01");
   });
 
+  it("keeps peer evidence available from loaded detail when the filtered corpus drops selection", () => {
+    const { result } = renderController(
+      makeOptions({
+        selectedBlock: null,
+        detail,
+        comparison: null,
+        allBlocks: [sourceBlock, similarBlock],
+      }),
+    );
+
+    expect(result.current.currentSummary).toEqual(detail.summary);
+    expect(result.current.similarBlocks.map((block) => block.addressKey)).toEqual(["similar"]);
+    expect(result.current.comparableRange).toMatchObject({
+      minPrice: 552_000,
+      maxPrice: 552_000,
+      medianPrice: 552_000,
+      sampleSize: 1,
+    });
+  });
+
+  it("does not let the selected block price choose its own benchmark peers or range", () => {
+    const peerA = makeBlock("peer-a", {
+      block: "102",
+      medianPrice: 520_000,
+      pricePerSqmMedian: 5_700,
+      leaseCommenceRange: [1982, 1982],
+    });
+    const peerB = makeBlock("peer-b", {
+      block: "103",
+      medianPrice: 580_000,
+      pricePerSqmMedian: 6_100,
+      leaseCommenceRange: [1988, 1988],
+    });
+    const repricedSource = {
+      ...sourceBlock,
+      medianPrice: 950_000,
+      pricePerSqmMedian: 10_200,
+    };
+    const { result, rerender } = renderHook(
+      ({ selectedBlock }: { selectedBlock: BlockSummary }) =>
+        useBlockDetailController(
+          makeOptions({
+            selectedBlock,
+            detail: null,
+            comparison: null,
+            allBlocks: [selectedBlock, peerA, peerB],
+          }),
+        ),
+      { initialProps: { selectedBlock: sourceBlock } },
+    );
+    const initialRange = result.current.comparableRange;
+    expect(initialRange).not.toBeNull();
+    if (!initialRange) {
+      throw new Error("Expected benchmark range before repricing");
+    }
+
+    rerender({ selectedBlock: repricedSource });
+
+    expect(result.current.comparableRange).toMatchObject({
+      minPrice: initialRange.minPrice,
+      maxPrice: initialRange.maxPrice,
+      medianPrice: initialRange.medianPrice,
+      sampleSize: initialRange.sampleSize,
+    });
+  });
+
   it("does not show an affordability verdict for a partial finance profile", () => {
     const { result } = renderController(
       makeOptions({

@@ -591,7 +591,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.calculatingTrends": "Calculating Trends",
     "detail.topPercentile": "Top {value}%",
     "detail.recentTransactions": "Recent Transactions",
-    "detail.totalCount": "{count} total",
     "detail.recentShownCount": "Latest {count}",
     "detail.outlierCount": "{count} flagged",
     "detail.outlierRule":
@@ -1416,7 +1415,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.calculatingTrends": "计算走势中",
     "detail.topPercentile": "前 {value}%",
     "detail.recentTransactions": "近期交易",
-    "detail.totalCount": "共 {count} 笔",
     "detail.recentShownCount": "最近 {count} 笔",
     "detail.outlierCount": "标记 {count} 笔",
     "detail.outlierRule":

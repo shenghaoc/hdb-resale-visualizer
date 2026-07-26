@@ -106,10 +106,10 @@ export function useBlockDetailController({
 
   const similarBlocks = useMemo(
     () =>
-      selectedBlock
-        ? rankSimilarBlocks(selectedBlock, allBlocks, { limit: 6, flatType: filters.flatType })
+      currentSummary
+        ? rankSimilarBlocks(currentSummary, allBlocks, { limit: 6, flatType: filters.flatType })
         : [],
-    [allBlocks, filters.flatType, selectedBlock],
+    [allBlocks, currentSummary, filters.flatType],
   );
 
   // Benchmarked against peers chosen WITHOUT price proximity. Reusing
@@ -117,22 +117,22 @@ export function useBlockDetailController({
   // having a similar price, so every block lands mid-range by construction.
   const benchmarkBlocks = useMemo(
     () =>
-      selectedBlock
-        ? rankSimilarBlocks(selectedBlock, allBlocks, {
+      currentSummary
+        ? rankSimilarBlocks(currentSummary, allBlocks, {
             limit: 12,
             flatType: filters.flatType,
             ignorePriceProximity: true,
           })
         : [],
-    [allBlocks, filters.flatType, selectedBlock],
+    [allBlocks, currentSummary, filters.flatType],
   );
 
   const comparableRange = useMemo(
     () =>
-      selectedBlock
-        ? computeComparableRange(selectedBlock, benchmarkBlocks, filters.flatType)
+      currentSummary
+        ? computeComparableRange(currentSummary, benchmarkBlocks, filters.flatType)
         : null,
-    [benchmarkBlocks, filters.flatType, selectedBlock],
+    [benchmarkBlocks, currentSummary, filters.flatType],
   );
 
   const affordabilityVerdict = useMemo(() => {

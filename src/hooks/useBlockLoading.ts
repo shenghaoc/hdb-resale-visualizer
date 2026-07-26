@@ -137,11 +137,6 @@ export function useBlockLoading({
           setSearchTruncated(false);
           setRefinementUnsupported(false);
         }
-        // Clear the previous failure before any early return, so "Reset filters
-        // and try again" actually drops back to the normal shell instead of
-        // re-rendering the same error card.
-        setLoadError(null);
-
         if (needsAllBlocks) {
           if (hasFullCorpus) return;
           setIsLoading(true);

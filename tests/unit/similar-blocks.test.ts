@@ -162,6 +162,40 @@ describe("rankSimilarBlocks", () => {
     expect(results.some((b) => b.addressKey === "hasOverlap")).toBe(true);
   });
 
+  it("keeps benchmark peer ranking independent of the source price", () => {
+    const candidates = [
+      makeBlock({
+        addressKey: "newer-near-mrt",
+        leaseCommenceRange: [2001, 2001],
+        nearestMrt: { stationName: "A", distanceMeters: 520, walkingTimeSeconds: 416 },
+        medianPrice: 610_000,
+        pricePerSqmMedian: 6_400,
+      }),
+      makeBlock({
+        addressKey: "older-far-mrt",
+        leaseCommenceRange: [1985, 1985],
+        nearestMrt: { stationName: "B", distanceMeters: 1_500, walkingTimeSeconds: 1_200 },
+        medianPrice: 900_000,
+        pricePerSqmMedian: 9_000,
+      }),
+    ];
+    const repricedSource = {
+      ...SOURCE,
+      medianPrice: 1_200_000,
+      pricePerSqmMedian: 12_000,
+    };
+
+    const initial = rankSimilarBlocks(SOURCE, candidates, { ignorePriceProximity: true });
+    const afterSourceReprice = rankSimilarBlocks(repricedSource, candidates, {
+      ignorePriceProximity: true,
+    });
+
+    expect(initial.map((block) => block.addressKey)).toEqual(["newer-near-mrt", "older-far-mrt"]);
+    expect(afterSourceReprice.map((block) => block.addressKey)).toEqual(
+      initial.map((block) => block.addressKey),
+    );
+  });
+
   it("requires the canonical selected flat type instead of any source-type overlap", () => {
     const wrongType = makeBlock({
       addressKey: "only-five-room",

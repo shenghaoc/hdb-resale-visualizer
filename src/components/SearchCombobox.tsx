@@ -80,30 +80,23 @@ export function SearchCombobox({
   const listboxId = useId();
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const [suggestionsQuery, setSuggestionsQuery] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [loading, setLoading] = useState(false);
+  const [selectionSuppressed, setSelectionSuppressed] = useState(false);
   const isFocusedRef = useRef(false);
+  const selectionSuppressedRef = useRef(false);
   const fetchSequenceRef = useRef(0);
   const blurTimeoutRef = useRef<number | null>(null);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
   const allowedGroups = useMemo(() => groups ?? SUGGEST_GROUPS, [groups]);
   const allowedGroupSet = useMemo(() => new Set(allowedGroups), [allowedGroups]);
 
-  // When suggest is off or the query is too short there are no results to show.
-  // Clear any stale state during render (guarded so it only runs when something
-  // is actually set) instead of in an effect — React re-renders before paint,
-  // which avoids the extra commit/flicker a post-paint effect reset causes.
-  // See react.dev "You Might Not Need an Effect" → adjusting state on prop change.
-  const trimmedQuery = debouncedQuery.trim();
-  if (
-    (!suggestActive || trimmedQuery.length < 2) &&
-    (suggestions.length > 0 || open || activeIndex !== -1 || loading)
-  ) {
-    setSuggestions([]);
-    setOpen(false);
-    setActiveIndex(-1);
-    setLoading(false);
-  }
+  const immediateQuery = value.trim();
+  const requestQuery = debouncedQuery.trim();
+  const requestMatchesValue = requestQuery === immediateQuery;
+  const canUseRequest =
+    suggestActive && requestQuery.length >= 2 && requestMatchesValue && !selectionSuppressed;
 
   useEffect(() => {
     return () => {
@@ -114,9 +107,7 @@ export function SearchCombobox({
   }, []);
 
   useEffect(() => {
-    const trimmed = debouncedQuery.trim();
-    // Stale state is cleared during render above; here we only fetch.
-    if (!suggestActive || trimmed.length < 2) {
+    if (!canUseRequest) {
       return;
     }
 
@@ -124,15 +115,16 @@ export function SearchCombobox({
     const controller = new AbortController();
     // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setLoading(true);
-    void fetchSuggestions(trimmed, controller.signal)
+    void fetchSuggestions(requestQuery, controller.signal)
       .then((next) => {
-        if (fetchSequenceRef.current !== sequence) {
+        if (fetchSequenceRef.current !== sequence || selectionSuppressedRef.current) {
           return;
         }
         const actionableSuggestions = next.filter((suggestion) =>
           allowedGroupSet.has(suggestion.group),
         );
         setSuggestions(actionableSuggestions);
+        setSuggestionsQuery(requestQuery);
         if (isFocusedRef.current) {
           setOpen(actionableSuggestions.length > 0);
         }
@@ -147,6 +139,7 @@ export function SearchCombobox({
         }
         console.error("Suggest fetch failed:", error);
         setSuggestions([]);
+        setSuggestionsQuery(null);
         setOpen(false);
         setActiveIndex(-1);
       })
@@ -158,35 +151,63 @@ export function SearchCombobox({
 
     return () => {
       controller.abort();
+      if (fetchSequenceRef.current === sequence) {
+        fetchSequenceRef.current += 1;
+      }
     };
-  }, [allowedGroupSet, debouncedQuery, suggestActive]);
+  }, [allowedGroupSet, canUseRequest, requestQuery]);
 
   const selectSuggestion = useCallback(
     (suggestion: Suggestion) => {
-      onSelectSuggestion(suggestion);
+      selectionSuppressedRef.current = true;
+      fetchSequenceRef.current += 1;
+      setSelectionSuppressed(true);
       setOpen(false);
       setSuggestions([]);
+      setSuggestionsQuery(null);
       setActiveIndex(-1);
+      setLoading(false);
+      onSelectSuggestion(suggestion);
     },
     [onSelectSuggestion],
   );
 
+  const handleValueChange = useCallback(
+    (nextValue: string) => {
+      selectionSuppressedRef.current = false;
+      fetchSequenceRef.current += 1;
+      setSelectionSuppressed(false);
+      setOpen(false);
+      setSuggestions([]);
+      setSuggestionsQuery(null);
+      setActiveIndex(-1);
+      setLoading(false);
+      onValueChange(nextValue);
+    },
+    [onValueChange],
+  );
+
+  const suggestionsAreCurrent = canUseRequest && suggestionsQuery === requestQuery;
   const grouped = useMemo(() => {
+    if (!suggestionsAreCurrent) {
+      return [];
+    }
     return allowedGroups
       .map((group) => ({
         group,
         items: suggestions.filter((item) => item.group === group),
       }))
       .filter((section) => section.items.length > 0);
-  }, [allowedGroups, suggestions]);
+  }, [allowedGroups, suggestions, suggestionsAreCurrent]);
 
   const flatGroupedItems = useMemo(() => {
     return grouped.flatMap((section) => section.items);
   }, [grouped]);
+  const popoverOpen = open && flatGroupedItems.length > 0;
 
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (!open || flatGroupedItems.length === 0) {
+      if (!popoverOpen || flatGroupedItems.length === 0) {
         if (event.key === "Escape") {
           setOpen(false);
         }
@@ -224,11 +245,16 @@ export function SearchCombobox({
         setActiveIndex(-1);
       }
     },
-    [activeIndex, flatGroupedItems, open, selectSuggestion],
+    [activeIndex, flatGroupedItems, popoverOpen, selectSuggestion],
   );
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={popoverOpen}
+      onOpenChange={(nextOpen) => {
+        setOpen(nextOpen && suggestionsAreCurrent && !selectionSuppressedRef.current);
+      }}
+    >
       <PopoverAnchor asChild>
         <div className={cn("relative min-w-0 flex-1", className)}>
           <LocationSearchInput
@@ -236,23 +262,27 @@ export function SearchCombobox({
             id={id}
             data-testid={dataTestId}
             aria-label={ariaLabel}
-            aria-expanded={open}
-            aria-controls={open ? listboxId : undefined}
+            aria-expanded={popoverOpen}
+            aria-controls={popoverOpen ? listboxId : undefined}
             aria-autocomplete="list"
             aria-activedescendant={
-              activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined
+              popoverOpen && activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined
             }
             role="combobox"
             placeholder={placeholder ?? t("filters.searchPlaceholder")}
             value={value}
-            onValueChange={onValueChange}
+            onValueChange={handleValueChange}
             onKeyDown={handleKeyDown}
             onFocus={() => {
               isFocusedRef.current = true;
               if (blurTimeoutRef.current !== null) {
                 window.clearTimeout(blurTimeoutRef.current);
               }
-              if (suggestions.length > 0) {
+              if (
+                suggestionsAreCurrent &&
+                suggestions.length > 0 &&
+                !selectionSuppressedRef.current
+              ) {
                 setOpen(true);
               }
             }}
