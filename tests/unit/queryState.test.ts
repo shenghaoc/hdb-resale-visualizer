@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   clampFilterRanges,
+  mergeFiltersIntoSearch,
   normalizeNumericFilterRangeOrder,
   parseFilters,
   serializeFilters,
@@ -220,5 +221,37 @@ describe("queryState", () => {
 
   it("falls back to the default sort for the retired affordability mode", () => {
     expect(parseFilters("?sort=affordability").sort).toBe("");
+  });
+
+  it("removes invalid filter values while preserving unrelated deep-link parameters", () => {
+    const current =
+      "?town=BEDOK&sort=affordability&checkAddress=bedok-10d-bedok-sth-ave-2&utm_source=share";
+    const search = mergeFiltersIntoSearch(current, parseFilters(current));
+    const params = new URLSearchParams(search);
+
+    expect(params.get("town")).toBe("BEDOK");
+    expect(params.get("sort")).toBeNull();
+    expect(params.get("v")).toBe("1");
+    expect(params.get("checkAddress")).toBe("bedok-10d-bedok-sth-ave-2");
+    expect(params.get("utm_source")).toBe("share");
+  });
+
+  it("updates filter-owned parameters without erasing other product state", () => {
+    const search = mergeFiltersIntoSearch(
+      "?town=BEDOK&selected=old-block&v=0&checkAskingPrice=650000",
+      {
+        ...DEFAULT_FILTERS,
+        town: "TAMPINES",
+        selectedAddressKey: "new-block",
+        sort: "median-desc",
+      },
+    );
+    const params = new URLSearchParams(search);
+
+    expect(params.get("town")).toBe("TAMPINES");
+    expect(params.get("selected")).toBe("new-block");
+    expect(params.get("sort")).toBe("median-desc");
+    expect(params.get("v")).toBe("1");
+    expect(params.get("checkAskingPrice")).toBe("650000");
   });
 });

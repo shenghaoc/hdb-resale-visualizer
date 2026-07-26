@@ -16,6 +16,26 @@ import {
 import { isYearMonth } from "../../../shared/yearMonth";
 import type { AffordabilityMode, BlockSortMode, FilterState } from "../../types/data";
 
+const FILTER_QUERY_KEYS = [
+  "search",
+  "town",
+  "flatType",
+  "flatModel",
+  "budgetMin",
+  "budgetMax",
+  "areaMin",
+  "areaMax",
+  "remainingLeaseMin",
+  "startMonth",
+  "endMonth",
+  "mrtMax",
+  "selected",
+  "compareTown",
+  "affordable",
+  "sort",
+  "v",
+] as const;
+
 /**
  * Force the numeric filters into the range the search API accepts.
  *
@@ -173,5 +193,29 @@ export function serializeFilters(filters: FilterState): string {
   }
 
   const search = params.toString();
+  return search ? `?${search}` : "";
+}
+
+/**
+ * Replace only filter-owned URL parameters with the canonical filter state.
+ *
+ * Listing Check and campaign deep links share the same URL with block filters.
+ * Replacing the entire query string when a filter changes would silently erase
+ * those unrelated parameters; retaining the raw filter parameters, on the
+ * other hand, leaves invalid or retired values in links users copy. This merge
+ * keeps the two concerns independent.
+ */
+export function mergeFiltersIntoSearch(currentSearch: string, filters: FilterState): string {
+  const merged = new URLSearchParams(currentSearch);
+  for (const key of FILTER_QUERY_KEYS) {
+    merged.delete(key);
+  }
+
+  const canonical = new URLSearchParams(serializeFilters(filters));
+  for (const [key, value] of canonical) {
+    merged.set(key, value);
+  }
+
+  const search = merged.toString();
   return search ? `?${search}` : "";
 }

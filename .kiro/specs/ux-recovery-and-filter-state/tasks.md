@@ -14,8 +14,10 @@
 - [x] Replace raw recovery exception text with source-specific translated copy.
 - [x] Add a same-selection retry for transient Listing Check detail failures.
 - [x] Replace compact affordability's color-only dot with translated text.
+- [x] Canonicalize filter-owned URL parameters on hydration and updates while
+  preserving unrelated deep-link state.
 - [x] Cover valid/invalid months, manifest retry, search reset, controlled sort,
   live range order, comparison failure/retry, localized recovery copy, Listing
-  Check detail retry, request ordering, and compact affordability with focused
-  tests.
+  Check detail retry, request ordering, compact affordability, and URL ownership
+  with focused tests.
 - [ ] Run the exact-head CI and deployed-preview UX checks after push.

@@ -31,6 +31,9 @@ the filters, data, or recovery action they actually controlled.
    translated heading.
 10. A transient Listing Check address-detail failure could not be retried for
     the same selected block.
+11. URL filter hydration skipped its first canonical write, so retired or
+    invalid filter values remained in copied links. Later filter writes replaced
+    the entire query string and could erase unrelated Listing Check state.
 
 ## Expected Behavior
 
@@ -53,6 +56,9 @@ the filters, data, or recovery action they actually controlled.
    request without requiring a different selection.
 7. Compact Results SHALL expose affordability in visible translated text; color
    may remain a redundant visual cue.
+8. Filter hydration SHALL remove invalid or retired filter parameters from the
+   visible URL. Filter updates SHALL preserve unrelated query parameters used by
+   other product flows.
 
 ## Preserved Behavior
 
@@ -63,3 +69,5 @@ the filters, data, or recovery action they actually controlled.
   swapping.
 - Manifest retry does not cache, mutate, or write user data.
 - Town comparison remains lazy and does not add external requests.
+- Listing Check and other non-filter deep-link parameters remain intact while
+  block filters are canonicalized.

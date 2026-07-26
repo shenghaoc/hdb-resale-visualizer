@@ -22,6 +22,16 @@ keeps raw controlled values until blur commits the shared endpoint order. The
 Worker uses the same numeric ordering helper and month validator, preserving
 the browser/server contract.
 
+## URL Ownership
+
+`mergeFiltersIntoSearch` treats the filter query keys as an owned subset of the
+URL. On hydration and every later filter update, it removes that subset and
+merges the canonical serialized filters back into the existing query string.
+This strips invalid and retired values without deleting Listing Check or other
+non-filter deep-link state. `useUrlFilters` writes only when the merged search
+actually differs, so the initial canonicalization is safe under repeated React
+effects.
+
 ## Async Comparison
 
 Town comparison assigns a monotonically increasing request sequence before
