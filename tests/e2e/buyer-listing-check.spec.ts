@@ -55,7 +55,7 @@ test("a first-time buyer can start a listing price check from the Check tab with
   await page.locator(".desktop-tab-bar").getByRole("button", { name: "Check" }).click();
 
   const check = desktopCheckPanel(page);
-  await expect(check.getByRole("button", { name: /check a listing price/i })).toBeVisible();
+  await expect(check.getByRole("heading", { name: /check a listing price/i })).toBeVisible();
   await expect(check.getByPlaceholder(/search for a block/i)).toBeVisible();
   await expect(check.getByText(/search and select a block/i)).toBeVisible();
 });
@@ -105,15 +105,20 @@ test("a buyer enters listing facts and asking price and sees a verdict, confiden
   await check.getByRole("button", { name: /save to shortlist/i }).click();
   await expect(check.getByRole("button", { name: /saved/i })).toBeVisible();
 
-  // (7) The saved shortlist item is present and preserves the asking price as
-  // the buyer's target price. Scope the target-price field to this block's
-  // offer editor (stable `id`) so the assertion is independent of how many
-  // other items are in the shortlist or which one is expanded.
+  // (7) The saved shortlist item preserves the seller's asking price without
+  // overwriting the buyer's independent target price.
   await desktopSavedTab(page).click();
   const drawer = page.getByTestId("shortlist-drawer");
   await expect(drawer).toBeVisible();
   await expect(drawer.getByText(/106 LENGKONG TIGA/i).first()).toBeVisible({ timeout: 10_000 });
-  await expect(drawer.locator(`#target-${CHECK_ADDRESS_KEY}`)).toHaveValue("1200000");
+  const rowToggle = drawer.locator(
+    "[role='listitem'] [data-slot='card-header'] button[aria-expanded]",
+  );
+  await expect(rowToggle).toHaveCount(1);
+  await rowToggle.click();
+  await expect(rowToggle).toHaveAttribute("aria-expanded", "true");
+  await expect(drawer.locator(`#asking-${CHECK_ADDRESS_KEY}`)).toHaveValue("1200000");
+  await expect(drawer.locator(`#target-${CHECK_ADDRESS_KEY}`)).toHaveValue("");
 });
 
 // ── Low-confidence / low-sample state ────────────────────────────────────────

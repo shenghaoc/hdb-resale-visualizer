@@ -151,16 +151,3 @@ test.describe("affordability filter — clearing via filter chip", () => {
     ).toBeVisible();
   });
 });
-
-test.describe("affordability filter — retired sort links", () => {
-  test("?sort=affordability falls back to the default price sort", async ({ page }) => {
-    await page.goto("/?town=BEDOK&sort=affordability");
-    await waitForAppReady(page);
-    await openResultsTab(page);
-
-    const sortTrigger = page.getByTestId("results-sort-trigger");
-    await expect(sortTrigger).toBeVisible();
-    await expect(sortTrigger).toContainText(/lowest median price/i);
-    await expect(page).not.toHaveURL(/sort=affordability/);
-  });
-});

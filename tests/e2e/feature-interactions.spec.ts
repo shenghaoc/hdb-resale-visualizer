@@ -66,11 +66,15 @@ test("feature interaction: search -> detail -> layers -> save -> canonical check
   // not carry a second, weaker asking-price implementation.
   const checkTab = desktopNavButton(page, "Check");
   await checkTab.click();
+  const check = page.locator("#desktop-check-content");
   await expect(
-    page.locator("#desktop-check-content").getByRole("button", {
+    check.getByRole("heading", {
       name: /check a listing price/i,
     }),
   ).toBeVisible();
+  await expect(check.getByRole("combobox", { name: /search for a block/i })).toHaveValue(
+    rowAddress ?? "",
+  );
 
   // 7. Saved still works.
   const savedTab = page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });

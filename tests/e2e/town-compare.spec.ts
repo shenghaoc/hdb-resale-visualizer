@@ -16,7 +16,13 @@ test("deep-links into the side-by-side town compare view", async ({ page }) => {
   await expect(page.getByTestId("results-pane")).toBeVisible();
 
   // Switch to the TOWN OVERVIEW view which hosts the compare section.
-  await page.getByRole("button", { name: /Show town overview/i }).click();
+  await page
+    .getByTestId("results-view-toggle")
+    .getByRole("button", {
+      name: "Show town-wide overview for all flat types",
+      exact: true,
+    })
+    .click();
 
   const section = page.getByTestId("town-compare-section");
   await expect(section).toBeVisible();
