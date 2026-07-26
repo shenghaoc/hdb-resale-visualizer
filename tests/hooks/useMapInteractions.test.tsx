@@ -92,15 +92,19 @@ function createMapStub() {
   };
 }
 
-function createPopupStub(): Popup {
+type PopupContentMock = ReturnType<typeof vi.fn<(content: HTMLElement) => Popup>>;
+
+function createPopupStub(
+  setDOMContent: PopupContentMock = vi.fn<(content: HTMLElement) => Popup>(),
+): Popup {
   const popupChain = {
     setLngLat: vi.fn(),
-    setDOMContent: vi.fn(),
+    setDOMContent,
     addTo: vi.fn(),
     remove: vi.fn(),
   };
   popupChain.setLngLat.mockReturnValue(popupChain);
-  popupChain.setDOMContent.mockReturnValue(popupChain);
+  popupChain.setDOMContent.mockReturnValue(popupChain as unknown as Popup);
   popupChain.addTo.mockReturnValue(popupChain);
   return popupChain as unknown as Popup;
 }
@@ -248,8 +252,8 @@ describe("useMapInteractions map click guard", () => {
 
   it("formats popup currency with the active locale", () => {
     const mapStub = createMapStub();
-    const popup = createPopupStub();
-    const popupSetContent = vi.mocked(popup.setDOMContent);
+    const popupSetContent = vi.fn<(content: HTMLElement) => Popup>();
+    const popup = createPopupStub(popupSetContent);
     const localizedTranslator: Translator = (key, values) =>
       `${key}:${values?.value ?? ""}:${values?.count ?? ""}`;
 

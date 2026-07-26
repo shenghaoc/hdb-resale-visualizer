@@ -6,6 +6,7 @@
   while retaining English fallback messages.
 - [x] Pass the selected locale through Listing Check, map-popup, shortlist,
   and block-history chart currency formatting; localize filter range copy.
+- [x] Localize the lazy map loading fallback and cover zh-SG rendering.
 - [x] Give Buyer setup budget and lease inputs translated accessible names and
   correct the Chinese lease-commencement label.
 - [x] Implement wrapping four-arrow plus Home/End keyboard behavior for the

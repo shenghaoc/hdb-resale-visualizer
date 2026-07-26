@@ -552,6 +552,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "map.blockWideMedian": "Block-wide median {value}",
     "map.median": "Median {value}",
     "map.ariaLabel": "Interactive map of Singapore HDB resale blocks",
+    "map.loading": "Loading map…",
     "map.unavailableTitle": "Map unavailable",
     "map.unavailableDescription":
       "Your browser could not initialize the map renderer. Filters and results are still available.",
@@ -1436,6 +1437,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "map.blockWideMedian": "整座组屋中位价 {value}",
     "map.median": "中位价 {value}",
     "map.ariaLabel": "新加坡组屋转售互动地图",
+    "map.loading": "正在加载地图…",
     "map.unavailableTitle": "地图暂不可用",
     "map.unavailableDescription": "浏览器无法初始化地图渲染。你仍可使用筛选和结果列表。",
     "map.legend.heading": "中位价（新元）",

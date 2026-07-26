@@ -11,7 +11,7 @@ cannot change confidence.
 
 Locale-aware formatters receive the selected locale in Listing Check, map
 popups, shortlist charts, and the block-history chart axis/tooltip. Filter
-range copy uses the translation catalog.
+range copy and the lazy map fallback use the translation catalog.
 
 ## Accessible Interaction
 
