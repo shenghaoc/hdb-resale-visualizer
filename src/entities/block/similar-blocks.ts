@@ -10,6 +10,12 @@ export type RankSimilarBlocksOptions = {
   limit?: number;
   /** When set, require and compare the same canonical flat type. */
   flatType?: string;
+  /**
+   * Drop the price and $/sqm terms from the score. Use this when the ranked set
+   * will itself be used as a price benchmark: peers chosen for having a similar
+   * price make any price comparison circular, so every block looks average.
+   */
+  ignorePriceProximity?: boolean;
 };
 
 /**
@@ -30,6 +36,7 @@ export function scoreSimilarity(
   candidate: BlockSummary,
   sourceSet?: Set<string>,
   flatType = "",
+  ignorePriceProximity = false,
 ): number {
   // ── Same-town bonus ──────────────────────────────────────────────────────
   const townScore = source.town === candidate.town ? 0.3 : 0;
@@ -74,13 +81,13 @@ export function scoreSimilarity(
   const candidatePrice = candidatePriceResolution.value;
   const priceDiffFraction =
     sourcePrice > 0 ? Math.abs(candidatePrice - sourcePrice) / sourcePrice : 0;
-  const priceScore = Math.exp(-5 * priceDiffFraction) * 0.25;
+  const priceScore = ignorePriceProximity ? 0 : Math.exp(-5 * priceDiffFraction) * 0.25;
 
   // ── Price-per-sqm similarity ──────────────────────────────────────────────
   const sourcePpsm = sourcePpsmResolution.value;
   const candidatePpsm = candidatePpsmResolution.value;
   const psmDiffFraction = sourcePpsm > 0 ? Math.abs(candidatePpsm - sourcePpsm) / sourcePpsm : 0;
-  const psmScore = Math.exp(-5 * psmDiffFraction) * 0.1;
+  const psmScore = ignorePriceProximity ? 0 : Math.exp(-5 * psmDiffFraction) * 0.1;
 
   // ── Lease-commence similarity ─────────────────────────────────────────────
   const sourceMidLease = (source.leaseCommenceRange[0] + source.leaseCommenceRange[1]) / 2;
@@ -109,7 +116,7 @@ export function rankSimilarBlocks(
   candidates: ReadonlyArray<BlockSummary>,
   options: RankSimilarBlocksOptions = {},
 ): BlockSummary[] {
-  const { limit = 6, flatType = "" } = options;
+  const { limit = 6, flatType = "", ignorePriceProximity = false } = options;
 
   type Scored = { block: BlockSummary; score: number };
   const scored: Scored[] = [];
@@ -117,7 +124,7 @@ export function rankSimilarBlocks(
 
   for (const candidate of candidates) {
     if (candidate.addressKey === source.addressKey) continue;
-    const score = scoreSimilarity(source, candidate, sourceSet, flatType);
+    const score = scoreSimilarity(source, candidate, sourceSet, flatType, ignorePriceProximity);
     if (score > 0) {
       scored.push({ block: candidate, score });
     }

@@ -20,7 +20,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { DistributionBar } from "./DistributionBar";
 import { ComparableEvidenceTable } from "./ComparableEvidenceTable";
 import { SearchCombobox } from "@/components/SearchCombobox";
-import type { Suggestion } from "@/types/data";
+import type { Suggestion, SuggestionGroup } from "@/types/data";
 import { QUALITY_LABEL_KEYS, QUALITY_HINT_KEYS } from "@/shared/lib/listing-quality";
 import { parseLeaseCommenceYearInput, parsePositiveDecimalInput } from "./listingCheckInputs";
 import { useListingCheckAnalysis } from "./useListingCheckAnalysis";
@@ -31,6 +31,8 @@ import {
   getListingVerdictStyles,
   LISTING_VERDICT_THEMES,
 } from "./listingVerdictPresentation";
+
+const CHECK_SUGGEST_GROUPS: readonly SuggestionGroup[] = ["block"];
 
 // ── Props ───────────────────────────────────────────────────────────────────
 
@@ -210,6 +212,9 @@ export function ListingCheckPanel({
             t={t}
             placeholder={t("check.blockPlaceholder")}
             aria-label={t("check.blockSearchLabel")}
+            // Only block suggestions can be acted on here; the other groups
+            // were rendered but their selection was silently ignored.
+            groups={CHECK_SUGGEST_GROUPS}
           />
         </div>
 

@@ -474,14 +474,23 @@ function App() {
             allBlocks={pipeline.blocks}
             isLoading={detailLoading}
             isComparisonLoading={comparisonLoading}
-            isSaved={selectedBlock ? shortlist.has(selectedBlock.addressKey) : false}
+            // Keyed on the selected address, not the filter-resolved block: the
+            // drawer stays open (and its detail keeps loading) after a filter
+            // change drops the block from the loaded corpus, and gating on
+            // selectedBlock there made Save both mislabelled and inert.
+            isSaved={
+              activeFilters.selectedAddressKey
+                ? shortlist.has(activeFilters.selectedAddressKey)
+                : false
+            }
             shortlistFull={shortlist.isFull}
             remainingLeaseMin={activeFilters.remainingLeaseMin}
             referenceMonth={manifest.dataWindow.maxMonth}
             searchProfile={searchProfile.profile}
             onClose={() => patchFilters({ selectedAddressKey: null })}
             onToggleShortlist={() => {
-              if (selectedBlock) handleShortlistToggle(selectedBlock.addressKey);
+              const key = activeFilters.selectedAddressKey;
+              if (key) handleShortlistToggle(key);
             }}
             onSelectBlock={handleSelectAddress}
           />
@@ -532,6 +541,7 @@ function App() {
               patchUserFilters({ town, selectedAddressKey: null, compareTown: "" })
             }
             searchTruncated={pipeline.searchTruncated}
+            blocksLoading={pipeline.blocksLoading}
             refinementUnsupported={pipeline.refinementUnsupported}
             onClearUnsupportedRefinements={() =>
               patchUserFilters({

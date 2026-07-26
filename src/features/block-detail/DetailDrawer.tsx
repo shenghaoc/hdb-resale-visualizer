@@ -1045,7 +1045,9 @@ export function DetailDrawer({
                           </Badge>
                         )}
                         <Badge variant="outline" className="font-mono text-[0.75rem]">
-                          {t("detail.totalCount", {
+                          {/* This list is capped by the pipeline, so it is the
+                              number shown — not the block's total. */}
+                          {t("detail.recentShownCount", {
                             count: detail?.recentTransactions.length ?? 0,
                           })}
                         </Badge>

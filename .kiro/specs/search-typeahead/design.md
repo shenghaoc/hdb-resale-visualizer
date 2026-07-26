@@ -1,17 +1,17 @@
 # Design: Global Search Typeahead
 
-> Status: Draft for review. Tracks the rework of the free-text search into a
-> single, ranked, grouped typeahead backed by a new D1 suggest endpoint.
+> Status: Implemented. Documents the current ranked, grouped typeahead backed
+> by the D1 suggest endpoint.
 
 ## Problem
 
-Search today is one free-text field (`filters.search`) rendered in **three**
+Before this work, search was one free-text field (`filters.search`) rendered in **three**
 places — the desktop header inline input, the mobile header overlay input, and
 the `FilterPanel` input — all bound to the same state via `onChange({ search })`.
 On desktop the header field and the filter-panel field are visible at once, so it
 reads as competing search boxes even though it is one piece of state.
 
-The matcher (`src/lib/filtering.ts`) silently overloads that single box with at
+The matcher (`shared/product/filtering.ts`) silently overloads that single box with at
 least five modes with **no feedback about which fired**:
 
 1. token substring (`candidate.includes(token)`)
@@ -45,7 +45,7 @@ behaviour.
 
 ## Architecture
 
-### 1. Backend — `functions/api/suggest.ts` (new)
+### 1. Backend — `functions/api/suggest.ts`
 
 D1-backed, mirrors `functions/api/search.ts` conventions (`getDb`,
 `jsonResponse`/`errorResponse`). Query `?q=`:
@@ -53,7 +53,7 @@ D1-backed, mirrors `functions/api/search.ts` conventions (`getDb`,
 - Guard: reject/clamp `q` longer than a max length (client-side DoS rule).
 - Normalise `q` (lowercase, strip non-alphanumeric) consistently with
   `filtering.ts`.
-- Run grouped lookups against the `addresses` table and station data:
+- Run grouped lookups against the `blocks` table and persisted station data:
   - **Town** — distinct towns prefix/substring match (also serveable from
     `manifest.filterOptions.towns`, but kept server-side for one ranking pass).
   - **Street** — distinct `street_name` matches.
@@ -63,15 +63,10 @@ D1-backed, mirrors `functions/api/search.ts` conventions (`getDb`,
 - Rank: exact > prefix > substring; cap total (~10) with per-group caps.
 - Return `{ suggestions: Suggestion[] }`.
 
-The `blocks` table today has only `idx_blocks_town` and `idx_blocks_sort`
-(see `migrations/0001_initial.sql`) — there is **no** index on `street_name`
-or `postal_code`. Prefix lookups for street/postal therefore need a **new
-numbered migration** (next id `0005`) adding the supporting indexes; existing
-migrations are never edited. Note SQLite uses an index for `LIKE 'x%'` only
-with a `COLLATE NOCASE` index and no leading wildcard, so suggestions are
-prefix-anchored (substring fallback scans, hence the per-group cap + `q`
-length floor). Any schema/index change is mirrored in
-`scripts/lib/sync/store.ts` and `functions/_lib/d1.ts` per steering.
+Migration `0005_suggest_indexes.sql` added `COLLATE NOCASE` indexes for
+`street_name` and `postal_code`; existing migrations remain immutable. SQLite
+uses those indexes for prefix-anchored lookups. Substring fallback scans remain
+bounded by the query-length floor and per-group caps.
 
 ### 2. Types & validation
 
@@ -79,25 +74,36 @@ length floor). Any schema/index change is mirrored in
   (`town | street | block | mrt | postal`), each carrying the label and a
   structured payload (e.g. `{ town }`, `{ addressKey }`,
   `{ stationName }`, `{ search }`).
-- `src/lib/dataSchemas.ts`: add `suggestResponseSchema` matching the type
+- `src/shared/lib/dataSchemas.ts`: add `suggestResponseSchema` matching the type
   exactly (steering requires the schema/type pair to move together).
 
-### 3. Data client — `src/lib/data.ts`
+### 3. Data client — `src/shared/lib/data.ts`
 
 `fetchSuggestions(q)` with a **Map-based promise cache** keyed by normalised
 query (same eviction pattern as `tokenizationCache` in `filtering.ts`, cap
-~32 entries) plus a sequence guard so only the latest in-flight request
-updates UI state. This avoids redundant `/api/suggest` round-trips when users
-backspace while typing (e.g. `Ang` → `An` → `Ang`). Debounced at the component
-layer.
+at 32 entries). Callers may abort their own wrapper without cancelling the
+shared cached request. This avoids redundant `/api/suggest` round-trips when
+users backspace while typing (e.g. `Ang` → `An` → `Ang`). Debouncing and
+latest-wins display ownership stay at the component layer.
 
-### 4. Component — `src/components/SearchCombobox.tsx` (new)
+### 4. Component — `src/components/SearchCombobox.tsx`
 
 Radix popover + listbox built on the existing `LocationSearchInput` (keeps IME
 composition handling). Features:
 
 - Debounced fetch; grouped sections with headers; keyboard nav
   (↑/↓/Enter/Esc); aria roles for combobox/listbox/option.
+- Optional allowed-group constraints are applied before suggestions enter
+  component state or decide whether the popover opens. This lets Listing Check
+  accept block selections without showing an empty popover for postal-only
+  responses.
+- Each response is associated with its request query. Suggestions can render or
+  participate in keyboard selection only while the immediate controlled value
+  still matches that query, so a response arriving inside the debounce window
+  cannot expose stale options.
+- Selecting an option invalidates in-flight work and suppresses reopening while
+  the focused input receives its controlled selected label. Suppression clears
+  only on the next user edit.
 - Placeholder advertises modes: e.g. "town, street, postal, or 'near Bedok MRT'".
 - On select, dispatch a **structured** action:
   - town → `patchFilters({ town })`
@@ -117,14 +123,16 @@ composition handling). Features:
 ## Testing
 
 - Vitest: `suggest` ranking (exact/prefix/substring order, per-group caps),
-  size guard, numeric→postal routing; `fetchSuggestions` cache/sequence guard
-  with `resetSuggestCacheForTests()` teardown.
+  size guard, numeric→postal routing; constrained-consumer filtering;
+  `fetchSuggestions` cache with `resetSuggestCacheForTests()` teardown; and
+  deterministic deferred-response plus post-selection debounce regressions in
+  `SearchCombobox.groups.test.tsx`.
 - Playwright: typeahead keyboard flow, grouped rendering, structured-select
   outcomes, and an assertion that only one search affordance is present.
 
 ## Risks / trade-offs
 
-- New endpoint + migration is the largest slice of work, but is the only option
-  that gives true nationwide typeahead within the build-time-ingest boundary.
+- The endpoint + migration were the largest slice of work, but provide
+  nationwide typeahead within the build-time-ingest boundary.
 - Keeping the fuzzy fallback avoids regressing power-user queries while removing
   its surprise factor from the default path.

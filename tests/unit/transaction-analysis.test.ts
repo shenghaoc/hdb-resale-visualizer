@@ -328,3 +328,23 @@ describe("buildTrendEnvelope", () => {
     expect(envelope.get("2024-06")).toEqual({ min: 700000, max: 700000 });
   });
 });
+
+describe("sliceTrendByRange", () => {
+  it("filters by calendar span, not by number of data points", () => {
+    // A sparse series: the block only transacted a handful of times, so the
+    // last 24 ENTRIES span two decades.
+    const trend = [
+      { month: "2005-04", medianPrice: 300000, transactionCount: 1, medianPricePerSqm: 3000 },
+      { month: "2012-01", medianPrice: 400000, transactionCount: 1, medianPricePerSqm: 4000 },
+      { month: "2024-06", medianPrice: 500000, transactionCount: 1, medianPricePerSqm: 5000 },
+      { month: "2025-12", medianPrice: 550000, transactionCount: 1, medianPricePerSqm: 5500 },
+    ] as unknown as Parameters<typeof sliceTrendByRange>[0];
+
+    expect(sliceTrendByRange(trend, "2y").map((p) => p.month)).toEqual(["2024-06", "2025-12"]);
+    expect(sliceTrendByRange(trend, "max").map((p) => p.month)).toHaveLength(4);
+  });
+
+  it("returns an empty window rather than inventing points", () => {
+    expect(sliceTrendByRange([], "2y")).toEqual([]);
+  });
+});

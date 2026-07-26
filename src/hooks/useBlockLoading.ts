@@ -137,7 +137,6 @@ export function useBlockLoading({
           setSearchTruncated(false);
           setRefinementUnsupported(false);
         }
-
         if (needsAllBlocks) {
           if (hasFullCorpus) return;
           setIsLoading(true);

@@ -19,6 +19,16 @@ export function parseOptionalNumber(value: string): number | null {
   return value.trim() !== "" ? Number(value) : null;
 }
 
+/**
+ * Monetary wizard answers are persisted as whole dollars. Rounding here keeps a
+ * typed decimal instead of letting it pass validation, apply as a filter, and
+ * then vanish when the profile is written back.
+ */
+function parseOptionalWholeNumber(value: string): number | null {
+  const parsed = parseOptionalNumber(value);
+  return parsed === null || !Number.isFinite(parsed) ? null : Math.round(parsed);
+}
+
 function isOptionalInRange(value: string, min: number, max: number): boolean {
   return value.trim().length === 0 || (Number(value) >= min && Number(value) <= max);
 }
@@ -86,11 +96,11 @@ export function buildSearchProfileFromWizard(draft: SearchProfileWizardDraft): S
   return {
     version: 3,
     mainFlatType: draft.mainFlatType.trim(),
-    maxBudget: parseOptionalNumber(draft.maxBudget),
+    maxBudget: parseOptionalWholeNumber(draft.maxBudget),
     minimumRemainingLeaseYears: Number(draft.minLease),
     age: parseOptionalNumber(draft.age),
     coApplicantAge: parseOptionalNumber(draft.coApplicantAge),
-    cpfOABalance: parseOptionalNumber(draft.cpfOABalance),
-    monthlyIncome: parseOptionalNumber(draft.monthlyIncome),
+    cpfOABalance: parseOptionalWholeNumber(draft.cpfOABalance),
+    monthlyIncome: parseOptionalWholeNumber(draft.monthlyIncome),
   };
 }

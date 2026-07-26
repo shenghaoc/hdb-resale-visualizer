@@ -6,7 +6,7 @@
 ## Phase 1 — Schema & contracts
 - [x] **T1.1** Add migration `0005_suggest_indexes.sql`: `COLLATE NOCASE`
   indexes on `blocks(street_name)` and `blocks(postal_code)` (prefix lookups).
-  → `npm run db:migrate:local` applies cleanly. (R5.3)
+  → `vp run db:migrate:local` applies cleanly. (R5.3)
 - [x] **T1.2** Mirror any schema assumptions in `scripts/lib/sync/store.ts` and
   `functions/_lib/d1.ts`. (R5.3)
 - [x] **T1.3** Add `Suggestion` + group union to `shared/data-types.ts` and
@@ -22,9 +22,10 @@
   numeric→postal routing. (R7.1)
 
 ## Phase 3 — Client data layer
-- [x] **T3.1** Add `fetchSuggestions(q)` to `src/lib/data.ts` with promise
-  cache + sequence guard + `resetSuggestCacheForTests()`. (R6.1)
-- [x] **T3.2** Vitest for cache/sequence-guard behaviour. (R7.2)
+- [x] **T3.1** Add `fetchSuggestions(q)` to `src/shared/lib/data.ts` with a
+  bounded promise cache, caller-local abort wrapper, and
+  `resetSuggestCacheForTests()`. (R6.1)
+- [x] **T3.2** Vitest for cache behaviour. (R7.2)
 
 ## Phase 4 — Component
 - [x] **T4.1** Build `src/components/SearchCombobox.tsx` on top of
@@ -32,6 +33,12 @@
   keyboard nav, ARIA, mode-hint placeholder. (R2.1, R2.3, R4.1, R4.2)
 - [x] **T4.2** Implement structured-select dispatch + Enter free-text fallback
   via callback props (no direct coupling to filters). (R3.1, R3.2)
+- [x] **T4.3** Filter constrained-consumer responses before opening the
+  popover; cover disallowed-only and mixed responses. (R2.5, R7.4)
+- [x] **T4.4** Associate responses with their request query, gate rendering and
+  keyboard selection on the immediate controlled value, and suppress reopening
+  after selection until the next user edit. Cover deferred-response and
+  select-then-debounce races. (R2.6, R3.3, R7.5)
 
 ## Phase 5 — Wiring (header-only)
 - [x] **T5.1** Replace the three raw inputs: `SearchCombobox` in the
@@ -44,9 +51,9 @@
 ## Phase 6 — Verification
 - [x] **T6.1** Playwright: keyboard flow, grouped rendering, structured-select
   outcomes, single-affordance assertion. (R7.3)
-- [x] **T6.2** `npm run check` (boundaries + typecheck + lint + test) green;
-  `npm run build` within bundle budget (`check:bundle`).
-- [x] **T6.3** Manual smoke via `npm run dev:functions` against local D1 seed.
+- [x] **T6.2** `vp run check` (format + lint + tests + boundaries + typecheck +
+  build) green and within the `check:bundle` budget.
+- [x] **T6.3** Manual smoke via `vp run dev:functions` against local D1 seed.
 
 ## Open questions (resolved)
 - Block-suggestion label format: `{block} {Title Case street}` (e.g. "123 Ang Mo Kio Ave 3"); street suggestions use street name only (no dominant town).

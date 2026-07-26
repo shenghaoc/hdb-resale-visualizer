@@ -21,7 +21,7 @@ export {
   type ComparableTolerances,
   type TrendRangeKey,
 } from "@shared/product";
-import { TREND_RANGE_MONTHS } from "@shared/product";
+import { TREND_RANGE_MONTHS, monthDiff as monthDiffBetween } from "@shared/product";
 import type { TrendRangeKey } from "@shared/product";
 
 export type BlockTrajectory = {
@@ -110,7 +110,12 @@ export function sliceTrendByRange(
 ): AddressTrendPoint[] {
   const months = TREND_RANGE_MONTHS[range];
   if (months == null) return [...monthlyTrend];
-  return monthlyTrend.slice(-months);
+  // Filter by calendar span, not by index. The series only contains months that
+  // actually had a transaction, so slicing the last N entries made "2Y" cover a
+  // decade on a low-volume block.
+  const latest = monthlyTrend[monthlyTrend.length - 1];
+  if (!latest) return [];
+  return monthlyTrend.filter((point) => monthDiffBetween(point.month, latest.month) < months);
 }
 
 export function buildTrendEnvelope(

@@ -16,6 +16,12 @@
 - **R2.3** Each suggestion shows a human label and a group/category indicator so
   the user understands what they are selecting.
 - **R2.4** Empty/whitespace query shows no dropdown and triggers no fetch.
+- **R2.5** A consumer that accepts only a subset of suggestion groups shows and
+  opens the dropdown only for actionable suggestions in that subset.
+- **R2.6** A suggestion response is visible and keyboard-selectable only while
+  the immediate controlled input value still matches the response's request
+  query; a response that arrives during a newer value's debounce window is
+  ignored.
 
 ## R3 — Structured selection
 - **R3.1** Selecting a suggestion sets a structured intent, not raw text:
@@ -23,6 +29,9 @@
   MRT→station geographic intent; postal→scoped search.
 - **R3.2** Pressing Enter with no active suggestion selection falls back to the
   existing free-text matcher (no regression for power users).
+- **R3.3** Selecting a suggestion closes the popover and keeps it closed while
+  the focused input receives the selected controlled value. Suggestions resume
+  only after the user edits the input again.
 
 ## R4 — Accessibility & input
 - **R4.1** Combobox exposes correct ARIA roles (combobox/listbox/option,
@@ -41,16 +50,22 @@
   together (type ↔ Zod schema parity).
 
 ## R6 — Performance
-- **R6.1** Client fetches are debounced and use a latest-wins sequence guard
-  plus a bounded Map cache of in-flight/completed promises keyed by normalised
-  query (not a single-entry cache), so backspacing reuses prior results.
+- **R6.1** Client fetches are debounced. The data client uses a bounded Map
+  cache of in-flight/completed promises keyed by normalised query (not a
+  single-entry cache), while the component owns latest-wins request sequencing
+  and immediate-value display guards.
 - **R6.2** Server queries are index-backed; prefix-anchored where an index
   applies.
 
 ## R7 — Tests
 - **R7.1** Vitest covers suggest ranking, per-group caps, size guard, and
   numeric→postal routing.
-- **R7.2** Vitest covers `fetchSuggestions` caching + sequence guard with a
+- **R7.2** Vitest covers `fetchSuggestions` caching with a
   `resetSuggestCacheForTests()` teardown.
 - **R7.3** Playwright covers typeahead keyboard flow, grouped rendering,
   structured-select outcomes, and asserts a single search affordance exists.
+- **R7.4** Vitest covers constrained consumers with disallowed-only and mixed
+  suggestion responses so no empty or inert dropdown can open.
+- **R7.5** Vitest deterministically covers a deferred stale response and the
+  select-then-debounce path so stale or post-selection options cannot reopen or
+  be selected.
