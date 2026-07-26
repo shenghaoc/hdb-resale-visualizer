@@ -19,6 +19,7 @@ import {
 import { buildTrendLookup, computeTimeAdjustments } from "../../shared/time-adjustment";
 import type { AdjustmentMeta } from "../../shared/time-adjustment";
 import type { TimeAdjustedComparable } from "../../shared/data-types";
+import { canonicalFlatType } from "../../shared/filter-options";
 import { maxLeaseCommenceYear, MIN_LEASE_COMMENCE_YEAR } from "../../shared/product/lease";
 import { z } from "zod";
 
@@ -78,7 +79,7 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     block: row.block as string,
     streetName: row.street_name as string,
     addressKey: row.address_key as string,
-    flatType: row.flat_type as string,
+    flatType: canonicalFlatType(row.flat_type as string),
     storeyRange,
     // Fallback to 0 is defensive only — pipeline.ts filters out rows whose
     // storey_range cannot be parsed, so every row reaching D1 has a valid range.
@@ -164,6 +165,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!isValidLeaseCommenceYear(parsed.leaseCommenceYear, parsed.referenceMonth)) {
     return privateJsonResponse({ error: "Invalid request body" }, { status: 400 });
   }
+  parsed = { ...parsed, flatType: canonicalFlatType(parsed.flatType) };
 
   // 2. Run three parallel COUNT(*) queries for scope counts
   const [sameBlockCount, sameStreetCount, sameTownCount] = await Promise.all([

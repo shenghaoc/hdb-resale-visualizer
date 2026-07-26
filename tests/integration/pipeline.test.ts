@@ -114,7 +114,7 @@ describe("pipeline artifacts", () => {
       {
         ...base,
         id: "alpha-multi-2",
-        month: "2026-03",
+        month: "2025-11",
         flatType: "MULTI-GENERATION",
         floorAreaSqm: 135,
         flatModel: "MODEL B",
@@ -129,11 +129,72 @@ describe("pipeline artifacts", () => {
     expect(summary?.flatTypes).toContain("MULTI-GENERATION");
     expect(summary?.flatTypeCohorts?.["MULTI-GENERATION"]).toEqual({
       transactionCount: 2,
-      latestMonth: "2026-03",
+      latestMonth: "2025-11",
       floorAreaRange: [130, 135],
       flatModels: ["MODEL A", "MODEL B"],
     });
     expect(summary?.medianPriceByFlatType?.["MULTI-GENERATION"]).toBe(825000);
+    expect(
+      new Set(
+        artifacts.transactions
+          ?.filter((row) => row.address_key === summary?.addressKey)
+          .map((row) => row.flat_type),
+      ),
+    ).toEqual(new Set(["3 ROOM", "MULTI-GENERATION"]));
+    expect(
+      artifacts.townFlatTypeTrend.filter(
+        (row) =>
+          row.town === "ANG MO KIO" && row.month === "2025-11" && row.flatType.includes("MULTI"),
+      ),
+    ).toEqual([
+      expect.objectContaining({
+        flatType: "MULTI-GENERATION",
+        transactionCount: 2,
+      }),
+    ]);
+    expect(
+      artifacts.details[summary?.addressKey ?? ""]?.recentTransactions
+        .filter((row) => row.flatType.includes("MULTI"))
+        .map((row) => row.flatType),
+    ).toEqual(["MULTI-GENERATION", "MULTI-GENERATION"]);
+  });
+
+  it("keeps an older real flat type selectable outside the recent cohort window", () => {
+    const base = fixtureTransactions[0]!;
+    const recentTransactions = Array.from({ length: 24 }, (_, index) => {
+      const year = 2024 + Math.floor(index / 12);
+      const month = String((index % 12) + 1).padStart(2, "0");
+      return {
+        ...base,
+        id: `recent-${index}`,
+        month: `${year}-${month}`,
+        flatType: "3 ROOM",
+      };
+    });
+    const artifacts = buildFixtureArtifacts([
+      ...recentTransactions,
+      {
+        ...base,
+        id: "older-real-type",
+        month: "2023-12",
+        flatType: "4 ROOM",
+        floorAreaSqm: 92,
+        resalePrice: 560000,
+        pricePerSqm: 6086.96,
+      },
+    ]);
+    const summary = artifacts.blockSummaries[0];
+
+    expect(summary?.flatTypes).toEqual(["3 ROOM", "4 ROOM"]);
+    expect(summary?.flatTypeCohorts?.["3 ROOM"]).toBeDefined();
+    expect(summary?.flatTypeCohorts?.["4 ROOM"]).toEqual({
+      transactionCount: 1,
+      latestMonth: "2023-12",
+      floorAreaRange: [92, 92],
+      flatModels: ["IMPROVED"],
+    });
+    expect(summary?.medianPriceByFlatType?.["4 ROOM"]).toBe(560000);
+    expect(artifacts.transactions?.some((row) => row.flat_type === "4 ROOM")).toBe(true);
   });
 
   it("rejects an empty transaction dataset before producing an invalid manifest", () => {

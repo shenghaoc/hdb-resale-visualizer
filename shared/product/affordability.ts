@@ -129,7 +129,7 @@ export function computeAffordabilityVerdict(
 }
 
 /**
- * Profile completeness gate for affordability filter and sort. Positive
+ * Profile completeness gate for the local affordability filter. Positive
  * income and CPF OA are required because the model has no available-cash
  * input. Treating an explicit zero as complete would create a zero ceiling
  * and falsely label every home as unaffordable.

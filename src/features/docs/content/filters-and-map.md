@@ -52,7 +52,7 @@ The **heatmap toggle** overlays price density across the map. Adjust its opacity
 
 ## Results list
 
-The **Results** tab lists every block matching your filters, with address, median price, recorded floor-area range, flat types, nearest MRT, and remaining lease. When a flat-type filter is active, every row uses that type's recent price median. Floor-area range, record count, latest sale, quality tag, sorting, map popup, and CSV export use the same type cohort when it is available; older rows label any unavailable cohort attributes as block-wide instead of guessing. You can also sort by remaining lease, MRT proximity, most recent activity, or a conservative CPF-based estimate (with positive local finance inputs). That estimate excludes available cash, grants, other debts, and HFE outcomes.
+The **Results** tab lists every block matching your filters, with address, median price, recorded floor-area range, flat types, nearest MRT, and remaining lease. When a flat-type filter is active, every row uses that type's recent price median. Floor-area range, record count, latest sale, quality tag, sorting, map popup, and CSV export use the same type cohort when it is available; older rows label any unavailable cohort attributes as block-wide instead of guessing. You can sort by price, remaining lease, MRT proximity, or most recent activity.
 
 ## Town profile and charts
 
@@ -62,4 +62,4 @@ Pick a second town in the dropdown to **compare two towns** side by side.
 
 ## Block detail
 
-Selecting a block opens the **detail drawer**: median resale price for the selected flat type, full transaction history (price, floor area, storey range, date), remaining lease and lease commencement year, nearest MRT with walking time, nearby amenities, and comparable blocks. Monthly trend charts are explicitly block-wide because they combine all recorded flat types. The drawer avoids a separate market-rank dashboard: the listing check is the single place for price assessment against comparable transactions. The bookmark icon saves the block to your [shortlist](/docs/shortlisting), where prices are labelled as block-wide medians.
+Selecting a block opens the **detail drawer**: median resale price for the selected flat type, the latest 20 transactions (price, floor area, storey range, date), remaining lease and lease commencement year, nearest MRT with walking time, nearby amenities, and comparable blocks. Monthly trend charts are explicitly block-wide because they combine all recorded flat types. The drawer avoids a separate market-rank dashboard: the listing check is the single place for price assessment against comparable transactions. The bookmark icon saves the block to your [shortlist](/docs/shortlisting), where prices are labelled as block-wide medians.

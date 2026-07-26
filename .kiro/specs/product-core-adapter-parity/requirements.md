@@ -5,8 +5,9 @@
 - **R1.1** `tests/unit/product-core-adapter-parity.test.ts` covers
   representative web-adapter outputs against the shared product core for
   search profile evaluation tier, profile visibility filtering, town/budget
-  filtering, remaining lease filtering, MRT/geographic intent, commute anchor,
-  and affordability integration.
+  filtering, remaining lease filtering, MRT/geographic intent, and affordability
+  integration. Retired commute fields are covered only by legacy-profile
+  normalization and cannot affect current evaluation output.
 
 - **R1.2** Adapter parity tests compare behavior, not references. Direct
   re-export helpers are covered through existing shared-core tests or through a

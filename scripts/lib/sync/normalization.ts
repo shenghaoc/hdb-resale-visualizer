@@ -17,6 +17,7 @@ import {
   type ResaleTransaction,
   type SchoolLocation,
 } from "../pipeline";
+import { canonicalFlatType } from "../../../shared/filter-options";
 import { geocodeAddress } from "./geocode";
 
 /** Conversion factor from square meters to square feet. */
@@ -48,7 +49,10 @@ export function normalizeResaleRows(rows: Record<string, string>[]) {
       id: `${addressKey}-${month}-${index}`,
       month,
       town,
-      flatType: normalizeText(parsed.data.flat_type),
+      // Keep the ingestion contract canonical so summaries, D1 comparable
+      // rows, and town trends cannot split aliases such as MULTI GENERATION
+      // and MULTI-GENERATION into different evidence groups.
+      flatType: canonicalFlatType(normalizeText(parsed.data.flat_type)),
       block,
       streetName,
       storeyRange: normalizeText(parsed.data.storey_range),

@@ -29,8 +29,8 @@
 - [x] **T2.1** Add `tests/unit/product-core-adapter-parity.test.ts` with
   focused adapter-vs-shared parity coverage for search profile evaluation tier,
   profile visibility, town/budget/flat type filtering, remaining lease
-  filtering with explicit current year, MRT/geographic behavior, commute anchor,
-  and affordability integration.
+  filtering with explicit current year, MRT/geographic behavior, and
+  affordability integration. Retired commute fields remain migration-only.
   -> Focused parity suite added. (R1.1, R1.4)
 
 - [x] **T2.2** Avoid vacuous reference/identity assertions for direct
@@ -61,8 +61,9 @@
 
 - [x] **T4.2** Address important review findings: import
   `DEFAULT_FILTERS` from shared constants, improve doc comments, correct
-  section labels, add `makeProfile`, add alternative flat-type and
-  commute-anchor cases, and add an affordability integration test.
+  section labels, add `makeProfile`, add alternative flat-type cases, verify
+  retired commute fields are stripped during migration, and add an affordability
+  integration test.
   -> Fixed.
 
 - [x] **T4.3** Apply simplifications: use `toEqual` where clearer, remove dead

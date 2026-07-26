@@ -109,6 +109,19 @@ capped block-detail transaction sample.
   and caveats from factual evidence signals: record volume, recency, scope,
   listing-fact match, and time-adjustment status.
 
+The pipeline separates **known flat types** from **recent flat-type cohorts**.
+`BlockSummary.flatTypes` is canonicalized from all transactions at the block so
+Listing Check never hides a real unit type. Median prices and cohort attributes
+remain limited to the recent summary window. Ingestion canonicalizes aliases
+before writing D1 transactions and town trends, and the comparable endpoint
+canonicalizes request and row values defensively.
+
+Per-type model, size, and date filters require complete cohort metadata. The
+search API probes for both the column and a completed backfill; the full-corpus
+client path makes the same inference from parsed block summaries. Until every
+row is ready, the UI shows the explicit unsupported-refinement state instead of
+presenting a confident empty result.
+
 An empty comparable response produces a clear no-evidence state rather than a
 verdict. A response with widened, stale, thin, or unadjusted evidence remains
 usable only with the corresponding caveats visible.

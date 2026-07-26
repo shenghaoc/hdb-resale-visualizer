@@ -37,6 +37,10 @@
   first available value.
 - **R3.6** The empty state has no sample/demo listing and does not prefill
   synthetic unit facts.
+- **R3.7** The block summary keeps every canonical flat type observed in the
+  block's complete transaction history selectable, even when that type has no
+  sale in the recent summary window. Recent medians and cohort attributes remain
+  recent-window evidence and are never invented for that older type.
 
 ## R4 — Canonical deterministic price verdict
 - **R4.1** Explicitly submitting the form sends the listing facts to the
@@ -49,6 +53,9 @@
   `fair` (−3% to +3%), `above` (+3% to +10%), `well_above` (≥+10%).
 - **R4.4** No AI, prediction models, runtime geocoding, or external API calls
   are involved.
+- **R4.5** Flat-type aliases are canonicalized before D1 transaction and town
+  trend writes and again at the comparable API boundary, so one real unit type
+  cannot split into multiple evidence groups.
 
 ## R5 — Confidence level
 - **R5.1** Confidence is computed by the shared `computeConfidence()` module as
@@ -113,3 +120,6 @@
   and edge cases (no comparables, low confidence).
 - **R11.4** Regression coverage proves block detail routes to the canonical
   Check panel and that no sample/default unit facts or second evaluator remain.
+- **R11.5** Pipeline and search-handler regressions cover older selectable flat
+  types, canonical flat-type aliases, missing/unbackfilled cohort metadata, and
+  full-corpus refinement readiness.

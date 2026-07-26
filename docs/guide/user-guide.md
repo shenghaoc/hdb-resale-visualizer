@@ -111,7 +111,6 @@ Sort by:
 - **Remaining lease**
 - **MRT proximity**
 - **Most recent activity** (blocks with the most recent transactions first)
-- **Most room within CPF estimate** (when positive CPF, income, and age inputs are available)
 
 ### Town profile
 

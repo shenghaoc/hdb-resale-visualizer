@@ -612,7 +612,8 @@ export function buildArtifacts({
   const townFlatTypeGroups = new Map<string, ResaleTransaction[]>();
 
   for (const transaction of transactions) {
-    const key = `${transaction.town}__${transaction.flatType}__${transaction.month}`;
+    const flatType = canonicalFlatType(transaction.flatType);
+    const key = `${transaction.town}__${flatType}__${transaction.month}`;
     const list = townFlatTypeGroups.get(key) ?? [];
     list.push(transaction);
     townFlatTypeGroups.set(key, list);
@@ -636,7 +637,7 @@ export function buildArtifacts({
         block: tx.block,
         street_name: tx.streetName,
         address_key: tx.addressKey,
-        flat_type: tx.flatType,
+        flat_type: canonicalFlatType(tx.flatType),
         storey_range: tx.storeyRange,
         floor_area_sqm: tx.floorAreaSqm,
         lease_commence_year: tx.leaseCommenceDate || null,
@@ -700,45 +701,32 @@ export function buildArtifacts({
     const medianPriceByFlatType: Record<string, number> = {};
     const medianPricePerSqmByFlatType: Record<string, number> = {};
     const flatTypeCohorts: Record<string, BlockFlatTypeCohort> = {};
-    const transactionsByFlatType = new Map<
-      string,
-      {
-        prices: number[];
-        ppsmValues: number[];
-        latestMonth: string;
-        minFloorArea: number;
-        maxFloorArea: number;
-        flatModels: Set<string>;
-      }
-    >();
-    for (const transaction of sourceWindow) {
+    const transactionsByFlatType = new Map<string, ResaleTransaction[]>();
+    for (const transaction of sortedTransactions) {
       const flatType = canonicalFlatType(transaction.flatType);
-      const cohort = transactionsByFlatType.get(flatType) ?? {
-        prices: [],
-        ppsmValues: [],
-        latestMonth: transaction.month,
-        minFloorArea: transaction.floorAreaSqm,
-        maxFloorArea: transaction.floorAreaSqm,
-        flatModels: new Set<string>(),
-      };
-      cohort.prices.push(transaction.resalePrice);
-      cohort.ppsmValues.push(transaction.pricePerSqm);
-      if (transaction.month > cohort.latestMonth) {
-        cohort.latestMonth = transaction.month;
-      }
-      if (transaction.floorAreaSqm < cohort.minFloorArea) {
-        cohort.minFloorArea = transaction.floorAreaSqm;
-      }
-      if (transaction.floorAreaSqm > cohort.maxFloorArea) {
-        cohort.maxFloorArea = transaction.floorAreaSqm;
-      }
-      cohort.flatModels.add(transaction.flatModel);
-      transactionsByFlatType.set(flatType, cohort);
+      const rows = transactionsByFlatType.get(flatType) ?? [];
+      rows.push(transaction);
+      transactionsByFlatType.set(flatType, rows);
     }
-    for (const [
-      flatType,
-      { prices: ftPrices, ppsmValues: ftPpsm, latestMonth, minFloorArea, maxFloorArea, flatModels },
-    ] of transactionsByFlatType.entries()) {
+    for (const [flatType, allTypeRows] of transactionsByFlatType.entries()) {
+      // Prefer the shared recent window, but never erase a real type merely
+      // because it has no recent sale. Its own full history is the truthful
+      // fallback and keeps every per-type attribute internally coherent.
+      const recentTypeRows = allTypeRows.filter(
+        (transaction) => transaction.month >= recentThreshold,
+      );
+      const typeWindow = recentTypeRows.length > 0 ? recentTypeRows : allTypeRows;
+      const ftPrices = typeWindow.map((transaction) => transaction.resalePrice);
+      const ftPpsm = typeWindow.map((transaction) => transaction.pricePerSqm);
+      const latestMonth = typeWindow[0]!.month;
+      let minFloorArea = Number.POSITIVE_INFINITY;
+      let maxFloorArea = Number.NEGATIVE_INFINITY;
+      const flatModels = new Set<string>();
+      for (const transaction of typeWindow) {
+        minFloorArea = Math.min(minFloorArea, transaction.floorAreaSqm);
+        maxFloorArea = Math.max(maxFloorArea, transaction.floorAreaSqm);
+        flatModels.add(transaction.flatModel);
+      }
       medianPriceByFlatType[flatType] = Math.round(median(ftPrices));
       medianPricePerSqmByFlatType[flatType] = Number(median(ftPpsm).toFixed(2));
       flatTypeCohorts[flatType] = {
@@ -766,7 +754,7 @@ export function buildArtifacts({
         sortedTransactions[sortedTransactions.length - 1].month,
         sortedTransactions[0].month,
       ],
-      flatTypes: Object.keys(flatTypeCohorts).sort(),
+      flatTypes: [...transactionsByFlatType.keys()].sort(),
       flatModels: [...new Set(sourceWindow.map((transaction) => transaction.flatModel))].sort(),
       medianPriceByFlatType,
       medianPricePerSqmByFlatType,
@@ -807,7 +795,7 @@ export function buildArtifacts({
       .map((transaction) => ({
         id: transaction.id,
         month: transaction.month,
-        flatType: transaction.flatType,
+        flatType: canonicalFlatType(transaction.flatType),
         storeyRange: transaction.storeyRange,
         floorAreaSqm: transaction.floorAreaSqm,
         flatModel: transaction.flatModel,

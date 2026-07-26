@@ -11,6 +11,7 @@ import {
   parseSearchRequest,
   validateSearchRequest,
 } from "../_lib/search";
+import { requiresFlatTypeCohortMetadata } from "../../shared/product/flat-type-cohort";
 
 type SearchContext = {
   env: {
@@ -25,6 +26,29 @@ type SearchContext = {
 
 function isMissingCohortColumnError(error: unknown): boolean {
   return error instanceof Error && /no such column:.*flat_type_cohorts_json/i.test(error.message);
+}
+
+async function hasCompleteCohortMetadata(db: SearchContext["env"]["DB"]): Promise<boolean> {
+  try {
+    const result = await db
+      .prepare(
+        "SELECT COUNT(*) AS total_count, COUNT(NULLIF(TRIM(flat_type_cohorts_json), '')) AS populated_count FROM blocks",
+      )
+      .bind()
+      .all();
+    const counts = (result.results?.[0] ?? {}) as {
+      total_count?: number;
+      populated_count?: number;
+    };
+    return (
+      typeof counts.total_count === "number" &&
+      counts.total_count > 0 &&
+      counts.populated_count === counts.total_count
+    );
+  } catch (error) {
+    if (isMissingCohortColumnError(error)) return false;
+    throw error;
+  }
 }
 
 export const onRequestGet = async ({ env, request }: SearchContext) => {
@@ -52,14 +76,19 @@ export const onRequestGet = async ({ env, request }: SearchContext) => {
         .all();
     };
 
-    let cohortMetadataAvailable = true;
+    // A successful ALTER TABLE is not the same as a completed data backfill.
+    // Probe only when the requested refinement needs the cohort JSON, and
+    // conservatively refuse the refinement if any block is still unbackfilled.
+    let cohortMetadataAvailable = requiresFlatTypeCohortMetadata(parsed.request)
+      ? await hasCompleteCohortMetadata(env.DB)
+      : true;
     let result: Awaited<ReturnType<typeof execute>>;
     try {
-      result = await execute(true);
+      result = await execute(cohortMetadataAvailable);
     } catch (error) {
-      if (!isMissingCohortColumnError(error)) {
-        throw error;
-      }
+      // Defensive race handling: if readiness changed between the probe and
+      // query, retain the truthful unsupported response rather than returning 500.
+      if (!cohortMetadataAvailable || !isMissingCohortColumnError(error)) throw error;
       cohortMetadataAvailable = false;
       result = await execute(false);
     }

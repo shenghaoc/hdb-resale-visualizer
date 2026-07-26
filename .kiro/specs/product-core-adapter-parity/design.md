@@ -48,8 +48,10 @@ It compares the web adapter layer with the shared product core for:
 - town, budget, flat type, remaining lease, and MRT filter behavior;
 - explicit filter evaluation context propagation;
 - geographic intent matching with existing small fixtures;
-- commute-anchor matching through profile evaluation;
 - web affordability integration through the filtering adapter.
+
+Legacy commute fields are migration-only input. Parity coverage verifies that
+normalization removes them; the active profile evaluator has no commute signal.
 
 The test file owns small typed helpers for block/profile construction so
 scenario setup stays readable and reviewable. Direct re-export helpers are not

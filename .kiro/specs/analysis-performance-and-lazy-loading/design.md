@@ -140,8 +140,8 @@ interaction.
 - Implements custom virtualization for compact mode when
   `sortedBlocks.length > 80` (overscan: 8 items).
 - `BlockCard` is wrapped in `React.memo`.
-- Sort helpers pre-compute affordability headroom in a memoized Map to avoid
-  O(N log N) CPF/loan calculations during sort.
+- Sort helpers read only cohort-aligned price, lease, MRT, and recency facts;
+  the retired affordability sort performs no per-row finance calculations.
 
 **Assessment:** Table rendering is already well-optimized. Virtualization for
 the comparable table would only help if row counts grow beyond 30 (currently

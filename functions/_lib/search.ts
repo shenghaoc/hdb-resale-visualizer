@@ -1,4 +1,5 @@
 import { canonicalFlatType } from "../../shared/filter-options";
+import { requiresFlatTypeCohortMetadata } from "../../shared/product/flat-type-cohort";
 import { workerCurrentUtcYear } from "./worker-time";
 
 const MAX_LEASE_DURATION = 99;
@@ -134,15 +135,7 @@ export function buildSearchQuery(
   currentYear: number = workerCurrentUtcYear(),
   supportsFlatTypeCohorts = true,
 ): SearchQueryPlan {
-  if (
-    !supportsFlatTypeCohorts &&
-    request.flatType &&
-    (request.flatModel ||
-      request.areaMin !== null ||
-      request.areaMax !== null ||
-      request.startMonth !== null ||
-      request.endMonth !== null)
-  ) {
+  if (!supportsFlatTypeCohorts && requiresFlatTypeCohortMetadata(request)) {
     // During the additive migration window, never reinterpret a selected-type
     // refinement against block-wide attributes. Return no guess until the
     // cohort column is available; basic flat type and budget remain usable.

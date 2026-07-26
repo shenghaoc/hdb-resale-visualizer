@@ -86,4 +86,70 @@ describe("/api/search handler", () => {
     expect(preparedSql).toHaveLength(2);
     expect(preparedSql[1]).toContain("WHERE 0 = 1");
   });
+
+  it("reports cohort metadata unavailable until migrated rows are backfilled", async () => {
+    const preparedSql: string[] = [];
+    const ctx = {
+      request: new Request(
+        "http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&startMonth=2024-01",
+      ),
+      env: {
+        DB: {
+          prepare: (sql: string) => {
+            preparedSql.push(sql);
+            return {
+              bind: () => ({
+                all: async () =>
+                  preparedSql.length === 1
+                    ? { results: [{ total_count: 10, populated_count: 0 }] }
+                    : { results: [] },
+              }),
+            };
+          },
+        },
+      },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    const body = (await resp.json()) as {
+      blocks: unknown[];
+      cohortMetadataAvailable: boolean;
+    };
+
+    expect(resp.status).toBe(200);
+    expect(body.blocks).toEqual([]);
+    expect(body.cohortMetadataAvailable).toBe(false);
+    expect(preparedSql[0]).toContain("COUNT(NULLIF(TRIM(flat_type_cohorts_json)");
+    expect(preparedSql[1]).toContain("WHERE 0 = 1");
+  });
+
+  it("uses cohort predicates after every block is backfilled", async () => {
+    const preparedSql: string[] = [];
+    const ctx = {
+      request: new Request("http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&areaMin=90"),
+      env: {
+        DB: {
+          prepare: (sql: string) => {
+            preparedSql.push(sql);
+            return {
+              bind: () => ({
+                all: async () =>
+                  sql.includes("COUNT(NULLIF(TRIM(flat_type_cohorts_json)")
+                    ? { results: [{ total_count: 10, populated_count: 10 }] }
+                    : { results: [] },
+              }),
+            };
+          },
+        },
+      },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    const body = (await resp.json()) as { cohortMetadataAvailable: boolean };
+
+    expect(resp.status).toBe(200);
+    expect(body.cohortMetadataAvailable).toBe(true);
+    expect(preparedSql[1]).toContain("flat_type_cohorts_json");
+    expect(preparedSql[1]).not.toContain("WHERE 0 = 1");
+  });
 });

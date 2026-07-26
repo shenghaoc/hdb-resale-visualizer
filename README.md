@@ -46,7 +46,7 @@ A full user guide is available in [docs/guide/user-guide.md](docs/guide/user-gui
 
 - Visualizes resale blocks as address points on a Singapore map
 - Filters by town, flat type, flat model, budget, floor area, lease year, date window, and MRT distance
-- Shows block-level median pricing, recent transactions, and 12–24 month price trends
+- Shows block-level median pricing, the latest 20 transactions, and selectable 2Y/5Y/10Y/all-history trends
 - Uses one MRT overlay switch for stations and exits, plus selection-scoped nearby school markers
 - Price heatmap mode colors the map by median $/sqm for at-a-glance comparisons
 - Budget match badges highlight blocks within your target range
@@ -108,7 +108,7 @@ vp run format:check    # check formatting only
 vp run typecheck
 vp run lint
 vp run test
-vp run test:listing-check  # targeted: listing verdict/confidence/caveats/portal + AskingPriceCheck
+vp run test:listing-check  # targeted: listing verdict, confidence, caveats, evidence + Check panel
 vp run test:comparables    # targeted: comparable engine, time-adjustment, transaction analysis
 vp run test:buyer-workflow # targeted: shortlist + buyer-first homepage flows
 vp run test:browser        # Vitest Browser Mode — real-browser component/integration tests

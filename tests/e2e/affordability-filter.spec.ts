@@ -152,19 +152,15 @@ test.describe("affordability filter — clearing via filter chip", () => {
   });
 });
 
-test.describe("affordability filter — sort integration", () => {
-  test("?sort=affordability is accepted and shown when the profile is complete", async ({
-    page,
-  }) => {
-    // town=BEDOK provides result scope so the sort control renders; the seeded
-    // profile is complete, so the affordability sort option is enabled.
+test.describe("affordability filter — retired sort links", () => {
+  test("?sort=affordability falls back to the default price sort", async ({ page }) => {
     await page.goto("/?town=BEDOK&sort=affordability");
     await waitForAppReady(page);
     await openResultsTab(page);
 
     const sortTrigger = page.getByTestId("results-sort-trigger");
     await expect(sortTrigger).toBeVisible();
-    await expect(sortTrigger).toContainText(/most room within cpf estimate/i);
-    await expect(page).toHaveURL(/sort=affordability/);
+    await expect(sortTrigger).toContainText(/lowest median price/i);
+    await expect(page).not.toHaveURL(/sort=affordability/);
   });
 });

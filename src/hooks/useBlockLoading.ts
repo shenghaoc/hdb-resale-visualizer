@@ -5,6 +5,10 @@ import {
   fetchBlocksByTown,
   townToFilename,
 } from "@/shared/lib/data";
+import {
+  hasCompleteFlatTypeCohortMetadata,
+  requiresFlatTypeCohortMetadata,
+} from "@shared/product/flat-type-cohort";
 import type { BlockSummary, Manifest } from "@/types/data";
 
 type UseBlockLoadingArgs = {
@@ -30,6 +34,15 @@ type UseBlockLoadingArgs = {
     mrtMax: number | null;
   };
 };
+
+type CohortRefinementParams = UseBlockLoadingArgs["coarseSearchParams"];
+
+export function requiresUnavailableFullCorpusCohorts(
+  blocks: BlockSummary[],
+  params: CohortRefinementParams,
+): boolean {
+  return requiresFlatTypeCohortMetadata(params) && !hasCompleteFlatTypeCohortMetadata(blocks);
+}
 
 export function useBlockLoading({
   manifest,
@@ -100,6 +113,11 @@ export function useBlockLoading({
         const currentBlocks = blocksRef.current;
         const hasFullCorpus =
           blocksSourceRef.current === "full" && currentBlocks.length >= totalBlocks;
+        if (hasFullCorpus) {
+          setRefinementUnsupported(
+            requiresUnavailableFullCorpusCohorts(currentBlocks, coarseSearchParams),
+          );
+        }
 
         if (needsAllBlocks) {
           if (hasFullCorpus) return;
@@ -112,7 +130,9 @@ export function useBlockLoading({
             blocksRef.current = nextBlocks;
             setBlocks(nextBlocks);
             setSearchTruncated(false);
-            setRefinementUnsupported(false);
+            setRefinementUnsupported(
+              requiresUnavailableFullCorpusCohorts(nextBlocks, coarseSearchParams),
+            );
           }
           return;
         }
