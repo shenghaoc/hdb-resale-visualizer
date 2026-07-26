@@ -30,7 +30,9 @@ merges the canonical serialized filters back into the existing query string.
 This strips invalid and retired values without deleting Listing Check or other
 non-filter deep-link state. `useUrlFilters` writes only when the merged search
 actually differs, so the initial canonicalization is safe under repeated React
-effects.
+effects. Every query-only writer appends the current `location.hash`; Listing
+Check synchronization and one-time shortlist-import cleanup therefore cannot
+erase an unrelated fragment while changing their owned parameters.
 
 ## Async Comparison
 

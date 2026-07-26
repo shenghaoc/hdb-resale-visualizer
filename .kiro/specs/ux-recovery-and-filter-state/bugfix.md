@@ -34,6 +34,8 @@ the filters, data, or recovery action they actually controlled.
 11. URL filter hydration skipped its first canonical write, so retired or
     invalid filter values remained in copied links. Later filter writes replaced
     the entire query string and could erase unrelated Listing Check state.
+12. Listing Check synchronization and shortlist-import cleanup rewrote only the
+    pathname and query, silently deleting an unrelated URL fragment.
 
 ## Expected Behavior
 
@@ -59,6 +61,8 @@ the filters, data, or recovery action they actually controlled.
 8. Filter hydration SHALL remove invalid or retired filter parameters from the
    visible URL. Filter updates SHALL preserve unrelated query parameters used by
    other product flows.
+9. Query-only URL mutations SHALL preserve the current fragment, including
+   Listing Check synchronization and one-time shortlist-import cleanup.
 
 ## Preserved Behavior
 
@@ -71,3 +75,5 @@ the filters, data, or recovery action they actually controlled.
 - Town comparison remains lazy and does not add external requests.
 - Listing Check and other non-filter deep-link parameters remain intact while
   block filters are canonicalized.
+- Existing fragments remain intact while query-owned state is canonicalized or
+  cleaned up.

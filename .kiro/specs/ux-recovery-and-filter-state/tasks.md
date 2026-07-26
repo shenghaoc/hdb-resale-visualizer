@@ -16,6 +16,8 @@
 - [x] Replace compact affordability's color-only dot with translated text.
 - [x] Canonicalize filter-owned URL parameters on hydration and updates while
   preserving unrelated deep-link state.
+- [x] Preserve URL fragments during Listing Check synchronization and
+  shortlist-import query cleanup.
 - [x] Cover valid/invalid months, manifest retry, search reset, controlled sort,
   live range order, comparison failure/retry, localized recovery copy, Listing
   Check detail retry, request ordering, compact affordability, and URL ownership

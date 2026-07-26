@@ -140,7 +140,11 @@ export function useListingCheckUrlState() {
         ? `?${existingQS}${nextSearch ? `&${nextSearch.slice(1)}` : ""}`
         : nextSearch;
 
-      window.history.replaceState({}, "", `${window.location.pathname}${fullQS}`);
+      window.history.replaceState(
+        {},
+        "",
+        `${window.location.pathname}${fullQS}${window.location.hash}`,
+      );
     });
   }, []);
 
