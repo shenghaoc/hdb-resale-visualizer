@@ -167,6 +167,9 @@ export function ListingCheckPanel({
     if (!result || !shouldScrollToVerdictRef.current) return;
     shouldScrollToVerdictRef.current = false;
     verdictRef.current?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+    // Submitting removed focus from the button; without this it lands on
+    // <body> and a screen reader is never told the verdict arrived.
+    verdictRef.current?.focus?.({ preventScroll: true });
   }, [result]);
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
@@ -236,7 +239,7 @@ export function ListingCheckPanel({
               className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
               aria-hidden="true"
             />
-            <span>{t("filters.suggestLoading")}</span>
+            <span>{t("app.loadingDetails")}</span>
           </div>
         )}
         {selectedAddressKey && detailError && (
@@ -376,7 +379,11 @@ export function ListingCheckPanel({
 
       {/* ── API loading state ──────────────────────────────────────────── */}
       {comparableSetLoading && (
-        <div className="flex items-center gap-2 rounded-none bg-muted/20 p-3 text-xs text-muted-foreground">
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex items-center gap-2 rounded-none bg-muted/20 p-3 text-xs text-muted-foreground"
+        >
           <div
             className="size-3 animate-spin rounded-full border-2 border-primary/30 border-t-primary"
             aria-hidden="true"
@@ -387,7 +394,10 @@ export function ListingCheckPanel({
 
       {/* ── API error state ────────────────────────────────────────────── */}
       {comparableSetError && !comparableSetLoading && (
-        <div className="flex items-start gap-3 rounded-none border border-destructive/30 bg-destructive/5 p-3 text-xs">
+        <div
+          role="alert"
+          className="flex items-start gap-3 rounded-none border border-destructive/30 bg-destructive/5 p-3 text-xs"
+        >
           <AlertTriangle
             data-icon
             className="size-4 shrink-0 text-destructive"
@@ -412,6 +422,11 @@ export function ListingCheckPanel({
       {result && theme && askingPrice != null && (
         <Card
           ref={verdictRef}
+          // Focusable only as a programmatic target, so submit can move focus
+          // here; it stays out of the normal tab order.
+          tabIndex={-1}
+          role="status"
+          aria-live="polite"
           className={cn("border-2 shadow-none", styles.border, styles.bg)}
           data-testid="listing-check-verdict"
         >

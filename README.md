@@ -10,7 +10,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 - Cloudflare Pages Functions (`functions/api/*`) backed by Cloudflare D1 (runtime API)
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
-- ECharts for block-level trend charts
+- Recharts for block-level trend charts
 - Node.js 24 + Vite+ (`vp`) for package management, scripts, and CI
 
 ## Kiro workflow and repository docs

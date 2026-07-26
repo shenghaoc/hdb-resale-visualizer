@@ -23,8 +23,8 @@ The app compares an asking price (a hope) against transactions (facts). A "fair"
 
 The verdict states whether the ask is **well below**, **below**, **around**, **above**, or **well above** the median of comparable recent transactions, together with:
 
-- the percentage difference vs the comparable median and peak
-- the price range of the comparables (lowest to highest)
+- the difference vs the comparable median
+- the **fair range**: the middle half of comparable prices (P25 to P75), not the full low-to-high spread
 - price per square metre for the ask vs the comparable median
 - where the ask sits as a percentile among the comparables
 - the number of comparable transactions used

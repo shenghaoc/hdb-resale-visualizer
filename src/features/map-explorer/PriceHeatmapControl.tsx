@@ -1,4 +1,4 @@
-import { type CSSProperties, useId } from "react";
+import { type CSSProperties, useId, useRef } from "react";
 import { Flame } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
@@ -38,6 +38,8 @@ export function PriceHeatmapControl({
   style,
 }: PriceHeatmapControlProps) {
   const sliderId = useId();
+  const priceRadioRef = useRef<HTMLButtonElement>(null);
+  const perSqmRadioRef = useRef<HTMLButtonElement>(null);
   const toggleId = useId();
   const toggleHint = hasScope
     ? isEnabled
@@ -116,8 +118,15 @@ export function PriceHeatmapControl({
               aria-checked={mode === "price"}
               tabIndex={mode === "price" ? 0 : -1}
               onClick={() => onModeChange("price")}
+              ref={priceRadioRef}
               onKeyDown={(e) => {
-                if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
+                if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                  e.preventDefault();
+                  // Roving tabindex moves the tab stop, so focus must follow the
+                  // selection or the user is left on a tabIndex={-1} button.
+                  onModeChange("perSqm");
+                  perSqmRadioRef.current?.focus();
+                }
               }}
               className={cn(
                 "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
@@ -135,8 +144,13 @@ export function PriceHeatmapControl({
               aria-checked={mode === "perSqm"}
               tabIndex={mode === "perSqm" ? 0 : -1}
               onClick={() => onModeChange("perSqm")}
+              ref={perSqmRadioRef}
               onKeyDown={(e) => {
-                if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
+                if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+                  e.preventDefault();
+                  onModeChange("price");
+                  priceRadioRef.current?.focus();
+                }
               }}
               className={cn(
                 "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
