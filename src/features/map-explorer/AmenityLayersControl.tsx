@@ -88,10 +88,11 @@ export function AmenityLayersControl({
   style,
 }: AmenityLayersControlProps) {
   const schoolCanToggle = schoolOverlayAvailable && !schoolOverlayLoading;
+  const effectiveSchoolOverlayEnabled = schoolOverlayEnabled && schoolOverlayAvailable;
   const schoolAriaLabel = schoolOverlayLoading
     ? t("schoolOverlay.loading")
     : schoolOverlayAvailable
-      ? schoolOverlayEnabled
+      ? effectiveSchoolOverlayEnabled
         ? t("schoolOverlay.disable")
         : t("schoolOverlay.enable")
       : hasBlockSelection
@@ -138,7 +139,7 @@ export function AmenityLayersControl({
             aria-hidden="true"
             className={cn(
               "size-3 shrink-0 transition-colors duration-200",
-              schoolOverlayEnabled ? "text-primary" : "text-muted-foreground",
+              effectiveSchoolOverlayEnabled ? "text-primary" : "text-muted-foreground",
             )}
           />
           <span className="flex-1 text-muted-foreground">
@@ -150,7 +151,7 @@ export function AmenityLayersControl({
             )}
           </span>
           <LayerSwitch
-            enabled={schoolOverlayEnabled}
+            enabled={effectiveSchoolOverlayEnabled}
             disabled={!schoolCanToggle}
             busy={schoolOverlayLoading}
             ariaLabel={schoolAriaLabel}

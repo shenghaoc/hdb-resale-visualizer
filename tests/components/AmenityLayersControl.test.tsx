@@ -109,15 +109,32 @@ describe("AmenityLayersControl", () => {
 
   it("shows the unavailable school label when no block is selected", () => {
     renderControl({
+      schoolOverlayEnabled: true,
       hasBlockSelection: false,
       schoolOverlayAvailable: false,
     });
 
     expect(screen.getByText(/select a block/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("switch", {
-        name: "Select a block to show up to 3 nearest primary school markers.",
-      }),
-    ).toBeDisabled();
+    const schoolSwitch = screen.getByRole("switch", {
+      name: "Select a block to show up to 3 nearest primary school markers.",
+    });
+    expect(schoolSwitch).toBeDisabled();
+    expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
+    expect(schoolSwitch.firstElementChild).toHaveClass("bg-muted-foreground/30");
+  });
+
+  it("renders an unavailable selected block as inactive even when the saved preference is on", () => {
+    renderControl({
+      schoolOverlayEnabled: true,
+      schoolOverlayAvailable: false,
+      hasBlockSelection: true,
+    });
+
+    const schoolSwitch = screen.getByRole("switch", {
+      name: "No primary schools within 2km with map coordinates for this block.",
+    });
+    expect(schoolSwitch).toBeDisabled();
+    expect(schoolSwitch).toHaveAttribute("aria-checked", "false");
+    expect(schoolSwitch.firstElementChild).toHaveClass("bg-muted-foreground/30");
   });
 });

@@ -44,4 +44,6 @@
 
 ## Phase 8: Dark Mode & Mobile Map Polish
 - [x] Remove the mobile header overlay from the default map view so map controls remain unobstructed.
+- [x] Keep the school-layer switch's visual and accessible state aligned with whether
+      the selected block can actually render school markers.
 - [x] Restyle the dark-mode base map with a night-map treatment instead of a plain dimming filter.

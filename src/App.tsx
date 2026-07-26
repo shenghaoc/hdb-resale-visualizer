@@ -669,7 +669,7 @@ function App() {
         {mapExplorer.controlsVisible && !showScopePrompt && (
           <AmenityLayersControl
             mrtEnabled={mapExplorer.mrtEnabled}
-            schoolOverlayEnabled={mapExplorer.schoolOverlayEnabled}
+            schoolOverlayEnabled={mapExplorer.effectiveSchoolOverlayEnabled}
             schoolOverlayAvailable={mapExplorer.schoolOverlayAvailable}
             schoolOverlayLoading={mapExplorer.schoolOverlayLoading}
             hasBlockSelection={mapExplorer.hasBlockSelection}
