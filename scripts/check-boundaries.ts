@@ -15,6 +15,9 @@ const SOURCE_EXTENSIONS = [".ts", ".tsx", ".mts", ".cts", ".js", ".mjs", ".cjs"]
 const INDEX_FILENAMES = SOURCE_EXTENSIONS.map((extension) => `index${extension}`);
 const FORBIDDEN_RUNTIME_ALIASES = ["@/", "@shared/"] as const;
 const FORBIDDEN_SHARED_PRODUCT_IMPORTS = ["react", "react-dom", "maplibre-gl"] as const;
+const COMPONENTS_UI_DIR = path.join(SRC_DIR, "components", "ui");
+const FORBIDDEN_ENTITY_PACKAGES = ["react", "react-dom", "maplibre-gl", "recharts"] as const;
+
 const FORBIDDEN_SHARED_UI_DOMAIN_TYPES = [
   path.join(SRC_DIR, "types", "data.ts"),
   path.join(SRC_DIR, "types", "searchProfile.ts"),
@@ -349,6 +352,18 @@ function checkEntityDirection(): void {
     for (const edge of getModuleEdges(sourceFile)) {
       const resolved = resolveFrontendModule(file, edge.specifier);
       if (!resolved) {
+        // Bare specifier that didn't resolve locally — check if it's a
+        // forbidden framework/UI package (entities must be React-free per
+        // the design doc).
+        if (
+          edge.isRuntime &&
+          (FORBIDDEN_ENTITY_PACKAGES as readonly string[]).includes(edge.specifier)
+        ) {
+          recordViolation(
+            file,
+            `entities must not import framework packages — "${edge.specifier}" is forbidden. Entities must be pure TypeScript with no React/map/chart dependencies.`,
+          );
+        }
         continue;
       }
 
@@ -390,6 +405,11 @@ function checkSharedUiDirection(): void {
         recordViolation(
           file,
           `shared-ui must not import entities — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
+      } else if (isInside(COMPONENTS_DIR, resolved) && !isInside(COMPONENTS_UI_DIR, resolved)) {
+        recordViolation(
+          file,
+          `shared-ui must not import non-UI components — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}. Only src/components/ui is allowed.`,
         );
       } else {
         const forbiddenDomainType = FORBIDDEN_SHARED_UI_DOMAIN_TYPES.find(

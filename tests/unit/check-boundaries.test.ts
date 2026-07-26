@@ -280,6 +280,24 @@ describe("check-boundaries", () => {
     expect(result.stderr).toContain("entities must not import components");
   });
 
+  it("rejects an entity importing a forbidden framework package", () => {
+    const workspace = makeWorkspace({
+      "scripts/noop.ts": `export const ok = true;`,
+      "src/entities/block/summary.ts": `
+        import React from "react";
+
+        export const el = React.createElement("div");
+      `,
+    });
+
+    const result = runBoundaryCheck(workspace);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("src/entities/block/summary.ts");
+    expect(result.stderr).toContain("entities must not import framework packages");
+    expect(result.stderr).toContain("react");
+  });
+
   it("allows shared UI to import src/components/ui", () => {
     const workspace = makeWorkspace({
       "scripts/noop.ts": `export const ok = true;`,
@@ -385,6 +403,29 @@ describe("check-boundaries", () => {
     expect(result.stderr).toContain("src/shared-ui/Panel.tsx");
     expect(result.stderr).toContain("shared-ui must not import HDB-domain types");
     expect(result.stderr).toContain("src/types/data.ts");
+  });
+
+  it("rejects shared UI importing a non-UI component", () => {
+    const workspace = makeWorkspace({
+      "scripts/noop.ts": `export const ok = true;`,
+      "src/components/BuyerChecklist.tsx": `
+        export function BuyerChecklist() {
+          return null;
+        }
+      `,
+      "src/shared-ui/Panel.tsx": `
+        import { BuyerChecklist } from "@/components/BuyerChecklist";
+
+        export const Panel = BuyerChecklist;
+      `,
+    });
+
+    const result = runBoundaryCheck(workspace);
+
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain("src/shared-ui/Panel.tsx");
+    expect(result.stderr).toContain("shared-ui must not import non-UI components");
+    expect(result.stderr).toContain("src/components/BuyerChecklist.tsx");
   });
 
   // ── Runtime cycle detection ──────────────────────────────────────────
