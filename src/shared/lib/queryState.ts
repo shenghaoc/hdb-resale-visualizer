@@ -11,6 +11,7 @@ import {
   MAX_LEASE_DURATION_YEARS,
   MAX_MRT_DISTANCE_METERS,
   clampNullableNumber,
+  orderNullableNumberRange,
 } from "../../../shared/search-bounds";
 import { isYearMonth } from "../../../shared/yearMonth";
 import type { AffordabilityMode, BlockSortMode, FilterState } from "../../types/data";
@@ -43,6 +44,26 @@ export function clampFilterRanges(filters: FilterState): FilterState {
     endMonth: monthInverted ? startMonth : endMonth,
     mrtMax: clampNullableNumber(filters.mrtMax, 0, MAX_MRT_DISTANCE_METERS),
   };
+}
+
+/**
+ * Normalize numeric range order for evaluation without moving a value between
+ * controlled inputs while the user is typing.
+ */
+export function normalizeNumericFilterRangeOrder(filters: FilterState): FilterState {
+  const [budgetMin, budgetMax] = orderNullableNumberRange(filters.budgetMin, filters.budgetMax);
+  const [areaMin, areaMax] = orderNullableNumberRange(filters.areaMin, filters.areaMax);
+
+  if (
+    budgetMin === filters.budgetMin &&
+    budgetMax === filters.budgetMax &&
+    areaMin === filters.areaMin &&
+    areaMax === filters.areaMax
+  ) {
+    return filters;
+  }
+
+  return { ...filters, budgetMin, budgetMax, areaMin, areaMax };
 }
 
 function parseNumber(value: string | null): number | null {
@@ -91,9 +112,6 @@ export function parseFilters(search: string): FilterState {
   const areaMax = parseNumber(params.get("areaMax"));
   const startMonth = safeParamNullable(params.get("startMonth"));
   const endMonth = safeParamNullable(params.get("endMonth"));
-  const budgetInverted = budgetMin !== null && budgetMax !== null && budgetMin > budgetMax;
-  const areaInverted = areaMin !== null && areaMax !== null && areaMin > areaMax;
-
   const town = safeParam(params.get("town"), DEFAULT_FILTERS.town);
   const rawCompareTown = safeParam(params.get("compareTown"), DEFAULT_FILTERS.compareTown);
   // Require a primary town anchor; ignore a compareTown that matches the primary.
@@ -102,28 +120,30 @@ export function parseFilters(search: string): FilterState {
   const compareTown =
     town && !isSameTown(rawCompareTown, town) ? rawCompareTown : DEFAULT_FILTERS.compareTown;
 
-  return clampFilterRanges({
-    search: safeParam(params.get("search"), DEFAULT_FILTERS.search),
-    town,
-    flatType: safeParam(params.get("flatType"), DEFAULT_FILTERS.flatType),
-    flatModel: safeParam(params.get("flatModel"), DEFAULT_FILTERS.flatModel),
-    budgetMin: budgetInverted ? budgetMax : budgetMin,
-    budgetMax: budgetInverted ? budgetMin : budgetMax,
-    areaMin: areaInverted ? areaMax : areaMin,
-    areaMax: areaInverted ? areaMin : areaMax,
-    remainingLeaseMin: parseNumber(params.get("remainingLeaseMin")),
-    startMonth,
-    endMonth,
-    mrtMax: parseNumber(params.get("mrtMax")),
-    selectedAddressKey: safeParamNullable(params.get("selected")),
-    compareTown,
-    affordable: parseEnum<AffordabilityMode>(
-      params.get("affordable"),
-      AFFORDABILITY_MODES,
-      DEFAULT_FILTERS.affordable,
-    ),
-    sort: parseEnum<BlockSortMode>(params.get("sort"), BLOCK_SORT_MODES, DEFAULT_FILTERS.sort),
-  });
+  return clampFilterRanges(
+    normalizeNumericFilterRangeOrder({
+      search: safeParam(params.get("search"), DEFAULT_FILTERS.search),
+      town,
+      flatType: safeParam(params.get("flatType"), DEFAULT_FILTERS.flatType),
+      flatModel: safeParam(params.get("flatModel"), DEFAULT_FILTERS.flatModel),
+      budgetMin,
+      budgetMax,
+      areaMin,
+      areaMax,
+      remainingLeaseMin: parseNumber(params.get("remainingLeaseMin")),
+      startMonth,
+      endMonth,
+      mrtMax: parseNumber(params.get("mrtMax")),
+      selectedAddressKey: safeParamNullable(params.get("selected")),
+      compareTown,
+      affordable: parseEnum<AffordabilityMode>(
+        params.get("affordable"),
+        AFFORDABILITY_MODES,
+        DEFAULT_FILTERS.affordable,
+      ),
+      sort: parseEnum<BlockSortMode>(params.get("sort"), BLOCK_SORT_MODES, DEFAULT_FILTERS.sort),
+    }),
+  );
 }
 
 export function serializeFilters(filters: FilterState): string {

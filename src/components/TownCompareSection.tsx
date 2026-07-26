@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 type TownCompareSectionProps = {
   locale: Locale;
@@ -47,6 +48,7 @@ type TownCompareSectionProps = {
   trendsFailed: boolean;
   compareBlocksLoading: boolean;
   compareBlocksFailed: boolean;
+  onRetry: () => void;
   onChangeCompareTown: (next: string) => void;
 };
 
@@ -190,6 +192,7 @@ export function TownCompareSection({
   trendsFailed,
   compareBlocksLoading,
   compareBlocksFailed,
+  onRetry,
   onChangeCompareTown,
 }: TownCompareSectionProps) {
   const primarySnap = useMemo(
@@ -204,14 +207,31 @@ export function TownCompareSection({
   );
 
   const compareSnap = useMemo<TownCompareSnapshot | null>(() => {
-    if (!compareTown) return null;
+    if (
+      !compareTown ||
+      trendsLoading ||
+      trendsFailed ||
+      compareBlocksLoading ||
+      compareBlocksFailed
+    ) {
+      return null;
+    }
     return buildTownCompareSnapshot({
       town: compareTown,
       blocks: compareBlocks,
       trends,
       range: monthRange,
     });
-  }, [compareBlocks, compareTown, monthRange, trends]);
+  }, [
+    compareBlocks,
+    compareBlocksFailed,
+    compareBlocksLoading,
+    compareTown,
+    monthRange,
+    trends,
+    trendsFailed,
+    trendsLoading,
+  ]);
 
   const metrics = useMemo(() => buildMetricRows(t, locale), [t, locale]);
 
@@ -288,22 +308,29 @@ export function TownCompareSection({
         </div>
       </header>
 
-      {!compareSnap ? (
+      {!compareTown ? (
         <div
           data-testid="town-compare-empty"
           className="rounded-none border border-dashed border-border/40 bg-background px-3 py-4 text-center text-[0.75rem] text-muted-foreground"
         >
           {t("townCompare.emptyHint")}
         </div>
+      ) : trendsFailed || compareBlocksFailed ? (
+        <div
+          className="flex items-center justify-between gap-3 border border-destructive/30 bg-destructive/5 px-3 py-3"
+          role="alert"
+        >
+          <p className="text-[0.75rem] text-destructive">{t("townCompare.loadFailed")}</p>
+          <Button type="button" size="xs" variant="outline" onClick={onRetry}>
+            {t("error.retry")}
+          </Button>
+        </div>
+      ) : trendsLoading || compareBlocksLoading || !compareSnap ? (
+        <p className="border border-border/35 bg-background px-3 py-4 text-[0.75rem] text-muted-foreground">
+          {t("townCompare.loading")}
+        </p>
       ) : (
         <>
-          {trendsLoading || compareBlocksLoading ? (
-            <p className="mb-2 text-[0.75rem] text-muted-foreground">{t("townCompare.loading")}</p>
-          ) : null}
-          {trendsFailed || compareBlocksFailed ? (
-            <p className="mb-2 text-[0.75rem] text-destructive">{t("townCompare.loadFailed")}</p>
-          ) : null}
-
           {/* Sticky pill for mobile section jumps. */}
           <nav
             aria-label={t("townCompare.sectionsNavLabel")}

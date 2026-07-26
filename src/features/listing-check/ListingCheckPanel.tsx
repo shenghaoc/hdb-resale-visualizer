@@ -140,6 +140,7 @@ export function ListingCheckPanel({
     qualityTag,
     evidenceCaveats,
     canSubmit,
+    retryDetail,
     submit,
   } = analysis;
 
@@ -234,9 +235,12 @@ export function ListingCheckPanel({
           </div>
         )}
         {selectedAddressKey && detailError && (
-          <div className="mb-4 flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+          <div className="mb-4 flex items-center gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
             <AlertTriangle data-icon className="size-4 shrink-0 text-warning" aria-hidden="true" />
-            <span>{t("check.noDetail")}</span>
+            <span className="flex-1">{t("check.noDetail")}</span>
+            <Button type="button" size="xs" variant="outline" onClick={retryDetail}>
+              {t("error.retry")}
+            </Button>
           </div>
         )}
         {selectedAddressKey &&

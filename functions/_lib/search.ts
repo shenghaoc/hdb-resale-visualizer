@@ -1,6 +1,10 @@
 import { canonicalFlatType } from "../../shared/filter-options";
 import { requiresFlatTypeCohortMetadata } from "../../shared/product/flat-type-cohort";
-import { MAX_LEASE_DURATION_YEARS, MAX_MRT_DISTANCE_METERS } from "../../shared/search-bounds";
+import {
+  MAX_LEASE_DURATION_YEARS,
+  MAX_MRT_DISTANCE_METERS,
+  orderNullableNumberRange,
+} from "../../shared/search-bounds";
 import { isYearMonth } from "../../shared/yearMonth";
 import { workerCurrentUtcYear } from "./worker-time";
 
@@ -93,16 +97,11 @@ export function parseSearchRequest(url: URL): ParsedSearchRequest {
     endMonth,
   };
 
-  if (
-    request.budgetMin !== null &&
-    request.budgetMax !== null &&
-    request.budgetMin > request.budgetMax
-  ) {
-    [request.budgetMin, request.budgetMax] = [request.budgetMax, request.budgetMin];
-  }
-  if (request.areaMin !== null && request.areaMax !== null && request.areaMin > request.areaMax) {
-    [request.areaMin, request.areaMax] = [request.areaMax, request.areaMin];
-  }
+  [request.budgetMin, request.budgetMax] = orderNullableNumberRange(
+    request.budgetMin,
+    request.budgetMax,
+  );
+  [request.areaMin, request.areaMax] = orderNullableNumberRange(request.areaMin, request.areaMax);
   if (request.startMonth && request.endMonth && request.startMonth > request.endMonth) {
     [request.startMonth, request.endMonth] = [request.endMonth, request.startMonth];
   }

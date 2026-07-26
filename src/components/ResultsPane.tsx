@@ -828,9 +828,11 @@ export function ResultsPane({
   const compareBlocksMountedRef = useRef(true);
   const compareBlocksFetchedTownRef = useRef<string | null>(null);
   const compareBlocksRequestSequenceRef = useRef(0);
+  const [compareBlocksRetryGeneration, setCompareBlocksRetryGeneration] = useState(0);
+  const [townTrendRetryGeneration, setTownTrendRetryGeneration] = useState(0);
 
   type CompareBlocksSnap = {
-    status: "idle" | "loaded" | "failed";
+    status: "idle" | "loading" | "loaded" | "failed";
     requestedTown: string;
     blocks: BlockSummary[];
   };
@@ -869,6 +871,7 @@ export function ResultsPane({
     // Mark the request in flight before awaiting so a render caused by other
     // state cannot start a duplicate request for the same town.
     compareBlocksFetchedTownRef.current = requestedTown;
+    setCompareBlocksSnap({ status: "loading", requestedTown, blocks: [] });
     void fetchBlocksByTown(requestedTown)
       .then((blocks) => {
         if (
@@ -886,7 +889,7 @@ export function ResultsPane({
           return;
         setCompareBlocksSnap({ status: "failed", requestedTown, blocks: [] });
       });
-  }, [activeCompareTown, showTownCompare]);
+  }, [activeCompareTown, compareBlocksRetryGeneration, showTownCompare]);
 
   useEffect(() => {
     if (!showTownProfile || !profileTown) {
@@ -923,7 +926,13 @@ export function ResultsPane({
         }
         setTrendSnap({ status: "failed", requestedTown, rows: [] });
       });
-  }, [profileTown, showTownProfile, trendSnap.requestedTown, trendSnap.status]);
+  }, [
+    profileTown,
+    showTownProfile,
+    townTrendRetryGeneration,
+    trendSnap.requestedTown,
+    trendSnap.status,
+  ]);
 
   const townTrendRows = useMemo(
     () => (trendSnap.status === "loaded" ? trendSnap.rows : EMPTY_ARRAY),
@@ -989,11 +998,25 @@ export function ResultsPane({
   const compareBlocksLoading =
     showTownCompare &&
     Boolean(activeCompareTown) &&
-    (compareBlocksSnap.status === "idle" || compareBlocksSnap.requestedTown !== activeCompareTown);
+    (compareBlocksSnap.status === "idle" ||
+      compareBlocksSnap.status === "loading" ||
+      compareBlocksSnap.requestedTown !== activeCompareTown);
   const compareBlocksFailed =
     showTownCompare &&
     compareBlocksSnap.status === "failed" &&
     compareBlocksSnap.requestedTown === activeCompareTown;
+  const retryTownComparison = () => {
+    if (compareBlocksFailed) {
+      compareBlocksFetchedTownRef.current = null;
+      setCompareBlocksSnap({ status: "idle", requestedTown: "", blocks: [] });
+      setCompareBlocksRetryGeneration((current) => current + 1);
+    }
+    if (townTrendFailed) {
+      townTrendRequestRef.current = null;
+      setTrendSnap({ status: "idle", requestedTown: "", rows: [] });
+      setTownTrendRetryGeneration((current) => current + 1);
+    }
+  };
 
   const sortedBlocks = useMemo(() => {
     if (blocks.length === 0) return EMPTY_ARRAY;
@@ -1348,6 +1371,7 @@ export function ResultsPane({
                     trendsFailed={townTrendFailed}
                     compareBlocksLoading={compareBlocksLoading}
                     compareBlocksFailed={compareBlocksFailed}
+                    onRetry={retryTownComparison}
                     onChangeCompareTown={(next) => onChangeCompareTown?.(next)}
                   />
                   {!activeCompareTown ? (

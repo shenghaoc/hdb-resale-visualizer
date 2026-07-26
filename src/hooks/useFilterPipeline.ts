@@ -18,6 +18,7 @@ import { getFuseMatchedKeys } from "@/features/search-profile/searchFuse";
 import { hasCompletedSearchProfile } from "@/features/search-profile/searchProfile";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
+import { normalizeNumericFilterRangeOrder } from "@/shared/lib/queryState";
 import type { BlockSummary, Coordinates, FilterState, Manifest } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
 import type { Translator } from "@/shared/lib/i18n";
@@ -45,15 +46,15 @@ export function useFilterPipeline({
 }: UseFilterPipelineOptions) {
   // URL-backed filters are the complete result contract. Never inject a hidden
   // date constraint: null means no latest-sale cutoff.
-  const effectiveFilters = rawFilters;
+  const effectiveFilters = useMemo(
+    () => normalizeNumericFilterRangeOrder(rawFilters),
+    [rawFilters],
+  );
 
   // Hide the "near me" sentinel from the search input so it looks empty.
   const filterPanelFilters = useMemo(
-    () =>
-      effectiveFilters.search === NEAR_ME_SEARCH_QUERY
-        ? { ...effectiveFilters, search: "" }
-        : effectiveFilters,
-    [effectiveFilters],
+    () => (rawFilters.search === NEAR_ME_SEARCH_QUERY ? { ...rawFilters, search: "" } : rawFilters),
+    [rawFilters],
   );
 
   // "near me" is a sentinel that requires userLocation to resolve. Without a

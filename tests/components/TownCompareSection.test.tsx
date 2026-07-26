@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vite-plus/test";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vite-plus/test";
 import { TownCompareSection } from "@/components/TownCompareSection";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
@@ -93,6 +94,7 @@ function renderSection(overrides: Partial<React.ComponentProps<typeof TownCompar
         trendsFailed={false}
         compareBlocksLoading={false}
         compareBlocksFailed={false}
+        onRetry={() => {}}
         onChangeCompareTown={() => {}}
         {...overrides}
       />
@@ -118,5 +120,22 @@ describe("TownCompareSection", () => {
     // Delta badges only appear in the compare column.
     expect(within(compare).getAllByTestId("town-compare-delta").length).toBeGreaterThan(0);
     expect(within(primary).queryByTestId("town-compare-delta")).toBeNull();
+  });
+
+  it("renders no zero-valued comparison snapshot when block evidence fails", async () => {
+    const onRetry = vi.fn();
+    renderSection({
+      compareTown: "ANG MO KIO",
+      compareBlocks: [],
+      compareBlocksFailed: true,
+      onRetry,
+    });
+
+    expect(screen.getByRole("alert")).toHaveTextContent("townCompare.loadFailed");
+    expect(screen.queryByTestId("town-compare-column-primary")).toBeNull();
+    expect(screen.queryByTestId("town-compare-column-compare")).toBeNull();
+
+    await userEvent.click(screen.getByRole("button", { name: "error.retry" }));
+    expect(onRetry).toHaveBeenCalledTimes(1);
   });
 });

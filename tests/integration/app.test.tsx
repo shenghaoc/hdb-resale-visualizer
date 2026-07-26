@@ -306,12 +306,64 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    expect(await screen.findByText(/manifest unavailable/i)).toBeInTheDocument();
+    expect(await screen.findByText(/could not load its data index/i)).toBeInTheDocument();
+    expect(screen.queryByText(/manifest unavailable/i)).toBeNull();
     await user.click(screen.getByRole("button", { name: "Retry" }));
 
     expect(await screen.findByTestId("map-view")).toBeInTheDocument();
     expect(dataMocks.fetchManifest).toHaveBeenCalledTimes(2);
     expect(screen.queryByRole("button", { name: /reset filters and try again/i })).toBeNull();
+  });
+
+  it("localizes manifest recovery without exposing diagnostic paths or messages", async () => {
+    dataMocks.fetchManifest.mockRejectedValueOnce(
+      new Error("Failed to load /api/manifest: 500 manifest unavailable"),
+    );
+    vi.stubGlobal("localStorage", {
+      getItem: vi.fn((key: string) => {
+        if (key === "hdb-resale-locale") return "zh-SG";
+        return key === SEARCH_PROFILE_STORAGE_KEY ? JSON.stringify(completedSearchProfile) : null;
+      }),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    });
+
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    expect(await screen.findByText(/无法载入应用的数据索引/)).toBeInTheDocument();
+    expect(screen.queryByText(/\/api\//i)).toBeNull();
+    expect(screen.queryByText(/manifest unavailable/i)).toBeNull();
+    expect(screen.getByRole("button", { name: "重试" })).toBeInTheDocument();
+  });
+
+  it("hides block-search diagnostics behind source-specific recovery copy", async () => {
+    window.history.replaceState({}, "", "/?town=BEDOK&v=1");
+    dataMocks.fetchBlocksByTown.mockRejectedValueOnce(
+      new Error("Failed to load /api/blocks: 500 database unavailable"),
+    );
+
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    expect(await screen.findByText(/Data unavailable/)).toHaveTextContent(
+      "Results could not be loaded for these filters.",
+    );
+    expect(screen.queryByText(/\/api\//i)).toBeNull();
+    expect(screen.queryByText(/database unavailable/i)).toBeNull();
+    expect(
+      screen.getByRole("button", { name: /reset filters and try again/i }),
+    ).toBeInTheDocument();
   });
 
   it("dismisses the first-visit prompt while a desktop work panel is open", async () => {

@@ -665,6 +665,41 @@ describe("ResultsPane", () => {
     expect(screen.getByTestId("town-compare-column-compare")).toHaveTextContent("TAMPINES");
   });
 
+  it("retries failed town-comparison blocks without rendering false zero metrics", async () => {
+    dataMocks.fetchBlocksByTown
+      .mockRejectedValueOnce(new Error("comparison unavailable"))
+      .mockResolvedValueOnce([amkBlock]);
+
+    render(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block]}
+          hasResultScope
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact
+          profileTown="BEDOK"
+          profileTownBlocks={[block]}
+          profileDataWindow={{ minMonth: "2024-01", maxMonth: "2024-01" }}
+          compareTown="ANG MO KIO"
+          availableTowns={["BEDOK", "ANG MO KIO"]}
+        />
+      </I18nProvider>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "显示涵盖所有房型的全镇概览" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("无法加载对比数据。");
+    expect(screen.queryByTestId("town-compare-column-compare")).toBeNull();
+
+    await userEvent.click(screen.getByRole("button", { name: "重试" }));
+    await waitFor(() => expect(dataMocks.fetchBlocksByTown).toHaveBeenCalledTimes(2));
+    expect(await screen.findByTestId("town-compare-column-compare")).toHaveTextContent(
+      "ANG MO KIO",
+    );
+  });
+
   it("explains an unanswerable refinement instead of implying zero matches", async () => {
     const onClear = vi.fn();
     render(

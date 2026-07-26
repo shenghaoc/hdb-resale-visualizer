@@ -16,15 +16,30 @@
 `clampFilterRanges` applies it on both URL hydration and every filter patch,
 then normalizes valid month ranges and clamps numeric bounds. `parseFilters`
 alone orders numeric deep-link endpoints; doing that on every keystroke would
-move a value into the opposite controlled input. The Worker uses the same month
-validator, preserving defense in depth.
+move a value into the opposite controlled input. For live numeric edits,
+`useFilterPipeline` evaluates a derived ascending range while `FilterPanel`
+keeps raw controlled values until blur commits the shared endpoint order. The
+Worker uses the same numeric ordering helper and month validator, preserving
+the browser/server contract.
 
 ## Async Comparison
 
 Town comparison assigns a monotonically increasing request sequence before
 awaiting. Completion handlers commit only when their sequence is still current
 and the component remains mounted. Disabling or changing comparison invalidates
-the previous request without adding a duplicate cache.
+the previous request without adding a duplicate cache. Loading and failure
+states never synthesize a snapshot from an empty array; failure exposes an
+explicit retry generation for block and trend data.
+
+## Recovery Copy
+
+Diagnostic strings stay in hook state for debugging, but `App` renders only
+source-specific translated manifest/results failure copy. Buyers never see raw
+request paths or HTTP implementation details.
+
+`useListingCheckAnalysis` owns an address-detail retry generation. The panel
+exposes it beside the translated detail error, so retrying the same block does
+not depend on changing reducer selection state.
 
 ## Presentation
 

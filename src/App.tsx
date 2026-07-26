@@ -313,10 +313,11 @@ function App() {
     toggleShortlist: handleShortlistToggle,
     leftTab: panel.leftTab,
   });
+  const retryBlockLoading = pipeline.retryBlockLoading;
   const handleBlockLoadRecovery = useCallback(() => {
     handleResetFilters();
-    pipeline.retryBlockLoading();
-  }, [handleResetFilters, pipeline.retryBlockLoading]);
+    retryBlockLoading();
+  }, [handleResetFilters, retryBlockLoading]);
 
   const mapExplorer = useMapExplorerController({
     filters: activeFilters,
@@ -363,7 +364,8 @@ function App() {
           <CardHeader className="gap-3">
             <CardTitle className="text-3xl">{t("app.title")}</CardTitle>
             <CardDescription>
-              {t("app.missingData")} · {error ?? pipeline.loadError}
+              {t("app.missingData")} ·{" "}
+              {error ? t("app.manifestLoadFailed") : t("app.resultsLoadFailed")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-start gap-3 pt-2 text-sm text-muted-foreground">

@@ -23,3 +23,15 @@ export function clampNullableNumber(value: number | null, min: number, max: numb
   if (value === null || !Number.isFinite(value)) return null;
   return Math.min(Math.max(value, min), max);
 }
+
+/**
+ * Return numeric range endpoints in ascending order while preserving an open
+ * endpoint. The same helper keeps Worker search parsing and browser-side
+ * filtering aligned for temporarily inverted controlled inputs.
+ */
+export function orderNullableNumberRange(
+  min: number | null,
+  max: number | null,
+): readonly [number | null, number | null] {
+  return min !== null && max !== null && min > max ? [max, min] : [min, max];
+}

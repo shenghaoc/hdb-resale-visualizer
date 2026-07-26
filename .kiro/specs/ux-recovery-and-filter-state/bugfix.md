@@ -22,6 +22,15 @@ the filters, data, or recovery action they actually controlled.
    forever.
 6. Compact Results represented affordability with an unexplained, non-focusable
    color dot even though the full layout had a textual status.
+7. Live inverted budget/area inputs were normalized by the Worker but evaluated
+   in their raw order in the browser, turning valid server results into a false
+   zero-match state.
+8. A failed town-comparison block request was sticky and its empty fallback
+   rendered unavailable evidence as real-looking zero metrics.
+9. Global recovery copy appended raw exception messages and API paths after a
+   translated heading.
+10. A transient Listing Check address-detail failure could not be retried for
+    the same selected block.
 
 ## Expected Behavior
 
@@ -33,9 +42,16 @@ the filters, data, or recovery action they actually controlled.
    and SHALL clear the prior error when no follow-up request is needed.
 3. Client state SHALL accept only real `YYYY-MM` month values, normalize valid
    inverted deep-link ranges, and discard malformed values before they reach
-   the API. Per-keystroke numeric edits SHALL preserve the field being edited.
+   the API. Per-keystroke numeric edits SHALL preserve the field being edited;
+   browser evaluation SHALL use the same ascending range as the Worker, and
+   blur SHALL commit that order back to the visible fields.
 4. Only the latest town-comparison request SHALL update comparison state.
-5. Compact Results SHALL expose affordability in visible translated text; color
+   Failed comparison data SHALL render no metrics and offer a real retry.
+5. Global recovery SHALL render source-specific translated copy without
+   exposing exception text or API paths.
+6. Listing Check address-detail failure SHALL expose a retry that repeats the
+   request without requiring a different selection.
+7. Compact Results SHALL expose affordability in visible translated text; color
    may remain a redundant visual cue.
 
 ## Preserved Behavior
@@ -43,5 +59,7 @@ the filters, data, or recovery action they actually controlled.
 - Basic flat-type and budget filters remain usable during cohort migration.
 - Uncontrolled `ResultsPane` tests and consumers retain local sort state.
 - Numeric bounds remain shared by client and server.
+- Temporarily inverted controlled inputs remain editable without keystroke-time
+  swapping.
 - Manifest retry does not cache, mutate, or write user data.
 - Town comparison remains lazy and does not add external requests.

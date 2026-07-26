@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
-import { clampFilterRanges, parseFilters, serializeFilters } from "@/shared/lib/queryState";
+import {
+  clampFilterRanges,
+  normalizeNumericFilterRangeOrder,
+  parseFilters,
+  serializeFilters,
+} from "@/shared/lib/queryState";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 
 describe("queryState", () => {
@@ -195,6 +200,21 @@ describe("queryState", () => {
       budgetMax: 500000,
       areaMin: 100,
       areaMax: 80,
+    });
+
+    expect(
+      normalizeNumericFilterRangeOrder({
+        ...DEFAULT_FILTERS,
+        budgetMin: 600000,
+        budgetMax: 500000,
+        areaMin: 100,
+        areaMax: 80,
+      }),
+    ).toMatchObject({
+      budgetMin: 500000,
+      budgetMax: 600000,
+      areaMin: 80,
+      areaMax: 100,
     });
   });
 

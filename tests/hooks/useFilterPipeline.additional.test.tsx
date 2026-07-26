@@ -85,6 +85,69 @@ describe("useFilterPipeline — additional edge cases", () => {
     mockLocation("");
   });
 
+  it("evaluates live inverted numeric ranges in the same order as the server", () => {
+    const matching = makeBlock({
+      addressKey: "bedok-in-normalized-range",
+      medianPrice: 550_000,
+      floorAreaRange: [85, 95],
+    });
+    vi.mocked(useBlockLoading).mockReturnValue({
+      blocks: [matching],
+      loadError: null,
+      searchTruncated: false,
+      refinementUnsupported: false,
+      isLoading: false,
+      retry: vi.fn(),
+    });
+    const rawFilters = {
+      ...baseFilters,
+      town: "BEDOK",
+      budgetMin: 600_000,
+      budgetMax: 500_000,
+      areaMin: 100,
+      areaMax: 80,
+    };
+
+    const { result } = renderHook(() =>
+      useFilterPipeline({
+        manifest,
+        rawFilters,
+        userLocation: null,
+        resultsVisible: true,
+        savedVisible: false,
+        shortlistCount: 0,
+        searchProfile: DEFAULT_SEARCH_PROFILE,
+        t,
+      }),
+    );
+
+    expect(result.current.filterPanelFilters).toMatchObject({
+      budgetMin: 600_000,
+      budgetMax: 500_000,
+      areaMin: 100,
+      areaMax: 80,
+    });
+    expect(result.current.effectiveFilters).toMatchObject({
+      budgetMin: 500_000,
+      budgetMax: 600_000,
+      areaMin: 80,
+      areaMax: 100,
+    });
+    expect(result.current.filteredBlocks.map((item) => item.addressKey)).toEqual([
+      "bedok-in-normalized-range",
+    ]);
+    expect(useBlockLoading).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        coarseSearchParams: expect.objectContaining({
+          budgetMin: 500_000,
+          budgetMax: 600_000,
+          areaMin: 80,
+          areaMax: 100,
+        }),
+      }),
+    );
+  });
+
   describe("near-me sentinel handling", () => {
     it("hides near-me sentinel from filterPanelFilters", () => {
       const { result } = renderHook(() =>
