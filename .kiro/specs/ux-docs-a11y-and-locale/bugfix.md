@@ -23,11 +23,14 @@ architecture the repository actually runs.
 4. The heatmap radiogroup did not provide complete wrapping arrow-key
    navigation.
 5. The lazy map fallback kept an English-only loading label in zh-SG.
-6. Primary buttons diluted their background on hover while keeping white
+6. Switching the visible UI to zh-SG left the root document language and
+   browser title in English, so assistive technology could apply the wrong
+   pronunciation rules and the browser chrome contradicted the selected locale.
+7. Primary buttons diluted their background on hover while keeping white
    11px labels, dropping the light-mode contrast ratio below WCAG AA. Buyer
    setup also animated its action from the disabled surface to primary,
    exposing another failing intermediate color.
-7. CI invoked a bare Vite+ command instead of the package-defined `check`
+8. CI invoked a bare Vite+ command instead of the package-defined `check`
    script. README, AGENTS, architecture docs, and older Kiro specs repeated
    stale package-manager, browser, local-server, migration, and interaction
    claims.
@@ -45,11 +48,12 @@ architecture the repository actually runs.
 4. The heatmap mode radiogroup SHALL support wrapping ArrowLeft/ArrowRight and
    ArrowUp/ArrowDown navigation, with Home/End selecting the first/last option.
 5. The map loading fallback SHALL use the active locale.
-6. Primary-button hover states SHALL preserve at least WCAG AA text contrast
+6. The root document language and title SHALL follow the active locale.
+7. Primary-button hover states SHALL preserve at least WCAG AA text contrast
    in both color schemes, including shared buttons, the buyer wizard, and the
    selected month control. Enabled/disabled state changes SHALL NOT animate
    through a failing intermediate foreground/background pair.
-7. Base CI SHALL run `vp install` then `vp run check`. Documentation SHALL
+8. Base CI SHALL run `vp install` then `vp run check`. Documentation SHALL
    describe Node 24, pnpm/Vite+, Chromium, `wrangler dev`, forward-only
    migrations, Worker-routed APIs, and per-flat-type cohort readiness
    accurately.

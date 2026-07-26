@@ -12,7 +12,9 @@ cannot change confidence.
 Locale-aware formatters receive the selected locale in Listing Check, map
 popups, Buyer setup presets/review, shortlist charts, and the block-history
 chart axis/tooltip. Filter range copy and the lazy map fallback use the
-translation catalog.
+translation catalog. `I18nProvider` also synchronizes the root document
+`lang` attribute and browser title with the active BCP 47 locale so assistive
+technology and browser chrome use the same language as the rendered UI.
 
 ## Accessible Interaction
 
