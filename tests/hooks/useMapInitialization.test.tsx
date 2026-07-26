@@ -25,11 +25,14 @@ const maplibreMocks = vi.hoisted(() => {
 });
 
 vi.mock("maplibre-gl", () => ({
-  default: {
-    Map: maplibreMocks.mapConstructor,
-    NavigationControl: maplibreMocks.navigationControlConstructor,
-    GeolocateControl: maplibreMocks.geolocateControlConstructor,
-  },
+  Map: maplibreMocks.mapConstructor,
+  NavigationControl: maplibreMocks.navigationControlConstructor,
+  GeolocateControl: maplibreMocks.geolocateControlConstructor,
+  setWorkerUrl: vi.fn(),
+}));
+
+vi.mock("maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url", () => ({
+  default: "/fake-worker-url",
 }));
 
 function createContainerRef() {
