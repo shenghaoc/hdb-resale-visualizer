@@ -12,4 +12,7 @@
 - [x] Distinguish block loading from a completed zero-result answer.
 - [x] Round persisted money answers and use a searchable zh-SG example.
 - [x] Remove dead copy and duplicate recovery state writes.
-- [ ] Verify the final exact-head CI and deployed preview after push.
+- [x] Verify the final exact-head CI and deployed preview after push.
+  → Product-code head `1560b0cba` passed the full local `pnpm run check:pr`
+  gate, all exact-head GitHub checks, and deployed Listing Check smoke with
+  30 comparable transactions at desktop and mobile widths.

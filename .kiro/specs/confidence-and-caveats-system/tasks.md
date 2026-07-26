@@ -1,7 +1,7 @@
 # Tasks: Confidence & Caveats System
 
-> Status: Implementation complete. Final stacked-PR gates remain separate from
-> this implementation checklist so they are not claimed before they run.
+> Status: Complete at final stacked product-code head `1560b0cba`, including
+> local, exact-head CI, and deployed-preview verification.
 
 ## Phase 1 — Shared engines
 
@@ -66,7 +66,13 @@
 
 ## Phase 5 — Final verification
 
-- [ ] **T5.1** Run the exact-head package gate: `vp run check`.
-- [ ] **T5.2** Run the exact-head browser/E2E gate: `vp run check:pr`.
-- [ ] **T5.3** Complete the final deployed-preview smoke for Listing Check
+- [x] **T5.1** Run the exact-head package gate: `vp run check`.
+  → Passed within `pnpm run check:pr` on product-code head `1560b0cba`:
+  179 Vitest files and 1,734 tests, plus production build and bundle checks.
+- [x] **T5.2** Run the exact-head browser/E2E gate: `vp run check:pr`.
+  → Passed on product-code head `1560b0cba`, including all 76 Playwright tests.
+- [x] **T5.3** Complete the final deployed-preview smoke for Listing Check
   confidence, caveats, evidence badges, and both locales.
+  → Verified the English and Chinese verdict, confidence tier, three
+  structured caveats, localized match-reason badges, and responsive
+  comparable evidence on the deployed preview.

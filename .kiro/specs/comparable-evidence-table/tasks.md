@@ -1,7 +1,7 @@
 # Tasks: Comparable Evidence Table
 
-> Status: Implementation complete. Final exact-head and deployed-preview gates
-> remain unchecked until they are run.
+> Status: Complete at final stacked product-code head `1560b0cba`, including
+> local, exact-head CI, and deployed-preview verification.
 
 ## Phase 1 — Component and sorting
 
@@ -61,10 +61,16 @@
 
 ## Phase 5 — Final verification
 
-- [ ] **T5.1** Run the exact-head package gate: `vp run check`.
-- [ ] **T5.2** Run the exact-head browser/E2E gate: `vp run check:pr`.
-- [ ] **T5.3** Complete the final deployed-preview smoke at desktop and mobile
+- [x] **T5.1** Run the exact-head package gate: `vp run check`.
+  → Passed within `pnpm run check:pr` on product-code head `1560b0cba`:
+  179 Vitest files and 1,734 tests, plus production build and bundle checks.
+- [x] **T5.2** Run the exact-head browser/E2E gate: `vp run check:pr`.
+  → Passed on product-code head `1560b0cba`, including all 76 Playwright tests.
+- [x] **T5.3** Complete the final deployed-preview smoke at desktop and mobile
   widths, including both locales.
+  → Verified 30-row desktop evidence and responsive mobile cards, localized
+  caveats and match reasons, sorting controls, and no horizontal overflow in
+  `en-SG` and `zh-SG`.
 - [x] **T5.4** Verify by repository search that
   `ComparableEvidenceTable` is the sole Listing Check transaction-evidence
   surface.

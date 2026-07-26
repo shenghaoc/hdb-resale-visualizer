@@ -26,5 +26,10 @@
   specs with Node 24, pnpm/Vite+, Chromium, Worker/D1 local development,
   forward-only migrations, map pan/zoom behavior, and flat-type cohort
   readiness.
-- [ ] Run exact-head CI and the deployed desktop/mobile bilingual UX audit
+- [x] Run exact-head CI and the deployed desktop/mobile bilingual UX audit
   after push.
+  → Product-code head `1560b0cba` passed the full local `pnpm run check:pr`
+  gate and all exact-head GitHub checks. The deployed preview was audited in
+  `en-SG` and `zh-SG` at desktop, 390 × 844, and 320 × 568 widths, including
+  document language/title, Buyer setup, Listing Check, comparable evidence,
+  contrast, keyboard behavior, and horizontal overflow.
