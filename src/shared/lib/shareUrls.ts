@@ -54,10 +54,11 @@ export function buildCompareShareUrl(filters: FilterState, baseUrl: string): str
 
 /**
  * Builds the full deep-link URL for the current filter set.
- * Passes through all active filters via `serializeFilters`.
+ * Personal affordability depends on local-only CPF, income, and age inputs, so
+ * it cannot be reproduced safely in a shared URL and is intentionally omitted.
  */
 export function buildFilterShareUrl(filters: FilterState, baseUrl: string): string {
-  return `${baseUrl}${serializeFilters(filters)}`;
+  return `${baseUrl}${serializeFilters({ ...filters, affordable: "" })}`;
 }
 
 /**
@@ -70,7 +71,9 @@ export function buildShortlistShareUrl(
   origin: string,
   pathname: string,
 ): string {
-  const filterSearch = serializeFilters(filters);
+  // Shortlist sharing carries the board data, but never the sender's local-only
+  // affordability mode because recipients do not have the same finance profile.
+  const filterSearch = serializeFilters({ ...filters, affordable: "" });
   const params = new URLSearchParams(
     filterSearch.startsWith("?") ? filterSearch.slice(1) : filterSearch,
   );

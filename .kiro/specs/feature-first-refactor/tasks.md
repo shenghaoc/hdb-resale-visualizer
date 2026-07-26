@@ -72,8 +72,8 @@
   - Completed via `src/features/listing-check/useListingCheckController.ts`.
 - [x] 6.2 Keep calculation functions in entities/shared/lib modules; move only orchestration and component composition into feature.
   - Completed: panel at `src/features/listing-check/ListingCheckPanel.tsx`; async orchestration in `useListingCheckAnalysis.ts`; pure composition in `listingCheckAnalysis.ts` (orchestrates entity/shared calculations without reimplementing them).
-- [x] 6.3 Ensure `AskingPriceCheck`, verdict panels, and comparable evidence producers import from new feature/entity modules.
-  - Moved `AskingPriceCheck`, `ComparableEvidenceTable`, `ComparableTransactionsList`, and `DistributionBar` into `src/features/listing-check/`.
+- [x] 6.3 Ensure `ListingCheckPanel`, verdict presentation, and comparable evidence producers import from new feature/entity modules.
+  - `ListingCheckPanel`, `ComparableEvidenceTable`, and `DistributionBar` now live in `src/features/listing-check/`; retired duplicate listing-check components were removed.
   - Consolidated shared verdict presentation in `src/features/listing-check/listingVerdictPresentation.ts`.
   - Evidence components now consume feature analysis types (`DisplayComparable`, `ListingAdjustmentInfo`) rather than parallel local contracts.
   - Listing-check feature boundary is complete (tasks 6.1–6.5).
@@ -83,7 +83,7 @@
   - Added `tests/unit/listingCheckAnalysis.test.ts`, `tests/unit/useListingCheckAnalysis.test.tsx`, `tests/unit/useListingFactInput.test.tsx`; retained `tests/components/ListingCheckPanel.inputs.test.tsx`.
 - [x] 6.5 Validate:
   - `npm run test tests/unit/listing-verdict.test.ts tests/unit/listing-confidence.test.ts tests/unit/comparable-engine.test.ts`
-  - `npm run test tests/components/ComparableEvidenceTable.test.tsx tests/components/AskingPriceCheck.test.tsx`
+  - `npm run test tests/components/ComparableEvidenceTable.test.tsx tests/components/ListingCheckPanel.inputs.test.tsx`
   - Plus focused feature tests, buyer listing-check E2E, `vp run check`, and `vp run check:pr`.
 
 ## 7) Move shortlist feature logic

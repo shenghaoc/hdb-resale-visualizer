@@ -65,8 +65,7 @@ export function useMapExplorerController({
   } = geolocation;
   const heatmap = usePriceHeatmap();
   const [schoolOverlayEnabled, setSchoolOverlayEnabled] = useState(false);
-  const [mrtStationsEnabled, setMrtStationsEnabled] = useState(false);
-  const [mrtExitsEnabled, setMrtExitsEnabled] = useState(false);
+  const [mrtEnabled, setMrtEnabled] = useState(false);
 
   const primarySchoolsForOverlay = useMemo(
     () => getPrimarySchoolsForOverlay(selectedComparison?.amenities.nearestPrimarySchools ?? []),
@@ -91,12 +90,8 @@ export function useMapExplorerController({
     return null;
   }, [geographicIntent, mapSearch]);
 
-  const toggleMrtStations = useCallback(() => {
-    setMrtStationsEnabled((value) => !value);
-  }, []);
-
-  const toggleMrtExits = useCallback(() => {
-    setMrtExitsEnabled((value) => !value);
+  const toggleMrt = useCallback(() => {
+    setMrtEnabled((value) => !value);
   }, []);
 
   const toggleSchoolOverlay = useCallback(() => {
@@ -109,6 +104,7 @@ export function useMapExplorerController({
       clearGeolocationError();
       patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
       if (isDesktop) {
+        setIsSavedPanelOpen(false);
         setLeftTab("results");
         setIsLeftPanelOpen(true);
       }
@@ -118,6 +114,7 @@ export function useMapExplorerController({
       clearGeolocationError,
       patchFilters,
       isDesktop,
+      setIsSavedPanelOpen,
       setLeftTab,
       setIsLeftPanelOpen,
     ],
@@ -128,6 +125,7 @@ export function useMapExplorerController({
       (coords) => {
         patchFilters({ search: NEAR_ME_SEARCH_QUERY, town: "", selectedAddressKey: null });
         if (isDesktop) {
+          setIsSavedPanelOpen(false);
           setLeftTab("results");
           setIsLeftPanelOpen(true);
         }
@@ -137,7 +135,15 @@ export function useMapExplorerController({
       },
       () => onCannotLocate(),
     );
-  }, [locate, patchFilters, isDesktop, setLeftTab, setIsLeftPanelOpen, onCannotLocate]);
+  }, [
+    locate,
+    patchFilters,
+    isDesktop,
+    setIsSavedPanelOpen,
+    setLeftTab,
+    setIsLeftPanelOpen,
+    onCannotLocate,
+  ]);
 
   const handleMapInteract = useCallback(
     (interactionType: "background" | "feature" = "background") => {
@@ -203,16 +209,14 @@ export function useMapExplorerController({
       setHeatmapMode: heatmap.setHeatmapMode,
 
       // Amenity overlays
-      mrtStationsEnabled,
-      mrtExitsEnabled,
+      mrtEnabled,
       schoolOverlayEnabled,
       schoolOverlayAvailable,
       schoolOverlayLoading,
       hasBlockSelection,
       primarySchoolsForOverlay,
       effectiveSchoolOverlayEnabled,
-      toggleMrtStations,
-      toggleMrtExits,
+      toggleMrt,
       toggleSchoolOverlay,
 
       // Fit / interaction
@@ -237,16 +241,14 @@ export function useMapExplorerController({
       heatmap.togglePriceHeatmap,
       heatmap.setPriceHeatmapOpacity,
       heatmap.setHeatmapMode,
-      mrtStationsEnabled,
-      mrtExitsEnabled,
+      mrtEnabled,
       schoolOverlayEnabled,
       schoolOverlayAvailable,
       schoolOverlayLoading,
       hasBlockSelection,
       primarySchoolsForOverlay,
       effectiveSchoolOverlayEnabled,
-      toggleMrtStations,
-      toggleMrtExits,
+      toggleMrt,
       toggleSchoolOverlay,
       autoFitKey,
       handleGeolocate,

@@ -58,11 +58,13 @@ test.describe("Accessibility (axe)", () => {
   test.describe("Search profile wizard", () => {
     test.use({ storageState: { cookies: [], origins: [] } });
 
-    test("welcome step has no serious or critical WCAG violations", async ({ page }) => {
+    test("first preference step has no serious or critical WCAG violations", async ({ page }) => {
       await page.goto("/");
 
-      await expect(page.getByRole("heading", { name: "Set up your search profile" })).toBeVisible();
-      await expect(page.getByRole("button", { name: "Get started" })).toBeVisible();
+      await page.getByRole("button", { name: "Filters" }).click();
+      await page.getByRole("button", { name: "Buyer setup" }).click();
+      await expect(page.getByText("What type of flat?")).toBeVisible();
+      await expect(page.getByRole("button", { name: "Skip for now" })).toBeVisible();
 
       await expectNoSeriousOrCriticalViolations(page);
     });

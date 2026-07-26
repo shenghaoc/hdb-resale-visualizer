@@ -5,6 +5,10 @@ import {
   fetchBlocksByTown,
   townToFilename,
 } from "@/shared/lib/data";
+import {
+  hasCompleteFlatTypeCohortMetadata,
+  requiresFlatTypeCohortMetadata,
+} from "@shared/product/flat-type-cohort";
 import type { BlockSummary, Manifest } from "@/types/data";
 
 type UseBlockLoadingArgs = {
@@ -31,6 +35,15 @@ type UseBlockLoadingArgs = {
   };
 };
 
+type CohortRefinementParams = UseBlockLoadingArgs["coarseSearchParams"];
+
+export function requiresUnavailableFullCorpusCohorts(
+  blocks: BlockSummary[],
+  params: CohortRefinementParams,
+): boolean {
+  return requiresFlatTypeCohortMetadata(params) && !hasCompleteFlatTypeCohortMetadata(blocks);
+}
+
 export function useBlockLoading({
   manifest,
   townFilter,
@@ -46,6 +59,11 @@ export function useBlockLoading({
   const [blocks, setBlocks] = useState<BlockSummary[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [searchTruncated, setSearchTruncated] = useState(false);
+  // True only when the server refused a per-flat-type refinement because the
+  // cohort column is missing. The empty result set is then "we cannot answer
+  // this yet", not "nothing matches" — the UI must say so rather than imply zero.
+  const [refinementUnsupported, setRefinementUnsupported] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const blocksRef = useRef<BlockSummary[]>([]);
   const loadedTownsRef = useRef<Set<string>>(new Set());
   const blocksSourceRef = useRef<"none" | "search" | "town-partial" | "full">("none");
@@ -73,7 +91,11 @@ export function useBlockLoading({
   );
 
   useEffect(() => {
-    if (!manifest) return;
+    if (!manifest) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- clear stale loading state when the manifest disappears
+      setIsLoading(false);
+      return;
+    }
 
     let isMounted = true;
     const totalBlocks = manifest.counts.blocks;
@@ -91,9 +113,15 @@ export function useBlockLoading({
         const currentBlocks = blocksRef.current;
         const hasFullCorpus =
           blocksSourceRef.current === "full" && currentBlocks.length >= totalBlocks;
+        if (hasFullCorpus) {
+          setRefinementUnsupported(
+            requiresUnavailableFullCorpusCohorts(currentBlocks, coarseSearchParams),
+          );
+        }
 
         if (needsAllBlocks) {
           if (hasFullCorpus) return;
+          setIsLoading(true);
           setLoadError(null);
           loadedTownsRef.current.clear();
           blocksSourceRef.current = "full";
@@ -102,12 +130,16 @@ export function useBlockLoading({
             blocksRef.current = nextBlocks;
             setBlocks(nextBlocks);
             setSearchTruncated(false);
+            setRefinementUnsupported(
+              requiresUnavailableFullCorpusCohorts(nextBlocks, coarseSearchParams),
+            );
           }
           return;
         }
 
         if (hasCoarseSearchFilters) {
           if (hasFullCorpus) return;
+          setIsLoading(true);
           setLoadError(null);
           loadedTownsRef.current.clear();
           blocksSourceRef.current = "search";
@@ -117,6 +149,7 @@ export function useBlockLoading({
           });
           if (isMounted) {
             setSearchTruncated(result.truncated);
+            setRefinementUnsupported(!result.cohortMetadataAvailable);
             if (effectiveTown) {
               setBlocks((current) => {
                 const withoutTown = current.filter((block) => block.town !== effectiveTown);
@@ -135,11 +168,16 @@ export function useBlockLoading({
         if (!effectiveTown || hasFullCorpus) return;
         if (loadedTownsRef.current.has(effectiveTown)) return;
 
+        setIsLoading(true);
         setLoadError(null);
         const nextBlocks = await fetchBlocksByTown(effectiveTown);
         if (!isMounted || !Array.isArray(nextBlocks)) return;
 
         loadedTownsRef.current.add(effectiveTown);
+        // This path replaces any search-derived result set, so search-scoped
+        // notices must not survive into it.
+        setSearchTruncated(false);
+        setRefinementUnsupported(false);
         const wasSearchSource = blocksSourceRef.current === "search";
         blocksSourceRef.current = "town-partial";
         setBlocks((current) => {
@@ -152,6 +190,10 @@ export function useBlockLoading({
       } catch (error) {
         if (!isMounted) return;
         setLoadError(error instanceof Error ? error.message : "Failed to load blocks data");
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     }
 
@@ -172,5 +214,5 @@ export function useBlockLoading({
     coarseSearchParams,
   ]);
 
-  return { blocks, loadError, searchTruncated };
+  return { blocks, loadError, searchTruncated, refinementUnsupported, isLoading };
 }

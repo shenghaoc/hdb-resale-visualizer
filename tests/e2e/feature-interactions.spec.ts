@@ -21,7 +21,7 @@ function desktopNavButton(page: Page, label: string) {
   return page.locator(".desktop-tab-bar").getByRole("button", { name: label });
 }
 
-test("feature interaction: search -> detail -> layers -> negotiate -> escape -> saved", async ({
+test("feature interaction: search -> detail -> layers -> save -> canonical check -> saved", async ({
   page,
 }) => {
   await mockComparisonArtifacts(page);
@@ -55,25 +55,28 @@ test("feature interaction: search -> detail -> layers -> negotiate -> escape -> 
   await schoolsSwitch.click();
   await expect(schoolsSwitch).toHaveAttribute("aria-checked", "true");
 
-  // 5. Negotiate tab
-  const negotiateTab = detailDrawer.getByRole("tab", { name: /negotiate/i });
-  await negotiateTab.click();
-
-  // We use regex to find Asking Price Check ignoring case
-  await expect(detailDrawer.getByText(/Asking Price Reality Check/i)).toBeVisible();
-
-  // 6. Save the block. If button label is just "Save", we look for save ignoring case.
+  // 5. Save the block. If button label is just "Save", we look for save ignoring case.
   // The app.spec.ts checks for "Add to shortlist" but the aria-label is t("detail.save").
   // Let's use a regex that handles both just in case, or stick to the icon if possible.
   // We'll use a broad selector
   const saveButton = detailDrawer.getByRole("button").filter({ hasText: /save|add to shortlist/i });
   await saveButton.click();
 
-  // 7. Escape closes drawer
-  await page.keyboard.press("Escape");
-  await expect(page.getByTestId("detail-drawer")).toHaveCount(0);
+  // 6. The primary Check destination reuses the selected block; detail does
+  // not carry a second, weaker asking-price implementation.
+  const checkTab = desktopNavButton(page, "Check");
+  await checkTab.click();
+  const check = page.locator("#desktop-check-content");
+  await expect(
+    check.getByRole("heading", {
+      name: /check a listing price/i,
+    }),
+  ).toBeVisible();
+  await expect(check.getByRole("combobox", { name: /search for a block/i })).toHaveValue(
+    rowAddress ?? "",
+  );
 
-  // 8. Saved still works
+  // 7. Saved still works.
   const savedTab = page.locator(".desktop-tab-bar button").filter({ hasText: /^Saved/ });
   await savedTab.click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText(rowAddress ?? "");

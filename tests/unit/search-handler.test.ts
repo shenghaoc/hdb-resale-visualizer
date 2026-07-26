@@ -24,6 +24,8 @@ describe("/api/search handler", () => {
       flat_models_json: '["Model A"]',
       median_price_by_flat_type_json: null,
       median_price_per_sqm_by_flat_type_json: null,
+      flat_type_cohorts_json:
+        '{"4 ROOM":{"transactionCount":1,"latestMonth":"2024-12","floorAreaRange":[90,100],"flatModels":["Model A"]}}',
       nearest_mrt_json: null,
       nearby_mrts_json: "[]",
       postal_code: null,
@@ -36,5 +38,118 @@ describe("/api/search handler", () => {
     const body = (await resp.json()) as { truncated: boolean; blocks: unknown[] };
     expect(body.truncated).toBe(true);
     expect(body.blocks).toHaveLength(2000);
+    expect(body.blocks[0]).toMatchObject({
+      flatTypeCohorts: {
+        "4 ROOM": {
+          transactionCount: 1,
+          latestMonth: "2024-12",
+          floorAreaRange: [90, 100],
+          flatModels: ["Model A"],
+        },
+      },
+    });
+  });
+
+  it("falls back safely while the additive cohort migration is pending", async () => {
+    const preparedSql: string[] = [];
+    const ctx = {
+      request: new Request(
+        "http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&flatModel=MODEL%20A",
+      ),
+      env: {
+        DB: {
+          prepare: (sql: string) => {
+            preparedSql.push(sql);
+            return {
+              bind: () => ({
+                all: async () => {
+                  if (preparedSql.length === 1) {
+                    throw new Error("D1_ERROR: no such column: blocks.flat_type_cohorts_json");
+                  }
+                  return { results: [] };
+                },
+              }),
+            };
+          },
+        },
+      },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    const body = (await resp.json()) as {
+      blocks: unknown[];
+      cohortMetadataAvailable: boolean;
+    };
+    expect(resp.status).toBe(200);
+    expect(body.blocks).toEqual([]);
+    expect(body.cohortMetadataAvailable).toBe(false);
+    expect(preparedSql).toHaveLength(2);
+    expect(preparedSql[1]).toContain("WHERE 0 = 1");
+  });
+
+  it("reports cohort metadata unavailable until migrated rows are backfilled", async () => {
+    const preparedSql: string[] = [];
+    const ctx = {
+      request: new Request(
+        "http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&startMonth=2024-01",
+      ),
+      env: {
+        DB: {
+          prepare: (sql: string) => {
+            preparedSql.push(sql);
+            return {
+              bind: () => ({
+                all: async () =>
+                  preparedSql.length === 1
+                    ? { results: [{ total_count: 10, populated_count: 0 }] }
+                    : { results: [] },
+              }),
+            };
+          },
+        },
+      },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    const body = (await resp.json()) as {
+      blocks: unknown[];
+      cohortMetadataAvailable: boolean;
+    };
+
+    expect(resp.status).toBe(200);
+    expect(body.blocks).toEqual([]);
+    expect(body.cohortMetadataAvailable).toBe(false);
+    expect(preparedSql[0]).toContain("COUNT(NULLIF(TRIM(flat_type_cohorts_json)");
+    expect(preparedSql[1]).toContain("WHERE 0 = 1");
+  });
+
+  it("uses cohort predicates after every block is backfilled", async () => {
+    const preparedSql: string[] = [];
+    const ctx = {
+      request: new Request("http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&areaMin=90"),
+      env: {
+        DB: {
+          prepare: (sql: string) => {
+            preparedSql.push(sql);
+            return {
+              bind: () => ({
+                all: async () =>
+                  sql.includes("COUNT(NULLIF(TRIM(flat_type_cohorts_json)")
+                    ? { results: [{ total_count: 10, populated_count: 10 }] }
+                    : { results: [] },
+              }),
+            };
+          },
+        },
+      },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    const body = (await resp.json()) as { cohortMetadataAvailable: boolean };
+
+    expect(resp.status).toBe(200);
+    expect(body.cohortMetadataAvailable).toBe(true);
+    expect(preparedSql[1]).toContain("flat_type_cohorts_json");
+    expect(preparedSql[1]).not.toContain("WHERE 0 = 1");
   });
 });

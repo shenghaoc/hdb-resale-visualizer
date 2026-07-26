@@ -16,6 +16,7 @@ type AppTabBarsProps = {
   onDesktopResultsClick: () => void;
   onDesktopCheckClick: () => void;
   onDesktopSavedClick: () => void;
+  onMobileMapClick: () => void;
   onMobileFiltersClick: () => void;
   onMobileResultsClick: () => void;
   onMobileCheckClick: () => void;
@@ -37,6 +38,7 @@ export function AppTabBars({
   onDesktopResultsClick,
   onDesktopCheckClick,
   onDesktopSavedClick,
+  onMobileMapClick,
   onMobileFiltersClick,
   onMobileResultsClick,
   onMobileCheckClick,
@@ -69,12 +71,12 @@ export function AppTabBars({
       shortlistCount={shortlistCount}
       theme={theme}
       t={t}
+      onMapClick={onMobileMapClick}
       onFiltersClick={onMobileFiltersClick}
       onResultsClick={onMobileResultsClick}
       onCheckClick={onMobileCheckClick}
       onSavedClick={onMobileSavedClick}
       onToggleTheme={onToggleTheme}
-      onOpenGuide={onOpenGuide}
     />
   );
 }

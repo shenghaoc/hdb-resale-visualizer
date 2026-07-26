@@ -18,6 +18,20 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
     availableDateRange: ["2021-01", "2024-06"],
     flatTypes: ["3 ROOM", "5 ROOM"],
     flatModels: ["NEW GENERATION", "IMPROVED"],
+    flatTypeCohorts: {
+      "3 ROOM": {
+        transactionCount: 4,
+        latestMonth: "2024-05",
+        floorAreaRange: [65, 80],
+        flatModels: ["NEW GENERATION"],
+      },
+      "5 ROOM": {
+        transactionCount: 6,
+        latestMonth: "2024-06",
+        floorAreaRange: [105, 120],
+        flatModels: ["IMPROVED"],
+      },
+    },
     nearestMrt: { stationName: "Bedok", distanceMeters: 500, walkingTimeSeconds: 400 },
     nearbyMrts: [{ stationName: "Bedok", distanceMeters: 500, walkingTimeSeconds: 400 }],
     postalCode: "460100",
@@ -33,6 +47,7 @@ describe("toGeoJson", () => {
     });
     const result = toGeoJson([block]);
     expect(result.features[0].properties.median_price).toBe(600000);
+    expect(result.features[0].properties.price_basis).toBe("__BLOCK_WIDE__");
   });
 
   it("uses flat-type-specific median when flatType is provided", () => {
@@ -44,6 +59,26 @@ describe("toGeoJson", () => {
     const result = toGeoJson([block], "3 ROOM");
     expect(result.features[0].properties.median_price).toBe(480000);
     expect(result.features[0].properties.price_per_sqm_median).toBe(6000);
+    expect(result.features[0].properties.price_basis).toBe("3 ROOM");
+    expect(result.features[0].properties.transaction_count).toBe(4);
+    expect(result.features[0].properties.latest_month).toBe("2024-05");
+  });
+
+  it("retains existing type prices while cohort attributes fall back block-wide", () => {
+    const block = makeBlock({
+      medianPrice: 600000,
+      medianPriceByFlatType: { "3 ROOM": 480000 },
+      medianPricePerSqmByFlatType: { "3 ROOM": 6000 },
+      flatTypeCohorts: undefined,
+    });
+    const result = toGeoJson([block], "3 ROOM");
+    expect(result.features[0].properties).toMatchObject({
+      median_price: 480000,
+      price_per_sqm_median: 6000,
+      price_basis: "3 ROOM",
+      transaction_count: 10,
+      latest_month: "2024-06",
+    });
   });
 
   it("falls back to block median when block has no per-type data", () => {
@@ -56,6 +91,7 @@ describe("toGeoJson", () => {
     const result = toGeoJson([block], "3 ROOM");
     expect(result.features[0].properties.median_price).toBe(600000);
     expect(result.features[0].properties.price_per_sqm_median).toBe(5000);
+    expect(result.features[0].properties.price_basis).toBe("__BLOCK_WIDE__");
   });
 
   it("falls back to block median when flatType is not in medianPriceByFlatType", () => {
@@ -68,6 +104,7 @@ describe("toGeoJson", () => {
     const result = toGeoJson([block], "EXECUTIVE");
     expect(result.features[0].properties.median_price).toBe(600000);
     expect(result.features[0].properties.price_per_sqm_median).toBe(5000);
+    expect(result.features[0].properties.price_basis).toBe("__BLOCK_WIDE__");
   });
 
   it("uses canonical key for MULTI-GENERATION lookup", () => {
@@ -75,6 +112,14 @@ describe("toGeoJson", () => {
       medianPrice: 900000,
       medianPriceByFlatType: { "MULTI-GENERATION": 850000 },
       medianPricePerSqmByFlatType: { "MULTI-GENERATION": 7000 },
+      flatTypeCohorts: {
+        "MULTI-GENERATION": {
+          transactionCount: 2,
+          latestMonth: "2024-03",
+          floorAreaRange: [130, 135],
+          flatModels: ["MULTI GENERATION"],
+        },
+      },
     });
     const result = toGeoJson([block], "MULTI-GENERATION");
     expect(result.features[0].properties.median_price).toBe(850000);

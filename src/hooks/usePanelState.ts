@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export type LeftTab = "filters" | "results" | "check";
@@ -31,16 +31,50 @@ export const DESKTOP_PANEL_LAYOUT = {
 export function usePanelState() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-  // Desktop: left panel (filters/results) is mutually exclusive;
-  // saved panel is independent and tiles alongside the left panel.
+  // Desktop starts with the map and first-action prompt unobstructed. The
+  // primary destinations are mutually exclusive through the shell controller.
   const [leftTab, setLeftTab] = useState<LeftTab>("filters");
-  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(true);
+  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false);
   const [isSavedPanelOpen, setIsSavedPanelOpen] = useState(false);
 
   // Mobile: single tab at a time (unchanged)
   const [mobileTab, setMobileTab] = useState<PanelTab | null>(null);
 
   const [isShortlistOpen, setIsShortlistOpen] = useState(true);
+  const previousIsDesktop = useRef(isDesktop);
+
+  useEffect(() => {
+    if (previousIsDesktop.current === isDesktop) {
+      return;
+    }
+
+    previousIsDesktop.current = isDesktop;
+
+    if (isDesktop) {
+      if (mobileTab === "saved") {
+        setIsLeftPanelOpen(false);
+        setIsSavedPanelOpen(true);
+        return;
+      }
+
+      setIsSavedPanelOpen(false);
+      if (mobileTab !== null) {
+        setLeftTab(mobileTab);
+        setIsLeftPanelOpen(true);
+      } else {
+        setIsLeftPanelOpen(false);
+      }
+      return;
+    }
+
+    if (isSavedPanelOpen) {
+      setMobileTab("saved");
+    } else if (isLeftPanelOpen) {
+      setMobileTab(leftTab);
+    } else {
+      setMobileTab(null);
+    }
+  }, [isDesktop, isLeftPanelOpen, isSavedPanelOpen, leftTab, mobileTab]);
 
   const resultsVisible = isDesktop
     ? isLeftPanelOpen && leftTab === "results"

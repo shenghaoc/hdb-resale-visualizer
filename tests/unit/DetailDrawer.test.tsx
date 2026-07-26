@@ -21,6 +21,14 @@ const mockBlock: BlockSummary = {
   availableDateRange: ["2026-02", "2026-02"],
   flatTypes: ["4 ROOM"],
   flatModels: ["MODEL A"],
+  flatTypeCohorts: {
+    "4 ROOM": {
+      transactionCount: 1,
+      latestMonth: "2026-02",
+      floorAreaRange: [92, 92],
+      flatModels: ["MODEL A"],
+    },
+  },
   nearestMrt: {
     stationName: "BEDOK NORTH MRT STATION",
     distanceMeters: 400,
@@ -97,6 +105,29 @@ describe("DetailDrawer", () => {
     vi.clearAllTimers();
     vi.useRealTimers();
     vi.restoreAllMocks();
+  });
+
+  it("explains when an unsaved block cannot be added to a full shortlist", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={mockBlock}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          shortlistFull={true}
+          remainingLeaseMin={null}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getByRole("button", { name: "Shortlist full" })).toBeDisabled();
   });
 
   it("renders amenity sections when comparison data is available", () => {
@@ -191,6 +222,65 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("Low sample size")).toBeInTheDocument();
   });
 
+  it("labels a missing selected-type price as a block-wide fallback", async () => {
+    vi.useRealTimers();
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={{ ...mockBlock, flatTypeCohorts: undefined }}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          remainingLeaseMin={null}
+          filters={{ ...DEFAULT_FILTERS, flatType: "4 ROOM" }}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getByText("Block-wide median")).toBeInTheDocument();
+    expect(screen.getByText("Block-wide attributes")).toBeInTheDocument();
+    expect(screen.queryByText(/\$\/sq ft/)).not.toBeInTheDocument();
+
+    fireEvent.mouseDown(screen.getByRole("tab", { name: "Trends" }), {
+      button: 0,
+      ctrlKey: false,
+    });
+    const trendSection = (await screen.findByText("Block-wide Price History")).closest("section");
+    expect(trendSection).toHaveTextContent(/do not follow the active 4 ROOM filter/i);
+    expect(screen.queryByText("Market Rank")).not.toBeInTheDocument();
+  });
+
+  it("does not add dense percentile rankings to the block decision view", () => {
+    render(
+      <I18nProvider>
+        <DetailDrawer
+          selectedBlock={{ ...mockBlock, flatTypes: ["4 ROOM", "5 ROOM"] }}
+          detail={null}
+          comparison={mockComparison}
+          isLoading={false}
+          isComparisonLoading={false}
+          isSaved={false}
+          remainingLeaseMin={null}
+          filters={{ ...DEFAULT_FILTERS, flatType: "5 ROOM" }}
+          onClose={() => {}}
+          onToggleShortlist={() => {}}
+          allBlocks={[]}
+          onSelectBlock={() => {}}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.queryByText("Market Percentiles")).not.toBeInTheDocument();
+    expect(screen.queryByText("Price Rank")).not.toBeInTheDocument();
+    expect(screen.queryByText("MRT Access Rank")).not.toBeInTheDocument();
+  });
+
   it("renders all 3 nearby schools with names and distances", () => {
     render(
       <I18nProvider>
@@ -219,46 +309,6 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("600 m")).toBeInTheDocument();
   });
 
-  it("renders percentile sections when comparison data is available", () => {
-    render(
-      <I18nProvider>
-        <DetailDrawer
-          remainingLeaseMin={null}
-          selectedBlock={mockBlock}
-          detail={null}
-          comparison={mockComparison}
-          isLoading={false}
-          isComparisonLoading={false}
-          isSaved={false}
-          onClose={() => {}}
-          onToggleShortlist={() => {}}
-          allBlocks={[]}
-          onSelectBlock={() => {}}
-        />
-      </I18nProvider>,
-    );
-
-    // Check that percentile sections are rendered
-    expect(screen.getByText("Market Percentiles")).toBeInTheDocument();
-    expect(screen.getByText("Price Rank")).toBeInTheDocument();
-    expect(screen.getByText("65%")).toBeInTheDocument();
-
-    expect(screen.getByText("Price/sqm Rank")).toBeInTheDocument();
-    expect(screen.getByText("70%")).toBeInTheDocument();
-
-    expect(screen.getByText("Lease Rank")).toBeInTheDocument();
-    expect(screen.getByText("45%")).toBeInTheDocument();
-
-    expect(screen.getByText("MRT Access Rank")).toBeInTheDocument();
-    expect(screen.getByText("80%")).toBeInTheDocument();
-
-    expect(screen.getByText("Liquidity Rank")).toBeInTheDocument();
-    expect(screen.getByText("55%")).toBeInTheDocument();
-
-    expect(screen.getByText("Recency Rank")).toBeInTheDocument();
-    expect(screen.getByText("90%")).toBeInTheDocument();
-  });
-
   it("shows loading state when comparison data is loading", () => {
     render(
       <I18nProvider>
@@ -280,7 +330,6 @@ describe("DetailDrawer", () => {
 
     // Check that loading skeletons are shown
     expect(screen.getByText("Nearby Amenities")).toBeInTheDocument();
-    expect(screen.getByText("Market Percentiles")).toBeInTheDocument();
 
     // Should show loading skeletons (animated divs)
     const loadingSkeletons = screen
@@ -332,9 +381,8 @@ describe("DetailDrawer", () => {
       </I18nProvider>,
     );
 
-    // Check that fallback messages are shown
+    // The remaining comparison surface is the actionable amenity context.
     expect(screen.getByText("Amenity comparison data not available yet.")).toBeInTheDocument();
-    expect(screen.getByText("Market percentile data not available yet.")).toBeInTheDocument();
   });
 
   it("renders similar blocks empty state when no candidates are available", () => {

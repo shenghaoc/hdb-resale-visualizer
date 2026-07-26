@@ -32,18 +32,10 @@ const options: FilterOptions = {
 };
 
 const completeProfile: SearchProfile = {
-  version: 1,
+  version: 3,
   mainFlatType: "4 ROOM",
-  alternativeFlatTypes: [],
   maxBudget: 700000,
-  commuteAnchorLabel: "",
-  commuteAnchorMrt: null,
-  maxComfortableCommuteMinutes: 30,
-  commuteStretchMinutes: 10,
   minimumRemainingLeaseYears: 65,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
   age: 35,
   coApplicantAge: 33,
   cpfOABalance: 120000,
@@ -81,7 +73,7 @@ describe("FilterPanel affordability toggle", () => {
     expect(screen.getByTestId("affordability-filter-toggle")).toBeInTheDocument();
   });
 
-  // The three labels (longest: "Affordable: comfortable + stretch") overflow a
+  // The three estimate labels overflow a
   // horizontal segmented control and get clipped inside the filter panel, making
   // two options render identically. The group must stack vertically so every
   // option stays fully readable at any panel width.
@@ -102,7 +94,7 @@ describe("FilterPanel affordability toggle", () => {
   it("comfortable button is active when affordable = 'comfortable'", () => {
     renderPanel({ ...baseFilters, affordable: "comfortable" }, completeProfile);
     const comfortableBtn = screen.getByRole("button", {
-      name: /comfortable(?!\s*\+)/i,
+      name: /within estimate/i,
     });
     expect(comfortableBtn).toHaveAttribute("aria-pressed", "true");
   });
@@ -110,7 +102,7 @@ describe("FilterPanel affordability toggle", () => {
   it("stretch button is active when affordable = 'stretch'", () => {
     renderPanel({ ...baseFilters, affordable: "stretch" }, completeProfile);
     const stretchBtn = screen.getByRole("button", {
-      name: /stretch/i,
+      name: /within \+ near estimate/i,
     });
     expect(stretchBtn).toHaveAttribute("aria-pressed", "true");
   });
@@ -120,7 +112,7 @@ describe("FilterPanel affordability toggle", () => {
     renderPanel(baseFilters, completeProfile, onChange);
 
     const comfortableBtn = screen.getByRole("button", {
-      name: /comfortable(?!\s*\+)/i,
+      name: /within estimate/i,
     });
     await userEvent.click(comfortableBtn);
 
@@ -132,7 +124,7 @@ describe("FilterPanel affordability toggle", () => {
     renderPanel(baseFilters, completeProfile, onChange);
 
     const stretchBtn = screen.getByRole("button", {
-      name: /stretch/i,
+      name: /within \+ near estimate/i,
     });
     await userEvent.click(stretchBtn);
 
@@ -160,6 +152,13 @@ describe("FilterPanel affordability toggle", () => {
 
   it("buttons are disabled when profile is incomplete (missing monthlyIncome)", () => {
     renderPanel(baseFilters, incompleteProfile);
+    const toggle = screen.getByTestId("affordability-filter-toggle");
+    const buttons = toggle.querySelectorAll("button");
+    buttons.forEach((btn) => expect(btn).toBeDisabled());
+  });
+
+  it("buttons are disabled when CPF is zero because available cash is not captured", () => {
+    renderPanel(baseFilters, { ...completeProfile, cpfOABalance: 0 });
     const toggle = screen.getByTestId("affordability-filter-toggle");
     const buttons = toggle.querySelectorAll("button");
     buttons.forEach((btn) => expect(btn).toBeDisabled());

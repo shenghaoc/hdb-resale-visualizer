@@ -230,10 +230,12 @@ describe("useLocalShortlist", () => {
     act(() => {
       result.current.toggle("addr-a");
     });
+    let restored = false;
     act(() => {
-      result.current.restore(removedItem, 0);
+      restored = result.current.restore(removedItem, 0);
     });
 
+    expect(restored).toBe(true);
     expect(result.current.items.map((item) => item.addressKey)).toEqual(["addr-a", "addr-b"]);
     expect(result.current.items[0]).toEqual(removedItem);
   });
@@ -250,10 +252,12 @@ describe("useLocalShortlist", () => {
     const { result } = renderHook(() => useLocalShortlist());
     const existing = result.current.items[0]!;
 
+    let restored = false;
     act(() => {
-      result.current.restore({ ...existing, notes: "duplicate attempt" }, 0);
+      restored = result.current.restore({ ...existing, notes: "duplicate attempt" }, 0);
     });
 
+    expect(restored).toBe(true);
     expect(result.current.items).toHaveLength(1);
     expect(result.current.items[0]?.notes).toBe("");
   });
@@ -268,8 +272,9 @@ describe("useLocalShortlist", () => {
     writeStorage(full);
     const { result } = renderHook(() => useLocalShortlist());
 
+    let restored = true;
     act(() => {
-      result.current.restore(
+      restored = result.current.restore(
         {
           addressKey: "overflow",
           notes: "",
@@ -280,6 +285,7 @@ describe("useLocalShortlist", () => {
       );
     });
 
+    expect(restored).toBe(false);
     expect(result.current.items).toHaveLength(MAX_SHORTLIST_ITEMS);
     expect(result.current.items.some((item) => item.addressKey === "overflow")).toBe(false);
   });

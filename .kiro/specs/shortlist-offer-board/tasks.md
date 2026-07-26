@@ -53,10 +53,11 @@
 ## Phase 3 — Comparison row schema and computation
 
 - [x] **T3.1** Extend `ShortlistComparisonInputRow` and
-  `ShortlistComparisonRow` in `src/lib/shortlist-comparison.ts` with:
+  `ShortlistComparisonRow` in
+  `src/features/shortlist/shortlist-comparison.ts` with:
   `askingPrice`, `fairRangeLow`, `fairRangeMedian`, `fairRangeHigh`,
-  `deltaVsFairMedian`, `confidenceLevelLabel`, `caveatKeys`,
-  `decisionStatus`, `monthlyPaymentEstimate`.
+  `deltaVsFairMedian`, `recentTransactionCount`, `caveatKeys`, and
+  `decisionStatus`.
   → `npm run typecheck` passes. (R3.1, R3.2, R3.3)
 
 - [x] **T3.2** Implement `deltaVsFairMedian` computation:
@@ -68,7 +69,8 @@
   `tests/unit/shortlist-comparison.test.ts`:
   - Delta calculation for below/above/match tones
   - Fair range formatting with complete, partial, and missing data
-  - Confidence and caveat propagation from block data
+  - Recent block-record volume from the block summary
+  - Explicit missing-fair-range and missing-MRT caveats
   - Decision status passthrough from ShortlistItem
   → `npm run test -- tests/unit/shortlist-comparison.test.ts` passes.
   (R9.3)
@@ -76,18 +78,19 @@
 ## Phase 4 — UI: comparison table and mobile cards
 
 - [x] **T4.1** Update `ShortlistComparisonTable` in
-  `src/components/ShortlistDrawer.tsx` with desktop table columns:
+  `src/features/shortlist/ShortlistDrawer.tsx` with desktop table columns:
   rank, address, town, median price (with budget badge), price/sqm,
-  asking price, fair range, delta vs fair median, confidence, lease,
-  MRT, monthly payment, decision status, caveats, target price, notes.
+  asking price, fair range, delta vs fair median, recent block records,
+  lease, MRT, decision status, caveats, target price, notes.
   Table wrapped in `hidden md:block overflow-x-auto` with
   `min-w-[60rem]`.
   → `npm run typecheck` passes. (R3.1, R3.4, R3.5)
 
 - [x] **T4.2** Add mobile card layout in `ShortlistComparisonTable`:
   render inside `grid gap-2 px-2 py-3 md:hidden`. Each card shows
-  rank, address, flat type, metric badges (median price, confidence,
-  decision status), and a two-column grid of secondary metrics.
+  rank, address, flat type, metric badges (median price, recent block records,
+  decision status), a two-column grid of secondary metrics, explicit caveats,
+  and buyer notes.
   → `npm run typecheck` passes. (R6.1, R6.2)
 
 - [x] **T4.3** Verify existing list view behaviors remain intact:

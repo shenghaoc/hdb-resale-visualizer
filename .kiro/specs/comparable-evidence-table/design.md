@@ -2,13 +2,18 @@
 
 > Status: Draft. Add a high-density evidence table inside the Listing Price
 > Check result so buyers can inspect the actual transactions behind a verdict.
+>
+> Supersession note: `ListingCheckPanel` is the sole canonical listing-check
+> UI. `ComparableEvidenceTable` is its sole comparable-evidence surface; the
+> former detail-drawer checker and compact comparable-list component are
+> retired and must not be preserved or reintroduced.
 
 ## Problem
 
-The current Listing Price Check panel shows a verdict card with summary
+The earlier Listing Price Check panel showed a verdict card with summary
 statistics (median, percentiles, delta) and a compact expandable list of
-comparables (`ComparableTransactionsList`). The list shows only price, storey
-range, floor area, and month — four fields per row, capped at 8 items.
+comparables. The list showed only price, storey range, floor area, and month —
+four fields per row, capped at 8 items.
 
 This leaves buyers with three blind spots:
 
@@ -32,9 +37,8 @@ This leaves buyers with three blind spots:
 
 ## Goals
 
-- Replace the expandable `ComparableTransactionsList` inside
-  `ListingCheckPanel` with a new `ComparableEvidenceTable` component that
-  shows all requested columns.
+- Make `ComparableEvidenceTable` the sole comparable-evidence surface inside
+  `ListingCheckPanel`, showing all requested columns.
 - Surface similarity score and match reasons per comparable.
 - Allow interactive sorting by date, price, price per sqm, floor area, and
   similarity.
@@ -76,7 +80,7 @@ ListingCheckPanel fetches /api/comparable-transactions
   → table renders with client-side sorting
 ```
 
-### 2. New Component: `src/components/ComparableEvidenceTable.tsx`
+### 2. Canonical component: `src/features/listing-check/ComparableEvidenceTable.tsx`
 
 A self-contained component that receives sorted-ready data and handles its
 own sort state. No data fetching, no side effects.
@@ -199,8 +203,8 @@ card scrolls out of view.
 
 ### 3. Integration into `ListingCheckPanel.tsx`
 
-The existing `ComparableTransactionsList` usage inside the verdict card is
-replaced by the new `ComparableEvidenceTable`. The table renders below the
+The former compact comparable-list usage inside the verdict card is replaced
+by `ComparableEvidenceTable`. The table renders below the
 verdict card (after the distribution bar and caveats section), not inside
 the card — it needs full panel width.
 
@@ -221,9 +225,8 @@ the card — it needs full panel width.
 )}
 ```
 
-The `ComparableTransactionsList` import and usage are removed from
-`ListingCheckPanel`. The component file itself (`ComparableTransactionsList.tsx`)
-is preserved because `AskingPriceCheck.tsx` in the `DetailDrawer` still uses it.
+No legacy comparable-list or detail-drawer listing-check component remains.
+`ListingCheckPanel` and `ComparableEvidenceTable` own the complete workflow.
 
 ### 4. Styling
 

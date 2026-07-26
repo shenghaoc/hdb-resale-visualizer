@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fetchAddressDetail } from "@/shared/lib/data";
 import type { AddressDetail } from "@/types/data";
 import type { ListingComparableSet } from "../../../shared/comparable-engine";
@@ -25,8 +25,6 @@ export type UseListingCheckAnalysisOptions = {
   storeyRange: string | null;
   leaseCommenceYear: number | null;
   referenceMonth?: string;
-  onFlatTypeChange: (flatType: string | null) => void;
-  onStoreyRangeChange: (storeyRange: string | null) => void;
 };
 
 export type ListingCheckAnalysisState = {
@@ -44,15 +42,17 @@ export type ListingCheckAnalysisState = {
   adjustmentMeta: ListingAdjustmentMeta | null;
   qualityTag: ReturnType<typeof deriveComparableQualityTag>;
   evidenceCaveats: string[];
+  canSubmit: boolean;
+  submit: () => boolean;
 };
 
 /**
  * Owns address-detail loading, comparable-transaction fetching, and pure
  * listing-check result derivation for the listing-check panel.
  *
- * Asking-price changes recompute the local result without refetching
- * comparables. Stale async responses are discarded via effect cleanup
- * cancellation flags.
+ * Comparable fetching is an explicit submit action. Asking-price changes
+ * recompute the local result without refetching comparables; changes to facts
+ * that determine the comparable set hide stale analysis until resubmission.
  */
 export function useListingCheckAnalysis({
   selectedAddressKey,
@@ -62,8 +62,6 @@ export function useListingCheckAnalysis({
   storeyRange,
   leaseCommenceYear,
   referenceMonth,
-  onFlatTypeChange,
-  onStoreyRangeChange,
 }: UseListingCheckAnalysisOptions): ListingCheckAnalysisState {
   const [detail, setDetail] = useState<AddressDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
@@ -72,6 +70,9 @@ export function useListingCheckAnalysis({
   const [comparableSetLoading, setComparableSetLoading] = useState(false);
   const [comparableSetError, setComparableSetError] = useState(false);
   const [adjustmentMeta, setAdjustmentMeta] = useState<ListingAdjustmentMeta | null>(null);
+  const [submittedRequestKey, setSubmittedRequestKey] = useState<string | null>(null);
+  const requestIdRef = useRef(0);
+  const requestAbortRef = useRef<AbortController | null>(null);
 
   // ── Address detail ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -112,42 +113,20 @@ export function useListingCheckAnalysis({
   const flatTypeOptions = useMemo(() => deriveFlatTypeOptions(detail), [detail]);
   const storeyOptions = useMemo(() => deriveStoreyOptions(detail), [detail]);
 
-  // ── Default option selection (idempotent, complete deps) ──────────────────
-  useEffect(() => {
-    if (flatTypeOptions.length === 0) return;
-    if (flatType != null && flatTypeOptions.includes(flatType)) return;
-    onFlatTypeChange(flatTypeOptions[0] ?? null);
-  }, [flatTypeOptions, flatType, onFlatTypeChange]);
-
-  useEffect(() => {
-    if (storeyOptions.length === 0) return;
-    if (storeyRange != null && storeyOptions.includes(storeyRange)) return;
-    onStoreyRangeChange(storeyOptions[0] ?? null);
-  }, [storeyOptions, storeyRange, onStoreyRangeChange]);
-
-  // ── Comparable set fetch ──────────────────────────────────────────────────
-  // NOTE: askingPrice is deliberately excluded — the comparable set does not
-  // depend on the asking price. The verdict recomputes locally from the existing
-  // set when the price changes.
-  useEffect(() => {
-    // Require detail to match the current selection so a mid-switch render that
-    // still holds the previous address cannot fire a redundant comparable request.
+  const comparableRequestBody = useMemo(() => {
     if (
       !detail ||
       !selectedAddressKey ||
       detail.summary.addressKey !== selectedAddressKey ||
       !flatType ||
-      !storeyRange
+      !flatTypeOptions.includes(flatType) ||
+      !storeyRange ||
+      !storeyOptions.includes(storeyRange)
     ) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- clearing stale state when inputs become invalid
-      setComparableSet(null);
-      setComparableSetLoading(false);
-      setComparableSetError(false);
-      setAdjustmentMeta(null);
-      return;
+      return null;
     }
 
-    const body = buildComparableRequestBody({
+    return buildComparableRequestBody({
       detail,
       flatType,
       storeyRange,
@@ -155,19 +134,43 @@ export function useListingCheckAnalysis({
       leaseCommenceYear,
       referenceMonth,
     });
+  }, [
+    detail,
+    flatType,
+    flatTypeOptions,
+    floorAreaSqm,
+    leaseCommenceYear,
+    referenceMonth,
+    selectedAddressKey,
+    storeyOptions,
+    storeyRange,
+  ]);
 
-    if (!body) {
-      setComparableSet(null);
-      setComparableSetError(true);
-      setComparableSetLoading(false);
-      setAdjustmentMeta(null);
-      return;
+  const comparableRequestKey = useMemo(
+    () =>
+      comparableRequestBody && selectedAddressKey
+        ? `${selectedAddressKey}:${JSON.stringify(comparableRequestBody)}`
+        : null,
+    [comparableRequestBody, selectedAddressKey],
+  );
+
+  // ── Comparable set fetch ──────────────────────────────────────────────────
+  // Asking price is deliberately excluded from the request body/key. Once a
+  // comparable set is submitted and loaded, price-only edits can recompute the
+  // verdict locally without another network request.
+  const submit = useCallback(() => {
+    if (askingPrice == null || !comparableRequestBody || !comparableRequestKey) {
+      return false;
     }
 
-    let cancelled = false;
+    requestAbortRef.current?.abort();
+    const controller = new AbortController();
+    requestAbortRef.current = controller;
+    const requestId = ++requestIdRef.current;
+
+    setSubmittedRequestKey(comparableRequestKey);
     setComparableSetLoading(true);
     setComparableSetError(false);
-    // Clear stale results while loading so UI doesn't show mismatched verdict.
     setComparableSet(null);
     setAdjustmentMeta(null);
 
@@ -176,67 +179,79 @@ export function useListingCheckAnalysis({
     fetch("/api/comparable-transactions?adjust=time", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: JSON.stringify(comparableRequestBody),
+      signal: controller.signal,
     })
       .then(async (res) => {
         if (!res.ok) throw new Error(`API error: ${res.status}`);
         const json: unknown = await res.json();
         const data = json as ListingComparableResponse;
-        if (!cancelled) {
-          setComparableSet(data);
-          setComparableSetLoading(false);
-          setAdjustmentMeta(buildListingAdjustmentMeta(data));
-        }
+        if (controller.signal.aborted || requestId !== requestIdRef.current) return;
+        setComparableSet(data);
+        setComparableSetLoading(false);
+        setAdjustmentMeta(buildListingAdjustmentMeta(data));
       })
       .catch(() => {
-        if (!cancelled) {
-          setComparableSet(null);
-          setComparableSetError(true);
-          setComparableSetLoading(false);
-          setAdjustmentMeta(null);
-        }
+        if (controller.signal.aborted || requestId !== requestIdRef.current) return;
+        setComparableSet(null);
+        setComparableSetError(true);
+        setComparableSetLoading(false);
+        setAdjustmentMeta(null);
       });
 
+    return true;
+  }, [askingPrice, comparableRequestBody, comparableRequestKey]);
+
+  useEffect(() => {
     return () => {
-      cancelled = true;
+      requestIdRef.current += 1;
+      requestAbortRef.current?.abort();
     };
-  }, [
-    floorAreaSqm,
-    leaseCommenceYear,
-    selectedAddressKey,
-    flatType,
-    storeyRange,
-    detail,
-    referenceMonth,
-  ]);
+  }, []);
+
+  const submittedFactsAreCurrent =
+    askingPrice != null &&
+    comparableRequestKey != null &&
+    submittedRequestKey === comparableRequestKey;
+  const activeComparableSet = submittedFactsAreCurrent ? comparableSet : null;
+  const activeComparableSetLoading = submittedFactsAreCurrent && comparableSetLoading;
+  const activeComparableSetError = submittedFactsAreCurrent && comparableSetError;
+  const activeAdjustmentMeta = submittedFactsAreCurrent ? adjustmentMeta : null;
 
   // ── Pure derivation ───────────────────────────────────────────────────────
   const result = useMemo(
     () =>
       deriveListingCheckResult({
-        comparableSet,
+        comparableSet: activeComparableSet,
         detail,
         askingPrice,
         floorAreaSqm,
         leaseCommenceYear,
-        adjustmentMeta,
+        adjustmentMeta: activeAdjustmentMeta,
       }),
-    [comparableSet, detail, askingPrice, floorAreaSqm, leaseCommenceYear, adjustmentMeta],
+    [
+      activeAdjustmentMeta,
+      activeComparableSet,
+      askingPrice,
+      detail,
+      floorAreaSqm,
+      leaseCommenceYear,
+    ],
   );
 
   const comparables = useMemo(
-    () => buildDisplayComparables(comparableSet, adjustmentMeta),
-    [comparableSet, adjustmentMeta],
+    () => buildDisplayComparables(activeComparableSet, activeAdjustmentMeta),
+    [activeComparableSet, activeAdjustmentMeta],
   );
 
   const qualityTag = useMemo(
-    () => deriveComparableQualityTag(result, comparableSet),
-    [result, comparableSet],
+    () => deriveComparableQualityTag(result, activeComparableSet),
+    [result, activeComparableSet],
   );
 
   const evidenceCaveats = useMemo(
-    () => deriveEvidenceCaveats(result, comparableSet, adjustmentMeta),
-    [result, comparableSet, adjustmentMeta],
+    () => deriveEvidenceCaveats(result, activeComparableSet, activeAdjustmentMeta),
+    [result, activeComparableSet, activeAdjustmentMeta],
   );
 
   const selectedBlockLabel = useMemo(() => {
@@ -251,13 +266,15 @@ export function useListingCheckAnalysis({
     selectedBlockLabel,
     flatTypeOptions,
     storeyOptions,
-    comparableSet,
-    comparableSetLoading,
-    comparableSetError,
+    comparableSet: activeComparableSet,
+    comparableSetLoading: activeComparableSetLoading,
+    comparableSetError: activeComparableSetError,
     result,
     comparables,
-    adjustmentMeta,
+    adjustmentMeta: activeAdjustmentMeta,
     qualityTag,
     evidenceCaveats,
+    canSubmit: askingPrice != null && comparableRequestBody != null,
+    submit,
   };
 }

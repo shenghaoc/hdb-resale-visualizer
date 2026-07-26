@@ -1,3 +1,4 @@
+import { type ComponentProps } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
@@ -58,7 +59,10 @@ function makeDetail(): AddressDetail {
   };
 }
 
-function renderPanel() {
+function renderPanel(
+  shortlistFull = false,
+  overrides: Partial<ComponentProps<typeof ListingCheckPanel>> = {},
+) {
   const callbacks = {
     onAddressSelect: vi.fn(),
     onAskingPriceChange: vi.fn(),
@@ -66,9 +70,6 @@ function renderPanel() {
     onFlatTypeChange: vi.fn(),
     onStoreyRangeChange: vi.fn(),
     onLeaseYearChange: vi.fn(),
-    onUseSampleCheck: vi.fn(),
-    onOpenCandidates: vi.fn(),
-    onOpenShortlist: vi.fn(),
     onSaveToShortlist: vi.fn(),
     onShare: vi.fn(),
   };
@@ -83,8 +84,10 @@ function renderPanel() {
         storeyRange="07 TO 09"
         leaseCommenceYear={1990}
         savedToShortlist={false}
+        shortlistFull={shortlistFull}
         referenceMonth="2026-04"
         {...callbacks}
+        {...overrides}
       />
     </I18nProvider>,
   );
@@ -102,11 +105,27 @@ describe("ListingCheckPanel input clearing", () => {
       "fetch",
       vi.fn(async () =>
         Response.json({
-          comparables: [],
-          sameBlockCount: 0,
-          sameStreetCount: 0,
-          sameTownCount: 0,
-          newestComparableAgeMonths: null,
+          comparables: [
+            {
+              transactionId: "cmp-1",
+              month: "2026-03",
+              town: "ANG MO KIO",
+              block: "123A",
+              streetName: "ANG MO KIO AVE 1",
+              flatType: "4 ROOM",
+              storeyRange: "07 TO 09",
+              floorAreaSqm: 93,
+              leaseCommenceDate: 1990,
+              resalePrice: 620000,
+              pricePerSqm: 6667,
+              similarity: 0.95,
+              matchReasons: ["Same block", "Same flat type"],
+            },
+          ],
+          sameBlockCount: 1,
+          sameStreetCount: 1,
+          sameTownCount: 1,
+          newestComparableAgeMonths: 1,
           widenedSearch: false,
           caveats: [],
           adjustmentApplied: false,
@@ -140,5 +159,57 @@ describe("ListingCheckPanel input clearing", () => {
     await waitFor(() =>
       expect(dataMocks.fetchAddressDetail).toHaveBeenCalledWith("ang-mo-kio-123a"),
     );
+  });
+
+  it("waits for an explicit Check submission before fetching comparables", async () => {
+    const user = userEvent.setup();
+    renderPanel();
+
+    await screen.findByLabelText(/asking price/i);
+    expect(fetch).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole("button", { name: /check this listing/i }));
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
+  });
+
+  it.each([
+    { label: "asking price", overrides: { askingPrice: null } },
+    { label: "floor area", overrides: { floorAreaSqm: null } },
+    { label: "flat type", overrides: { flatType: null } },
+    { label: "storey", overrides: { storeyRange: null } },
+  ])("requires an explicit $label before enabling Check", async ({ overrides }) => {
+    renderPanel(false, overrides);
+
+    const button = await screen.findByRole("button", { name: /check this listing/i });
+    expect(button).toBeDisabled();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("shows a flat-type selector even when the block has one option and never selects it", async () => {
+    const callbacks = renderPanel(false, { flatType: null });
+
+    await screen.findByLabelText(/flat type/i);
+    expect(callbacks.onFlatTypeChange).not.toHaveBeenCalled();
+  });
+
+  it("does not repeat candidate and shortlist navigation inside the check workflow", async () => {
+    renderPanel();
+
+    await screen.findByLabelText(/asking price/i);
+    expect(screen.getAllByText(/check a listing price/i)).toHaveLength(1);
+    expect(
+      screen.queryByRole("button", { name: /find candidate blocks/i }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /compare my shortlist/i })).not.toBeInTheDocument();
+  });
+
+  it("explains when the shortlist limit prevents another save", async () => {
+    const user = userEvent.setup();
+    renderPanel(true);
+
+    await user.click(await screen.findByRole("button", { name: /check this listing/i }));
+    const button = await screen.findByRole("button", { name: /shortlist full/i });
+    expect(button).toBeDisabled();
   });
 });

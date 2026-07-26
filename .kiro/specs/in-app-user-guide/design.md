@@ -67,6 +67,7 @@ falls back to `<span>` for anything unexpected. Click handlers check
 ### Contextual links
 
 - Empty results pane → link to `/docs/troubleshooting`
-- `AskingPriceCheck` → link to `/docs/understanding-price-comparisons`
+- `ListingCheckPanel` / `ComparableEvidenceTable` → link to
+  `/docs/understanding-price-comparisons`
 - `LeaseWarningPanel` → link to `/docs/getting-started`
 - Data-load error state → link to `/docs/troubleshooting`

@@ -27,50 +27,97 @@ function enrichMrtFeaturesWithLineColors(
   };
 }
 
-async function fetchFeatureCollection(url: string, label: string): Promise<FeatureCollection> {
-  const response = await fetch(url);
+async function fetchFeatureCollection(
+  url: string,
+  label: string,
+  signal: AbortSignal,
+): Promise<FeatureCollection> {
+  const response = await fetch(url, { signal });
   if (!response.ok) {
     throw new Error(`Failed to load ${label}: ${response.status}`);
   }
   return (await response.json()) as FeatureCollection;
 }
 
+function isAbortError(error: unknown): boolean {
+  return (
+    typeof error === "object" && error !== null && "name" in error && error.name === "AbortError"
+  );
+}
+
 export function useAmenityGeoSync({
   map,
-  mrtStationsEnabled,
-  mrtExitsEnabled,
+  mrtEnabled,
 }: {
   map: MapLibreMap | null;
-  mrtStationsEnabled: boolean;
-  mrtExitsEnabled: boolean;
+  mrtEnabled: boolean;
 }) {
   const [stationsGeoJson, setStationsGeoJson] = useState<FeatureCollection | null>(null);
   const [exitsGeoJson, setExitsGeoJson] = useState<FeatureCollection | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [stationsLoading, setStationsLoading] = useState(false);
+  const [exitsLoading, setExitsLoading] = useState(false);
+  const [stationsError, setStationsError] = useState<string | null>(null);
+  const [exitsError, setExitsError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (mrtStationsEnabled && !stationsGeoJson) {
-      void fetchFeatureCollection(`${API_BASE_PATH}/mrt-stations`, "stations")
-        .then((data: FeatureCollection) =>
-          setStationsGeoJson(enrichMrtFeaturesWithLineColors(data, "stationName")),
-        )
-        .catch((e: unknown) =>
-          setError(e instanceof Error ? e.message : "Failed to load MRT stations"),
-        );
+    if (!mrtEnabled) {
+      setStationsLoading(false);
+      return;
     }
-  }, [mrtStationsEnabled, stationsGeoJson]);
+    if (stationsGeoJson) return;
+
+    const controller = new AbortController();
+    let active = true;
+    setStationsLoading(true);
+    setStationsError(null);
+
+    void fetchFeatureCollection(`${API_BASE_PATH}/mrt-stations`, "stations", controller.signal)
+      .then((data: FeatureCollection) => {
+        if (!active) return;
+        setStationsGeoJson(enrichMrtFeaturesWithLineColors(data, "stationName"));
+        setStationsLoading(false);
+      })
+      .catch((error: unknown) => {
+        if (!active || isAbortError(error)) return;
+        setStationsError(error instanceof Error ? error.message : "Failed to load MRT stations");
+        setStationsLoading(false);
+      });
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [mrtEnabled, stationsGeoJson]);
 
   useEffect(() => {
-    if (mrtExitsEnabled && !exitsGeoJson) {
-      void fetchFeatureCollection(`${API_BASE_PATH}/mrt-exits`, "exits")
-        .then((data: FeatureCollection) =>
-          setExitsGeoJson(enrichMrtFeaturesWithLineColors(data, "STATION_NA")),
-        )
-        .catch((e: unknown) =>
-          setError(e instanceof Error ? e.message : "Failed to load MRT exits"),
-        );
+    if (!mrtEnabled) {
+      setExitsLoading(false);
+      return;
     }
-  }, [mrtExitsEnabled, exitsGeoJson]);
+    if (exitsGeoJson) return;
+
+    const controller = new AbortController();
+    let active = true;
+    setExitsLoading(true);
+    setExitsError(null);
+
+    void fetchFeatureCollection(`${API_BASE_PATH}/mrt-exits`, "exits", controller.signal)
+      .then((data: FeatureCollection) => {
+        if (!active) return;
+        setExitsGeoJson(enrichMrtFeaturesWithLineColors(data, "STATION_NA"));
+        setExitsLoading(false);
+      })
+      .catch((error: unknown) => {
+        if (!active || isAbortError(error)) return;
+        setExitsError(error instanceof Error ? error.message : "Failed to load MRT exits");
+        setExitsLoading(false);
+      });
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [mrtEnabled, exitsGeoJson]);
 
   // Sync station data to map source with deferred-apply
   useEffect(() => {
@@ -129,14 +176,14 @@ export function useAmenityGeoSync({
     const apply = () => {
       if (!map.isStyleLoaded()) return;
 
+      const visible = mrtEnabled ? "visible" : "none";
+
       if (map.getLayer("mrt-stations-points")) {
-        const visible = mrtStationsEnabled ? "visible" : "none";
         map.setLayoutProperty("mrt-stations-points", "visibility", visible);
         map.setLayoutProperty("mrt-stations-labels", "visibility", visible);
       }
 
       if (map.getLayer("mrt-exits-points")) {
-        const visible = mrtExitsEnabled ? "visible" : "none";
         map.setLayoutProperty("mrt-exits-points", "visibility", visible);
       }
     };
@@ -152,7 +199,12 @@ export function useAmenityGeoSync({
       map.off("load", apply);
       map.off("styledata", apply);
     };
-  }, [map, mrtStationsEnabled, mrtExitsEnabled]);
+  }, [map, mrtEnabled]);
 
-  return { error };
+  return {
+    error: stationsError ?? exitsError,
+    isLoading: mrtEnabled && (stationsLoading || exitsLoading),
+    stationsFailed: mrtEnabled && stationsError !== null,
+    exitsFailed: mrtEnabled && exitsError !== null,
+  };
 }

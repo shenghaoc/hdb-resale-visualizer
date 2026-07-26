@@ -9,6 +9,13 @@ export type NearestMrt = {
   walkingTimeSeconds: number;
 };
 
+export type BlockFlatTypeCohort = {
+  transactionCount: number;
+  latestMonth: string;
+  floorAreaRange: [number, number];
+  flatModels: string[];
+};
+
 export type BlockSummary = {
   addressKey: string;
   town: string;
@@ -27,6 +34,7 @@ export type BlockSummary = {
   flatModels: string[];
   medianPriceByFlatType?: Record<string, number>;
   medianPricePerSqmByFlatType?: Record<string, number>;
+  flatTypeCohorts?: Record<string, BlockFlatTypeCohort>;
   nearestMrt: NearestMrt | null;
   nearbyMrts?: NearestMrt[];
   postalCode?: string | null;

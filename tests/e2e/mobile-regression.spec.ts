@@ -1,5 +1,6 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import { mockComparisonArtifacts } from "./fixtures";
+import { highConfidenceSet, mockComparableTransactions } from "./listing-check.fixtures";
 
 test.describe.configure({
   timeout: 60_000,
@@ -23,7 +24,18 @@ async function expectNoHorizontalOverflow(locator: Locator) {
     .toBe(true);
 }
 
+async function expandOnlyShortlistRow(drawer: Locator) {
+  const rowToggle = drawer.locator(
+    "[role='listitem'] [data-slot='card-header'] button[aria-expanded]",
+  );
+  await expect(rowToggle).toHaveCount(1);
+  await expect(rowToggle).toHaveAttribute("aria-expanded", "false");
+  await rowToggle.click();
+  await expect(rowToggle).toHaveAttribute("aria-expanded", "true");
+}
+
 async function runMobileListingCheckFlow(page: Page) {
+  await mockComparableTransactions(page, highConfidenceSet);
   await page.goto("/?search=BEDOK");
 
   // Keep map visible, but use dedicated workflow to ensure the user does
@@ -42,62 +54,49 @@ async function runMobileListingCheckFlow(page: Page) {
 
   const detailDrawer = page.getByTestId("detail-drawer");
   await expect(detailDrawer).toBeVisible();
-  await detailDrawer.getByRole("tab", { name: /negotiate/i }).click();
-  await expect(detailDrawer.getByText(/Asking Price Reality Check/i)).toBeVisible();
+  await mobileTabBar(page).getByRole("button", { name: /check/i }).click();
+  await expect(detailDrawer).toBeHidden();
 
-  const askingPriceInput = detailDrawer.getByLabel(/asking price/i);
-  const floorAreaInput = detailDrawer.getByLabel(/floor area/i);
-  await askingPriceInput.click();
-  await askingPriceInput.pressSequentially("500000");
-  await floorAreaInput.click();
-  await floorAreaInput.pressSequentially("90");
+  const check = page.locator("#mobile-check-content");
+  await expect(check.getByText(/check a listing price/i).first()).toBeVisible();
+  await check.getByRole("spinbutton", { name: /asking price/i }).fill("1200000");
+  await check.getByRole("spinbutton", { name: /floor area/i }).fill("150");
 
-  // Assessment is reactive — verdict or no-comparables hint appears automatically
-  const verdict = detailDrawer.getByTestId("listing-check-verdict");
-  const noComparablesHint = detailDrawer.getByText(/no comparable transactions/i);
-  const hasVerdict = await verdict
-    .waitFor({ state: "visible", timeout: 15_000 })
-    .then(() => true)
-    .catch(() => false);
+  await check.getByRole("combobox", { name: /flat type/i }).click();
+  await page.getByRole("option").first().click();
+  await check.getByRole("combobox", { name: /storey/i }).click();
+  await page.getByRole("option", { name: "01 TO 03" }).click();
+  await check.getByRole("button", { name: /check this listing/i }).click();
 
-  if (hasVerdict) {
-    // AskingPriceCheck (detail drawer) uses the v1 engine which does not
-    // compute confidence — only the main ListingCheckPanel shows the
-    // confidence badge and summary. Assert verdict and evidence only.
-    const evidence = detailDrawer.getByTestId("listing-check-evidence");
-    await expect(evidence).toBeVisible({ timeout: 25_000 });
+  const verdict = check.getByTestId("listing-check-verdict");
+  const evidence = check.getByTestId("listing-check-evidence");
+  await expect(verdict).toBeVisible({ timeout: 15_000 });
+  await expect(evidence).toBeVisible({ timeout: 25_000 });
+  await expectNoHorizontalOverflow(verdict);
+  await expectNoHorizontalOverflow(evidence);
 
-    await expectNoHorizontalOverflow(verdict);
-    await expectNoHorizontalOverflow(evidence);
+  const verdictBox = await verdict.boundingBox();
+  const evidenceBox = await evidence.boundingBox();
+  expect(verdictBox).not.toBeNull();
+  expect(evidenceBox).not.toBeNull();
+  expect(verdictBox!.y).toBeLessThan(evidenceBox!.y);
 
-    const verdictBox = await verdict.boundingBox();
-    const evidenceBox = await evidence.boundingBox();
-    expect(verdictBox).not.toBeNull();
-    expect(evidenceBox).not.toBeNull();
-    expect(verdictBox!.y).toBeLessThan(evidenceBox!.y);
-  } else {
-    // No verdict means no comparables — the hint should be visible as confirmation
-    await expect(noComparablesHint).toBeVisible({ timeout: 10_000 });
-  }
-
-  const saveButton = detailDrawer.getByRole("button", { name: /add to shortlist/i });
+  const saveButton = check.getByRole("button", { name: /save to shortlist/i });
   await expect(saveButton).toBeVisible();
   await saveButton.click();
-  // Button switches to "Saved to Shortlist" — verify the saved state via the tab bar badge
+  await expect(check.getByRole("button", { name: /saved/i })).toBeVisible();
   await expect(mobileTabBar(page).locator("[data-slot='badge']")).toContainText("1");
-
-  await page.keyboard.press("Escape");
-  await expect(detailDrawer).toHaveCount(0);
 
   await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
   const shortlistDrawer = page.getByTestId("shortlist-drawer");
   await expect(shortlistDrawer).toBeVisible();
 
-  // First shortlist item is expanded by default — cockpit inputs should be
-  // visible. Use the exact "Offer ceiling" label so it can't also match the
-  // offer board's "Suggested offer ceiling" field (both editable on the card).
-  const offerCeilingInput = shortlistDrawer.getByLabel("Offer ceiling", { exact: true });
-  const notesInput = shortlistDrawer.getByLabel("Notes", { exact: true });
+  // Offer preparation is intentionally collapsed until the buyer opens it.
+  await expandOnlyShortlistRow(shortlistDrawer);
+  const offerCeilingInput = shortlistDrawer.getByLabel("Suggested offer ceiling", {
+    exact: true,
+  });
+  const notesInput = shortlistDrawer.getByLabel("Buyer notes", { exact: true });
   await expect(offerCeilingInput).toBeVisible({ timeout: 10_000 });
   await offerCeilingInput.fill("490000");
   await notesInput.fill("Mobile shortlist note");
@@ -221,9 +220,14 @@ test.describe("Mobile Regression: Recent Features", () => {
     await detailDrawer.getByRole("tab", { name: /history/i }).click();
     await expect(detailDrawer.getByText(/Recent Transactions/i)).toBeVisible();
 
-    // Navigate to negotiate tab
-    await detailDrawer.getByRole("tab", { name: /negotiate/i }).click();
-    await expect(detailDrawer.getByText(/Asking Price Reality Check/i)).toBeVisible();
+    // Listing checks live in the single canonical Check destination.
+    await mobileTabBar(page).getByRole("button", { name: /check/i }).click();
+    await expect(
+      page
+        .locator("#mobile-check-content")
+        .getByText(/check a listing price/i)
+        .first(),
+    ).toBeVisible();
   });
 
   test("budget match indicator shows on mobile results", async ({ page }) => {
@@ -297,12 +301,11 @@ test.describe("Mobile Regression: Recent Features", () => {
 
     // Navigate to saved tab
     await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
-    await expect(page.getByTestId("shortlist-drawer")).toBeVisible();
+    const drawer = page.getByTestId("shortlist-drawer");
+    await expect(drawer).toBeVisible();
+    await expandOnlyShortlistRow(drawer);
 
-    // Buyer checklist section should be present
-    await expect(page.getByTestId("shortlist-drawer").getByText(/checklist/i)).toBeVisible({
-      timeout: 10_000,
-    });
+    await expect(drawer.getByRole("group", { name: "Viewing checklist" })).toBeVisible();
   });
 
   test("shortlist comparison renders card layout on mobile", async ({ page }) => {
@@ -330,8 +333,9 @@ test.describe("Mobile Regression: Recent Features", () => {
     const drawer = page.getByTestId("shortlist-drawer");
     await expect(drawer).toBeVisible();
 
-    // Single item auto-expands; wait for the asking price field to be visible
-    const askingInput = page.getByRole("spinbutton", { name: /asking price/i });
+    // Offer preparation stays collapsed until the buyer asks for it.
+    await expandOnlyShortlistRow(drawer);
+    const askingInput = drawer.getByRole("spinbutton", { name: /asking price/i });
     await expect(askingInput).toBeVisible({ timeout: 10_000 });
 
     // Fill asking price
@@ -349,12 +353,12 @@ test.describe("Mobile Regression: Recent Features", () => {
     await page.reload();
     await mobileTabBar(page).getByRole("button", { name: /saved/i }).click();
     await expect(drawer).toBeVisible();
+    await expandOnlyShortlistRow(drawer);
 
-    // Wait for auto-expanded item
-    await expect(page.getByRole("spinbutton", { name: /asking price/i })).toBeVisible({
+    await expect(drawer.getByRole("spinbutton", { name: /asking price/i })).toBeVisible({
       timeout: 10_000,
     });
-    await expect(page.getByRole("spinbutton", { name: /asking price/i })).toHaveValue("550000");
+    await expect(drawer.getByRole("spinbutton", { name: /asking price/i })).toHaveValue("550000");
     await expect(drawer.getByRole("combobox", { name: /decision status/i })).toContainText(
       /considering/i,
     );

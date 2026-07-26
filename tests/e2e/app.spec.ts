@@ -160,13 +160,7 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   await expect(detailDrawer).toContainText("1 within 1km");
   await expect(detailDrawer).toContainText("Parks");
   await expect(detailDrawer).toContainText("4 within 1km");
-  await expect(detailDrawer).toContainText("Market Percentiles");
-  await expect(detailDrawer).toContainText("Price Rank");
-  await expect(detailDrawer).toContainText("65%");
-  await expect(detailDrawer).toContainText("Price/sqm Rank");
-  await expect(detailDrawer).toContainText("70%");
-  await expect(detailDrawer).toContainText("MRT Access Rank");
-  await expect(detailDrawer).toContainText("80%");
+  await expect(detailDrawer).not.toContainText("Market Percentiles");
 
   await page
     .getByTestId("detail-drawer")
@@ -179,15 +173,13 @@ test("comparison data binds into detail and shortlist views", async ({ page }) =
   const shortlistDrawer = page.getByTestId("shortlist-drawer");
 
   await expect(shortlistDrawer).toContainText(rowAddress ?? "");
+  await shortlistDrawer.locator("[role='listitem'] button[aria-expanded]").first().click();
   await expect(shortlistDrawer).toContainText("Primary schools");
   await expect(shortlistDrawer).toContainText("3 within 1km, 8 within 2km");
   await expect(shortlistDrawer).toContainText("BEDOK PRIMARY SCHOOL: 250 m");
   await expect(shortlistDrawer).toContainText("Amenities");
   await expect(shortlistDrawer).toContainText("2H • 1S • 4P");
-  await expect(shortlistDrawer).toContainText("Price percentile");
-  await expect(shortlistDrawer).toContainText("65th percentile");
-  await expect(shortlistDrawer).toContainText("Location ranks");
-  await expect(shortlistDrawer).toContainText("MRT: 80th • Lease: 45th");
+  await expect(shortlistDrawer).not.toContainText("Market position");
 });
 
 test("shortlist items from prior sessions are visible without adding a new one", async ({
@@ -225,5 +217,9 @@ test("shortlist items from prior sessions are visible without adding a new one",
   await expect(page.getByTestId("shortlist-drawer")).toContainText("104A ANG MO KIO ST 11", {
     timeout: 10_000,
   });
+  await page
+    .getByTestId("shortlist-drawer")
+    .getByRole("button", { name: /104A ANG MO KIO ST 11/i, expanded: false })
+    .click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText("Prior session note");
 });

@@ -1,8 +1,4 @@
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
-import {
-  getDataConfidenceLabelKey,
-  type DataConfidenceLabelKey,
-} from "@/features/listing-check/confidence";
 import type { AddressDetailSummary, BlockSummary, NearestMrt, ShortlistItem } from "@/types/data";
 
 /**
@@ -38,8 +34,7 @@ export type ShortlistComparisonGap = {
 
 export type ShortlistComparisonCaveatKey =
   | "shortlist.compare.caveat.noFairRange"
-  | "shortlist.compare.caveat.noMrt"
-  | "shortlist.compare.caveat.lowConfidence";
+  | "shortlist.compare.caveat.noMrt";
 
 export type ShortlistComparisonRow = {
   addressKey: string;
@@ -64,7 +59,6 @@ export type ShortlistComparisonRow = {
   suggestedOfferCeiling: number | null;
   decisionStatus?: ShortlistItem["decisionStatus"];
   deltaVsFairMedian: ShortlistComparisonGap | null;
-  confidenceLevelLabel: DataConfidenceLabelKey;
   caveatKeys: ShortlistComparisonCaveatKey[];
 };
 
@@ -119,7 +113,6 @@ function computeDeltaVsReference(
 function buildCaveats(
   item: ShortlistComparisonInputRow["item"],
   nearestMrt: NearestMrt | null,
-  recentTransactionCount: number,
 ): ShortlistComparisonCaveatKey[] {
   const caveats: ShortlistComparisonCaveatKey[] = [];
   if (item.fairRangeLow == null || item.fairRangeMedian == null || item.fairRangeHigh == null) {
@@ -127,9 +120,6 @@ function buildCaveats(
   }
   if (nearestMrt === null) {
     caveats.push("shortlist.compare.caveat.noMrt");
-  }
-  if (getDataConfidenceLabelKey(recentTransactionCount) === "confidence.low.label") {
-    caveats.push("shortlist.compare.caveat.lowConfidence");
   }
   return caveats;
 }
@@ -191,8 +181,7 @@ export function buildShortlistComparisonRows<T extends ShortlistComparisonInputR
         isFiniteNumber(item.fairRangeMedian) ? item.fairRangeMedian : null,
         block.medianPrice,
       ),
-      confidenceLevelLabel: getDataConfidenceLabelKey(block.transactionCount),
-      caveatKeys: buildCaveats(item, block.nearestMrt ?? null, block.transactionCount),
+      caveatKeys: buildCaveats(item, block.nearestMrt ?? null),
     };
   });
 }

@@ -80,7 +80,7 @@ describe("buildCompareShareUrl", () => {
 });
 
 describe("buildFilterShareUrl", () => {
-  it("preserves all active filters in the URL", () => {
+  it("preserves reproducible filters and omits local-only affordability", () => {
     const filters = makeFilters({
       town: "BEDOK",
       budgetMin: 300000,
@@ -94,7 +94,7 @@ describe("buildFilterShareUrl", () => {
     expect(url).toContain("budgetMin=300000");
     expect(url).toContain("budgetMax=600000");
     expect(url).toContain("flatType=4+ROOM");
-    expect(url).toContain("affordable=comfortable");
+    expect(url).not.toContain("affordable");
     expect(url).toContain("sort=median-asc");
   });
 
@@ -114,11 +114,16 @@ describe("buildFilterShareUrl", () => {
 
 describe("buildShortlistShareUrl", () => {
   it("appends encoded shortlist with filter scope", () => {
-    const filters = makeFilters({ town: "BEDOK", budgetMin: 300000 });
+    const filters = makeFilters({
+      town: "BEDOK",
+      budgetMin: 300000,
+      affordable: "stretch",
+    });
     const url = buildShortlistShareUrl("abc123", filters, "https://example.com", "/");
     expect(url).toContain("town=BEDOK");
     expect(url).toContain("budgetMin=300000");
     expect(url).toContain("shortlist=abc123");
+    expect(url).not.toContain("affordable");
   });
 
   it("works when only shortlist param is set", () => {

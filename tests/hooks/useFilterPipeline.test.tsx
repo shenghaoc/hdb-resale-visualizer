@@ -7,7 +7,13 @@ import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/shared/lib/i18n";
 
 vi.mock("@/hooks/useBlockLoading", () => ({
-  useBlockLoading: vi.fn(() => ({ blocks: [], loadError: null, searchTruncated: false })),
+  useBlockLoading: vi.fn(() => ({
+    blocks: [],
+    loadError: null,
+    searchTruncated: false,
+    refinementUnsupported: false,
+    isLoading: false,
+  })),
 }));
 
 describe("useFilterPipeline", () => {
@@ -36,7 +42,7 @@ describe("useFilterPipeline", () => {
     sort: "",
   };
 
-  it("should inject default start month if not in URL", () => {
+  it("does not inject a hidden start month when the URL has none", () => {
     // Mock window.location.search to be empty
     const originalLocation = window.location;
     Object.defineProperty(window, "location", {
@@ -56,9 +62,7 @@ describe("useFilterPipeline", () => {
       }),
     );
 
-    // For 2024-12 maxMonth, default start month (minus 3 years) is 2021-12
-    expect(result.current.effectiveFilters.startMonth).toBe("2021-12");
-    expect(result.current.useDefaultStartMonth).toBe(true);
+    expect(result.current.effectiveFilters.startMonth).toBeNull();
 
     Object.defineProperty(window, "location", {
       configurable: true,
@@ -86,7 +90,6 @@ describe("useFilterPipeline", () => {
     );
 
     expect(result.current.effectiveFilters.startMonth).toBe("2021-01");
-    expect(result.current.useDefaultStartMonth).toBe(false);
 
     Object.defineProperty(window, "location", {
       configurable: true,
@@ -159,7 +162,13 @@ describe("useFilterPipeline", () => {
       },
     ] as unknown as BlockSummary[];
 
-    vi.mocked(useBlockLoading).mockReturnValue({ blocks, loadError: null, searchTruncated: false });
+    vi.mocked(useBlockLoading).mockReturnValue({
+      blocks,
+      loadError: null,
+      searchTruncated: false,
+      refinementUnsupported: false,
+      isLoading: false,
+    });
 
     const { result } = renderHook(() =>
       useFilterPipeline({
@@ -178,5 +187,49 @@ describe("useFilterPipeline", () => {
     expect(result.current.mapFilteredBlocks.map((b) => b.addressKey)).toContain("block-1");
     expect(result.current.mapFilteredBlocks.map((b) => b.addressKey)).toContain("block-2");
     expect(result.current.mapFilteredBlocks.length).toBe(2);
+  });
+
+  it("uses only canonical filters for visible results, not hidden profile preferences", () => {
+    const blocks = [
+      {
+        addressKey: "four-room",
+        town: "BEDOK",
+        flatTypes: ["4 ROOM"],
+        availableDateRange: ["2020-01", "2024-12"],
+      },
+      {
+        addressKey: "five-room",
+        town: "BEDOK",
+        flatTypes: ["5 ROOM"],
+        availableDateRange: ["2020-01", "2024-12"],
+      },
+    ] as unknown as BlockSummary[];
+    vi.mocked(useBlockLoading).mockReturnValue({
+      blocks,
+      loadError: null,
+      searchTruncated: false,
+      refinementUnsupported: false,
+      isLoading: false,
+    });
+
+    const { result } = renderHook(() =>
+      useFilterPipeline({
+        manifest,
+        rawFilters: { ...initialFilters, town: "BEDOK" },
+        userLocation: null,
+        savedVisible: false,
+        shortlistCount: 0,
+        searchProfile: {
+          ...DEFAULT_SEARCH_PROFILE,
+          mainFlatType: "4 ROOM",
+        },
+        t,
+      }),
+    );
+
+    expect(result.current.filteredBlocks.map((block) => block.addressKey)).toEqual([
+      "four-room",
+      "five-room",
+    ]);
   });
 });

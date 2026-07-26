@@ -50,22 +50,23 @@
 ## R3 — Side-by-side comparison
 
 - **R3.1** The comparison view displays all shortlisted items with
-  columns for: asking price, fair range (formatted as
-  `low — median — high`), delta vs fair median, price per sqm,
-  remaining lease, monthly payment estimate (placeholder if not
-  computable), nearest MRT with walking time, confidence level,
-  and caveats.
+  columns for: rank, address, town, block-wide median, block price per sqm,
+  asking price, fair range (formatted as `low — median — high`), delta vs fair
+  median, recent block-record volume, remaining lease, nearest MRT with walking
+  time, decision status, explicit caveats, target price, and notes.
 
 - **R3.2** `deltaVsFairMedian` is computed as the difference between
   the block's median price and the item's `fairRangeMedian`. It is
   `null` when either value is missing.
 
-- **R3.3** Price per sqm, lease, MRT, confidence, and caveats are
-  derived from existing block summary and detail data — not from
-  buyer inputs.
+- **R3.3** Price per sqm, recent block-record volume, lease, and MRT are
+  factual fields derived from current block summary/detail data. Data-quality
+  labels or hints, where shown, are derived from record volume and recency
+  rather than a generic saved confidence verdict.
 
-- **R3.4** Monthly payment estimate degrades gracefully to a dash or
-  placeholder when the underlying calculation is not yet implemented.
+- **R3.4** Missing fair-range or MRT data degrades to an explicit placeholder
+  and corresponding caveat. The comparison does not reserve empty columns for
+  unimplemented features.
 
 - **R3.5** Comparison rows include the item's `decisionStatus` and
   `notes` alongside market-derived metrics.
@@ -118,9 +119,9 @@
   breakpoint) renders a card-based layout instead of a horizontally
   scrolling table.
 
-- **R6.2** Each mobile comparison card shows all key metrics: median
-  price, confidence, decision status, asking price, price/sqm, target
-  price, lease, MRT, fair range, and delta vs fair median.
+- **R6.2** Each mobile comparison card shows the block median, recent
+  block-record volume, decision status, asking price, price/sqm, target price,
+  lease, MRT, fair range, delta vs fair median, and explicit caveats.
 
 - **R6.3** The item editor is touch-friendly: input fields and dropdowns
   are large enough for mobile tap targets.
@@ -158,8 +159,8 @@
   shapes.
 
 - **R9.3** Unit tests cover comparison row derivation: delta vs fair
-  median calculation, fair range formatting, confidence and caveat
-  propagation, decision status passthrough.
+  median calculation, fair range formatting, recent block-record volume,
+  explicit caveat propagation, and decision status passthrough.
 
 - **R9.4** E2E tests verify mobile comparison renders card layout with
   correct item count on mobile viewport width.

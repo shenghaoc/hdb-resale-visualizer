@@ -63,12 +63,12 @@ tests (shortlist storage, etc.) behave identically.
 ```jsonc
 // package.json "scripts"
 "check:pr": "npm run check && npm run test:e2e",
-"test:listing-check": "NODE_OPTIONS=--no-experimental-webstorage vitest run listing AskingPriceCheck",
+"test:listing-check": "NODE_OPTIONS=--no-experimental-webstorage vp test run listing ListingCheckPanel",
 "test:comparables":   "NODE_OPTIONS=--no-experimental-webstorage vitest run comparable time-adjustment transaction-analysis transaction-outliers",
 "test:buyer-workflow":"NODE_OPTIONS=--no-experimental-webstorage vitest run shortlist buyer-first",
 ```
 
-#### `test:listing-check` → patterns `listing`, `AskingPriceCheck`
+#### `test:listing-check` → patterns `listing`, `ListingCheckPanel`
 
 Resolves to (verified via `vitest list --filesOnly`):
 
@@ -77,11 +77,11 @@ Resolves to (verified via `vitest list --filesOnly`):
 - `tests/unit/listing-confidence-adapter.test.ts`
 - `tests/unit/listing-caveats.test.ts`
 - `tests/unit/listingPortalLinks.test.ts`
-- `tests/components/AskingPriceCheck.test.tsx`
+- `tests/components/ListingCheckPanel.inputs.test.tsx`
 
 The `listing` substring is case-insensitive and catches every `listing*` file
-including `listingPortalLinks`. `AskingPriceCheck` is added explicitly because
-its filename does not contain "listing" but it is the listing price-check UI.
+including `listingPortalLinks`. `ListingCheckPanel` is added explicitly because
+it is the sole listing price-check UI and its component filename is capitalized.
 
 #### `test:comparables` → patterns `comparable`, `time-adjustment`, `transaction-analysis`, `transaction-outliers`
 
@@ -143,7 +143,7 @@ gate, not a build.
 ## Risks / Trade-offs
 
 - **Filename-filter drift** — if a future listing-check test is named without
-  the `listing` substring (like `AskingPriceCheck`), it will be missed by
+  either the `listing` substring or the canonical panel name, it will be missed by
   `test:listing-check`. Mitigation: the patterns are documented here and in the
   spec; new buyer-critical tests should either follow the naming convention or
   the pattern list is extended. The full `npm run test` / `check` remains the

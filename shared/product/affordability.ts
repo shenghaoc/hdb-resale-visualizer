@@ -1,4 +1,5 @@
 import type { AffordabilityMode, BlockSummary } from "../data-types";
+import { getCohortAlignedMedianPrice } from "./filtering";
 
 export const HDB_MAX_LTV_RATIO = 0.75;
 export const HDB_LOAN_TENURE_MONTHS = 25 * 12;
@@ -24,9 +25,20 @@ export type AffordabilityVerdict = {
   status: AffordabilityStatus;
 };
 
-export function computeLoanTenureYears(age: number | null): number {
+/**
+ * Indicative HDB-loan age cap.
+ *
+ * HDB uses the applicants' average age for the `65 - age` limit. Keeping the
+ * optional co-applicant in this calculation prevents the setup field from
+ * being collected without affecting the estimate.
+ */
+export function computeLoanTenureYears(
+  age: number | null,
+  coApplicantAge: number | null = null,
+): number {
   if (age === null) return 25;
-  return Math.min(25, Math.max(0, 65 - age));
+  const averageAge = coApplicantAge === null ? age : (age + coApplicantAge) / 2;
+  return Math.min(25, Math.max(0, 65 - averageAge));
 }
 
 export function maxLoanFor(monthlyIncome: number, tenureMonths?: number): number {
@@ -42,7 +54,7 @@ export function maxLoanFor(monthlyIncome: number, tenureMonths?: number): number
 export function maxAffordablePrice(profile: AffordabilityProfile): number {
   const cpf = profile.cpfOABalance ?? 0;
   const income = profile.monthlyIncome ?? 0;
-  const tenureYears = computeLoanTenureYears(profile.age);
+  const tenureYears = computeLoanTenureYears(profile.age, profile.coApplicantAge);
   const maxLoan = income > 0 && tenureYears > 0 ? maxLoanFor(income, tenureYears * 12) : 0;
 
   if (maxLoan <= 0) return Math.floor(cpf);
@@ -56,7 +68,7 @@ export function computeAffordabilityVerdict(
   profile: AffordabilityProfile,
   medianPrice: number,
 ): AffordabilityVerdict {
-  if (profile.monthlyIncome === null) {
+  if (!isAffordabilityProfileComplete(profile)) {
     return {
       maxAffordablePrice: maxAffordablePrice(profile),
       monthlyRepayment: 0,
@@ -67,9 +79,9 @@ export function computeAffordabilityVerdict(
     };
   }
 
-  const income = profile.monthlyIncome;
+  const income = profile.monthlyIncome ?? 0;
   const cpf = profile.cpfOABalance ?? 0;
-  const tenureYears = computeLoanTenureYears(profile.age);
+  const tenureYears = computeLoanTenureYears(profile.age, profile.coApplicantAge);
   const ceiling = maxAffordablePrice(profile);
   let downPaymentFromCpf: number;
   let cashOutlay: number;
@@ -117,13 +129,19 @@ export function computeAffordabilityVerdict(
 }
 
 /**
- * Profile completeness gate for affordability filter and sort. Mirrors the
- * per-card pill gate but extends to CPF + age so the verdict is meaningful
- * (income alone with no CPF yields a zero ceiling that would flag every
- * block as "over").
+ * Profile completeness gate for the local affordability filter. Positive
+ * income and CPF OA are required because the model has no available-cash
+ * input. Treating an explicit zero as complete would create a zero ceiling
+ * and falsely label every home as unaffordable.
  */
 export function isAffordabilityProfileComplete(profile: AffordabilityProfile): boolean {
-  return profile.monthlyIncome !== null && profile.cpfOABalance !== null && profile.age !== null;
+  return (
+    profile.monthlyIncome !== null &&
+    profile.monthlyIncome > 0 &&
+    profile.cpfOABalance !== null &&
+    profile.cpfOABalance > 0 &&
+    profile.age !== null
+  );
 }
 
 /**
@@ -136,13 +154,17 @@ export function isAffordabilityProfileComplete(profile: AffordabilityProfile): b
  * both comfortable + stretch (= everything except over/unknown).
  */
 export function passesAffordabilityMode(
-  block: Pick<BlockSummary, "medianPrice">,
+  block: BlockSummary,
   profile: AffordabilityProfile,
   mode: AffordabilityMode,
+  flatType = "",
 ): boolean {
   if (mode === "") return true;
   if (!isAffordabilityProfileComplete(profile)) return true;
-  const { status } = computeAffordabilityVerdict(profile, block.medianPrice);
+  const { status } = computeAffordabilityVerdict(
+    profile,
+    getCohortAlignedMedianPrice(block, flatType),
+  );
   if (mode === "comfortable") return status === "comfortable";
   return status === "comfortable" || status === "stretch";
 }

@@ -2,8 +2,7 @@
  * E2E tests for the CPF Affordability filter (Phase 3).
  *
  * Relies on the global storage state seeded by global-setup.ts:
- *   monthlyIncome: 9000, cpfOABalance: 120_000, age: 35, coApplicantAge: 33,
- *   showAllBlocks: true
+ *   monthlyIncome: 9000, cpfOABalance: 120_000, age: 35, coApplicantAge: 33
  *
  * All fixture blocks have medians ≈ 1.2 M which is far above the affordable
  * ceiling for that profile, so ?affordable=comfortable always yields 0 matches
@@ -98,13 +97,13 @@ test.describe("affordability filter — result count", () => {
     const emptyCard = page.getByTestId("affordability-empty-card");
     await expect(emptyCard).toBeVisible();
     await expect(
-      emptyCard.getByRole("button", { name: /clear affordability filter/i }),
+      emptyCard.getByRole("button", { name: /clear cpf-based estimate/i }),
     ).toBeVisible();
   });
 });
 
 test.describe("affordability filter — clearing via empty-state button", () => {
-  test("clicking 'Clear affordability filter' removes the affordable param and restores results", async ({
+  test("clicking 'Clear CPF-based estimate' removes the affordable param and restores results", async ({
     page,
   }) => {
     await page.goto("/?town=BEDOK&affordable=comfortable");
@@ -112,7 +111,7 @@ test.describe("affordability filter — clearing via empty-state button", () => 
     await openResultsTab(page);
 
     const emptyCard = page.getByTestId("affordability-empty-card");
-    await emptyCard.getByRole("button", { name: /clear affordability filter/i }).click();
+    await emptyCard.getByRole("button", { name: /clear cpf-based estimate/i }).click();
 
     await expect(page).not.toHaveURL(/affordable=/);
     await expect(page).toHaveURL(/town=BEDOK/);
@@ -127,9 +126,9 @@ test.describe("affordability filter — clearing via filter chip", () => {
     await waitForAppReady(page);
 
     // Chip aria-label follows the "filters.removeChip" i18n template:
-    // "Remove filter: Affordable: comfortable"
+    // "Remove filter: Within CPF estimate"
     await expect(
-      page.getByRole("button", { name: /remove filter: affordable: comfortable/i }),
+      page.getByRole("button", { name: /remove filter: within cpf estimate/i }),
     ).toBeVisible();
   });
 
@@ -137,7 +136,7 @@ test.describe("affordability filter — clearing via filter chip", () => {
     await page.goto("/?town=BEDOK&affordable=comfortable");
     await waitForAppReady(page);
 
-    await page.getByRole("button", { name: /remove filter: affordable: comfortable/i }).click();
+    await page.getByRole("button", { name: /remove filter: within cpf estimate/i }).click();
 
     await expect(page).not.toHaveURL(/affordable=/);
     await expect(page).toHaveURL(/town=BEDOK/);
@@ -148,24 +147,7 @@ test.describe("affordability filter — clearing via filter chip", () => {
     await waitForAppReady(page);
 
     await expect(
-      page.getByRole("button", { name: /remove filter: affordable: \+ stretch/i }),
+      page.getByRole("button", { name: /remove filter: within\/near cpf estimate/i }),
     ).toBeVisible();
-  });
-});
-
-test.describe("affordability filter — sort integration", () => {
-  test("?sort=affordability is accepted and shown when the profile is complete", async ({
-    page,
-  }) => {
-    // town=BEDOK provides result scope so the sort control renders; the seeded
-    // profile is complete, so the affordability sort option is enabled.
-    await page.goto("/?town=BEDOK&sort=affordability");
-    await waitForAppReady(page);
-    await openResultsTab(page);
-
-    const sortTrigger = page.getByTestId("results-sort-trigger");
-    await expect(sortTrigger).toBeVisible();
-    await expect(sortTrigger).toContainText(/best affordability fit/i);
-    await expect(page).toHaveURL(/sort=affordability/);
   });
 });

@@ -34,8 +34,6 @@ function makeProfile(overrides: Partial<SearchProfile> = {}): SearchProfile {
 const PROFILE = makeProfile({
   mainFlatType: "4 ROOM",
   maxBudget: 700_000,
-  budgetStretchPercent: 5,
-  maxComfortableCommuteMinutes: 30,
 });
 
 describe("buildTownRecommendations", () => {
@@ -108,22 +106,41 @@ describe("buildTownRecommendations", () => {
     expect(buildTownRecommendations(PROFILE, blocks, { limit: 2 })).toHaveLength(2);
   });
 
-  it("reports per-tier match counts and median price", () => {
+  it("reports matching blocks and their selected-type median price", () => {
     const blocks = [
-      makeBlock({ addressKey: "s1", town: "BEDOK", medianPrice: 600_000 }),
-      makeBlock({ addressKey: "s2", town: "BEDOK", medianPrice: 610_000 }),
-      makeBlock({ addressKey: "g1", town: "BEDOK", medianPrice: 720_000 }),
+      makeBlock({
+        addressKey: "s1",
+        town: "BEDOK",
+        medianPrice: 400_000,
+        medianPriceByFlatType: { "4 ROOM": 600_000 },
+      }),
+      makeBlock({
+        addressKey: "s2",
+        town: "BEDOK",
+        medianPrice: 410_000,
+        medianPriceByFlatType: { "4 ROOM": 610_000 },
+      }),
+      makeBlock({
+        addressKey: "g1",
+        town: "BEDOK",
+        medianPrice: 420_000,
+        medianPriceByFlatType: { "4 ROOM": 720_000 },
+      }),
+      makeBlock({
+        addressKey: "wrong-type",
+        town: "BEDOK",
+        medianPrice: 100_000,
+        flatTypes: ["3 ROOM"],
+      }),
     ];
     const profile = makeProfile({
       mainFlatType: "4 ROOM",
       maxBudget: 700_000,
-      budgetStretchPercent: 5,
     });
     const [rec] = buildTownRecommendations(profile, blocks);
     expect(rec.town).toBe("BEDOK");
-    expect(rec.totalBlocks).toBe(3);
-    expect(rec.strongCount).toBe(2);
-    expect(rec.stretchCount).toBe(1);
-    expect(rec.medianPrice).toBe(610_000);
+    expect(rec.totalBlocks).toBe(4);
+    expect(rec.matchingBlocks).toBe(2);
+    expect(rec.medianPrice).toBe(605_000);
   });
 });

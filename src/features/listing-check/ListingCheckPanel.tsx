@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AlertTriangle, Bookmark, Info, List, Search, Scale, Sparkles } from "lucide-react";
+import { AlertTriangle, Info, Scale, Sparkles } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { formatCompactCurrency, formatMonth, formatNumber } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
@@ -47,12 +47,10 @@ type ListingCheckPanelProps = {
   onFlatTypeChange: (flatType: string | null) => void;
   onStoreyRangeChange: (storeyRange: string | null) => void;
   onLeaseYearChange: (year: number | null) => void;
-  onUseSampleCheck: () => void;
-  onOpenCandidates: () => void;
-  onOpenShortlist: () => void;
   onSaveToShortlist: () => void;
   onShare: () => void;
   savedToShortlist: boolean;
+  shortlistFull: boolean;
   referenceMonth?: string;
 };
 
@@ -84,19 +82,16 @@ export function ListingCheckPanel({
   onFlatTypeChange,
   onStoreyRangeChange,
   onLeaseYearChange,
-  onUseSampleCheck,
-  onOpenCandidates,
-  onOpenShortlist,
   onSaveToShortlist,
   onShare,
   savedToShortlist,
+  shortlistFull,
   referenceMonth,
 }: ListingCheckPanelProps) {
   const { locale, t } = useI18n();
 
-  const searchInputRef = useRef<HTMLInputElement | null>(null);
-  const askingPriceInputRef = useRef<HTMLInputElement | null>(null);
   const verdictRef = useRef<HTMLDivElement>(null);
+  const shouldScrollToVerdictRef = useRef(false);
 
   // ── Search combobox state ──────────────────────────────────────────────────
   const [searchValue, setSearchValue] = useState("");
@@ -127,8 +122,6 @@ export function ListingCheckPanel({
     storeyRange,
     leaseCommenceYear,
     referenceMonth,
-    onFlatTypeChange,
-    onStoreyRangeChange,
   });
 
   const {
@@ -146,6 +139,8 @@ export function ListingCheckPanel({
     adjustmentMeta,
     qualityTag,
     evidenceCaveats,
+    canSubmit,
+    submit,
   } = analysis;
 
   // Keep search label in sync with loaded detail / cleared selection without
@@ -161,10 +156,15 @@ export function ListingCheckPanel({
   }, [selectedAddressKey, selectedBlockLabel]);
 
   const handleCheckClick = useCallback(() => {
-    setTimeout(() => {
-      verdictRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
-  }, []);
+    if (!submit()) return;
+    shouldScrollToVerdictRef.current = true;
+  }, [submit]);
+
+  useEffect(() => {
+    if (!result || !shouldScrollToVerdictRef.current) return;
+    shouldScrollToVerdictRef.current = false;
+    verdictRef.current?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+  }, [result]);
 
   // ── Derive verdict theme ──────────────────────────────────────────────────
   const theme = result ? LISTING_VERDICT_THEMES[result.assessment.verdict] : null;
@@ -181,23 +181,6 @@ export function ListingCheckPanel({
     },
     [onAddressSelect],
   );
-
-  // ── Check button enabled ──────────────────────────────────────────────────
-  const canCheck = selectedAddressKey != null && askingPrice != null;
-
-  const handlePrimaryAction = useCallback(() => {
-    if (!selectedAddressKey) {
-      searchInputRef.current?.focus();
-      return;
-    }
-
-    if (!comparableSetLoading && canCheck) {
-      handleCheckClick();
-      return;
-    }
-
-    askingPriceInputRef.current?.focus();
-  }, [canCheck, comparableSetLoading, selectedAddressKey, handleCheckClick]);
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
@@ -217,45 +200,12 @@ export function ListingCheckPanel({
           </div>
         </div>
 
-        <div className="grid gap-2">
-          <Button
-            type="button"
-            size="lg"
-            className="h-12 w-full justify-start"
-            onClick={handlePrimaryAction}
-          >
-            <Search data-icon className="size-4" aria-hidden="true" />
-            <span>{t("check.primaryAction")}</span>
-          </Button>
-          <div className="grid gap-2 sm:grid-cols-2">
-            <Button
-              type="button"
-              variant="outline"
-              className="h-10 w-full justify-start"
-              onClick={onOpenCandidates}
-            >
-              <List data-icon className="size-4" aria-hidden="true" />
-              <span>{t("check.findCandidates")}</span>
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              className="h-10 w-full justify-start"
-              onClick={onOpenShortlist}
-            >
-              <Bookmark data-icon className="size-4" aria-hidden="true" />
-              <span>{t("check.compareShortlist")}</span>
-            </Button>
-          </div>
-        </div>
-
         {/* ── Block search ─────────────────────────────────────────────── */}
         <div className="mb-4">
           <SearchCombobox
             value={searchValue}
             onValueChange={setSearchValue}
             onSelectSuggestion={handleSelectSuggestion}
-            ref={searchInputRef}
             t={t}
             placeholder={t("check.blockPlaceholder")}
           />
@@ -307,9 +257,8 @@ export function ListingCheckPanel({
         {detail && detail.recentTransactions.length > 0 && (
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
-              <span className="v2-field-label">{t("askingCheck.askingPrice")}</span>
+              <span className="v2-field-label">{t("askingCheck.askingPrice")} *</span>
               <Input
-                ref={askingPriceInputRef}
                 type="number"
                 inputMode="numeric"
                 enterKeyHint="done"
@@ -320,11 +269,12 @@ export function ListingCheckPanel({
                 onFocus={askingPriceField.onFocus}
                 onBlur={askingPriceField.onBlur}
                 aria-label={t("askingCheck.askingPrice")}
+                required
                 className="h-10 text-base font-bold tabular-nums"
               />
             </label>
             <label className="flex flex-col gap-1">
-              <span className="v2-field-label">{t("askingCheck.floorArea")}</span>
+              <span className="v2-field-label">{t("askingCheck.floorArea")} *</span>
               <Input
                 type="number"
                 inputMode="numeric"
@@ -336,18 +286,19 @@ export function ListingCheckPanel({
                 onFocus={floorAreaField.onFocus}
                 onBlur={floorAreaField.onBlur}
                 aria-label={t("askingCheck.floorArea")}
+                required
                 className="h-10 text-base font-bold tabular-nums"
               />
             </label>
-            {flatTypeOptions.length > 1 && (
+            {flatTypeOptions.length > 0 && (
               <label className="flex flex-col gap-1">
-                <span className="v2-field-label">{t("askingCheck.flatType")}</span>
+                <span className="v2-field-label">{t("askingCheck.flatType")} *</span>
                 <Select
-                  value={flatType ?? flatTypeOptions[0]}
+                  value={flatType ?? undefined}
                   onValueChange={(v) => onFlatTypeChange(v || null)}
                 >
-                  <SelectTrigger aria-label={t("askingCheck.flatType")}>
-                    <SelectValue />
+                  <SelectTrigger aria-label={t("askingCheck.flatType")} aria-required="true">
+                    <SelectValue placeholder={t("askingCheck.flatType")} />
                   </SelectTrigger>
                   <SelectContent>
                     {flatTypeOptions.map((type) => (
@@ -361,13 +312,13 @@ export function ListingCheckPanel({
             )}
             {storeyOptions.length > 0 && (
               <label className="flex flex-col gap-1">
-                <span className="v2-field-label">{t("askingCheck.storey")}</span>
+                <span className="v2-field-label">{t("askingCheck.storey")} *</span>
                 <Select
-                  value={storeyRange ?? storeyOptions[0]}
+                  value={storeyRange ?? undefined}
                   onValueChange={(v) => onStoreyRangeChange(v || null)}
                 >
-                  <SelectTrigger aria-label={t("askingCheck.storey")}>
-                    <SelectValue />
+                  <SelectTrigger aria-label={t("askingCheck.storey")} aria-required="true">
+                    <SelectValue placeholder={t("askingCheck.storey")} />
                   </SelectTrigger>
                   <SelectContent>
                     {storeyOptions.map((range) => (
@@ -404,7 +355,7 @@ export function ListingCheckPanel({
             <Button
               type="button"
               className="w-full"
-              disabled={!canCheck || comparableSetLoading}
+              disabled={!canSubmit || comparableSetLoading}
               onClick={handleCheckClick}
             >
               {comparableSetLoading ? t("check.loading") : t("check.checkButton")}
@@ -441,24 +392,9 @@ export function ListingCheckPanel({
 
       {/* ── No block selected hint ─────────────────────────────────────── */}
       {!selectedAddressKey && (
-        <div className="flex flex-col gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
-          <div className="flex items-start gap-3">
-            <Info
-              data-icon
-              className="size-4 shrink-0 text-muted-foreground/70"
-              aria-hidden="true"
-            />
-            <span>{t("check.selectBlockHint")}</span>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="w-full"
-            onClick={onUseSampleCheck}
-          >
-            {t("check.sampleListingCheck")}
-          </Button>
+        <div className="flex items-start gap-3 rounded-none border border-dashed border-border/50 p-4 text-xs text-muted-foreground">
+          <Info data-icon className="size-4 shrink-0 text-muted-foreground/70" aria-hidden="true" />
+          <span>{t("check.selectBlockHint")}</span>
         </div>
       )}
 
@@ -628,9 +564,13 @@ export function ListingCheckPanel({
                 size="sm"
                 className="flex-1"
                 onClick={onSaveToShortlist}
-                disabled={savedToShortlist}
+                disabled={savedToShortlist || shortlistFull}
               >
-                {savedToShortlist ? t("check.saved") : t("check.saveToShortlist")}
+                {savedToShortlist
+                  ? t("check.saved")
+                  : shortlistFull
+                    ? t("shortlist.full")
+                    : t("check.saveToShortlist")}
               </Button>
               <Button
                 type="button"

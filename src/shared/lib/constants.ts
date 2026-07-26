@@ -16,7 +16,6 @@ export {
   MAX_LEASE_DURATION,
   MIN_LEASE_COMMENCE_YEAR,
 } from "@shared/product/lease";
-export const DEFAULT_TRANSACTION_WINDOW_YEARS = 3;
 export const NEAR_ME_SEARCH_QUERY = "near me";
 
 let maxLeaseCommenceYearCache: number | undefined;
@@ -30,32 +29,6 @@ export const getCurrentYear = (): number => new Date().getFullYear();
 export function getMaxLeaseCommenceYear(): number {
   maxLeaseCommenceYearCache ??= maxLeaseCommenceYear(getCurrentYear());
   return maxLeaseCommenceYearCache;
-}
-
-const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
-
-export function getDefaultTransactionStartMonth(minMonth: string, maxMonth: string): string | null {
-  const hasValidMinMonth = YEAR_MONTH_PATTERN.test(minMonth);
-  const hasValidMaxMonth = YEAR_MONTH_PATTERN.test(maxMonth);
-
-  if (!hasValidMinMonth && !hasValidMaxMonth) {
-    return null;
-  }
-
-  if (!hasValidMinMonth) {
-    return maxMonth;
-  }
-
-  if (!hasValidMaxMonth) {
-    return minMonth;
-  }
-
-  const [maxYearRaw, maxMonthRaw] = maxMonth.split("-");
-  const maxYear = Number(maxYearRaw);
-  const month = Number(maxMonthRaw);
-
-  const defaultStart = `${maxYear - DEFAULT_TRANSACTION_WINDOW_YEARS}-${String(month).padStart(2, "0")}`;
-  return defaultStart < minMonth ? minMonth : defaultStart;
 }
 
 /**
@@ -91,9 +64,9 @@ export const SYNC_CODE_STORAGE_KEY = "hdb_resale_sync_code_v1";
  */
 export const MAX_SHORTLIST_SHARE_PAYLOAD_LENGTH = 10_000;
 export const HEADER_DISMISSED_STORAGE_KEY = "hdb_resale_header_dismissed_v1";
-export const SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v1";
-export const SEARCH_PROFILE_WIZARD_DISMISSED_STORAGE_KEY =
-  "hdb_resale_search_profile_wizard_dismissed_v1";
+export const SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v3";
+export const LEGACY_SEARCH_PROFILE_V2_STORAGE_KEY = "hdb_resale_search_profile_v2";
+export const LEGACY_SEARCH_PROFILE_STORAGE_KEY = "hdb_resale_search_profile_v1";
 
 /**
  * Base path for the runtime data API served by the Cloudflare Worker

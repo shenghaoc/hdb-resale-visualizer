@@ -1,8 +1,15 @@
 import type { BlockSummary } from "../../types/data";
+import { canonicalFlatType } from "@shared/filter-options";
+import {
+  resolveEffectiveMedianPrice,
+  resolveEffectivePricePerSqmMedian,
+} from "@shared/product/filtering";
 
 export type RankSimilarBlocksOptions = {
   /** Maximum number of results to return. Defaults to 6. */
   limit?: number;
+  /** When set, require and compare the same canonical flat type. */
+  flatType?: string;
 };
 
 /**
@@ -22,32 +29,57 @@ export function scoreSimilarity(
   source: BlockSummary,
   candidate: BlockSummary,
   sourceSet?: Set<string>,
+  flatType = "",
 ): number {
   // ── Same-town bonus ──────────────────────────────────────────────────────
   const townScore = source.town === candidate.town ? 0.3 : 0;
 
   // ── Flat-type overlap (Jaccard) ──────────────────────────────────────────
-  const effectiveSourceSet = sourceSet ?? new Set(source.flatTypes);
+  const canonicalSelectedFlatType = flatType ? canonicalFlatType(flatType) : "";
+  const effectiveSourceSet = canonicalSelectedFlatType
+    ? new Set([canonicalSelectedFlatType])
+    : (sourceSet ?? new Set(source.flatTypes.map(canonicalFlatType)));
+  const candidateSet = new Set(candidate.flatTypes.map(canonicalFlatType));
   let intersection = 0;
-  for (const t of candidate.flatTypes) {
+  for (const t of candidateSet) {
     if (effectiveSourceSet.has(t)) {
       intersection++;
     }
   }
   if (intersection === 0) return 0; // No overlap at all — not similar
-  const unionSize = source.flatTypes.length + candidate.flatTypes.length - intersection;
+  const unionSize = effectiveSourceSet.size + candidateSet.size - intersection;
   const flatTypeScore = (intersection / unionSize) * 0.25;
 
   // ── Price similarity ─────────────────────────────────────────────────────
+  const sourcePriceResolution = resolveEffectiveMedianPrice(source, canonicalSelectedFlatType);
+  const candidatePriceResolution = resolveEffectiveMedianPrice(
+    candidate,
+    canonicalSelectedFlatType,
+  );
+  const sourcePpsmResolution = resolveEffectivePricePerSqmMedian(source, canonicalSelectedFlatType);
+  const candidatePpsmResolution = resolveEffectivePricePerSqmMedian(
+    candidate,
+    canonicalSelectedFlatType,
+  );
+  if (
+    canonicalSelectedFlatType &&
+    (!sourcePriceResolution.isTypeSpecific ||
+      !candidatePriceResolution.isTypeSpecific ||
+      !sourcePpsmResolution.isTypeSpecific ||
+      !candidatePpsmResolution.isTypeSpecific)
+  ) {
+    return 0;
+  }
+  const sourcePrice = sourcePriceResolution.value;
+  const candidatePrice = candidatePriceResolution.value;
   const priceDiffFraction =
-    source.medianPrice > 0
-      ? Math.abs(candidate.medianPrice - source.medianPrice) / source.medianPrice
-      : 0;
+    sourcePrice > 0 ? Math.abs(candidatePrice - sourcePrice) / sourcePrice : 0;
   const priceScore = Math.exp(-5 * priceDiffFraction) * 0.25;
 
   // ── Price-per-sqm similarity ──────────────────────────────────────────────
-  const psmDiffFraction =
-    Math.abs(candidate.pricePerSqmMedian - source.pricePerSqmMedian) / source.pricePerSqmMedian;
+  const sourcePpsm = sourcePpsmResolution.value;
+  const candidatePpsm = candidatePpsmResolution.value;
+  const psmDiffFraction = sourcePpsm > 0 ? Math.abs(candidatePpsm - sourcePpsm) / sourcePpsm : 0;
   const psmScore = Math.exp(-5 * psmDiffFraction) * 0.1;
 
   // ── Lease-commence similarity ─────────────────────────────────────────────
@@ -77,15 +109,15 @@ export function rankSimilarBlocks(
   candidates: ReadonlyArray<BlockSummary>,
   options: RankSimilarBlocksOptions = {},
 ): BlockSummary[] {
-  const { limit = 6 } = options;
+  const { limit = 6, flatType = "" } = options;
 
   type Scored = { block: BlockSummary; score: number };
   const scored: Scored[] = [];
-  const sourceSet = new Set(source.flatTypes);
+  const sourceSet = new Set(source.flatTypes.map(canonicalFlatType));
 
   for (const candidate of candidates) {
     if (candidate.addressKey === source.addressKey) continue;
-    const score = scoreSimilarity(source, candidate, sourceSet);
+    const score = scoreSimilarity(source, candidate, sourceSet, flatType);
     if (score > 0) {
       scored.push({ block: candidate, score });
     }

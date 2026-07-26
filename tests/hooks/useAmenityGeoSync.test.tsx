@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { useAmenityGeoSync } from "@/features/map-explorer/useAmenityGeoSync";
@@ -43,14 +43,13 @@ describe("useAmenityGeoSync", () => {
     vi.clearAllMocks();
   });
 
-  it("keeps enabled MRT layers layout-visible below minzoom so MapLibre can reveal them after zooming", () => {
+  it("keeps enabled MRT station and exit layers layout-visible together", () => {
     const map = createMapStub();
 
     renderHook(() =>
       useAmenityGeoSync({
         map,
-        mrtStationsEnabled: true,
-        mrtExitsEnabled: true,
+        mrtEnabled: true,
       }),
     );
 
@@ -68,43 +67,18 @@ describe("useAmenityGeoSync", () => {
     expect(map.getZoom).not.toHaveBeenCalled();
   });
 
-  it("sets visibility to none when layers are disabled", () => {
+  it("sets station and exit visibility to none when MRT is disabled", () => {
     const map = createMapStub();
 
     renderHook(() =>
       useAmenityGeoSync({
         map,
-        mrtStationsEnabled: false,
-        mrtExitsEnabled: false,
+        mrtEnabled: false,
       }),
     );
 
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-points", "visibility", "none");
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-stations-labels", "visibility", "none");
-    expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
-  });
-
-  it("handles partial state: stations enabled, exits disabled", () => {
-    const map = createMapStub();
-
-    renderHook(() =>
-      useAmenityGeoSync({
-        map,
-        mrtStationsEnabled: true,
-        mrtExitsEnabled: false,
-      }),
-    );
-
-    expect(map.setLayoutProperty).toHaveBeenCalledWith(
-      "mrt-stations-points",
-      "visibility",
-      "visible",
-    );
-    expect(map.setLayoutProperty).toHaveBeenCalledWith(
-      "mrt-stations-labels",
-      "visibility",
-      "visible",
-    );
     expect(map.setLayoutProperty).toHaveBeenCalledWith("mrt-exits-points", "visibility", "none");
   });
 
@@ -115,11 +89,54 @@ describe("useAmenityGeoSync", () => {
     renderHook(() =>
       useAmenityGeoSync({
         map,
-        mrtStationsEnabled: true,
-        mrtExitsEnabled: true,
+        mrtEnabled: true,
       }),
     );
 
     expect(map.setLayoutProperty).not.toHaveBeenCalled();
+  });
+
+  it("reports loading and a partial failure when only MRT exits fail", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: string | URL | Request) => {
+        const url =
+          typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (url.endsWith("/mrt-exits")) {
+          return Promise.reject(new Error("Exit service unavailable"));
+        }
+
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: { type: "Point", coordinates: [103.85, 1.29] },
+                properties: { stationName: "City Hall" },
+              },
+            ],
+          }),
+        });
+      }),
+    );
+
+    const { result } = renderHook(() =>
+      useAmenityGeoSync({
+        map: createMapStub(),
+        mrtEnabled: true,
+      }),
+    );
+
+    expect(result.current.isLoading).toBe(true);
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+    });
+
+    expect(result.current.stationsFailed).toBe(false);
+    expect(result.current.exitsFailed).toBe(true);
+    expect(result.current.error).toBe("Exit service unavailable");
   });
 });

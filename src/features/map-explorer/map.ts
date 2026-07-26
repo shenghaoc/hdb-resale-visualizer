@@ -1,5 +1,9 @@
 import type { BlockSummary } from "../../types/data";
-import { getEffectiveMedianPrice, getEffectivePricePerSqmMedian } from "../../shared/lib/filtering";
+import {
+  resolveEffectiveBlockCohort,
+  resolveEffectiveMedianPrice,
+  resolveEffectivePricePerSqmMedian,
+} from "../../shared/lib/filtering";
 
 type GeoJsonFeature = {
   type: "Feature";
@@ -14,6 +18,7 @@ type GeoJsonFeature = {
     display_name?: string | null;
     median_price: number;
     price_per_sqm_median: number;
+    price_basis: string;
     transaction_count: number;
     latest_month: string;
   };
@@ -28,8 +33,8 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
   return {
     type: "FeatureCollection" as const,
     features: blocks.map<GeoJsonFeature>((block) => {
-      // When flatType is active and block has per-type data, bypass cache since median_price varies
-      if (!flatType || (!block.medianPriceByFlatType && !block.medianPricePerSqmByFlatType)) {
+      // No flat-type filter means one stable block-wide feature can be reused.
+      if (!flatType) {
         let feature = geoJsonCache.get(block);
         if (!feature) {
           feature = {
@@ -44,6 +49,7 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
               address: `${block.block} ${block.streetName}`,
               median_price: block.medianPrice,
               price_per_sqm_median: block.pricePerSqmMedian,
+              price_basis: "__BLOCK_WIDE__",
               transaction_count: block.transactionCount,
               latest_month: block.latestMonth,
               ...(block.displayName ? { display_name: block.displayName } : {}),
@@ -54,8 +60,9 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
         return feature;
       }
 
-      const effectivePrice = getEffectiveMedianPrice(block, flatType);
-      const effectivePpsm = getEffectivePricePerSqmMedian(block, flatType);
+      const priceResolution = resolveEffectiveMedianPrice(block, flatType);
+      const ppsmResolution = resolveEffectivePricePerSqmMedian(block, flatType);
+      const cohortResolution = resolveEffectiveBlockCohort(block, flatType);
       return {
         type: "Feature",
         geometry: {
@@ -66,10 +73,15 @@ export function toGeoJson(blocks: BlockSummary[], flatType?: string) {
           address_key: block.addressKey,
           town: block.town,
           address: `${block.block} ${block.streetName}`,
-          median_price: effectivePrice,
-          price_per_sqm_median: effectivePpsm,
-          transaction_count: block.transactionCount,
-          latest_month: block.latestMonth,
+          median_price: priceResolution.value,
+          price_per_sqm_median: ppsmResolution.value,
+          price_basis: priceResolution.isTypeSpecific ? priceResolution.flatType : "__BLOCK_WIDE__",
+          transaction_count: cohortResolution.isTypeSpecific
+            ? cohortResolution.transactionCount
+            : block.transactionCount,
+          latest_month: cohortResolution.isTypeSpecific
+            ? cohortResolution.latestMonth
+            : block.latestMonth,
           ...(block.displayName ? { display_name: block.displayName } : {}),
         },
       };

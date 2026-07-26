@@ -45,7 +45,7 @@
 
 ## Phase 3 — Listing check integration
 
-- [x] **T3.1** Update `src/components/ListingCheckPanel.tsx`:
+- [x] **T3.1** Update `src/features/listing-check/ListingCheckPanel.tsx`:
   - Show latest month used by the check result (from comparable set, falling
     back to manifest `dataWindow.maxMonth`).
   - Display quality badge (`strong` / `weak` / `widened` / `stale`) from
@@ -54,7 +54,8 @@
   -> Component renders badge and latest month; `npm run test` passes.
   (R2.1, R4.1, R4.3, R5.3)
 
-- [x] **T3.2** Update `src/components/ComparableEvidenceTable.tsx`:
+- [x] **T3.2** Update
+  `src/features/listing-check/ComparableEvidenceTable.tsx`:
   - Replace any inline caveat strings with shared adapter from
     `shared/caveat-codes.ts`.
   - Preserve widened-search and low-sample explanations using shared phrasing.

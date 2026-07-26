@@ -50,6 +50,18 @@ describe("assessLeaseFinancing", () => {
     expect(result.shortfallYears).toBe(5);
   });
 
+  it("uses average applicant age for the loan-tenure cap", () => {
+    const result = assessLeaseFinancing({
+      remainingLeaseYears: 90,
+      applicantAge: 50,
+      coApplicantAge: 60,
+    });
+    expect(result.youngestApplicantAge).toBe(50);
+    expect(result.requiredLeaseYears).toBe(45);
+    expect(result.loanTenureYears).toBe(10);
+    expect(result.tenureLimitedBy).toBe("age");
+  });
+
   it("pro-rates CPF usage and LTV when the lease falls short of 95", () => {
     // Youngest 40 → needs 55 years; 44 years reaches 44/55 = 0.8 of the span.
     const result = assessLeaseFinancing({

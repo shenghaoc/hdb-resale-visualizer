@@ -15,8 +15,9 @@ The app compares an asking price (a hope) against transactions (facts). A "fair"
 
 1. **Search for the block** — type the address to select it.
 2. **Enter the asking price** — the listed price from a property portal.
-3. Optionally add **floor area**, **flat type**, **storey range**, and **lease commencement year** to tighten the match.
-4. No listing handy? **Try sample listing check** pre-fills a known block so you can see the flow.
+3. Enter the listing's actual **floor area**, **flat type**, and **storey range**. These facts are required because substituting another unit's details would make the verdict meaningless.
+4. Add the **lease commencement year** when known; it remains optional.
+5. Choose **Check this listing**. Comparable transactions are fetched only after these facts are complete.
 
 ## Reading the verdict
 

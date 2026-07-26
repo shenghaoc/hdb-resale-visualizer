@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Search, X } from "lucide-react";
+import { CircleHelp, Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -10,6 +10,7 @@ import type { Locale, Translator } from "@/shared/lib/i18n";
 import type { Manifest } from "@/types/data";
 import { cn } from "@/shared/lib/utils";
 import { deriveDataQualityState } from "@/shared/lib/dataQuality";
+import type { PanelTab } from "@/hooks/usePanelState";
 
 type AppHeaderProps = {
   manifest: Manifest;
@@ -22,8 +23,13 @@ type AppHeaderProps = {
   isMobileHeaderOpen: boolean;
   onToggleMobileHeader: () => void;
   onDismiss: () => void;
-  mobileTab: string | null;
-  onClearMobileTab?: () => void;
+  onOpenGuide: () => void;
+  /**
+   * Active mobile destination. The mobile tab bar sits above the search
+   * overlay's scrim, so navigating while the overlay is open would otherwise
+   * leave a full-screen scrim swallowing taps on the destination underneath.
+   */
+  mobileTab?: PanelTab | null;
 };
 
 const HEADER_SURFACE_CLASS = "v2-chrome";
@@ -39,8 +45,8 @@ export function AppHeader({
   isMobileHeaderOpen,
   onToggleMobileHeader,
   onDismiss,
-  mobileTab,
-  onClearMobileTab,
+  onOpenGuide,
+  mobileTab = null,
 }: AppHeaderProps) {
   const dataQuality = deriveDataQualityState(manifest);
   const baseSourceLabel = dataQuality.sourceLabels.join(" + ");
@@ -57,13 +63,26 @@ export function AppHeader({
   const closeMobileSearch = useCallback(() => {
     setIsMobileSearchOpen(false);
   }, []);
+  const handleMobileSelectSuggestion = useCallback(
+    (suggestion: Suggestion) => {
+      closeMobileSearch();
+      onSelectSuggestion(suggestion);
+    },
+    [closeMobileSearch, onSelectSuggestion],
+  );
 
   const openMobileSearch = useCallback(() => {
-    if (mobileTab != null) {
-      onClearMobileTab?.();
-    }
     setIsMobileSearchOpen(true);
-  }, [mobileTab, onClearMobileTab]);
+  }, []);
+
+  const previousMobileTabRef = useRef(mobileTab);
+  useEffect(() => {
+    if (previousMobileTabRef.current === mobileTab) {
+      return;
+    }
+    previousMobileTabRef.current = mobileTab;
+    closeMobileSearch();
+  }, [mobileTab, closeMobileSearch]);
 
   useEffect(() => {
     if (!isMobileSearchOpen) {
@@ -220,7 +239,7 @@ export function AppHeader({
             value={search}
             onValueChange={onSearchChange}
             onSelectSuggestion={onSelectSuggestion}
-            suggestActive={isDesktop}
+            suggestActive={!isMobileSearchOpen}
             t={t}
             inputClassName="h-8 min-w-0 border-0 bg-transparent px-2 text-[0.75rem] shadow-none focus-visible:border-0 focus-visible:ring-0"
           />
@@ -248,6 +267,27 @@ export function AppHeader({
           <TooltipContent>{t("header.openSearch")}</TooltipContent>
         </Tooltip>
 
+        {!isDesktop ? (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                aria-label={t("app.openGuide")}
+                onClick={onOpenGuide}
+                className={cn(
+                  "pointer-events-auto size-9 shrink-0 p-0 text-muted-foreground hover:text-foreground",
+                  HEADER_SURFACE_CLASS,
+                )}
+              >
+                <CircleHelp data-icon="inline-start" className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>{t("app.openGuide")}</TooltipContent>
+          </Tooltip>
+        ) : null}
+
         {isDesktop ? (
           <div
             className={cn(
@@ -274,7 +314,7 @@ export function AppHeader({
         ) : null}
       </header>
 
-      {isMobileSearchOpen && mobileTab == null ? (
+      {isMobileSearchOpen ? (
         <div
           id={overlayContainerId}
           className="pointer-events-auto fixed inset-0 z-40 sm:hidden"
@@ -306,7 +346,7 @@ export function AppHeader({
                 aria-label={t("filters.searchLabel")}
                 value={search}
                 onValueChange={onSearchChange}
-                onSelectSuggestion={onSelectSuggestion}
+                onSelectSuggestion={handleMobileSelectSuggestion}
                 suggestActive={isMobileSearchOpen}
                 t={t}
                 inputClassName="h-10 min-w-0 border-0 bg-transparent px-1 text-sm shadow-none focus-visible:border-0 focus-visible:ring-0"

@@ -14,7 +14,7 @@ PR #336 collects audit fixes found while hardening the buyer listing-check flow 
 
 1.3 WHEN the listing-check URL state or comparable-transactions API receives an out-of-range lease commencement year THEN validation is weaker than the dataset schema validation used elsewhere.
 
-1.4 WHEN price and floor-area inputs are parsed in separate components THEN duplicated parsing rules can drift between the current listing-check panel and the legacy asking-price check.
+1.4 WHEN listing-check field and URL inputs use separate parsing rules THEN malformed values can be interpreted inconsistently in the canonical panel.
 
 1.5 WHEN the comparable-transactions API receives an impossible reference month such as `2026-99` THEN validation can accept the shape even though no real calendar month exists.
 
@@ -36,7 +36,7 @@ PR #336 collects audit fixes found while hardening the buyer listing-check flow 
 
 2.4 The URL state parser and `/api/comparable-transactions` endpoint SHALL reject malformed or out-of-range lease commencement years.
 
-2.5 Current and legacy listing-check surfaces SHALL share one positive decimal parser for asking price and floor area.
+2.5 The canonical `ListingCheckPanel` field and URL inputs SHALL share one positive decimal parser for asking price and floor area; no legacy duplicate surface is retained.
 
 2.6 The `/api/comparable-transactions` endpoint SHALL accept only real `YYYY-MM` calendar months.
 

@@ -89,44 +89,34 @@ describe("useMapExplorerController", () => {
     expect(result.current.heatmapMode).toBe("price");
   });
 
-  it("starts with MRT stations, exits, and school overlay disabled", () => {
+  it("starts with MRT and school overlay disabled", () => {
     const { result } = renderHook(() => useMapExplorerController(makeOptions()));
-    expect(result.current.mrtStationsEnabled).toBe(false);
-    expect(result.current.mrtExitsEnabled).toBe(false);
+    expect(result.current.mrtEnabled).toBe(false);
     expect(result.current.schoolOverlayEnabled).toBe(false);
   });
 
-  it("toggles each layer independently", () => {
+  it("toggles heatmap, MRT, and school overlay independently", () => {
     const { result } = renderHook(() => useMapExplorerController(makeOptions()));
 
     act(() => {
       result.current.togglePriceHeatmap();
     });
     expect(result.current.priceHeatmapEnabled).toBe(true);
-    expect(result.current.mrtStationsEnabled).toBe(false);
-    expect(result.current.mrtExitsEnabled).toBe(false);
+    expect(result.current.mrtEnabled).toBe(false);
     expect(result.current.schoolOverlayEnabled).toBe(false);
 
     act(() => {
-      result.current.toggleMrtStations();
+      result.current.toggleMrt();
     });
     expect(result.current.priceHeatmapEnabled).toBe(true);
-    expect(result.current.mrtStationsEnabled).toBe(true);
-    expect(result.current.mrtExitsEnabled).toBe(false);
-    expect(result.current.schoolOverlayEnabled).toBe(false);
-
-    act(() => {
-      result.current.toggleMrtExits();
-    });
-    expect(result.current.mrtExitsEnabled).toBe(true);
+    expect(result.current.mrtEnabled).toBe(true);
     expect(result.current.schoolOverlayEnabled).toBe(false);
 
     act(() => {
       result.current.toggleSchoolOverlay();
     });
     expect(result.current.schoolOverlayEnabled).toBe(true);
-    expect(result.current.mrtStationsEnabled).toBe(true);
-    expect(result.current.mrtExitsEnabled).toBe(true);
+    expect(result.current.mrtEnabled).toBe(true);
     expect(result.current.priceHeatmapEnabled).toBe(true);
   });
 
@@ -260,6 +250,7 @@ describe("useMapExplorerController", () => {
     const patchFilters = vi.fn();
     const setLeftTab = vi.fn();
     const setIsLeftPanelOpen = vi.fn();
+    const setIsSavedPanelOpen = vi.fn();
     const { result } = renderHook(() =>
       useMapExplorerController(
         makeOptions({
@@ -267,6 +258,7 @@ describe("useMapExplorerController", () => {
           patchFilters,
           setLeftTab,
           setIsLeftPanelOpen,
+          setIsSavedPanelOpen,
           geolocation: makeGeolocation({ setUserLocation, clearError }),
         }),
       ),
@@ -283,6 +275,7 @@ describe("useMapExplorerController", () => {
       town: "",
       selectedAddressKey: null,
     });
+    expect(setIsSavedPanelOpen).toHaveBeenCalledWith(false);
     expect(setLeftTab).toHaveBeenCalledWith("results");
     expect(setIsLeftPanelOpen).toHaveBeenCalledWith(true);
   });
@@ -290,6 +283,7 @@ describe("useMapExplorerController", () => {
   it("mobile geolocate does not force a panel open", () => {
     const setLeftTab = vi.fn();
     const setIsLeftPanelOpen = vi.fn();
+    const setIsSavedPanelOpen = vi.fn();
     const setMobileTab = vi.fn();
     const { result } = renderHook(() =>
       useMapExplorerController(
@@ -297,6 +291,7 @@ describe("useMapExplorerController", () => {
           isDesktop: false,
           setLeftTab,
           setIsLeftPanelOpen,
+          setIsSavedPanelOpen,
           setMobileTab,
         }),
       ),
@@ -308,6 +303,7 @@ describe("useMapExplorerController", () => {
 
     expect(setLeftTab).not.toHaveBeenCalled();
     expect(setIsLeftPanelOpen).not.toHaveBeenCalled();
+    expect(setIsSavedPanelOpen).not.toHaveBeenCalled();
     expect(setMobileTab).not.toHaveBeenCalled();
   });
 
@@ -315,6 +311,7 @@ describe("useMapExplorerController", () => {
     const patchFilters = vi.fn();
     const setLeftTab = vi.fn();
     const setIsLeftPanelOpen = vi.fn();
+    const setIsSavedPanelOpen = vi.fn();
     const locate = vi.fn((onSuccess: (coords: Coordinates) => void) => {
       onSuccess({ lat: 1.31, lng: 103.81 });
     });
@@ -325,6 +322,7 @@ describe("useMapExplorerController", () => {
           patchFilters,
           setLeftTab,
           setIsLeftPanelOpen,
+          setIsSavedPanelOpen,
           geolocation: makeGeolocation({ locate }),
         }),
       ),
@@ -340,6 +338,7 @@ describe("useMapExplorerController", () => {
       town: "",
       selectedAddressKey: null,
     });
+    expect(setIsSavedPanelOpen).toHaveBeenCalledWith(false);
     expect(setLeftTab).toHaveBeenCalledWith("results");
     expect(setIsLeftPanelOpen).toHaveBeenCalledWith(true);
   });

@@ -47,6 +47,14 @@ function makeBlock(overrides: Partial<BlockSummary> = {}): BlockSummary {
     availableDateRange: ["2020-01", "2024-12"],
     flatTypes: ["4 ROOM"],
     flatModels: ["MODEL A"],
+    flatTypeCohorts: {
+      "4 ROOM": {
+        transactionCount: 5,
+        latestMonth: "2024-12",
+        floorAreaRange: [80, 100],
+        flatModels: ["MODEL A"],
+      },
+    },
     nearestMrt: { stationName: "BEDOK MRT STATION", distanceMeters: 400, walkingTimeSeconds: 320 },
     postalCode: null,
     ...overrides,
@@ -160,16 +168,16 @@ describe("shared/product/filtering", () => {
   describe("matchesFilter — date range", () => {
     it("excludes block whose latest is before startMonth", () => {
       expect(
-        matchesFilter(makeBlock({ availableDateRange: ["2020-01", "2021-06"] }), {
+        matchesFilter(makeBlock({ latestMonth: "2021-06" }), {
           ...BASE_FILTERS,
           startMonth: "2022-01",
         }),
       ).toBe(false);
     });
 
-    it("excludes block whose earliest is after endMonth", () => {
+    it("excludes block whose latest is after endMonth", () => {
       expect(
-        matchesFilter(makeBlock({ availableDateRange: ["2023-01", "2024-12"] }), {
+        matchesFilter(makeBlock({ latestMonth: "2024-12" }), {
           ...BASE_FILTERS,
           endMonth: "2022-12",
         }),
@@ -208,6 +216,68 @@ describe("shared/product/filtering", () => {
           flatType: "5 ROOM",
         }),
       ).toBe(true);
+    });
+
+    it("keeps area, model, and latest-sale filters on the selected flat-type cohort", () => {
+      const block = makeBlock({
+        latestMonth: "2025-06",
+        floorAreaRange: [60, 125],
+        flatTypes: ["3 ROOM", "5 ROOM"],
+        flatModels: ["IMPROVED", "MODEL A"],
+        flatTypeCohorts: {
+          "3 ROOM": {
+            transactionCount: 2,
+            latestMonth: "2023-12",
+            floorAreaRange: [60, 70],
+            flatModels: ["IMPROVED"],
+          },
+          "5 ROOM": {
+            transactionCount: 8,
+            latestMonth: "2025-06",
+            floorAreaRange: [110, 125],
+            flatModels: ["MODEL A"],
+          },
+        },
+      });
+
+      expect(
+        matchesFilter(block, {
+          ...BASE_FILTERS,
+          flatType: "3 ROOM",
+          areaMin: 100,
+        }),
+      ).toBe(false);
+      expect(
+        matchesFilter(block, {
+          ...BASE_FILTERS,
+          flatType: "5 ROOM",
+          flatModel: "IMPROVED",
+        }),
+      ).toBe(false);
+      expect(
+        matchesFilter(block, {
+          ...BASE_FILTERS,
+          flatType: "3 ROOM",
+          endMonth: "2024-01",
+        }),
+      ).toBe(true);
+    });
+
+    it("does not guess combined type refinements when cohort metadata is unavailable", () => {
+      expect(
+        matchesFilter(
+          makeBlock({
+            flatTypes: ["4 ROOM"],
+            floorAreaRange: [60, 120],
+            flatTypeCohorts: undefined,
+          }),
+          {
+            ...BASE_FILTERS,
+            flatType: "4 ROOM",
+            areaMin: 90,
+          },
+        ),
+      ).toBe(false);
     });
   });
 

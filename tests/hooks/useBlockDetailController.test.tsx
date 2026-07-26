@@ -31,6 +31,20 @@ function makeBlock(addressKey: string, overrides: Partial<BlockSummary> = {}): B
     availableDateRange: ["2024-01", "2026-01"],
     flatTypes: ["4 ROOM", "5 ROOM"],
     flatModels: ["MODEL A"],
+    flatTypeCohorts: {
+      "4 ROOM": {
+        transactionCount: 4,
+        latestMonth: "2026-01",
+        floorAreaRange: [90, 95],
+        flatModels: ["MODEL A"],
+      },
+      "5 ROOM": {
+        transactionCount: 6,
+        latestMonth: "2025-11",
+        floorAreaRange: [110, 120],
+        flatModels: ["IMPROVED"],
+      },
+    },
     nearestMrt: {
       stationName: "BEDOK NORTH MRT STATION",
       distanceMeters: 400,
@@ -204,6 +218,90 @@ describe("useBlockDetailController", () => {
     );
   });
 
+  it("keeps selected-flat-type detail metrics and fallback provenance explicit", () => {
+    const typeSpecificBlock = makeBlock("typed", {
+      medianPriceByFlatType: { "4 ROOM": 480_000 },
+      medianPricePerSqmByFlatType: { "4 ROOM": 6_200 },
+    });
+    const typeFilters = {
+      ...filters,
+      flatType: "4 ROOM",
+      selectedAddressKey: "typed",
+    };
+    const { result, rerender } = renderHook(
+      ({ selectedBlock }: { selectedBlock: BlockSummary }) =>
+        useBlockDetailController(
+          makeOptions({
+            selectedBlock,
+            detail: null,
+            comparison: null,
+            allBlocks: [selectedBlock],
+            filters: typeFilters,
+          }),
+        ),
+      { initialProps: { selectedBlock: typeSpecificBlock } },
+    );
+
+    expect(result.current.effectiveMedianPrice).toBe(480_000);
+    expect(result.current.effectivePricePerSqmMedian).toBe(6_200);
+    expect(result.current.medianPriceResolution).toMatchObject({
+      flatType: "4 ROOM",
+      isTypeSpecific: true,
+    });
+    expect(result.current.pricePerSqmResolution).toMatchObject({
+      flatType: "4 ROOM",
+      isTypeSpecific: true,
+    });
+    expect(result.current.cohortResolution).toMatchObject({
+      flatType: "4 ROOM",
+      isTypeSpecific: true,
+      transactionCount: 4,
+      latestMonth: "2026-01",
+      floorAreaRange: [90, 95],
+      flatModels: ["MODEL A"],
+    });
+
+    const fallbackBlock = makeBlock("fallback", {
+      medianPriceByFlatType: undefined,
+      medianPricePerSqmByFlatType: undefined,
+    });
+    rerender({ selectedBlock: fallbackBlock });
+
+    expect(result.current.effectiveMedianPrice).toBe(fallbackBlock.medianPrice);
+    expect(result.current.medianPriceResolution?.isTypeSpecific).toBe(false);
+    expect(result.current.pricePerSqmResolution?.isTypeSpecific).toBe(false);
+  });
+
+  it("uses the selected flat-type cohort for the detail quality tag", () => {
+    const lowEvidenceType = makeBlock("typed-low-evidence", {
+      transactionCount: 20,
+      latestMonth: "2026-01",
+      flatTypeCohorts: {
+        "4 ROOM": {
+          transactionCount: 1,
+          latestMonth: "2026-01",
+          floorAreaRange: [90, 95],
+          flatModels: ["MODEL A"],
+        },
+      },
+    });
+    const { result } = renderController(
+      makeOptions({
+        selectedBlock: lowEvidenceType,
+        detail: null,
+        comparison: null,
+        allBlocks: [lowEvidenceType],
+        filters: {
+          ...filters,
+          flatType: "4 ROOM",
+          selectedAddressKey: lowEvidenceType.addressKey,
+        },
+      }),
+    );
+
+    expect(result.current.dataQualityTag).toBe("weak");
+  });
+
   it("owns derived block analysis without changing the existing algorithms", () => {
     const { result } = renderController(
       makeOptions({
@@ -238,6 +336,21 @@ describe("useBlockDetailController", () => {
     ]);
     expect(result.current.recentTransactionOutliers.get("high")?.direction).toBe("high");
     expect(result.current.peakMonthInView).toBe("2026-01");
+  });
+
+  it("does not show an affordability verdict for a partial finance profile", () => {
+    const { result } = renderController(
+      makeOptions({
+        searchProfile: {
+          ...DEFAULT_SEARCH_PROFILE,
+          monthlyIncome: 9_000,
+          cpfOABalance: null,
+          age: null,
+        },
+      }),
+    );
+
+    expect(result.current.affordabilityVerdict).toBeNull();
   });
 
   it("keeps default tab/range and slices trend points through the controller", () => {

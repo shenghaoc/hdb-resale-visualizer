@@ -71,10 +71,12 @@ describe("useShortlist public composition", () => {
     act(() => {
       result.current.toggle("addr-a");
     });
+    let restored = false;
     act(() => {
-      result.current.restore(removed, 0);
+      restored = result.current.restore(removed, 0);
     });
 
+    expect(restored).toBe(true);
     expect(result.current.items.map((item) => item.addressKey)).toEqual(["addr-a", "addr-b"]);
     expect(result.current.items[0]?.notes).toBe("updated");
     expect(result.current.items[0]?.targetPrice).toBe(750000);

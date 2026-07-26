@@ -26,6 +26,7 @@ const shortlistMocks = vi.hoisted(() => {
   const state = {
     items: [] as ShortlistItem[],
     toggle: vi.fn(),
+    restore: vi.fn(() => true),
     update: vi.fn(),
   };
 
@@ -36,6 +37,8 @@ const shortlistMocks = vi.hoisted(() => {
   function reset() {
     state.items = [];
     state.toggle.mockReset();
+    state.restore.mockReset();
+    state.restore.mockReturnValue(true);
     state.update.mockReset();
   }
 
@@ -59,9 +62,11 @@ vi.mock("@/hooks/useMediaQuery", () => ({
 vi.mock("@/features/shortlist/useShortlist", () => ({
   useShortlist: () => ({
     items: shortlistMocks.state.items,
+    isFull: shortlistMocks.state.items.length >= 20,
     has: (addressKey: string) =>
       shortlistMocks.state.items.some((item: ShortlistItem) => item.addressKey === addressKey),
     toggle: shortlistMocks.state.toggle,
+    restore: shortlistMocks.state.restore,
     update: shortlistMocks.state.update,
   }),
 }));
@@ -127,10 +132,21 @@ vi.mock("@/features/map-explorer/MapView", () => ({
 }));
 
 vi.mock("@/components/ResultsPane", () => ({
-  ResultsPane: ({ onSelect }: { onSelect: (addressKey: string) => void }) => (
-    <div data-testid="results-pane">
+  ResultsPane: ({
+    onSelect,
+    onToggleShortlist,
+    profileTown,
+  }: {
+    onSelect: (addressKey: string) => void;
+    onToggleShortlist: (addressKey: string) => void;
+    profileTown?: string | null;
+  }) => (
+    <div data-testid="results-pane" data-profile-town={profileTown ?? ""}>
       <button type="button" onClick={() => onSelect("bedok-101-bedok-nth-ave-4")}>
         Select block
+      </button>
+      <button type="button" onClick={() => onToggleShortlist("bedok-101-bedok-nth-ave-4")}>
+        Remove saved block
       </button>
     </div>
   ),
@@ -208,18 +224,10 @@ const blocks: BlockSummary[] = [
 ];
 
 const completedSearchProfile = {
-  version: 1,
+  version: 3,
   mainFlatType: "4 ROOM",
-  alternativeFlatTypes: [],
   maxBudget: 700000,
-  commuteAnchorLabel: "Bedok MRT",
-  commuteAnchorMrt: "BEDOK MRT STATION",
-  maxComfortableCommuteMinutes: 30,
-  commuteStretchMinutes: 10,
   minimumRemainingLeaseYears: 65,
-  budgetStretchPercent: 5,
-  showStretchOptions: true,
-  showAllBlocks: false,
 };
 
 function createDeferredPromise<T>() {
@@ -268,6 +276,37 @@ describe("App detail loading", () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+  });
+
+  it("starts with the map prompt unobstructed instead of opening filters automatically", async () => {
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    await screen.findByTestId("map-view");
+    expect(document.querySelector("#desktop-left-panel")).toHaveAttribute("data-open", "false");
+    expect(screen.getByText(/start with location/i)).toBeInTheDocument();
+  });
+
+  it("dismisses the first-visit prompt while a desktop work panel is open", async () => {
+    const user = userEvent.setup();
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    await screen.findByText(/start with location/i);
+    await user.click(screen.getByRole("button", { name: "Filters" }));
+
+    expect(document.querySelector("#desktop-left-panel")).toHaveAttribute("data-open", "true");
+    expect(screen.queryByText(/start with location/i)).not.toBeInTheDocument();
   });
 
   it("clears loading and shows results again when selection is removed mid-request", async () => {
@@ -320,15 +359,10 @@ describe("App detail loading", () => {
     expect(screen.getByTestId("results-pane")).toBeInTheDocument();
   });
 
-  it("defaults the transaction window and lets users clear it to view all history", async () => {
-    dataMocks.fetchManifest.mockResolvedValue({
-      ...manifest,
-      dataWindow: {
-        minMonth: "2020-01",
-        maxMonth: "2026-04",
-      },
-    });
-
+  it("keeps shortlist Undo available after leaving the surface that removed the home", async () => {
+    const savedItem = createShortlistItem("bedok-101-bedok-nth-ave-4");
+    shortlistMocks.setItems([savedItem]);
+    window.history.replaceState({}, "", "/?town=BEDOK");
     const user = userEvent.setup();
 
     render(
@@ -339,11 +373,50 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await waitFor(() => {
-      expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "2023-04");
+    await user.click(await screen.findByRole("button", { name: "Results" }));
+    await user.click(await screen.findByRole("button", { name: "Remove saved block" }));
+    expect(shortlistMocks.state.toggle).toHaveBeenCalledWith(savedItem.addressKey);
+    expect(screen.getByTestId("shortlist-undo-toast")).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Filters" }));
+    expect(screen.getByTestId("shortlist-undo-toast")).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "Undo" }));
+    expect(shortlistMocks.state.restore).toHaveBeenCalledWith(savedItem, 0);
+    expect(screen.queryByTestId("shortlist-undo-toast")).not.toBeInTheDocument();
+  });
+
+  it("keeps town-wide overview out of buyer-filtered result scopes", async () => {
+    window.history.replaceState({}, "", "/?town=BEDOK&flatType=4+ROOM");
+
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    expect(await screen.findByTestId("results-pane")).toHaveAttribute("data-profile-town", "");
+    expect(dataMocks.fetchBlocksBySearch).toHaveBeenCalled();
+  });
+
+  it("leaves the transaction window unconstrained until the user sets one", async () => {
+    dataMocks.fetchManifest.mockResolvedValue({
+      ...manifest,
+      dataWindow: {
+        minMonth: "2020-01",
+        maxMonth: "2026-04",
+      },
     });
 
-    await user.click(screen.getByRole("button", { name: "Clear start month" }));
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
 
     await waitFor(() => {
       expect(screen.getByTestId("filter-panel")).toHaveAttribute("data-start-month", "");
@@ -615,6 +688,7 @@ describe("App detail loading", () => {
     );
 
     await screen.findByTestId("filter-panel");
+    await user.click(screen.getByRole("button", { name: "Filters" }));
     await user.click(screen.getByRole("button", { name: "Choose Bedok" }));
 
     await waitFor(() => {

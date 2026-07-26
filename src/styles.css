@@ -1010,7 +1010,7 @@ html {
 /* --cv-intrinsic-height lets each consumer set an appropriate estimate for
    its own row height so the scrollbar doesn't jump as items enter the
    viewport (default 200px works for BlockCards; smaller rows like
-   AskingPriceCheck can override with a lower value). */
+   compact decision rows can override with a lower value). */
 .cv-auto {
   content-visibility: auto;
   contain-intrinsic-size: auto var(--cv-intrinsic-height, 200px);

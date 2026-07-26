@@ -1,5 +1,10 @@
 import type { BlockSummary, ComparisonArtifact, FilterState } from "../../types/data";
 import { MAX_LEASE_DURATION, getCurrentYear } from "../../shared/lib/constants";
+import { canonicalFlatType } from "@shared/filter-options";
+import {
+  getCohortAlignedMedianPrice,
+  resolveEffectiveBlockCohort,
+} from "@shared/product/filtering";
 
 const MEANINGFUL_VOLUME_MIN_TRANSACTIONS = 5;
 
@@ -22,12 +27,19 @@ export function buildBlockExplanation({
   currentYear?: number;
 }): BlockExplanationCode[] {
   const explanations: BlockExplanationCode[] = [];
+  const cohortResolution = resolveEffectiveBlockCohort(block, filters.flatType);
 
-  if (block.transactionCount >= MEANINGFUL_VOLUME_MIN_TRANSACTIONS) {
+  if (
+    (!filters.flatType || cohortResolution.isTypeSpecific) &&
+    cohortResolution.transactionCount >= MEANINGFUL_VOLUME_MIN_TRANSACTIONS
+  ) {
     explanations.push("high-transaction-volume");
   }
 
-  if (comparison && comparison.percentileRanks.pricePercentile < 50) {
+  const comparisonMatchesFlatType =
+    !filters.flatType ||
+    (comparison && canonicalFlatType(comparison.flatType) === canonicalFlatType(filters.flatType));
+  if (comparison && comparisonMatchesFlatType && comparison.percentileRanks.pricePercentile < 50) {
     explanations.push("below-town-median-price");
   }
 
@@ -46,8 +58,9 @@ export function buildBlockExplanation({
   }
 
   if (filters.budgetMin != null || filters.budgetMax != null) {
-    const withinMin = filters.budgetMin == null || block.medianPrice >= filters.budgetMin;
-    const withinMax = filters.budgetMax == null || block.medianPrice <= filters.budgetMax;
+    const effectiveMedianPrice = getCohortAlignedMedianPrice(block, filters.flatType);
+    const withinMin = filters.budgetMin == null || effectiveMedianPrice >= filters.budgetMin;
+    const withinMax = filters.budgetMax == null || effectiveMedianPrice <= filters.budgetMax;
     if (withinMin && withinMax) {
       explanations.push("within-budget");
     }

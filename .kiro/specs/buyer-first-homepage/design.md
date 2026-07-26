@@ -17,7 +17,7 @@ This spec prioritises the buyer journey in the first screen so users can start a
 2. Make "Check a listing price" visually and behaviorally primary.
 3. Keep the map explorer in the product as a supporting exploration tool.
 4. Add explicit deterministic trust copy about the analysis source.
-5. Ensure first-run works clearly on mobile, including a sample/demo check entrypoint.
+5. Ensure first-run works clearly on mobile without invented listing facts.
 6. Preserve performance by lazy-loading heavy analysis views.
 
 ## Non-goals
@@ -25,6 +25,8 @@ This spec prioritises the buyer journey in the first screen so users can start a
 - Remove or replace the map explorer.
 - Add any AI valuation engine, prediction model, or external valuation API.
 - Expand filter complexity beyond existing buyer workflows.
+- Add a sample listing, synthetic unit facts, or automatic listing-detail
+  defaults.
 
 ## Product Architecture
 
@@ -63,16 +65,18 @@ Recommended pattern:
 3. Gate map-only pathways from the buyer actions (e.g., “Find candidate blocks” can open or focus map filters/listing cards before map interaction becomes central).
 4. Keep any map-first shortcuts available for returning users.
 
-### 4. Sample / demo listing check CTA
+### 4. Honest listing-check entry
 
-When no data is entered in the price-check flow, render a deterministic, one-click example CTA in the primary section:
+The empty price-check flow should explain what the buyer needs without
+inventing a listing:
 
-- Label and intent: “Try sample listing check” (or equivalent short callout)
-- Expected behavior:
-  1. Preload a known public sample block context.
-  2. Prefill price and key comparability inputs.
-  3. Execute the same local deterministic analysis path used by normal usage.
-  4. Make the sample clearly labeled as sample/demo to avoid confusion.
+1. Let the buyer select a real HDB block.
+2. Require the listing's asking price, floor area, flat type, and storey range.
+3. Keep lease commencement year optional.
+4. If the buyer arrives from Results or block detail, carry over the selected
+   block only; never infer unit facts from another transaction or the first
+   available option.
+5. Keep the submit action disabled until every required fact is present.
 
 ### 5. Mobile-first usability
 
@@ -100,6 +104,7 @@ No AI APIs are introduced. Existing deterministic pipeline remains as the source
 - E2E coverage for:
   - first screen visibility of all three actions,
   - direct listing check flow without map interaction,
-  - sample/demo CTA path,
+  - an honest empty Check state with no sample CTA or synthetic defaults,
+  - explicit entry of every required listing fact,
   - map still opens and behaves for explorer flow,
   - no AI valuation endpoint is called.

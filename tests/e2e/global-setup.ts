@@ -4,18 +4,10 @@ import { join } from "node:path";
 export default function globalSetup() {
   const storageStatePath = join(process.cwd(), "test-results/e2e-storage-state.json");
   const completedSearchProfile = {
-    version: 1,
+    version: 3,
     mainFlatType: "4 ROOM",
-    alternativeFlatTypes: [],
     maxBudget: 700000,
-    commuteAnchorLabel: "Bedok MRT",
-    commuteAnchorMrt: "BEDOK MRT STATION",
-    maxComfortableCommuteMinutes: 30,
-    commuteStretchMinutes: 10,
     minimumRemainingLeaseYears: 65,
-    budgetStretchPercent: 5,
-    showStretchOptions: true,
-    showAllBlocks: true,
     age: 35,
     coApplicantAge: 33,
     cpfOABalance: 120000,
@@ -36,12 +28,8 @@ export default function globalSetup() {
             origin: "http://127.0.0.1:4173",
             localStorage: [
               {
-                name: "hdb_resale_search_profile_v1",
+                name: "hdb_resale_search_profile_v3",
                 value: JSON.stringify(completedSearchProfile),
-              },
-              {
-                name: "hdb_resale_search_profile_wizard_dismissed_v1",
-                value: "1",
               },
             ],
           },

@@ -3,7 +3,7 @@ import { rankShortlistRows } from "@/features/shortlist/shortlist-ranking";
 
 const sampleRows = [
   {
-    item: { targetPrice: null },
+    item: { targetPrice: null, addedAt: "2026-01-01T00:00:00Z" },
     block: {
       medianPrice: 510000,
       leaseCommenceRange: [1988, 1988] as [number, number],
@@ -11,7 +11,7 @@ const sampleRows = [
     },
   },
   {
-    item: { targetPrice: 560000 },
+    item: { targetPrice: 560000, addedAt: "2026-03-01T00:00:00Z" },
     block: {
       medianPrice: 550000,
       leaseCommenceRange: [2002, 2002] as [number, number],
@@ -19,7 +19,7 @@ const sampleRows = [
     },
   },
   {
-    item: { targetPrice: 600000 },
+    item: { targetPrice: 600000, addedAt: "2026-02-01T00:00:00Z" },
     block: {
       medianPrice: 650000,
       leaseCommenceRange: [2016, 2016] as [number, number],
@@ -29,6 +29,15 @@ const sampleRows = [
 ];
 
 describe("shortlist ranking", () => {
+  it("shows the most recently saved rows first", () => {
+    const ranked = rankShortlistRows(sampleRows, "recent");
+    expect(ranked.map((row) => row.item.addedAt)).toEqual([
+      "2026-03-01T00:00:00Z",
+      "2026-02-01T00:00:00Z",
+      "2026-01-01T00:00:00Z",
+    ]);
+  });
+
   it("ranks target-fit rows with a target ahead of rows without a target", () => {
     const ranked = rankShortlistRows(sampleRows, "target-gap");
     expect(ranked[0]?.item.targetPrice).not.toBeNull();

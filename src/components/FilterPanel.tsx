@@ -50,6 +50,7 @@ type FilterPanelProps = {
   onReset: () => void;
   desktopToggle?: FilterPanelDesktopToggle;
   searchProfile?: SearchProfile | null;
+  onOpenBuyerSetup?: () => void;
 };
 
 const ALL_VALUE = "__all__";
@@ -121,9 +122,16 @@ type AffordabilityFilterFieldProps = {
   onChange: (next: AffordabilityMode) => void;
   disabled: boolean;
   t: ReturnType<typeof useI18n>["t"];
+  onOpenBuyerSetup?: () => void;
 };
 
-function AffordabilityFilterField({ value, onChange, disabled, t }: AffordabilityFilterFieldProps) {
+function AffordabilityFilterField({
+  value,
+  onChange,
+  disabled,
+  t,
+  onOpenBuyerSetup,
+}: AffordabilityFilterFieldProps) {
   const legendId = useId();
   const buttonClass =
     "h-7 w-full justify-start rounded-none px-2.5 text-[0.75rem] font-extrabold uppercase tracking-wider disabled:cursor-not-allowed disabled:opacity-50";
@@ -201,14 +209,37 @@ function AffordabilityFilterField({ value, onChange, disabled, t }: Affordabilit
         ) : (
           control
         )}
+        <p className="text-[length:var(--text-xs)] leading-snug text-muted-foreground">
+          {t("affordability.filter.localOnly")}
+        </p>
+        {onOpenBuyerSetup ? (
+          <Button
+            type="button"
+            size="xs"
+            variant="outline"
+            className="w-fit rounded-none"
+            onClick={onOpenBuyerSetup}
+          >
+            {t("searchProfile.openSetup")}
+          </Button>
+        ) : null}
       </FieldContent>
     </Field>
   );
 }
 
 export function FilterPanel(props: FilterPanelProps) {
-  const { filters, options, minMonth, maxMonth, onChange, onReset, desktopToggle, searchProfile } =
-    props;
+  const {
+    filters,
+    options,
+    minMonth,
+    maxMonth,
+    onChange,
+    onReset,
+    desktopToggle,
+    searchProfile,
+    onOpenBuyerSetup,
+  } = props;
   const { locale, t } = useI18n();
 
   const affordabilityEnabled = searchProfile
@@ -292,6 +323,7 @@ export function FilterPanel(props: FilterPanelProps) {
                 onChange={(affordable) => onChange({ affordable })}
                 disabled={!affordabilityEnabled}
                 t={t}
+                onOpenBuyerSetup={onOpenBuyerSetup}
               />
 
               <FieldSet className="gap-3">
@@ -413,6 +445,9 @@ export function FilterPanel(props: FilterPanelProps) {
               <FieldLegend className="v2-section-title">
                 {t("filters.advancedRefinements")}
               </FieldLegend>
+              <p className="text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
+                {t("filters.advancedRefinementsHint")}
+              </p>
               <SelectField
                 allLabel={t("filters.allModels")}
                 label={t("filters.flatModel")}
@@ -491,6 +526,9 @@ export function FilterPanel(props: FilterPanelProps) {
                     {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
                   </Badge>
                 </div>
+                <p className="text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">
+                  {t("filters.transactionWindowHint")}
+                </p>
                 <div className="grid gap-4 pt-2 lg:grid-cols-2">
                   <Field>
                     <FieldContent>

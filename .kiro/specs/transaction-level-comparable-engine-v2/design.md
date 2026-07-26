@@ -382,13 +382,10 @@ engine's public API).
 
 ### 7. Backwards Compatibility
 
-- The existing `findComparableTransactions` in
-  `src/lib/transaction-analysis.ts` is **preserved unchanged**. The
-  `AskingPriceCheck` inside `DetailDrawer` continues to use it.
-- The new engine is opt-in: `ListingCheckPanel` switches to it; the drawer
-  does not.
-- Once the v2 engine is proven stable (several weeks of production use),
-  a follow-up spec can deprecate the v1 block-scoped path.
+- The earlier block-scoped duplicate UI path is retired.
+- `ListingCheckPanel` is the sole canonical listing-check UI and uses the
+  transaction-level engine.
+- `ComparableEvidenceTable` is the sole comparable-evidence surface.
 
 ## Testing
 

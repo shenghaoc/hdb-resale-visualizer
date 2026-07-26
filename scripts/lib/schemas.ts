@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+const yearMonthSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/);
+
+export const blockFlatTypeCohortSchema = z.object({
+  transactionCount: z.number().int().nonnegative(),
+  latestMonth: yearMonthSchema,
+  floorAreaRange: z.tuple([z.number().positive(), z.number().positive()]),
+  flatModels: z.array(z.string()),
+});
+
 export const collectionMetadataSchema = z.object({
   code: z.number(),
   data: z.object({

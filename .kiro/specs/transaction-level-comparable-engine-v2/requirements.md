@@ -89,10 +89,10 @@
 - **R6.3** The panel shows an error state if the API returns 4xx/5xx.
 - **R6.4** The verdict card displays the `widenedSearch` indicator and
   per-caveat messages from the API response.
-- **R6.5** The expandable comparable transactions list shows match reasons
-  per comparable.
-- **R6.6** The existing `AskingPriceCheck` inside `DetailDrawer` is **not
-  modified** — it continues to use the v1 block-scoped logic.
+- **R6.5** `ComparableEvidenceTable` shows match reasons per comparable.
+- **R6.6** `ListingCheckPanel` is the sole canonical listing-check UI and
+  `ComparableEvidenceTable` is its sole comparable-evidence surface; no
+  block-detail duplicate is retained.
 
 ## R7 — Type definitions
 - **R7.1** `shared/data-types.ts` gains a `TransactionRow` type matching

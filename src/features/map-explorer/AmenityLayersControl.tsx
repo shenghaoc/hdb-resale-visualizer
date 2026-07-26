@@ -5,14 +5,12 @@ import { cn } from "@/shared/lib/utils";
 import type { Translator } from "@/shared/lib/i18n";
 
 type AmenityLayersControlProps = {
-  mrtStationsEnabled: boolean;
-  mrtExitsEnabled: boolean;
+  mrtEnabled: boolean;
   schoolOverlayEnabled: boolean;
   schoolOverlayAvailable: boolean;
   schoolOverlayLoading: boolean;
   hasBlockSelection: boolean;
-  onToggleMrtStations: () => void;
-  onToggleMrtExits: () => void;
+  onToggleMrt: () => void;
   onToggleSchoolOverlay: () => void;
   t: Translator;
   className?: string;
@@ -22,23 +20,25 @@ type AmenityLayersControlProps = {
 function LayerSwitch({
   enabled,
   disabled,
+  busy = false,
   ariaLabel,
   tooltip,
   onToggle,
 }: {
   enabled: boolean;
   disabled: boolean;
+  busy?: boolean;
   ariaLabel: string;
   tooltip?: string;
   onToggle: () => void;
 }) {
-  const active = enabled && !disabled;
   const switchButton = (
     <button
       type="button"
       role="switch"
       data-touch-target
-      aria-checked={active}
+      aria-checked={enabled}
+      aria-busy={busy || undefined}
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={onToggle}
@@ -47,14 +47,14 @@ function LayerSwitch({
       <span
         className={cn(
           "relative h-6 w-10 rounded-full transition-colors duration-300",
-          active ? "bg-primary" : "bg-muted-foreground/30",
+          enabled ? "bg-primary" : "bg-muted-foreground/30",
         )}
         aria-hidden="true"
       >
         <span
           className={cn(
             "absolute left-[3px] top-[3px] size-[18px] rounded-full bg-white shadow-sm transition-transform duration-300 ease-in-out",
-            active ? "translate-x-4" : "translate-x-0",
+            enabled ? "translate-x-4" : "translate-x-0",
           )}
         />
       </span>
@@ -76,24 +76,23 @@ function LayerSwitch({
 }
 
 export function AmenityLayersControl({
-  mrtStationsEnabled,
-  mrtExitsEnabled,
+  mrtEnabled,
   schoolOverlayEnabled,
   schoolOverlayAvailable,
   schoolOverlayLoading,
   hasBlockSelection,
-  onToggleMrtStations,
-  onToggleMrtExits,
+  onToggleMrt,
   onToggleSchoolOverlay,
   t,
   className,
   style,
 }: AmenityLayersControlProps) {
   const schoolCanToggle = schoolOverlayAvailable && !schoolOverlayLoading;
+  const effectiveSchoolOverlayEnabled = schoolOverlayEnabled && schoolOverlayAvailable;
   const schoolAriaLabel = schoolOverlayLoading
     ? t("schoolOverlay.loading")
     : schoolOverlayAvailable
-      ? schoolOverlayEnabled
+      ? effectiveSchoolOverlayEnabled
         ? t("schoolOverlay.disable")
         : t("schoolOverlay.enable")
       : hasBlockSelection
@@ -122,33 +121,15 @@ export function AmenityLayersControl({
             aria-hidden="true"
             className={cn(
               "size-3 shrink-0 transition-colors duration-200",
-              mrtStationsEnabled ? "text-primary" : "text-muted-foreground",
+              mrtEnabled ? "text-primary" : "text-muted-foreground",
             )}
           />
-          <span className="flex-1 text-muted-foreground">{t("amenity.mrtStations")}</span>
+          <span className="flex-1 text-muted-foreground">{t("amenity.mrt")}</span>
           <LayerSwitch
-            enabled={mrtStationsEnabled}
+            enabled={mrtEnabled}
             disabled={false}
-            ariaLabel={t("amenity.mrtStations")}
-            onToggle={onToggleMrtStations}
-          />
-        </div>
-
-        <div className="flex items-center gap-1.5">
-          <TrainFront
-            data-icon
-            aria-hidden="true"
-            className={cn(
-              "size-3 shrink-0 transition-colors duration-200",
-              mrtExitsEnabled ? "text-primary" : "text-muted-foreground",
-            )}
-          />
-          <span className="flex-1 text-muted-foreground">{t("amenity.mrtExits")}</span>
-          <LayerSwitch
-            enabled={mrtExitsEnabled}
-            disabled={false}
-            ariaLabel={t("amenity.mrtExits")}
-            onToggle={onToggleMrtExits}
+            ariaLabel={t("amenity.mrt")}
+            onToggle={onToggleMrt}
           />
         </div>
 
@@ -158,7 +139,7 @@ export function AmenityLayersControl({
             aria-hidden="true"
             className={cn(
               "size-3 shrink-0 transition-colors duration-200",
-              schoolOverlayEnabled && schoolCanToggle ? "text-primary" : "text-muted-foreground",
+              effectiveSchoolOverlayEnabled ? "text-primary" : "text-muted-foreground",
             )}
           />
           <span className="flex-1 text-muted-foreground">
@@ -170,8 +151,9 @@ export function AmenityLayersControl({
             )}
           </span>
           <LayerSwitch
-            enabled={schoolOverlayEnabled}
+            enabled={effectiveSchoolOverlayEnabled}
             disabled={!schoolCanToggle}
+            busy={schoolOverlayLoading}
             ariaLabel={schoolAriaLabel}
             tooltip={schoolAriaLabel}
             onToggle={onToggleSchoolOverlay}

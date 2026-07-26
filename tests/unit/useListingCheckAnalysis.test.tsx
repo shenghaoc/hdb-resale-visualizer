@@ -153,8 +153,6 @@ type HookProps = {
 };
 
 function renderAnalysis(initial: Partial<HookProps> = {}) {
-  const onFlatTypeChange = vi.fn();
-  const onStoreyRangeChange = vi.fn();
   const defaults: HookProps = {
     selectedAddressKey: null,
     askingPrice: null,
@@ -166,17 +164,11 @@ function renderAnalysis(initial: Partial<HookProps> = {}) {
     ...initial,
   };
 
-  const rendered = renderHook(
-    (props: HookProps) =>
-      useListingCheckAnalysis({
-        ...props,
-        onFlatTypeChange,
-        onStoreyRangeChange,
-      }),
-    { initialProps: defaults },
-  );
+  const rendered = renderHook((props: HookProps) => useListingCheckAnalysis(props), {
+    initialProps: defaults,
+  });
 
-  return { ...rendered, onFlatTypeChange, onStoreyRangeChange, defaults };
+  return { ...rendered, defaults };
 }
 
 describe("useListingCheckAnalysis", () => {
@@ -223,6 +215,10 @@ describe("useListingCheckAnalysis", () => {
     await waitFor(() => {
       expect(result.current.detail).not.toBeNull();
     });
+    expect(fetch).not.toHaveBeenCalled();
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
     await waitFor(() => {
       expect(result.current.comparableSet).not.toBeNull();
     });
@@ -268,6 +264,12 @@ describe("useListingCheckAnalysis", () => {
 
     await waitFor(() => {
       expect(result.current.detail?.summary.addressKey).toBe("ang-mo-kio-123a");
+    });
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
+    await waitFor(() => {
+      expect(result.current.comparableSet).not.toBeNull();
     });
     const comparableCallsBeforeSwitch = fetchMock.mock.calls.length;
 
@@ -366,68 +368,61 @@ describe("useListingCheckAnalysis", () => {
     expect(result.current.detailLoading).toBe(false);
   });
 
-  it("defaults flat type only when the current value is invalid", async () => {
-    const { result, onFlatTypeChange, rerender } = renderAnalysis({
+  it("derives options without auto-selecting missing or invalid listing facts", async () => {
+    dataMocks.fetchAddressDetail.mockResolvedValueOnce(
+      makeDetail({ flatTypes: ["EXECUTIVE", "5 ROOM", "4 ROOM"] }),
+    );
+    const { result } = renderAnalysis({
       selectedAddressKey: "ang-mo-kio-123a",
-      flatType: "EXECUTIVE",
-    });
-
-    await waitFor(() => {
-      expect(result.current.flatTypeOptions.length).toBeGreaterThan(0);
-    });
-    expect(onFlatTypeChange).toHaveBeenCalledWith("4 ROOM");
-
-    onFlatTypeChange.mockClear();
-    rerender({
-      selectedAddressKey: "ang-mo-kio-123a",
-      askingPrice: null,
-      floorAreaSqm: null,
-      flatType: "4 ROOM",
-      storeyRange: null,
-      leaseCommenceYear: null,
-      referenceMonth: "2026-04",
-    });
-
-    await act(async () => {
-      await Promise.resolve();
-    });
-    expect(onFlatTypeChange).not.toHaveBeenCalled();
-  });
-
-  it("defaults storey range only when the current value is invalid", async () => {
-    const { result, onStoreyRangeChange, rerender } = renderAnalysis({
-      selectedAddressKey: "ang-mo-kio-123a",
-      storeyRange: "99 TO 99",
-    });
-
-    await waitFor(() => {
-      expect(result.current.storeyOptions.length).toBeGreaterThan(0);
-    });
-    expect(onStoreyRangeChange).toHaveBeenCalledWith("07 TO 09");
-
-    onStoreyRangeChange.mockClear();
-    rerender({
-      selectedAddressKey: "ang-mo-kio-123a",
-      askingPrice: null,
-      floorAreaSqm: null,
+      askingPrice: 650000,
+      floorAreaSqm: 93,
       flatType: null,
-      storeyRange: "07 TO 09",
-      leaseCommenceYear: null,
-      referenceMonth: "2026-04",
+      storeyRange: null,
     });
 
-    await act(async () => {
-      await Promise.resolve();
+    await waitFor(() => {
+      expect(result.current.flatTypeOptions).toEqual(["4 ROOM", "5 ROOM", "EXECUTIVE"]);
+      expect(result.current.storeyOptions).toHaveLength(17);
+      expect(result.current.storeyOptions).toEqual(
+        expect.arrayContaining(["01 TO 03", "07 TO 09", "49 TO 51"]),
+      );
     });
-    expect(onStoreyRangeChange).not.toHaveBeenCalled();
+    expect(result.current.canSubmit).toBe(false);
+    expect(result.current.submit()).toBe(false);
+    expect(fetch).not.toHaveBeenCalled();
   });
 
-  it("sends the exact comparable payload to ?adjust=time", async () => {
+  it("submits a canonical high-floor range absent from the recent transaction sample", async () => {
     const fetchMock = vi.fn(async () => Response.json(makeComparableResponse()));
     vi.stubGlobal("fetch", fetchMock);
 
     const { result } = renderAnalysis({
       selectedAddressKey: "ang-mo-kio-123a",
+      askingPrice: 650000,
+      floorAreaSqm: 93,
+      flatType: "4 ROOM",
+      storeyRange: "49 TO 51",
+      leaseCommenceYear: 1990,
+    });
+
+    await waitFor(() => expect(result.current.canSubmit).toBe(true));
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+    expect(getFetchBody(fetchMock)).toMatchObject({ storeyRange: "49 TO 51" });
+  });
+
+  it("waits for submission, then sends the exact comparable payload to ?adjust=time", async () => {
+    const fetchMock = vi.fn(async () => Response.json(makeComparableResponse()));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderAnalysis({
+      selectedAddressKey: "ang-mo-kio-123a",
+      askingPrice: 650000,
       flatType: "4 ROOM",
       storeyRange: "07 TO 09",
       floorAreaSqm: 93,
@@ -436,11 +431,14 @@ describe("useListingCheckAnalysis", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.detail).not.toBeNull();
+      expect(result.current.canSubmit).toBe(true);
     });
-    await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
+
+    act(() => {
+      expect(result.current.submit()).toBe(true);
     });
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
     const [url, init] = getFetchCall(fetchMock);
     expect(url).toBe("/api/comparable-transactions?adjust=time");
@@ -458,32 +456,33 @@ describe("useListingCheckAnalysis", () => {
     });
   });
 
-  it("uses median floor-area midpoint when no floor area is supplied", async () => {
+  it("does not submit without an explicit floor area", async () => {
     const fetchMock = vi.fn(async () => Response.json(makeComparableResponse()));
     vi.stubGlobal("fetch", fetchMock);
 
-    renderAnalysis({
+    const { result } = renderAnalysis({
       selectedAddressKey: "ang-mo-kio-123a",
+      askingPrice: 650000,
       flatType: "4 ROOM",
       storeyRange: "07 TO 09",
       floorAreaSqm: null,
       leaseCommenceYear: 1990,
     });
 
-    await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalled();
-    });
-
-    const body = getFetchBody(fetchMock) as { floorAreaSqm: number };
-    expect(body.floorAreaSqm).toBe(93);
+    await waitFor(() => expect(result.current.detail).not.toBeNull());
+    expect(result.current.canSubmit).toBe(false);
+    expect(result.current.submit()).toBe(false);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("issues no comparable request without required detail/options", async () => {
     const fetchMock = vi.fn(async () => Response.json(makeComparableResponse()));
     vi.stubGlobal("fetch", fetchMock);
 
-    renderAnalysis({
+    const { result } = renderAnalysis({
       selectedAddressKey: "ang-mo-kio-123a",
+      askingPrice: 650000,
+      floorAreaSqm: 93,
       flatType: null,
       storeyRange: null,
     });
@@ -495,6 +494,8 @@ describe("useListingCheckAnalysis", () => {
       await Promise.resolve();
       await Promise.resolve();
     });
+    expect(result.current.canSubmit).toBe(false);
+    expect(result.current.submit()).toBe(false);
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
@@ -511,6 +512,13 @@ describe("useListingCheckAnalysis", () => {
       leaseCommenceYear: 1990,
     });
 
+    await waitFor(() => {
+      expect(result.current.canSubmit).toBe(true);
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
     await waitFor(() => {
       expect(result.current.result).not.toBeNull();
     });
@@ -535,7 +543,7 @@ describe("useListingCheckAnalysis", () => {
     expect(fetchMock.mock.calls.length).toBe(fetchCount);
   });
 
-  it("issues a new comparable request when floor area changes", async () => {
+  it("requires another submission when a comparable-driving fact changes", async () => {
     const fetchMock = vi.fn(async () => Response.json(makeComparableResponse()));
     vi.stubGlobal("fetch", fetchMock);
 
@@ -548,6 +556,10 @@ describe("useListingCheckAnalysis", () => {
       leaseCommenceYear: 1990,
     });
 
+    await waitFor(() => expect(result.current.canSubmit).toBe(true));
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
     await waitFor(() => {
       expect(result.current.comparableSet).not.toBeNull();
     });
@@ -563,6 +575,12 @@ describe("useListingCheckAnalysis", () => {
       referenceMonth: "2026-04",
     });
 
+    expect(result.current.comparableSet).toBeNull();
+    expect(result.current.result).toBeNull();
+    expect(fetchMock.mock.calls.length).toBe(fetchCount);
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
     await waitFor(() => {
       expect(fetchMock.mock.calls.length).toBeGreaterThan(fetchCount);
     });
@@ -599,13 +617,13 @@ describe("useListingCheckAnalysis", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.detail).not.toBeNull();
+      expect(result.current.canSubmit).toBe(true);
     });
 
-    // Wait until first fetch is in flight
-    await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledTimes(1);
+    act(() => {
+      expect(result.current.submit()).toBe(true);
     });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
 
     rerender({
       selectedAddressKey: "ang-mo-kio-123a",
@@ -617,6 +635,9 @@ describe("useListingCheckAnalysis", () => {
       referenceMonth: "2026-04",
     });
 
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
     await waitFor(() => {
       expect(result.current.comparableSet?.caveats).toContain("SECOND_RESPONSE");
     });
@@ -652,6 +673,10 @@ describe("useListingCheckAnalysis", () => {
       leaseCommenceYear: 1990,
     });
 
+    await waitFor(() => expect(result.current.canSubmit).toBe(true));
+    act(() => {
+      expect(result.current.submit()).toBe(true);
+    });
     await waitFor(() => {
       expect(result.current.comparableSetError).toBe(true);
     });

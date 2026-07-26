@@ -39,7 +39,7 @@ function renderDrawer(rows: Parameters<typeof ShortlistDrawer>[0]["rows"]) {
         rows={rows}
         onToggleOpen={() => {}}
         onRemove={() => {}}
-        onRestore={() => {}}
+        onRestore={() => true}
         onUpdate={vi.fn()}
         onSelectAddress={() => {}}
       />

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { Bookmark, CircleHelp, List, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
+import { Bookmark, List, Map, Moon, Scale, SlidersHorizontal, Sun } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -11,12 +11,12 @@ type MobileTabBarProps = {
   shortlistCount: number;
   theme: "light" | "dark";
   t: Translator;
+  onMapClick: () => void;
   onFiltersClick: () => void;
   onResultsClick: () => void;
   onCheckClick: () => void;
   onSavedClick: () => void;
   onToggleTheme: () => void;
-  onOpenGuide: () => void;
 };
 
 export function MobileTabBar({
@@ -24,12 +24,12 @@ export function MobileTabBar({
   shortlistCount,
   theme,
   t,
+  onMapClick,
   onFiltersClick,
   onResultsClick,
   onCheckClick,
   onSavedClick,
   onToggleTheme,
-  onOpenGuide,
 }: MobileTabBarProps) {
   // Roving arrow-key navigation across all toolbar elements.
   const [focusedIndex, setFocusedIndex] = useState(2); // Default to Filters
@@ -65,6 +65,7 @@ export function MobileTabBar({
   }, []);
 
   const filtersLabel = t("tab.filters");
+  const mapLabel = t("tab.map");
   const resultsLabel = t("tab.results");
   const checkLabel = t("tab.check");
   const savedLabel = t("tab.saved");
@@ -102,27 +103,25 @@ export function MobileTabBar({
         </TooltipTrigger>
         <TooltipContent>{t("app.toggleTheme")}</TooltipContent>
       </Tooltip>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            ref={(node) => {
-              itemRefs.current[1] = node;
-            }}
-            type="button"
-            size="icon"
-            variant="ghost"
-            className="mobile-mode-button"
-            tabIndex={focusedIndex === 1 ? 0 : -1}
-            onClick={onOpenGuide}
-            onKeyDown={(e) => handleKeyDown(e, 1)}
-            onFocus={() => setFocusedIndex(1)}
-            aria-label={t("app.openGuide")}
-          >
-            <CircleHelp data-icon="inline-start" className="size-4" aria-hidden="true" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>{t("app.openGuide")}</TooltipContent>
-      </Tooltip>
+      <Button
+        ref={(node) => {
+          itemRefs.current[1] = node;
+        }}
+        type="button"
+        variant={mobileTab === null ? "secondary" : "ghost"}
+        size="sm"
+        className="mobile-tab-button"
+        data-active={mobileTab === null}
+        aria-pressed={mobileTab === null}
+        title={mapLabel}
+        tabIndex={focusedIndex === 1 ? 0 : -1}
+        onClick={onMapClick}
+        onKeyDown={(e) => handleKeyDown(e, 1)}
+        onFocus={() => setFocusedIndex(1)}
+      >
+        <Map data-icon="inline-start" />
+        <span>{mapLabel}</span>
+      </Button>
       <Button
         ref={(node) => {
           itemRefs.current[2] = node;

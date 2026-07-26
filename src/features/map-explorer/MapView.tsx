@@ -30,8 +30,7 @@ type MapViewProps = {
   isDarkMode: boolean;
   priceHeatmapEnabled?: boolean;
   priceHeatmapOpacity?: number;
-  mrtStationsEnabled?: boolean;
-  mrtExitsEnabled?: boolean;
+  mrtEnabled?: boolean;
   heatmapMode?: HeatmapMode;
   primarySchools?: PrimarySchoolWithBand[];
   schoolOverlayEnabled?: boolean;
@@ -53,8 +52,7 @@ export function MapView({
   isDarkMode,
   priceHeatmapEnabled = false,
   priceHeatmapOpacity = 0.7,
-  mrtStationsEnabled = false,
-  mrtExitsEnabled = false,
+  mrtEnabled = false,
   heatmapMode = "price",
   primarySchools = [],
   schoolOverlayEnabled = false,
@@ -107,6 +105,7 @@ export function MapView({
     for (const b of blocks) map.set(b.addressKey, b);
     return map;
   }, [blocks]);
+  const selectedBlock = selectedAddressKey ? (blocksByKey.get(selectedAddressKey) ?? null) : null;
 
   const debouncedTownFilter = useDebouncedValue(townFilter, 400);
 
@@ -134,7 +133,14 @@ export function MapView({
     prefersReducedMotion,
   });
 
-  useMapSelectionSync({ map: mapInstance, selectedAddressKey });
+  useMapSelectionSync({
+    map: mapInstance,
+    selectedAddressKey,
+    selectedBlock,
+    townFilter,
+    autoFitKey,
+    prefersReducedMotion,
+  });
   useMapMarkerVisibility({ map: mapInstance, showBlockMarkers });
   useMapPriceHeatmapSync({
     map: mapInstance,
@@ -144,14 +150,27 @@ export function MapView({
     heatmapMode,
   });
 
-  useAmenityGeoSync({
+  const amenityStatus = useAmenityGeoSync({
     map: mapInstance,
-    mrtStationsEnabled,
-    mrtExitsEnabled,
+    mrtEnabled,
   });
 
   useMapTheme(mapInstance, isDarkMode);
   useMapRadiusLayer(mapInstance, geographicIntent, selectedAddressKey, blocksByKey);
+
+  const mrtStatusMessage = !mrtEnabled
+    ? null
+    : amenityStatus.isLoading
+      ? t("amenity.mrtLoading")
+      : amenityStatus.stationsFailed && amenityStatus.exitsFailed
+        ? t("amenity.mrtUnavailable")
+        : amenityStatus.stationsFailed
+          ? t("amenity.mrtStationsUnavailable")
+          : amenityStatus.exitsFailed
+            ? t("amenity.mrtExitsUnavailable")
+            : null;
+  const mrtLoadFailed =
+    !amenityStatus.isLoading && (amenityStatus.stationsFailed || amenityStatus.exitsFailed);
 
   return (
     <div
@@ -173,6 +192,15 @@ export function MapView({
               {t("map.unavailableDescription")}
             </p>
           </div>
+        </div>
+      ) : null}
+      {!mapError && mrtStatusMessage ? (
+        <div
+          className="pointer-events-none absolute left-1/2 top-20 z-10 max-w-[min(90%,24rem)] -translate-x-1/2 border border-border bg-popover px-3 py-2 text-center text-xs text-popover-foreground shadow-sm"
+          data-testid="mrt-layer-status"
+          role={mrtLoadFailed ? "alert" : "status"}
+        >
+          {mrtStatusMessage}
         </div>
       ) : null}
     </div>

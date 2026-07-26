@@ -153,4 +153,5 @@
   - Toggle "Show time-adjusted prices" → adjusted prices render with
     strikethrough raw + bold adjusted.
   - Toggle off → raw prices only.
-  - Block detail drawer Asking Price tab still works unchanged.
+  - The Check workflow renders adjusted evidence in
+    `ComparableEvidenceTable`; no duplicate detail-drawer checker exists.

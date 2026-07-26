@@ -2,18 +2,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   hasCompletedSearchProfile,
   loadSearchProfile,
-  loadSearchProfileWizardDismissed,
   saveSearchProfile,
-  saveSearchProfileWizardDismissed,
 } from "@/features/search-profile/searchProfile";
-import type { SearchProfile, SearchProfilePatch } from "@/types/searchProfile";
+import type { SearchProfile } from "@/types/searchProfile";
 
 export function useSearchProfile() {
   const [profile, setProfile] = useState<SearchProfile>(() => loadSearchProfile());
-  const [wizardDismissed, setWizardDismissed] = useState(() => loadSearchProfileWizardDismissed());
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   const isMountedProfile = useRef(false);
-  const isMountedDismissed = useRef(false);
 
   // Synchronize profile changes to persistence store cleanly on update, skipping initial mount
   useEffect(() => {
@@ -24,29 +21,20 @@ export function useSearchProfile() {
     saveSearchProfile(profile);
   }, [profile]);
 
-  // Synchronize wizardDismissed state to persistence store cleanly on update, skipping initial mount
-  useEffect(() => {
-    if (!isMountedDismissed.current) {
-      isMountedDismissed.current = true;
-      return;
-    }
-    saveSearchProfileWizardDismissed(wizardDismissed);
-  }, [wizardDismissed]);
-
   const completed = useMemo(() => hasCompletedSearchProfile(profile), [profile]);
-  const shouldShowWizard = !completed && !wizardDismissed;
-
-  const patchProfile = useCallback((patch: SearchProfilePatch) => {
-    setProfile((prev) => ({ ...prev, ...patch }));
-  }, []);
+  const shouldShowWizard = wizardOpen;
 
   const replaceProfile = useCallback((next: SearchProfile) => {
     setProfile(next);
-    setWizardDismissed(true);
+    setWizardOpen(false);
   }, []);
 
   const dismissWizard = useCallback(() => {
-    setWizardDismissed(true);
+    setWizardOpen(false);
+  }, []);
+
+  const openWizard = useCallback(() => {
+    setWizardOpen(true);
   }, []);
 
   return useMemo(
@@ -54,10 +42,10 @@ export function useSearchProfile() {
       profile,
       completed,
       shouldShowWizard,
-      patchProfile,
       replaceProfile,
       dismissWizard,
+      openWizard,
     }),
-    [profile, completed, shouldShowWizard, patchProfile, replaceProfile, dismissWizard],
+    [profile, completed, shouldShowWizard, replaceProfile, dismissWizard, openWizard],
   );
 }
