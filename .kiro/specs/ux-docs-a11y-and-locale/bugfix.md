@@ -15,15 +15,18 @@ architecture the repository actually runs.
    silently break confidence counts that intentionally match stable reason
    identifiers.
 2. Several compact currency call sites omitted the active locale, including
-   the block-history chart axis/tooltip, and one filter range separator
-   remained hardcoded English.
+   the block-history chart axis/tooltip, while the Buyer setup review chip
+   hand-built a fixed `S$` string and one filter range separator remained
+   hardcoded English.
 3. Buyer setup numeric inputs lacked programmatic names and the Chinese lease
    label described a build year instead of the lease commencement year.
 4. The heatmap radiogroup did not provide complete wrapping arrow-key
    navigation.
 5. The lazy map fallback kept an English-only loading label in zh-SG.
 6. Primary buttons diluted their background on hover while keeping white
-   11px labels, dropping the light-mode contrast ratio below WCAG AA.
+   11px labels, dropping the light-mode contrast ratio below WCAG AA. Buyer
+   setup also animated its action from the disabled surface to primary,
+   exposing another failing intermediate color.
 7. CI invoked a bare Vite+ command instead of the package-defined `check`
    script. README, AGENTS, architecture docs, and older Kiro specs repeated
    stale package-manager, browser, local-server, migration, and interaction
@@ -35,7 +38,8 @@ architecture the repository actually runs.
    fallback messages. Listing Check SHALL translate only at the UI
    presentation boundary using structured codes and interpolation values.
 2. Currency and range presentation SHALL follow the selected locale everywhere
-   touched by this bugfix, including chart axes and tooltips.
+   touched by this bugfix, including Buyer setup presets/review, chart axes,
+   and tooltips.
 3. Buyer setup inputs SHALL have translated accessible names and accurate lease
    terminology in both locales.
 4. The heatmap mode radiogroup SHALL support wrapping ArrowLeft/ArrowRight and
@@ -43,7 +47,8 @@ architecture the repository actually runs.
 5. The map loading fallback SHALL use the active locale.
 6. Primary-button hover states SHALL preserve at least WCAG AA text contrast
    in both color schemes, including shared buttons, the buyer wizard, and the
-   selected month control.
+   selected month control. Enabled/disabled state changes SHALL NOT animate
+   through a failing intermediate foreground/background pair.
 7. Base CI SHALL run `vp install` then `vp run check`. Documentation SHALL
    describe Node 24, pnpm/Vite+, Chromium, `wrangler dev`, forward-only
    migrations, Worker-routed APIs, and per-flat-type cohort readiness

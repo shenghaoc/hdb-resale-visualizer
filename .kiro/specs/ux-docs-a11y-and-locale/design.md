@@ -10,8 +10,9 @@ counts the original reason identifiers before presentation so switching locale
 cannot change confidence.
 
 Locale-aware formatters receive the selected locale in Listing Check, map
-popups, shortlist charts, and the block-history chart axis/tooltip. Filter
-range copy and the lazy map fallback use the translation catalog.
+popups, Buyer setup presets/review, shortlist charts, and the block-history
+chart axis/tooltip. Filter range copy and the lazy map fallback use the
+translation catalog.
 
 ## Accessible Interaction
 
@@ -26,8 +27,10 @@ endpoints. Keyboard input uses the same mode-change callback as pointer input.
 Primary actions retain the existing cyan surface and foreground pair on hover
 without diluting the surface below the small-text WCAG AA threshold. The same
 opaque-enough hover treatment applies to shared primary buttons, the buyer
-wizard action, and the selected month control. The Buyer setup axe path
-explicitly hovers the persistent action before each post-navigation scan.
+wizard action, and the selected month control. Buyer setup limits its action
+transition to the focus shadow so the disabled-to-enabled change cannot animate
+through a low-contrast intermediate surface. The Buyer setup axe path explicitly
+hovers the persistent action before each post-navigation scan.
 
 ## Repository Truth
 

@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vite-plus/test";
 import { SearchProfileWizard } from "@/features/search-profile/SearchProfileWizard";
-import { formatCompactCurrency } from "@/shared/lib/format";
+import { formatCompactCurrency, formatCurrency } from "@/shared/lib/format";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { FilterOptions } from "@/types/data";
 
@@ -33,11 +33,19 @@ describe("SearchProfileWizard locale presentation", () => {
     await user.click(screen.getByRole("button", { name: "下一步" }));
 
     expect(screen.getByRole("spinbutton", { name: "最高预算（新元）" })).toBeVisible();
-    expect(
-      screen.getByRole("button", { name: formatCompactCurrency(1_200_000, "zh-SG") }),
-    ).toBeVisible();
+    const budgetPreset = screen.getByRole("button", {
+      name: formatCompactCurrency(1_200_000, "zh-SG"),
+    });
+    expect(budgetPreset).toBeVisible();
+    await user.click(budgetPreset);
 
     await user.click(screen.getByRole("button", { name: "下一步" }));
     expect(screen.getByRole("spinbutton", { name: "最低剩余地契（年）" })).toBeVisible();
+
+    await user.click(screen.getByRole("button", { name: "70 年" }));
+    await user.click(screen.getByRole("button", { name: "下一步" }));
+    await user.click(screen.getByRole("button", { name: "下一步" }));
+
+    expect(screen.getByText(formatCurrency(1_200_000, "zh-SG"))).toBeVisible();
   });
 });

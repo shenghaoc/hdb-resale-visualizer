@@ -456,7 +456,7 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                         </div>
                         {maxBudget ? (
                           <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
-                            {`S$${formatNumber(Number(maxBudget), 0, locale)}`}
+                            {formatCurrency(Number(maxBudget), locale)}
                           </div>
                         ) : null}
                         <div className="rounded-none bg-secondary px-3 py-1.5 text-xs font-bold text-secondary-foreground">
@@ -541,7 +541,7 @@ export function SearchProfileWizard({ options, initialProfile, onComplete, onSki
                   type="button"
                   onClick={handleContinue}
                   disabled={!canContinueStep || (step === totalSteps - 1 && !canSubmit)}
-                  className="rounded-none bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-[color,background-color,box-shadow] enabled:hover:bg-primary/95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="rounded-none bg-primary px-6 py-2.5 text-xs font-extrabold uppercase tracking-[0.06em] text-primary-foreground transition-[box-shadow] enabled:hover:bg-primary/95 disabled:cursor-not-allowed disabled:bg-muted/70 disabled:text-muted-foreground/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {nextLabel}
                 </button>
