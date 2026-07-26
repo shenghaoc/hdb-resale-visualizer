@@ -111,7 +111,9 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
 
     const elements = await getControlElements(page);
 
-    // Test language selector functionality - just verify it opens and has options
+    await expect(page.locator("html")).toHaveAttribute("lang", "en-SG");
+
+    // Test language selector functionality and document-language synchronization.
     await expect(elements.languageSelect).toBeVisible();
     await elements.languageSelect.click();
 
@@ -125,10 +127,17 @@ test.describe("Preservation: Header & Tab Bar Controls Continue to Function", ()
     expect(optionTexts).toContain("English");
     expect(optionTexts).toContain("中文");
 
-    // Close the select without changing language to avoid potential page reload
-    await page.keyboard.press("Escape");
+    await page.getByRole("option", { name: "中文" }).click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh-SG");
+    await expect(page).toHaveTitle("组屋转售探索");
 
-    // PRESERVATION ASSERTION: Language selector should remain visible after interaction
+    const chineseLanguageSelect = elements.mapLocale.getByRole("combobox", { name: "语言" });
+    await expect(chineseLanguageSelect).toBeVisible();
+    await chineseLanguageSelect.click();
+    await page.getByRole("option", { name: "English" }).click();
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "en-SG");
+    await expect(page).toHaveTitle("HDB Resale Explorer");
     await expect(elements.languageSelect).toBeVisible();
   });
 

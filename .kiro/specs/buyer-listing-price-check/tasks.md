@@ -78,7 +78,7 @@
 
 - [x] **T6.1** Extend `usePanelState` types: add `"check"` to `LeftTab`
   and `PanelTab`. Add `setLeftTab("check")` and `setMobileTab("check")`
-  support. → `npm run typecheck` passes. (R1.1, R1.2)
+  support. → `vp run typecheck` passes. (R1.1, R1.2)
 
 - [x] **T6.2** Add "Check" button to `DesktopTabBar` between Results and
   Saved, with icon (e.g. `Scale` from lucide). Wire click to
@@ -131,6 +131,11 @@
 - [x] **T8.3** Add block-detail regression coverage proving its Check action
   opens the canonical panel with no inferred unit facts and that no sample CTA
   or second evaluator remains. (R11.4)
+
+- [x] **T8.4** Localize confidence summaries, structured caveats, and all eight
+  comparable match-reason identifiers at the UI boundary. Preserve the English
+  tokens used by confidence counting, carry locale through compact currencies,
+  and cover both locales with focused tests. (R5, R6, R11.6)
 
 ## Phase 9 — Verification
 

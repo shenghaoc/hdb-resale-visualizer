@@ -1,6 +1,9 @@
 # Design: Buyer-First Homepage
 
-> Status: Draft. Reframes the homepage around buyer tasks before map exploration and makes price checking the fastest path for first-time users.
+> Status: Partially implemented. The app now provides an honest, map-free
+> listing-check entry and preserves the map explorer, but the proposed
+> three-action homepage cluster, first-fold trust copy, and associated lazy
+> homepage composition are not implemented.
 
 ## Problem
 

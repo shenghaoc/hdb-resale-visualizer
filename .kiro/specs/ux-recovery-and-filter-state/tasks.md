@@ -16,8 +16,14 @@
 - [x] Replace compact affordability's color-only dot with translated text.
 - [x] Canonicalize filter-owned URL parameters on hydration and updates while
   preserving unrelated deep-link state.
+- [x] Preserve URL fragments during Listing Check synchronization and
+  shortlist-import query cleanup.
 - [x] Cover valid/invalid months, manifest retry, search reset, controlled sort,
   live range order, comparison failure/retry, localized recovery copy, Listing
   Check detail retry, request ordering, compact affordability, and URL ownership
   with focused tests.
-- [ ] Run the exact-head CI and deployed-preview UX checks after push.
+- [x] Run the exact-head CI and deployed-preview UX checks after push.
+  → Product-code head `1560b0cba` passed the full local `pnpm run check:pr`
+  gate (1,734 Vitest tests and 76 Playwright tests), all exact-head GitHub
+  checks, and deployed URL ownership/recovery smoke at desktop and mobile
+  widths.

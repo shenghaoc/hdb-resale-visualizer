@@ -16,7 +16,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import type { DisplayComparable } from "./listingCheckAnalysis";
+import type { DisplayComparable, EvidenceCaveat } from "./listingCheckAnalysis";
+import { formatEvidenceCaveat, formatListingMatchReason } from "./listingCheckPresentation";
 
 // ── Constants ──────────────────────────────────────────────────────────────
 
@@ -78,7 +79,7 @@ type ComparableEvidenceTableProps = {
   comparables: ReadonlyArray<DisplayComparable>;
   referenceMonth: string;
   widenedSearch: boolean;
-  caveats: ReadonlyArray<string>;
+  caveats: ReadonlyArray<EvidenceCaveat>;
   adjustmentApplied?: boolean;
 };
 
@@ -130,7 +131,7 @@ export function ComparableEvidenceTable({
               {caveats.map((caveat, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-warning">
                   <AlertTriangle data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
-                  <span>{caveat}</span>
+                  <span>{formatEvidenceCaveat(caveat, t)}</span>
                 </li>
               ))}
             </ul>
@@ -157,7 +158,7 @@ export function ComparableEvidenceTable({
             {caveats.map((caveat, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-warning">
                 <AlertTriangle data-icon className="mt-0.5 size-3 shrink-0" aria-hidden="true" />
-                <span>{caveat}</span>
+                <span>{formatEvidenceCaveat(caveat, t)}</span>
               </li>
             ))}
           </ul>
@@ -300,7 +301,7 @@ export function ComparableEvidenceTable({
                   <SimilarityBar similarity={tx.similarity} />
                 </TableCell>
                 <TableCell>
-                  <MatchReasonBadges reasons={tx.matchReasons} />
+                  <MatchReasonBadges reasons={tx.matchReasons} t={t} />
                 </TableCell>
               </TableRow>
             ))}
@@ -377,7 +378,7 @@ export function ComparableEvidenceTable({
             </div>
             {tx.matchReasons.length > 0 && (
               <div className="mt-1.5">
-                <MatchReasonBadges reasons={tx.matchReasons} />
+                <MatchReasonBadges reasons={tx.matchReasons} t={t} />
               </div>
             )}
           </article>
@@ -454,7 +455,13 @@ function SimilarityBar({ similarity }: { similarity: number }) {
 
 // ── MatchReasonBadges ──────────────────────────────────────────────────────
 
-function MatchReasonBadges({ reasons }: { reasons: string[] }) {
+function MatchReasonBadges({
+  reasons,
+  t,
+}: {
+  reasons: string[];
+  t: ReturnType<typeof useI18n>["t"];
+}) {
   if (reasons.length === 0) return null;
   return (
     <div className="flex flex-wrap gap-1">
@@ -464,7 +471,7 @@ function MatchReasonBadges({ reasons }: { reasons: string[] }) {
           variant="outline"
           className="h-4 border border-border/40 px-1 text-[length:var(--text-xs)] font-medium normal-case tracking-normal"
         >
-          {reason}
+          {formatListingMatchReason(reason, t)}
         </Badge>
       ))}
     </div>

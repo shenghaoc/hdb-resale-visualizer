@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { describe, expect, it, vi } from "vite-plus/test";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -9,6 +10,13 @@ const t: Translator = (key) => key;
 
 function renderWithProviders(ui: React.ReactElement) {
   return render(<TooltipProvider>{ui}</TooltipProvider>);
+}
+
+function ControlledMode({ initialMode }: { initialMode: "price" | "perSqm" }) {
+  const [mode, setMode] = useState(initialMode);
+  return (
+    <PriceHeatmapControl {...baseProps} hasScope isEnabled mode={mode} onModeChange={setMode} />
+  );
 }
 
 const baseProps = {
@@ -81,5 +89,33 @@ describe("PriceHeatmapControl — hasScope=true", () => {
     renderWithProviders(<PriceHeatmapControl {...baseProps} isEnabled={true} hasScope={true} />);
     expect(screen.getByText("heatmap.modePrice")).toBeInTheDocument();
     expect(screen.getByRole("slider")).toBeInTheDocument();
+  });
+
+  it.each([
+    ["price", "{ArrowRight}", "perSqm"],
+    ["price", "{ArrowDown}", "perSqm"],
+    ["price", "{ArrowLeft}", "perSqm"],
+    ["price", "{ArrowUp}", "perSqm"],
+    ["perSqm", "{ArrowRight}", "price"],
+    ["perSqm", "{ArrowDown}", "price"],
+    ["perSqm", "{ArrowLeft}", "price"],
+    ["perSqm", "{ArrowUp}", "price"],
+    ["perSqm", "{Home}", "price"],
+    ["price", "{End}", "perSqm"],
+  ] as const)("moves and wraps from %s with %s", async (initialMode, key, expectedMode) => {
+    const user = userEvent.setup();
+    renderWithProviders(<ControlledMode initialMode={initialMode} />);
+    const initial = screen.getByRole("radio", {
+      name: initialMode === "price" ? "heatmap.modePrice" : "heatmap.modePerSqm",
+    });
+    initial.focus();
+
+    await user.keyboard(key);
+
+    const expected = screen.getByRole("radio", {
+      name: expectedMode === "price" ? "heatmap.modePrice" : "heatmap.modePerSqm",
+    });
+    expect(expected).toHaveAttribute("aria-checked", "true");
+    expect(expected).toHaveFocus();
   });
 });

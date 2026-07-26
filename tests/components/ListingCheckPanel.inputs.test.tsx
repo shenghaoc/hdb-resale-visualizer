@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { ListingCheckPanel } from "@/features/listing-check/ListingCheckPanel";
+import { formatCompactCurrency } from "@/shared/lib/format";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { AddressDetail, Suggestion } from "@/types/data";
 
@@ -137,6 +138,7 @@ describe("ListingCheckPanel input clearing", () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    window.localStorage.removeItem("hdb-resale-locale");
   });
 
   it("propagates null immediately when listing fact inputs are cleared", async () => {
@@ -211,5 +213,23 @@ describe("ListingCheckPanel input clearing", () => {
     await user.click(await screen.findByRole("button", { name: /check this listing/i }));
     const button = await screen.findByRole("button", { name: /shortlist full/i });
     expect(button).toBeDisabled();
+  });
+
+  it("localizes confidence, caveats, match reasons, and compact prices in zh-SG", async () => {
+    const user = userEvent.setup();
+    window.localStorage.setItem("hdb-resale-locale", "zh-SG");
+    renderPanel();
+
+    await user.click(await screen.findByRole("button", { name: "检查此房源" }));
+
+    expect(await screen.findByTestId("listing-check-confidence-summary")).toHaveTextContent(
+      "低可信度",
+    );
+    expect(screen.getAllByText(/仅找到 1 笔可比交易/).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("同一栋组屋").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("相同房型").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByTestId("listing-check-verdict")).toHaveTextContent(
+      formatCompactCurrency(620000, "zh-SG"),
+    );
   });
 });

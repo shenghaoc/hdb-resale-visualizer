@@ -11,9 +11,9 @@ function writeStorage(items: object[]) {
   window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify(items));
 }
 
-function mockLocation(search = ""): void {
+function mockLocation(search = "", hash = ""): void {
   Object.defineProperty(window, "location", {
-    value: { href: `http://localhost/${search}`, pathname: "/", search },
+    value: { href: `http://localhost/${search}${hash}`, pathname: "/", search, hash },
     writable: true,
   });
 }
@@ -141,7 +141,7 @@ describe("useLocalShortlist", () => {
       { addressKey: "addr-url", notes: "", targetPrice: null, addedAt: "2026-01-01T00:00:00Z" },
     ];
     const encoded = Buffer.from(JSON.stringify(items)).toString("base64");
-    mockLocation(`?town=BEDOK&shortlist=${encoded}&view=map`);
+    mockLocation(`?town=BEDOK&shortlist=${encoded}&view=map`, "#main-content");
     const replaceSpy = vi.spyOn(window.history, "replaceState");
 
     renderHook(() => useLocalShortlist());
@@ -151,6 +151,7 @@ describe("useLocalShortlist", () => {
     expect(nextUrl).toContain("town=BEDOK");
     expect(nextUrl).toContain("view=map");
     expect(nextUrl).not.toContain("shortlist=");
+    expect(nextUrl).toMatch(/#main-content$/);
   });
 
   it("clears to pathname alone when shortlist is the only query parameter", () => {

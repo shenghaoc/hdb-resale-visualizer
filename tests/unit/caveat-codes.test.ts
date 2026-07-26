@@ -60,6 +60,7 @@ describe("sample size caveats", () => {
     expect(codes(result)).toContain("VERY_LOW_SAMPLE");
     expect(codes(result)).not.toContain("LOW_SAMPLE");
     expect(codes(result)).not.toContain("NO_COMPARABLES");
+    expect(result.find((c) => c.code === "VERY_LOW_SAMPLE")?.values).toEqual({ count: 2 });
   });
 
   it("emits LOW_SAMPLE for count 3-4", () => {
@@ -243,6 +244,10 @@ describe("lease mismatch", () => {
       comparableLeaseYears: [2000, 2002, 2005],
     });
     expect(codes(result)).toContain("LEASE_MISMATCH");
+    expect(result.find((c) => c.code === "LEASE_MISMATCH")?.values).toEqual({
+      leaseCommenceYear: 2020,
+      medianLeaseYear: 2002,
+    });
   });
 
   it("does not emit when diff <= 10 years", () => {
@@ -319,6 +324,7 @@ describe("time adjustment caveats", () => {
       comparableLeaseYears: [],
     });
     expect(codes(result)).toContain("SMALL_TREND_SAMPLE");
+    expect(result.find((c) => c.code === "SMALL_TREND_SAMPLE")?.values).toEqual({ count: 3 });
   });
 
   it("does not emit SMALL_TREND_SAMPLE when trendSampleSize >= 6", () => {

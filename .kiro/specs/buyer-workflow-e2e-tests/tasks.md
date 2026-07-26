@@ -1,8 +1,8 @@
 # Tasks: Buyer Workflow E2E Tests
 
 > Execution checklist. Test-only; no product/runtime code changes. Each task
-> names its acceptance check. Run with `npm run test:e2e` (WebKit required —
-> `npx playwright install --with-deps webkit`).
+> names its acceptance check. Run with `vp run test:e2e`; the repository's
+> Playwright config uses Chromium.
 
 ## Phase 1 — Fixtures and mocks
 
@@ -10,7 +10,7 @@
   `ComparableTx` / `ComparableSet` shapes, the `CHECK_ADDRESS_KEY`
   (`bedok-106-lengkong-tiga`), and a `mockComparableTransactions(page, set)`
   helper that routes `**/api/comparable-transactions**` and fulfills JSON.
-  → `npm run typecheck` passes. (R9.2, R9.3)
+  → `vp run typecheck` passes. (R9.2, R9.3)
 
 - [x] **T1.2** Add the `highConfidenceSet` (8 same-block recent comparables,
   median 1,200,000, full match reasons) and `lowSampleSet` (2 stale widened
@@ -55,8 +55,8 @@
 
 ## Phase 4 — Verification
 
-- [ ] **T4.1** Run `npm run typecheck` and `npm run lint` — clean.
-- [ ] **T4.2** Run `npm run test:e2e -- buyer-listing-check` — all new tests
+- [ ] **T4.1** Run `vp run typecheck` and `vp run lint` — clean.
+- [ ] **T4.2** Run `vp run test:e2e -- buyer-listing-check` — all new tests
   green; spot-check that the existing suite is unaffected.
 
 ## Notes / follow-ups (not in this spec)

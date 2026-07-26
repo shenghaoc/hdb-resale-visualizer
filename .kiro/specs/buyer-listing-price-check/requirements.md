@@ -64,16 +64,20 @@
   unit-fact match signals from the canonical comparable response.
 - **R5.3** Low sample volume, stale evidence, or a lack of block/street evidence
   caps the tier according to the shared confidence contract.
-- **R5.4** The confidence badge and plain-English reason text are displayed
-  prominently in the verdict card.
+- **R5.4** The confidence badge and reason text are displayed prominently in
+  the verdict card and follow the selected locale. Presentation derives text
+  from structured input without changing evidence scoring.
 
-## R6 — Plain-English caveats
-- **R6.1** `generateCaveats()` produces a list of caveat messages with
-  severity levels (`info`, `warning`, or `critical`).
+## R6 — Localized, machine-readable caveats
+- **R6.1** `generateCaveats()` produces stable codes, severity levels
+  (`info`, `warning`, or `critical`), English compatibility messages, and
+  structured values for dynamic text.
 - **R6.2** Triggers include no/low sample volume, stale or widened evidence,
   listing-fact match gaps, lease mismatch, extreme outliers, and unavailable or
   applied time adjustment.
-- **R6.3** Caveats are displayed in the verdict card with severity icons.
+- **R6.3** Caveats are displayed with severity icons and translated by code at
+  the presentation boundary. Match reasons are translated only when badges
+  render.
 
 ## R7 — Verdict card display
 - **R7.1** Shows: verdict label with themed colors, confidence badge,
@@ -123,3 +127,6 @@
 - **R11.5** Pipeline and search-handler regressions cover older selectable flat
   types, canonical flat-type aliases, missing/unbackfilled cohort metadata, and
   full-corpus refinement readiness.
+- **R11.6** Focused tests cover localized confidence, every caveat code, all
+  eight match reasons, dynamic values, and locale-aware currency while
+  preserving the stable English identifiers used by analysis.

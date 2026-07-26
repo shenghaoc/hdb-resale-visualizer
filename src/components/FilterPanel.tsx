@@ -540,7 +540,8 @@ export function FilterPanel(props: FilterPanelProps) {
                     {t("filters.transactionWindow")}
                   </span>
                   <Badge variant="secondary" className="h-5 text-[length:var(--text-xs)] font-bold">
-                    {formatMonth(minMonth, locale)} to {formatMonth(maxMonth, locale)}
+                    {formatMonth(minMonth, locale)} {t("filters.rangeTo")}{" "}
+                    {formatMonth(maxMonth, locale)}
                   </Badge>
                 </div>
                 <p className="text-[length:var(--text-xs)] leading-relaxed text-muted-foreground">

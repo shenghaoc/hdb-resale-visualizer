@@ -1,7 +1,7 @@
 name: E2E
 
 # Repo-specific Playwright smoke gate, kept separate from the universal base
-# CI (.github/workflows/ci.yml), which runs `vp install` + `vp check` on
+# CI (.github/workflows/ci.yml), which runs `vp install` + `vp run check` on
 # every PR with no path filters.
 #
 # On PR / push: runs the smoke subset (production-bootstrap + app + a11y) when
@@ -155,8 +155,9 @@ jobs:
           retention-days: 7
 
   # Vitest Browser Mode — real-browser component/integration tests.
-  # Separate from E2E (which tests full user flows) and from base CI
-  # (which runs jsdom unit tests only).
+  # Separate from E2E (which tests full user flows) and from the package full
+  # gate in base CI. The `test` phase inside `vp run check` uses jsdom; real
+  # browser component coverage remains here.
   #
   # Runs inside Playwright's official prebuilt image — browsers AND all
   # browser system dependencies are baked in at /ms-playwright. This

@@ -1,4 +1,4 @@
-import { type CSSProperties, useId } from "react";
+import { type CSSProperties, useId, useRef } from "react";
 import { Flame } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/shared/lib/utils";
@@ -38,12 +38,43 @@ export function PriceHeatmapControl({
   style,
 }: PriceHeatmapControlProps) {
   const sliderId = useId();
+  const priceRadioRef = useRef<HTMLButtonElement>(null);
+  const perSqmRadioRef = useRef<HTMLButtonElement>(null);
   const toggleId = useId();
   const toggleHint = hasScope
     ? isEnabled
       ? t("heatmap.disable")
       : t("heatmap.enable")
     : t("heatmap.disabledHint");
+  const selectModeAndFocus = (nextMode: HeatmapMode) => {
+    onModeChange(nextMode);
+    (nextMode === "price" ? priceRadioRef : perSqmRadioRef).current?.focus();
+  };
+  const handleModeKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    currentMode: HeatmapMode,
+  ) => {
+    let nextMode: HeatmapMode | null = null;
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextMode = currentMode === "price" ? "perSqm" : "price";
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextMode = currentMode === "price" ? "perSqm" : "price";
+        break;
+      case "Home":
+        nextMode = "price";
+        break;
+      case "End":
+        nextMode = "perSqm";
+        break;
+    }
+    if (!nextMode) return;
+    event.preventDefault();
+    selectModeAndFocus(nextMode);
+  };
 
   return (
     <div
@@ -116,9 +147,8 @@ export function PriceHeatmapControl({
               aria-checked={mode === "price"}
               tabIndex={mode === "price" ? 0 : -1}
               onClick={() => onModeChange("price")}
-              onKeyDown={(e) => {
-                if (e.key === "ArrowRight" || e.key === "ArrowDown") onModeChange("perSqm");
-              }}
+              ref={priceRadioRef}
+              onKeyDown={(event) => handleModeKeyDown(event, "price")}
               className={cn(
                 "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "price"
@@ -135,9 +165,8 @@ export function PriceHeatmapControl({
               aria-checked={mode === "perSqm"}
               tabIndex={mode === "perSqm" ? 0 : -1}
               onClick={() => onModeChange("perSqm")}
-              onKeyDown={(e) => {
-                if (e.key === "ArrowLeft" || e.key === "ArrowUp") onModeChange("price");
-              }}
+              ref={perSqmRadioRef}
+              onKeyDown={(event) => handleModeKeyDown(event, "perSqm")}
               className={cn(
                 "flex-1 rounded-none py-1 text-[length:var(--text-xs)] font-medium uppercase tracking-wider transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
                 mode === "perSqm"

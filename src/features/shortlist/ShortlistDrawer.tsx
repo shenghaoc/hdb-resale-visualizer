@@ -1232,7 +1232,7 @@ export function ShortlistDrawer({
                                 tickLine={false}
                               />
                               <YAxis
-                                tickFormatter={(v: number) => formatCompactCurrency(v)}
+                                tickFormatter={(v: number) => formatCompactCurrency(v, locale)}
                                 tick={{ fill: compareChart.colors.mutedForeground, fontSize: 10 }}
                                 axisLine={false}
                                 tickLine={false}
@@ -1255,7 +1255,7 @@ export function ShortlistDrawer({
                                   ) {
                                     return t("shortlist.na");
                                   }
-                                  return formatCompactCurrency(value);
+                                  return formatCompactCurrency(value, locale);
                                 }}
                               />
                               <Legend

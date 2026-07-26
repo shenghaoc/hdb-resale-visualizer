@@ -92,7 +92,7 @@ describe("useListingCheckUrlState", () => {
       checkStorey: "04 TO 06",
       checkLease: "1985",
     });
-    window.history.replaceState({}, "", `/map?${params.toString()}`);
+    window.history.replaceState({}, "", `/map?${params.toString()}#main-content`);
     const replaceSpy = vi.spyOn(window.history, "replaceState");
     const pushSpy = vi.spyOn(window.history, "pushState");
     const { result } = renderHook(() => useListingCheckUrlState());
@@ -104,7 +104,7 @@ describe("useListingCheckUrlState", () => {
     for (const name of CHECK_PARAM_NAMES) {
       expect(synced.has(name)).toBe(false);
     }
-    expect(replaceSpy).toHaveBeenCalledWith({}, "", "/map?town=BEDOK");
+    expect(replaceSpy).toHaveBeenCalledWith({}, "", "/map?town=BEDOK#main-content");
     expect(pushSpy).not.toHaveBeenCalled();
   });
 
@@ -116,7 +116,7 @@ describe("useListingCheckUrlState", () => {
       checkAddress: "old-address",
       checkPrice: "1",
     });
-    window.history.replaceState({}, "", `/map?${params.toString()}`);
+    window.history.replaceState({}, "", `/map?${params.toString()}#main-content`);
     const { result } = renderHook(() => useListingCheckUrlState());
 
     act(() => result.current.syncToUrl(COMPLETE_STATE));
@@ -131,6 +131,7 @@ describe("useListingCheckUrlState", () => {
     expect(synced.get("checkFlatType")).toBe("EXECUTIVE");
     expect(synced.get("checkStorey")).toBe("01 TO 03");
     expect(synced.get("checkLease")).toBe("1989");
+    expect(window.location.hash).toBe("#main-content");
   });
 
   it("builds a share URL that replaces old check state and preserves unrelated parameters", () => {

@@ -28,8 +28,8 @@ area, flat type, and storey range.
   selection path.
 - Require the buyer to enter every listing-specific fact used by the analysis;
   do not infer flat type, floor area, or storey from another transaction.
-- Show confidence (high/medium/low) and plain-English caveats alongside
-  the price verdict.
+- Show confidence (high/medium/low), caveats, and match reasons in the selected
+  locale alongside the price verdict.
 - Results are shareable via URL and saveable to the shortlist.
 - Block detail routes into the same Check panel instead of embedding a second
   asking-price engine.
@@ -108,6 +108,10 @@ capped block-detail transaction sample.
 - `shared/confidence-system.ts` and `shared/caveat-codes.ts` derive confidence
   and caveats from factual evidence signals: record volume, recency, scope,
   listing-fact match, and time-adjustment status.
+- `src/features/listing-check/listingCheckPresentation.ts` translates
+  confidence from structured input, caveats from code + values, and stable
+  match-reason identifiers at render time. Localized text never feeds back into
+  analysis.
 
 The pipeline separates **known flat types** from **recent flat-type cohorts**.
 `BlockSummary.flatTypes` is canonicalized from all transactions at the block so
@@ -152,13 +156,13 @@ buyer's behalf.
 4. **"Check This Listing" button** — disabled until block, asking price, floor
    area, flat type, and storey range are valid
 5. **Verdict card** (after explicit submit) — renders:
-   - Confidence badge (high/medium/low with reason text)
-   - Data-quality badge and factual caveats
+   - Confidence badge (high/medium/low with localized reason text)
+   - Data-quality badge and localized factual caveats
    - Statistics grid (median, P25/P75, $/sqm, percentile, delta)
    - Distribution bar
    - Caveats section with severity icons
-   - Comparable evidence table/cards with match reasons and original prices
-     when time adjustment applies
+   - Comparable evidence table/cards with localized match-reason badges and
+     original prices when time adjustment applies
    - "Save to Shortlist" and "Share" buttons
 
 #### Block-detail integration

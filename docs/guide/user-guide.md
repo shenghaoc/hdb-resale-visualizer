@@ -101,7 +101,7 @@ Use the **bookmark icon** to save the block. Saved comparisons are block-level, 
 
 ## Results list
 
-The **Results** tab shows all blocks matching your current filters as a scrollable list. Each row displays the block address, median price, recorded floor-area range, flat types available, nearest MRT, and remaining lease. When a flat-type filter is active, each row uses that type's recent price median. Floor-area range, record count, latest sale, quality tag, sorting, map popup, and CSV export use the same type cohort when it is available; older rows label any unavailable cohort attributes as block-wide instead of guessing.
+The **Results** tab shows all blocks matching your current filters as a scrollable list. Each row displays the block address, median price, recorded floor-area range, nearest MRT, and remaining lease. When a flat-type filter is active, each row uses that type's recent price median. Floor-area range, record count, latest sale, quality tag, sorting, map popup, and CSV export use the same type cohort when it is available; older rows label any unavailable cohort attributes as block-wide instead of guessing.
 
 ### Sorting
 
@@ -114,7 +114,7 @@ Sort by:
 
 ### Town profile
 
-When a town filter is active, a **town profile card** appears at the top of Results showing monthly trends, transaction volume, median price per square metre, busiest blocks, and value deals.
+With an unrefined town scope — a town filter and no other filters — a **Town-wide overview** toggle appears above Results, showing monthly trends, transaction volume, median price per square metre, busiest blocks, and value deals across all flat types. The toggle is hidden once any other filter is active, so town-wide and filtered evidence are not mixed.
 
 You can **compare two towns** side-by-side by selecting a second town from the dropdown.
 
@@ -132,12 +132,13 @@ This is a **deterministic comparison**, not a black-box AI valuation.
 3. Enter the listing's actual **floor area**, **flat type**, and **storey range**. These are required so the app never substitutes facts from a different unit.
 4. Optionally enter the **lease commencement year**, then choose **Check this listing**.
 
-Selecting a block in global search opens Results immediately. If you then open **Check**, that block carries over and any listing-specific facts from a previously checked block are cleared.
+Selecting a block in global search opens Results immediately. If you then open **Check** and no check is in progress, that block carries over. A check that already has a block keeps it, so facts you have already entered are not silently replaced — use the block search inside **Check** to switch, which clears the previous listing's facts.
 
 The tool returns a **verdict** — whether the asking price is well below, around, or above the median for comparable recent transactions. You will see:
 
-- A percentage comparison to the median
-- The transaction range (lowest to highest recent price)
+- The difference vs the comparable median, in dollars and in price per square metre
+- The **fair range** (the middle half of comparable prices, P25 to P75)
+- Where the ask sits as a percentile among the comparables
 - Number of comparable transactions used
 
 ### Confidence and caveats

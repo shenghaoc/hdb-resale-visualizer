@@ -58,7 +58,7 @@ test.describe("Accessibility (axe)", () => {
   test.describe("Search profile wizard", () => {
     test.use({ storageState: { cookies: [], origins: [] } });
 
-    test("first preference step has no serious or critical WCAG violations", async ({ page }) => {
+    test("preference steps have no serious or critical WCAG violations", async ({ page }) => {
       await page.goto("/");
 
       await page.getByRole("button", { name: "Filters" }).click();
@@ -66,6 +66,19 @@ test.describe("Accessibility (axe)", () => {
       await expect(page.getByText("What type of flat?")).toBeVisible();
       await expect(page.getByRole("button", { name: "Skip for now" })).toBeVisible();
 
+      await expectNoSeriousOrCriticalViolations(page);
+
+      await page.getByRole("button", { name: "4 ROOM" }).click();
+      await page.getByRole("button", { name: "Next" }).click();
+      await expect(page.getByRole("spinbutton", { name: "Max budget (SGD)" })).toBeVisible();
+      await page.getByRole("button", { name: "Next" }).hover();
+      await expectNoSeriousOrCriticalViolations(page);
+
+      await page.getByRole("button", { name: "Next" }).click();
+      await expect(
+        page.getByRole("spinbutton", { name: "Minimum remaining lease (years)" }),
+      ).toBeVisible();
+      await page.getByRole("button", { name: "Next" }).hover();
       await expectNoSeriousOrCriticalViolations(page);
     });
   });

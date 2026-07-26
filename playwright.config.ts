@@ -30,7 +30,10 @@ export default defineConfig({
   globalSetup: "./tests/e2e/global-setup.ts",
   testDir: "./tests/e2e",
   fullyParallel: true,
-  workers: process.env.CI ? 2 : "75%",
+  // Keep the documented local pre-PR gate aligned with CI. Higher local
+  // fan-out makes interaction-latency traces measure runner contention rather
+  // than the production build.
+  workers: 2,
   retries: process.env.CI ? 2 : 0,
   use: {
     baseURL: E2E_BASE_URL,

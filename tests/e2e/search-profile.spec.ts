@@ -18,7 +18,7 @@ test.describe("Search Profile Wizard", () => {
 
     // 2. Budget Step
     await expect(page.getByText("What's your budget?")).toBeVisible();
-    const budgetBtn = page.getByRole("button", { name: "S$700K", exact: true });
+    const budgetBtn = page.getByRole("button", { name: "$700K", exact: true });
     await budgetBtn.click();
     await page.getByRole("button", { name: "Next" }).click();
 
@@ -39,7 +39,7 @@ test.describe("Search Profile Wizard", () => {
     // 5. Review Step
     await expect(page.getByText("Profile ready")).toBeVisible();
     await expect(page.getByText("4 ROOM")).toBeVisible();
-    await expect(page.getByText("S$700,000")).toBeVisible();
+    await expect(page.getByText("$700,000")).toBeVisible();
     await expect(page.getByText("70 years")).toBeVisible();
 
     const continueBtn = page.getByRole("button", { name: "Apply setup" });

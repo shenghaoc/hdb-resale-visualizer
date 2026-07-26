@@ -119,9 +119,9 @@ describe("SearchProfileWizard", () => {
 
     expect(screen.getByRole("button", { name: "4 ROOM" })).toHaveAttribute("aria-pressed", "true");
     await clickPrimary(user, /next/i);
-    expect(screen.getByPlaceholderText(/e\.g\. 750000/i)).toHaveValue(700_000);
+    expect(screen.getByRole("spinbutton", { name: /max budget/i })).toHaveValue(700_000);
     await clickPrimary(user, /next/i);
-    expect(screen.getByPlaceholderText(/e\.g\. 65/i)).toHaveValue(70);
+    expect(screen.getByRole("spinbutton", { name: /minimum remaining lease/i })).toHaveValue(70);
     await clickPrimary(user, /next/i);
     expect(screen.getByLabelText(/^your age$/i)).toHaveValue(35);
     expect(screen.getByLabelText(/co-applicant age/i)).toHaveValue(33);
@@ -150,7 +150,7 @@ describe("SearchProfileWizard", () => {
     await clickPrimary(user, /next/i);
 
     const overMaxBudget = String(SEARCH_PROFILE_MAX_MONETARY_VALUE + 1);
-    await user.type(screen.getByPlaceholderText(/e\.g\. 750000/i), overMaxBudget);
+    await user.type(screen.getByRole("spinbutton", { name: /max budget/i }), overMaxBudget);
     expect(screen.getByRole("button", { name: /next/i })).toBeDisabled();
   });
 

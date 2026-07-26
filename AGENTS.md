@@ -34,15 +34,16 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 
 **Active:**
 
+- [**UX Docs, Accessibility, and Locale Coherence**](.kiro/specs/ux-docs-a11y-and-locale/tasks.md) — Localized Listing Check presentation, operable buyer controls, and truthful CI/docs contracts.
 - [**Feature-First Refactor**](.kiro/specs/feature-first-refactor/tasks.md) — Incremental ownership migration across listing check, shortlist, map explorer, search profile, block detail, entities, and shared modules.
 - [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
-- [**Repo Quality Scripts Refinement**](.kiro/specs/repo-quality-scripts-refinement/tasks.md) — Targeted Vitest scripts + a single pre-PR command, refining existing npm scripts (no parallel runner).
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
 
 **Completed:**
 
+- [**Repo Quality Scripts Refinement**](.kiro/specs/repo-quality-scripts-refinement/tasks.md) — Targeted Vitest scripts plus one package-defined pre-PR gate.
 - [**UX Recovery and Filter State**](.kiro/specs/ux-recovery-and-filter-state/tasks.md) — Honest error recovery, normalized URL filters, controlled sorting, race-safe town comparison, and textual compact affordability status.
 - [**Analyst's Workbench Design System**](.kiro/specs/analyst-workbench-design-system/tasks.md) — Opaque workbench UI, tokenized typography, responsive controls, and exact shortlist removal recovery.
 - [**Platform Parity Extraction**](.kiro/specs/platform-parity-extraction/tasks.md) — Deterministic buyer/filter/search/profile logic moved to shared product core.
@@ -57,28 +58,35 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 ```bash
 vp install             # Clean install from the lockfile (what CI runs)
 vp dev                 # Start development server (localhost:5173)
-vp run sync-data       # Refresh precomputed artifacts (public/data/)
+vp run dev:functions   # Build and run the Worker/API against local D1
+vp run sync-data       # Refresh remote D1 from official sources
+vp run check:boundaries # Enforce script/runtime import boundaries
 vp run format          # Write formatting fixes
 vp run format:check    # Check formatting only
 vp run typecheck       # Strict TypeScript verification
 vp run lint            # Oxlint with type-aware rules
 vp run test            # Run Vitest unit/integration tests
+vp run test:listing-check  # Focused listing-check suite
+vp run test:comparables    # Focused comparable-engine suite
+vp run test:buyer-workflow # Focused shortlist/buyer flow suite
+vp run test:browser    # Vitest Browser Mode in Chromium
 vp run test:e2e        # Run Playwright end-to-end tests
 vp run build           # Production build
 vp run check           # Full quality gate: format check + lint + typecheck + tests + build
+vp run check:pr        # Pre-PR gate: full check + Playwright E2E
 ```
 
 The targeted `test:*` scripts reuse the existing Vitest config (filename
 filters, no new runner) for fast feedback on buyer-critical listing-check and
 comparable-engine work. `check:pr` is the single documented pre-PR command and
 is a plain package script with no Kiro-specific behaviour. Base CI
-(`.github/workflows/ci.yml`) runs `vp install` followed by `vp check`; the
+(`.github/workflows/ci.yml`) runs `vp install` followed by `vp run check`; the
 Playwright smoke subset runs in a separate workflow
 (`.github/workflows/e2e.yml`) when UI-affecting paths change.
 
 ## 🏗️ Architectural Boundary
 
-1. **Runtime API**: The frontend (`src/`) loads all data from `/api/*` Pages Functions (`functions/api/*`), backed by Cloudflare D1.
+1. **Runtime API**: The frontend (`src/`) loads all data from same-origin `/api/*` routes. `worker/index.ts` routes to Pages Functions-style handlers under `functions/api/*`, backed by Cloudflare D1.
 2. **Build-Time Ingestion**: `scripts/sync-data.ts` fetches data.gov.sg / OneMap and writes to D1. Geocoding and walking-time computation are one-time and persisted in `geocode_cache` / `walking_time_cache` D1 tables — they never re-run for an already-cached address or pair.
 3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `vp run db:migrate:remote` (prod) or `vp run db:migrate:local` (Wrangler emulator).
 4. **Persistence**: User state is browser-local (`localStorage`) by default and works fully offline. The shortlist additionally supports **opt-in** cloud sync via an anonymous sync code (no account, no PII), persisted in the `shortlists` D1 table and written at runtime by `functions/api/shortlist/*`. This is the _only_ runtime D1 write path; every other D1 write stays build-time (`scripts/sync-data.ts`).
@@ -174,17 +182,17 @@ P1 (must fix before merge):
 
 ### Local data dev
 
-The app loads all data from `/api/*` Pages Functions backed by Cloudflare D1. For local development:
+The app loads all data from Worker-routed `/api/*` handlers backed by Cloudflare D1. For local development:
 
 - **UI-only iteration**: `vp dev` (Vite on `localhost:5173`) — useful for component work that doesn't exercise live data.
-- **Full stack with D1**: `vp run dev:functions` runs `wrangler pages dev` against the local D1 emulator. Seed it once with `vp run db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
+- **Full stack with D1**: `vp run dev:functions` builds the app and runs `wrangler dev` against the local D1 emulator. Seed it once with `vp run db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
 - **Production sync**: `vp run sync-data` writes directly to remote D1; requires `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID` env vars. Run from CI normally, not from a local box.
 
 ### Running services
 
 - `vp dev` starts Vite on `localhost:5173` for UI work.
-- `vp run dev:functions` starts Wrangler Pages dev with the D1 binding.
-- Playwright E2E tests mock the `/api/*` Pages Functions (see `tests/e2e/fixtures.ts`); they do not require a live D1 binding.
+- `vp run dev:functions` builds the app and starts `wrangler dev` with the D1 binding.
+- Playwright E2E tests mock the `/api/*` handlers (see `tests/e2e/fixtures.ts`); they do not require a live D1 binding.
 - Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `vp run test`).
 
 ### Standard commands

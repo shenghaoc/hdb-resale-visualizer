@@ -104,10 +104,10 @@
   conventions, and avoid `any`.
 
 ## R8 — Backwards compatibility
-- **R8.1** `src/lib/transaction-analysis.ts` is not modified.
-- **R8.2** `src/lib/listing-verdict.ts`, `listing-confidence.ts`, and
-  `listing-caveats.ts` are not modified — they consume the new comparable
-  array unchanged.
+- **R8.1** Existing block-level helpers remain available through
+  `shared/product/transaction-analysis.ts` and the entity adapter.
+- **R8.2** Listing verdict, confidence, and caveat semantics consume the new
+  comparable array without moving price into similarity scoring.
 - **R8.3** Existing tests continue to pass.
 - **R8.4** Existing API endpoints are not modified.
 

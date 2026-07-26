@@ -81,6 +81,8 @@ export type ListingCheckAnalysisResult = {
   caveats: Caveat[];
 };
 
+export type EvidenceCaveat = Caveat | string;
+
 export type ListingCheckAnalysisInput = {
   comparableSet: ListingComparableSet | null;
   detail: AddressDetail | null;
@@ -311,9 +313,9 @@ export function deriveEvidenceCaveats(
   result: ListingCheckAnalysisResult | null,
   comparableSet: ListingComparableSet | null,
   adjustmentMeta: ListingAdjustmentMeta | null,
-): string[] {
+): EvidenceCaveat[] {
   if (result) {
-    return result.caveats.map((c) => c.message);
+    return [...result.caveats];
   }
   return Array.from(
     new Set([...(comparableSet?.caveats ?? []), ...(adjustmentMeta?.adjustmentCaveats ?? [])]),

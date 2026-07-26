@@ -51,36 +51,32 @@
   and the existing composite PK — no new indexes, no new migrations.
 - **R2.7** No external API calls, no AI, no runtime geocoding.
 
-## R3 — Zod schemas and type definitions
-- **R3.1** `shared/time-adjustment.ts` exports Zod schemas for
-  `TrendPoint` and `TimeAdjustmentResult` for use in tests and API
-  validation.
+## R3 — Type definitions
+- **R3.1** `shared/time-adjustment.ts` exports `TrendPoint`,
+  `TimeAdjustmentResult`, and the adjustment functions as pure TypeScript.
 - **R3.2** `shared/data-types.ts` exports a `TimeAdjustedComparable` type
   extending the comparable shape with adjustment fields.
 - **R3.3** All types use `type` (not `interface`), follow existing naming
   conventions, and avoid `any`.
+- **R3.4** `adjustmentLabel` is structured (`at_latest` or
+  `adjusted_from` with a month) so the UI can translate it without parsing
+  English text.
 
-## R4 — Frontend toggle
-- **R4.1** The comparable results section in `ListingCheckPanel` includes a
-  toggle (Switch or segmented control) labeled "Show time-adjusted prices".
-- **R4.2** A subtitle or tooltip on the toggle reads: "Prices adjusted using
-  observed historical resale medians. This is not a price forecast."
-- **R4.3** Default state: toggle off (raw prices only).
-- **R4.4** Toggling sends a new request to the API with `?adjust=time` (or
-  omits it when off). The toggle state is not persisted across sessions
-  (local component state only).
+## R4 — Frontend request contract
+- **R4.1** An explicit listing-check submission requests
+  `/api/comparable-transactions?adjust=time`.
+- **R4.2** The UI does not expose a raw/adjusted preference toggle. A single
+  evidence basis keeps the verdict, fair range, and table prices coherent.
+- **R4.3** Time adjustment is labelled as a deterministic historical
+  restatement, not a price forecast.
 
 ## R5 — Comparable row display
-- **R5.1** When the toggle is on and a comparable has valid adjusted prices:
-  - Raw price is shown with strikethrough styling.
-  - Adjusted price is shown in bold next to it.
-  - A small muted label reads the `adjustmentLabel` (e.g., "Adjusted from
-    2022-03 median").
-- **R5.2** When the toggle is on and a comparable has no adjusted prices
-  (null): raw price is shown as normal, with a small muted indicator
-  "No adjustment data".
-- **R5.3** When the toggle is off: raw prices only, as today. No adjusted
-  fields are shown.
+- **R5.1** When a comparable has valid adjusted prices, adjusted Price and
+  $/sqm are the primary evidence values and the original registered price is
+  shown as provenance.
+- **R5.2** When adjusted prices are null, raw Price and $/sqm remain primary.
+- **R5.3** The verdict and fair-range calculation use the same effective price
+  basis presented by the evidence table.
 
 ## R6 — Caveats display
 - **R6.1** Adjustment caveats from the API response are rendered below the
@@ -96,8 +92,8 @@
 - **R7.1** Omitting `?adjust=time` returns the existing response shape
   unchanged.
 - **R7.2** `shared/comparable-engine.ts` is not modified.
-- **R7.3** `src/lib/transaction-analysis.ts`, `src/lib/listing-verdict.ts`,
-  `listing-confidence.ts`, and `listing-caveats.ts` are not modified.
+- **R7.3** Existing transaction-analysis, listing-verdict, confidence, and
+  caveat semantics remain separate from the adjustment calculation.
 - **R7.4** `ListingCheckPanel` remains the sole listing-check UI and
   `ComparableEvidenceTable` remains its sole evidence surface.
 - **R7.5** Existing tests continue to pass.
@@ -107,8 +103,7 @@
   as latest month, missing month, missing latest month (walks back), low
   sample size fallback, no trend data at all, division guard (zero median),
   mixed results caveats.
-- **R8.2** Component tests for `ListingCheckPanel`: toggle off → raw only;
-  toggle on → adjusted visible; toggle on with null adjusted → indicator
-  visible; adjustment caveats render.
+- **R8.2** Listing-analysis and evidence-table tests verify adjusted-primary
+  display, original-price provenance, raw fallback, and adjustment caveats.
 - **R8.3** API tests for the endpoint: `?adjust=time` returns extended shape;
   no parameter returns existing shape; invalid parameter returns 400.

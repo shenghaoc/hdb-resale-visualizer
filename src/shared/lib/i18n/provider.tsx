@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { I18nContext } from "./context";
 import { dictionaries } from "./messages";
 import type { Locale } from "./types";
@@ -30,6 +30,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
     return window.navigator.language.toLowerCase().startsWith("zh") ? "zh-SG" : "en-SG";
   });
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.title = dictionaries[locale]["app.title"] ?? dictionaries["en-SG"]["app.title"];
+  }, [locale]);
 
   const value = useMemo(
     () => ({

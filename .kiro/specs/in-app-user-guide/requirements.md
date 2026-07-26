@@ -3,8 +3,9 @@
 ## R1 — Full-page docs view
 - **R1.1** A `/docs` route renders a full-page user guide with sidebar navigation
   and content area.
-- **R1.2** Six subsections are available: Overview, Getting started, Price
-  comparisons, Filters & map, Shortlisting, FAQ, Troubleshooting.
+- **R1.2** Seven sections are available: Overview plus six subsection routes
+  for Getting started, Price comparisons, Filters & map, Shortlisting, FAQ,
+  and Troubleshooting.
 - **R1.3** The sidebar highlights the active section and allows navigation
   between sections via pushState.
 

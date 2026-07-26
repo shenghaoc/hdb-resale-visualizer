@@ -163,14 +163,16 @@ export function useMapInteractions({
       const medianLabel =
         priceBasis === "__BLOCK_WIDE__"
           ? tRef.current("map.blockWideMedian", {
-              value: formatCompactCurrency(medianPrice),
+              value: formatCompactCurrency(medianPrice, localeRef.current),
             })
           : priceBasis
             ? tRef.current("map.flatTypeMedian", {
                 flatType: localizeFlatType(priceBasis, localeRef.current),
-                value: formatCompactCurrency(medianPrice),
+                value: formatCompactCurrency(medianPrice, localeRef.current),
               })
-            : tRef.current("map.median", { value: formatCompactCurrency(medianPrice) });
+            : tRef.current("map.median", {
+                value: formatCompactCurrency(medianPrice, localeRef.current),
+              });
       infoEl.textContent = `${medianLabel} · ${tRef.current(
         priceBasis && priceBasis !== "__BLOCK_WIDE__" ? "map.typeTxns" : "map.txns",
         { count: transactionCount },
