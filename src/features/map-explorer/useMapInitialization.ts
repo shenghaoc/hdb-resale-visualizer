@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
+import { Map, NavigationControl, GeolocateControl, setWorkerUrl } from "maplibre-gl";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import {
   MAP_GLYPHS_URL,
   ONEMAP_ATTRIBUTION,
@@ -8,6 +9,8 @@ import {
   ONEMAP_NIGHT_TILE_URL,
   SINGAPORE_BOUNDS,
 } from "@/shared/lib/constants";
+
+setWorkerUrl(workerUrl);
 
 type UseMapInitializationProps = {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -73,7 +76,7 @@ export function useMapInitialization({
     };
 
     try {
-      map = new maplibregl.Map({
+      map = new Map({
         container: containerRef.current,
         attributionControl: false,
         center: [103.8198, 1.3521],
@@ -110,15 +113,15 @@ export function useMapInitialization({
         handleFatalRendererError(event.error);
       };
       map.on("error", handleFatalMapError);
-      map.addControl(new maplibregl.NavigationControl(), "top-right");
+      map.addControl(new NavigationControl(), "top-right");
 
-      const geolocate = new maplibregl.GeolocateControl({
+      const geolocate = new GeolocateControl({
         positionOptions: { enableHighAccuracy: true },
         trackUserLocation: false,
         showUserLocation: true,
       });
 
-      geolocate.on("geolocate", (position: GeolocationPosition) => {
+      geolocate.on("geolocate", (position) => {
         onGeolocateRef.current?.({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
