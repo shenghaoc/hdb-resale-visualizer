@@ -21,6 +21,7 @@ const maplibreMocks = vi.hoisted(() => {
       };
     }),
     geolocateOn,
+    setWorkerUrl: vi.fn(),
   };
 });
 
@@ -28,12 +29,15 @@ vi.mock("maplibre-gl", () => ({
   Map: maplibreMocks.mapConstructor,
   NavigationControl: maplibreMocks.navigationControlConstructor,
   GeolocateControl: maplibreMocks.geolocateControlConstructor,
-  setWorkerUrl: vi.fn(),
+  setWorkerUrl: maplibreMocks.setWorkerUrl,
 }));
 
 vi.mock("maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url", () => ({
   default: "/fake-worker-url",
 }));
+
+// Capture import-time side effect before beforeEach(clearAllMocks) erases it.
+const setWorkerUrlCallsAtImport = [...maplibreMocks.setWorkerUrl.mock.calls];
 
 function createContainerRef() {
   return { current: document.createElement("div") };
@@ -58,6 +62,10 @@ describe("useMapInitialization", () => {
     vi.clearAllMocks();
     mapStub = createMapStub();
     maplibreMocks.mapFactory.mockImplementation(() => mapStub);
+  });
+
+  it("registers the Vite-resolved MapLibre worker URL at module load", () => {
+    expect(setWorkerUrlCallsAtImport).toEqual([["/fake-worker-url"]]);
   });
 
   it("initializes MapLibre with configured glyphs and controls", async () => {
