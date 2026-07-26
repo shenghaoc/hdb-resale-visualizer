@@ -32,6 +32,8 @@
   keyboard nav, ARIA, mode-hint placeholder. (R2.1, R2.3, R4.1, R4.2)
 - [x] **T4.2** Implement structured-select dispatch + Enter free-text fallback
   via callback props (no direct coupling to filters). (R3.1, R3.2)
+- [x] **T4.3** Filter constrained-consumer responses before opening the
+  popover; cover disallowed-only and mixed responses. (R2.5, R7.4)
 
 ## Phase 5 — Wiring (header-only)
 - [x] **T5.1** Replace the three raw inputs: `SearchCombobox` in the
@@ -44,9 +46,9 @@
 ## Phase 6 — Verification
 - [x] **T6.1** Playwright: keyboard flow, grouped rendering, structured-select
   outcomes, single-affordance assertion. (R7.3)
-- [x] **T6.2** `npm run check` (boundaries + typecheck + lint + test) green;
-  `npm run build` within bundle budget (`check:bundle`).
-- [x] **T6.3** Manual smoke via `npm run dev:functions` against local D1 seed.
+- [x] **T6.2** `vp run check` (format + lint + tests + boundaries + typecheck +
+  build) green and within the `check:bundle` budget.
+- [x] **T6.3** Manual smoke via `vp run dev:functions` against local D1 seed.
 
 ## Open questions (resolved)
 - Block-suggestion label format: `{block} {Title Case street}` (e.g. "123 Ang Mo Kio Ave 3"); street suggestions use street name only (no dominant town).

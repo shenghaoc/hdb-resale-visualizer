@@ -592,6 +592,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.topPercentile": "Top {value}%",
     "detail.recentTransactions": "Recent Transactions",
     "detail.totalCount": "{count} total",
+    "detail.recentShownCount": "Latest {count}",
     "detail.outlierCount": "{count} flagged",
     "detail.outlierRule":
       "Outlier rule: for each flat type with at least {minCount} recent transactions, a sale is flagged only when it is both outside the {iqrMult}x IQR price band and at least {pctThreshold}% above or below that flat type's median price.",
@@ -839,6 +840,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       "Clear this conservative estimate before deciding: available cash, grants and HFE outcomes are not included.",
     "affordability.filter.empty.clear": "Clear CPF-based estimate",
     "app.resetFiltersAndRetry": "Reset filters and try again",
+    "results.loading": "Loading matching blocks…",
     "results.refinementUnsupported.title": "Cannot filter this precisely yet",
     "results.refinementUnsupported.hint":
       "Flat model, size and sale-date filters for a single flat type need per-flat-type data that has not been published yet. Rather than show blocks matched on the whole building, no results are shown. Flat type and budget still work.",
@@ -1415,6 +1417,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "detail.topPercentile": "前 {value}%",
     "detail.recentTransactions": "近期交易",
     "detail.totalCount": "共 {count} 笔",
+    "detail.recentShownCount": "最近 {count} 笔",
     "detail.outlierCount": "标记 {count} 笔",
     "detail.outlierRule":
       "异常值规则：按户型分别计算；仅当该户型至少有 {minCount} 笔近期交易，且某笔成交价同时落在 {iqrMult}x IQR 区间外，并且相对该户型中位价高/低至少 {pctThreshold}% 时，才会被标记。",
@@ -1509,7 +1512,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "check.primaryAction": "检查房源",
     "check.valueStatement": "用历史组屋转售成交记录，判断卖家开价是否合理。",
     "check.trustStatement": "采用可追溯的历史比较，不使用 AI 估值 API。",
-    "check.blockPlaceholder": "搜索组屋（如 宏茂桥3道123号）",
+    "check.blockPlaceholder": "搜索组屋（如 123 Ang Mo Kio Ave 3）",
     "check.loading": "检查中…",
     "check.analyzingComparables": "正在分析可比成交…",
     "check.apiError": "无法完成检查",
@@ -1637,6 +1640,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     "affordability.filter.empty.hint": "决定前请清除此保守估算；它不包括可用现金、津贴与HFE结果。",
     "affordability.filter.empty.clear": "清除CPF估算",
     "app.resetFiltersAndRetry": "重置筛选并重试",
+    "results.loading": "正在加载符合条件的组屋…",
     "results.refinementUnsupported.title": "暂时无法这样精确筛选",
     "results.refinementUnsupported.hint":
       "针对单一户型的房型、面积与成交时间筛选需要按户型统计的数据，该数据尚未发布。为避免用整栋楼的数据充数，这里不显示任何结果。户型与预算筛选仍然可用。",

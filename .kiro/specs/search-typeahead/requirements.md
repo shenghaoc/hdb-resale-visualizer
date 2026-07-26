@@ -16,6 +16,8 @@
 - **R2.3** Each suggestion shows a human label and a group/category indicator so
   the user understands what they are selecting.
 - **R2.4** Empty/whitespace query shows no dropdown and triggers no fetch.
+- **R2.5** A consumer that accepts only a subset of suggestion groups shows and
+  opens the dropdown only for actionable suggestions in that subset.
 
 ## R3 — Structured selection
 - **R3.1** Selecting a suggestion sets a structured intent, not raw text:
@@ -54,3 +56,5 @@
   `resetSuggestCacheForTests()` teardown.
 - **R7.3** Playwright covers typeahead keyboard flow, grouped rendering,
   structured-select outcomes, and asserts a single search affordance exists.
+- **R7.4** Vitest covers constrained consumers with disallowed-only and mixed
+  suggestion responses so no empty or inert dropdown can open.

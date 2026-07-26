@@ -8,7 +8,7 @@ import type { Suggestion, SuggestionGroup } from "@/types/data";
 import { cn } from "@/shared/lib/utils";
 
 const SUGGEST_DEBOUNCE_MS = 200;
-const SUGGEST_GROUPS: SuggestionGroup[] = ["town", "street", "block", "mrt", "postal"];
+const SUGGEST_GROUPS: readonly SuggestionGroup[] = ["town", "street", "block", "mrt", "postal"];
 
 type SearchComboboxProps = {
   value: string;
@@ -20,6 +20,12 @@ type SearchComboboxProps = {
   id?: string;
   "data-testid"?: string;
   "aria-label"?: string;
+  /**
+   * Suggestion groups this combobox can act on. Groups outside this list are
+   * not rendered — showing a clickable suggestion whose selection handler
+   * ignores it makes the control look broken.
+   */
+  groups?: readonly SuggestionGroup[];
   placeholder?: string;
   /** When false, skips suggest fetch (e.g. hidden duplicate header inputs on mobile). */
   suggestActive?: boolean;
@@ -66,6 +72,7 @@ export function SearchCombobox({
   id,
   "data-testid": dataTestId,
   "aria-label": ariaLabel,
+  groups,
   placeholder,
   suggestActive = true,
   ref,
@@ -79,6 +86,8 @@ export function SearchCombobox({
   const fetchSequenceRef = useRef(0);
   const blurTimeoutRef = useRef<number | null>(null);
   const debouncedQuery = useDebouncedValue(value, SUGGEST_DEBOUNCE_MS);
+  const allowedGroups = useMemo(() => groups ?? SUGGEST_GROUPS, [groups]);
+  const allowedGroupSet = useMemo(() => new Set(allowedGroups), [allowedGroups]);
 
   // When suggest is off or the query is too short there are no results to show.
   // Clear any stale state during render (guarded so it only runs when something
@@ -120,9 +129,12 @@ export function SearchCombobox({
         if (fetchSequenceRef.current !== sequence) {
           return;
         }
-        setSuggestions(next);
+        const actionableSuggestions = next.filter((suggestion) =>
+          allowedGroupSet.has(suggestion.group),
+        );
+        setSuggestions(actionableSuggestions);
         if (isFocusedRef.current) {
-          setOpen(next.length > 0);
+          setOpen(actionableSuggestions.length > 0);
         }
         setActiveIndex(-1);
       })
@@ -147,7 +159,7 @@ export function SearchCombobox({
     return () => {
       controller.abort();
     };
-  }, [debouncedQuery, suggestActive]);
+  }, [allowedGroupSet, debouncedQuery, suggestActive]);
 
   const selectSuggestion = useCallback(
     (suggestion: Suggestion) => {
@@ -160,11 +172,13 @@ export function SearchCombobox({
   );
 
   const grouped = useMemo(() => {
-    return SUGGEST_GROUPS.map((group) => ({
-      group,
-      items: suggestions.filter((item) => item.group === group),
-    })).filter((section) => section.items.length > 0);
-  }, [suggestions]);
+    return allowedGroups
+      .map((group) => ({
+        group,
+        items: suggestions.filter((item) => item.group === group),
+      }))
+      .filter((section) => section.items.length > 0);
+  }, [allowedGroups, suggestions]);
 
   const flatGroupedItems = useMemo(() => {
     return grouped.flatMap((section) => section.items);

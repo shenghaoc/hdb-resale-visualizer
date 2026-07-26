@@ -112,10 +112,27 @@ export function useBlockDetailController({
     [allBlocks, filters.flatType, selectedBlock],
   );
 
+  // Benchmarked against peers chosen WITHOUT price proximity. Reusing
+  // `similarBlocks` here would compare the block against the blocks picked for
+  // having a similar price, so every block lands mid-range by construction.
+  const benchmarkBlocks = useMemo(
+    () =>
+      selectedBlock
+        ? rankSimilarBlocks(selectedBlock, allBlocks, {
+            limit: 12,
+            flatType: filters.flatType,
+            ignorePriceProximity: true,
+          })
+        : [],
+    [allBlocks, filters.flatType, selectedBlock],
+  );
+
   const comparableRange = useMemo(
     () =>
-      selectedBlock ? computeComparableRange(selectedBlock, similarBlocks, filters.flatType) : null,
-    [filters.flatType, selectedBlock, similarBlocks],
+      selectedBlock
+        ? computeComparableRange(selectedBlock, benchmarkBlocks, filters.flatType)
+        : null,
+    [benchmarkBlocks, filters.flatType, selectedBlock],
   );
 
   const affordabilityVerdict = useMemo(() => {

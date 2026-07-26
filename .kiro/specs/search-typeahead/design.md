@@ -98,6 +98,10 @@ composition handling). Features:
 
 - Debounced fetch; grouped sections with headers; keyboard nav
   (↑/↓/Enter/Esc); aria roles for combobox/listbox/option.
+- Optional allowed-group constraints are applied before suggestions enter
+  component state or decide whether the popover opens. This lets Listing Check
+  accept block selections without showing an empty popover for postal-only
+  responses.
 - Placeholder advertises modes: e.g. "town, street, postal, or 'near Bedok MRT'".
 - On select, dispatch a **structured** action:
   - town → `patchFilters({ town })`
@@ -117,8 +121,9 @@ composition handling). Features:
 ## Testing
 
 - Vitest: `suggest` ranking (exact/prefix/substring order, per-group caps),
-  size guard, numeric→postal routing; `fetchSuggestions` cache/sequence guard
-  with `resetSuggestCacheForTests()` teardown.
+  size guard, numeric→postal routing; constrained-consumer filtering;
+  `fetchSuggestions` cache/sequence guard with
+  `resetSuggestCacheForTests()` teardown.
 - Playwright: typeahead keyboard flow, grouped rendering, structured-select
   outcomes, and an assertion that only one search affordance is present.
 

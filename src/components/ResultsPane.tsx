@@ -178,6 +178,8 @@ type ResultsPaneProps = {
   townRecommendationsLoading?: boolean;
   onSelectTown?: (town: string) => void;
   searchTruncated?: boolean;
+  /** True while the block corpus for the current scope is still being fetched. */
+  blocksLoading?: boolean;
   /**
    * The server could not evaluate a per-flat-type refinement (model, size, or
    * sale window) because the cohort data it needs is not deployed yet, so the
@@ -723,6 +725,7 @@ export function ResultsPane({
   townRecommendationsLoading = false,
   onSelectTown,
   searchTruncated = false,
+  blocksLoading = false,
   refinementUnsupported = false,
   onClearUnsupportedRefinements,
   shareUrl,
@@ -1395,7 +1398,13 @@ export function ResultsPane({
               ) : null}
               {resultsView === "blocks" && blocks.length === 0 ? (
                 <div className="flex flex-1 items-start pt-2">
-                  {refinementUnsupported ? (
+                  {/* An empty list while the fetch is still in flight is not a
+                      "no matches" answer yet. */}
+                  {blocksLoading ? (
+                    <div className="empty-state w-full" role="status">
+                      {t("results.loading")}
+                    </div>
+                  ) : refinementUnsupported ? (
                     <Card
                       data-testid="refinement-unsupported-card"
                       className="w-full border-border/50 bg-card"
