@@ -8,6 +8,7 @@ import type { BlockSummary, TownFlatTypeTrendPoint } from "@/types/data";
 
 const dataMocks = vi.hoisted(() => ({
   fetchTownFlatTypeTrends: vi.fn<() => Promise<TownFlatTypeTrendPoint[]>>(),
+  fetchBlocksByTown: vi.fn<(town: string) => Promise<BlockSummary[]>>(),
 }));
 
 const exportMocks = vi.hoisted(() => ({
@@ -16,6 +17,7 @@ const exportMocks = vi.hoisted(() => ({
 
 vi.mock("@/shared/lib/data", () => ({
   fetchTownFlatTypeTrends: dataMocks.fetchTownFlatTypeTrends,
+  fetchBlocksByTown: dataMocks.fetchBlocksByTown,
 }));
 
 vi.mock("@/shared/lib/export", async (importOriginal) => {
@@ -103,6 +105,8 @@ describe("ResultsPane", () => {
   beforeEach(() => {
     dataMocks.fetchTownFlatTypeTrends.mockReset();
     dataMocks.fetchTownFlatTypeTrends.mockResolvedValue(trendRows);
+    dataMocks.fetchBlocksByTown.mockReset();
+    dataMocks.fetchBlocksByTown.mockResolvedValue([]);
     exportMocks.downloadCsv.mockReset();
   });
 
@@ -252,6 +256,71 @@ describe("ResultsPane", () => {
     expect(resultCards[0]).toHaveTextContent("302 NEWER FOUR ROOM SALE");
     expect(resultCards[0]).toHaveTextContent("7 笔该房型记录");
     expect(resultCards[1]).toHaveTextContent("2 笔该房型记录");
+  });
+
+  it("resets a controlled empty sort to lowest median instead of stale internal state", () => {
+    const { rerender } = render(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block, amkBlock]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact
+          sortMode="median-desc"
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getAllByRole("option")[0]).toHaveTextContent("406 ANG MO KIO AVE 10");
+
+    rerender(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block, amkBlock]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact
+          sortMode=""
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getAllByRole("option")[0]).toHaveTextContent("101 BEDOK NTH AVE 4");
+    expect(screen.getByTestId("results-sort-trigger")).toHaveTextContent("价格由低到高");
+  });
+
+  it("shows a textual affordability status in compact results", () => {
+    render(
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block]}
+          hasResultScope={true}
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact
+          searchProfile={{
+            version: 3,
+            mainFlatType: "4 ROOM",
+            maxBudget: 700000,
+            minimumRemainingLeaseYears: 60,
+            age: 35,
+            coApplicantAge: null,
+            cpfOABalance: 300000,
+            monthlyIncome: 20000,
+          }}
+        />
+      </I18nProvider>,
+    );
+
+    expect(screen.getByRole("option")).toHaveTextContent(/CPF估算/);
   });
 
   it("labels an unfiltered price as block-wide instead of borrowing a flat type", () => {
@@ -538,6 +607,62 @@ describe("ResultsPane", () => {
 
     expect(screen.queryByText("正在载入镇区级趋势文件…")).not.toBeInTheDocument();
     expect(dataMocks.fetchTownFlatTypeTrends).toHaveBeenCalledTimes(1);
+  });
+
+  it("ignores an older town-comparison response that resolves after the active town", async () => {
+    let resolveAmk!: (blocks: BlockSummary[]) => void;
+    let resolveTampines!: (blocks: BlockSummary[]) => void;
+    const amkRequest = new Promise<BlockSummary[]>((resolve) => {
+      resolveAmk = resolve;
+    });
+    const tampinesRequest = new Promise<BlockSummary[]>((resolve) => {
+      resolveTampines = resolve;
+    });
+    dataMocks.fetchBlocksByTown.mockImplementation((town) =>
+      town === "ANG MO KIO" ? amkRequest : tampinesRequest,
+    );
+    const tampinesBlock = {
+      ...block,
+      addressKey: "tampines-1-example",
+      town: "TAMPINES",
+      block: "1",
+      streetName: "TAMPINES EXAMPLE",
+    };
+
+    const renderPane = (compareTown: string) => (
+      <I18nProvider>
+        <ResultsPane
+          blocks={[block]}
+          hasResultScope
+          selectedAddressKey={null}
+          shortlistKeys={new Set<string>()}
+          onSelect={() => {}}
+          onToggleShortlist={() => {}}
+          isCompact
+          profileTown="BEDOK"
+          profileTownBlocks={[block]}
+          profileDataWindow={{ minMonth: "2024-01", maxMonth: "2024-01" }}
+          compareTown={compareTown}
+          availableTowns={["BEDOK", "ANG MO KIO", "TAMPINES"]}
+        />
+      </I18nProvider>
+    );
+    const { rerender } = render(renderPane("ANG MO KIO"));
+    await userEvent.click(screen.getByRole("button", { name: "显示涵盖所有房型的全镇概览" }));
+    await waitFor(() => expect(dataMocks.fetchBlocksByTown).toHaveBeenCalledWith("ANG MO KIO"));
+
+    rerender(renderPane("TAMPINES"));
+    await waitFor(() => expect(dataMocks.fetchBlocksByTown).toHaveBeenCalledWith("TAMPINES"));
+    resolveTampines([tampinesBlock]);
+    await waitFor(() =>
+      expect(screen.queryByText("正在载入镇区比较数据…")).not.toBeInTheDocument(),
+    );
+    expect(screen.getByTestId("town-compare-column-compare")).toHaveTextContent("TAMPINES");
+
+    resolveAmk([amkBlock]);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(screen.queryByText("正在载入镇区比较数据…")).not.toBeInTheDocument();
+    expect(screen.getByTestId("town-compare-column-compare")).toHaveTextContent("TAMPINES");
   });
 
   it("explains an unanswerable refinement instead of implying zero matches", async () => {

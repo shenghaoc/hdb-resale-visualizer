@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { parseFilters, serializeFilters } from "@/shared/lib/queryState";
+import { clampFilterRanges, parseFilters, serializeFilters } from "@/shared/lib/queryState";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 
 describe("queryState", () => {
@@ -124,9 +124,9 @@ describe("queryState", () => {
 
     expect(parsed.selectedAddressKey).toBe("a".repeat(256));
 
-    expect(parsed.startMonth).toBe("a".repeat(256));
+    expect(parsed.startMonth).toBeNull();
 
-    expect(parsed.endMonth).toBe("a".repeat(256));
+    expect(parsed.endMonth).toBeNull();
 
     // Both town and compareTown truncate to the same value → same-town guard clears compareTown.
     expect(parsed.compareTown).toBe("");
@@ -142,6 +142,60 @@ describe("queryState", () => {
     expect(parsed.remainingLeaseMin).toBe(99);
     expect(parsed.budgetMin).toBe(0);
     expect(parsed.areaMax).toBe(100_000);
+  });
+
+  it.each(["2026-00", "2026-13", "2026-1", "not-a-month", "a".repeat(300)])(
+    "drops invalid calendar month %s from deep links",
+    (month) => {
+      expect(
+        parseFilters(`?town=BEDOK&startMonth=${month}&endMonth=${month}`).startMonth,
+      ).toBeNull();
+      expect(parseFilters(`?town=BEDOK&startMonth=${month}&endMonth=${month}`).endMonth).toBeNull();
+    },
+  );
+
+  it("normalizes patched month values and inverted ranges before API use", () => {
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        startMonth: "2026-13",
+        endMonth: "2025-01",
+      }),
+    ).toMatchObject({ startMonth: null, endMonth: "2025-01" });
+
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        startMonth: "2026-02",
+        endMonth: "2025-01",
+      }),
+    ).toMatchObject({ startMonth: "2025-01", endMonth: "2026-02" });
+  });
+
+  it("normalizes inverted numeric deep links without rewriting the field being edited", () => {
+    expect(parseFilters("?budgetMin=800000&budgetMax=500000&areaMin=120&areaMax=80")).toMatchObject(
+      {
+        budgetMin: 500000,
+        budgetMax: 800000,
+        areaMin: 80,
+        areaMax: 120,
+      },
+    );
+
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        budgetMin: 600000,
+        budgetMax: 500000,
+        areaMin: 100,
+        areaMax: 80,
+      }),
+    ).toMatchObject({
+      budgetMin: 600000,
+      budgetMax: 500000,
+      areaMin: 100,
+      areaMax: 80,
+    });
   });
 
   it("falls back to the default sort for the retired affordability mode", () => {

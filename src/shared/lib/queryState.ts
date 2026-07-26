@@ -12,6 +12,7 @@ import {
   MAX_MRT_DISTANCE_METERS,
   clampNullableNumber,
 } from "../../../shared/search-bounds";
+import { isYearMonth } from "../../../shared/yearMonth";
 import type { AffordabilityMode, BlockSortMode, FilterState } from "../../types/data";
 
 /**
@@ -23,13 +24,23 @@ import type { AffordabilityMode, BlockSortMode, FilterState } from "../../types/
  * error screen with no controls left to correct it.
  */
 export function clampFilterRanges(filters: FilterState): FilterState {
+  const budgetMin = clampNullableNumber(filters.budgetMin, 0, MAX_BUDGET_SGD);
+  const budgetMax = clampNullableNumber(filters.budgetMax, 0, MAX_BUDGET_SGD);
+  const areaMin = clampNullableNumber(filters.areaMin, 0, MAX_FLOOR_AREA_SQM);
+  const areaMax = clampNullableNumber(filters.areaMax, 0, MAX_FLOOR_AREA_SQM);
+  const startMonth = isYearMonth(filters.startMonth) ? filters.startMonth : null;
+  const endMonth = isYearMonth(filters.endMonth) ? filters.endMonth : null;
+  const monthInverted = Boolean(startMonth && endMonth && startMonth > endMonth);
+
   return {
     ...filters,
-    budgetMin: clampNullableNumber(filters.budgetMin, 0, MAX_BUDGET_SGD),
-    budgetMax: clampNullableNumber(filters.budgetMax, 0, MAX_BUDGET_SGD),
-    areaMin: clampNullableNumber(filters.areaMin, 0, MAX_FLOOR_AREA_SQM),
-    areaMax: clampNullableNumber(filters.areaMax, 0, MAX_FLOOR_AREA_SQM),
+    budgetMin,
+    budgetMax,
+    areaMin,
+    areaMax,
     remainingLeaseMin: clampNullableNumber(filters.remainingLeaseMin, 0, MAX_LEASE_DURATION_YEARS),
+    startMonth: monthInverted ? endMonth : startMonth,
+    endMonth: monthInverted ? startMonth : endMonth,
     mrtMax: clampNullableNumber(filters.mrtMax, 0, MAX_MRT_DISTANCE_METERS),
   };
 }
@@ -80,11 +91,8 @@ export function parseFilters(search: string): FilterState {
   const areaMax = parseNumber(params.get("areaMax"));
   const startMonth = safeParamNullable(params.get("startMonth"));
   const endMonth = safeParamNullable(params.get("endMonth"));
-
-  // Normalize inverted ranges so min <= max invariants always hold.
   const budgetInverted = budgetMin !== null && budgetMax !== null && budgetMin > budgetMax;
   const areaInverted = areaMin !== null && areaMax !== null && areaMin > areaMax;
-  const monthInverted = Boolean(startMonth && endMonth && startMonth > endMonth);
 
   const town = safeParam(params.get("town"), DEFAULT_FILTERS.town);
   const rawCompareTown = safeParam(params.get("compareTown"), DEFAULT_FILTERS.compareTown);
@@ -104,8 +112,8 @@ export function parseFilters(search: string): FilterState {
     areaMin: areaInverted ? areaMax : areaMin,
     areaMax: areaInverted ? areaMin : areaMax,
     remainingLeaseMin: parseNumber(params.get("remainingLeaseMin")),
-    startMonth: monthInverted ? endMonth : startMonth,
-    endMonth: monthInverted ? startMonth : endMonth,
+    startMonth,
+    endMonth,
     mrtMax: parseNumber(params.get("mrtMax")),
     selectedAddressKey: safeParamNullable(params.get("selected")),
     compareTown,

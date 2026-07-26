@@ -117,6 +117,7 @@ export function useFilterPipeline({
     searchTruncated,
     refinementUnsupported,
     isLoading: blocksLoading,
+    retry: retryBlockLoading,
   } = useBlockLoading({
     manifest,
     townFilter: effectiveFilters.town,
@@ -327,6 +328,7 @@ export function useFilterPipeline({
       blocks,
       blocksLoading,
       loadError,
+      retryBlockLoading,
       searchTruncated,
       refinementUnsupported,
       filteredBlocks,
@@ -348,6 +350,7 @@ export function useFilterPipeline({
       blocks,
       blocksLoading,
       loadError,
+      retryBlockLoading,
       searchTruncated,
       refinementUnsupported,
       filteredBlocks,

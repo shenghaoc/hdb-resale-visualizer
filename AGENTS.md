@@ -43,6 +43,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 
 **Completed:**
 
+- [**UX Recovery and Filter State**](.kiro/specs/ux-recovery-and-filter-state/tasks.md) — Honest error recovery, normalized URL filters, controlled sorting, race-safe town comparison, and textual compact affordability status.
 - [**Analyst's Workbench Design System**](.kiro/specs/analyst-workbench-design-system/tasks.md) — Opaque workbench UI, tokenized typography, responsive controls, and exact shortlist removal recovery.
 - [**Platform Parity Extraction**](.kiro/specs/platform-parity-extraction/tasks.md) — Deterministic buyer/filter/search/profile logic moved to shared product core.
 - [**Product Core Adapter Parity**](.kiro/specs/product-core-adapter-parity/tasks.md) — Focused adapter-vs-shared parity tests for future Swift/macOS mirroring.

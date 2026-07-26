@@ -168,6 +168,7 @@ describe("useFilterPipeline", () => {
       searchTruncated: false,
       refinementUnsupported: false,
       isLoading: false,
+      retry: vi.fn(),
     });
 
     const { result } = renderHook(() =>
@@ -210,6 +211,7 @@ describe("useFilterPipeline", () => {
       searchTruncated: false,
       refinementUnsupported: false,
       isLoading: false,
+      retry: vi.fn(),
     });
 
     const { result } = renderHook(() =>

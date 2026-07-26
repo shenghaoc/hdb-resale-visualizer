@@ -292,6 +292,28 @@ describe("App detail loading", () => {
     expect(screen.getByText(/start with location/i)).toBeInTheDocument();
   });
 
+  it("retries a manifest failure instead of offering an ineffective filter reset", async () => {
+    dataMocks.fetchManifest
+      .mockRejectedValueOnce(new Error("manifest unavailable"))
+      .mockResolvedValueOnce(manifest);
+    const user = userEvent.setup();
+
+    render(
+      <I18nProvider>
+        <TooltipProvider>
+          <App />
+        </TooltipProvider>
+      </I18nProvider>,
+    );
+
+    expect(await screen.findByText(/manifest unavailable/i)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Retry" }));
+
+    expect(await screen.findByTestId("map-view")).toBeInTheDocument();
+    expect(dataMocks.fetchManifest).toHaveBeenCalledTimes(2);
+    expect(screen.queryByRole("button", { name: /reset filters and try again/i })).toBeNull();
+  });
+
   it("dismisses the first-visit prompt while a desktop work panel is open", async () => {
     const user = userEvent.setup();
     render(

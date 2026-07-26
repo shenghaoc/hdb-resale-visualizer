@@ -1,11 +1,11 @@
 import { canonicalFlatType } from "../../shared/filter-options";
 import { requiresFlatTypeCohortMetadata } from "../../shared/product/flat-type-cohort";
 import { MAX_LEASE_DURATION_YEARS, MAX_MRT_DISTANCE_METERS } from "../../shared/search-bounds";
+import { isYearMonth } from "../../shared/yearMonth";
 import { workerCurrentUtcYear } from "./worker-time";
 
 const MAX_LEASE_DURATION = MAX_LEASE_DURATION_YEARS;
 const MAX_SEARCH_QUERY_LENGTH = 256;
-const YEAR_MONTH_PATTERN = /^\d{4}-(0[1-9]|1[0-2])$/;
 
 export const SEARCH_RESULT_LIMIT = 2000;
 
@@ -124,9 +124,8 @@ export function validateSearchRequest(request: SearchRequest): string | null {
   ) {
     return "invalid remainingLeaseMin";
   }
-  if (request.startMonth && !YEAR_MONTH_PATTERN.test(request.startMonth))
-    return "invalid startMonth";
-  if (request.endMonth && !YEAR_MONTH_PATTERN.test(request.endMonth)) return "invalid endMonth";
+  if (request.startMonth && !isYearMonth(request.startMonth)) return "invalid startMonth";
+  if (request.endMonth && !isYearMonth(request.endMonth)) return "invalid endMonth";
   return null;
 }
 

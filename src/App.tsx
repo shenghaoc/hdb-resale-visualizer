@@ -74,7 +74,7 @@ const ListingCheckPanel = lazy(() =>
 function App() {
   const { locale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const { manifest, error } = useManifestData();
+  const { manifest, error, retry: retryManifest } = useManifestData();
   const shortlist = useShortlist();
   const {
     pendingRemoval: pendingShortlistRemoval,
@@ -313,6 +313,10 @@ function App() {
     toggleShortlist: handleShortlistToggle,
     leftTab: panel.leftTab,
   });
+  const handleBlockLoadRecovery = useCallback(() => {
+    handleResetFilters();
+    pipeline.retryBlockLoading();
+  }, [handleResetFilters, pipeline.retryBlockLoading]);
 
   const mapExplorer = useMapExplorerController({
     filters: activeFilters,
@@ -364,13 +368,13 @@ function App() {
           </CardHeader>
           <CardContent className="flex flex-col items-start gap-3 pt-2 text-sm text-muted-foreground">
             <span>{t("app.devFunctionsHint")}</span>
-            {/*
-              Without this the screen is a dead end: every filter control lives
-              past this early return, and the filters that caused the failure
-              are already in the URL, so a reload reproduces it forever.
-            */}
-            <Button type="button" variant="default" size="sm" onClick={handleResetFilters}>
-              {t("app.resetFiltersAndRetry")}
+            <Button
+              type="button"
+              variant="default"
+              size="sm"
+              onClick={error ? retryManifest : handleBlockLoadRecovery}
+            >
+              {error ? t("error.retry") : t("app.resetFiltersAndRetry")}
             </Button>
             <DocsLink slug="troubleshooting">{t("docs.linkTroubleshooting")}</DocsLink>
           </CardContent>

@@ -386,19 +386,27 @@ const BlockCard = memo(function BlockCard({
                 {affordVerdict && affordVerdict.status !== "unknown" ? (
                   <span
                     className={cn(
-                      "h-2 w-2 shrink-0 rounded-full",
-                      affordVerdict.status === "comfortable" && "bg-success",
-                      affordVerdict.status === "stretch" && "bg-warning",
-                      affordVerdict.status === "over" && "bg-destructive",
+                      "inline-flex shrink-0 items-center gap-1 text-[0.65rem] font-bold uppercase tracking-wide",
+                      affordVerdict.status === "comfortable" && "text-success",
+                      affordVerdict.status === "stretch" && "text-warning",
+                      affordVerdict.status === "over" && "text-destructive",
                     )}
-                    title={
-                      affordVerdict.status === "comfortable"
-                        ? t("affordability.comfortable")
-                        : affordVerdict.status === "stretch"
-                          ? t("affordability.stretch")
-                          : t("affordability.over")
-                    }
-                  />
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "h-1.5 w-1.5 rounded-full",
+                        affordVerdict.status === "comfortable" && "bg-success",
+                        affordVerdict.status === "stretch" && "bg-warning",
+                        affordVerdict.status === "over" && "bg-destructive",
+                      )}
+                    />
+                    {affordVerdict.status === "comfortable"
+                      ? t("affordability.comfortable")
+                      : affordVerdict.status === "stretch"
+                        ? t("affordability.stretch")
+                        : t("affordability.over")}
+                  </span>
                 ) : null}
                 <span className="text-[length:var(--text-xs)] font-medium text-muted-foreground">
                   {t(cohortResolution.isTypeSpecific ? "stats.typeTxns" : "stats.txns", {
@@ -791,12 +799,12 @@ export function ResultsPane({
   // Controlled (URL) or uncontrolled (local state) sort. Tests omit the prop
   // and rely on the internal default; App.tsx always passes it.
   const [internalSortMode, setInternalSortMode] = useState<SortMode>(DEFAULT_SORT_MODE);
-  const incomingSort: SortMode | null = sortModeProp ? sortModeProp : null;
+  const sortControlled = sortModeProp !== undefined;
   // A retired sort mode in an older shared link is normalized to the default by
   // parseFilters' allowlist before it reaches here.
-  const sortMode: SortMode = incomingSort ?? internalSortMode;
+  const sortMode: SortMode = sortControlled ? sortModeProp || DEFAULT_SORT_MODE : internalSortMode;
   const setSortMode = (next: SortMode) => {
-    setInternalSortMode(next);
+    if (!sortControlled) setInternalSortMode(next);
     onSortChange?.(next === DEFAULT_SORT_MODE ? "" : next);
   };
   const [resultsView, setResultsView] = useState<ResultsViewMode>("blocks");
@@ -819,6 +827,7 @@ export function ResultsPane({
   const townTrendRequestRef = useRef<Promise<TownFlatTypeTrendPoint[]> | null>(null);
   const compareBlocksMountedRef = useRef(true);
   const compareBlocksFetchedTownRef = useRef<string | null>(null);
+  const compareBlocksRequestSequenceRef = useRef(0);
 
   type CompareBlocksSnap = {
     status: "idle" | "loaded" | "failed";
@@ -848,6 +857,7 @@ export function ResultsPane({
 
   useEffect(() => {
     if (!showTownCompare || !activeCompareTown) {
+      compareBlocksRequestSequenceRef.current += 1;
       compareBlocksFetchedTownRef.current = null;
       return;
     }
@@ -855,15 +865,25 @@ export function ResultsPane({
       return;
     }
     const requestedTown = activeCompareTown;
+    const requestSequence = ++compareBlocksRequestSequenceRef.current;
+    // Mark the request in flight before awaiting so a render caused by other
+    // state cannot start a duplicate request for the same town.
+    compareBlocksFetchedTownRef.current = requestedTown;
     void fetchBlocksByTown(requestedTown)
       .then((blocks) => {
-        if (!compareBlocksMountedRef.current) return;
-        compareBlocksFetchedTownRef.current = requestedTown;
+        if (
+          !compareBlocksMountedRef.current ||
+          compareBlocksRequestSequenceRef.current !== requestSequence
+        )
+          return;
         setCompareBlocksSnap({ status: "loaded", requestedTown, blocks });
       })
       .catch(() => {
-        if (!compareBlocksMountedRef.current) return;
-        compareBlocksFetchedTownRef.current = requestedTown;
+        if (
+          !compareBlocksMountedRef.current ||
+          compareBlocksRequestSequenceRef.current !== requestSequence
+        )
+          return;
         setCompareBlocksSnap({ status: "failed", requestedTown, blocks: [] });
       });
   }, [activeCompareTown, showTownCompare]);

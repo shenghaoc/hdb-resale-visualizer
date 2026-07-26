@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   fetchBlockSummaries,
   fetchBlocksBySearch,
@@ -64,6 +64,7 @@ export function useBlockLoading({
   // this yet", not "nothing matches" — the UI must say so rather than imply zero.
   const [refinementUnsupported, setRefinementUnsupported] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [requestGeneration, setRequestGeneration] = useState(0);
   const blocksRef = useRef<BlockSummary[]>([]);
   const loadedTownsRef = useRef<Set<string>>(new Set());
   const blocksSourceRef = useRef<"none" | "search" | "town-partial" | "full">("none");
@@ -90,6 +91,11 @@ export function useBlockLoading({
     [coarseSearchParams],
   );
 
+  const retry = useCallback(() => {
+    setLoadError(null);
+    setRequestGeneration((current) => current + 1);
+  }, []);
+
   useEffect(() => {
     if (!manifest) {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- clear stale loading state when the manifest disappears
@@ -111,6 +117,10 @@ export function useBlockLoading({
     async function loadBlocks() {
       try {
         const currentBlocks = blocksRef.current;
+        // A reset can leave no town and no coarse filters, which exits below
+        // without another request. Clear the previous request error before any
+        // such early return so the recovery action actually leaves the error UI.
+        setLoadError(null);
         const hasFullCorpus =
           blocksSourceRef.current === "full" && currentBlocks.length >= totalBlocks;
         if (hasFullCorpus) {
@@ -131,7 +141,6 @@ export function useBlockLoading({
         if (needsAllBlocks) {
           if (hasFullCorpus) return;
           setIsLoading(true);
-          setLoadError(null);
           loadedTownsRef.current.clear();
           blocksSourceRef.current = "full";
           const nextBlocks = await fetchBlockSummaries();
@@ -149,7 +158,6 @@ export function useBlockLoading({
         if (hasCoarseSearchFilters) {
           if (hasFullCorpus) return;
           setIsLoading(true);
-          setLoadError(null);
           loadedTownsRef.current.clear();
           blocksSourceRef.current = "search";
           const result = await fetchBlocksBySearch({
@@ -178,7 +186,6 @@ export function useBlockLoading({
         if (loadedTownsRef.current.has(effectiveTown)) return;
 
         setIsLoading(true);
-        setLoadError(null);
         const nextBlocks = await fetchBlocksByTown(effectiveTown);
         if (!isMounted || !Array.isArray(nextBlocks)) return;
 
@@ -221,7 +228,8 @@ export function useBlockLoading({
     hasCoarseSearchFilters,
     needsAllBlocksForRecommendations,
     coarseSearchParams,
+    requestGeneration,
   ]);
 
-  return { blocks, loadError, searchTruncated, refinementUnsupported, isLoading };
+  return { blocks, loadError, searchTruncated, refinementUnsupported, isLoading, retry };
 }

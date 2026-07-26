@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { renderHook } from "@testing-library/react";
-import { describe, expect, it, vi } from "vite-plus/test";
+import { beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { ResultsPane } from "@/components/ResultsPane";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { Manifest } from "@/types/data";
@@ -15,7 +15,14 @@ const dataMocks = vi.hoisted(() => ({
 
 vi.mock("@/shared/lib/data", () => dataMocks);
 
-describe("truncation banner claim", () => {
+describe("block-loading recovery notices", () => {
+  beforeEach(() => {
+    dataMocks.fetchBlockSummaries.mockReset();
+    dataMocks.fetchBlocksBySearch.mockReset();
+    dataMocks.fetchBlocksByTown.mockReset();
+    dataMocks.fetchTownFlatTypeTrends.mockReset();
+  });
+
   it("A: banner renders even when the pane has no scope and shows zero blocks", async () => {
     render(
       <I18nProvider>
@@ -40,7 +47,7 @@ describe("truncation banner claim", () => {
     expect(screen.queryAllByRole("option")).toHaveLength(0);
   });
 
-  it("B: searchTruncated is never reset once the coarse filter is removed with no town", async () => {
+  it("clears searchTruncated once the coarse filter is removed with no town", async () => {
     const { useBlockLoading } = await import("@/hooks/useBlockLoading");
 
     const manifest = { counts: { blocks: 10000 } } as unknown as Manifest;
@@ -86,7 +93,85 @@ describe("truncation banner claim", () => {
     rerender({ flatType: "" });
     await new Promise((resolve) => setTimeout(resolve, 20));
 
-    // Documented expectation: banner should be gone.
     expect(result.current.searchTruncated).toBe(false);
+  });
+
+  it("clears a failed coarse-search error when Reset removes the last filter", async () => {
+    const { useBlockLoading } = await import("@/hooks/useBlockLoading");
+    const manifest = { counts: { blocks: 10000 } } as unknown as Manifest;
+    dataMocks.fetchBlocksBySearch.mockRejectedValue(new Error("invalid startMonth"));
+
+    const baseCoarse = {
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+    };
+
+    const { result, rerender } = renderHook(
+      ({ flatType }: { flatType: string }) =>
+        useBlockLoading({
+          manifest,
+          townFilter: "",
+          debouncedSearch: "",
+          userLocationPresent: false,
+          selectedAddressKey: null,
+          sortedTowns: ["BEDOK"],
+          savedVisible: false,
+          shortlistCount: 0,
+          coarseSearchParams: { ...baseCoarse, flatType },
+        }),
+      { initialProps: { flatType: "4 ROOM" } },
+    );
+
+    await waitFor(() => expect(result.current.loadError).toBe("invalid startMonth"));
+    rerender({ flatType: "" });
+    await waitFor(() => expect(result.current.loadError).toBeNull());
+  });
+
+  it("retries a failed full-corpus request when filters were already empty", async () => {
+    const { useBlockLoading } = await import("@/hooks/useBlockLoading");
+    const manifest = { counts: { blocks: 10000 } } as unknown as Manifest;
+    dataMocks.fetchBlockSummaries
+      .mockRejectedValueOnce(new Error("full corpus unavailable"))
+      .mockResolvedValueOnce([]);
+    const coarseSearchParams = {
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+    };
+    const sortedTowns = ["BEDOK"];
+
+    const { result } = renderHook(() =>
+      useBlockLoading({
+        manifest,
+        townFilter: "",
+        debouncedSearch: "",
+        userLocationPresent: false,
+        selectedAddressKey: null,
+        sortedTowns,
+        savedVisible: true,
+        shortlistCount: 1,
+        coarseSearchParams,
+      }),
+    );
+
+    await waitFor(() => expect(result.current.loadError).toBe("full corpus unavailable"));
+    act(() => result.current.retry());
+    await waitFor(() => expect(dataMocks.fetchBlockSummaries).toHaveBeenCalledTimes(2));
+    expect(result.current.loadError).toBeNull();
   });
 });

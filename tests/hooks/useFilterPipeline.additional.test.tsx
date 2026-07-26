@@ -14,6 +14,7 @@ vi.mock("@/hooks/useBlockLoading", () => ({
     searchTruncated: false,
     refinementUnsupported: false,
     isLoading: false,
+    retry: vi.fn(),
   })),
 }));
 
@@ -78,6 +79,7 @@ describe("useFilterPipeline — additional edge cases", () => {
       searchTruncated: false,
       refinementUnsupported: false,
       isLoading: false,
+      retry: vi.fn(),
     });
     vi.clearAllMocks();
     mockLocation("");
@@ -213,6 +215,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         searchTruncated: false,
         refinementUnsupported: false,
         isLoading: false,
+        retry: vi.fn(),
       });
 
       const { result } = renderHook(() =>
@@ -241,6 +244,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         searchTruncated: false,
         refinementUnsupported: false,
         isLoading: false,
+        retry: vi.fn(),
       });
 
       const { result } = renderHook(() =>
@@ -270,6 +274,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         searchTruncated: false,
         refinementUnsupported: false,
         isLoading: false,
+        retry: vi.fn(),
       });
 
       const { result } = renderHook(() =>
@@ -300,6 +305,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         searchTruncated: false,
         refinementUnsupported: false,
         isLoading: false,
+        retry: vi.fn(),
       });
 
       const { result } = renderHook(() =>
@@ -329,6 +335,7 @@ describe("useFilterPipeline — additional edge cases", () => {
         searchTruncated: false,
         refinementUnsupported: false,
         isLoading: false,
+        retry: vi.fn(),
       });
 
       const { result } = renderHook(() =>
