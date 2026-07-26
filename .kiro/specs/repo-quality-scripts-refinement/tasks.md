@@ -46,6 +46,10 @@
   modify or re-list the steps inside `check`.
   → `check:pr` resolves; `check` is unchanged. (R1.3, R5.1, R5.2, R5.3)
 
+- [x] **T3.2** Align the shared Playwright worker default with CI.
+  → Local and CI pre-PR runs use two workers; performance traces run serially
+  and retain every absolute latency ceiling. (R5.4)
+
 ## Phase 4 — Documentation
 
 - [x] **T4.1** Update the README `## Scripts` block with

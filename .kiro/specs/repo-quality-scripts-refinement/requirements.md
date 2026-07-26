@@ -56,6 +56,9 @@
   the steps inside `check`.
 - **R5.3** `check:pr` reuses the existing Playwright config — no new E2E runner
   or config is introduced.
+- **R5.4** The shared Playwright config SHALL default to the same two-worker
+  execution locally and in CI so the pre-PR performance checks are not
+  dominated by host contention.
 
 ## R6 — Tooling and packaging constraints
 
@@ -89,5 +92,6 @@
   behaves as before).
 - **R8.2** `vp run test:listing-check` and `vp run test:comparables` each run
   only their targeted subset and pass.
-- **R8.3** `vp run check:pr` runs the full pre-PR gate in one invocation.
+- **R8.3** `vp run check:pr` runs the full pre-PR gate in one invocation with
+  the deterministic two-worker Playwright default.
 - **R8.4** README.md and AGENTS.md accurately list the useful commands.

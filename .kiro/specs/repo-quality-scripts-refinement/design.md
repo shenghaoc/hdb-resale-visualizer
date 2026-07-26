@@ -98,7 +98,9 @@ case-insensitive so it also matches `ShortlistDrawer` and `useShortlist`.
 `format:check → lint → typecheck → test → build`; `build` in turn runs the
 boundary and bundle-budget checks. `check:pr` reuses that package script
 verbatim and appends the Playwright E2E suite, so the full gate remains
-defined in one place.
+defined in one place. The shared Playwright config uses two workers locally and
+in CI so interaction-latency traces measure the production build rather than
+machine-dependent runner contention.
 
 ### Why not other approaches
 
@@ -137,6 +139,9 @@ defined in one place.
   filename convention this spec documents.
 - **No E2E in the targeted scripts** — intentional; targeted scripts are fast
   unit loops. E2E is covered by `check:pr` and `test:e2e`.
+- **Two E2E workers** — this is slower than machine-dependent 75% fan-out, but
+  matches CI and keeps the documented pre-PR command deterministic. Callers can
+  still override the worker count explicitly for non-gating exploratory runs.
 
 ## Testing / Verification
 
