@@ -5,7 +5,10 @@ import {
   hasResultScope,
   hasMapMarkerScope,
 } from "@shared/product/filter-pipeline";
-import { resetFilteringCachesForTests } from "@shared/product/filtering";
+import {
+  createFilterEvaluationContext,
+  resetFilteringCachesForTests,
+} from "@shared/product/filtering";
 import type { BlockSummary, FilterState } from "@shared/data-types";
 
 const BASE_FILTERS: FilterState & { selectedAddressKey: null } = {
@@ -188,7 +191,7 @@ describe("shared/product/filter-pipeline", () => {
         null,
         "selected",
         blocksByKey,
-        2026,
+        null,
         null,
       );
 
@@ -209,7 +212,7 @@ describe("shared/product/filter-pipeline", () => {
         null,
         "match",
         blocksByKey,
-        2026,
+        null,
         null,
       );
 
@@ -228,7 +231,7 @@ describe("shared/product/filter-pipeline", () => {
         null,
         null,
         blocksByKey,
-        2026,
+        null,
         null,
       );
 
@@ -237,7 +240,7 @@ describe("shared/product/filter-pipeline", () => {
       expect(result).toHaveLength(1);
     });
 
-    it("uses the supplied currentYear for remaining lease filtering", () => {
+    it("uses the supplied evaluation context for remaining lease filtering", () => {
       const block = makeBlock({ addressKey: "lease", leaseCommenceRange: [1990, 2000] });
       const blocks = [block];
       const blocksByKey = new Map(blocks.map((b) => [b.addressKey, b]));
@@ -252,14 +255,43 @@ describe("shared/product/filter-pipeline", () => {
           null,
           null,
           blocksByKey,
-          2026,
+          createFilterEvaluationContext(2026),
           null,
         ).map((b) => b.addressKey),
       ).toEqual(["lease"]);
 
       expect(
-        computeMapFilteredBlocks(blocks, filters, null, null, null, null, blocksByKey, 2027, null),
+        computeMapFilteredBlocks(
+          blocks,
+          filters,
+          null,
+          null,
+          null,
+          null,
+          blocksByKey,
+          createFilterEvaluationContext(2027),
+          null,
+        ),
       ).toEqual([]);
+    });
+
+    it("requires an explicit evaluation context for remaining lease filters", () => {
+      const block = makeBlock({ addressKey: "lease", leaseCommenceRange: [1990, 2000] });
+      const blocksByKey = new Map([[block.addressKey, block]]);
+
+      expect(() =>
+        computeMapFilteredBlocks(
+          [block],
+          { ...BASE_FILTERS, remainingLeaseMin: 73 },
+          null,
+          null,
+          null,
+          null,
+          blocksByKey,
+          null,
+          null,
+        ),
+      ).toThrow(/FilterEvaluationContext/);
     });
   });
 
