@@ -96,8 +96,9 @@
 - [x] 5.2 Create `src/entities/town` with town-level helpers (comparisons, profiles, recommendations where domain-only).
 - [x] 5.3 Keep imports explicit; add barrels only if multiple submodules are consumed together.
   - Imports are explicit. The `index.ts` barrels under `src/features/*` and
-    `src/entities/*` currently have no consumers; whether to remove them is tracked
-    as optional backlog and deliberately left unchanged here.
+    `src/entities/*` had no consumers and have been removed, matching the
+    `src/shared-ui` decision in task 11.3 (design rule 4, R6). The only surviving
+    barrel under `src/` is `src/shared/lib/i18n/index.ts`, which 71 consumers use.
 - [x] 5.4 Migrate tests near modules; keep fixture use unchanged.
 - [x] 5.5 Validate:
   - `npm run test tests/unit/town-profile.test.ts tests/unit/town-compare.test.ts tests/unit/town-recommendations.test.ts`
@@ -249,7 +250,8 @@
   - Obsolete migration compatibility paths are removed.
 - [x] 12.2 Replace ambiguous imports with feature/entity paths where readability improves.
   - Canonical feature/entity/shared-ui imports are used.
-  - Feature-internal self-barrel imports are removed.
+  - Feature-internal self-barrel imports are removed, as are the unconsumed
+    `src/features/*` and `src/entities/*` barrels themselves (see task 5.3).
 - [x] 12.3 Ensure all moved modules have no cyclic dependencies.
   - Frontend boundary and runtime-cycle checks pass.
 - [x] 12.4 Re-run:
