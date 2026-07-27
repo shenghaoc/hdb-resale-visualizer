@@ -1,17 +1,39 @@
 # Implementation Plan
 
+> **Status of sections 1–5 (historical bootstrap).** These were the inventory,
+> scaffolding, and early-extraction steps of the migration. They were delivered by
+> the earlier migration PRs, before this file began tracking per-task evidence — the
+> checkbox convention started at section 6, which is why they sat unticked and read
+> like pending future work. They are not outstanding work, and no follow-up PR is
+> planned for them.
+>
+> Marker convention used below:
+>
+> - `[x]` — delivered; the resulting code is present today.
+> - `[-]` — **superseded**: deliberately not done, because a later decision made it
+>   unnecessary. Two items fall here (1.4 and 2.2); both are called out inline rather
+>   than quietly ticked.
+>
+> Sections 6–13 carry the detailed per-task evidence, and section 13 records the
+> final parity gate.
+
 ## 1) Baseline and migration map (no runtime changes)
 
-- [ ] 1.1 Inventory all files referenced by each target feature domain:
+- [x] 1.1 Inventory all files referenced by each target feature domain:
   - Listing check pipeline and rendering.
   - Shortlist orchestration and persistence integration.
   - Map explorer state and interactions.
   - Search-profile flow and search-result rendering.
   - Block detail view and related computations.
-- [ ] 1.2 Build a cross-reference list: current file → intended target folder.
-- [ ] 1.3 Run baseline tests for impacted surfaces and record snapshots/expectations.
-- [ ] 1.4 Add temporary migration notes file under `.kiro/specs/feature-first-refactor/` (internal only) with move plan and ownership decision.
-- [ ] 1.5 Validate criteria before moving:
+- [x] 1.2 Build a cross-reference list: current file → intended target folder.
+  - The durable form of this list is the ownership mapping in task 13.1.
+- [x] 1.3 Run baseline tests for impacted surfaces and record snapshots/expectations.
+- [-] 1.4 Add temporary migration notes file under `.kiro/specs/feature-first-refactor/` (internal only) with move plan and ownership decision.
+  - **Superseded.** No such file was created and none is needed: the move plan and
+    ownership decisions are recorded as per-phase evidence under sections 6–13, which
+    outlast a temporary scratch file. The spec directory intentionally holds only
+    `design.md`, `requirements.md`, and `tasks.md`.
+- [x] 1.5 Validate criteria before moving:
   - `npm run test tests/unit/search-profile.test.ts`
   - `npm run test tests/unit/listing-confidence.test.ts tests/unit/listing-caveats.test.ts`
   - `npm run test tests/unit/shortlist.test.ts tests/unit/shortlist-sync.test.ts tests/unit/shortlist-comparison.test.ts`
@@ -19,7 +41,7 @@
 
 ## 2) Introduce target folders and compatibility strategy
 
-- [ ] 2.1 Create all target directories:
+- [x] 2.1 Create all target directories:
   - `src/features/listing-check`
   - `src/features/shortlist`
   - `src/features/map-explorer`
@@ -30,40 +52,54 @@
   - `src/entities/town`
   - `src/shared-ui`
   - `src/shared/lib`
-- [ ] 2.2 Add minimal `README.md` or index note files for each folder describing responsibility boundaries.
-- [ ] 2.3 Add non-invasive compatibility re-export files only where needed to avoid giant import rewrites.
-- [ ] 2.4 Run focused tests for import/build health.
+  - All ten exist today.
+- [-] 2.2 Add minimal `README.md` or index note files for each folder describing responsibility boundaries.
+  - **Superseded.** No per-folder READMEs exist. Responsibility boundaries are
+    documented centrally in the "Feature Boundaries" and "Dependency Direction"
+    sections of `.kiro/steering/structure.md`, which agents already read as steering.
+    Ten scattered READMEs would duplicate that and drift out of sync.
+- [x] 2.3 Add non-invasive compatibility re-export files only where needed to avoid giant import rewrites.
+  - Added during the move phases, then removed once consumers pointed at canonical
+    owners (task 12.1). None remain.
+- [x] 2.4 Run focused tests for import/build health.
   - `npm run typecheck`
   - `npm run lint`
 
 ## 3) Extract shared primitives first (`src/shared/lib`)
 
-- [ ] 3.1 Move/copy non-UI pure helpers used by multiple features (formatting, filtering, and utility helpers that do not own feature state) into `src/shared/lib`.
-- [ ] 3.2 Keep behavior unchanged by preserving old import paths via temporary re-exports.
-- [ ] 3.3 Update consumers to prefer new `src/shared/lib` paths incrementally.
-- [ ] 3.4 Add/relocate tests near new modules:
+- [x] 3.1 Move/copy non-UI pure helpers used by multiple features (formatting, filtering, and utility helpers that do not own feature state) into `src/shared/lib`.
+  - `src/shared/lib` now holds 18 modules.
+- [x] 3.2 Keep behavior unchanged by preserving old import paths via temporary re-exports.
+- [x] 3.3 Update consumers to prefer new `src/shared/lib` paths incrementally.
+- [x] 3.4 Add/relocate tests near new modules:
   - Existing unit tests moved/copied to `tests/unit` for each extracted file.
-- [ ] 3.5 Validate with focused tests:
+- [x] 3.5 Validate with focused tests:
   - `npm run test tests/unit/format.test.ts tests/unit/filtering.test.ts tests/unit/filtering.edge-cases.test.ts`
 
 ## 4) Extract transaction entities first (lowest coupling)
 
-- [ ] 4.1 Move transaction type definitions and transaction analysis helpers into `src/entities/transaction`.
-- [ ] 4.2 Extract pure comparable/confidence/caveat calculators used in listing analysis into transaction/block entities as appropriate.
-- [ ] 4.3 Ensure no React imports in these new modules.
-- [ ] 4.4 Route all feature logic through these entity modules using compatibility exports temporarily.
-- [ ] 4.5 Add unit coverage adjacent to modules in feature/entity area.
-- [ ] 4.6 Validate parity:
+- [x] 4.1 Move transaction type definitions and transaction analysis helpers into `src/entities/transaction`.
+- [x] 4.2 Extract pure comparable/confidence/caveat calculators used in listing analysis into transaction/block entities as appropriate.
+- [x] 4.3 Ensure no React imports in these new modules.
+  - Verified zero React imports under `src/entities`, and now machine-enforced by
+    `scripts/check-boundaries.ts` (framework packages incl. subpaths are rejected).
+- [x] 4.4 Route all feature logic through these entity modules using compatibility exports temporarily.
+  - Temporary exports removed in task 12.1.
+- [x] 4.5 Add unit coverage adjacent to modules in feature/entity area.
+- [x] 4.6 Validate parity:
   - `npm run test tests/unit/transaction-analysis.test.ts`
   - `npm run test tests/unit/listing-confidence.test.ts tests/unit/listing-caveats.test.ts tests/unit/listing-confidence-adapter.test.ts`
 
 ## 5) Extract block and town entities
 
-- [ ] 5.1 Create `src/entities/block` with block type definitions and block-only helpers (explanations, matching, similar blocks where purely domain logic).
-- [ ] 5.2 Create `src/entities/town` with town-level helpers (comparisons, profiles, recommendations where domain-only).
-- [ ] 5.3 Keep imports explicit; add barrels only if multiple submodules are consumed together.
-- [ ] 5.4 Migrate tests near modules; keep fixture use unchanged.
-- [ ] 5.5 Validate:
+- [x] 5.1 Create `src/entities/block` with block type definitions and block-only helpers (explanations, matching, similar blocks where purely domain logic).
+- [x] 5.2 Create `src/entities/town` with town-level helpers (comparisons, profiles, recommendations where domain-only).
+- [x] 5.3 Keep imports explicit; add barrels only if multiple submodules are consumed together.
+  - Imports are explicit. The `index.ts` barrels under `src/features/*` and
+    `src/entities/*` currently have no consumers; whether to remove them is tracked
+    as optional backlog and deliberately left unchanged here.
+- [x] 5.4 Migrate tests near modules; keep fixture use unchanged.
+- [x] 5.5 Validate:
   - `npm run test tests/unit/town-profile.test.ts tests/unit/town-compare.test.ts tests/unit/town-recommendations.test.ts`
 
 ## 6) Move listing-check feature logic
