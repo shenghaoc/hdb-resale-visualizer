@@ -1,5 +1,5 @@
 import { type CSSProperties, lazy, Suspense } from "react";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary } from "@/shared-ui/ErrorBoundary";
 import {
   AlertTriangle,
   ArrowDown,
@@ -69,7 +69,7 @@ import { MrtLineDots } from "@/components/MrtLineDots";
 import { BudgetMatchBadge } from "@/components/BudgetMatchBadge";
 import { classifyPrimarySchoolDistance } from "@/entities/block/school-proximity";
 import { FlatTypePriceLadder } from "./FlatTypePriceLadder";
-import { ShareButton } from "@/components/ShareButton";
+import { ShareButton } from "@/shared-ui/ShareButton";
 import { useBlockDetailController } from "./useBlockDetailController";
 import { resolveEffectiveMedianPrice } from "@shared/product/filtering";
 import { canonicalFlatType } from "@shared/filter-options";

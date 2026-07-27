@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Minus } from "lucide-react";
-import { ShareButton } from "@/components/ShareButton";
+import { ShareButton } from "@/shared-ui/ShareButton";
 import { buildCompareShareUrl } from "@/shared/lib/shareUrls";
 import {
   formatCompactCurrency,

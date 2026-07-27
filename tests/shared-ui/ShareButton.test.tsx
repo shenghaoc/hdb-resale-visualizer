@@ -1,7 +1,7 @@
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { ShareButton } from "@/components/ShareButton";
+import { ShareButton } from "@/shared-ui/ShareButton";
 
 const DEFAULT_PROPS = {
   url: "https://example.com/?town=BEDOK",

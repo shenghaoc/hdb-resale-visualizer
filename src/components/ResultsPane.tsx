@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
 import { buildResultsCsvContent } from "@/shared/lib/export";
-import { ShareButton } from "@/components/ShareButton";
+import { ShareButton } from "@/shared-ui/ShareButton";
 import {
   formatCompactCurrency,
   formatMeters,
