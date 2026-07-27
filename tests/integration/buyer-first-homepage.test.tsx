@@ -7,6 +7,7 @@ import { SEARCH_PROFILE_STORAGE_KEY } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
+import { findLazySurface } from "../helpers/lazySurfaces";
 
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
@@ -222,9 +223,7 @@ describe("Buyer-first homepage", () => {
     const checkButton = await screen.findByRole("button", { name: /check a listing price/i });
     await user.click(checkButton);
 
-    await waitFor(() => {
-      expect(screen.getByTestId("listing-check-panel")).toBeVisible();
-    });
+    expect(await findLazySurface("listing-check-panel")).toBeVisible();
   });
 
   it("allows updating an already-saved listing when the shortlist is at capacity", async () => {
@@ -244,7 +243,7 @@ describe("Buyer-first homepage", () => {
 
     renderApp();
 
-    const panel = await screen.findByTestId("listing-check-panel");
+    const panel = await findLazySurface("listing-check-panel");
     expect(panel).toHaveAttribute("data-address-key", selectedAddressKey);
     expect(panel).toHaveAttribute("data-shortlist-full", "false");
   });
@@ -278,7 +277,7 @@ describe("Buyer-first homepage", () => {
 
     renderApp();
 
-    await screen.findByTestId("map-view");
+    await findLazySurface("map-view");
     await waitFor(() => {
       expect(new URLSearchParams(window.location.search).has("affordable")).toBe(false);
     });
@@ -298,7 +297,7 @@ describe("Buyer-first homepage", () => {
 
     renderApp();
 
-    await screen.findByTestId("map-view");
+    await findLazySurface("map-view");
     await waitFor(() => {
       expect(new URLSearchParams(window.location.search).has("affordable")).toBe(false);
     });
@@ -331,7 +330,7 @@ describe("Buyer-first homepage", () => {
 
     renderApp();
 
-    expect(await screen.findByTestId("map-view")).toBeInTheDocument();
+    expect(await findLazySurface("map-view")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Filters" }));
     await user.click(screen.getByRole("button", { name: "Open buyer setup" }));
 
