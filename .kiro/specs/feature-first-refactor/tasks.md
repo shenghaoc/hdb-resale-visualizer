@@ -201,8 +201,11 @@
 - [x] 11.3 Add/repoint exports and adjust imports.
   - Canonical paths: `@/shared-ui/ErrorBoundary`, `@/shared-ui/ShareButton`, `@/shared-ui/DrawerSkeleton`.
   - No compatibility files remain at old `src/components/` paths.
+  - No `src/shared-ui` barrel: all 7 consumers import direct module paths, so a barrel would
+    add a dead export surface without reducing import noise (design rule 4, R6).
 - [x] 11.4 Validate a representative UI slice with render tests and lint.
   - Representative render tests and lint/typecheck/build gates pass.
+  - Render tests moved with their subjects to `tests/shared-ui/` (R7 test locality).
 
 ## 12) Import cleanup and compatibility removal
 
@@ -232,14 +235,25 @@
   - generic presentation -> `src/shared-ui`
   - pricing/comparable/confidence/caveat logic in pure entity/shared modules
 - [x] 13.2 Run full parity verification:
-  - Unit: 165 test files, 1650 tests passed
-  - Playwright: 76 passed, 0 flaky, 0 failed
+  - Unit: 165 test files, 1663 tests passed
+  - Playwright: 76 passed, 0 failed. A re-run showed 75 passed + 1 flaky
+    (`performance-trace.spec.ts` "map remains interactive during filter operations",
+    green on retry) — pre-existing timing sensitivity in a perf trace test, unrelated
+    to this PR, which changes no runtime code.
   - Lint: 1 pre-existing warning (`useFilterPipeline` exhaustive-deps), 0 errors
   - Typecheck: passed
-  - Boundaries: passed (26 script modules, 191 src modules architecture-checked; no runtime cycles)
+  - Boundaries: passed (26 script modules, 190 src modules architecture-checked; no runtime cycles)
   - Build: passed
   - Bundle: passed (9 modulepreloads, 81764 B gzip total)
   - `CI=1 vp run check:pr` / `CI=1 pnpm run check:pr` passed
+- [x] 13.4 Close boundary-checker enforcement gaps found in review:
+  - Forbidden entity packages now match subpaths (`react-dom/client`, `react/jsx-runtime`),
+    reusing the same predicate as the `shared/product` check.
+  - `shared/data-types` added to the shared-ui HDB-domain-type denylist (was reachable via `@shared/`).
+  - Entity and shared-ui rules are now allowlists, closing `src/hooks` and other unnamed trees;
+    steering docs and R5 updated to match what is actually enforced.
+  - Regression tests added for each gap plus the runtime/type-only asymmetry,
+    `require()` cycles, and star re-export cycles (23 -> 34 boundary tests).
 - [x] 13.3 Add final spec notes for any deferred follow-up tasks only (no behavior-critical work left in TODO).
   - Deferred (non-critical): domain-aware multi-feature components (`BudgetMatchBadge`, `MrtLineDots`, `LeaseWarningPanel`, `BuyerChecklist`) remain under `src/components` intentionally; residual app-shell hooks under `src/hooks` are not behavior-critical migration work.
   - No behavior-critical migration TODO remains.

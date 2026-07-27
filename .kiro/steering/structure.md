@@ -75,13 +75,13 @@ New buyer workflows should land under the owning feature. Not every remaining mu
 ## Dependency Direction
 
 - Features may import entities, `src/shared-ui`, `src/shared/lib`, `src/components` (including ui), and repository-level `shared/*`.
-- Entities must stay domain-focused and must not import features, shared-ui, or components.
-- `src/shared-ui` must not import features, entities, or HDB-domain type modules (`src/types/data`, `src/types/searchProfile`). It may import React, presentation libraries, `src/components/ui`, and `src/shared/lib`.
+- Entities must stay domain-focused. They may import only `src/entities`, `src/shared/lib`, `src/types`, and repository-level `shared/*` — never features, shared-ui, components, or `src/hooks`. Entities are also framework-free: no runtime import of `react`, `react-dom`, `maplibre-gl`, or `recharts` (subpaths such as `react-dom/client` included). Type-only imports of framework types are allowed.
+- `src/shared-ui` is generic presentation only. It may import npm presentation packages (React, icon/UI libraries) and, under `src/`, only `src/shared-ui`, `src/components/ui`, and `src/shared/lib`. It must not import features, entities, non-ui components, `src/hooks`, or HDB-domain type modules (`src/types/data`, `src/types/searchProfile`, `shared/data-types`).
 - Cross-runtime code used by scripts, Worker/API, and frontend belongs in `shared/`, not `src/`.
 - Node-executed scripts must not import from `src/`; `pnpm check:boundaries` enforces this.
 - Runtime API modules under `functions/` should not import React UI code or browser-only modules.
-- Feature-internal files must not import their own feature barrel (`@/features/<name>`); use direct relative or explicit module paths.
-- The boundary checker enforces entity/shared-ui dependency direction and detects runtime import cycles under `src/` (type-only edges are excluded).
+- Feature-internal files must not import their own feature barrel (`@/features/<name>`); use direct relative or explicit module paths. This one is convention, not enforced by the checker.
+- The boundary checker enforces the entity and shared-ui allowlists above and detects runtime import cycles under `src/` (type-only edges are excluded). Direction rules apply to type-only imports too; only the framework-package rule is runtime-only.
 
 ## Migration Guidance
 

@@ -11,6 +11,9 @@ const ENTITIES_DIR = path.join(SRC_DIR, "entities");
 const FEATURES_DIR = path.join(SRC_DIR, "features");
 const SHARED_UI_DIR = path.join(SRC_DIR, "shared-ui");
 const COMPONENTS_DIR = path.join(SRC_DIR, "components");
+const HOOKS_DIR = path.join(SRC_DIR, "hooks");
+const SRC_SHARED_LIB_DIR = path.join(SRC_DIR, "shared", "lib");
+const TYPES_DIR = path.join(SRC_DIR, "types");
 const SOURCE_EXTENSIONS = [".ts", ".tsx", ".mts", ".cts", ".js", ".mjs", ".cjs"] as const;
 const INDEX_FILENAMES = SOURCE_EXTENSIONS.map((extension) => `index${extension}`);
 const FORBIDDEN_RUNTIME_ALIASES = ["@/", "@shared/"] as const;
@@ -18,10 +21,33 @@ const FORBIDDEN_SHARED_PRODUCT_IMPORTS = ["react", "react-dom", "maplibre-gl"] a
 const COMPONENTS_UI_DIR = path.join(SRC_DIR, "components", "ui");
 const FORBIDDEN_ENTITY_PACKAGES = ["react", "react-dom", "maplibre-gl", "recharts"] as const;
 
+/**
+ * Local module trees an entity may depend on. Anything else under src/ is a
+ * dependency-direction violation — entities stay domain-focused and framework-free.
+ */
+const ENTITY_ALLOWED_DIRS = [ENTITIES_DIR, SRC_SHARED_LIB_DIR, TYPES_DIR, SHARED_DIR] as const;
+const ENTITY_ALLOWED_SUMMARY = "src/entities, src/shared/lib, src/types, and repository shared/";
+
+/**
+ * Local module trees a shared-ui module may depend on. This mirrors the
+ * allowlist in .kiro/steering/structure.md — shared-ui is generic presentation
+ * only, so anything outside these trees is a violation even if no specific rule
+ * below names it.
+ */
+const SHARED_UI_ALLOWED_DIRS = [SHARED_UI_DIR, COMPONENTS_UI_DIR, SRC_SHARED_LIB_DIR] as const;
+const SHARED_UI_ALLOWED_SUMMARY = "src/shared-ui, src/components/ui, and src/shared/lib";
+
 const FORBIDDEN_SHARED_UI_DOMAIN_TYPES = [
   path.join(SRC_DIR, "types", "data.ts"),
   path.join(SRC_DIR, "types", "searchProfile.ts"),
+  // Repository-level canonical HDB domain types, reachable via `@shared/data-types`.
+  path.join(SHARED_DIR, "data-types.ts"),
 ] as const;
+
+/** Match a package specifier and its subpaths (`react` also matches `react/jsx-runtime`). */
+function matchesPackage(specifier: string, packageName: string): boolean {
+  return specifier === packageName || specifier.startsWith(`${packageName}/`);
+}
 
 type Violation = {
   file: string;
@@ -302,8 +328,8 @@ function checkSharedProductFile(file: string): void {
       continue;
     }
 
-    const forbiddenPkg = FORBIDDEN_SHARED_PRODUCT_IMPORTS.find(
-      (pkg) => specifier === pkg || specifier.startsWith(`${pkg}/`),
+    const forbiddenPkg = FORBIDDEN_SHARED_PRODUCT_IMPORTS.find((pkg) =>
+      matchesPackage(specifier, pkg),
     );
     if (forbiddenPkg) {
       recordViolation(
@@ -354,11 +380,11 @@ function checkEntityDirection(): void {
       if (!resolved) {
         // Bare specifier that didn't resolve locally — check if it's a
         // forbidden framework/UI package (entities must be React-free per
-        // the design doc).
-        if (
-          edge.isRuntime &&
-          (FORBIDDEN_ENTITY_PACKAGES as readonly string[]).includes(edge.specifier)
-        ) {
+        // the design doc). Subpaths count: `react-dom/client` is still React.
+        const forbiddenPkg = edge.isRuntime
+          ? FORBIDDEN_ENTITY_PACKAGES.find((pkg) => matchesPackage(edge.specifier, pkg))
+          : undefined;
+        if (forbiddenPkg) {
           recordViolation(
             file,
             `entities must not import framework packages — "${edge.specifier}" is forbidden. Entities must be pure TypeScript with no React/map/chart dependencies.`,
@@ -382,6 +408,16 @@ function checkEntityDirection(): void {
           file,
           `entities must not import components — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
         );
+      } else if (isInside(HOOKS_DIR, resolved)) {
+        recordViolation(
+          file,
+          `entities must not import hooks — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}. React hooks are app orchestration, not domain logic.`,
+        );
+      } else if (!ENTITY_ALLOWED_DIRS.some((dir) => isInside(dir, resolved))) {
+        recordViolation(
+          file,
+          `entities may only import ${ENTITY_ALLOWED_SUMMARY} — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
       }
     }
   }
@@ -395,6 +431,10 @@ function checkSharedUiDirection(): void {
       if (!resolved) {
         continue;
       }
+
+      const forbiddenDomainType = FORBIDDEN_SHARED_UI_DOMAIN_TYPES.find(
+        (domainType) => path.normalize(domainType) === path.normalize(resolved),
+      );
 
       if (isInside(FEATURES_DIR, resolved)) {
         recordViolation(
@@ -411,16 +451,16 @@ function checkSharedUiDirection(): void {
           file,
           `shared-ui must not import non-UI components — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}. Only src/components/ui is allowed.`,
         );
-      } else {
-        const forbiddenDomainType = FORBIDDEN_SHARED_UI_DOMAIN_TYPES.find(
-          (domainType) => path.normalize(domainType) === path.normalize(resolved),
+      } else if (forbiddenDomainType) {
+        recordViolation(
+          file,
+          `shared-ui must not import HDB-domain types — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
         );
-        if (forbiddenDomainType) {
-          recordViolation(
-            file,
-            `shared-ui must not import HDB-domain types — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
-          );
-        }
+      } else if (!SHARED_UI_ALLOWED_DIRS.some((dir) => isInside(dir, resolved))) {
+        recordViolation(
+          file,
+          `shared-ui may only import ${SHARED_UI_ALLOWED_SUMMARY} — "${edge.specifier}" resolves to ${toDisplayPath(resolved)}.`,
+        );
       }
     }
   }
@@ -509,7 +549,7 @@ checkSharedUiDirection();
 const srcModuleCount = checkSrcRuntimeCycles();
 
 if (violations.length > 0) {
-  console.error("Script boundary check failed:");
+  console.error("Boundary check failed:");
   for (const violation of violations) {
     console.error(`- ${violation.file}: ${violation.message}`);
   }
@@ -517,5 +557,5 @@ if (violations.length > 0) {
 }
 
 console.log(
-  `Script boundary check passed (${visitedFiles.size} reachable local modules scanned; ${srcModuleCount} src modules architecture-checked).`,
+  `Boundary check passed (${visitedFiles.size} reachable local modules scanned; ${srcModuleCount} src modules architecture-checked).`,
 );

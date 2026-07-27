@@ -41,6 +41,9 @@ Moving to feature-first structure improves:
 
 - `entities/*`:
   - Pure TypeScript types and business logic (no React dependencies).
+  - May import only `src/entities`, `src/shared/lib`, `src/types`, and repository-level `shared/*`.
+  - No runtime import of `react`, `react-dom`, `maplibre-gl`, or `recharts`, including subpaths
+    such as `react-dom/client`. Type-only imports of framework types are allowed.
   - Shared by multiple features.
   - Includes determinism-heavy logic (listing confidence, caveats, pricing comparables where it is domain math).
 - `features/*`:
