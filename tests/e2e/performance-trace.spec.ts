@@ -136,6 +136,9 @@ function median(values: number[]): number {
 async function measureFilterLatency(page: Page, query: string): Promise<number> {
   const searchInput = page.getByTestId("header-search-input");
   await searchInput.fill("");
+  // Search writes run in a React transition. Settle the cleared URL state
+  // before refilling so a delayed clear cannot overwrite the timed query.
+  await expect.poll(() => new URL(page.url()).searchParams.get("search")).toBeNull();
   const start = performance.now();
   await searchInput.fill(query);
   await expect(page.locator("[data-testid='results-pane'] [data-slot='item']").first()).toBeVisible(
