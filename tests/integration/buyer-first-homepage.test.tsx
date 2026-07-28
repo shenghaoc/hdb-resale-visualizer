@@ -7,7 +7,7 @@ import { SEARCH_PROFILE_STORAGE_KEY } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
 import type { SearchProfile } from "@/types/searchProfile";
-import { findLazySurface } from "../helpers/lazySurfaces";
+import { findLazySurface, lazyIt } from "../helpers/lazySurfaces";
 
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
@@ -216,7 +216,7 @@ describe("Buyer-first homepage", () => {
     expect(screen.getByTestId("map-locale-control")).toBeVisible();
   });
 
-  it("'Check a listing price' CTA in scope prompt opens the check panel", async () => {
+  lazyIt("'Check a listing price' CTA in scope prompt opens the check panel", async () => {
     const user = userEvent.setup();
     renderApp();
 
@@ -226,7 +226,7 @@ describe("Buyer-first homepage", () => {
     expect(await findLazySurface("listing-check-panel")).toBeVisible();
   });
 
-  it("allows updating an already-saved listing when the shortlist is at capacity", async () => {
+  lazyIt("allows updating an already-saved listing when the shortlist is at capacity", async () => {
     const selectedAddressKey = "bedok-101-bedok-nth-ave-4";
     window.history.replaceState(
       {},
@@ -267,7 +267,7 @@ describe("Buyer-first homepage", () => {
     });
   });
 
-  it("clears a bookmarked affordability filter when this browser has no finance profile", async () => {
+  lazyIt("clears bookmarked affordability without a finance profile", async () => {
     window.history.replaceState({}, "", "/?affordable=comfortable");
     vi.stubGlobal("localStorage", {
       getItem: vi.fn(() => null),
@@ -283,7 +283,7 @@ describe("Buyer-first homepage", () => {
     });
   });
 
-  it("clears affordability mode when CPF is zero instead of marking every home over", async () => {
+  lazyIt("clears affordability when CPF is zero", async () => {
     window.history.replaceState({}, "", "/?affordable=comfortable");
     vi.stubGlobal("localStorage", {
       getItem: vi.fn((key: string) =>
@@ -319,7 +319,7 @@ describe("Buyer-first homepage", () => {
     });
   });
 
-  it("keeps the app shell mounted and preserves the selected block while editing Buyer setup", async () => {
+  lazyIt("preserves the shell and selected block while editing Buyer setup", async () => {
     const user = userEvent.setup();
     const selectedAddressKey = "bedok-101-bedok-nth-ave-4";
     window.history.replaceState({}, "", `/?selected=${encodeURIComponent(selectedAddressKey)}`);

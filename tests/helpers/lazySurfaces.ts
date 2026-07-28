@@ -1,4 +1,5 @@
 import { screen } from "@testing-library/react";
+import { it } from "vite-plus/test";
 
 /**
  * Surfaces that `src/App.tsx` mounts through `React.lazy()` behind a
@@ -18,11 +19,24 @@ export type LazySurfaceTestId =
  * update but a tight one for resolving a lazy chunk: in the full parallel
  * suite these integration files contend for the event loop and the import
  * alone has been measured past a second. Give module loading a budget that
- * absorbs a loaded machine, while staying far below the Vitest per-test
- * timeout so a surface that never mounts still fails with the useful
- * "unable to find element" message rather than a bare test timeout.
+ * absorbs a loaded machine.
  */
-export const LAZY_SURFACE_TIMEOUT_MS = 5000;
+const LAZY_SURFACE_WAIT_TIMEOUT_MS = 5000;
+
+/**
+ * Tests using `findLazySurface()` opt in to this larger test budget so the
+ * Testing Library wait can finish first and preserve its useful
+ * "unable to find element" diagnostic when a surface never mounts.
+ */
+const LAZY_SURFACE_TEST_TIMEOUT_MS = 10_000;
+
+/**
+ * Register a test that waits for a lazy surface with enough outer timeout
+ * headroom for Testing Library to report a missing surface first.
+ */
+export function lazyIt(name: string, test: () => Promise<void>): void {
+  it(name, { timeout: LAZY_SURFACE_TEST_TIMEOUT_MS }, test);
+}
 
 /**
  * Wait for a lazily-loaded app surface to finish mounting.
@@ -32,5 +46,5 @@ export const LAZY_SURFACE_TIMEOUT_MS = 5000;
  * regression still fails fast.
  */
 export function findLazySurface(testId: LazySurfaceTestId): Promise<HTMLElement> {
-  return screen.findByTestId(testId, {}, { timeout: LAZY_SURFACE_TIMEOUT_MS });
+  return screen.findByTestId(testId, {}, { timeout: LAZY_SURFACE_WAIT_TIMEOUT_MS });
 }
