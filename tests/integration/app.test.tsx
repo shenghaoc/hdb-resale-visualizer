@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SEARCH_PROFILE_STORAGE_KEY } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n";
 import type { BlockSummary, FilterState, Manifest, ShortlistItem } from "@/types/data";
+import { findLazySurface, lazyIt } from "../helpers/lazySurfaces";
 
 const dataMocks = vi.hoisted(() => ({
   fetchManifest: vi.fn<() => Promise<Manifest>>(),
@@ -278,7 +279,7 @@ describe("App detail loading", () => {
     vi.unstubAllGlobals();
   });
 
-  it("starts with the map prompt unobstructed instead of opening filters automatically", async () => {
+  lazyIt("keeps the map prompt clear instead of auto-opening filters", async () => {
     render(
       <I18nProvider>
         <TooltipProvider>
@@ -287,12 +288,12 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await screen.findByTestId("map-view");
+    await findLazySurface("map-view");
     expect(document.querySelector("#desktop-left-panel")).toHaveAttribute("data-open", "false");
     expect(screen.getByText(/start with location/i)).toBeInTheDocument();
   });
 
-  it("retries a manifest failure instead of offering an ineffective filter reset", async () => {
+  lazyIt("retries a manifest failure instead of offering an ineffective filter reset", async () => {
     dataMocks.fetchManifest
       .mockRejectedValueOnce(new Error("manifest unavailable"))
       .mockResolvedValueOnce(manifest);
@@ -310,7 +311,7 @@ describe("App detail loading", () => {
     expect(screen.queryByText(/manifest unavailable/i)).toBeNull();
     await user.click(screen.getByRole("button", { name: "Retry" }));
 
-    expect(await screen.findByTestId("map-view")).toBeInTheDocument();
+    expect(await findLazySurface("map-view")).toBeInTheDocument();
     expect(dataMocks.fetchManifest).toHaveBeenCalledTimes(2);
     expect(screen.queryByRole("button", { name: /reset filters and try again/i })).toBeNull();
   });
@@ -383,7 +384,7 @@ describe("App detail loading", () => {
     expect(screen.queryByText(/start with location/i)).not.toBeInTheDocument();
   });
 
-  it("clears loading and shows results again when selection is removed mid-request", async () => {
+  lazyIt("clears loading when selection is removed mid-request", async () => {
     const detailRequest = createDeferredPromise<never>();
     dataMocks.fetchAddressDetail.mockReturnValue(detailRequest.promise);
 
@@ -398,11 +399,11 @@ describe("App detail loading", () => {
     );
 
     await user.click(await screen.findByRole("button", { name: "Results" }));
-    await screen.findByTestId("results-pane");
+    await findLazySurface("results-pane");
 
     await user.click(screen.getByRole("button", { name: "Select block" }));
 
-    await screen.findByTestId("detail-drawer");
+    await findLazySurface("detail-drawer");
 
     await user.click(screen.getByRole("button", { name: "Close" }));
 
@@ -414,7 +415,7 @@ describe("App detail loading", () => {
     detailRequest.reject(new Error("Request aborted"));
   });
 
-  it("keeps the results panel open when a map feature click selects a block", async () => {
+  lazyIt("keeps the results panel open when a map feature click selects a block", async () => {
     const user = userEvent.setup();
 
     render(
@@ -425,11 +426,11 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await screen.findByTestId("map-view");
+    await findLazySurface("map-view");
 
     await user.click(screen.getByRole("button", { name: "Feature map click" }));
 
-    await screen.findByTestId("detail-drawer");
+    await findLazySurface("detail-drawer");
     expect(screen.getByTestId("results-pane")).toBeInTheDocument();
   });
 
@@ -460,7 +461,7 @@ describe("App detail loading", () => {
     expect(screen.queryByTestId("shortlist-undo-toast")).not.toBeInTheDocument();
   });
 
-  it("keeps town-wide overview out of buyer-filtered result scopes", async () => {
+  lazyIt("keeps town-wide overview out of buyer-filtered result scopes", async () => {
     window.history.replaceState({}, "", "/?town=BEDOK&flatType=4+ROOM");
 
     render(
@@ -471,7 +472,7 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    expect(await screen.findByTestId("results-pane")).toHaveAttribute("data-profile-town", "");
+    expect(await findLazySurface("results-pane")).toHaveAttribute("data-profile-town", "");
     expect(dataMocks.fetchBlocksBySearch).toHaveBeenCalled();
   });
 
@@ -497,7 +498,7 @@ describe("App detail loading", () => {
     });
   });
 
-  it("loads nearby map markers after geolocation", async () => {
+  lazyIt("loads nearby map markers after geolocation", async () => {
     const user = userEvent.setup();
 
     render(
@@ -508,7 +509,7 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await screen.findByTestId("map-view");
+    await findLazySurface("map-view");
     await user.click(screen.getByRole("button", { name: "Mock geolocate" }));
 
     await waitFor(() => {
@@ -576,7 +577,7 @@ describe("App detail loading", () => {
     expect(await screen.findByRole("button", { name: "Locating" })).toBeDisabled();
   });
 
-  it("closes the results panel for background map exploration", async () => {
+  lazyIt("closes the results panel for background map exploration", async () => {
     const user = userEvent.setup();
 
     render(
@@ -588,7 +589,7 @@ describe("App detail loading", () => {
     );
 
     await user.click(await screen.findByRole("button", { name: "Results" }));
-    await screen.findByTestId("results-pane");
+    await findLazySurface("results-pane");
 
     await user.click(screen.getByRole("button", { name: "Background map interaction" }));
     await waitFor(() => {
@@ -726,7 +727,7 @@ describe("App detail loading", () => {
     });
   });
 
-  it("shows scope prompt when URL has near-me sentinel but no user location", async () => {
+  lazyIt("shows scope prompt when URL has near-me sentinel but no user location", async () => {
     window.history.replaceState({}, "", "/?search=near+me");
 
     const user = userEvent.setup();
@@ -739,7 +740,7 @@ describe("App detail loading", () => {
       </I18nProvider>,
     );
 
-    await screen.findByTestId("map-view");
+    await findLazySurface("map-view");
     await user.click(screen.getByRole("button", { name: "Background map interaction" }));
 
     await waitFor(() => {

@@ -297,7 +297,10 @@ export function useFilterPipeline({
       mapFuseMatchedKeys,
       selectedAddressKey,
       blocksByKey,
-      filterEvaluationContext?.currentYear ?? createFilterEvaluationContext().currentYear,
+      // Same memoised context the results memo uses: mapFilters only differs
+      // from stableFilters by `search`, so remainingLeaseMin — and therefore
+      // whether a context is required — is identical for both.
+      filterEvaluationContext,
       passesAffordabilityForBlock,
     );
   }, [
@@ -305,7 +308,7 @@ export function useFilterPipeline({
     blocksByKey,
     blocks,
     effectiveMapGeographicIntent,
-    filterEvaluationContext?.currentYear,
+    filterEvaluationContext,
     hasMapMarkerScope,
     mapFilters,
     passesAffordabilityForBlock,

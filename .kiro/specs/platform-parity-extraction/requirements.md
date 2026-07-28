@@ -2,20 +2,22 @@
 
 ## R1 — Shared search profile module
 
-- **R1.1** `SearchProfile` and `SearchProfilePatch` types are defined
-  in `shared/product/search-profile.ts` and re-exported from
+- **R1.1** The canonical version 3 `SearchProfile` type is defined in
+  `shared/product/search-profile.ts` and re-exported from
   `src/types/searchProfile.ts`.
 
-- **R1.2** Profile matching functions (`evaluateBlockForProfile`,
-  `createProfileEvaluator`, `isProfileVisibilityActive`,
-  `applyProfileVisibility`) are defined in `shared/product/search-profile.ts`
-  with explicit `currentYear` parameters.
+- **R1.2** Profile matching functions (`computeRemainingLeaseYears`,
+  `createProfileEvaluator`, `evaluateBlockForProfile`) are defined in
+  `shared/product/search-profile.ts` with explicit `currentYear`
+  parameters. `hasCompletedSearchProfile` checks whether the required
+  flat-type and minimum-lease preferences are present.
 
 - **R1.3** `computeRemainingLeaseYears` uses `MAX_LEASE_DURATION` from
   `shared/product/lease.ts`, not from `src/shared/lib/constants`.
 
 - **R1.4** `src/features/search-profile/matchProfile.ts` becomes a thin
-  adapter that wraps shared functions with `getCurrentYear()` defaults.
+  adapter that wraps the year-dependent shared functions with
+  `getCurrentYear()` defaults.
 
 ## R2 — Shared filtering module
 
@@ -50,16 +52,20 @@
 
 - **R3.1** `filterScopedBlocks` is a pure function that filters blocks
   against filters, geographic intent, affordability, and Fuse.js keys.
+  Callers must provide a `FilterEvaluationContext` whenever the
+  remaining-lease filter is active.
 
 - **R3.2** `computeMapFilteredBlocks` includes the selected-address
   inclusion semantics (appends selected block if not already in filtered
-  set).
+  set) and uses the same caller-owned `FilterEvaluationContext` contract
+  as `filterScopedBlocks`.
 
 - **R3.3** `hasResultScope` and `hasMapMarkerScope` are pure boolean
   computations derived from filter state.
 
 - **R3.4** `src/hooks/useFilterPipeline.ts` uses shared pure functions
-  for deterministic filter/map/list semantics.
+  for deterministic filter/map/list semantics and passes one memoized
+  evaluation context to both list and map filtering.
 
 ## R4 — Search alias resolver
 
@@ -99,17 +105,17 @@
 ## R7 — Golden parity fixtures
 
 - **R7.1** `tests/fixtures/platform-parity/product-core-golden.json`
-  includes search profile scenarios for strong, good, stretch, and
-  weak tiers.
+  includes strong and weak search-profile scenarios covering flat-type,
+  maximum-budget, and minimum-lease outcomes.
 
-- **R7.2** Stretch budget scenarios cover within-ceiling, beyond-ceiling,
-  and within-primary-budget.
+- **R7.2** Search-profile fixtures prove that retired commute/MRT inputs
+  do not influence recommendation tiers.
 
-- **R7.3** Commute proxy scenarios cover pass, stretch, fail, and
-  no-data.
+- **R7.3** Filter scenarios cover town, flat type, budget min/max,
+  remaining lease, MRT distance, and missing MRT data.
 
-- **R7.4** Filter scenarios cover town, flat type, budget min/max,
-  remaining lease, MRT distance, and date range.
+- **R7.4** Lease-determinism scenarios cover the same block and
+  remaining-lease threshold across explicit evaluation years.
 
 - **R7.5** Geographic search scenarios cover station match/no-match and
   coordinate match/no-match.
@@ -120,9 +126,10 @@
 ## R8 — Shared-core tests
 
 - **R8.1** `tests/unit/shared-search-profile.test.ts` covers
-  `computeRemainingLeaseYears`, `createProfileEvaluator`,
-  `evaluateBlockForProfile`, `isProfileVisibilityActive`,
-  `applyProfileVisibility` with deterministic `currentYear`.
+  `hasCompletedSearchProfile`, `computeRemainingLeaseYears`,
+  `createProfileEvaluator`, and `evaluateBlockForProfile` with
+  deterministic `currentYear`, including the retired commute and local
+  finance non-effects.
 
 - **R8.2** `tests/unit/shared-filtering.test.ts` covers `matchesFilter`
   all dimensions, `resolveGeographicSearchIntent`, `matchesGeographicSearchIntent`,
@@ -138,8 +145,8 @@
 
 ## R9 — Backward compatibility
 
-- **R9.1** `src/types/searchProfile.ts` re-exports from shared;
-  existing imports continue to work.
+- **R9.1** `src/types/searchProfile.ts` re-exports `SearchProfile` from
+  shared; existing imports continue to work.
 
 - **R9.2** `src/features/search-profile/matchProfile.ts` preserves
   existing function signatures with `getCurrentYear()` defaults.
