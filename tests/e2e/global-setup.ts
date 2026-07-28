@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { E2E_BASE_URL } from "./runtime-config";
 
 export default function globalSetup() {
   const storageStatePath = join(process.cwd(), "test-results/e2e-storage-state.json");
@@ -14,7 +15,7 @@ export default function globalSetup() {
     monthlyIncome: 9000,
   };
 
-  // Fixtures are staged into `public/api/` by `pnpm run setup:fixtures` (invoked
+  // Fixtures are staged into `public/api/` by `vp run setup:fixtures` (invoked
   // from the playwright webServer command), so no copying happens here.
 
   mkdirSync(join(process.cwd(), "test-results"), { recursive: true });
@@ -25,7 +26,7 @@ export default function globalSetup() {
         cookies: [],
         origins: [
           {
-            origin: "http://127.0.0.1:4173",
+            origin: E2E_BASE_URL,
             localStorage: [
               {
                 name: "hdb_resale_search_profile_v3",

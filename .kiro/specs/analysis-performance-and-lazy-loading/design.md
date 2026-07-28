@@ -2,7 +2,8 @@
 
 ## Status
 
-In Progress.
+Complete. Conditional virtualization and worker paths were not triggered by
+measured evidence.
 
 ## Goal
 
@@ -42,6 +43,24 @@ The heavy chunks (MapLibre 273 KiB, CartesianChart 97 KiB) are lazy-loaded.
 The main index chunk at 195 KiB is large but within the 220 KiB single-module
 limit since it is not a preloaded chunk.
 
+### Current verification snapshot (measured 2026-07-28)
+
+| Metric | Value |
+|--------|-------|
+| Build | 3,818 ms |
+| Modulepreload count | 8 |
+| Modulepreload gzip total | 100,703 B |
+| Unit/integration tests | 181 files, 1,782 passed in 28,782 ms |
+| Typecheck | 1,003 ms |
+| Lint | 1,578 ms |
+| Filter interaction (exact + typo) | 83.5 ms P95, 20 samples, 10,000 blocks, two-worker gate |
+| Filter interaction (free text) | 120.9 ms P95, 20 samples, 10,000 blocks — see R3.4a |
+| Map interaction | 58.3 fps, 25.5 ms maximum frame gap, 500 blocks rendered |
+| Listing verdict | 108.9 ms |
+
+The current preload total remains below the 225,280 B budget. Interaction
+metrics are recorded in-page and therefore exclude Playwright/CDP round trips.
+
 ### Lazy loading boundaries (current)
 
 Already lazy via `React.lazy` in `src/App.tsx`:
@@ -75,16 +94,21 @@ needed unless a new heavy analysis surface is added.
 - `fuseMatchedKeys` (Set) provides O(1) lookup for text search when Fuse.js
   pre-computed results are available — bypasses the hand-rolled
   substring/Levenshtein entirely.
+- Exact and one-edit whole-field queries use a corpus-scoped normalized field
+  index before Fuse.js; broader free text retains the existing Fuse ranking.
+- The most recent query result is reused, including between the results and
+  debounced-map consumers when their query values converge.
 - `geographicIntent` uses bounding-box pre-filter before haversine.
 
-**Remaining bottlenecks:**
-1. `resolveGeographicSearchIntent` depends on `t` (translator fn) which may
-   have unstable identity, causing `geographicIntent` and
-   `mapGeographicIntent` to recompute unnecessarily.
-2. Two parallel filter passes run (results + map) with overlapping work when
-   `debouncedSearch === stableFilters.search`.
-3. `getFuseMatchedKeys` scans all blocks even when search is empty (early
-   return exists but depends on Fuse index rebuild timing).
+**Disposition of measured bottlenecks:**
+1. `nearMeLabel` is resolved to a primitive string before the geographic
+   intent memos. A translator reference change that produces the same label
+   does not invalidate those memos.
+2. `mapFilters` excludes the live search value from its memo dependencies and
+   changes only when the debounced search changes, avoiding an immediate
+   10,000-block map pass followed by a duplicate debounced pass.
+3. Empty/one-character queries return before any Fuse index work. Exact and
+   minor-typo structured queries avoid building/searching Fuse entirely.
 
 ### Comparable computation performance
 
@@ -167,12 +191,9 @@ capped by engine).
   prevent reference churn.
 - `filterScopedBlocks` uses `useCallback` with minimal dependencies.
 
-**Remaining concerns:**
-1. `geographicIntent` depends on `t` — if translator identity is unstable,
-   both intent memos recompute.
-2. `mapFilters` recreates on every `debouncedSearch` change — this is
-   intentional (100ms debounce) but means the map filter pass always runs
-   100ms behind results.
+**Intentional behavior:** Results respond immediately to live search input;
+map filtering follows the shared 100ms debounce. This keeps result feedback
+prompt while avoiding duplicate map-corpus work on each keystroke.
 
 ## Design approach
 
@@ -180,10 +201,10 @@ capped by engine).
 
 Before further changes, collect baseline snapshots:
 
-- `npm run build` + `npm run check:bundle` (captured above)
-- `npm run test` — 133 files, 1205 tests passing
-- `npm run typecheck` — clean
-- `npm run lint` — clean
+- `vp run build` + `vp run check:bundle`
+- `vp run test`
+- `vp run typecheck`
+- `vp run lint`
 
 Define delta targets:
 - INP: maintain < 200ms for filter interactions
@@ -220,8 +241,8 @@ ResultsPane already has custom virtualization for >80 blocks.
 ### E. Bundle size guardrails
 
 - Any new heavy package must ship only in dynamically loaded analysis bundles.
-- Keep initial preload budget under 220 KiB gzip (currently 15 KiB — massive
-  headroom).
+- Keep initial preload budget under 220 KiB gzip (currently 100,703 B, or
+  44.7% of the budget).
 - New deps accepted only if measurable pre/post gain is captured.
 
 ### F. No-compute-in-render rule
@@ -230,29 +251,35 @@ ResultsPane already has custom virtualization for >80 blocks.
 - Never derive large arrays directly in JSX render loops.
 - Ensure stable keys and stable handlers to reduce child rerenders.
 
-## Architecture changes (target)
+## Architecture disposition
 
 1. **`src/hooks/useFilterPipeline.ts`**
-   - Stabilize `t` dependency for geographic intent computation.
-   - Add early-exit when search is empty to skip Fuse pass entirely.
-   - Consider deduplicating results/map filter passes when search values
-     converge.
+   - Resolve the translated near-me label before geographic intent memos.
+   - Keep live result filtering immediate while map filtering follows a
+     single-sourced 100ms debounce.
 
-2. **`src/hooks/useMapDataSync.ts` and sibling hooks**
+2. **`src/features/search-profile/searchFuse.ts`**
+   - Reuse the last query result for a stable block corpus.
+   - Use a corpus-scoped exact/one-edit whole-field index for structured
+     queries.
+   - Build and search the Fuse index only for broader free text.
+
+3. **`src/hooks/useMapDataSync.ts` and sibling hooks**
    - Current ref-based guards are sufficient.
    - Consider debouncing `styledata` handler if profiling shows it fires
      excessively during rapid pan/zoom (only if measurable).
 
-3. **`src/features/listing-check/ComparableEvidenceTable.tsx`**
+4. **`src/features/listing-check/ComparableEvidenceTable.tsx`**
    - No changes needed at current scale (≤30 rows).
    - Add optional virtualization path if row cap increases.
 
-4. **Performance regression fixture**
-   - Add Playwright performance trace script for:
+5. **Performance regression fixture**
+   - Playwright performance traces cover:
      - filter typing latency
      - listing check request-to-verdict
      - map interaction smoothness
-   - Run as part of CI or manually before/after performance PRs.
+   - Metrics are measured in-page; deterministic corpus/setup and measurement
+     utilities live in focused e2e helper modules.
 
 ## Heavy library justification
 

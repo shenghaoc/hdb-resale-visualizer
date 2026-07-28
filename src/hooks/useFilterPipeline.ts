@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import {
   DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS,
+  MAP_SEARCH_DEBOUNCE_MS,
   NEAR_ME_SEARCH_QUERY,
 } from "@/shared/lib/constants";
 import {
@@ -66,7 +67,7 @@ export function useFilterPipeline({
 
   // 100ms debounce eliminates the stacked delay that caused the map and list
   // to fall out of sync during geographic searches.
-  const debouncedSearch = useDebouncedValue(resolvedSearch, 100);
+  const debouncedSearch = useDebouncedValue(resolvedSearch, MAP_SEARCH_DEBOUNCE_MS);
 
   const sortedTowns = useMemo(
     () => manifest?.filterOptions.towns.slice().sort((a, b) => b.length - a.length) ?? [],
@@ -184,7 +185,26 @@ export function useFilterPipeline({
 
   const mapFilters = useMemo(
     () => ({ ...stableFilters, search: debouncedSearch }),
-    [debouncedSearch, stableFilters],
+    // The live search is the only stableFilters field intentionally excluded:
+    // map search follows debouncedSearch, so recreating this object for each
+    // keystroke would force an immediate 10k-block map pass and then repeat it
+    // when the debounce settles.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      debouncedSearch,
+      stableFilters.town,
+      stableFilters.flatType,
+      stableFilters.flatModel,
+      stableFilters.budgetMin,
+      stableFilters.budgetMax,
+      stableFilters.areaMin,
+      stableFilters.areaMax,
+      stableFilters.remainingLeaseMin,
+      stableFilters.startMonth,
+      stableFilters.endMonth,
+      stableFilters.mrtMax,
+      stableFilters.affordable,
+    ],
   );
 
   const filterEvaluationContext = useMemo(
