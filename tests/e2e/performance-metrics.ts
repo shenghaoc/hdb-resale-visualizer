@@ -23,6 +23,12 @@ export async function measureSearchDomLatency(
           return;
         }
 
+        // Resolution needs BOTH the committed query and the new result summary.
+        // The summary alone is not enough: callers must order their queries so
+        // consecutive expected counts differ, otherwise the summary already
+        // reads the expected value on entry and this degrades into timing the
+        // URL write instead of the filter. The query alone is not enough
+        // either, since the URL commits before the list re-renders.
         const expectedSummary = `${nextCount} shown`;
         let observer: MutationObserver | null = null;
         const timeout = window.setTimeout(() => {
@@ -79,6 +85,22 @@ export async function measureSearchDomLatency(
 export function percentile95(values: number[]): number {
   const sorted = [...values].sort((a, b) => a - b);
   return sorted[Math.max(0, Math.ceil(sorted.length * 0.95) - 1)] ?? Number.POSITIVE_INFINITY;
+}
+
+/**
+ * Reported alongside P95 and used for the assertions.
+ *
+ * Nearest-rank P95 over 20 samples is the second-slowest sample by definition,
+ * so it tracks whichever two samples the runner happened to deschedule. The
+ * median moves only when the whole distribution moves, which is what a
+ * regression looks like. Measured across five consecutive local runs, P95 for
+ * the same unchanged code ranged 40.9–137.0 ms while medians stayed clustered.
+ */
+export function median(values: number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  if (sorted.length === 0) return Number.POSITIVE_INFINITY;
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0 ? (sorted[middle - 1]! + sorted[middle]!) / 2 : sorted[middle]!;
 }
 
 export async function measureClickToSelectorLatency(
@@ -172,29 +194,42 @@ export async function armMapFrameMeasurement(page: Page): Promise<void> {
         { once: true },
       );
 
-      document.addEventListener(
-        "pointerup",
-        () => {
-          if (!started) return;
-          requestAnimationFrame((timestamp) => {
-            window.clearTimeout(timeout);
-            if (animationFrame) cancelAnimationFrame(animationFrame);
-            frames.push(timestamp);
-            if (frames.length < 2) {
-              reject(new Error("Map interaction produced too few animation frames"));
-              return;
-            }
-            const frameGaps = frames.slice(1).map((frame, index) => frame - frames[index]!);
-            const duration = frames.at(-1)! - frames[0]!;
-            resolve({
-              fps: ((frames.length - 1) * 1000) / duration,
-              maxFrameGapMs: Math.max(...frameGaps),
-              frameCount: frames.length,
-            });
+      const handlePointerUp = () => {
+        document.removeEventListener("pointerup", handlePointerUp, true);
+        // A gesture that never landed on the canvas would otherwise leave this
+        // promise pending until the generic timeout, reporting "too few frames"
+        // for what is really a mis-targeted pan.
+        if (!started) {
+          window.clearTimeout(timeout);
+          reject(
+            new Error(
+              "Pointer gesture completed without a pointerdown on the map canvas; " +
+                "the pan never reached MapLibre",
+            ),
+          );
+          return;
+        }
+        requestAnimationFrame((timestamp) => {
+          window.clearTimeout(timeout);
+          if (animationFrame) cancelAnimationFrame(animationFrame);
+          frames.push(timestamp);
+          if (frames.length < 2) {
+            reject(new Error("Map interaction produced too few animation frames"));
+            return;
+          }
+          const frameGaps = frames.slice(1).map((frame, index) => frame - frames[index]!);
+          const duration = frames.at(-1)! - frames[0]!;
+          resolve({
+            // Identical timestamps would divide by zero and report Infinity,
+            // which would pass a "faster than" assertion for free.
+            fps: duration > 0 ? ((frames.length - 1) * 1000) / duration : 0,
+            maxFrameGapMs: Math.max(...frameGaps),
+            frameCount: frames.length,
           });
-        },
-        { capture: true, once: true },
-      );
+        });
+      };
+
+      document.addEventListener("pointerup", handlePointerUp, true);
     });
   }, INTERACTION_RESPONSE_TIMEOUT_MS);
 }

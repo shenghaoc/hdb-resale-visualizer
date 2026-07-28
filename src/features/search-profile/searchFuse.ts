@@ -15,7 +15,16 @@ const FUSE_OPTIONS = {
   minMatchCharLength: 2,
   shouldSort: true,
 };
-const FUSE_MATCH_LIMIT = 500;
+/**
+ * Upper bound on matches returned by either search path.
+ *
+ * Fuse.js applies it to ranked results. The structured index applies it while
+ * building, so a field shared by more blocks than this keeps the first
+ * `SEARCH_MATCH_LIMIT` in corpus order — an arbitrary subset, not the most
+ * relevant one. Both paths have always truncated at this size; only the
+ * ordering of the surviving subset differs between them.
+ */
+export const SEARCH_MATCH_LIMIT = 500;
 type StructuredFieldIndex = ReadonlyMap<number, ReadonlyMap<string, readonly string[]>>;
 
 let fuseIndex: Fuse<BlockSummary> | null = null;
@@ -70,7 +79,7 @@ function ensureStructuredFieldIndex(blocks: readonly BlockSummary[]): Structured
       }
       const matches = lengthBucket.get(field);
       if (matches) {
-        if (matches.length < FUSE_MATCH_LIMIT) matches.push(block.addressKey);
+        if (matches.length < SEARCH_MATCH_LIMIT) matches.push(block.addressKey);
       } else {
         lengthBucket.set(field, [block.addressKey]);
       }
@@ -88,6 +97,12 @@ function getStructuredFieldMatches(
   const exactMatches = index.get(normalizedQuery.length)?.get(normalizedQuery);
   if (exactMatches) return new Set(exactMatches);
 
+  // No exact hit, so every field whose length is within one of the query has to
+  // be checked. This runs on free-text queries too — including the partial
+  // prefixes typed on the way to a real one — before they fall through to Fuse,
+  // so it is pure added cost on that path. It stays bounded: only three length
+  // buckets are visited and each comparison is O(query length). The e2e P95
+  // budget measures a free-text query precisely so this cost is covered.
   const oneEditMatches = new Set<string>();
   for (
     let candidateLength = normalizedQuery.length - 1;
@@ -100,7 +115,7 @@ function getStructuredFieldMatches(
       if (!isSingleEditAway(field, normalizedQuery)) continue;
       for (const addressKey of addressKeys) {
         oneEditMatches.add(addressKey);
-        if (oneEditMatches.size === FUSE_MATCH_LIMIT) return oneEditMatches;
+        if (oneEditMatches.size === SEARCH_MATCH_LIMIT) return oneEditMatches;
       }
     }
   }
@@ -149,7 +164,7 @@ export function getFuseMatchedKeys(
   }
 
   const results = ensureFuseIndex(blocks).search(trimmed, {
-    limit: Math.min(blocks.length, FUSE_MATCH_LIMIT),
+    limit: Math.min(blocks.length, SEARCH_MATCH_LIMIT),
   });
 
   if (results.length === 0) {

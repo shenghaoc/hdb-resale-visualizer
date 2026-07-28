@@ -6,7 +6,9 @@ set -euo pipefail
 # Usage: ./scripts/perf-baseline.sh > baseline-$(date +%Y%m%d).json
 
 OUTPUT_FILE="${1:-/dev/stdout}"
-VP_BIN="${VP_BIN:-./node_modules/.bin/vp}"
+# Bare `vp` matches how CI invokes every other step and does not depend on the
+# caller's working directory. Override VP_BIN when it is not on PATH.
+VP_BIN="${VP_BIN:-vp}"
 
 echo "Capturing performance baseline..." >&2
 

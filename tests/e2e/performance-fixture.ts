@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { expect, type Page } from "@playwright/test";
 import type { BlockSummary, Manifest } from "../../shared/data-types";
 import { MAP_SEARCH_DEBOUNCE_MS } from "../../src/shared/lib/constants";
+import { SEARCH_MATCH_LIMIT } from "../../src/features/search-profile/searchFuse";
 
 const INTERACTION_RESPONSE_TIMEOUT_MS = 10_000;
 export const PERFORMANCE_BLOCK_COUNT = 10_000;
@@ -13,33 +14,53 @@ const fixtureManifest = JSON.parse(
   readFileSync(new URL("../fixtures/public-data/manifest.json", import.meta.url), "utf8"),
 ) as Manifest;
 
+/**
+ * Search identities assigned across the synthetic corpus, largest group last.
+ *
+ * `shown` is what the UI reports for a whole-field query on the group, which is
+ * the group size clamped by `SEARCH_MATCH_LIMIT` — WOODLANDS is deliberately
+ * larger than the cap so the truncation stays visible in an end-to-end run
+ * rather than only in unit tests.
+ */
+const SEARCH_GROUPS = [
+  { town: "BEDOK", streetName: "BEDOK NORTH ROAD", displayName: "BEDOK PERFORMANCE", size: 300 },
+  {
+    town: "ANG MO KIO",
+    streetName: "ANG MO KIO AVENUE 10",
+    displayName: "ANG MO KIO PERFORMANCE",
+    size: 200,
+  },
+  { town: "GEYLANG", streetName: "LENGKONG TIGA", displayName: "GEYLANG PERFORMANCE", size: 100 },
+  {
+    town: "WOODLANDS",
+    streetName: "WOODLANDS RING ROAD",
+    displayName: "WOODLANDS PERFORMANCE",
+    size: PERFORMANCE_BLOCK_COUNT - 600,
+  },
+] as const;
+
+export const PERFORMANCE_SHOWN = Object.fromEntries(
+  SEARCH_GROUPS.map((group) => [group.town, Math.min(group.size, SEARCH_MATCH_LIMIT)]),
+) as Record<(typeof SEARCH_GROUPS)[number]["town"], number>;
+
+function searchIdentityFor(index: number) {
+  let offset = 0;
+  for (const group of SEARCH_GROUPS) {
+    offset += group.size;
+    if (index < offset) {
+      return { town: group.town, streetName: group.streetName, displayName: group.displayName };
+    }
+  }
+  throw new Error(`Search groups do not cover block index ${index}`);
+}
+
 const performanceBlocks = Array.from({ length: PERFORMANCE_BLOCK_COUNT }, (_, index) => {
   const template = fixtureBlocks[index % fixtureBlocks.length];
   if (!template) throw new Error("Performance fixture requires at least one block");
   const coordinateOffset = (index % 50) * 0.000_001;
-  const searchIdentity =
-    index < 300
-      ? { town: "BEDOK", streetName: "BEDOK NORTH ROAD", displayName: "BEDOK PERFORMANCE" }
-      : index < 500
-        ? {
-            town: "ANG MO KIO",
-            streetName: "ANG MO KIO AVENUE 10",
-            displayName: "ANG MO KIO PERFORMANCE",
-          }
-        : index < 600
-          ? {
-              town: "GEYLANG",
-              streetName: "LENGKONG TIGA",
-              displayName: "KEMBANGAN PERFORMANCE",
-            }
-          : {
-              town: "WOODLANDS",
-              streetName: "WOODLANDS RING ROAD",
-              displayName: "NORTH COAST PERFORMANCE",
-            };
   return {
     ...template,
-    ...searchIdentity,
+    ...searchIdentityFor(index),
     addressKey: `${template.addressKey}-perf-${index}`,
     block: `${template.block}-${index}`,
     coordinates: {
@@ -57,6 +78,11 @@ const performanceManifest: Manifest = {
   },
 };
 
+// Serialize once: re-encoding a 10,000-block payload inside the route handler
+// would add test-process work to every request the measured run makes.
+const performanceManifestBody = JSON.stringify(performanceManifest);
+const performanceBlocksBody = JSON.stringify(performanceBlocks);
+
 export async function openApp(page: Page, path = "/"): Promise<void> {
   await page.goto(path);
   await expect(page.getByTestId("global-header")).toBeVisible({ timeout: 15_000 });
@@ -70,14 +96,14 @@ export async function servePerformanceCorpus(page: Page): Promise<void> {
     route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify(performanceManifest),
+      body: performanceManifestBody,
     }),
   );
   await page.route("**/api/block-summaries", (route) =>
     route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify(performanceBlocks),
+      body: performanceBlocksBody,
     }),
   );
 }

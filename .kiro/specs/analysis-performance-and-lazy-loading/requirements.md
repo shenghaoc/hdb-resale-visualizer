@@ -41,6 +41,22 @@
 - **R3.4** Filter-change-to-first-result latency must remain under 100ms
   (nearest-rank P95 across at least 20 exact and minor-typo samples) for
   10,000+ block datasets.
+- **R3.4a** Free-text queries that the structured field index cannot answer
+  fall through to a full Fuse.js pass and do **not** meet R3.4. They must be
+  measured rather than excluded, so the Fuse fallback cost is visible and
+  regressions fail. Measured median ~110ms; see the performance audit for the
+  standing follow-up.
+- **R3.4b** Map frame-stability traces must run against a filter that leaves
+  substantial geometry rendered. An FPS floor asserted over a near-empty map
+  cannot fail and does not satisfy R1.2.
+- **R3.4c** The product targets in R3.4/R1.2 are verified from the P95 and FPS
+  values logged by an **isolated** trace run and recorded in the performance
+  audit. The values asserted in CI are deliberately looser and use the median
+  rather than P95. Nearest-rank P95 over 20 samples is the second-slowest
+  sample, so it tracks runner descheduling: across five consecutive local runs
+  of unchanged code it ranged 40.9–137.0ms while medians stayed clustered.
+  Asserting the product target directly reintroduces the load-dependent flake
+  this suite exists to remove.
 - **R3.5** No correctness regressions in filter results when filter state is
   toggled rapidly.
 

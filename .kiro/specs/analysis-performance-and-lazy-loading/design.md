@@ -53,8 +53,9 @@ limit since it is not a preloaded chunk.
 | Unit/integration tests | 181 files, 1,782 passed in 28,782 ms |
 | Typecheck | 1,003 ms |
 | Lint | 1,578 ms |
-| Filter interaction | 83.5 ms P95, 20 samples, 10,000 blocks, two-worker gate |
-| Map interaction | 63.8 fps, 25.9 ms maximum frame gap |
+| Filter interaction (exact + typo) | 83.5 ms P95, 20 samples, 10,000 blocks, two-worker gate |
+| Filter interaction (free text) | 120.9 ms P95, 20 samples, 10,000 blocks — see R3.4a |
+| Map interaction | 58.3 fps, 25.5 ms maximum frame gap, 500 blocks rendered |
 | Listing verdict | 108.9 ms |
 
 The current preload total remains below the 225,280 B budget. Interaction

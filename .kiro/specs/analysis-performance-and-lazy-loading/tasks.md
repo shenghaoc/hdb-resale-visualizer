@@ -24,8 +24,12 @@
   - the package test suite (record duration)
   - Outputs a JSON summary for diff comparison.
   - Acceptance: script runs in CI and produces reproducible output.
-  - **Done:** `scripts/perf-baseline.sh`; base CI runs it and uploads
-    `performance-baseline.json` as a 14-day artifact.
+  - **Done:** `scripts/perf-baseline.sh`; base CI runs it on `main` pushes and
+    `workflow_dispatch` (not on pull requests) and uploads
+    `performance-baseline.json` as a 14-day artifact. The script re-runs build,
+    bundle, test, typecheck and lint, all of which `vp run check` already ran,
+    so charging every PR for it would roughly double PR feedback time while
+    nothing compares the artifact against a previous run.
 
 ## Phase 2 — Filtering pipeline stabilization
 

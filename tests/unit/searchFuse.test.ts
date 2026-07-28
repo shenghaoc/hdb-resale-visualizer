@@ -60,4 +60,30 @@ describe("searchFuse", () => {
     expect(getFuseMatchedKeys(blocks, "BEDOX")).toEqual(new Set(["bedok", "bedoo"]));
     expect(getFuseMatchedKeys(blocks, "BEDOK STREET")).toEqual(new Set(["bedok", "bedoo"]));
   });
+
+  // Both search paths cap at 500. The structured index applies the cap while
+  // building, so an exact query on a field shared by more blocks keeps an
+  // arbitrary corpus-ordered subset rather than the most relevant one.
+  it("caps exact matches at the shared search limit", () => {
+    const blocks = Array.from({ length: 620 }, (_, index) =>
+      makeBlock(`woodlands-${index}`, "WOODLANDS"),
+    );
+
+    const matches = getFuseMatchedKeys(blocks, "WOODLANDS");
+
+    expect(matches?.size).toBe(500);
+    expect(matches?.has("woodlands-0")).toBe(true);
+    expect(matches?.has("woodlands-499")).toBe(true);
+    expect(matches?.has("woodlands-500")).toBe(false);
+  });
+
+  it("caps one-edit matches at the shared search limit", () => {
+    const blocks = Array.from({ length: 620 }, (_, index) =>
+      makeBlock(`woodland-${index}`, `WOODLAND${index % 2 === 0 ? "S" : "Z"}`),
+    );
+
+    // Neither WOODLANDS nor WOODLANDZ is an exact hit for WOODLANDX, so both
+    // one-edit buckets contribute until the cap stops the scan.
+    expect(getFuseMatchedKeys(blocks, "WOODLANDX")?.size).toBe(500);
+  });
 });
