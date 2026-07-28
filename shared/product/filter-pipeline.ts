@@ -10,7 +10,6 @@ import type { BlockSummary, FilterState } from "../data-types";
 import {
   type GeographicSearchIntent,
   type FilterEvaluationContext,
-  createFilterEvaluationContext,
   matchesFilter,
   matchesGeographicSearchIntent,
 } from "./filtering";
@@ -84,15 +83,13 @@ export function computeMapFilteredBlocks(
   fuseMatchedKeys: ReadonlySet<string> | null | undefined,
   selectedAddressKey: string | null,
   blocksByKey: Map<string, BlockSummary>,
-  currentYear: number,
+  evaluationContext: FilterEvaluationContext | null | undefined,
   passesAffordabilityForBlock: ((block: BlockSummary) => boolean | null) | null | undefined,
 ): BlockSummary[] {
-  // Pass explicit currentYear for lease filtering so blocks near the
-  // remaining-lease threshold are evaluated deterministically, not based
-  // on the host date.
-  const evaluationContext =
-    mapFilters.remainingLeaseMin !== null ? createFilterEvaluationContext(currentYear) : null;
-
+  // The caller owns the evaluation context (same contract as filterScopedBlocks)
+  // so blocks near the remaining-lease threshold are evaluated against one fixed
+  // year, not a host date re-read per call. filterScopedBlocks throws when
+  // remainingLeaseMin is set without a context.
   const scopedBlocks = filterScopedBlocks(
     blocks,
     mapFilters,

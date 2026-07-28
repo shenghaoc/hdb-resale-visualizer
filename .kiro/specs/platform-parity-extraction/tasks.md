@@ -7,16 +7,16 @@
 ## Phase 1 — Shared search profile module
 
 - [x] **T1.1** Create `shared/product/search-profile.ts`: export
-  `SearchProfile`, `SearchProfilePatch`, `MatchTier`, `DimensionMatch`,
-  `ProfileEvaluation` types and `evaluateBlockForProfile`,
-  `createProfileEvaluator`, `isProfileVisibilityActive`,
-  `applyProfileVisibility` functions. Import `MAX_LEASE_DURATION`
-  from `./lease`. All functions take explicit `currentYear`.
+  version 3 `SearchProfile`, `MatchTier`, `DimensionMatch`,
+  `ProfileEvaluation` types and `computeRemainingLeaseYears`,
+  `evaluateBlockForProfile`, `createProfileEvaluator`,
+  `hasCompletedSearchProfile` functions. Import `MAX_LEASE_DURATION`
+  from `./lease`. All year-dependent functions take explicit
+  `currentYear`.
   → `vp run typecheck` passes. (R1.1, R1.2, R1.3)
 
 - [x] **T1.2** Update `src/types/searchProfile.ts` to re-export
-  `SearchProfile` and `SearchProfilePatch` from
-  `@shared/product/search-profile`.
+  `SearchProfile` from `@shared/product/search-profile`.
   → Existing imports continue to work. (R9.1)
 
 - [x] **T1.3** Update `src/features/search-profile/matchProfile.ts`
@@ -31,8 +31,8 @@
   → `vp run typecheck` passes. (R4.1, R4.2)
 
 - [x] **T2.2** Create `shared/product/filtering.ts`: export
-  `GeographicSearchIntent`, `FilterEvaluationContext`, `AffordabilityMode`
-  types and `matchesFilter`, `resolveGeographicSearchIntent`,
+  `GeographicSearchIntent`, `FilterEvaluationContext` types and
+  `matchesFilter`, `resolveGeographicSearchIntent`,
   `matchesGeographicSearchIntent`, `getEffectiveMedianPrice`,
   `getEffectivePricePerSqmMedian`, `createFilterEvaluationContext`,
   `resetFilteringCachesForTests` functions. Import
@@ -51,11 +51,13 @@
 
 - [x] **T3.1** Create `shared/product/filter-pipeline.ts`: export
   `filterScopedBlocks`, `computeMapFilteredBlocks`, `hasResultScope`,
-  `hasMapMarkerScope`.
+  `hasMapMarkerScope`. Both filtering functions require a caller-owned
+  `FilterEvaluationContext` when remaining-lease filtering is active.
   → `vp run typecheck` passes. (R3.1–R3.3)
 
 - [x] **T3.2** Update `src/hooks/useFilterPipeline.ts` to use shared
-  pure functions for deterministic filter/map/list semantics.
+  pure functions for deterministic filter/map/list semantics and pass
+  the same memoized evaluation context to the list and map paths.
   → Existing tests pass. (R3.4)
 
 ## Phase 4 — Shared affordability helpers
@@ -75,30 +77,30 @@
 
 ## Phase 5 — Shared-core tests
 
-- [x] **T5.1** Create `tests/unit/shared-search-profile.test.ts`: 20
-  tests covering all shared search-profile functions with deterministic
-  `currentYear`.
+- [x] **T5.1** Create `tests/unit/shared-search-profile.test.ts` with
+  deterministic `currentYear` coverage for profile completeness,
+  remaining lease, evaluator outcomes, and retired-input non-effects.
   → `vp run test` passes. (R8.1)
 
-- [x] **T5.2** Create `tests/unit/shared-filtering.test.ts`: 32 tests
-  covering `matchesFilter` all dimensions, geographic search intent,
-  effective median price, cache reset.
+- [x] **T5.2** Create `tests/unit/shared-filtering.test.ts` with
+  coverage for all `matchesFilter` dimensions, geographic search
+  intent, effective median price, and cache reset.
   → `vp run test` passes. (R8.2)
 
-- [x] **T5.3** Create `tests/unit/shared-filter-pipeline.test.ts`: 10
-  tests covering `filterScopedBlocks`, `computeMapFilteredBlocks`,
-  scope detection.
+- [x] **T5.3** Create `tests/unit/shared-filter-pipeline.test.ts` with
+  coverage for `filterScopedBlocks`, `computeMapFilteredBlocks`,
+  explicit evaluation-context handling, and scope detection.
   → `vp run test` passes. (R8.3)
 
 ## Phase 6 — Golden fixtures and parity tests
 
 - [x] **T6.1** Expand `tests/fixtures/platform-parity/product-core-golden.json`
-  with search profile, stretch budget, commute proxy, filter, geographic
-  search, and effective price scenarios.
+  with search-profile, filter, lease-determinism, geographic-search,
+  and effective-price scenarios.
   → `vp run test` passes. (R7.1–R7.6)
 
-- [x] **T6.2** Expand `tests/unit/product-core-parity.test.ts` from 3
-  to 11 test cases covering all new golden fixture scenarios.
+- [x] **T6.2** Expand `tests/unit/product-core-parity.test.ts` to cover
+  all current golden fixture scenario groups.
   → `vp run test` passes. (R8.4)
 
 ## Phase 7 — Boundary checks
@@ -124,6 +126,7 @@
 - [x] **T9.1** `vp run format:check` — clean.
 - [x] **T9.2** `vp run lint` — clean.
 - [x] **T9.3** `vp run typecheck` — clean.
-- [x] **T9.4** `vp run test` — 148 files, 1378 tests pass.
+- [x] **T9.4** `vp run test` — 179 files, 1766 tests pass.
 - [x] **T9.5** `vp run build` — production build succeeds.
-- [x] **T9.6** `vp run check:boundaries` — passes (25 modules scanned).
+- [x] **T9.6** `vp run check:boundaries` — passes (26 reachable
+  shared modules and 189 `src/` modules checked).

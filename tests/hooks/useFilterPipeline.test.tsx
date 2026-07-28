@@ -2,6 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vite-plus/test";
 import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useBlockLoading } from "@/hooks/useBlockLoading";
+import { MAX_LEASE_DURATION, getCurrentYear } from "@/shared/lib/constants";
 import { DEFAULT_SEARCH_PROFILE } from "@/features/search-profile/searchProfile";
 import type { Manifest, FilterState, BlockSummary } from "@/types/data";
 import type { Translator } from "@/shared/lib/i18n";
@@ -188,6 +189,57 @@ describe("useFilterPipeline", () => {
     expect(result.current.mapFilteredBlocks.map((b) => b.addressKey)).toContain("block-1");
     expect(result.current.mapFilteredBlocks.map((b) => b.addressKey)).toContain("block-2");
     expect(result.current.mapFilteredBlocks.length).toBe(2);
+  });
+
+  it("applies the current-year remaining-lease cutoff to both result and map blocks", () => {
+    // Lease age is expressed relative to getCurrentYear() so the expectation
+    // survives a calendar rollover instead of pinning a literal year.
+    const currentYear = getCurrentYear();
+    const youngLeaseAgeYears = 10;
+    const oldLeaseAgeYears = 60;
+    const blocks = [
+      {
+        addressKey: "young-lease",
+        town: "BEDOK",
+        leaseCommenceRange: [currentYear - youngLeaseAgeYears, currentYear - youngLeaseAgeYears],
+        availableDateRange: ["2020-01", "2024-12"],
+      },
+      {
+        addressKey: "old-lease",
+        town: "BEDOK",
+        leaseCommenceRange: [currentYear - oldLeaseAgeYears, currentYear - oldLeaseAgeYears],
+        availableDateRange: ["2020-01", "2024-12"],
+      },
+    ] as unknown as BlockSummary[];
+
+    vi.mocked(useBlockLoading).mockReturnValue({
+      blocks,
+      loadError: null,
+      searchTruncated: false,
+      refinementUnsupported: false,
+      isLoading: false,
+      retry: vi.fn(),
+    });
+
+    // Between the two blocks' remaining lease (89 vs 39 years at MAX_LEASE_DURATION 99).
+    const cutoff = MAX_LEASE_DURATION - (youngLeaseAgeYears + oldLeaseAgeYears) / 2;
+
+    const { result } = renderHook(() =>
+      useFilterPipeline({
+        manifest,
+        rawFilters: { ...initialFilters, town: "BEDOK", remainingLeaseMin: cutoff },
+        userLocation: null,
+        savedVisible: false,
+        shortlistCount: 0,
+        searchProfile: DEFAULT_SEARCH_PROFILE,
+        t,
+      }),
+    );
+
+    expect(result.current.filteredBlocks.map((block) => block.addressKey)).toEqual(["young-lease"]);
+    expect(result.current.mapFilteredBlocks.map((block) => block.addressKey)).toEqual([
+      "young-lease",
+    ]);
   });
 
   it("uses only canonical filters for visible results, not hidden profile preferences", () => {
