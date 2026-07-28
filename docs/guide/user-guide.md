@@ -30,7 +30,7 @@ On **mobile** a bottom tab bar switches between Filters, Results, Check, Saved, 
 
 ### Quick search
 
-Type an address, block number, street name, town, MRT station, or postal code into the **search bar** in the header. The typeahead suggests matching results across all of these categories — select one to jump straight there.
+Type an address, block number, street name, town, MRT station, or postal code into the **search bar** in the header. The typeahead suggests matching results across all of these categories. Exact and minor-typo town, street, block, display-name, or postal-code queries use those field matches; broader free text falls back to fuzzy matching. Select a suggestion to jump straight there.
 
 ### Filter panel
 

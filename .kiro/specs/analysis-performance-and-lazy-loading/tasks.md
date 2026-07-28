@@ -14,15 +14,18 @@
   - map pan/zoom FPS during active filtering
   - Acceptance: script returns stable timing summary; can be run before/after
     any performance PR.
-  - **Done:** `tests/e2e/performance-trace.spec.ts`
+  - **Done:** `tests/e2e/performance-trace.spec.ts` records metrics in-page;
+    deterministic corpus/setup and measurement code is split into
+    `performance-fixture.ts` and `performance-metrics.ts`.
 
 - [x] **T1.2** Add a `scripts/perf-baseline.sh` script that runs:
-  - `npm run build` (record time)
-  - `npm run check:bundle` (record preload sizes)
-  - `npm run test -- --run` (record duration)
+  - the package build (record time)
+  - the package bundle check (record preload sizes)
+  - the package test suite (record duration)
   - Outputs a JSON summary for diff comparison.
   - Acceptance: script runs in CI and produces reproducible output.
-  - **Done:** `scripts/perf-baseline.sh`
+  - **Done:** `scripts/perf-baseline.sh`; base CI runs it and uploads
+    `performance-baseline.json` as a 14-day artifact.
 
 ## Phase 2 — Filtering pipeline stabilization
 
@@ -32,20 +35,33 @@
   caches are module-level.
 
 - [x] **T2.2** Stabilize the `t` dependency for geographic intent computation.
-  Extract `t("filters.nearMe")` into a `useMemo` that depends only on the
-  translated string value, not the translator function reference. Pass the
-  resolved string to `resolveGeographicSearchIntent`.
+  Resolve `t("filters.nearMe")` to a primitive label before the geographic
+  intent memos. Those memos depend on the label value rather than the
+  translator function reference.
   - Acceptance: `geographicIntent` and `mapGeographicIntent` do not
     recompute when `t` reference changes but string is identical. Add a test
     that verifies memo stability.
-  - **Done:** `nearMeLabel` useMemo added in `src/hooks/useFilterPipeline.ts`
+  - **Done:** `nearMeLabel` is passed to both geographic intent memos;
+    `useFilterPipeline.test.tsx` verifies their references stay stable when a
+    new translator returns the same label.
 
 - [x] **T2.3** Add regression tests for filter consistency under rapid state
   toggles. Test that toggling town/flatType/budget back and forth produces
   identical filtered sets.
-  - Acceptance: new test file passes in `npm run test`.
+  - Acceptance: new test file passes in `vp run test`.
   - **Done:** "filter consistency under rapid state toggles" describe block
     in `src/lib/__tests__/filtering.test.ts`
+
+- [x] **T2.4** Keep 10,000-block structured search within the R3.4 budget.
+  - Use a corpus-scoped, length-bucketed
+    town/street/block/display-name/postal-code index for exact and one-edit
+    queries; retain Fuse.js for broader free text.
+  - Reuse the latest result for the stable block corpus.
+  - Keep map filters referentially stable until the shared debounce settles.
+  - Acceptance: exact, typo, fuzzy-fallback, cache-invalidation, and map
+    debounce regressions pass; the 20-sample browser P95 is below 100ms.
+  - **Done:** focused tests pass; the isolated trace measured 26.5ms P95 and
+    the final two-worker pre-PR gate measured 83.5ms P95.
 
 ## Phase 3 — Map sync hook optimization (if profiling warrants)
 
@@ -62,7 +78,8 @@
   verifies no visible stutter during repeated pan/zoom with active filters.
   - Acceptance: trace shows >30fps during interaction; no frame drops >100ms.
   - **Done:** "map remains interactive during filter operations" test in
-    `tests/e2e/performance-trace.spec.ts`
+    `tests/e2e/performance-trace.spec.ts`; the final gate measured 63.8fps with
+    a 25.9ms maximum frame gap and asserted that the camera actually moved.
 
 ## Phase 4 — Render-path hygiene validation
 
@@ -79,7 +96,7 @@
   - no repeated comparable recompute on unchanged query
   - loading/error states remain responsive
   - result stays interactive while user edits price/filters
-  - Acceptance: new tests pass in `npm run test`.
+  - Acceptance: new tests pass in `vp run test`.
   - **Done:** `tests/unit/comparable-determinism.test.ts`
 
 ## Phase 5 — Comparable table virtualization (conditional)
@@ -112,25 +129,27 @@
 
 ## Phase 7 — Final validation and documentation
 
-- [ ] **T7.1** Re-run full validation suite:
-  - `npm run test` — all 1,205+ tests pass
-  - `npm run lint` — clean
-  - `npm run typecheck` — clean
-  - `npm run check:bundle` — within budget
-  - `npm run build` — succeeds
-  - Playwright performance trace — no regressions
+- [x] **T7.1** Re-run full validation suite:
+  - `vp run check:pr` — formatting, lint, typecheck, 1,782 tests, boundaries,
+    production build, bundle budget, and 76 Playwright tests pass.
+  - `vp run test:browser` — 8 Chromium Browser Mode tests pass.
+  - Playwright performance trace — 83.5ms filter P95 in the two-worker gate,
+    63.8fps map pan with 25.9ms maximum gap, 108.9ms listing verdict.
 
-- [ ] **T7.2** Compare before/after metrics using the T1.2 baseline script.
-  Publish deltas in PR description.
+- [x] **T7.2** Compare before/after metrics using the T1.2 baseline script.
+  - Final JSON: build 3,818ms; 8 preloads / 100,703 B gzip; 1,782 tests in
+    28,782ms; typecheck 1,003ms; lint 1,578ms.
+  - Same-tree isolated filter P95: 247.0ms before → 26.5ms final (−89.3%).
+  - Publish these deltas in the PR description.
 
-- [ ] **T7.3** Update `performance-audit.md` with final measured deltas and
-  any changes to heavy library decisions.
+- [x] **T7.3** Update `performance-audit.md` with final measured deltas and
+  heavy-library decisions.
 
 ## Task dependency summary
 
 ```
 T1.1, T1.2 (measurement) → enables T7.1, T7.2 (validation)
-T2.2 (translator fix) → standalone, no deps
+T2.2, T2.4 (filter-path stabilization) → standalone, no deps
 T2.3, T4.3 (regression tests) → standalone
 T3.3 (map perf check) → depends on T1.1 script
 T5.1, T5.2 (virtualization) → conditional on engine cap change

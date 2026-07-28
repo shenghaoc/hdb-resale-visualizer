@@ -32,3 +32,13 @@ jobs:
 
       - name: Run checks
         run: vp run check
+
+      - name: Capture performance baseline
+        run: ./scripts/perf-baseline.sh performance-baseline.json
+
+      - name: Upload performance baseline
+        uses: actions/upload-artifact@v7
+        with:
+          name: performance-baseline
+          path: performance-baseline.json
+          retention-days: 14

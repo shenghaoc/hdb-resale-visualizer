@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { E2E_BASE_URL, E2E_HOST, E2E_PORT } from "./tests/e2e/runtime-config";
 
 /**
  * E2E runs against the production build (vite preview), not the dev server.
@@ -8,10 +9,6 @@ import { defineConfig, devices } from "@playwright/test";
  * downloaded; in that case the webServer skips setup:fixtures + build and just
  * starts vite preview directly.
  */
-const E2E_HOST = "127.0.0.1";
-const E2E_PORT = 4173;
-const E2E_BASE_URL = `http://${E2E_HOST}:${E2E_PORT}`;
-
 const prebuilt = process.env.E2E_DIST_PREBUILT === "1" || process.env.E2E_DIST_PREBUILT === "true";
 
 export default defineConfig({

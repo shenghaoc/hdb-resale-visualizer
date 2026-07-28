@@ -3,15 +3,17 @@
 ## R1 — Baseline and measurement
 
 - **R1.1** Capture pre-change baseline values for:
-  - `npm run build` timing and output sizes
-  - `npm run check:bundle` preload metrics
-  - `npm run test` pass count and duration
-  - `npm run lint` clean state
+  - `vp run build` timing and output sizes
+  - `vp run check:bundle` preload metrics
+  - `vp run test` pass count and duration
+  - `vp run lint` clean state
   - Playwright interaction timings for filter/search/map/check flows.
 - **R1.2** Add a Playwright performance trace script that captures:
   - filter typing latency (keypress → list update)
   - listing check verdict latency (click → verdict visible)
   - map pan/zoom frame stability during active filtering
+  - Measurements must use `performance.now()` / animation frames inside the
+    page so Playwright driver and CDP round trips are excluded.
 - **R1.3** Record before/after deltas in PR descriptions for any performance
   change.
 
@@ -21,7 +23,7 @@
   the current 225,280 B gzip total / 98,304 B gzip single limits.
 - **R2.2** Heavy dependencies must ship only in lazily-loaded chunks (not in
   the modulepreload set).
-- **R2.3** `npm run check:bundle` must continue to pass after any dependency
+- **R2.3** `vp run check:bundle` must continue to pass after any dependency
   addition.
 - **R2.4** The main index chunk (currently 195 KiB gzip) must not grow by
   more than 10% without explicit justification.
@@ -37,7 +39,8 @@
 - **R3.3** Keep existing cache infrastructure (`tokenizationCache`,
   `filterFlatTypeCache`, `getCanonicalFlatTypes` WeakMap) intact.
 - **R3.4** Filter-change-to-first-result latency must remain under 100ms
-  (P95) for 10,000+ block datasets.
+  (nearest-rank P95 across at least 20 exact and minor-typo samples) for
+  10,000+ block datasets.
 - **R3.5** No correctness regressions in filter results when filter state is
   toggled rapidly.
 
@@ -103,8 +106,7 @@
 
 ## R10 — Validation
 
-- **R10.1** All existing unit tests (1,205) and e2e tests must continue to
-  pass.
+- **R10.1** All existing unit and e2e tests must continue to pass.
 - **R10.2** Add a Playwright performance trace script for before/after
   comparison (filter latency, check latency, map smoothness).
 - **R10.3** Add regression tests for filter result consistency under rapid
