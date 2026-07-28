@@ -12,12 +12,12 @@ search lived under `src/` and was therefore too coupled to the React web
 app for a future native/macOS app to reuse safely:
 
 1. **`src/features/search-profile/matchProfile.ts`** — profile matching
-   (flat type / lease / budget / commute) imported `getCurrentYear()`
+   (flat type / lease / budget) imported `getCurrentYear()`
    from `src/shared/lib/constants` and `MAX_LEASE_DURATION` from the
    same web-owned module.
 
-2. **`src/types/searchProfile.ts`** — `SearchProfile` and
-   `SearchProfilePatch` types owned only by `src/`.
+2. **`src/types/searchProfile.ts`** — the `SearchProfile` type was
+   owned only by `src/`.
 
 3. **`src/shared/lib/filtering.ts`** — filter predicate, geographic
    search intent, station matching, coordinate parsing, distance
@@ -63,19 +63,23 @@ platform boundaries).
 Platform-neutral search profile types and matching logic.
 
 **Exports:**
-- `SearchProfile`, `SearchProfilePatch` types
+- Version 3 `SearchProfile` type
 - `MatchTier`, `DimensionMatch`, `ProfileEvaluation` types
 - `computeRemainingLeaseYears(leaseCommenceRange, currentYear)`
 - `createProfileEvaluator(profile, currentYear)` → reusable evaluator
 - `evaluateBlockForProfile(block, profile, currentYear)`
-- `isProfileVisibilityActive(profile)`
-- `applyProfileVisibility(blocks, profile, currentYear)`
+- `hasCompletedSearchProfile(profile)`
 
-All functions take `currentYear` as an explicit parameter (no
-`getCurrentYear()` call). The web adapter supplies the default.
+Every function that depends on the current year takes `currentYear` as
+an explicit parameter (no `getCurrentYear()` call). The web adapter
+supplies the default. Recommendation matching evaluates only flat type,
+minimum remaining lease, and maximum budget; its result is `strong` or
+`weak`. Retired commute inputs and local finance inputs do not affect
+the recommendation tier.
 
-**Imports:** `BlockSummary` from `../data-types`, `MAX_LEASE_DURATION`
-from `./lease`. No React, no browser globals.
+**Imports:** `BlockSummary` from `../data-types`,
+`getEffectiveMedianPrice` from `./filtering`, and
+`MAX_LEASE_DURATION` from `./lease`. No React, no browser globals.
 
 ### 2. New Module: `shared/product/filtering.ts`
 
@@ -85,12 +89,16 @@ effective median price helpers.
 **Exports:**
 - `GeographicSearchIntent` type
 - `FilterEvaluationContext` type
-- `AffordabilityMode` type
-- `matchesFilter(block, filters, intent?, profile?, fuseKeys?, ctx?, passesAffordability?)`
+- `matchesFilter(block, filters, intent?, fuseKeys?, ctx?, passesAffordability?)`
 - `resolveGeographicSearchIntent(query, blocks, radius, userLocation?, nearMeQuery?)`
 - `matchesGeographicSearchIntent(block, intent)`
+- `resolveEffectiveMedianPrice(block, flatType)`
 - `getEffectiveMedianPrice(block, flatType)`
+- `resolveEffectivePricePerSqmMedian(block, flatType)`
 - `getEffectivePricePerSqmMedian(block, flatType)`
+- `resolveEffectiveBlockCohort(block, flatType)`
+- `getCohortAlignedMedianPrice(block, flatType)`
+- `getCohortAlignedLatestMonth(block, flatType)`
 - `createFilterEvaluationContext(currentYear)`
 - `resetFilteringCachesForTests()`
 
@@ -102,8 +110,9 @@ cached `passesAffordabilityMode` wrapper.
 
 All caches are module-level and resettable for deterministic tests.
 
-**Imports:** `BlockSummary`, `Coordinates`, `FilterState` from
-`../data-types`, `canonicalFlatType` from `../filter-options`,
+**Imports:** `BlockFlatTypeCohort`, `BlockSummary`, `Coordinates`,
+`FilterState` from `../data-types`, `canonicalFlatType` from
+`../filter-options`,
 `resolveMultilingualSearchAliases` from `./search-aliases`,
 `MAX_LEASE_DURATION` from `./lease`.
 
@@ -113,13 +122,17 @@ Pure filter pipeline functions extracted from `useFilterPipeline`.
 
 **Exports:**
 - `filterScopedBlocks(blocks, filters, intent, profile, fuseKeys, ctx, passesAffordabilityFn)`
-- `computeMapFilteredBlocks(blocks, filters, intent, profile, searchProfile, fuseKeys, selectedKey, blocksByKey, currentYear, passesAffordabilityFn)`
+- `computeMapFilteredBlocks(blocks, filters, intent, profile, fuseKeys, selectedKey, blocksByKey, ctx, passesAffordabilityFn)`
 - `hasResultScope(town, search, intent, selectedKey)`
 - `hasMapMarkerScope(town, search, intent)`
 
 These are the deterministic cores of the React hook's filtering logic.
 The hook becomes an adapter that feeds debounced/URL-resolved inputs
-into these pure functions.
+into these pure functions. It creates one memoized
+`FilterEvaluationContext` when the remaining-lease filter is active
+and passes that same context to list and map filtering. Both shared
+filter functions reject an active remaining-lease filter without an
+explicit context instead of reading the host clock.
 
 ### 4. New Module: `shared/product/search-aliases.ts`
 
@@ -164,30 +177,32 @@ rule: must not import from `src/`, must not use Vite aliases (`@/`,
 
 ### New Shared-Core Tests
 
-1. `tests/unit/shared-search-profile.test.ts` — 20 tests covering
-   `computeRemainingLeaseYears`, `createProfileEvaluator`,
-   `evaluateBlockForProfile`, `isProfileVisibilityActive`,
-   `applyProfileVisibility` with deterministic `currentYear`.
+1. `tests/unit/shared-search-profile.test.ts` — tests covering
+   `hasCompletedSearchProfile`, `computeRemainingLeaseYears`,
+   `createProfileEvaluator`, and `evaluateBlockForProfile` with
+   deterministic `currentYear`, including retired commute and local
+   finance non-effects.
 
-2. `tests/unit/shared-filtering.test.ts` — 32 tests covering
+2. `tests/unit/shared-filtering.test.ts` — tests covering
    `matchesFilter` (town, budget, lease, area, MRT, date, flat type,
    affordability, text search), `resolveGeographicSearchIntent`
    (station, coordinate, near-me, town suppression),
    `matchesGeographicSearchIntent`, `getEffectiveMedianPrice`,
    `getEffectivePricePerSqmMedian`, cache reset.
 
-3. `tests/unit/shared-filter-pipeline.test.ts` — 10 tests covering
+3. `tests/unit/shared-filter-pipeline.test.ts` — tests covering
    `filterScopedBlocks`, `computeMapFilteredBlocks` (selected-address
-   inclusion), `hasResultScope`, `hasMapMarkerScope`.
+   inclusion and explicit evaluation-context handling),
+   `hasResultScope`, `hasMapMarkerScope`.
 
 ### Expanded Golden Fixtures
 
 `tests/fixtures/platform-parity/product-core-golden.json` expanded
 with scenarios for:
-- Search profile tiers (strong, good, stretch, weak)
-- Stretch budget (within, beyond, primary)
-- Commute proxy (pass, stretch, fail, no-data)
-- Filter dimensions (town, flat type, budget, lease, MRT, date)
+- Search profile tiers (strong and weak across flat type, budget, and lease)
+- Retired commute/MRT inputs not affecting recommendation tiers
+- Filter dimensions (town, flat type, budget, lease, and MRT)
+- Lease determinism across explicit evaluation years
 - Geographic search (station match/no-match, coordinate match/no-match)
 - Effective median price (flat-type-specific, fallback, no-filter)
 
@@ -197,8 +212,8 @@ with scenarios for:
   adapter re-exports.
 - `tests/unit/filtering.test.ts` — continues to pass via web adapter.
 - `tests/unit/search-profile.test.ts` — unchanged.
-- `tests/unit/product-core-parity.test.ts` — expanded from 3 to 11
-  test cases covering all new shared modules.
+- `tests/unit/product-core-parity.test.ts` — covers all current golden
+  fixture scenario groups across the shared modules.
 
 ## Risks / Trade-offs
 
@@ -208,10 +223,10 @@ with scenarios for:
   10,000+ block filter loop. A future native app should add its own
   caching if needed.
 
-- **`_affordabilityProfile` parameter in shared `matchesFilter`**: the
-  shared predicate accepts but ignores the profile parameter (uses
-  pre-computed `passesAffordability` boolean instead). This keeps the
-  signature compatible with the web adapter while staying pure.
+- **Pre-computed affordability input in shared `matchesFilter`**: the
+  shared predicate accepts a `passesAffordability` boolean instead of
+  an affordability profile. This keeps the shared predicate independent
+  of the web adapter's caching layer.
 
 - **`near me` without userLocation**: returns `null` immediately
   instead of falling through to station matching, preventing confusing
