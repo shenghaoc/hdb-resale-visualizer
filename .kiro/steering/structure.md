@@ -80,7 +80,7 @@ New buyer workflows should land under the owning feature. Not every remaining mu
 - Cross-runtime code used by scripts, Worker/API, and frontend belongs in `shared/`, not `src/`.
 - Node-executed scripts must not import from `src/`; `pnpm check:boundaries` enforces this.
 - Runtime API modules under `functions/` should not import React UI code or browser-only modules.
-- Feature-internal files must not import their own feature barrel (`@/features/<name>`); use direct relative or explicit module paths. This one is convention, not enforced by the checker.
+- Features and entities have no barrels: every consumer imports the explicit module path (`@/features/<name>/<module>`, `@/entities/<name>/<module>`). Add a barrel only when several submodules are genuinely consumed together and it measurably reduces import noise; a barrel with no consumers is dead export surface. If one is ever added, feature-internal files must still import direct relative or explicit module paths rather than their own barrel. Both rules are convention, not enforced by the checker.
 - The boundary checker enforces the entity and shared-ui allowlists above and detects runtime import cycles under `src/` (type-only edges are excluded). Direction rules apply to type-only imports too; only the framework-package rule is runtime-only.
 
 ## Migration Guidance

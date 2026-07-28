@@ -84,6 +84,10 @@ THEN barrel exports may be added.
 WHEN imports are already explicit and readable,
 THEN avoid new barrels to reduce hidden coupling.
 
+WHEN a barrel has no consumers,
+THEN it SHALL be removed rather than kept as a speculative public API,
+since an unconsumed barrel is dead export surface that reduces no import noise.
+
 ### R7 — Test locality
 
 WHEN feature/domain logic is moved,
