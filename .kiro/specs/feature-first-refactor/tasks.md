@@ -98,7 +98,8 @@
   - Imports are explicit. The `index.ts` barrels under `src/features/*` and
     `src/entities/*` had no consumers and have been removed, matching the
     `src/shared-ui` decision in task 11.3 (design rule 4, R6). The only surviving
-    barrel under `src/` is `src/shared/lib/i18n/index.ts`, which 71 consumers use.
+    barrel under `src/` is `src/shared/lib/i18n/index.ts`, with 71 direct import
+    declarations across 68 modules.
 - [x] 5.4 Migrate tests near modules; keep fixture use unchanged.
 - [x] 5.5 Validate:
   - `npm run test tests/unit/town-profile.test.ts tests/unit/town-compare.test.ts tests/unit/town-recommendations.test.ts`
