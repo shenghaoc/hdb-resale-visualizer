@@ -187,7 +187,7 @@ CLOUDFLARE_D1_DATABASE_ID=...
 
 - **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `vp run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
 - **CI** (`.github/workflows/ci.yml`): `vp install` then `vp run check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
-- **Data refresh** (`.github/workflows/refresh-data.yml`): nightly sync into D1 via `vp run sync-data`. The Worker picks up new data on the next request — no app redeploy needed for data-only changes.
+- **Data refresh**: disabled. The nightly `refresh-data.yml` workflow was removed because data.gov.sg rate-limited the sync and Cloudflare has announced strict D1 rate enforcement. The dataset in D1 is frozen at its last successful sync; `vp run sync-data` can still be run manually against remote D1 if a one-off refresh is ever needed.
 
 ## Notes
 

@@ -4,7 +4,7 @@
 The application separates **build-time ingestion** (Node + GitHub Actions) from **runtime serving** (Cloudflare Pages Functions + D1):
 - **Frontend**: React 19 SPA. Only talks to `/api/*` (same-origin Pages Functions).
 - **Runtime API**: `functions/api/*` Pages Functions, backed by the `DB` D1 binding.
-- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion. It runs nightly via `.github/workflows/refresh-data.yml` and pushes directly into D1 via the Cloudflare D1 HTTP API.
+- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required.
 
 ## Data Pipeline Flow (`scripts/sync-data.ts`)
 1. **Ingestion**: Fetches raw data from official Singapore sources (data.gov.sg, LTA).
