@@ -13,6 +13,7 @@ import {
   type CandidateListing,
   type ListingComparableSet,
   type TransactionRow,
+  MIN_COMPARABLES,
   buildComparableSet,
   parseStoreyMidpoint,
 } from "../../shared/comparable-engine";
@@ -41,6 +42,33 @@ const candidateListingSchema = z.object({
 
 // Body size limit: 8 KB is more than enough for a CandidateListing payload.
 const MAX_BODY_BYTES = 8192;
+/** Recency window for the winning widening pass. Narrower scopes are merged
+ *  in separately so older same-block rows are not dropped by this LIMIT. */
+const COMPARABLE_FETCH_LIMIT = 150;
+
+function transactionRowKey(row: TransactionRow): string {
+  return (
+    row.id ||
+    `${row.month}|${row.town}|${row.block}|${row.streetName}|${row.flatType}|${row.resalePrice}|${row.floorAreaSqm}`
+  );
+}
+
+/** Keep `primary` rows first, then append extras that the recency LIMIT omitted. */
+function mergeTransactionRows(
+  primary: TransactionRow[],
+  extras: TransactionRow[],
+): TransactionRow[] {
+  if (extras.length === 0) return primary;
+  const seen = new Set<string>();
+  const merged: TransactionRow[] = [];
+  for (const row of [...primary, ...extras]) {
+    const key = transactionRowKey(row);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(row);
+  }
+  return merged;
+}
 
 function isValidLeaseCommenceYear(
   leaseCommenceYear: number | null,
@@ -190,40 +218,68 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     ),
   ]);
 
-  // 3. Determine which pass wins and fetch the data
-  let dataRows: TransactionRow[] = [];
-
-  if (sameBlockCount >= 8) {
-    dataRows = await queryRows(
+  // 3. Fetch the narrowest pass that meets MIN_COMPARABLES, then merge in any
+  // narrower-scope rows the recency LIMIT would otherwise drop. Quiet blocks
+  // often have a handful of older same-block sales while the town has 150+
+  // newer transactions; scoring only the recent town window would hide the
+  // listing's own evidence and skew the asking-price verdict.
+  const fetchBlockRows = () =>
+    queryRows(
       env.DB,
-      "SELECT * FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3 ORDER BY month DESC LIMIT 150",
+      `SELECT * FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3 ORDER BY month DESC LIMIT ${COMPARABLE_FETCH_LIMIT}`,
       parsed.town,
       parsed.block,
       parsed.flatType,
     );
-  } else if (sameStreetCount >= 8) {
-    dataRows = await queryRows(
+  const fetchStreetRows = () =>
+    queryRows(
       env.DB,
-      "SELECT * FROM transactions WHERE street_name = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 150",
+      `SELECT * FROM transactions WHERE street_name = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT ${COMPARABLE_FETCH_LIMIT}`,
       parsed.streetName,
       parsed.flatType,
     );
-  } else if (sameTownCount > 0) {
-    dataRows = await queryRows(
+  const fetchTownRows = () =>
+    queryRows(
       env.DB,
-      "SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 150",
+      `SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT ${COMPARABLE_FETCH_LIMIT}`,
       parsed.town,
       parsed.flatType,
     );
+
+  let sameBlockRows: TransactionRow[] = [];
+  let sameStreetRows: TransactionRow[] = [];
+  let sameTownRows: TransactionRow[] = [];
+
+  if (sameBlockCount >= MIN_COMPARABLES) {
+    sameBlockRows = await fetchBlockRows();
+    sameStreetRows = sameBlockRows.filter((row) => row.streetName === parsed.streetName);
+    sameTownRows = sameBlockRows;
+  } else if (sameStreetCount >= MIN_COMPARABLES) {
+    const [blockRows, streetRows] = await Promise.all([
+      sameBlockCount > 0 ? fetchBlockRows() : Promise.resolve([]),
+      fetchStreetRows(),
+    ]);
+    sameBlockRows = blockRows;
+    sameStreetRows = mergeTransactionRows(streetRows, blockRows);
+    sameTownRows = sameStreetRows;
+  } else if (sameTownCount > 0) {
+    const [blockRows, streetRows, townRows] = await Promise.all([
+      sameBlockCount > 0 ? fetchBlockRows() : Promise.resolve([]),
+      sameStreetCount > 0 ? fetchStreetRows() : Promise.resolve([]),
+      fetchTownRows(),
+    ]);
+    sameBlockRows = blockRows;
+    sameStreetRows = mergeTransactionRows(streetRows, blockRows);
+    sameTownRows = mergeTransactionRows(townRows, sameStreetRows);
   }
-  // If all counts are 0, dataRows stays empty → buildComparableSet handles it.
+  // If all counts are 0, the three arrays stay empty → buildComparableSet handles it.
 
   // 4. Score and build the result
   const result = buildComparableSet({
     candidate: parsed,
-    sameBlockRows: dataRows.filter((r) => r.block === parsed.block && r.town === parsed.town),
-    sameStreetRows: dataRows.filter((r) => r.streetName === parsed.streetName),
-    sameTownRows: dataRows,
+    sameBlockRows,
+    sameStreetRows,
+    sameTownRows,
   });
 
   // 5. Apply time adjustment if requested (after scoring, before response)
