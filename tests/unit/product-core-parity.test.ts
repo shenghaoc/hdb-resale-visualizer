@@ -7,6 +7,7 @@ import {
   findComparableTransactions,
   getBudgetMatchSignal,
   isBlockAgeEligible,
+  maxLeaseCommenceYear,
   minRequiredRemainingLease,
   performListingCheck,
   remainingLeaseYears,
@@ -73,6 +74,9 @@ describe("shared product core golden parity", () => {
     }
     expect(minRequiredRemainingLease(55)).toBe(40);
     expect(remainingLeaseYears(1968, 2026)).toBe(41);
+    expect(remainingLeaseYears(2026, 2026)).toBe(99);
+    expect(remainingLeaseYears(1927, 2026)).toBe(0);
+    expect(maxLeaseCommenceYear(2026)).toBe(2126);
     expect(isBlockAgeEligible({ leaseCommenceRange: [2026 - 60, 2026 - 5] }, 35, 2026)).toBe(true);
   });
 

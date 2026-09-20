@@ -41,6 +41,12 @@ describe("suggest lib", () => {
     expect(normalizeSuggestQuery("AMK")).toBe("ang mo kio");
   });
 
+  it("strips CJK characters so a Chinese-only query cannot match Latin indexes", () => {
+    expect(normalizeSuggestQuery("宏茂桥")).toBe("");
+    expect(normalizeSuggestQuery("宏茂桥 123")).toBe("123");
+    expect(parseSuggestRequest(new URL("http://localhost/api/suggest?q=宏茂桥")).ok).toBe(false);
+  });
+
   it("ranks exact town before substring", async () => {
     const db = mockDb({
       "DISTINCT town": async () => ({
