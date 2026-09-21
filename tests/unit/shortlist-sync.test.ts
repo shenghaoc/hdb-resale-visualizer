@@ -119,4 +119,35 @@ describe("parseStoredItems", () => {
     expect(parsed[0]?.buyerOpeningOffer).toBeUndefined();
     expect(parsed[0]?.buyerNotes).toBe("legacy note");
   });
+
+  it("migrates legacy noise/transport aliases and drops non-finite prices", () => {
+    const parsed = parseStoredItems(
+      JSON.stringify([
+        {
+          ...validItem("legacy-notes"),
+          noise: "nearby expressway",
+          transport: "bus 30",
+          targetPrice: Number.POSITIVE_INFINITY,
+        },
+      ]),
+    );
+
+    expect(parsed).toHaveLength(1);
+    expect(parsed[0]?.noiseNotes).toBe("nearby expressway");
+    expect(parsed[0]?.transportNotes).toBe("bus 30");
+    expect(parsed[0]?.targetPrice).toBeNull();
+  });
+
+  it("prefers explicit noiseNotes over the legacy noise alias", () => {
+    const parsed = parseStoredItems(
+      JSON.stringify([
+        {
+          ...validItem("both-noise"),
+          noise: "legacy",
+          noiseNotes: "canonical",
+        },
+      ]),
+    );
+    expect(parsed[0]?.noiseNotes).toBe("canonical");
+  });
 });
