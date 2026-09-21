@@ -14,5 +14,5 @@
 ## Components & Patterns
 - **Cards**: Use `Card` with `size="sm"` and `bg-muted/20` for metadata grouping.
 - **Badges**: Use `Badge` for quick-read facts (Town, Price Rank).
-- **Formatters**: Always use the standard formatters in `src/lib/format.ts` for currency, meters, and lease values.
+- **Formatters**: Always use the standard formatters in `src/shared/lib/format.ts` for currency, meters, and lease values.
 - **Density**: Headers should be compact. Use `col-span-full` in grid headers to ensure text breathing room.

@@ -74,26 +74,34 @@ Install dependencies:
 vp install
 ```
 
-For pure UI iteration that does not require live data, start Vite:
+There are three local data modes. Mixing them up is the usual cause of empty maps and `/api/*` 404s.
 
-```bash
-vp dev
-```
+| Mode          | Command                                                       | Data                                                                                  | Use when                                       |
+| ------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| UI-only       | `vp dev`                                                      | No API. `/api/*` 404s.                                                                | Component / CSS / in-app `/docs` work          |
+| E2E / preview | `vp run setup:fixtures` then `vp run build` then `vp preview` | JSON from `tests/fixtures/public-data/` copied into `public/api/` (no `.json` suffix) | Playwright, or a production-like UI without D1 |
+| Full stack    | `vp run db:migrate:local` then `vp run dev:functions`         | Wrangler local D1 emulator                                                            | Worker, D1, or live `/api/*` work              |
 
-This serves the SPA on `http://localhost:5173`. `/api/*` requests will 404
-because the Worker API is not running — wire mock data per spec or use the full
-local stack below.
+`vp dev` serves the SPA on `http://localhost:5173`. Docs under `/docs` work here because they are bundled markdown, not D1.
 
-For a full local stack (built UI + Worker API + local D1 emulator):
+`vp run setup:fixtures` is **not** a D1 seed. It stages fixture JSON for `vite preview` / Playwright. Those files have no production effect because the Worker handlers win over static `/api/*` fallbacks.
+
+`vp run db:migrate:local` creates schema only. The emulator starts empty — there is no JSON→D1 importer in this repo. `wrangler d1 execute hdb-resale --local --file=<sql>` can load SQL you supply; `tests/fixtures/public-data/` is JSON, not that SQL. `vp run sync-data` always writes **remote** D1 via the Cloudflare HTTP API and does not fill the local emulator.
 
 ```bash
 vp run db:migrate:local     # one-time: create the local D1 schema
 vp run dev:functions        # builds, then runs `wrangler dev` against local D1
 ```
 
-You can seed the local D1 from `tests/fixtures/public-data/` using `wrangler d1 execute hdb-resale --local --file=<sql>` if needed.
+### Manual remote D1 refresh
 
-Run `vp run sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
+Nightly `refresh-data.yml` is gone (data.gov.sg rate limits and upcoming D1 rate enforcement). Production data stays at the last successful sync until a maintainer runs:
+
+```bash
+vp run sync-data
+```
+
+That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID`, plus data.gov.sg / OneMap credentials listed under Environment. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and updates `manifest.generatedAt` / `sources.lastUpdatedAt` — the values the header shows as **Data through** / **Synced**.
 
 ## Scripts
 
@@ -157,13 +165,15 @@ run them explicitly or via CI.
 5. Loads existing geocodes from the `geocode_cache` D1 table; only addresses missing a cached row are sent to OneMap. New rows are upserted back to D1 in batches of 250.
 6. Same one-time pattern for OneMap walking-time routes via the `walking_time_cache` table.
 7. Computes block-level summaries, address details, comparisons, and town × flat-type trend aggregates.
-8. Writes generated artifacts back to D1 (`manifest`, `blocks`, `block_details`, `comparisons`, `town_flat_type_trends`, `mrt_geojson`).
+8. Writes generated artifacts back to D1 (`manifest`, `blocks`, `block_details`, `comparisons`, `town_flat_type_trends`, `mrt_geojson`, `transactions`).
 
 The Worker routes requests to the handlers under `functions/api/*`, which read
-those tables on every request. The forward-only schema is the ordered set of
-files in `migrations/*.sql`; later migrations add normalized transactions,
-search indexes, shortlist storage, and per-flat-type cohort metadata to the
-initial schema.
+those tables on every request. Request contracts (including search, suggest,
+comparable transactions, and shortlist sync) live in
+[docs/architecture/artifact-contracts.md](docs/architecture/artifact-contracts.md).
+The forward-only schema is the ordered set of files in `migrations/*.sql`;
+later migrations add normalized transactions, search indexes, shortlist
+storage, and per-flat-type cohort metadata to the initial schema.
 
 ## Environment
 
@@ -206,3 +216,16 @@ Run `vp run check:boundaries` to see script/runtime import violations. Common fi
 You are running `vp dev` (Vite only). Switch to `vp run dev:functions` to build
 and start `wrangler dev` with the D1 binding, or run the unit tests against
 fixtures instead.
+
+### Full-stack map or results are empty
+
+`vp run db:migrate:local` only applies `migrations/*.sql`. Local D1 has no
+blocks until you import SQL yourself. For UI with sample data, use
+`vp run setup:fixtures` + `vp preview` (static `/api` files) rather than
+expecting the JSON fixtures to appear in Wrangler D1.
+
+### `vp` vs `pnpm`
+
+Package scripts are defined in `package.json` and work with either
+`vp run <script>` or `pnpm run <script>`. Docs and CI use `vp` (`vp install`,
+`vp run check`, `vp run check:pr`). `vp run check:pr` is the pre-PR gate.

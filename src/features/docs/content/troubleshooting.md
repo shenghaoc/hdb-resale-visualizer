@@ -19,11 +19,11 @@ If you see "Static data missing" or a load error:
 - Check your connection and **reload** the page.
 - If you are on a flaky network, the app may have cached a partial state — a reload usually recovers it.
 - If the error persists, the data service itself may be down; try again later. The app never falls back to made-up data.
-- Developers running locally: the API needs the full-stack dev server (`pnpm dev:functions`), not the UI-only one.
+- Developers running locally: the API needs the full-stack dev server (`vp run dev:functions`), not the UI-only one (`vp dev`). See the README local-development notes.
 
 ## Stale data or stale cache
 
-- The dataset updates **nightly**; the latest transaction month is shown in the header. A sale from this week will not appear yet.
+- The header shows the latest month in this copy and, when available, when that copy was last synced. The live dataset is **not** refreshed every night, and HDB publication itself can lag the sale by weeks — a sale from this week will not appear yet.
 - The app is a PWA and caches aggressively for offline use. If the header date looks older than it should: reload once (the service worker updates itself), or close all tabs of the app and reopen.
 - As a last resort, clear the site's data in your browser settings. **Warning:** this also deletes a local-only shortlist — generate a [sync code](/docs/shortlisting) first.
 

@@ -88,6 +88,13 @@ describe("docs search index", () => {
     expect(headings).toContain("No results / empty map");
     expect(headings).toContain("Stale data or stale cache");
   });
+
+  it("does not claim a nightly data refresh", () => {
+    for (const section of DOCS_SECTIONS) {
+      expect(section.content.toLowerCase()).not.toMatch(/refreshed nightly/);
+      expect(section.content.toLowerCase()).not.toMatch(/updates \*\*nightly\*\*/);
+    }
+  });
 });
 
 describe("docs routing helpers", () => {

@@ -34,7 +34,7 @@ The shortlist lives in your browser by default and works fully offline. To use i
 2. Generate a **sync code** — a short anonymous code, no account or email.
 3. Enter the same code on another device.
 
-The sync code is the only identifier; anyone who has it can read the shortlist, so treat it like a private link. Notes you add to saved blocks are included in synced data.
+The sync code is the only identifier; anyone who has it can read the shortlist, so treat it like a private link. Notes you add to saved blocks are included in synced data. A cloud copy that goes **180 days** without an update is removed from the server. Turning sync off on a device does not delete that server row immediately — keep the code if you still need it.
 
 ## Things to keep in mind
 
