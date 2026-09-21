@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { onRequestGet as detailsHandler } from "../../functions/api/details/[addressKey]";
 import { onRequestGet as comparisonsHandler } from "../../functions/api/comparisons/[addressKey]";
 import { onRequestGet as manifestHandler } from "../../functions/api/manifest";
@@ -6,21 +6,15 @@ import { onRequestGet as mrtStationsHandler } from "../../functions/api/mrt-stat
 import { onRequestGet as mrtExitsHandler } from "../../functions/api/mrt-exits";
 import { onRequestGet as blocksByTownHandler } from "../../functions/api/blocks/[town]";
 
-type PagesGetHandler = (ctx: {
-  env: { DB: unknown };
-  params: Record<string, string | string[]>;
-  request: Request;
-}) => Promise<Response>;
-
-function pagesCtx(
-  handler: PagesGetHandler,
+async function pagesCtx(
+  handler: (ctx: never) => Response | Promise<Response>,
   opts: { db: unknown; params?: Record<string, string | string[]> },
-) {
+): Promise<Response> {
   return handler({
     request: new Request("http://localhost/api"),
     env: { DB: opts.db },
     params: opts.params ?? {},
-  } as unknown as Parameters<PagesGetHandler>[0]);
+  } as never);
 }
 
 function jsonFirstDb(row: { json: string } | null, options: { throwOnRead?: boolean } = {}) {
@@ -38,6 +32,14 @@ function jsonFirstDb(row: { json: string } | null, options: { throwOnRead?: bool
     prepare: () => statement,
   };
 }
+
+beforeEach(() => {
+  vi.spyOn(console, "error").mockImplementation(() => {});
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("JSON-blob GET handlers", () => {
   it.each([
