@@ -1,6 +1,7 @@
 import { API_BASE_PATH } from "@/shared/lib/constants";
 import { parseShortlist } from "./shortlist";
 import { SHORTLIST_WRITE_RATE_LIMIT_PERIOD_SEC } from "@shared/shortlist-limits";
+import { isShortlistApiPath } from "@shared/pwa-api-cache";
 import type { ShortlistItem } from "@/types/data";
 
 /**
@@ -46,6 +47,44 @@ export function isRetriableSyncError(error: unknown): boolean {
 type PushResult = { syncCode: string; items: ShortlistItem[] };
 
 /**
+ * Drop previously cached shortlist GETs before a pull.
+ *
+ * Installed service workers may still hold NetworkFirst entries from before
+ * shortlist paths were excluded. Hydration pushes whatever pull returns, so
+ * those entries have to be gone before the request starts.
+ */
+async function purgeCachedShortlistResponses(): Promise<void> {
+  if (typeof caches === "undefined") return;
+
+  let names: readonly string[];
+  try {
+    names = await caches.keys();
+  } catch {
+    return;
+  }
+
+  await Promise.all(
+    names.map(async (name) => {
+      const cache = await caches.open(name);
+      const requests = await cache.keys();
+      await Promise.all(
+        requests.map(async (request) => {
+          let pathname: string;
+          try {
+            pathname = new URL(request.url).pathname;
+          } catch {
+            return;
+          }
+          if (isShortlistApiPath(pathname)) {
+            await cache.delete(request);
+          }
+        }),
+      );
+    }),
+  );
+}
+
+/**
  * Push items to the cloud. With no `syncCode` the server mints one; with a
  * code it merges into the stored row. Returns the server's merged set.
  */
@@ -83,7 +122,9 @@ export async function pushShortlist(
 
 /** Fetch the shortlist stored for a sync code. Throws if the code is unknown. */
 export async function pullShortlist(syncCode: string): Promise<ShortlistItem[]> {
+  await purgeCachedShortlistResponses();
   const response = await fetch(`${SHORTLIST_ENDPOINT}/${encodeURIComponent(syncCode)}`, {
+    cache: "no-store",
     headers: { accept: "application/json" },
   });
 
