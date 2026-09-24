@@ -1,7 +1,10 @@
 import { describe, expect, it, vi } from "vite-plus/test";
+import type { D1Client } from "../../scripts/lib/sync/d1";
 import {
   buildRoutingCacheKey,
+  loadRoutingCache,
   routeMissingPairs,
+  saveRoutingCacheEntries,
   type RoutingCacheEntry,
   type RoutingCacheFile,
 } from "../../scripts/lib/sync/routing";
@@ -149,5 +152,121 @@ describe("routeMissingPairs", () => {
     );
 
     expect(maxInFlight).toBeLessThanOrEqual(3);
+  });
+
+  it("keeps only the first five failure samples and labels non-Error throws", async () => {
+    const pairs = Array.from({ length: 6 }, (_, index) => ({
+      key: `k${index}`,
+      start: { lat: 1.3, lng: 103.8 },
+      end: { lat: 1.4, lng: 103.9 },
+    }));
+    const fetchFn = vi.fn(async () => {
+      const index = fetchFn.mock.calls.length - 1;
+      if (index === 0) {
+        throw "socket reset";
+      }
+      throw new Error(`timeout ${index}`);
+    });
+
+    const result = await routeMissingPairs(
+      {
+        ...baseOptions,
+        pairs,
+        cache: makeCache(),
+        concurrency: 1,
+        flushCacheFn: vi.fn().mockResolvedValue(undefined),
+      },
+      { fetchWalkingRouteFn: fetchFn },
+    );
+
+    expect(result.failedCount).toBe(6);
+    expect(result.routedCount).toBe(0);
+    expect(result.failureSamples).toEqual([
+      "k0: unknown error",
+      "k1: timeout 1",
+      "k2: timeout 2",
+      "k3: timeout 3",
+      "k4: timeout 4",
+    ]);
+  });
+
+  it("surfaces a walking-time cache flush failure instead of reporting success", async () => {
+    const pairs = [{ key: "k1", start: { lat: 1.3, lng: 103.8 }, end: { lat: 1.4, lng: 103.9 } }];
+
+    await expect(
+      routeMissingPairs(
+        {
+          ...baseOptions,
+          pairs,
+          cache: makeCache(),
+          concurrency: 1,
+          flushCacheFn: vi.fn().mockRejectedValue(new Error("d1 write failed")),
+        },
+        {
+          fetchWalkingRouteFn: vi.fn().mockResolvedValue({
+            walkingTimeSeconds: 180,
+            walkingDistanceMeters: 150,
+          }),
+        },
+      ),
+    ).rejects.toThrow("d1 write failed");
+  });
+});
+
+describe("walking time cache persistence", () => {
+  function makeCache(entries: Record<string, RoutingCacheEntry> = {}): RoutingCacheFile {
+    return { version: 1, updatedAt: "2024-01-01T00:00:00Z", entries };
+  }
+
+  it("maps D1 rows and preserves a null walking distance", async () => {
+    const query = vi.fn().mockResolvedValue([
+      {
+        cache_key: "1.30000,103.80000|1.40000,103.90000",
+        walking_time_seconds: 90,
+        walking_distance_meters: null,
+      },
+    ]);
+    const db = { query } as unknown as D1Client;
+
+    const cache = await loadRoutingCache(db);
+
+    expect(query).toHaveBeenCalledWith({
+      sql: "SELECT cache_key, walking_time_seconds, walking_distance_meters FROM walking_time_cache",
+    });
+    expect(cache.entries["1.30000,103.80000|1.40000,103.90000"]).toEqual({
+      walkingTimeSeconds: 90,
+      walkingDistanceMeters: null,
+    });
+    expect(cache.version).toBe(1);
+  });
+
+  it("upserts only keys that exist and skips an empty write", async () => {
+    const batchInsert = vi.fn().mockResolvedValue(undefined);
+    const db = { batchInsert } as unknown as D1Client;
+    const cache = makeCache({
+      present: { walkingTimeSeconds: 42, walkingDistanceMeters: 30 },
+    });
+
+    await saveRoutingCacheEntries(db, cache, ["present", "missing"], "2026-05-14T01:00:00.000Z");
+    await saveRoutingCacheEntries(db, cache, [], "2026-05-14T01:00:00.000Z");
+
+    expect(batchInsert).toHaveBeenCalledTimes(1);
+    expect(batchInsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        table: "walking_time_cache",
+        upsert: true,
+        columns: ["cache_key", "walking_time_seconds", "walking_distance_meters", "updated_at"],
+        rows: [{ key: "present", entry: cache.entries.present }],
+      }),
+    );
+    const options = batchInsert.mock.calls[0]?.[0] as {
+      mapRow: (row: { key: string; entry: RoutingCacheEntry }) => unknown[];
+    };
+    expect(options.mapRow({ key: "present", entry: cache.entries.present })).toEqual([
+      "present",
+      42,
+      30,
+      "2026-05-14T01:00:00.000Z",
+    ]);
   });
 });
