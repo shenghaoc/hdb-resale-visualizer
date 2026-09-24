@@ -157,6 +157,62 @@ describe("useShortlistSync", () => {
     expect(pushed.map((i) => i.addressKey).sort()).toEqual(["cloud-only", "stale-local"]);
   });
 
+  it("pushes a local edit whose debounce elapsed during the hydration push", async () => {
+    window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
+    window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify([validItem("keep")]));
+
+    vi.mocked(pullShortlist).mockResolvedValue([validItem("keep")]);
+
+    let resolveFirstPush!: (value: {
+      syncCode: string;
+      items: ReturnType<typeof validItem>[];
+    }) => void;
+    let pushCalls = 0;
+    vi.mocked(pushShortlist).mockImplementation((code, items) => {
+      pushCalls += 1;
+      if (pushCalls === 1) {
+        return new Promise((resolve) => {
+          resolveFirstPush = resolve;
+        });
+      }
+      return Promise.resolve({ syncCode: code ?? SYNC_CODE, items });
+    });
+
+    const { result } = renderHook(() => useSyncHarness());
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.local.toggle("keep");
+    });
+
+    // Debounce settles while the hydration POST is still in flight. That effect
+    // bails because hydration is not ready yet, and readiness will not retrigger it.
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+    expect(result.current.local.items).toEqual([]);
+
+    await act(async () => {
+      resolveFirstPush({ syncCode: SYNC_CODE, items: [validItem("keep")] });
+      await vi.runAllTimersAsync();
+    });
+
+    const pushedSets = vi
+      .mocked(pushShortlist)
+      .mock.calls.map((call) => (call[1] ?? []).map((item) => item.addressKey));
+    expect(pushedSets.at(-1)).toEqual([]);
+    expect(result.current.local.items).toEqual([]);
+    expect(result.current.sync.status).toBe("synced");
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
+  });
+
   it("drops a missing stored code back to local", async () => {
     window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
     vi.mocked(pullShortlist).mockRejectedValue(new SyncCodeNotFoundError());
