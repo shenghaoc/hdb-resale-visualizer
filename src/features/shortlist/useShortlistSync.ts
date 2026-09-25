@@ -85,6 +85,10 @@ export function useShortlistSync({
   // never clobber cloud data with stale local state on sign-in/reload.
   const readyRef = useRef(false);
   const flushInFlightRef = useRef(false);
+  // Serializes cloud writes. A newer POST must not be in flight beside an older
+  // one: the server keeps whichever request finishes last, and the next pull
+  // unions by addressKey, so a slow edit can resurrect a flat the buyer deleted.
+  const pushChainRef = useRef<Promise<void>>(Promise.resolve());
   const rateLimitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const flushPendingPushRef = useRef<() => void>(() => {});
   const mountedRef = useRef(true);
@@ -100,6 +104,14 @@ export function useShortlistSync({
     (operationId: number) => mountedRef.current && operationIdRef.current === operationId,
     [],
   );
+
+  const enqueueSerializedCloudWrite = useCallback((work: () => Promise<void>) => {
+    const task = pushChainRef.current.then(work, work);
+    pushChainRef.current = task.then(
+      () => undefined,
+      () => undefined,
+    );
+  }, []);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -155,10 +167,21 @@ export function useShortlistSync({
 
     flushInFlightRef.current = true;
     const operationId = operationIdRef.current;
-    const flushedSnapshot = JSON.stringify(pending.items);
-    setSyncStatus("syncing");
-    void pushShortlist(pending.syncCode, pending.items)
-      .then((result) => {
+    enqueueSerializedCloudWrite(async () => {
+      let flushedSnapshot: string;
+      try {
+        if (!isCurrentOperation(operationId) || !navigator.onLine) {
+          return;
+        }
+        // Re-read at send time so a write queued behind an in-flight push sends
+        // the latest snapshot, and a push that already cleared the queue no-ops.
+        const latest = readPendingShortlistPush();
+        if (!latest || (latest.syncCode !== null && !readyRef.current)) {
+          return;
+        }
+        flushedSnapshot = JSON.stringify(latest.items);
+        setSyncStatus("syncing");
+        const result = await pushShortlist(latest.syncCode, latest.items);
         if (!isCurrentOperation(operationId)) {
           return;
         }
@@ -167,23 +190,22 @@ export function useShortlistSync({
         if (!current || JSON.stringify(current.items) === flushedSnapshot) {
           clearPendingShortlistPush();
         } else {
-          // Newer data was enqueued during the push — re-flush once .finally()
-          // resets flushInFlightRef (setTimeout defers to the next macrotask).
+          // Newer data was enqueued during the push — re-flush once this task
+          // releases flushInFlightRef (setTimeout defers to the next macrotask).
           setTimeout(() => {
             if (isCurrentOperation(operationId)) {
               flushPendingPushRef.current();
             }
           }, 0);
         }
-        if (pending.syncCode === null) {
+        if (latest.syncCode === null) {
           safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
           setSyncCode(result.syncCode);
           readyRef.current = true;
         }
         applyPushResult(itemsRef, replaceItems, lastPushedRef, flushedSnapshot, result.items);
         setSyncStatus("synced");
-      })
-      .catch((error: unknown) => {
+      } catch (error: unknown) {
         if (!isCurrentOperation(operationId)) {
           return;
         }
@@ -202,11 +224,18 @@ export function useShortlistSync({
           return;
         }
         setSyncStatus("error");
-      })
-      .finally(() => {
+      } finally {
         flushInFlightRef.current = false;
-      });
-  }, [dropSyncCode, isCurrentOperation, itemsRef, replaceItems, scheduleRateLimitRetry]);
+      }
+    });
+  }, [
+    dropSyncCode,
+    enqueueSerializedCloudWrite,
+    isCurrentOperation,
+    itemsRef,
+    replaceItems,
+    scheduleRateLimitRetry,
+  ]);
 
   useEffect(() => {
     flushPendingPushRef.current = flushPendingPush;
@@ -328,29 +357,36 @@ export function useShortlistSync({
 
     let cancelled = false;
     const operationId = operationIdRef.current;
+    const itemsToPush = debouncedItems;
     setSyncStatus("syncing");
-    void pushShortlist(syncCode, debouncedItems)
-      .then((result) => {
+    enqueueSerializedCloudWrite(async () => {
+      // A newer edit already queued another write, or this effect was cleaned
+      // up before the previous POST finished. Skip so we don't start a second
+      // in-flight POST that can land after the newer one.
+      if (cancelled || !isCurrentOperation(operationId)) return;
+      if (snapshot === lastPushedRef.current) return;
+      try {
+        const result = await pushShortlist(syncCode, itemsToPush);
         if (cancelled || !isCurrentOperation(operationId)) return;
         clearPendingShortlistPush();
         applyPushResult(itemsRef, replaceItems, lastPushedRef, snapshot, result.items);
         setSyncStatus("synced");
-      })
-      .catch((error: unknown) => {
+      } catch (error: unknown) {
         if (cancelled || !isCurrentOperation(operationId)) return;
         if (error instanceof SyncCodeNotFoundError) {
           dropSyncCode("local");
         } else if (error instanceof SyncRateLimitedError) {
-          enqueuePendingShortlistPush(syncCode, debouncedItems);
+          enqueuePendingShortlistPush(syncCode, itemsToPush);
           scheduleRateLimitRetry(error.retryAfterSec);
           setSyncStatus("synced");
         } else if (isRetriableSyncError(error)) {
-          enqueuePendingShortlistPush(syncCode, debouncedItems);
+          enqueuePendingShortlistPush(syncCode, itemsToPush);
           setSyncStatus("synced");
         } else {
           setSyncStatus("error");
         }
-      });
+      }
+    });
 
     return () => {
       cancelled = true;
@@ -359,6 +395,7 @@ export function useShortlistSync({
     debouncedItems,
     syncCode,
     dropSyncCode,
+    enqueueSerializedCloudWrite,
     isCurrentOperation,
     itemsRef,
     replaceItems,

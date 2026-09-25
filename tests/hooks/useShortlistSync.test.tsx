@@ -387,6 +387,67 @@ describe("useShortlistSync", () => {
     expect(vi.mocked(pushShortlist).mock.calls.length).toBe(pushesAfterHydration + 1);
   });
 
+  it("waits for an in-flight push before sending a later deletion", async () => {
+    window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
+    window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify([validItem("keep", "")]));
+    vi.mocked(pullShortlist).mockResolvedValue([validItem("keep", "")]);
+
+    let resolveEditPush:
+      | ((value: { syncCode: string; items: ReturnType<typeof validItem>[] }) => void)
+      | undefined;
+    let pushCount = 0;
+    vi.mocked(pushShortlist).mockImplementation(async (code, items) => {
+      pushCount += 1;
+      if (pushCount === 2) {
+        return new Promise((resolve) => {
+          resolveEditPush = resolve;
+        });
+      }
+      return { syncCode: code ?? SYNC_CODE, items };
+    });
+
+    const { result } = renderHook(() => useSyncHarness());
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.local.update("keep", { notes: "edited" });
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(2);
+    expect(resolveEditPush).toBeTypeOf("function");
+
+    act(() => {
+      result.current.local.toggle("keep");
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+
+    // The deletion must not hit the network until the edit POST settles.
+    // Otherwise a slow edit can land last, and the next pull unions it back.
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(2);
+    expect(result.current.local.items).toEqual([]);
+
+    await act(async () => {
+      resolveEditPush?.({
+        syncCode: SYNC_CODE,
+        items: [validItem("keep", "edited")],
+      });
+      await Promise.resolve();
+      await vi.runAllTimersAsync();
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(3);
+    expect(vi.mocked(pushShortlist).mock.calls[2]?.[1]).toEqual([]);
+    expect(result.current.local.items).toEqual([]);
+  });
+
   // --- Offline queue / reconnect ---
 
   it("queues a failed hydration push offline and flushes on reconnect", async () => {
