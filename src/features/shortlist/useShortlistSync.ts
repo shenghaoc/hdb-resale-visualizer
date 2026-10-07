@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
-import { mergeShortlists, parseShortlist } from "@/features/shortlist/shortlist";
+import { mergeShortlists } from "@/features/shortlist/shortlist";
 import {
   isRetriableSyncError,
   SyncCodeNotFoundError,
@@ -90,6 +90,10 @@ export function useShortlistSync({
   // never clobber cloud data with stale local state on sign-in/reload.
   const readyRef = useRef(false);
   const flushInFlightRef = useRef(false);
+  // Serializes cloud writes. A newer POST must not be in flight beside an older
+  // one: the server keeps whichever request finishes last, and the next pull
+  // unions by addressKey, so a slow edit can resurrect a flat the buyer deleted.
+  const pushChainRef = useRef<Promise<void>>(Promise.resolve());
   const rateLimitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const flushPendingPushRef = useRef<() => void>(() => {});
   const mountedRef = useRef(true);
@@ -98,6 +102,11 @@ export function useShortlistSync({
 
   const beginOperation = useCallback(() => {
     operationIdRef.current += 1;
+    // A request still in flight belongs to the previous operation and can no longer
+    // apply its result. Release the write chain and the flush gate so the new
+    // operation's writes do not queue behind a request that may never settle.
+    pushChainRef.current = Promise.resolve();
+    flushInFlightRef.current = false;
     return operationIdRef.current;
   }, []);
 
@@ -105,6 +114,14 @@ export function useShortlistSync({
     (operationId: number) => mountedRef.current && operationIdRef.current === operationId,
     [],
   );
+
+  const enqueueSerializedCloudWrite = useCallback((work: () => Promise<void>) => {
+    const task = pushChainRef.current.then(work, work);
+    pushChainRef.current = task.then(
+      () => undefined,
+      () => undefined,
+    );
+  }, []);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -160,51 +177,45 @@ export function useShortlistSync({
 
     flushInFlightRef.current = true;
     const operationId = operationIdRef.current;
-    const flushedSnapshot = JSON.stringify(pending.items);
-    setSyncStatus("syncing");
-    void pushShortlist(pending.syncCode, pending.items)
-      .then((result) => {
+    enqueueSerializedCloudWrite(async () => {
+      let flushedSnapshot: string;
+      try {
+        if (!isCurrentOperation(operationId) || !navigator.onLine) {
+          return;
+        }
+        // Re-read at send time so a write queued behind an in-flight push sends
+        // the latest snapshot, and a push that already cleared the queue no-ops.
+        const latest = readPendingShortlistPush();
+        if (!latest || (latest.syncCode !== null && !readyRef.current)) {
+          return;
+        }
+        flushedSnapshot = JSON.stringify(latest.items);
+        setSyncStatus("syncing");
+        const result = await pushShortlist(latest.syncCode, latest.items);
         if (!isCurrentOperation(operationId)) {
           return;
         }
-        // The debounced effect sends edits straight to the cloud and never queues
-        // them. If it already ran for the latest edit while this (older) request was
-        // in flight, it will not run again — yet this response is about to record the
-        // older snapshot as the last one pushed, and the cloud may now hold it if it
-        // landed last. Re-send the latest snapshot in that case.
-        // `flushedSnapshot` was read back through the queue, which normalizes items,
-        // so normalize the live items the same way before comparing.
-        const latestSnapshot = JSON.stringify(itemsRef.current);
-        const needsLatestResend =
-          JSON.stringify(parseShortlist(itemsRef.current)) !== flushedSnapshot &&
-          JSON.stringify(debouncedItemsRef.current) === latestSnapshot;
         // Only clear if the queue wasn't overwritten with newer data while in flight.
         const current = readPendingShortlistPush();
-        const queueUnchanged = !current || JSON.stringify(current.items) === flushedSnapshot;
-        if (queueUnchanged) {
+        if (!current || JSON.stringify(current.items) === flushedSnapshot) {
           clearPendingShortlistPush();
-          if (needsLatestResend) {
-            enqueuePendingShortlistPush(pending.syncCode ?? result.syncCode, itemsRef.current);
-          }
-        }
-        if (!queueUnchanged || needsLatestResend) {
-          // Newer data is queued — re-flush once .finally() resets flushInFlightRef
-          // (setTimeout defers to the next macrotask).
+        } else {
+          // Newer data was enqueued during the push — re-flush once this task
+          // releases flushInFlightRef (setTimeout defers to the next macrotask).
           setTimeout(() => {
             if (isCurrentOperation(operationId)) {
               flushPendingPushRef.current();
             }
           }, 0);
         }
-        if (pending.syncCode === null) {
+        if (latest.syncCode === null) {
           safeStorage.setItem(SYNC_CODE_STORAGE_KEY, result.syncCode);
           setSyncCode(result.syncCode);
           readyRef.current = true;
         }
         applyPushResult(itemsRef, replaceItems, lastPushedRef, flushedSnapshot, result.items);
         setSyncStatus("synced");
-      })
-      .catch((error: unknown) => {
+      } catch (error: unknown) {
         if (!isCurrentOperation(operationId)) {
           return;
         }
@@ -223,11 +234,18 @@ export function useShortlistSync({
           return;
         }
         setSyncStatus("error");
-      })
-      .finally(() => {
+      } finally {
         flushInFlightRef.current = false;
-      });
-  }, [dropSyncCode, isCurrentOperation, itemsRef, replaceItems, scheduleRateLimitRetry]);
+      }
+    });
+  }, [
+    dropSyncCode,
+    enqueueSerializedCloudWrite,
+    isCurrentOperation,
+    itemsRef,
+    replaceItems,
+    scheduleRateLimitRetry,
+  ]);
 
   useEffect(() => {
     flushPendingPushRef.current = flushPendingPush;
@@ -363,29 +381,36 @@ export function useShortlistSync({
 
     let cancelled = false;
     const operationId = operationIdRef.current;
+    const itemsToPush = debouncedItems;
     setSyncStatus("syncing");
-    void pushShortlist(syncCode, debouncedItems)
-      .then((result) => {
+    enqueueSerializedCloudWrite(async () => {
+      // A newer edit already queued another write, or this effect was cleaned
+      // up before the previous POST finished. Skip so we don't start a second
+      // in-flight POST that can land after the newer one.
+      if (cancelled || !isCurrentOperation(operationId)) return;
+      if (snapshot === lastPushedRef.current) return;
+      try {
+        const result = await pushShortlist(syncCode, itemsToPush);
         if (cancelled || !isCurrentOperation(operationId)) return;
         clearPendingShortlistPush();
         applyPushResult(itemsRef, replaceItems, lastPushedRef, snapshot, result.items);
         setSyncStatus("synced");
-      })
-      .catch((error: unknown) => {
+      } catch (error: unknown) {
         if (cancelled || !isCurrentOperation(operationId)) return;
         if (error instanceof SyncCodeNotFoundError) {
           dropSyncCode("local");
         } else if (error instanceof SyncRateLimitedError) {
-          enqueuePendingShortlistPush(syncCode, debouncedItems);
+          enqueuePendingShortlistPush(syncCode, itemsToPush);
           scheduleRateLimitRetry(error.retryAfterSec);
           setSyncStatus("synced");
         } else if (isRetriableSyncError(error)) {
-          enqueuePendingShortlistPush(syncCode, debouncedItems);
+          enqueuePendingShortlistPush(syncCode, itemsToPush);
           setSyncStatus("synced");
         } else {
           setSyncStatus("error");
         }
-      });
+      }
+    });
 
     return () => {
       cancelled = true;
@@ -394,6 +419,7 @@ export function useShortlistSync({
     debouncedItems,
     syncCode,
     dropSyncCode,
+    enqueueSerializedCloudWrite,
     isCurrentOperation,
     itemsRef,
     replaceItems,

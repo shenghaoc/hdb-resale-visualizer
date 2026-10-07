@@ -257,40 +257,36 @@ describe("useShortlistSync", () => {
     expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
   });
 
-  it("re-pushes the latest snapshot when the follow-up flush lands after a newer debounced push", async () => {
+  it("holds a later debounced write behind the follow-up flush so the older snapshot cannot land last", async () => {
     const { result, landPush } = await startHydrationFollowUpFlush();
 
-    // Second edit while that flush is in flight; the debounced effect sends it
-    // concurrently because hydration is already ready.
+    // Second edit while the follow-up flush is in flight. Its debounce elapses,
+    // but the write must wait: sent concurrently, the older flush could land last
+    // and overwrite it, and nothing would push again afterwards.
     act(() => {
       result.current.local.toggle("added");
     });
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1000);
     });
-    expect(landPush).toHaveLength(3);
+    expect(landPush).toHaveLength(2);
 
-    // The newer request lands first, then the older follow-up lands last.
-    await act(async () => {
-      landPush[2]?.();
-      await vi.advanceTimersByTimeAsync(0);
-    });
+    // Once the follow-up flush lands, the newer snapshot is sent right behind it.
     await act(async () => {
       landPush[1]?.();
       await vi.advanceTimersByTimeAsync(0);
     });
-
-    // Nothing else would push again (no dependency changed), so the hook must
-    // re-send the latest snapshot or the cloud keeps the older one.
-    expect(landPush).toHaveLength(4);
-    const latestPayload = vi.mocked(pushShortlist).mock.calls.at(-1)?.[1] ?? [];
-    expect(latestPayload.map((item) => item.addressKey)).toEqual(["added"]);
+    expect(landPush).toHaveLength(3);
+    const pushedSets = vi
+      .mocked(pushShortlist)
+      .mock.calls.map((call) => (call[1] ?? []).map((item) => item.addressKey));
+    expect(pushedSets.slice(1)).toEqual([[], ["added"]]);
 
     await act(async () => {
-      landPush[3]?.();
+      landPush[2]?.();
       await vi.runAllTimersAsync();
     });
-    expect(landPush).toHaveLength(4);
+    expect(landPush).toHaveLength(3);
     expect(result.current.sync.status).toBe("synced");
     expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
   });
@@ -553,6 +549,169 @@ describe("useShortlistSync", () => {
       await vi.advanceTimersByTimeAsync(2000);
     });
     expect(vi.mocked(pushShortlist).mock.calls.length).toBe(pushesAfterHydration + 1);
+  });
+
+  it("waits for an in-flight push before sending a later deletion", async () => {
+    window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
+    window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify([validItem("keep", "")]));
+    vi.mocked(pullShortlist).mockResolvedValue([validItem("keep", "")]);
+
+    let resolveEditPush:
+      | ((value: { syncCode: string; items: ReturnType<typeof validItem>[] }) => void)
+      | undefined;
+    let pushCount = 0;
+    vi.mocked(pushShortlist).mockImplementation(async (code, items) => {
+      pushCount += 1;
+      if (pushCount === 2) {
+        return new Promise((resolve) => {
+          resolveEditPush = resolve;
+        });
+      }
+      return { syncCode: code ?? SYNC_CODE, items };
+    });
+
+    const { result } = renderHook(() => useSyncHarness());
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.local.update("keep", { notes: "edited" });
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(2);
+    expect(resolveEditPush).toBeTypeOf("function");
+
+    act(() => {
+      result.current.local.toggle("keep");
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+
+    // The deletion must not hit the network until the edit POST settles.
+    // Otherwise a slow edit can land last, and the next pull unions it back.
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(2);
+    expect(result.current.local.items).toEqual([]);
+
+    await act(async () => {
+      resolveEditPush?.({
+        syncCode: SYNC_CODE,
+        items: [validItem("keep", "edited")],
+      });
+      await Promise.resolve();
+      await vi.runAllTimersAsync();
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(3);
+    expect(vi.mocked(pushShortlist).mock.calls[2]?.[1]).toEqual([]);
+    expect(result.current.local.items).toEqual([]);
+  });
+
+  it("does not queue a re-enabled session's writes behind a hung request from the disabled one", async () => {
+    const NEW_CODE = "NEW123abc123ABCD";
+    window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
+    window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify([validItem("keep")]));
+    vi.mocked(pullShortlist).mockResolvedValue([validItem("keep")]);
+
+    // Push 1 is hydration; push 2 is an edit that never settles.
+    let pushCount = 0;
+    vi.mocked(pushShortlist).mockImplementation(async (code, items) => {
+      pushCount += 1;
+      if (pushCount === 2) {
+        return new Promise(() => {});
+      }
+      return { syncCode: code ?? NEW_CODE, items };
+    });
+
+    const { result } = renderHook(() => useSyncHarness());
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      result.current.local.update("keep", { notes: "edited" });
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(2);
+
+    // Turn sync off and on again while that request is still pending.
+    act(() => {
+      result.current.sync.disable();
+    });
+    await act(async () => {
+      await result.current.sync.enable();
+    });
+    expect(result.current.sync.code).toBe(NEW_CODE);
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(3);
+
+    // The new session's next edit must still reach the cloud.
+    act(() => {
+      result.current.local.update("keep", { notes: "after re-enable" });
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(4);
+    expect(vi.mocked(pushShortlist).mock.calls[3]?.[0]).toBe(NEW_CODE);
+    expect(vi.mocked(pushShortlist).mock.calls[3]?.[1]?.[0]?.notes).toBe("after re-enable");
+  });
+
+  it("does not block a re-enabled session's queued flush behind a hung flush from the disabled one", async () => {
+    const NEW_CODE = "NEW123abc123ABCD";
+    window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
+    window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify([validItem("keep")]));
+    vi.mocked(pullShortlist).mockResolvedValue([validItem("keep")]);
+
+    // Push 1 is hydration; push 2 is a queued flush that never settles.
+    let pushCount = 0;
+    vi.mocked(pushShortlist).mockImplementation(async (code, items) => {
+      pushCount += 1;
+      if (pushCount === 2) {
+        return new Promise(() => {});
+      }
+      return { syncCode: code ?? NEW_CODE, items };
+    });
+
+    const { result } = renderHook(() => useSyncHarness());
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(1);
+
+    enqueuePendingShortlistPush(SYNC_CODE, [validItem("keep", "queued")]);
+    await act(async () => {
+      window.dispatchEvent(new Event("online"));
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(2);
+
+    act(() => {
+      result.current.sync.disable();
+    });
+    await act(async () => {
+      await result.current.sync.enable();
+    });
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(3);
+
+    // The new session queues a write; reconnecting must flush it.
+    enqueuePendingShortlistPush(NEW_CODE, [validItem("keep", "new session")]);
+    await act(async () => {
+      window.dispatchEvent(new Event("online"));
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    expect(vi.mocked(pushShortlist)).toHaveBeenCalledTimes(4);
+    expect(vi.mocked(pushShortlist).mock.calls[3]?.[0]).toBe(NEW_CODE);
+    expect(vi.mocked(pushShortlist).mock.calls[3]?.[1]?.[0]?.notes).toBe("new session");
   });
 
   // --- Offline queue / reconnect ---
