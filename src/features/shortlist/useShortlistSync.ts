@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
-import { mergeShortlists } from "@/features/shortlist/shortlist";
+import { mergeShortlists, parseShortlist } from "@/features/shortlist/shortlist";
 import {
   isRetriableSyncError,
   SyncCodeNotFoundError,
@@ -79,6 +79,11 @@ export function useShortlistSync({
   );
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(() => (syncCode ? "syncing" : "local"));
   const debouncedItems = useDebouncedValue(items, SYNC_DEBOUNCE_MS);
+  // Latest debounced snapshot, readable from the hydration promise. The
+  // debounced push effect bails while `readyRef` is false and does not re-run
+  // when hydration finishes, because readiness is a ref rather than state.
+  const debouncedItemsRef = useRef(debouncedItems);
+  debouncedItemsRef.current = debouncedItems;
   // JSON of the last successfully pushed set — skips redundant pushes.
   const lastPushedRef = useRef<string | null>(null);
   // Gates the debounced push until the initial pull/merge has completed, so we
@@ -162,13 +167,29 @@ export function useShortlistSync({
         if (!isCurrentOperation(operationId)) {
           return;
         }
+        // The debounced effect sends edits straight to the cloud and never queues
+        // them. If it already ran for the latest edit while this (older) request was
+        // in flight, it will not run again — yet this response is about to record the
+        // older snapshot as the last one pushed, and the cloud may now hold it if it
+        // landed last. Re-send the latest snapshot in that case.
+        // `flushedSnapshot` was read back through the queue, which normalizes items,
+        // so normalize the live items the same way before comparing.
+        const latestSnapshot = JSON.stringify(itemsRef.current);
+        const needsLatestResend =
+          JSON.stringify(parseShortlist(itemsRef.current)) !== flushedSnapshot &&
+          JSON.stringify(debouncedItemsRef.current) === latestSnapshot;
         // Only clear if the queue wasn't overwritten with newer data while in flight.
         const current = readPendingShortlistPush();
-        if (!current || JSON.stringify(current.items) === flushedSnapshot) {
+        const queueUnchanged = !current || JSON.stringify(current.items) === flushedSnapshot;
+        if (queueUnchanged) {
           clearPendingShortlistPush();
-        } else {
-          // Newer data was enqueued during the push — re-flush once .finally()
-          // resets flushInFlightRef (setTimeout defers to the next macrotask).
+          if (needsLatestResend) {
+            enqueuePendingShortlistPush(pending.syncCode ?? result.syncCode, itemsRef.current);
+          }
+        }
+        if (!queueUnchanged || needsLatestResend) {
+          // Newer data is queued — re-flush once .finally() resets flushInFlightRef
+          // (setTimeout defers to the next macrotask).
           setTimeout(() => {
             if (isCurrentOperation(operationId)) {
               flushPendingPushRef.current();
@@ -267,15 +288,29 @@ export function useShortlistSync({
         const result = await pushShortlist(syncCode, pushPayload);
         if (cancelled || !isCurrentOperation(operationId)) return;
         readyRef.current = true;
-        clearPendingShortlistPush();
+        const localSnapshot = JSON.stringify(itemsRef.current);
+        const localDiverged = localSnapshot !== mergedSnapshot;
+        // Edits made after the payload was snapshotted are still local. If the
+        // debounce already elapsed during this push, that effect returned early
+        // (`readyRef` was false) and will not run again — so queue and flush
+        // the current shortlist. Otherwise the pending debounce fires after
+        // readiness and pushes the edit itself.
+        const followUpNeeded =
+          localDiverged && JSON.stringify(debouncedItemsRef.current) === localSnapshot;
         lastPushedRef.current = JSON.stringify(result.items);
-        if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
-          const nextItems = mergeFromCloud(itemsRef.current, result.items);
-          if (nextItems !== itemsRef.current) {
-            replaceItems(nextItems);
+        if (followUpNeeded) {
+          enqueuePendingShortlistPush(syncCode, itemsRef.current);
+          flushPendingPushRef.current();
+        } else {
+          clearPendingShortlistPush();
+          if (!localDiverged) {
+            const nextItems = mergeFromCloud(itemsRef.current, result.items);
+            if (nextItems !== itemsRef.current) {
+              replaceItems(nextItems);
+            }
           }
+          setSyncStatus("synced");
         }
-        setSyncStatus("synced");
       } catch (error) {
         if (cancelled || !isCurrentOperation(operationId)) return;
         if (error instanceof SyncCodeNotFoundError) {
