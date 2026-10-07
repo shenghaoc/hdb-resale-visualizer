@@ -174,6 +174,24 @@ describe("useShortlistDrawerController", () => {
     await waitFor(() => expect(result.current.effectiveExpandedKey).toBeNull());
   });
 
+  it("keeps a restored row's offer form collapsed after its expanded row was removed", async () => {
+    const first = makeRow("addr-first");
+    const second = makeRow("addr-second");
+    const options = makeOptions({ rows: [first, second] });
+    const { result, rerender } = renderController(options);
+
+    act(() => result.current.setExpandedKey("addr-second"));
+    expect(result.current.effectiveExpandedKey).toBe("addr-second");
+
+    options.rows = [first];
+    rerender();
+    await waitFor(() => expect(result.current.effectiveExpandedKey).toBeNull());
+
+    options.rows = [first, second];
+    rerender();
+    expect(result.current.effectiveExpandedKey).toBeNull();
+  });
+
   it("keeps a deliberate collapse across unrelated rerenders", () => {
     const options = makeOptions();
     const { result, rerender } = renderController(options);
@@ -288,6 +306,22 @@ describe("useShortlistDrawerController", () => {
     rerender();
 
     await waitFor(() => expect(result.current.viewMode).toBe("list"));
+  });
+
+  it("stays in list view when the shortlist grows again after falling back", async () => {
+    const first = makeRow("addr-first");
+    const second = makeRow("addr-second");
+    const options = makeOptions({ rows: [first, second] });
+    const { result, rerender } = renderController(options);
+
+    act(() => result.current.setViewMode("compare"));
+    options.rows = [first];
+    rerender();
+    await waitFor(() => expect(result.current.viewMode).toBe("list"));
+
+    options.rows = [first, second];
+    rerender();
+    expect(result.current.viewMode).toBe("list");
   });
 
   it("builds a share URL with the existing filter state and blocks oversized payloads", () => {

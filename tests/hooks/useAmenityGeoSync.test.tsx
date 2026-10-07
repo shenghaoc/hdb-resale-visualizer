@@ -139,4 +139,72 @@ describe("useAmenityGeoSync", () => {
     expect(result.current.exitsFailed).toBe(true);
     expect(result.current.error).toBe("Exit service unavailable");
   });
+
+  it("stops reporting loading when MRT is switched off mid-request and refetches when switched back on", () => {
+    const signals: AbortSignal[] = [];
+    const fetchMock = vi.fn((_input: string | URL | Request, init?: RequestInit) => {
+      if (init?.signal) signals.push(init.signal);
+      return new Promise<Response>(() => {});
+    });
+    vi.stubGlobal("fetch", fetchMock);
+    const map = createMapStub();
+
+    const { result, rerender } = renderHook(
+      ({ mrtEnabled }) => useAmenityGeoSync({ map, mrtEnabled }),
+      { initialProps: { mrtEnabled: true } },
+    );
+
+    expect(result.current.isLoading).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    rerender({ mrtEnabled: false });
+    expect(result.current.isLoading).toBe(false);
+    expect(signals).toHaveLength(2);
+    expect(signals.every((signal) => signal.aborted)).toBe(true);
+
+    rerender({ mrtEnabled: true });
+    expect(result.current.isLoading).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(4);
+  });
+
+  it("clears a failure and retries when MRT is switched off and on again", async () => {
+    let stationAttempts = 0;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: string | URL | Request) => {
+        const url =
+          typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+        if (url.endsWith("/mrt-stations")) {
+          stationAttempts += 1;
+          if (stationAttempts === 1) {
+            return Promise.reject(new Error("Station service unavailable"));
+          }
+        }
+
+        return Promise.resolve({
+          ok: true,
+          json: async () => ({ type: "FeatureCollection", features: [] }),
+        });
+      }),
+    );
+    const map = createMapStub();
+
+    const { result, rerender } = renderHook(
+      ({ mrtEnabled }) => useAmenityGeoSync({ map, mrtEnabled }),
+      { initialProps: { mrtEnabled: true } },
+    );
+
+    await waitFor(() => expect(result.current.stationsFailed).toBe(true));
+    expect(result.current.error).toBe("Station service unavailable");
+
+    rerender({ mrtEnabled: false });
+    expect(result.current.stationsFailed).toBe(false);
+    expect(result.current.isLoading).toBe(false);
+
+    rerender({ mrtEnabled: true });
+    await waitFor(() => expect(stationAttempts).toBe(2));
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.stationsFailed).toBe(false);
+    expect(result.current.error).toBeNull();
+  });
 });

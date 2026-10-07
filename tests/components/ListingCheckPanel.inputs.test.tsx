@@ -75,7 +75,7 @@ function renderPanel(
     onShare: vi.fn(),
   };
 
-  render(
+  const panel = (props: Partial<ComponentProps<typeof ListingCheckPanel>>) => (
     <I18nProvider>
       <ListingCheckPanel
         selectedAddressKey="ang-mo-kio-123a"
@@ -88,12 +88,17 @@ function renderPanel(
         shortlistFull={shortlistFull}
         referenceMonth="2026-04"
         {...callbacks}
-        {...overrides}
+        {...props}
       />
-    </I18nProvider>,
+    </I18nProvider>
   );
+  const view = render(panel(overrides));
 
-  return callbacks;
+  return {
+    ...callbacks,
+    rerenderWith: (next: Partial<ComponentProps<typeof ListingCheckPanel>>) =>
+      view.rerender(panel({ ...overrides, ...next })),
+  };
 }
 
 describe("ListingCheckPanel input clearing", () => {
@@ -161,6 +166,16 @@ describe("ListingCheckPanel input clearing", () => {
     await waitFor(() =>
       expect(dataMocks.fetchAddressDetail).toHaveBeenCalledWith("ang-mo-kio-123a"),
     );
+  });
+
+  it("mirrors the selected block into the search box and clears it with the selection", async () => {
+    const { rerenderWith } = renderPanel();
+    const search = screen.getByRole("combobox", { name: /search for a block to check/i });
+
+    await waitFor(() => expect(search).toHaveValue("123A ANG MO KIO AVE 1"));
+
+    rerenderWith({ selectedAddressKey: null });
+    await waitFor(() => expect(search).toHaveValue(""));
   });
 
   it("waits for an explicit Check submission before fetching comparables", async () => {
