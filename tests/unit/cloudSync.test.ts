@@ -160,9 +160,13 @@ describe("pullShortlist", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     await expect(pullShortlist("abc/123?x=1")).resolves.toHaveLength(1);
-    expect(fetchMock).toHaveBeenCalledWith("/api/shortlist/abc%2F123%3Fx%3D1", {
-      headers: { accept: "application/json" },
-    });
+    // This test is about path encoding, so match the request options loosely:
+    // an exact match would break whenever an unrelated option such as `cache`
+    // is added to the pull request.
+    expect(fetchMock).toHaveBeenCalledWith(
+      "/api/shortlist/abc%2F123%3Fx%3D1",
+      expect.objectContaining({ headers: { accept: "application/json" } }),
+    );
   });
 
   it("throws SyncCodeNotFoundError on 404", async () => {
