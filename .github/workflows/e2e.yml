@@ -100,12 +100,12 @@ jobs:
 
   # Uses the official Playwright Docker image so Chromium browser binaries and
   # system dependencies are pre-installed; no `playwright install` step needed.
-  # The @playwright/test version is pinned exactly to 1.61.0 in package.json
-  # to match the mcr.microsoft.com/playwright:v1.61.0-noble image.
+  # The @playwright/test version is pinned exactly to 1.62.1 in package.json
+  # to match the mcr.microsoft.com/playwright:v1.62.1-noble image.
   e2e-smoke:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.61.0-noble
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
       # --ipc=host shares the runner's IPC namespace so Chromium's heavy
       # /dev/shm usage isn't capped by Docker's default 64 MB segment.
       options: --ipc=host
@@ -165,13 +165,13 @@ jobs:
   # on GitHub-hosted (Azure) runners' apt mirror.
   #
   # Tag breakdown:
-  #   v1.61.0    — must match @playwright/test in package.json; Playwright's
+  #   v1.62.1    — must match @playwright/test in package.json; Playwright's
   #                JS API looks for binaries at a version-specific path.
   #   -noble     — Ubuntu 24.04 LTS base.
   browser-tests:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.61.0-noble
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
       # --ipc=host shares the runner's IPC namespace so Chromium's heavy
       # /dev/shm usage isn't capped by Docker's default 64 MB segment.
       options: --ipc=host
