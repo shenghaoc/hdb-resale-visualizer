@@ -59,15 +59,15 @@ export function useAmenityGeoSync({
   const [stationsError, setStationsError] = useState<string | null>(null);
   const [exitsError, setExitsError] = useState<string | null>(null);
 
+  // While MRT is off nothing is loading as far as callers can tell (`isLoading`
+  // below is gated on `mrtEnabled`), and switching it back on starts a fresh
+  // fetch, so a request aborted by switching it off leaves no flag to reset.
   useEffect(() => {
-    if (!mrtEnabled) {
-      setStationsLoading(false);
-      return;
-    }
-    if (stationsGeoJson) return;
+    if (!mrtEnabled || stationsGeoJson) return;
 
     const controller = new AbortController();
     let active = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setStationsLoading(true);
     setStationsError(null);
 
@@ -90,14 +90,11 @@ export function useAmenityGeoSync({
   }, [mrtEnabled, stationsGeoJson]);
 
   useEffect(() => {
-    if (!mrtEnabled) {
-      setExitsLoading(false);
-      return;
-    }
-    if (exitsGeoJson) return;
+    if (!mrtEnabled || exitsGeoJson) return;
 
     const controller = new AbortController();
     let active = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setExitsLoading(true);
     setExitsError(null);
 

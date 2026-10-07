@@ -142,6 +142,7 @@ export function useMapInitialization({
     }
 
     mapRef.current = map;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- publish the externally created map instance to React state
     setMapInstance(map);
     setMapError(null);
 
