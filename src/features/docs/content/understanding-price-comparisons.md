@@ -66,7 +66,7 @@ Every transaction behind the verdict is listed with its month, block/street, fla
 
 - **Stale** means the newest comparable is over 12 months old. The market may have moved since; the time adjustment helps but cannot fully compensate.
 - **Missing** values (shown as "—") mean the source data did not include that field, or no transaction matched. The app states what is missing rather than guessing.
-- The data window's latest month is shown in the header — if a sale happened last week, it will not be in the dataset yet.
+- The data window's latest month is shown in the header — if a sale happened last week, it is not in this copy yet. HDB publication can lag the actual sale by weeks, and this live dataset is not updated on a nightly schedule.
 
 See also [Troubleshooting](/docs/troubleshooting) if a check returns no comparables at all.
 

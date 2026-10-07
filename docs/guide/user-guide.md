@@ -225,7 +225,7 @@ Your shortlist is stored locally in the browser by default. To sync across devic
 2. Generate a **sync code** (a short anonymous code — no account needed)
 3. Enter the same code on another device to sync
 
-No account, email, or password is required — the sync code is the only identifier. Note that any notes you add to shortlisted blocks are included in the synced data.
+No account, email, or password is required — the sync code is the only identifier. Notes you add to shortlisted blocks are included in the synced data. A cloud copy unused for 180 days is purged; turning sync off on one device does not delete the server row immediately.
 
 ## Search profile
 
@@ -248,7 +248,7 @@ The profile never acts as a second hidden visibility filter, and personal financ
 
 ## Data and privacy
 
-- All transaction data comes from [data.gov.sg](https://data.gov.sg) and is refreshed nightly.
+- All transaction data comes from [data.gov.sg](https://data.gov.sg). The header shows the latest month in this copy; the live dataset is not refreshed on a nightly schedule. HDB publication can also lag the actual sale by weeks.
 - Map tiles and geocoding use [OneMap](https://www.onemap.gov.sg).
 - No account is required. Your filters, theme preference, buyer profile, and shortlist are stored in your browser's local storage.
 - Cloud sync (optional) uses an anonymous code — no account, email, or password. It uploads the saved board, including any notes you entered, so treat the code like a private link. Local buyer-profile finance inputs are not synced.

@@ -18,7 +18,7 @@ HDB Resale Explorer is a free, buyer-first due-diligence tool for Singapore HDB 
 
 ## How the data works
 
-- Transaction data comes from [data.gov.sg](https://data.gov.sg) and is refreshed nightly. The header shows the latest transaction month in the dataset and, when available, the sync timestamp and source attribution.
+- Transaction data comes from [data.gov.sg](https://data.gov.sg). The header shows the latest month in this copy and, when available, the last sync timestamp and source attribution. The live dataset is **not** refreshed on a nightly schedule — treat the header date as the source of truth rather than assuming yesterday's sales are already in.
 - Map tiles and addresses use [OneMap](https://www.onemap.gov.sg).
 - Everything you see is a **deterministic calculation over published transactions** — there is no AI valuation model, no black box, and no third-party AI service involved.
 - Your theme, language, buyer profile, and shortlist stay in your browser by default. Optional shortlist sync uses an anonymous code with no account or email, but it does upload the saved board — including any notes you entered — so treat the code like a private link. Filters live in the URL so they can be shared; local finance inputs never do.
