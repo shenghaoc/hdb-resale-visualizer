@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
+import type { PublicData } from "../../functions/_lib/public-data";
 const spies = vi.hoisted(() => ({
   query: vi.fn(),
   snapshot: vi.fn(),
   close: vi.fn(),
   privateRead: vi.fn(),
 }));
-const probe = vi.hoisted(() => async ({ env }: { env: Env }) => {
-  const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{
-    json: string;
-  }>();
-  return new Response(row?.json, {
+/** Stands in for every public route: one read through whatever the Worker hands it. */
+const probe = vi.hoisted(() => async ({ publicData }: { publicData: PublicData }) => {
+  const json = await publicData.manifestJson();
+  return new Response(json, {
     headers: { "content-type": "application/json", "cache-control": "public, max-age=60" },
   });
 });
@@ -44,8 +44,8 @@ vi.mock("../../functions/api/shortlist/[syncCode]", () => ({
   },
 }));
 vi.mock("../../worker/og", () => ({
-  handleBlockOg: (_r: Request, env: Env) => probe({ env }),
-  handleCompareOg: (_r: Request, env: Env) => probe({ env }),
+  handleBlockOg: (_r: Request, reads: { data: PublicData }) => probe({ publicData: reads.data }),
+  handleCompareOg: (_r: Request, reads: { data: PublicData }) => probe({ publicData: reads.data }),
 }));
 // Load the Cloudflare entry in this runtime integration test without pulling its
 // WASM asset/Workers-only globals into the separate DOM TypeScript test project.

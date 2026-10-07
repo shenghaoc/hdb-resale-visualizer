@@ -9,19 +9,19 @@ inclusion: always
 - **Runtime and package manager**: Node.js 24 or newer, pnpm, `pnpm-lock.yaml` as the lockfile. Do not add `bun.lock`, `yarn.lock`, or `package-lock.json`.
 - **Frontend**: React 19, TypeScript, Vite 8, Tailwind CSS v4, shadcn-style components with Radix primitives, and Lucide icons.
 - **Deployment runtime**: Cloudflare Worker declared in `wrangler.jsonc` (`worker/index.ts`) serving static assets from `dist` and routing API, SEO, sitemap, and OG image requests.
-- **Runtime API modules**: `functions/api/*` and `functions/_lib/*` contain Pages Functions-style handlers and D1 helpers reused by the Worker router.
+- **Runtime API modules**: `functions/api/*` and `functions/_lib/*` contain the route handlers and their helpers, reused by the Worker router. Public data routes read only through the `PublicData` boundary (`functions/_lib/public-data.ts`); the shortlist routes are Pages Functions-style handlers on D1.
 - **Database**: Cloudflare D1 binding named `DB`. D1 is the default backend for public reads and always holds private shortlist state.
 - **Optional public-read backend**: Neon Postgres through the `HDB_PUBLIC_NEON` Hyperdrive binding, chosen per request by `PUBLIC_DATA_BACKEND` (`d1` by default). See `docs/architecture/public-read-backend.md`.
 - **Validation**: Zod schemas for external data, API payloads, localStorage, and test fixtures.
 - **Mapping**: MapLibre GL JS with OneMap GreyLite tiles and required attribution.
 - **Charts**: Recharts is the current charting library. Keep chart-heavy UI lazy-loaded where practical.
-- **Search**: Local/browser fuzzy search may use deterministic libraries such as Fuse.js. Server-side suggest/search endpoints must stay deterministic database-backed logic (the same SQL on D1 or Neon).
+- **Search**: Local/browser fuzzy search may use deterministic libraries such as Fuse.js. Server-side suggest/search endpoints must stay deterministic database-backed logic (the same results on D1 or Neon, held by `tests/unit/public-data-parity.test.ts`).
 - **PWA**: `vite-plugin-pwa` generates the service worker.
 
 ## Runtime Architecture
 
 - The browser reads application data from same-origin `/api/*` endpoints. It must not fetch upstream official datasets directly.
-- `functions/api/*` reads through `env.DB`: the D1 binding by default, or a read-only Neon shim when `PUBLIC_DATA_BACKEND=neon`. The only runtime database write path is opt-in shortlist sync under `functions/api/shortlist/*`, which always uses D1.
+- Public data routes read through `PublicData` (`functions/_lib/public-data.ts`), implemented for D1 (`worker/public-data-d1.ts`, the default) and for Neon (`worker/public-data-neon.ts`, when `PUBLIC_DATA_BACKEND=neon`); they never see `env`. The only runtime database write path is opt-in shortlist sync under `functions/api/shortlist/*`, which always uses D1.
 - `worker/index.ts` owns Worker routing, static asset fallback, API dispatch, SEO rewrites, sitemap, OG images, and background cleanup via `ctx.waitUntil`.
 - `scripts/sync-data.ts` is the build-time ingestion entry point. It fetches official datasets and OneMap data, normalizes artifacts, and writes D1 through the Cloudflare API.
 - Persistent geocode and walking-time caches live in D1 tables and are upserted by the sync pipeline. Browsers and runtime API handlers never geocode or compute new OneMap routes.

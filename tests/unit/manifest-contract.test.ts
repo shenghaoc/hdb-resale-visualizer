@@ -6,6 +6,15 @@ import { MANIFEST_CONTRACT, projectManifestContract } from "../../shared/manifes
 import { PUBLICATION_MARKER_KEY, stampPublicationMarker } from "../../shared/publication-state";
 import { manifestSchema } from "../../src/shared/lib/dataSchemas";
 
+/** The manifest route over a backend whose stored manifest text is `json`. */
+function getManifest(json: string): Promise<Response> {
+  return onRequestGet({
+    request: new Request("https://test/api/manifest"),
+    params: {},
+    publicData: { manifestJson: async () => json },
+  } as unknown as Parameters<typeof onRequestGet>[0]);
+}
+
 /** What D1 stores and serves today: only contract keys, in declaration order. */
 const d1Manifest = {
   schemaVersion: "2.0.0",
@@ -110,10 +119,7 @@ describe("public manifest contract", () => {
 
   it("is what GET /api/manifest actually returns, whatever the backend stored", async () => {
     const respond = async (stored: unknown) => {
-      const env = {
-        DB: { prepare: () => ({ first: async () => ({ json: JSON.stringify(stored) }) }) },
-      };
-      const response = await onRequestGet({ env } as unknown as Parameters<typeof onRequestGet>[0]);
+      const response = await getManifest(JSON.stringify(stored));
       return { response, text: await response.text() };
     };
     const neon = await respond(neonStored);
@@ -132,16 +138,14 @@ describe("public manifest contract", () => {
       "owner-a",
     );
     expect(stamped).toContain(PUBLICATION_MARKER_KEY);
-    const env = { DB: { prepare: () => ({ first: async () => ({ json: stamped }) }) } };
-    const response = await onRequestGet({ env } as unknown as Parameters<typeof onRequestGet>[0]);
+    const response = await getManifest(stamped);
     // The response during a publication is exactly what clients get before and after it.
     expect(await response.text()).toBe(JSON.stringify(d1Manifest));
   });
 
   it("answers 404 while only the first publication's placeholder exists", async () => {
     const placeholder = await stampPublicationMarker(null, "2026-10-07T01:00:00.000Z", "owner-a");
-    const env = { DB: { prepare: () => ({ first: async () => ({ json: placeholder }) }) } };
-    const response = await onRequestGet({ env } as unknown as Parameters<typeof onRequestGet>[0]);
+    const response = await getManifest(placeholder);
     // Same as before any manifest existed: the placeholder holds no contract field and is not a manifest.
     expect(response.status).toBe(404);
     expect(await response.text()).not.toContain(PUBLICATION_MARKER_KEY);

@@ -11,12 +11,13 @@ import { onRequestGet as mrtExitsHandler } from "../../functions/api/mrt-exits";
 import { onRequestGet as trendsHandler } from "../../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../../functions/api/search";
 import { onRequestGet as suggestHandler } from "../../functions/api/suggest";
-import { createNeonReadDb } from "../../worker/neon-read-db";
-import { compilePublicRead } from "../../worker/neon-public-read-sql";
+import type { PublicRouteHandler } from "../../functions/_lib/public-data";
+import { createNeonPublicData } from "../../worker/public-data-neon";
 
 /**
- * The Neon shim only admits the exact SQL the production handlers issue. This runs every real public
- * GET handler through it so a handler SQL change fails here instead of in production.
+ * Runs every real public GET route on the Neon implementation: each one must answer from fixed,
+ * parameterized SELECTs on the public schema. Row-level equality with D1 is
+ * tests/unit/public-data-parity.test.ts.
  */
 const block = {
   address_key: "1-bedok-north",
@@ -67,49 +68,32 @@ const nativeRows = async (sql: string): Promise<Record<string, unknown>[]> => {
   if (sql.includes("COUNT(*)")) return [{ total_count: 1, populated_count: 1 }];
   return [block];
 };
-type Handler = (context: {
-  request: Request;
-  env: { DB: D1Database };
-  params: Record<string, string>;
-  data: Record<string, unknown>;
-  waitUntil: (promise: Promise<unknown>) => void;
-}) => Promise<Response> | Response;
-const routes: [string, Handler, Record<string, string>][] = [
-  ["/api/manifest", manifestHandler as unknown as Handler, {}],
-  ["/api/block-summaries", blockSummariesHandler as unknown as Handler, {}],
-  ["/api/blocks/bedok", blocksByTownHandler as unknown as Handler, { town: "bedok" }],
-  [
-    "/api/details/1-bedok-north",
-    detailHandler as unknown as Handler,
-    { addressKey: "1-bedok-north" },
-  ],
-  [
-    "/api/comparisons/1-bedok-north",
-    comparisonHandler as unknown as Handler,
-    { addressKey: "1-bedok-north" },
-  ],
-  ["/api/mrt-stations", mrtStationsHandler as unknown as Handler, {}],
-  ["/api/mrt-exits", mrtExitsHandler as unknown as Handler, {}],
-  ["/api/trends/town-flat-type", trendsHandler as unknown as Handler, {}],
-  ["/api/search?town=BEDOK", searchHandler as unknown as Handler, {}],
+const routes: [string, PublicRouteHandler, Record<string, string>][] = [
+  ["/api/manifest", manifestHandler, {}],
+  ["/api/block-summaries", blockSummariesHandler, {}],
+  ["/api/blocks/bedok", blocksByTownHandler, { town: "bedok" }],
+  ["/api/details/1-bedok-north", detailHandler, { addressKey: "1-bedok-north" }],
+  ["/api/comparisons/1-bedok-north", comparisonHandler, { addressKey: "1-bedok-north" }],
+  ["/api/mrt-stations", mrtStationsHandler, {}],
+  ["/api/mrt-exits", mrtExitsHandler, {}],
+  ["/api/trends/town-flat-type", trendsHandler, {}],
+  ["/api/search?town=BEDOK", searchHandler, {}],
   [
     "/api/search?town=BEDOK&flatType=4%20ROOM&areaMin=90&budgetMax=600000&remainingLeaseMin=50",
-    searchHandler as unknown as Handler,
+    searchHandler,
     {},
   ],
-  ["/api/suggest?q=bedok", suggestHandler as unknown as Handler, {}],
+  ["/api/suggest?q=bedok", suggestHandler, {}],
 ];
 
-describe("every production public GET handler runs through the Neon read shim", () => {
+describe("every production public GET route runs on the Neon implementation", () => {
   beforeEach(() => resetStationNamesCacheForTests());
-  it.each(routes)("%s compiles to allowlisted native SELECTs", async (path, handler, params) => {
+  it.each(routes)("%s answers from native SELECTs", async (path, handler, params) => {
     const query = vi.fn(async (sql: string) => nativeRows(sql));
     const response = await handler({
       request: new Request(`https://test${path}`),
-      env: { DB: createNeonReadDb(query) as unknown as D1Database },
       params,
-      data: {},
-      waitUntil: () => {},
+      publicData: createNeonPublicData(query),
     });
     expect(response.status).toBe(200);
     expect(query).toHaveBeenCalled();
@@ -121,15 +105,32 @@ describe("every production public GET handler runs through the Neon read shim", 
       expect(Array.isArray(bound)).toBe(true);
     }
   });
-  it("refuses mutating, unknown and multi-statement SQL before any transport call", async () => {
-    const query = vi.fn(async () => []);
-    const db = createNeonReadDb(query);
-    await expect(db.prepare("DELETE FROM blocks").all()).rejects.toThrow();
-    await expect(db.prepare("SELECT 1").all()).rejects.toThrow();
-    await expect(
-      db.prepare("SELECT json FROM manifest WHERE id = 1; DELETE FROM manifest").all(),
-    ).rejects.toThrow();
-    expect(() => compilePublicRead("SELECT json FROM manifest WHERE id = 1", [1])).toThrow();
-    expect(query).not.toHaveBeenCalled();
+  it("never puts request text into SQL: it only travels as bound parameters", async () => {
+    const hostile = "x'; DELETE FROM manifest; --";
+    const encoded = encodeURIComponent(hostile);
+    const hostileRoutes: [string, PublicRouteHandler, Record<string, string>][] = [
+      [`/api/blocks/${encoded}`, blocksByTownHandler, { town: hostile }],
+      [`/api/details/${encoded}`, detailHandler, { addressKey: hostile }],
+      [`/api/comparisons/${encoded}`, comparisonHandler, { addressKey: hostile }],
+      [
+        `/api/search?town=${encoded}&flatType=${encoded}&flatModel=${encoded}&areaMin=1&startMonth=2020-01`,
+        searchHandler,
+        {},
+      ],
+      [`/api/suggest?q=${encoded}`, suggestHandler, {}],
+    ];
+    for (const [path, handler, params] of hostileRoutes) {
+      const query = vi.fn(async (sql: string) => nativeRows(sql));
+      await handler({
+        request: new Request(`https://test${path}`),
+        params,
+        publicData: createNeonPublicData(query),
+      });
+      expect(query).toHaveBeenCalled();
+      for (const [sql] of query.mock.calls as unknown as [string, unknown[]][]) {
+        expect(sql).not.toContain("DELETE");
+        expect(sql).not.toMatch(/x'|; --/);
+      }
+    }
   });
 });

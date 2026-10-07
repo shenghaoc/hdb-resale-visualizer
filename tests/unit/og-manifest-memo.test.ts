@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 import {
   createPublicReadScope,
   type PublicDataCache,
+  type PublicReadScope,
   type PublicReadTransport,
 } from "../../worker/public-read-backend";
 
@@ -20,17 +21,18 @@ vi.mock("../../worker/Inter-Regular.ttf", () => ({ default: new ArrayBuffer(0) }
 
 // Load the Cloudflare-only module without pulling its WASM and font imports into the DOM TypeScript test project.
 const ogModule = "../../worker/og";
+type OgReads = Pick<PublicReadScope, "data" | "namespace">;
 const og = (await import(ogModule)) as {
   handleBlockOg: (
     request: Request,
-    env: Env,
+    reads: OgReads,
     addressKey: string,
     ctx: ExecutionContext,
     cache?: PublicDataCache | null,
   ) => Promise<Response>;
   handleCompareOg: (
     request: Request,
-    env: Env,
+    reads: OgReads,
     townA: string,
     townB: string,
     ctx: ExecutionContext,
@@ -74,7 +76,7 @@ describe("OG manifest memo", () => {
   } as unknown as D1Database;
 
   /** A Neon request: a NEW request-scoped transport and adapter every time, like the Worker creates. */
-  function neonRequestEnv(epoch = "neon-test-1") {
+  function neonRequestScope(epoch = "neon-test-1") {
     const transport = (): PublicReadTransport => ({
       query: async (sql) => {
         if (!sql.endsWith("FROM public.manifest WHERE id = 1"))
@@ -95,7 +97,7 @@ describe("OG manifest memo", () => {
       transport,
     );
   }
-  function d1RequestEnv(epoch = "d1-test-1") {
+  function d1RequestScope(epoch = "d1-test-1") {
     return createPublicReadScope(
       {
         PUBLIC_DATA_BACKEND: "d1",
@@ -119,18 +121,16 @@ describe("OG manifest memo", () => {
 
   it("reuses the manifest metadata across Neon requests even though every request has its own adapter", async () => {
     const cache = imageCache();
-    const first = neonRequestEnv();
-    const second = neonRequestEnv();
-    expect(second.publicEnv.DB).not.toBe(first.publicEnv.DB);
-    expect(second.publicEnv.PUBLIC_DATA_CACHE_NAMESPACE).toBe(
-      first.publicEnv.PUBLIC_DATA_CACHE_NAMESPACE,
-    );
+    const first = neonRequestScope();
+    const second = neonRequestScope();
+    expect(second.data).not.toBe(first.data);
+    expect(second.namespace).toBe(first.namespace);
 
-    await og.handleBlockOg(blockRequest("a"), first.publicEnv, "a", ctx, cache);
-    await og.handleBlockOg(blockRequest("b"), second.publicEnv, "b", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), first, "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("b"), second, "b", ctx, cache);
     await og.handleCompareOg(
       new Request("https://example.com/og/compare/bedok/yishun.png"),
-      neonRequestEnv().publicEnv,
+      neonRequestScope(),
       "bedok",
       "yishun",
       ctx,
@@ -148,16 +148,10 @@ describe("OG manifest memo", () => {
 
   it("never lends one backend's or epoch's manifest to another namespace", async () => {
     const cache = imageCache();
-    await og.handleBlockOg(blockRequest("a"), d1RequestEnv().publicEnv, "a", ctx, cache);
-    await og.handleBlockOg(blockRequest("a"), neonRequestEnv().publicEnv, "a", ctx, cache);
-    await og.handleBlockOg(
-      blockRequest("a"),
-      neonRequestEnv("neon-test-2").publicEnv,
-      "a",
-      ctx,
-      cache,
-    );
-    await og.handleBlockOg(blockRequest("a"), d1RequestEnv("d1-test-2").publicEnv, "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), d1RequestScope(), "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), neonRequestScope(), "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), neonRequestScope("neon-test-2"), "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), d1RequestScope("d1-test-2"), "a", ctx, cache);
 
     expect(versionsSeenBy(cache)).toEqual([
       { namespace: "d1-d1-test-1", version: "2026-08-29T01:37:16.797Z" },
@@ -173,7 +167,7 @@ describe("OG manifest memo", () => {
   it("still reads D1 once for repeated requests on D1", async () => {
     const cache = imageCache();
     for (const key of ["a", "b", "c"])
-      await og.handleBlockOg(blockRequest(key), d1RequestEnv().publicEnv, key, ctx, cache);
+      await og.handleBlockOg(blockRequest(key), d1RequestScope(), key, ctx, cache);
     expect(d1ManifestReads).toHaveBeenCalledTimes(1);
     expect(neonManifestReads).not.toHaveBeenCalled();
   });
@@ -182,12 +176,12 @@ describe("OG manifest memo", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-10-07T00:00:00Z"));
     const cache = imageCache();
-    await og.handleBlockOg(blockRequest("a"), neonRequestEnv().publicEnv, "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), neonRequestScope(), "a", ctx, cache);
     vi.setSystemTime(new Date("2026-10-07T00:04:59Z"));
-    await og.handleBlockOg(blockRequest("a"), neonRequestEnv().publicEnv, "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), neonRequestScope(), "a", ctx, cache);
     expect(neonManifestReads).toHaveBeenCalledTimes(1);
     vi.setSystemTime(new Date("2026-10-07T00:05:01Z"));
-    await og.handleBlockOg(blockRequest("a"), neonRequestEnv().publicEnv, "a", ctx, cache);
+    await og.handleBlockOg(blockRequest("a"), neonRequestScope(), "a", ctx, cache);
     expect(neonManifestReads).toHaveBeenCalledTimes(2);
   });
 });
@@ -237,7 +231,7 @@ describe("OG cards when the manifest read is degraded", () => {
       () => {
         throw new Error("D1 mode must not open a Neon transport");
       },
-    ).publicEnv;
+    );
   }
   /** An image cache that misses, so every request renders and tries to store. */
   const missingCache = () => ({

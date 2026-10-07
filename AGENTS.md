@@ -86,7 +86,7 @@ Playwright smoke subset runs in a separate workflow
 
 ## 🏗️ Architectural Boundary
 
-1. **Runtime API**: The frontend (`src/`) loads all data from same-origin `/api/*` routes. `worker/index.ts` routes to Pages Functions-style handlers under `functions/api/*`, backed by Cloudflare D1 in code by default. Production currently selects Neon for public reads (`PUBLIC_DATA_BACKEND=neon` in `wrangler.jsonc`, through Hyperdrive); shortlists stay on D1, which is also the rollback target. See `docs/architecture/public-read-backend.md`.
+1. **Runtime API**: The frontend (`src/`) loads all data from same-origin `/api/*` routes. `worker/index.ts` routes to the handlers under `functions/api/*`. Public data routes read only through the public-read boundary (`PublicData` in `functions/_lib/public-data.ts`), implemented for D1 (`worker/public-data-d1.ts`, the default and the rollback target) and for Neon through Hyperdrive (`worker/public-data-neon.ts`), and selected per request by `PUBLIC_DATA_BACKEND`; production currently selects Neon. Shortlists always use the D1 binding. See `docs/architecture/public-read-backend.md`.
 2. **Build-Time Ingestion**: `scripts/sync-data.ts` fetches data.gov.sg / OneMap and writes to D1. Geocoding and walking-time computation are one-time and persisted in `geocode_cache` / `walking_time_cache` D1 tables — they never re-run for an already-cached address or pair.
 3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `vp run db:migrate:remote` (prod) or `vp run db:migrate:local` (Wrangler emulator).
 4. **Persistence**: User state is browser-local (`localStorage`) by default and works fully offline. The shortlist additionally supports **opt-in** cloud sync via an anonymous sync code (no account, no PII), persisted in the `shortlists` D1 table and written at runtime by `functions/api/shortlist/*`. This is the _only_ runtime D1 write path; every other D1 write stays build-time (`scripts/sync-data.ts`).
@@ -139,7 +139,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 
 - `fetch()` in `src/` or `functions/` targeting external domains (OneMap, data.gov.sg) — critical (those calls belong only in `scripts/sync-data.ts`)
 - Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
-- D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
+- D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, both public-read implementations (`worker/public-data-d1.ts`, `worker/public-data-neon.ts`) and their parity test, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
 - `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 24 + pnpm
 

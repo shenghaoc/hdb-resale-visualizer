@@ -5,6 +5,7 @@ import { onRequestGet as manifestHandler } from "../../functions/api/manifest";
 import { onRequestGet as mrtStationsHandler } from "../../functions/api/mrt-stations";
 import { onRequestGet as mrtExitsHandler } from "../../functions/api/mrt-exits";
 import { onRequestGet as blocksByTownHandler } from "../../functions/api/blocks/[town]";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
 async function pagesCtx(
   handler: (ctx: never) => Response | Promise<Response>,
@@ -12,8 +13,8 @@ async function pagesCtx(
 ): Promise<Response> {
   return handler({
     request: new Request("http://localhost/api"),
-    env: { DB: opts.db },
     params: opts.params ?? {},
+    publicData: createD1PublicData(opts.db as D1Database),
   } as never);
 }
 

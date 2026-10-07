@@ -14,6 +14,7 @@ import {
   writeArtifactsToD1,
 } from "../../scripts/lib/sync/store";
 import { withPublicDataCache } from "../../worker/public-data-cache";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
 /**
  * The race behind the #412 review finding: `writeArtifactsToD1()` replaces the generated tables through many
@@ -235,11 +236,11 @@ describe("D1 publication vs the public data cache", () => {
   async function get(town: string) {
     const response = await withPublicDataCache(
       new Request(`https://example.com/api/blocks/${town}`),
-      {
+      createD1PublicData({
         prepare: (sql: string) => ({
           first: async () => (sqlite.prepare(sql).get() as { json: string } | undefined) ?? null,
         }),
-      },
+      } as unknown as D1Database),
       cache,
       async () =>
         new Response(
@@ -472,11 +473,11 @@ describe("D1 publication vs the public data cache", () => {
     expect(await get("BEDOK")).toEqual({ status: "HIT-STALE", keys: GEN1 });
     const uncached = await withPublicDataCache(
       new Request("https://example.com/api/blocks/YISHUN"),
-      {
+      createD1PublicData({
         prepare: (sql: string) => ({
           first: async () => (sqlite.prepare(sql).get() as { json: string }) ?? null,
         }),
-      },
+      } as unknown as D1Database),
       cache,
       async () => new Response("[]", { headers: { "cache-control": "public, max-age=60" } }),
     );
@@ -707,11 +708,11 @@ describe("D1 publication vs the public data cache", () => {
         // A reader meanwhile gets the tables uncached, labelled, and never stored.
         const response = await withPublicDataCache(
           new Request("https://example.com/api/blocks/BEDOK"),
-          {
+          createD1PublicData({
             prepare: (sql: string) => ({
               first: async () => (empty.prepare(sql).get() as { json: string } | undefined) ?? null,
             }),
-          },
+          } as unknown as D1Database),
           cache,
           async () => new Response("[]", { headers: { "cache-control": "public, max-age=60" } }),
         );

@@ -3,7 +3,7 @@
 ## Core Architectural Boundary
 The application separates **build-time ingestion** (Node + GitHub Actions) from **runtime serving** (Cloudflare Worker + D1, with an optional Neon read backend selected by `PUBLIC_DATA_BACKEND`):
 - **Frontend**: React 19 SPA. Only talks to `/api/*` (same-origin Pages Functions).
-- **Runtime API**: `functions/api/*` Pages Functions-style handlers, backed by the `DB` D1 binding (or, when `PUBLIC_DATA_BACKEND=neon`, a read-only Neon shim; shortlists stay on D1). Production currently selects Neon, so `scripts/sync-data.ts` refreshing D1 does not change what the site serves until the selector is switched back. See `docs/architecture/public-read-backend.md`.
+- **Runtime API**: `functions/api/*` route handlers. Public data routes read through the `PublicData` boundary (`functions/_lib/public-data.ts`), answered by D1 or, when `PUBLIC_DATA_BACKEND=neon`, by Neon through Hyperdrive; shortlists stay on D1. Production currently selects Neon, so `scripts/sync-data.ts` refreshing D1 does not change what the site serves until the selector is switched back. See `docs/architecture/public-read-backend.md`.
 - **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required.
 
 ## Data Pipeline Flow (`scripts/sync-data.ts`)

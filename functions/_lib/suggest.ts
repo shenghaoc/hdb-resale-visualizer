@@ -1,4 +1,5 @@
 import type { Suggestion } from "../../shared/data-types";
+import type { NameMatch, PublicData } from "./public-data";
 
 export const MAX_SUGGEST_QUERY_LENGTH = 256;
 export const MIN_SUGGEST_QUERY_LENGTH = 2;
@@ -25,13 +26,11 @@ export type ParsedSuggestRequest =
   | { ok: true; normalizedQuery: string; rawQuery: string }
   | { ok: false; error: string };
 
-export type SuggestDb = {
-  prepare: (sql: string) => {
-    bind: (...args: unknown[]) => {
-      all: () => Promise<{ results?: unknown[] }>;
-    };
-  };
-};
+/** The public reads suggestions use. */
+export type SuggestReads = Pick<
+  PublicData,
+  "townsMatching" | "streetsMatching" | "blocksMatching" | "postalCodesStartingWith" | "mrtGeoJson"
+>;
 
 type RankedCandidate = {
   value: string;
@@ -222,97 +221,17 @@ function buildMrtSuggestions(stationNames: string[], normalizedQuery: string): S
   return rankCandidates(candidates, normalizedQuery, GROUP_CAPS.mrt).map((item) => item.payload);
 }
 
-async function queryDistinctTowns(db: SuggestDb, prefixPattern: string, containsPattern: string) {
-  const prefix = await db
-    .prepare("SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20")
-    .bind(prefixPattern)
-    .all();
-  const prefixRows = (prefix.results ?? []) as { town: string }[];
-  if (prefixRows.length >= GROUP_CAPS.town) {
+/** Prefix matches first; substring matches only when they cannot fill the group. */
+async function matchNames<Row>(
+  match: (match: NameMatch) => Promise<Row[]>,
+  query: string,
+  cap: number,
+): Promise<Row[]> {
+  const prefixRows = await match({ query, position: "prefix" });
+  if (prefixRows.length >= cap) {
     return prefixRows;
   }
-  const substring = await db
-    .prepare(
-      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' AND town NOT LIKE ? ESCAPE '\\' LIMIT 20",
-    )
-    .bind(containsPattern, prefixPattern)
-    .all();
-  return [...prefixRows, ...((substring.results ?? []) as { town: string }[])];
-}
-
-async function queryDistinctStreets(db: SuggestDb, prefixPattern: string, containsPattern: string) {
-  const prefix = await db
-    .prepare(
-      "SELECT DISTINCT street_name FROM blocks WHERE street_name LIKE ? ESCAPE '\\' LIMIT 20",
-    )
-    .bind(prefixPattern)
-    .all();
-  const prefixRows = (prefix.results ?? []) as { street_name: string }[];
-  if (prefixRows.length >= GROUP_CAPS.street) {
-    return prefixRows;
-  }
-  const substring = await db
-    .prepare(
-      "SELECT DISTINCT street_name FROM blocks WHERE street_name LIKE ? ESCAPE '\\' AND street_name NOT LIKE ? ESCAPE '\\' LIMIT 20",
-    )
-    .bind(containsPattern, prefixPattern)
-    .all();
-  return [...prefixRows, ...((substring.results ?? []) as { street_name: string }[])];
-}
-
-async function queryBlocks(db: SuggestDb, prefixPattern: string, containsPattern: string) {
-  const prefix = await db
-    .prepare(
-      "SELECT address_key, block, street_name FROM blocks WHERE (block || ' ' || street_name) COLLATE NOCASE LIKE ? ESCAPE '\\' LIMIT 20",
-    )
-    .bind(prefixPattern)
-    .all();
-  const prefixRows = (prefix.results ?? []) as {
-    address_key: string;
-    block: string;
-    street_name: string;
-  }[];
-  if (prefixRows.length >= GROUP_CAPS.block) {
-    return prefixRows;
-  }
-  const substring = await db
-    .prepare(
-      "SELECT address_key, block, street_name FROM blocks WHERE (block || ' ' || street_name) COLLATE NOCASE LIKE ? ESCAPE '\\' AND (block || ' ' || street_name) COLLATE NOCASE NOT LIKE ? ESCAPE '\\' LIMIT 20",
-    )
-    .bind(containsPattern, prefixPattern)
-    .all();
-  return [
-    ...prefixRows,
-    ...((substring.results ?? []) as { address_key: string; block: string; street_name: string }[]),
-  ];
-}
-
-async function queryPostalCodes(db: SuggestDb, prefixPattern: string) {
-  const result = await db
-    .prepare(
-      "SELECT DISTINCT postal_code FROM blocks WHERE postal_code IS NOT NULL AND postal_code LIKE ? ESCAPE '\\' LIMIT 20",
-    )
-    .bind(prefixPattern)
-    .all();
-  return (result.results ?? []) as { postal_code: string }[];
-}
-
-function escapeLikePattern(value: string): string {
-  // Single-pass character-class escape: avoids the ordering hazard of
-  // chained replaces (backslash must go first) that CodeQL flags as
-  // incomplete escaping (js/incomplete-sanitization).
-  return value.replace(/[\\%_]/g, (match) => `\\${match}`);
-}
-
-function buildLikePatterns(normalizedQuery: string): {
-  prefixPattern: string;
-  containsPattern: string;
-} {
-  const escaped = escapeLikePattern(normalizedQuery);
-  return {
-    prefixPattern: `${escaped}%`,
-    containsPattern: `%${escaped}%`,
-  };
+  return [...prefixRows, ...(await match({ query, position: "substring" }))];
 }
 
 type MrtStationGeoJson = {
@@ -325,21 +244,17 @@ export function resetStationNamesCacheForTests(): void {
   cachedStationNamesPromise = null;
 }
 
-async function loadStationNames(db: SuggestDb): Promise<string[]> {
+async function loadStationNames(reads: SuggestReads): Promise<string[]> {
   if (cachedStationNamesPromise) {
     return cachedStationNamesPromise;
   }
   cachedStationNamesPromise = (async () => {
     try {
-      const result = await db
-        .prepare("SELECT json FROM mrt_geojson WHERE kind = ?")
-        .bind("stations")
-        .all();
-      const row = (result.results ?? [])[0] as { json?: string } | undefined;
-      if (!row?.json) {
+      const json = await reads.mrtGeoJson("stations");
+      if (!json) {
         return [];
       }
-      const parsed = JSON.parse(row.json) as MrtStationGeoJson;
+      const parsed = JSON.parse(json) as MrtStationGeoJson;
       const names = new Set<string>();
       for (const feature of parsed.features ?? []) {
         const stationName = feature.properties?.stationName;
@@ -358,25 +273,28 @@ async function loadStationNames(db: SuggestDb): Promise<string[]> {
 }
 
 export async function buildSuggestions(
-  db: SuggestDb,
+  reads: SuggestReads,
   normalizedQuery: string,
   stationNames?: string[],
 ): Promise<Suggestion[]> {
-  const { prefixPattern, containsPattern } = buildLikePatterns(normalizedQuery);
   const isNumeric = RE_NUMERIC_QUERY.test(normalizedQuery);
 
   const [townRows, streetRows, blockRows, postalRows, mrtNames] = await Promise.all([
-    isNumeric ? Promise.resolve([]) : queryDistinctTowns(db, prefixPattern, containsPattern),
-    isNumeric ? Promise.resolve([]) : queryDistinctStreets(db, prefixPattern, containsPattern),
+    isNumeric
+      ? Promise.resolve([])
+      : matchNames(reads.townsMatching, normalizedQuery, GROUP_CAPS.town),
+    isNumeric
+      ? Promise.resolve([])
+      : matchNames(reads.streetsMatching, normalizedQuery, GROUP_CAPS.street),
     isNumeric && normalizedQuery.length >= 5
       ? Promise.resolve([])
-      : queryBlocks(db, prefixPattern, containsPattern),
-    isNumeric ? queryPostalCodes(db, prefixPattern) : Promise.resolve([]),
+      : matchNames(reads.blocksMatching, normalizedQuery, GROUP_CAPS.block),
+    isNumeric ? reads.postalCodesStartingWith(normalizedQuery) : Promise.resolve([]),
     isNumeric
       ? Promise.resolve([])
       : stationNames
         ? Promise.resolve(stationNames)
-        : loadStationNames(db),
+        : loadStationNames(reads),
   ]);
 
   const grouped: Suggestion[] = [

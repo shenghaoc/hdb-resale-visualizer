@@ -4,11 +4,13 @@ import {
   MAX_SUGGEST_QUERY_LENGTH,
   normalizeSuggestQuery,
   parseSuggestRequest,
-  type SuggestDb,
+  type SuggestReads,
 } from "../../functions/_lib/suggest";
+import { likePatterns } from "../../functions/_lib/public-data";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
-function mockDb(handlers: Record<string, () => Promise<{ results?: unknown[] }>>): SuggestDb {
-  return {
+function mockDb(handlers: Record<string, () => Promise<{ results?: unknown[] }>>): SuggestReads {
+  return createD1PublicData({
     prepare: (sql: string) => ({
       bind: () => ({
         all: async () => {
@@ -21,7 +23,7 @@ function mockDb(handlers: Record<string, () => Promise<{ results?: unknown[] }>>
         },
       }),
     }),
-  };
+  } as unknown as D1Database);
 }
 
 describe("suggest lib", () => {
@@ -79,6 +81,17 @@ describe("suggest lib", () => {
     });
     const suggestions = await buildSuggestions(db, "test\\path", []);
     expect(suggestions).toEqual([]);
+  });
+
+  it("escapes every LIKE metacharacter in the patterns both backends bind", () => {
+    expect(likePatterns("50% test_value")).toEqual({
+      prefix: "50\\% test\\_value%",
+      contains: "%50\\% test\\_value%",
+    });
+    expect(likePatterns("test\\path\\%")).toEqual({
+      prefix: "test\\\\path\\\\\\%%",
+      contains: "%test\\\\path\\\\\\%%",
+    });
   });
 
   it("includes postal suggestions for numeric queries", async () => {

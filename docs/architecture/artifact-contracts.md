@@ -25,7 +25,8 @@ Automatic nightly refresh is **disabled**. `scripts/sync-data.ts` still writes r
 - Worker router: `worker/index.ts` (`matchApiRoute` in `worker/api-route-match.ts`)
 - Reused handler root: `functions/api/*`
 - Shared helpers + row → DTO mapping: `functions/_lib/d1.ts`
-- D1 binding: `DB` (declared in `wrangler.jsonc`)
+- Public reads: the `PublicData` boundary in `functions/_lib/public-data.ts`, implemented for D1 (`worker/public-data-d1.ts`) and Neon (`worker/public-data-neon.ts`) and selected per request (see [public-read backend](public-read-backend.md)); responses do not depend on the backend
+- D1 binding: `DB` (declared in `wrangler.jsonc`); Neon through the Hyperdrive binding `HDB_PUBLIC_NEON`
 
 HEAD is treated as GET. Unknown methods on a matched path return **405** with `Allow`.
 

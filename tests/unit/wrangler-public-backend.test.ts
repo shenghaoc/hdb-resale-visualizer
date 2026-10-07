@@ -13,6 +13,18 @@ type WranglerConfig = {
 
 const WRANGLER_CONFIG = new URL("../../wrangler.jsonc", import.meta.url);
 
+/** A D1 binding that records every statement the public reads prepare on it. */
+function recordingD1() {
+  const d1Reads: string[] = [];
+  const d1 = {
+    prepare: (sql: string) => {
+      d1Reads.push(sql);
+      return { first: async () => null };
+    },
+  } as unknown as D1Database;
+  return { d1, d1Reads };
+}
+
 /** wrangler.jsonc is JSON with comments and trailing commas. */
 function readWranglerConfig(): WranglerConfig {
   const text = readFileSync(WRANGLER_CONFIG, "utf8")
@@ -64,11 +76,12 @@ describe("deployed public-read backend configuration", () => {
   // every other var and the Hyperdrive binding must already be in the committed file and work as shipped.
   it.each(["neon", "d1"] as const)(
     "completes the switch path from the committed vars and binding: %s",
-    (selected) => {
-      const d1 = {} as D1Database;
+    async (selected) => {
+      const { d1, d1Reads } = recordingD1();
       const hyperdrive = { connectionString: "postgresql://never-used" } as unknown as Hyperdrive;
+      const neonQuery = vi.fn(async () => []);
       const factory = vi.fn((): PublicReadTransport => ({
-        query: async () => [],
+        query: neonQuery,
         snapshot: (respond) => respond(),
         close: async () => {},
       }));
@@ -82,15 +95,17 @@ describe("deployed public-read backend configuration", () => {
         factory,
       );
       expect(scope.backend).toBe(selected);
+      await scope.data.manifestJson();
       if (selected === "neon") {
         // The Worker receives the binding the config declares and namespaces its cache by the configured epoch.
         expect(factory).toHaveBeenCalledWith(hyperdrive);
         expect(scope.namespace).toBe(`neon-${config.vars?.NEON_PUBLIC_CACHE_EPOCH}`);
-        expect(scope.publicEnv.DB).not.toBe(d1);
+        expect(neonQuery).toHaveBeenCalledOnce();
+        expect(d1Reads).toEqual([]);
       } else {
         expect(factory).not.toHaveBeenCalled();
         expect(scope.namespace).toBe(`d1-${config.vars?.D1_PUBLIC_CACHE_EPOCH}`);
-        expect(scope.publicEnv.DB).toBe(d1);
+        expect(d1Reads).toHaveLength(1);
       }
     },
   );
@@ -138,13 +153,13 @@ describe("local development with the committed configuration", () => {
     expect([url.username, url.password]).toEqual(["local", "local"]);
   });
 
-  it("runs `dev:functions` against the seeded local D1 emulator, whichever backend production selects", () => {
+  it("runs `dev:functions` against the seeded local D1 emulator, whichever backend production selects", async () => {
     expect(devFunctionsScript).toMatch(/\bwrangler dev\b/);
     const override = /--var\s+PUBLIC_DATA_BACKEND:(\S+)/.exec(devFunctionsScript)?.[1];
     expect(override).toBe("d1");
 
     // With that override the Worker serves the local D1 and never opens a Neon transport.
-    const d1 = {} as D1Database;
+    const { d1, d1Reads } = recordingD1();
     const factory = vi.fn((): PublicReadTransport => {
       throw new Error("local development must not need a Neon connection");
     });
@@ -158,7 +173,8 @@ describe("local development with the committed configuration", () => {
       factory,
     );
     expect(scope.backend).toBe("d1");
-    expect(scope.publicEnv.DB).toBe(d1);
+    await scope.data.manifestJson();
+    expect(d1Reads).toHaveLength(1);
     expect(factory).not.toHaveBeenCalled();
   });
 });

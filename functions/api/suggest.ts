@@ -1,12 +1,8 @@
 import { badRequest, jsonResponse, serverError } from "../_lib/d1";
+import type { PublicRouteHandler } from "../_lib/public-data";
 import { buildSuggestions, parseSuggestRequest } from "../_lib/suggest";
 
-type SuggestContext = {
-  env: { DB: Parameters<typeof buildSuggestions>[0] };
-  request: Request;
-};
-
-export const onRequestGet = async ({ env, request }: SuggestContext) => {
+export const onRequestGet: PublicRouteHandler = async ({ publicData, request }) => {
   try {
     const url = new URL(request.url);
     const parsed = parseSuggestRequest(url);
@@ -14,7 +10,7 @@ export const onRequestGet = async ({ env, request }: SuggestContext) => {
       return badRequest(parsed.error);
     }
 
-    const suggestions = await buildSuggestions(env.DB, parsed.normalizedQuery);
+    const suggestions = await buildSuggestions(publicData, parsed.normalizedQuery);
     return jsonResponse({ suggestions });
   } catch (error) {
     console.error("Suggest API failed:", error);

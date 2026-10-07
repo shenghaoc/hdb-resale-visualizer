@@ -1,3 +1,4 @@
+import type { PublicData } from "../functions/_lib/public-data";
 import { parseSearchRequest, validateSearchRequest } from "../functions/_lib/search";
 import { parseSuggestRequest } from "../functions/_lib/suggest";
 import { manifestVersion, readPublicationState } from "../shared/publication-state";
@@ -11,7 +12,8 @@ type SharedCache = {
   match: (request: Request) => Promise<Response | undefined>;
   put: (request: Request, response: Response) => Promise<void>;
 };
-type VersionDb = { prepare: (sql: string) => { first: () => Promise<{ json: string } | null> } };
+/** The manifest's exact stored text labels the publication a response was computed from. */
+type ManifestSource = Pick<PublicData, "manifestJson">;
 
 function responseWithStatus(response: Response, status: string): Response {
   const result = new Response(response.body, response);
@@ -44,7 +46,7 @@ export function resetPublicDataCacheWarningsForTests(): void {
 
 export async function withPublicDataCache(
   request: Request,
-  db: VersionDb,
+  data: ManifestSource,
   cache: SharedCache | null,
   respond: (version?: string) => Promise<Response>,
 ): Promise<Response> {
@@ -80,7 +82,7 @@ export async function withPublicDataCache(
   };
   let fetched: Response | undefined;
   try {
-    // Both cache lookups precede EVERY D1 read, including version discovery.
+    // Both cache lookups precede EVERY database read, including version discovery.
     const pointer = await cache.match(pointerKey);
     if (pointer) {
       const version = await pointer.text();
@@ -89,15 +91,15 @@ export async function withPublicDataCache(
         if (hit) return responseWithStatus(hit, "HIT");
       }
     }
-    const before = await db.prepare("SELECT json FROM manifest WHERE id = 1").first();
-    if (!before) {
+    const before = await data.manifestJson();
+    if (before === null) {
       // Nothing to label a generation with (no manifest has ever been published, or the row was lost), so what
       // the tables hold now cannot be stored or kept by anyone downstream.
       warnThrottled("public data cache: there is no stored manifest, so nothing is cached");
       fetched = await respond();
       return responseWithStatus(fetched, "BYPASS-NO-MANIFEST");
     }
-    const publication = readPublicationState(before.json);
+    const publication = readPublicationState(before);
     if (publication.inProgress) {
       // The publisher is replacing the generated tables under a manifest that still describes the previous
       // generation, so nothing computed now may be labeled with a version. Store nothing, and keep serving the
@@ -115,18 +117,16 @@ export async function withPublicDataCache(
       fetched = await respond();
       return responseWithStatus(fetched, unreadable ? "BYPASS-UNREADABLE" : "BYPASS");
     }
-    const version = await manifestVersion(before.json);
+    const version = await manifestVersion(before);
     // A stale pointer MISS must discover the CURRENT version before labeling new data.
     const currentHit = await cache.match(dataKey(version));
     const response = currentHit ?? (await respond(version));
     fetched = response;
-    const after = currentHit
-      ? before
-      : await db.prepare("SELECT json FROM manifest WHERE id = 1").first();
+    const after = currentHit ? before : await data.manifestJson();
     const cacheControl = response.headers.get("cache-control") ?? "";
     // A manifest that changed while the handler ran means a publication started or finished mid-request, so the
     // response may mix generations.
-    const stable = before.json === after?.json;
+    const stable = before === after;
     if (
       response.status === 200 &&
       !response.headers.has("set-cookie") &&

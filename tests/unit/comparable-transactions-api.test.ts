@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import { onRequestPost } from "../../functions/api/comparable-transactions";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
 const listing = {
   town: "ANG MO KIO",
@@ -152,12 +153,9 @@ async function postComparable(
 
   return onRequestPost({
     request,
-    env: { DB: options.db ?? makeDb() },
+    publicData: createD1PublicData(options.db ?? (makeDb() as unknown as D1Database)),
     params: {},
-    waitUntil: vi.fn(),
-    next: vi.fn(),
-    data: {},
-  } as unknown as EventContext<Env, string, Record<string, unknown>>);
+  } as unknown as Parameters<typeof onRequestPost>[0]);
 }
 
 function sameBlockD1Row(id: number): Record<string, unknown> {
@@ -235,12 +233,9 @@ describe("comparable-transactions API", () => {
         headers: new Headers({ "content-type": "application/json" }),
         body: { getReader: () => ({ read: async () => ({ done: true }) }) },
       } as unknown as Request,
-      env: { DB: makeDb() },
+      publicData: createD1PublicData(makeDb() as unknown as D1Database),
       params: {},
-      waitUntil: vi.fn(),
-      next: vi.fn(),
-      data: {},
-    } as unknown as EventContext<Env, string, Record<string, unknown>>);
+    } as unknown as Parameters<typeof onRequestPost>[0]);
     expect(missing.status).toBe(411);
 
     const tooLarge = await onRequestPost({
@@ -252,12 +247,9 @@ describe("comparable-transactions API", () => {
         }),
         body: { getReader: () => ({ read: async () => ({ done: true }) }) },
       } as unknown as Request,
-      env: { DB: makeDb() },
+      publicData: createD1PublicData(makeDb() as unknown as D1Database),
       params: {},
-      waitUntil: vi.fn(),
-      next: vi.fn(),
-      data: {},
-    } as unknown as EventContext<Env, string, Record<string, unknown>>);
+    } as unknown as Parameters<typeof onRequestPost>[0]);
     expect(tooLarge.status).toBe(413);
   });
 

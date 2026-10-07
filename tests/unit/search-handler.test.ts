@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import { onRequestGet } from "../../functions/api/search";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
 describe("/api/search handler", () => {
   it("returns truncated flag when rows exceed cap", async () => {
@@ -32,7 +33,9 @@ describe("/api/search handler", () => {
     }));
     const ctx = {
       request: new Request("http://localhost/api/search?town=BEDOK"),
-      env: { DB: { prepare: () => ({ bind: () => ({ all: async () => ({ results: rows }) }) }) } },
+      publicData: createD1PublicData({
+        prepare: () => ({ bind: () => ({ all: async () => ({ results: rows }) }) }),
+      } as unknown as D1Database),
     } as unknown as Parameters<typeof onRequestGet>[0];
     const resp = await onRequestGet(ctx);
     const body = (await resp.json()) as { truncated: boolean; blocks: unknown[] };
@@ -56,23 +59,21 @@ describe("/api/search handler", () => {
       request: new Request(
         "http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&flatModel=MODEL%20A",
       ),
-      env: {
-        DB: {
-          prepare: (sql: string) => {
-            preparedSql.push(sql);
-            return {
-              bind: () => ({
-                all: async () => {
-                  if (preparedSql.length === 1) {
-                    throw new Error("D1_ERROR: no such column: blocks.flat_type_cohorts_json");
-                  }
-                  return { results: [] };
-                },
-              }),
-            };
-          },
+      publicData: createD1PublicData({
+        prepare: (sql: string) => {
+          preparedSql.push(sql);
+          return {
+            bind: () => ({
+              all: async () => {
+                if (preparedSql.length === 1) {
+                  throw new Error("D1_ERROR: no such column: blocks.flat_type_cohorts_json");
+                }
+                return { results: [] };
+              },
+            }),
+          };
         },
-      },
+      } as unknown as D1Database),
     } as unknown as Parameters<typeof onRequestGet>[0];
 
     const resp = await onRequestGet(ctx);
@@ -93,21 +94,19 @@ describe("/api/search handler", () => {
       request: new Request(
         "http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&startMonth=2024-01",
       ),
-      env: {
-        DB: {
-          prepare: (sql: string) => {
-            preparedSql.push(sql);
-            return {
-              bind: () => ({
-                all: async () =>
-                  preparedSql.length === 1
-                    ? { results: [{ total_count: 10, populated_count: 0 }] }
-                    : { results: [] },
-              }),
-            };
-          },
+      publicData: createD1PublicData({
+        prepare: (sql: string) => {
+          preparedSql.push(sql);
+          return {
+            bind: () => ({
+              all: async () =>
+                preparedSql.length === 1
+                  ? { results: [{ total_count: 10, populated_count: 0 }] }
+                  : { results: [] },
+            }),
+          };
         },
-      },
+      } as unknown as D1Database),
     } as unknown as Parameters<typeof onRequestGet>[0];
 
     const resp = await onRequestGet(ctx);
@@ -127,21 +126,19 @@ describe("/api/search handler", () => {
     const preparedSql: string[] = [];
     const ctx = {
       request: new Request("http://localhost/api/search?town=BEDOK&flatType=4%20ROOM&areaMin=90"),
-      env: {
-        DB: {
-          prepare: (sql: string) => {
-            preparedSql.push(sql);
-            return {
-              bind: () => ({
-                all: async () =>
-                  sql.includes("COUNT(NULLIF(TRIM(flat_type_cohorts_json)")
-                    ? { results: [{ total_count: 10, populated_count: 10 }] }
-                    : { results: [] },
-              }),
-            };
-          },
+      publicData: createD1PublicData({
+        prepare: (sql: string) => {
+          preparedSql.push(sql);
+          return {
+            bind: () => ({
+              all: async () =>
+                sql.includes("COUNT(NULLIF(TRIM(flat_type_cohorts_json)")
+                  ? { results: [{ total_count: 10, populated_count: 10 }] }
+                  : { results: [] },
+            }),
+          };
         },
-      },
+      } as unknown as D1Database),
     } as unknown as Parameters<typeof onRequestGet>[0];
 
     const resp = await onRequestGet(ctx);
@@ -156,7 +153,9 @@ describe("/api/search handler", () => {
   it("returns 400 when a numeric bound is outside the shared search contract", async () => {
     const ctx = {
       request: new Request("http://localhost/api/search?budgetMin=-1"),
-      env: { DB: { prepare: () => ({ bind: () => ({ all: async () => ({ results: [] }) }) }) } },
+      publicData: createD1PublicData({
+        prepare: () => ({ bind: () => ({ all: async () => ({ results: [] }) }) }),
+      } as unknown as D1Database),
     } as unknown as Parameters<typeof onRequestGet>[0];
 
     const resp = await onRequestGet(ctx);
@@ -167,7 +166,9 @@ describe("/api/search handler", () => {
   it("returns 400 when a query parameter exceeds the length cap", async () => {
     const ctx = {
       request: new Request(`http://localhost/api/search?town=${"a".repeat(300)}`),
-      env: { DB: { prepare: () => ({ bind: () => ({ all: async () => ({ results: [] }) }) }) } },
+      publicData: createD1PublicData({
+        prepare: () => ({ bind: () => ({ all: async () => ({ results: [] }) }) }),
+      } as unknown as D1Database),
     } as unknown as Parameters<typeof onRequestGet>[0];
 
     const resp = await onRequestGet(ctx);

@@ -1,15 +1,16 @@
 // @vitest-environment node
 import { DatabaseSync } from "node:sqlite";
 import { afterAll, beforeAll, describe, expect, it } from "vite-plus/test";
-import { buildSuggestions, type SuggestDb } from "../../functions/_lib/suggest";
-import { compileRuntimeRead, createNeonReadDb } from "../../worker/neon-read-db";
+import { buildSuggestions } from "../../functions/_lib/suggest";
+import { createD1PublicData } from "../../worker/public-data-d1";
+import { createNeonPublicData } from "../../worker/public-data-neon";
 
 /**
- * /api/suggest takes "the first 20 matches" with no ORDER BY, so on D1 the answer is whatever order SQLite
- * walks the table or an index. Neon has no such order, so the shim spells it out. This runs the legacy
- * implementation against a SQLite copy of D1's schema and indexes (rows inserted the way the pipeline
- * writes them) and against the Neon shim over a database with NO suggest indexes and rows stored in a
- * scrambled order, and requires identical suggestions for every query.
+ * /api/suggest takes "the first 20 matches", and D1's statements have no ORDER BY, so on D1 the answer is
+ * whatever order SQLite walks the table or an index. Neon has no such order, so its statements spell it out.
+ * This runs suggest over the D1 implementation on a SQLite copy of D1's schema and indexes (rows inserted the
+ * way the pipeline writes them), and over the Neon implementation on a database with NO suggest indexes and
+ * rows stored in a scrambled order, and requires identical suggestions for every query.
  */
 const TOWNS = ["ANG MO KIO", "BEDOK", "BISHAN", "JURONG EAST", "JURONG WEST", "YISHUN"];
 let seed = 20261007;
@@ -107,9 +108,9 @@ afterAll(() => {
 });
 
 let limitReached = 0;
-const d1Db: SuggestDb = {
-  prepare: (sql) => ({
-    bind: (...args) => ({
+const d1Db = createD1PublicData({
+  prepare: (sql: string) => ({
+    bind: (...args: unknown[]) => ({
       all: async () => {
         const results = d1.prepare(sql).all(...(args as (string | number | null)[]));
         if (results.length === 20) limitReached++;
@@ -117,9 +118,9 @@ const d1Db: SuggestDb = {
       },
     }),
   }),
-};
+} as unknown as D1Database);
 const nativeSql: string[] = [];
-const neonDb = createNeonReadDb(async (sql, params) => {
+const neonDb = createNeonPublicData(async (sql, params) => {
   nativeSql.push(sql);
   const sqlite = sql
     .replaceAll("public.", "")
@@ -131,7 +132,7 @@ const neonDb = createNeonReadDb(async (sql, params) => {
     string,
     unknown
   >[];
-}) as unknown as SuggestDb;
+});
 
 function queries(): string[] {
   const out = new Set<string>();
@@ -192,7 +193,7 @@ describe("Neon suggest keeps the legacy D1 semantics", () => {
     expect(ties.length).toBeGreaterThan(50);
   });
 
-  it("sends explicit, deterministic native SQL for every legacy suggest query", () => {
+  it("sends explicit, deterministic SQL for every name match", () => {
     expect(new Set(nativeSql).size).toBeGreaterThanOrEqual(6);
     for (const sql of new Set(nativeSql)) {
       expect(sql).toMatch(/ORDER BY .* LIMIT 20$/);
@@ -200,20 +201,5 @@ describe("Neon suggest keeps the legacy D1 semantics", () => {
       expect(sql).not.toMatch(/(?<!I)LIKE/);
       expect(sql).toContain("public.blocks");
     }
-  });
-
-  it("still refuses suggest-shaped SQL that is not exactly the legacy text", () => {
-    for (const sql of [
-      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 21",
-      "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20; DROP TABLE blocks",
-      "SELECT DISTINCT town, lat FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20",
-    ])
-      expect(() => compileRuntimeRead(sql, ["jur%"])).toThrow();
-    expect(() =>
-      compileRuntimeRead(
-        "SELECT DISTINCT town FROM blocks WHERE town LIKE ? ESCAPE '\\' LIMIT 20",
-        [],
-      ),
-    ).toThrow();
   });
 });
