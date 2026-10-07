@@ -79,6 +79,11 @@ export function useShortlistSync({
   );
   const [syncStatus, setSyncStatus] = useState<SyncStatus>(() => (syncCode ? "syncing" : "local"));
   const debouncedItems = useDebouncedValue(items, SYNC_DEBOUNCE_MS);
+  // Latest debounced snapshot, readable from the hydration promise. The
+  // debounced push effect bails while `readyRef` is false and does not re-run
+  // when hydration finishes, because readiness is a ref rather than state.
+  const debouncedItemsRef = useRef(debouncedItems);
+  debouncedItemsRef.current = debouncedItems;
   // JSON of the last successfully pushed set — skips redundant pushes.
   const lastPushedRef = useRef<string | null>(null);
   // Gates the debounced push until the initial pull/merge has completed, so we
@@ -301,15 +306,29 @@ export function useShortlistSync({
         const result = await pushShortlist(syncCode, pushPayload);
         if (cancelled || !isCurrentOperation(operationId)) return;
         readyRef.current = true;
-        clearPendingShortlistPush();
+        const localSnapshot = JSON.stringify(itemsRef.current);
+        const localDiverged = localSnapshot !== mergedSnapshot;
+        // Edits made after the payload was snapshotted are still local. If the
+        // debounce already elapsed during this push, that effect returned early
+        // (`readyRef` was false) and will not run again — so queue and flush
+        // the current shortlist. Otherwise the pending debounce fires after
+        // readiness and pushes the edit itself.
+        const followUpNeeded =
+          localDiverged && JSON.stringify(debouncedItemsRef.current) === localSnapshot;
         lastPushedRef.current = JSON.stringify(result.items);
-        if (JSON.stringify(itemsRef.current) === mergedSnapshot) {
-          const nextItems = mergeFromCloud(itemsRef.current, result.items);
-          if (nextItems !== itemsRef.current) {
-            replaceItems(nextItems);
+        if (followUpNeeded) {
+          enqueuePendingShortlistPush(syncCode, itemsRef.current);
+          flushPendingPushRef.current();
+        } else {
+          clearPendingShortlistPush();
+          if (!localDiverged) {
+            const nextItems = mergeFromCloud(itemsRef.current, result.items);
+            if (nextItems !== itemsRef.current) {
+              replaceItems(nextItems);
+            }
           }
+          setSyncStatus("synced");
         }
-        setSyncStatus("synced");
       } catch (error) {
         if (cancelled || !isCurrentOperation(operationId)) return;
         if (error instanceof SyncCodeNotFoundError) {
