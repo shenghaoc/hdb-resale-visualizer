@@ -58,17 +58,26 @@ Switching backends must not change what clients receive, so two routes are pinne
 | `PUBLIC_DATA_BACKEND`     | var                | `"d1"` (default) or `"neon"`.                                                                    |
 | `D1_PUBLIC_CACHE_EPOCH`   | var                | Cache namespace epoch for D1. Change it to retire every cached D1 public response.               |
 | `NEON_PUBLIC_CACHE_EPOCH` | var                | Cache namespace epoch for Neon. Change it on every switch to Neon and on every Neon data change. |
-| `HDB_PUBLIC_NEON`         | Hyperdrive binding | Required only when `PUBLIC_DATA_BACKEND` is `"neon"`.                                            |
+| `HDB_PUBLIC_NEON`         | Hyperdrive binding | Always bound in `wrangler.jsonc`; read only when `PUBLIC_DATA_BACKEND` is `"neon"`.              |
 
 The Hyperdrive config must use the direct (non-pooled) Neon endpoint, query caching **disabled**, an origin connection limit of 5, and a database role that is `SELECT`-only on the public tables, has `default_transaction_read_only = on` and a bounded `statement_timeout`, and cannot read private tables. Writer or owner credentials must never be placed in Worker configuration.
 
+## Local development
+
+`vp run dev:functions` runs `wrangler dev --var PUBLIC_DATA_BACKEND:d1`, so the full-stack workflow uses the seeded local D1 emulator whichever backend production selects, and never needs a Neon connection. Two details of the committed configuration make that work:
+
+- `wrangler dev` refuses to start while a Hyperdrive binding has no local connection string, even if nothing uses it. The binding therefore carries `localConnectionString`: a fixed, non-secret placeholder (Wrangler requires a user and a password in it) that deploys never upload (they send only the binding's `id`) and that nothing connects to while D1 is selected. `tests/unit/wrangler-public-backend.test.ts` asks Wrangler itself to build the local options from `wrangler.jsonc`, so a binding without one fails CI instead of local development.
+- `--var` overrides the `vars` in `wrangler.jsonc` for that run only.
+
+Plain `wrangler dev` (without the override) selects Neon, and public reads then return `500` locally because the placeholder points at no database; use `vp run dev:functions`. To exercise the Neon path locally, run `wrangler dev` without the override against a local PostgreSQL that holds the public tables and set `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HDB_PUBLIC_NEON` to its connection string, which takes the place of the placeholder.
+
 ## Current production state
 
-Since 2026-10-07 production selects **Neon** (`PUBLIC_DATA_BACKEND="neon"`, cache epoch `neon-20261007-1`). Neon holds the publication generated on 2026-10-04 (988,128 transactions); D1 still holds the older 2026-08-29 publication (985,533 transactions) and is frozen. While Neon is selected, refreshing D1 does not change what the site serves; a new publication has to go to Neon, followed by a new `NEON_PUBLIC_CACHE_EPOCH`. The last D1-selected Worker version is `a93c380f-1a7a-4a15-868e-4cd8a70c549e`.
+`wrangler.jsonc` selects **Neon** (`PUBLIC_DATA_BACKEND="neon"`, cache epoch `neon-20261007-2`) and keeps D1 bound for shortlists and the TTL cleanup. Neon holds the publication generated on 2026-10-04 (988,128 transactions); D1 still holds the older 2026-08-29 publication (985,533 transactions) and is frozen. While Neon is selected, refreshing D1 does not change what the site serves; a new publication has to go to Neon, followed by a new `NEON_PUBLIC_CACHE_EPOCH`. The last D1-selected Worker version is `a93c380f-1a7a-4a15-868e-4cd8a70c549e`.
 
 ## Switching and rolling back
 
-1. Switch: set `PUBLIC_DATA_BACKEND` to `"neon"`, set a **new** `NEON_PUBLIC_CACHE_EPOCH`, deploy.
+1. Switch: set `PUBLIC_DATA_BACKEND` to `"neon"` and a **new** `NEON_PUBLIC_CACHE_EPOCH` in `wrangler.jsonc`, deploy. The `HDB_PUBLIC_NEON` binding stays in the committed configuration permanently (with its local placeholder, see above), so a switch is a variable change. A Worker that selects Neon without that binding fails every public read with a `500`, which is why the configuration test requires the binding whenever Neon is selected.
 2. Fastest rollback: `wrangler rollback <version-id> --name hdb-resale-visualizer` to a D1-selected version (for the 2026-10-07 switch, `a93c380f-1a7a-4a15-868e-4cd8a70c549e`). It takes effect within seconds, needs no build, and was rehearsed in both directions before the switch.
 3. Rollback by configuration: set `PUBLIC_DATA_BACKEND` back to `"d1"`, change `D1_PUBLIC_CACHE_EPOCH`, deploy.
 

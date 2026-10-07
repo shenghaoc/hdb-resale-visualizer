@@ -185,13 +185,13 @@ P1 (must fix before merge):
 The app loads all data from Worker-routed `/api/*` handlers backed by Cloudflare D1 (or Neon, when selected). For local development:
 
 - **UI-only iteration**: `vp dev` (Vite on `localhost:5173`) — useful for component work that doesn't exercise live data.
-- **Full stack with D1**: `vp run dev:functions` builds the app and runs `wrangler dev` against the local D1 emulator. Seed it once with `vp run db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
+- **Full stack with D1**: `vp run dev:functions` builds the app and runs `wrangler dev --var PUBLIC_DATA_BACKEND:d1` against the local D1 emulator, so it never needs a Neon connection even though production selects Neon (the Hyperdrive binding carries a local placeholder connection string; see `docs/architecture/public-read-backend.md`). Seed it once with `vp run db:migrate:local` and a fixture import (see `tests/fixtures/public-data/`).
 - **Production sync**: `vp run sync-data` writes directly to remote D1; requires `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID` env vars. Run from CI normally, not from a local box.
 
 ### Running services
 
 - `vp dev` starts Vite on `localhost:5173` for UI work.
-- `vp run dev:functions` builds the app and starts `wrangler dev` with the D1 binding.
+- `vp run dev:functions` builds the app and starts `wrangler dev` with the D1 binding, pinned to `PUBLIC_DATA_BACKEND=d1`.
 - Playwright E2E tests mock the `/api/*` handlers (see `tests/e2e/fixtures.ts`); they do not require a live D1 binding.
 - Unit tests use `NODE_OPTIONS=--no-experimental-webstorage` (already wired into `vp run test`).
 

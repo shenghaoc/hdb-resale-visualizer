@@ -41,16 +41,22 @@
   // rollback target: set PUBLIC_DATA_BACKEND back to "d1" (or promote the previous Worker version).
   // Changing an epoch retires every cached public response for that backend (Cache API keys are
   // namespaced `<backend>-<epoch>`); change NEON_PUBLIC_CACHE_EPOCH whenever the Neon data changes.
+  // `wrangler dev` refuses to start while a Hyperdrive binding has no local connection string, even if
+  // nothing uses it. `localConnectionString` is that non-secret placeholder: Wrangler requires a username
+  // and password in it, deploys never upload it (they send only the id), and `dev:functions` pins
+  // PUBLIC_DATA_BACKEND to "d1", so the seeded local D1 emulator is used and nothing ever connects to it.
+  // To run Neon locally, see docs/architecture/public-read-backend.md.
   "hyperdrive": [
     {
       "binding": "HDB_PUBLIC_NEON",
       "id": "70f9a7f0a2f64851af0cccba58dcfb0c",
+      "localConnectionString": "postgresql://local:local@localhost:5432/hdb_local",
     },
   ],
   "vars": {
     "PUBLIC_DATA_BACKEND": "neon",
     "D1_PUBLIC_CACHE_EPOCH": "d1-cutover-v1",
-    "NEON_PUBLIC_CACHE_EPOCH": "neon-20261007-1",
+    "NEON_PUBLIC_CACHE_EPOCH": "neon-20261007-2",
   },
   "triggers": {
     "crons": ["0 3 * * *"],

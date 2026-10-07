@@ -7,7 +7,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 ## Stack
 
 - Vite + React 19 + TypeScript (frontend)
-- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1 (public reads can optionally be served from Neon via Hyperdrive; see [public-read backend](docs/architecture/public-read-backend.md))
+- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1, with public reads served from Neon via Hyperdrive when `PUBLIC_DATA_BACKEND` selects it (see [public-read backend](docs/architecture/public-read-backend.md))
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - Recharts for block-level trend charts
@@ -92,6 +92,8 @@ There are three local data modes. Mixing them up is the usual cause of empty map
 vp run db:migrate:local     # one-time: create the local D1 schema
 vp run dev:functions        # builds, then runs `wrangler dev` against local D1
 ```
+
+`dev:functions` pins `PUBLIC_DATA_BACKEND` to `d1`, so it uses the local emulator and needs no Neon connection even though the deployed configuration reads from Neon (see [public-read backend](docs/architecture/public-read-backend.md#local-development)).
 
 ### Manual remote D1 refresh
 

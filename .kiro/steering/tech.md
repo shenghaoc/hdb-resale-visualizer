@@ -38,7 +38,7 @@ inclusion: always
 ## Standard Scripts
 
 - `vp dev`: start Vite on `localhost:5173` for UI-only iteration.
-- `vp run dev:functions`: build and run `wrangler dev` for the Worker/API/D1 stack.
+- `vp run dev:functions`: build and run `wrangler dev` for the Worker/API/D1 stack (pinned to `PUBLIC_DATA_BACKEND=d1`, so no Neon connection is needed).
 - `vp run check:boundaries`: enforce script/runtime boundaries.
 - `vp run typecheck`: TypeScript verification.
 - `vp run lint`: typed Oxlint.

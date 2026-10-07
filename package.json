@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vp dev",
-    "dev:functions": "pnpm build && wrangler dev",
+    "dev:functions": "pnpm build && wrangler dev --var PUBLIC_DATA_BACKEND:d1",
     "deploy": "wrangler deploy",
     "cf-typegen": "wrangler types",
     "build": "pnpm check:boundaries && tsc -b && vp build && pnpm check:bundle",
