@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
+  resolveOneMapRoutingEndpoint,
   resolveOneMapSearchEndpoint,
+  resolveOneMapTokenEndpoint,
   validateGeneratedArtifacts,
 } from "../../scripts/lib/syncGuards";
 
@@ -20,6 +22,19 @@ describe("sync guards", () => {
   it("throws a clear error for malformed non-empty endpoints", () => {
     expect(() => resolveOneMapSearchEndpoint("not-a-url")).toThrow(
       /Invalid ONEMAP_SEARCH_ENDPOINT/,
+    );
+    expect(() => resolveOneMapRoutingEndpoint("not-a-url")).toThrow(
+      /Invalid ONEMAP_ROUTING_ENDPOINT/,
+    );
+    expect(() => resolveOneMapTokenEndpoint("/relative")).toThrow(/Invalid ONEMAP_TOKEN_ENDPOINT/);
+  });
+
+  it("trims a configured endpoint before parsing it", () => {
+    expect(resolveOneMapRoutingEndpoint("  https://example.test/route  ").toString()).toBe(
+      "https://example.test/route",
+    );
+    expect(resolveOneMapTokenEndpoint(" https://example.test/token ").toString()).toBe(
+      "https://example.test/token",
     );
   });
 
@@ -41,5 +56,33 @@ describe("sync guards", () => {
         geocodeFailureCount: 0,
       }),
     ).not.toThrow();
+  });
+
+  it("names only the missing artifact side", () => {
+    expect(() =>
+      validateGeneratedArtifacts({
+        blockSummariesCount: 3,
+        detailCount: 0,
+        geocodeFailureCount: 0,
+      }),
+    ).toThrow(/no usable detail artifacts/);
+
+    expect(() =>
+      validateGeneratedArtifacts({
+        blockSummariesCount: 0,
+        detailCount: 2,
+        geocodeFailureCount: 0,
+      }),
+    ).toThrow(/no usable block summaries(?!.*detail artifacts)/);
+  });
+
+  it("omits the geocode hint when no lookups failed", () => {
+    expect(() =>
+      validateGeneratedArtifacts({
+        blockSummariesCount: 0,
+        detailCount: 0,
+        geocodeFailureCount: 0,
+      }),
+    ).toThrow(/unexpectedly\.$/);
   });
 });

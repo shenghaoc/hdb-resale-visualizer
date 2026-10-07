@@ -26,6 +26,13 @@ describe("seo worker helpers", () => {
     const selectedOnly = canonicalUrlForRoute("https://example.com", null, "BK-1", null);
     expect(selectedOnly).toContain("selected=BK-1");
     expect(selectedOnly).toContain("v=2");
+
+    expect(canonicalUrlForRoute("https://example.com", "  ", " \t ", "  ")).toBe(
+      "https://example.com/",
+    );
+    expect(canonicalUrlForRoute("https://example.com", "  BEDOK  ", null, null)).toBe(
+      "https://example.com/?town=BEDOK&v=2",
+    );
   });
 
   it("escapes closing script sequences in json-ld", () => {
@@ -49,8 +56,10 @@ describe("seo worker helpers", () => {
   });
 
   it("escapes xml-reserved chars in sitemap entries", () => {
-    const xml = sitemapXml([{ loc: "https://example.com/?town=A&B" }]);
-    expect(xml).toContain("A&amp;B");
+    const xml = sitemapXml([{ loc: `https://example.com/?q="><script>` }]);
+    expect(xml).toContain("&quot;");
+    expect(xml).toContain("&lt;script&gt;");
+    expect(xml).not.toContain("<script>");
   });
 
   it("builds town and block seo metadata", () => {

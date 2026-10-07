@@ -45,6 +45,36 @@ describe("rate-limits", () => {
     ).toBe("data-gov-dataset-download");
   });
 
+  it("classifies OneMap routing separately from search and ignores unknown hosts", () => {
+    expect(classifyUpstreamService("https://www.onemap.gov.sg/api/public/routingsvc/route")).toBe(
+      "onemap-routing",
+    );
+    expect(classifyUpstreamService("https://www.onemap.gov.sg/api/common/elastic/search")).toBe(
+      "onemap-search",
+    );
+    expect(classifyUpstreamService("https://example.test/route")).toBeNull();
+    expect(classifyUpstreamService("not a url")).toBeNull();
+  });
+
+  it("falls back to a 1s OneMap interval when the override is missing or not positive", () => {
+    vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "nope");
+    expect(upstreamIntervalMs("onemap-search")).toBe(1000);
+    vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "0");
+    expect(upstreamIntervalMs("onemap-routing")).toBe(1000);
+    vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "-5");
+    expect(upstreamIntervalMs("onemap-search")).toBe(1000);
+  });
+
+  it("honours a positive OneMap interval override", () => {
+    vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "250");
+    expect(upstreamIntervalMs("onemap-routing")).toBe(250);
+  });
+
+  it("uses the anonymous v2 realtime interval of 6 requests per 10 seconds", () => {
+    vi.stubEnv("DATA_GOV_API_KEY", "");
+    expect(upstreamIntervalMs("data-gov-v2-realtime")).toBe(1667);
+  });
+
   it("waits at least the configured interval between requests for the same service", async () => {
     vi.stubEnv("DATA_GOV_API_KEY", "test-key");
     vi.stubEnv("DATA_GOV_API_KEY_TIER", "prod");
