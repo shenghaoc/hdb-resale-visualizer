@@ -101,7 +101,11 @@ Nightly `refresh-data.yml` is gone (data.gov.sg rate limits and upcoming D1 rate
 vp run sync-data
 ```
 
-That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_D1_DATABASE_ID`, plus data.gov.sg / OneMap credentials listed under Environment. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and updates `manifest.generatedAt` / `sources.lastUpdatedAt` — the values the header shows as **Data through** / **Synced**.
+That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_D1_DATABASE_ID`; the upstream credentials listed under Environment are optional. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and writes a new manifest. The header reads it as follows:
+
+- **Built** is `manifest.generatedAt`, the time of the sync run.
+- **Synced** is `manifest.sources.lastUpdatedAt`, the last-updated time that data.gov.sg reports for the resale collection.
+- **Data through** is `manifest.dataWindow.maxMonth`, the latest transaction month in the data.
 
 ## Scripts
 
@@ -191,7 +195,11 @@ CLOUDFLARE_API_TOKEN=...
 CLOUDFLARE_D1_DATABASE_ID=...
 ```
 
-`DATA_GOV_API_KEY` is recommended for production refresh jobs because unauthenticated data.gov.sg rate limits are low.
+The three Cloudflare variables are required for `vp run sync-data`; everything else above is optional:
+
+- `DATA_GOV_API_KEY` is recommended for production refresh jobs. Without it the sync still runs, but at the much lower anonymous data.gov.sg rate limits.
+- `ONEMAP_TOKEN`, or `ONEMAP_EMAIL` with `ONEMAP_PASSWORD`, enables OneMap walking routes. Without one of them the sync logs a warning and uses straight-line walking-time estimates for every pair.
+- `GEOCODE_CONCURRENCY` only tunes how many geocoding requests run at once.
 
 ## Deployment
 

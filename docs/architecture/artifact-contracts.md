@@ -64,7 +64,10 @@ fails closed rather than mixing block-wide and selected-type evidence.
 
 ### Search (`GET /api/search`)
 
-Query params (each string value capped at 256 characters): `town`, `flatType`, `flatModel`, `budgetMin`, `budgetMax`, `areaMin`, `areaMax`, `mrtMax`, `remainingLeaseMin`, `startMonth`, `endMonth`.
+Query params:
+
+- Text: `town`, `flatType`, `flatModel`, `startMonth`, `endMonth`. Each value is capped at 256 characters and a longer value is rejected.
+- Numeric: `budgetMin`, `budgetMax`, `areaMin`, `areaMax`, `mrtMax`, `remainingLeaseMin`. These have no length cap. A value that is not a finite number is ignored, so that filter is simply not applied.
 
 Server-side predicates stop at those columns. **Text / geographic search and CPF-based affordability stay client-side** (`SEARCH_PREDICATE_OWNERSHIP` in `functions/_lib/search.ts`). The handler returns at most 2000 rows and sets `truncated` when more matched.
 
@@ -87,7 +90,7 @@ Selected-type refinements that need `flat_type_cohorts_json` return no rows when
 
 - `POST /api/shortlist` body: `{ syncCode?: string, items: ShortlistItem[] }` (max 20 items, 64 KB). Omit `syncCode` to mint a new 128-bit URL-safe code.
 - Server stores only `SHA-256(syncCode)`. The raw code is returned once and kept in the browser (`hdb_resale_sync_code_v1`).
-- Push **replaces** the stored items. The Worker does not merge; the client merges on pull/link so deletes stay deleted.
+- Push **replaces** the stored items and the Worker does not merge. On pull/link the client unions local and cloud items by `addressKey`, and the newer `addedAt` wins per key. There are no deletion markers, so a deletion is not guaranteed to survive: a device that still holds the item locally restores it on its next hydrate.
 - Rate limit: 10 POSTs per client IP per colo per 60 seconds (`SHORTLIST_WRITE_LIMITER` in `wrangler.jsonc`).
 - There is **no DELETE**. Disabling sync locally leaves the D1 row. The Worker cron (`0 3 * * *`, 03:00 UTC) purges rows whose `updated_at` is older than 180 days.
 
