@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
-import { mergeShortlists } from "@/features/shortlist/shortlist";
+import { mergeShortlists, parseShortlist } from "@/features/shortlist/shortlist";
 import {
   isRetriableSyncError,
   SyncCodeNotFoundError,
@@ -167,13 +167,29 @@ export function useShortlistSync({
         if (!isCurrentOperation(operationId)) {
           return;
         }
+        // The debounced effect sends edits straight to the cloud and never queues
+        // them. If it already ran for the latest edit while this (older) request was
+        // in flight, it will not run again — yet this response is about to record the
+        // older snapshot as the last one pushed, and the cloud may now hold it if it
+        // landed last. Re-send the latest snapshot in that case.
+        // `flushedSnapshot` was read back through the queue, which normalizes items,
+        // so normalize the live items the same way before comparing.
+        const latestSnapshot = JSON.stringify(itemsRef.current);
+        const needsLatestResend =
+          JSON.stringify(parseShortlist(itemsRef.current)) !== flushedSnapshot &&
+          JSON.stringify(debouncedItemsRef.current) === latestSnapshot;
         // Only clear if the queue wasn't overwritten with newer data while in flight.
         const current = readPendingShortlistPush();
-        if (!current || JSON.stringify(current.items) === flushedSnapshot) {
+        const queueUnchanged = !current || JSON.stringify(current.items) === flushedSnapshot;
+        if (queueUnchanged) {
           clearPendingShortlistPush();
-        } else {
-          // Newer data was enqueued during the push — re-flush once .finally()
-          // resets flushInFlightRef (setTimeout defers to the next macrotask).
+          if (needsLatestResend) {
+            enqueuePendingShortlistPush(pending.syncCode ?? result.syncCode, itemsRef.current);
+          }
+        }
+        if (!queueUnchanged || needsLatestResend) {
+          // Newer data is queued — re-flush once .finally() resets flushInFlightRef
+          // (setTimeout defers to the next macrotask).
           setTimeout(() => {
             if (isCurrentOperation(operationId)) {
               flushPendingPushRef.current();

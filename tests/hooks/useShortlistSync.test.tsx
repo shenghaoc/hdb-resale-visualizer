@@ -52,6 +52,50 @@ function useSyncHarness() {
   return { local, sync };
 }
 
+/**
+ * Drive hydration for a stored code until the follow-up flush of an edit made
+ * during the hydration push is in flight. Every POST stays open until the test
+ * lands it, and the fake server keeps whatever was posted last, so landing a
+ * push echoes the payload its request carried.
+ */
+async function startHydrationFollowUpFlush() {
+  window.localStorage.setItem(SYNC_CODE_STORAGE_KEY, SYNC_CODE);
+  window.localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify([validItem("keep")]));
+  vi.mocked(pullShortlist).mockResolvedValue([validItem("keep")]);
+
+  const landPush: Array<() => void> = [];
+  vi.mocked(pushShortlist).mockImplementation(
+    (_code, items) =>
+      new Promise((resolve) => {
+        landPush.push(() => resolve({ syncCode: SYNC_CODE, items }));
+      }),
+  );
+
+  const { result } = renderHook(() => useSyncHarness());
+  await act(async () => {
+    await vi.advanceTimersByTimeAsync(0);
+  });
+  expect(landPush).toHaveLength(1); // hydration push
+
+  // First edit; its debounce elapses while the hydration push is in flight.
+  act(() => {
+    result.current.local.toggle("keep");
+  });
+  await act(async () => {
+    await vi.advanceTimersByTimeAsync(1000);
+  });
+  expect(landPush).toHaveLength(1);
+
+  // Hydration lands: the follow-up flush sends the first edit and stays open.
+  await act(async () => {
+    landPush[0]?.();
+    await vi.advanceTimersByTimeAsync(0);
+  });
+  expect(landPush).toHaveLength(2);
+
+  return { result, landPush };
+}
+
 describe("useShortlistSync", () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -209,6 +253,74 @@ describe("useShortlistSync", () => {
       .mock.calls.map((call) => (call[1] ?? []).map((item) => item.addressKey));
     expect(pushedSets.at(-1)).toEqual([]);
     expect(result.current.local.items).toEqual([]);
+    expect(result.current.sync.status).toBe("synced");
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
+  });
+
+  it("re-pushes the latest snapshot when the follow-up flush lands after a newer debounced push", async () => {
+    const { result, landPush } = await startHydrationFollowUpFlush();
+
+    // Second edit while that flush is in flight; the debounced effect sends it
+    // concurrently because hydration is already ready.
+    act(() => {
+      result.current.local.toggle("added");
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+    expect(landPush).toHaveLength(3);
+
+    // The newer request lands first, then the older follow-up lands last.
+    await act(async () => {
+      landPush[2]?.();
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    await act(async () => {
+      landPush[1]?.();
+      await vi.advanceTimersByTimeAsync(0);
+    });
+
+    // Nothing else would push again (no dependency changed), so the hook must
+    // re-send the latest snapshot or the cloud keeps the older one.
+    expect(landPush).toHaveLength(4);
+    const latestPayload = vi.mocked(pushShortlist).mock.calls.at(-1)?.[1] ?? [];
+    expect(latestPayload.map((item) => item.addressKey)).toEqual(["added"]);
+
+    await act(async () => {
+      landPush[3]?.();
+      await vi.runAllTimersAsync();
+    });
+    expect(landPush).toHaveLength(4);
+    expect(result.current.sync.status).toBe("synced");
+    expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
+  });
+
+  it("leaves a newer edit to the debounced effect when its debounce has not elapsed as the follow-up flush lands", async () => {
+    const { result, landPush } = await startHydrationFollowUpFlush();
+
+    act(() => {
+      result.current.local.toggle("added");
+    });
+    // The follow-up flush lands before the second edit's debounce elapses, so the
+    // debounced effect has not run yet and will still send that edit itself.
+    await act(async () => {
+      landPush[1]?.();
+      await vi.advanceTimersByTimeAsync(0);
+    });
+    expect(landPush).toHaveLength(2);
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1000);
+    });
+    expect(landPush).toHaveLength(3);
+    const sentPayload = vi.mocked(pushShortlist).mock.calls.at(-1)?.[1] ?? [];
+    expect(sentPayload.map((item) => item.addressKey)).toEqual(["added"]);
+
+    await act(async () => {
+      landPush[2]?.();
+      await vi.runAllTimersAsync();
+    });
+    expect(landPush).toHaveLength(3);
     expect(result.current.sync.status).toBe("synced");
     expect(window.localStorage.getItem(SHORTLIST_SYNC_QUEUE_KEY)).toBeNull();
   });
