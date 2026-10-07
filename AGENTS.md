@@ -86,7 +86,7 @@ Playwright smoke subset runs in a separate workflow
 
 ## 🏗️ Architectural Boundary
 
-1. **Runtime API**: The frontend (`src/`) loads all data from same-origin `/api/*` routes. `worker/index.ts` routes to Pages Functions-style handlers under `functions/api/*`, backed by Cloudflare D1 by default (`PUBLIC_DATA_BACKEND=neon` serves public reads from Neon through Hyperdrive; see `docs/architecture/public-read-backend.md`).
+1. **Runtime API**: The frontend (`src/`) loads all data from same-origin `/api/*` routes. `worker/index.ts` routes to Pages Functions-style handlers under `functions/api/*`, backed by Cloudflare D1 in code by default. Production currently selects Neon for public reads (`PUBLIC_DATA_BACKEND=neon` in `wrangler.jsonc`, through Hyperdrive); shortlists stay on D1, which is also the rollback target. See `docs/architecture/public-read-backend.md`.
 2. **Build-Time Ingestion**: `scripts/sync-data.ts` fetches data.gov.sg / OneMap and writes to D1. Geocoding and walking-time computation are one-time and persisted in `geocode_cache` / `walking_time_cache` D1 tables — they never re-run for an already-cached address or pair.
 3. **Schema Migrations**: D1 schema lives in `migrations/*.sql`. Apply with `vp run db:migrate:remote` (prod) or `vp run db:migrate:local` (Wrangler emulator).
 4. **Persistence**: User state is browser-local (`localStorage`) by default and works fully offline. The shortlist additionally supports **opt-in** cloud sync via an anonymous sync code (no account, no PII), persisted in the `shortlists` D1 table and written at runtime by `functions/api/shortlist/*`. This is the _only_ runtime D1 write path; every other D1 write stays build-time (`scripts/sync-data.ts`).

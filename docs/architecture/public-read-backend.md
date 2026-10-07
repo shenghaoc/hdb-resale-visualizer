@@ -36,10 +36,14 @@ Switching backends must not change what clients receive, so two routes are pinne
 
 The Hyperdrive config must use the direct (non-pooled) Neon endpoint, query caching **disabled**, an origin connection limit of 5, and a database role that is `SELECT`-only on the public tables, has `default_transaction_read_only = on` and a bounded `statement_timeout`, and cannot read private tables. Writer or owner credentials must never be placed in Worker configuration.
 
+## Current production state
+
+Since 2026-10-07 production selects **Neon** (`PUBLIC_DATA_BACKEND="neon"`, cache epoch `neon-20261007-1`). Neon holds the publication generated on 2026-10-04 (988,128 transactions); D1 still holds the older 2026-08-29 publication (985,533 transactions) and is frozen. While Neon is selected, refreshing D1 does not change what the site serves; a new publication has to go to Neon, followed by a new `NEON_PUBLIC_CACHE_EPOCH`. The last D1-selected Worker version is `a93c380f-1a7a-4a15-868e-4cd8a70c549e`.
+
 ## Switching and rolling back
 
 1. Switch: set `PUBLIC_DATA_BACKEND` to `"neon"`, set a **new** `NEON_PUBLIC_CACHE_EPOCH`, deploy.
-2. Fastest rollback: promote the previous Worker version (`wrangler rollback`). Versions that predate a switch default to D1.
+2. Fastest rollback: `wrangler rollback <version-id> --name hdb-resale-visualizer` to a D1-selected version (for the 2026-10-07 switch, `a93c380f-1a7a-4a15-868e-4cd8a70c549e`). It takes effect within seconds, needs no build, and was rehearsed in both directions before the switch.
 3. Rollback by configuration: set `PUBLIC_DATA_BACKEND` back to `"d1"`, change `D1_PUBLIC_CACHE_EPOCH`, deploy.
 
 D1 and Neon hold different publications until D1 is refreshed. Rolling back to D1 returns to D1's data, not a Neon snapshot; nothing is copied back. Browsers and the service worker can keep a response for up to its `max-age` (public API responses use 60 s; the PWA runtime cache keeps API responses for offline use), so a switch is not instantaneous for already-open clients.
