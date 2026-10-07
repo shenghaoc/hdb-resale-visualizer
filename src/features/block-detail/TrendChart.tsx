@@ -115,7 +115,6 @@ export function TrendChart({ points, t, locale, peakMonth, height = 200 }: Trend
               borderRadius: 4,
               fontSize: 12,
             }}
-            labelFormatter={(label) => String(label)}
             formatter={(value, name) => {
               const numValue = typeof value === "number" ? value : NaN;
               if (name === priceLabel) {
