@@ -7,7 +7,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 ## Stack
 
 - Vite + React 19 + TypeScript (frontend)
-- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1
+- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1 (public reads can optionally be served from Neon via Hyperdrive; see [public-read backend](docs/architecture/public-read-backend.md))
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - Recharts for block-level trend charts
