@@ -97,6 +97,11 @@ export function useShortlistSync({
 
   const beginOperation = useCallback(() => {
     operationIdRef.current += 1;
+    // A request still in flight belongs to the previous operation and can no longer
+    // apply its result. Release the write chain and the flush gate so the new
+    // operation's writes do not queue behind a request that may never settle.
+    pushChainRef.current = Promise.resolve();
+    flushInFlightRef.current = false;
     return operationIdRef.current;
   }, []);
 
