@@ -2,8 +2,9 @@
  * The public shape of `GET /api/manifest`.
  *
  * The stored manifest row is written by the data pipeline and may carry internal bookkeeping (sync build
- * state, publication identity, reconciliation evidence). None of that is part of the public contract, and
- * a backend change must never widen it, so the handler projects every stored manifest through this list.
+ * state, publication identity, reconciliation evidence, the D1 `publicationInProgress` marker). None of that
+ * is part of the public contract, and a backend change must never widen it, so the handler projects every
+ * stored manifest through this list.
  * Keys are emitted in declaration order, which is also the order the D1 publication stores, so the output
  * is byte-for-byte what D1 serves today regardless of how the backend orders JSON object keys.
  *

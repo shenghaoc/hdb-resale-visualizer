@@ -201,6 +201,65 @@ describe("D1Client", () => {
     });
   });
 
+  it("makes every statement conditional on a guard, inside the statement itself", async () => {
+    const fetchMock = vi.fn<typeof fetch>(async () =>
+      jsonResponse({ success: true, errors: [], result: [{ success: true }, { success: true }] }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new D1Client(config);
+    const guard = "(SELECT 1) = 1";
+
+    await client.batchInsert({
+      table: "blocks",
+      columns: ["address_key", "town"],
+      rows: ["a", "b", "c"],
+      mapRow: (key) => [key, "BEDOK"],
+      chunkSize: 2,
+      preDelete: true,
+      guard,
+    });
+    await client.batchInsert({
+      table: "blocks",
+      columns: ["address_key"],
+      rows: [],
+      mapRow: () => [],
+      preDelete: true,
+      guard,
+    });
+    await client.batchInsert({
+      table: "walking_time_cache",
+      columns: ["cache_key", "walking_time_seconds"],
+      rows: ["k"],
+      mapRow: () => ["k", 90],
+      upsert: true,
+      guard,
+    });
+    await client.truncate("comparisons", guard);
+
+    const bodies = fetchMock.mock.calls.map((call) => parseRequestBody(call[1]));
+    // The rows come from a VALUES subquery so a WHERE can sit between the data and the write, and the bound
+    // parameters are unchanged (D1 allows 100 per statement, so the guard must never be a parameter).
+    expect(bodies[0]).toEqual({
+      batch: [
+        { sql: "DELETE FROM blocks WHERE (SELECT 1) = 1" },
+        {
+          sql: "INSERT INTO blocks (address_key,town) SELECT column1,column2 FROM (VALUES (?,?),(?,?)) WHERE (SELECT 1) = 1",
+          params: ["a", "BEDOK", "b", "BEDOK"],
+        },
+      ],
+    });
+    expect(bodies[1]).toEqual({
+      sql: "INSERT INTO blocks (address_key,town) SELECT column1,column2 FROM (VALUES (?,?)) WHERE (SELECT 1) = 1",
+      params: ["c", "BEDOK"],
+    });
+    expect(bodies[2]).toEqual({ sql: "DELETE FROM blocks WHERE (SELECT 1) = 1", params: [] });
+    expect(bodies[3]).toEqual({
+      sql: "INSERT OR REPLACE INTO walking_time_cache (cache_key,walking_time_seconds) SELECT column1,column2 FROM (VALUES (?,?)) WHERE (SELECT 1) = 1",
+      params: ["k", 90],
+    });
+    expect(bodies[4]).toEqual({ sql: "DELETE FROM comparisons WHERE (SELECT 1) = 1", params: [] });
+  });
+
   it("does not call D1 for an empty insert without preDelete", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);

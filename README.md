@@ -7,7 +7,7 @@ Map-first Singapore HDB resale explorer built for real buying decisions, not pri
 ## Stack
 
 - Vite + React 19 + TypeScript (frontend)
-- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1 (public reads can optionally be served from Neon via Hyperdrive; see [public-read backend](docs/architecture/public-read-backend.md))
+- Cloudflare Worker routing same-origin API handlers from `functions/api/*`, backed by Cloudflare D1, with public reads served from Neon via Hyperdrive when `PUBLIC_DATA_BACKEND` selects it (see [public-read backend](docs/architecture/public-read-backend.md))
 - MapLibre GL JS with OneMap GreyLite tiles
 - Shadcn-style card and list primitives for block results and shortlist comparison
 - Recharts for block-level trend charts
@@ -93,6 +93,8 @@ vp run db:migrate:local     # one-time: create the local D1 schema
 vp run dev:functions        # builds, then runs `wrangler dev` against local D1
 ```
 
+`dev:functions` pins `PUBLIC_DATA_BACKEND` to `d1`, so it uses the local emulator and needs no Neon connection even though the deployed configuration reads from Neon (see [public-read backend](docs/architecture/public-read-backend.md#local-development)).
+
 ### Manual remote D1 refresh
 
 Nightly `refresh-data.yml` is gone (data.gov.sg rate limits and upcoming D1 rate enforcement). Production data stays at the last successful sync until a maintainer runs:
@@ -101,7 +103,7 @@ Nightly `refresh-data.yml` is gone (data.gov.sg rate limits and upcoming D1 rate
 vp run sync-data
 ```
 
-That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_D1_DATABASE_ID`; the upstream credentials listed under Environment are optional. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and writes a new manifest. The header reads it as follows:
+That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_D1_DATABASE_ID`; the upstream credentials listed under Environment are optional. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and writes a new manifest. It refreshes D1 only: while Neon is selected, what the site serves does not change. Run one `sync-data` at a time. It marks the stored manifest as unfinished while it runs and clears the mark with the final manifest write, so an aborted run must be re-run to completion (see [the publication window](docs/architecture/public-read-backend.md#the-d1-publication-window)). The header reads it as follows:
 
 - **Built** is `manifest.generatedAt`, the time of the sync run.
 - **Synced** is `manifest.sources.lastUpdatedAt`, the last-updated time that data.gov.sg reports for the resale collection.

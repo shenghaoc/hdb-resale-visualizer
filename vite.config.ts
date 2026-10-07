@@ -183,6 +183,8 @@ export default defineConfig({
         "icons/apple-touch-icon.png",
       ],
       workbox: {
+        // Deletes the retired runtime cache when the new worker activates; see public/sw-cleanup.js.
+        importScripts: ["sw-cleanup.js"],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest,woff,woff2}"],
         navigateFallback: "/index.html",
         navigateFallbackDenylist: [/^\/api\//, /^\/og\//],
@@ -206,7 +208,11 @@ export default defineConfig({
             handler: "NetworkFirst",
             method: "GET",
             options: {
-              cacheName: "hdb-api-get-v1",
+              // v1 admitted every status-200 response, including ones the Worker computed while a D1
+              // publication had the tables half replaced, and Workbox does not run `cacheWillUpdate` when
+              // it falls back to an entry that is already there. Tightening admission therefore means a new
+              // cache; public/sw-cleanup.js deletes v1.
+              cacheName: "hdb-api-get-v2",
               networkTimeoutSeconds: 8,
               expiration: {
                 maxEntries: 128,
@@ -216,6 +222,27 @@ export default defineConfig({
                 // /api/* is same-origin, so opaque (0) responses never occur.
                 statuses: [200],
               },
+              plugins: [
+                {
+                  // Workbox ignores `Cache-Control: no-store`, so the status check above would also store what
+                  // the Worker labels `x-data-cache: BYPASS*` (computed while a D1 publication may have the tables
+                  // half replaced, from no usable manifest, or across a manifest change) or `ERROR` (its own cache
+                  // failed), and what it does not label at all: requests that skip the cache layer before the
+                  // manifest is read (cookies, credentials, oversized URLs, invalid queries) and Worker versions
+                  // that predate the header. Only the Worker's consistent outcomes may become the offline
+                  // fallback; any other label, including one added later, is refused. Inlined like urlPattern: the
+                  // generated service worker cannot close over imports.
+                  cacheWillUpdate: async ({ response }) => {
+                    const label = response.headers.get("x-data-cache");
+                    return label === "MISS" ||
+                      label === "HIT" ||
+                      label === "HIT-AFTER-VERSION-READ" ||
+                      label === "HIT-STALE"
+                      ? response
+                      : null;
+                  },
+                },
+              ],
             },
           },
         ],

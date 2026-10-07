@@ -33,26 +33,35 @@ const MAX_OG_ADDRESS_KEY_LENGTH = 128;
 const MAX_OG_TOWN_SLUG_LENGTH = 64;
 const MANIFEST_CACHE_TTL_MS = 5 * 60 * 1000;
 
+/** The version of a degraded manifest read, whose cards are never stored (see `complete` below). */
+const UNKNOWN_VERSION = "unknown";
+
+/**
+ * Per-isolate memo of the manifest metadata. It is keyed by the validated public cache namespace
+ * (`<backend>-<epoch>`), never by `env.DB`: in Neon mode `env.DB` is a new request-scoped adapter on every
+ * request, so an identity check would never match and every `/og/*` request would query the manifest (and open
+ * a connection) before it could reach the image cache. A backend or epoch switch changes the namespace and
+ * so retires the memo.
+ */
 let manifestCache: {
   expiresAt: number;
   version: string;
   dataWindow: DataWindow;
-  db: D1Database;
   namespace: string;
 } | null = null;
 
 async function readManifestMetadata(
   env: Env,
-): Promise<{ version: string; dataWindow: DataWindow }> {
+): Promise<{ version: string; dataWindow: DataWindow; complete: boolean }> {
   const now = workerNowEpochMilliseconds();
   const namespace = env.PUBLIC_DATA_CACHE_NAMESPACE ?? "legacy-d1";
-  if (
-    manifestCache &&
-    manifestCache.expiresAt > now &&
-    manifestCache.db === env.DB &&
-    manifestCache.namespace === namespace
-  ) {
-    return { version: manifestCache.version, dataWindow: manifestCache.dataWindow };
+  if (manifestCache && manifestCache.expiresAt > now && manifestCache.namespace === namespace) {
+    // Only complete reads are ever remembered.
+    return {
+      version: manifestCache.version,
+      dataWindow: manifestCache.dataWindow,
+      complete: true,
+    };
   }
 
   const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{
@@ -71,11 +80,20 @@ async function readManifestMetadata(
     }
   }
   const value = {
-    version: parsed.generatedAt ?? "unknown",
+    version: parsed.generatedAt ?? UNKNOWN_VERSION,
     dataWindow: parsed.dataWindow ?? { minMonth: "N/A", maxMonth: "N/A" },
   };
-  manifestCache = { expiresAt: now + MANIFEST_CACHE_TTL_MS, db: env.DB, namespace, ...value };
-  return value;
+  // Only a complete read is remembered, and only a complete read's cards are stored. The memo now holds across
+  // requests on Neon, so remembering a degraded one (missing row, unreadable or incomplete manifest) would pin
+  // placeholder cards for the whole TTL, and a card rendered with placeholder dates must not be kept under a
+  // real version either: repairing the manifest without changing `generatedAt` would reuse the same key.
+  const complete = parsed.generatedAt !== undefined && parsed.dataWindow !== undefined;
+  if (complete) manifestCache = { expiresAt: now + MANIFEST_CACHE_TTL_MS, namespace, ...value };
+  else
+    console.warn(
+      "OG cards use placeholder metadata: the stored manifest is missing or incomplete.",
+    );
+  return { ...value, complete };
 }
 
 export function resetOgManifestCacheForTests(): void {
@@ -201,7 +219,7 @@ export async function handleBlockOg(
 ): Promise<Response> {
   if (addressKey.length > MAX_OG_ADDRESS_KEY_LENGTH) return fallbackCard(request);
 
-  const { version, dataWindow } = await readManifestMetadata(env);
+  const { version, dataWindow, complete } = await readManifestMetadata(env);
   const cacheKey = buildCacheKey(request, `block/${encodeURIComponent(addressKey)}`, version, env);
 
   const cached = await readCache(cacheKey, cache);
@@ -216,7 +234,7 @@ export async function handleBlockOg(
   const props = mapBlockToOgProps(rowToBlockSummary(row), dataWindow);
   const png = renderPng(blockCardSvg(props));
   const response = new Response(png, { headers: IMAGE_HEADERS });
-  writeCache(ctx, cacheKey, response, cache);
+  if (complete) writeCache(ctx, cacheKey, response, cache);
   return response;
 }
 
@@ -235,7 +253,7 @@ export async function handleCompareOg(
   const canonicalA = townFilenameToCanonical(townA);
   const canonicalB = townFilenameToCanonical(townB);
 
-  const { version } = await readManifestMetadata(env);
+  const { version, complete } = await readManifestMetadata(env);
   const cacheKey = buildCacheKey(
     request,
     `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`,
@@ -282,6 +300,6 @@ export async function handleCompareOg(
     }),
   );
   const response = new Response(png, { headers: IMAGE_HEADERS });
-  writeCache(ctx, cacheKey, response, cache);
+  if (complete) writeCache(ctx, cacheKey, response, cache);
   return response;
 }

@@ -132,11 +132,19 @@ export class D1Client {
     upsert?: boolean;
     /** When true, batch `DELETE FROM <table>` with the first INSERT chunk. */
     preDelete?: boolean;
+    /**
+     * A SQL boolean expression that every statement of this call is made conditional on, in the statement
+     * itself (`... SELECT ... WHERE <guard>` / `DELETE ... WHERE <guard>`), so a caller that has lost whatever
+     * the expression checks (a publication lease) writes nothing instead of being noticed afterwards. It is
+     * spliced into the SQL as written: build it from trusted text only.
+     */
+    guard?: string;
   }): Promise<void> {
-    const { table, columns, rows, mapRow } = options;
+    const { table, columns, rows, mapRow, guard } = options;
+    const where = guard ? ` WHERE ${guard}` : "";
     if (rows.length === 0) {
       if (options.preDelete) {
-        await this.execute(`DELETE FROM ${table}`);
+        await this.execute(`DELETE FROM ${table}${where}`);
       }
       return;
     }
@@ -145,7 +153,12 @@ export class D1Client {
     const chunkSize = Math.min(options.chunkSize ?? maxByParams, maxByParams);
     const placeholders = `(${columns.map(() => "?").join(",")})`;
     const verb = options.upsert ? "INSERT OR REPLACE" : "INSERT";
-    const sqlPrefix = `${verb} INTO ${table} (${columns.join(",")}) VALUES `;
+    // Guarded: rows come from a VALUES subquery (SQLite names its columns column1, column2, ...) so that a
+    // WHERE clause can sit between the data and the write. The bound parameters are exactly the same.
+    const sqlPrefix = guard
+      ? `${verb} INTO ${table} (${columns.join(",")}) SELECT ${columns.map((_, index) => `column${index + 1}`).join(",")} FROM (VALUES `
+      : `${verb} INTO ${table} (${columns.join(",")}) VALUES `;
+    const sqlSuffix = guard ? `)${where}` : "";
 
     for (let i = 0; i < rows.length; i += chunkSize) {
       const chunk = rows.slice(i, i + chunkSize);
@@ -159,11 +172,12 @@ export class D1Client {
         }
         params.push(...values);
       }
-      const sql = sqlPrefix + Array.from({ length: chunk.length }, () => placeholders).join(",");
+      const sql =
+        sqlPrefix + Array.from({ length: chunk.length }, () => placeholders).join(",") + sqlSuffix;
 
       // First chunk with preDelete: batch DELETE + INSERT into one request.
       if (i === 0 && options.preDelete) {
-        await this.query([{ sql: `DELETE FROM ${table}` }, { sql, params }]);
+        await this.query([{ sql: `DELETE FROM ${table}${where}` }, { sql, params }]);
       } else {
         await this.execute(sql, params);
       }
@@ -175,7 +189,7 @@ export class D1Client {
    * rebuilt from scratch on every sync (blocks, trends, etc.). Persistent
    * caches must NOT be cleared; they are upserted in place.
    */
-  async truncate(table: string): Promise<void> {
-    await this.execute(`DELETE FROM ${table}`);
+  async truncate(table: string, guard?: string): Promise<void> {
+    await this.execute(`DELETE FROM ${table}${guard ? ` WHERE ${guard}` : ""}`);
   }
 }
