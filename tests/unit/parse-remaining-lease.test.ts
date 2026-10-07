@@ -18,7 +18,8 @@ describe("parseRemainingLease", () => {
     expect(parseRemainingLease(undefined, currentYear - 120)).toBe("0 years");
   });
 
-  it("does not cap a future lease-commence year at 99", () => {
-    expect(parseRemainingLease(undefined, currentYear + 1)).toBe("100 years");
+  it("caps a future lease-commence year at the 99-year maximum", () => {
+    expect(parseRemainingLease(undefined, currentYear + 1)).toBe("99 years");
+    expect(parseRemainingLease(undefined, currentYear + 50)).toBe("99 years");
   });
 });
