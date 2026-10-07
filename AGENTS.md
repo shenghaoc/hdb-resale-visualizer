@@ -177,7 +177,7 @@ P1 (must fix before merge):
 
 ### Environment
 
-- **Node.js 24** is required (`engines.node >= 24.0.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
+- **Node.js 24** is required (`engines.node >= 24.15.0`). Cursor Cloud's VM bootstrap script installs it via nvm and sets it as the default.
 - **Vite+** (`vp`) is the package manager and task runner. `pnpm-lock.yaml` is the lockfile.
 
 ### Local data dev

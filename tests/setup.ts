@@ -11,7 +11,8 @@ if (typeof ResizeObserver === "undefined") {
 }
 
 if (typeof URLPattern === "undefined") {
-  // A minimal mock for URLPattern since it's not natively supported in Node 18/jsdom
+  // Fallback for runtimes without a URLPattern global: jsdom does not provide one,
+  // but Node 24+ (the supported floor) does, so this normally never runs.
   // @ts-expect-error Types missing
   global.URLPattern = class URLPattern {
     pathname: string;
