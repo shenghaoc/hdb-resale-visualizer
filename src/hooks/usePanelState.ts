@@ -52,6 +52,7 @@ export function usePanelState() {
 
     if (isDesktop) {
       if (mobileTab === "saved") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- reconcile desktop and mobile panel state when the viewport crosses the breakpoint
         setIsLeftPanelOpen(false);
         setIsSavedPanelOpen(true);
         return;

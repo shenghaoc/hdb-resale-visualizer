@@ -135,6 +135,7 @@ export function useShortlistDrawerController({
       setShareError(null);
 
       if (expandedKey !== null && !resolvedKeys.has(expandedKey)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- drop the stored expansion once its row leaves the saved set so a restored row stays collapsed
         setExpandedKey(null);
       }
     }
@@ -144,6 +145,7 @@ export function useShortlistDrawerController({
 
   useEffect(() => {
     if (rows.length < 2 && viewMode !== "list") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- fall back to list view once fewer than two homes remain to compare
       setViewMode("list");
     }
   }, [rows.length, viewMode]);

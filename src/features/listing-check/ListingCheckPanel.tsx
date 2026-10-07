@@ -151,6 +151,7 @@ export function ListingCheckPanel({
   // render-phase state updates.
   useEffect(() => {
     if (!selectedAddressKey) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- mirror the selected block label into the search input and clear it with the selection
       setSearchValue("");
       return;
     }

@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type MutableRefObject,
+} from "react";
 import { SYNC_CODE_STORAGE_KEY } from "@/shared/lib/constants";
 import { mergeShortlists } from "@/features/shortlist/shortlist";
 import {
@@ -83,7 +91,12 @@ export function useShortlistSync({
   // debounced push effect bails while `readyRef` is false and does not re-run
   // when hydration finishes, because readiness is a ref rather than state.
   const debouncedItemsRef = useRef(debouncedItems);
-  debouncedItemsRef.current = debouncedItems;
+  // Synced in a layout effect rather than during render, which React forbids. Unlike a
+  // passive effect it has already run when a commit lands, so the hydration promise
+  // never reads a snapshot older than the last commit.
+  useLayoutEffect(() => {
+    debouncedItemsRef.current = debouncedItems;
+  }, [debouncedItems]);
   // JSON of the last successfully pushed set — skips redundant pushes.
   const lastPushedRef = useRef<string | null>(null);
   // Gates the debounced push until the initial pull/merge has completed, so we
