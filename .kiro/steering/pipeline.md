@@ -12,7 +12,7 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from 
 3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are upserted back to D1 in batches of 250.
 4. **MRT walking times (one-time)**: Same pattern with the `walking_time_cache` table.
 5. **Artifact build**: `buildArtifacts()` produces the same logical shapes as before (block summaries, address details, comparisons, town × flat-type trends, MRT GeoJSON) — but they are now written to D1, not files.
-6. **D1 write**: `scripts/lib/sync/store.ts` truncates and reinserts the generated tables in batched `INSERT OR REPLACE … VALUES (…),(…),…` statements via the D1 HTTP API.
+6. **D1 write**: `scripts/lib/sync/store.ts` stamps a `publicationInProgress` marker (owned by this run) into the stored manifest and reads it back, truncates and reinserts the generated tables in batched statements via the D1 HTTP API (every write is conditional on still owning the marker, inside the statement, so a superseded run changes nothing), and writes the manifest last with a statement that is conditional on that ownership and read back; that final write replaces the document and so removes the marker. While the marker is present the Worker's public-data cache stores nothing (see `docs/architecture/public-read-backend.md`). If a run aborts the marker stays, and the next `sync-data` run publishes again even when upstream is unchanged. Run one `sync-data` at a time.
 
 ## D1 Tables
 **Generated (rebuilt every sync):**

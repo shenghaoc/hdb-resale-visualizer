@@ -1,5 +1,6 @@
 import { parseSearchRequest, validateSearchRequest } from "../functions/_lib/search";
 import { parseSuggestRequest } from "../functions/_lib/suggest";
+import { manifestVersion, readPublicationState } from "../shared/publication-state";
 /** Shared Cache API is per data center. The pointer intentionally bounds freshness to 60s. */
 const POINTER_TTL_SECONDS = 60;
 const DATA_TTL_SECONDS = 3600;
@@ -12,17 +13,33 @@ type SharedCache = {
 };
 type VersionDb = { prepare: (sql: string) => { first: () => Promise<{ json: string } | null> } };
 
-async function versionOf(json: string): Promise<string> {
-  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(json));
-  return Array.from(new Uint8Array(hash), (byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-
 function responseWithStatus(response: Response, status: string): Response {
   const result = new Response(response.body, response);
   result.headers.set("x-data-cache", status);
   if (status.startsWith("HIT"))
     result.headers.set("cache-control", "public, max-age=60, s-maxage=3600");
+  // Computed while the tables may be half replaced, from no usable manifest, or after the cache layer itself
+  // failed: nothing downstream, browsers included, should keep it either.
+  else if (status.startsWith("BYPASS") || status === "ERROR")
+    result.headers.set("cache-control", "no-store");
   return result;
+}
+
+/**
+ * A degraded cache layer must be visible to operators, but must not flood the logs: each fixed message is
+ * logged at most once per isolate per interval. Messages never carry request, header or user data.
+ */
+const WARN_INTERVAL_MS = 10 * 60 * 1000;
+const lastWarned = new Map<string, number>();
+function warnThrottled(message: string): void {
+  const now = Date.now();
+  const last = lastWarned.get(message);
+  if (last !== undefined && now - last < WARN_INTERVAL_MS) return;
+  lastWarned.set(message, now);
+  console.warn(message);
+}
+export function resetPublicDataCacheWarningsForTests(): void {
+  lastWarned.clear();
 }
 
 export async function withPublicDataCache(
@@ -73,8 +90,32 @@ export async function withPublicDataCache(
       }
     }
     const before = await db.prepare("SELECT json FROM manifest WHERE id = 1").first();
-    if (!before) return respond();
-    const version = await versionOf(before.json);
+    if (!before) {
+      // Nothing to label a generation with (no manifest has ever been published, or the row was lost), so what
+      // the tables hold now cannot be stored or kept by anyone downstream.
+      warnThrottled("public data cache: there is no stored manifest, so nothing is cached");
+      fetched = await respond();
+      return responseWithStatus(fetched, "BYPASS-NO-MANIFEST");
+    }
+    const publication = readPublicationState(before.json);
+    if (publication.inProgress) {
+      // The publisher is replacing the generated tables under a manifest that still describes the previous
+      // generation, so nothing computed now may be labeled with a version. Store nothing, and keep serving the
+      // previous generation for as long as it stays cached: it is still one consistent generation.
+      const unreadable = publication.reason === "unreadable";
+      warnThrottled(
+        unreadable
+          ? "public data cache: the stored manifest is not a JSON object, so nothing is cached from it"
+          : "public data cache: a D1 publication is marked in progress, so nothing is cached until a sync-data run completes",
+      );
+      const previous = publication.baseVersion
+        ? await cache.match(dataKey(publication.baseVersion))
+        : undefined;
+      if (previous) return responseWithStatus(previous, "HIT-STALE");
+      fetched = await respond();
+      return responseWithStatus(fetched, unreadable ? "BYPASS-UNREADABLE" : "BYPASS");
+    }
+    const version = await manifestVersion(before.json);
     // A stale pointer MISS must discover the CURRENT version before labeling new data.
     const currentHit = await cache.match(dataKey(version));
     const response = currentHit ?? (await respond(version));
@@ -83,12 +124,15 @@ export async function withPublicDataCache(
       ? before
       : await db.prepare("SELECT json FROM manifest WHERE id = 1").first();
     const cacheControl = response.headers.get("cache-control") ?? "";
+    // A manifest that changed while the handler ran means a publication started or finished mid-request, so the
+    // response may mix generations.
+    const stable = before.json === after?.json;
     if (
       response.status === 200 &&
       !response.headers.has("set-cookie") &&
       /\bpublic\b/i.test(cacheControl) &&
       !/\b(?:private|no-store)\b/i.test(cacheControl) &&
-      before.json === after?.json
+      stable
     ) {
       if (!currentHit) {
         const stored = response.clone();
@@ -102,9 +146,16 @@ export async function withPublicDataCache(
         }),
       );
     }
-    return responseWithStatus(response, currentHit ? "HIT-AFTER-VERSION-READ" : "MISS");
-  } catch {
-    // Cache failure cannot make data unavailable; do not log requests, headers or private state.
-    return fetched ?? respond();
+    return responseWithStatus(
+      response,
+      !stable ? "BYPASS-UNSTABLE" : currentHit ? "HIT-AFTER-VERSION-READ" : "MISS",
+    );
+  } catch (error) {
+    // Cache failure cannot make data unavailable. Say that it happened (the error's name only: never requests,
+    // headers or private state) and label the response, so it is not mistaken for exempt traffic.
+    warnThrottled(
+      `public data cache: falling back to the origin after ${error instanceof Error ? error.name : "an unknown error"}`,
+    );
+    return responseWithStatus(fetched ?? (await respond()), "ERROR");
   }
 }

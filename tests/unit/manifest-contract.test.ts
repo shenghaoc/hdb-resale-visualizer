@@ -3,6 +3,7 @@ import { describe, expect, it } from "vite-plus/test";
 import { onRequestGet } from "../../functions/api/manifest";
 import type { Manifest } from "../../shared/data-types";
 import { MANIFEST_CONTRACT, projectManifestContract } from "../../shared/manifest-contract";
+import { PUBLICATION_MARKER_KEY, stampPublicationMarker } from "../../shared/publication-state";
 import { manifestSchema } from "../../src/shared/lib/dataSchemas";
 
 /** What D1 stores and serves today: only contract keys, in declaration order. */
@@ -56,7 +57,12 @@ const neonStored = jsonbOrder({
   },
 }) as Record<string, unknown>;
 
-const INTERNAL_KEYS = ["syncBuildState", "neonPublication", "neonReconciliation"];
+const INTERNAL_KEYS = [
+  "syncBuildState",
+  "neonPublication",
+  "neonReconciliation",
+  PUBLICATION_MARKER_KEY,
+];
 
 describe("public manifest contract", () => {
   it("does not change a manifest that already satisfies the contract (what D1 serves today)", () => {
@@ -117,6 +123,28 @@ describe("public manifest contract", () => {
     expect(neon.text).not.toContain("unresolved-retained");
     const d1 = await respond(d1Manifest);
     expect(d1.text).toBe(JSON.stringify(d1Manifest));
+  });
+
+  it("never exposes the D1 publication marker the publisher stamps while a publication runs", async () => {
+    const stamped = await stampPublicationMarker(
+      JSON.stringify(d1Manifest),
+      "2026-10-07T01:00:00.000Z",
+      "owner-a",
+    );
+    expect(stamped).toContain(PUBLICATION_MARKER_KEY);
+    const env = { DB: { prepare: () => ({ first: async () => ({ json: stamped }) }) } };
+    const response = await onRequestGet({ env } as unknown as Parameters<typeof onRequestGet>[0]);
+    // The response during a publication is exactly what clients get before and after it.
+    expect(await response.text()).toBe(JSON.stringify(d1Manifest));
+  });
+
+  it("answers 404 while only the first publication's placeholder exists", async () => {
+    const placeholder = await stampPublicationMarker(null, "2026-10-07T01:00:00.000Z", "owner-a");
+    const env = { DB: { prepare: () => ({ first: async () => ({ json: placeholder }) }) } };
+    const response = await onRequestGet({ env } as unknown as Parameters<typeof onRequestGet>[0]);
+    // Same as before any manifest existed: the placeholder holds no contract field and is not a manifest.
+    expect(response.status).toBe(404);
+    expect(await response.text()).not.toContain(PUBLICATION_MARKER_KEY);
   });
 
   it("stays equal to the frontend schema and the shared Manifest type", () => {

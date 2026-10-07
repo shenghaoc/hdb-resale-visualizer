@@ -101,7 +101,7 @@ Nightly `refresh-data.yml` is gone (data.gov.sg rate limits and upcoming D1 rate
 vp run sync-data
 ```
 
-That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_D1_DATABASE_ID`; the upstream credentials listed under Environment are optional. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and writes a new manifest. The header reads it as follows:
+That needs `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_D1_DATABASE_ID`; the upstream credentials listed under Environment are optional. It truncates and rebuilds generated tables, upserts geocode and walking-time caches, and writes a new manifest. It refreshes D1 only: while Neon is selected, what the site serves does not change. Run one `sync-data` at a time. It marks the stored manifest as unfinished while it runs and clears the mark with the final manifest write, so an aborted run must be re-run to completion (see [the publication window](docs/architecture/public-read-backend.md#the-d1-publication-window)). The header reads it as follows:
 
 - **Built** is `manifest.generatedAt`, the time of the sync run.
 - **Synced** is `manifest.sources.lastUpdatedAt`, the last-updated time that data.gov.sg reports for the resale collection.
