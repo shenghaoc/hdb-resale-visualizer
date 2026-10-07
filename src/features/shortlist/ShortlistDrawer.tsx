@@ -1246,7 +1246,6 @@ export function ShortlistDrawer({
                                   borderRadius: 4,
                                   fontSize: 11,
                                 }}
-                                labelFormatter={(label) => String(label)}
                                 formatter={(value) => {
                                   if (
                                     value == null ||
