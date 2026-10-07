@@ -116,6 +116,17 @@ describe("handleShortlistPush", () => {
     const res = await handleShortlistPush(db, JSON.stringify({ items: [{ addressKey: 123 }] }));
     expect(res.status).toBe(400);
   });
+
+  it("returns 500 when D1 throws during mint", async () => {
+    const db: SyncDB = {
+      prepare: () => {
+        throw new Error("d1 unavailable");
+      },
+    };
+    const res = await handleShortlistPush(db, JSON.stringify({ items: [item("a")] }));
+    expect(res.status).toBe(500);
+    expect(res.body).toEqual({ error: "Shortlist sync failed" });
+  });
 });
 
 describe("handleShortlistGet", () => {
@@ -140,5 +151,29 @@ describe("handleShortlistGet", () => {
   it("returns 404 for a malformed code", async () => {
     const { db } = makeFakeDB();
     expect((await handleShortlistGet(db, "bad code")).status).toBe(404);
+  });
+
+  it("returns 500 when D1 throws during lookup", async () => {
+    const db: SyncDB = {
+      prepare: () => {
+        throw new Error("d1 unavailable");
+      },
+    };
+    const res = await handleShortlistGet(db, "AAAAAAAAAAAAAAAA");
+    expect(res.status).toBe(500);
+    expect(res.body).toEqual({ error: "Shortlist lookup failed" });
+  });
+
+  it("returns 200 with an empty list when stored JSON is corrupt instead of 500", async () => {
+    const { db, rows } = makeFakeDB();
+    const minted = (await handleShortlistPush(db, JSON.stringify({ items: [item("a")] }))).body as {
+      syncCode: string;
+    };
+    const [hash] = rows.keys();
+    rows.set(hash!, { items_json: "{not-an-array", updated_at: "2026-04-20T00:00:00.000Z" });
+
+    const res = await handleShortlistGet(db, minted.syncCode);
+    expect(res.status).toBe(200);
+    expect((res.body as { items: unknown[] }).items).toEqual([]);
   });
 });
