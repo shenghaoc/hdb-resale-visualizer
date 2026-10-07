@@ -35,6 +35,14 @@
       },
     },
   ],
+  // Public-read backend selector (worker/public-read-backend.ts). D1 is the default and the rollback
+  // target; "neon" additionally requires the HDB_PUBLIC_NEON Hyperdrive binding. Private shortlist
+  // storage and the TTL cleanup always stay on D1. Changing an epoch retires every cached public
+  // response for that backend (Cache API keys are namespaced `<backend>-<epoch>`).
+  "vars": {
+    "PUBLIC_DATA_BACKEND": "d1",
+    "D1_PUBLIC_CACHE_EPOCH": "d1-cutover-v1",
+  },
   "triggers": {
     "crons": ["0 3 * * *"],
   },
