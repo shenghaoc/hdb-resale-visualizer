@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vite-plus/test";
+import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import {
   buildBlockShareUrl,
   buildCompareShareUrl,
@@ -6,6 +6,7 @@ import {
   buildShortlistShareUrl,
   buildBlockOgImageUrl,
   buildCompareOgImageUrl,
+  shareViaNavigator,
 } from "../shareUrls";
 import { DEFAULT_FILTERS } from "../constants";
 import type { FilterState } from "@/types/data";
@@ -159,5 +160,32 @@ describe("OG image URL builders", () => {
     expect(buildCompareOgImageUrl("KALLANG/WHAMPOA", "BEDOK", BASE_URL)).toBe(
       "https://example.com/og/compare/kallang-whampoa/bedok.png",
     );
+  });
+});
+
+describe("shareViaNavigator", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("treats a user-cancelled Web Share as success", async () => {
+    const writeText = vi.fn();
+    vi.stubGlobal("navigator", {
+      share: vi.fn().mockRejectedValue(new DOMException("Share canceled", "AbortError")),
+      clipboard: { writeText },
+    });
+
+    await expect(shareViaNavigator("https://example.com/block", "Blk 1")).resolves.toBe("shared");
+    expect(writeText).not.toHaveBeenCalled();
+  });
+
+  it("falls back to the clipboard when Web Share is unavailable", async () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    vi.stubGlobal("navigator", {
+      clipboard: { writeText },
+    });
+
+    await expect(shareViaNavigator("https://example.com/block", "Blk 1")).resolves.toBe("copied");
+    expect(writeText).toHaveBeenCalledWith("https://example.com/block");
   });
 });
