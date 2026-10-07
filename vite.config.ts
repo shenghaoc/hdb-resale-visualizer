@@ -190,7 +190,19 @@ export default defineConfig({
           {
             // Workbox RegExpRoute execs against url.href, so a `^/api/`-anchored
             // pattern never matches `https://host/api/...`. Match on pathname.
-            urlPattern: ({ url }) => url.pathname.startsWith("/api/"),
+            // Shortlist GETs are excluded: Workbox ignores `Cache-Control:
+            // no-store`, and a stale cached shortlist is pushed back on
+            // hydration, resurrecting deletions and dropping newer notes.
+            // Keep this predicate self-contained — generateSW stringifies it
+            // into the service worker, so it must not close over imports.
+            urlPattern: ({ url }) => {
+              const pathname = url.pathname;
+              return (
+                pathname.startsWith("/api/") &&
+                pathname !== "/api/shortlist" &&
+                !pathname.startsWith("/api/shortlist/")
+              );
+            },
             handler: "NetworkFirst",
             method: "GET",
             options: {
