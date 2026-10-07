@@ -30,6 +30,7 @@ import {
 } from "./seo";
 import { matchApiRoute, methodNotAllowedResponse, type ApiRouteId } from "./api-route-match";
 import { purgeStaleShortlists } from "../functions/_lib/shortlist";
+import { withPublicDataCache } from "./public-data-cache";
 import { townToFilename } from "../shared/geo";
 
 const apiHandlers: Record<ApiRouteId, PagesFunction<Env>> = {
@@ -184,8 +185,17 @@ export default {
       const apiMatch = matchApiRoute(url, request.method);
       if (apiMatch.kind === "handler") {
         const handler = apiHandlers[apiMatch.routeId];
-        return handler(
-          buildPagesContext(request, env, apiMatch.groups, ctx) as Parameters<typeof handler>[0],
+        // Public GETs are served from / stored in the Workers Cache API before any D1 read.
+        return withPublicDataCache(
+          request,
+          env.DB,
+          typeof caches !== "undefined" ? caches.default : null,
+          async () =>
+            handler(
+              buildPagesContext(request, env, apiMatch.groups, ctx) as Parameters<
+                typeof handler
+              >[0],
+            ),
         );
       }
       if (apiMatch.kind === "method_not_allowed") {
