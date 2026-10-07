@@ -80,8 +80,8 @@ importers:
         specifier: ^4.20260604.1
         version: 4.20260611.1
       '@maplibre/maplibre-gl-style-spec':
-        specifier: ^25.0.1
-        version: 25.0.1
+        specifier: ^26.4.4
+        version: 26.4.4
       '@playwright/test':
         specifier: 1.62.1
         version: 1.62.1
@@ -1383,10 +1383,6 @@ packages:
 
   '@maplibre/geojson-vt@6.1.1':
     resolution: {integrity: sha512-FVMOcmSP/yqol45t7StApEyTL5/vmqBCuFhH9n+fFuINenhaX+YgHHIt1yJ86S8kln3uJLcMvmEU2cfn6E2eCQ==}
-
-  '@maplibre/maplibre-gl-style-spec@25.0.1':
-    resolution: {integrity: sha512-cppei6MsmpZnBgtZoHwQu8Ioie6LcHC+ME8/wcLDwzdLi6eWnMgoryiWnd00qQ5ZNTmFcAnw5EMZIqZxMamEBQ==}
-    hasBin: true
 
   '@maplibre/maplibre-gl-style-spec@26.4.4':
     resolution: {integrity: sha512-hG4RZR4PBd/+6A3ODdZ3AnQRF106ZQk1y3bhwDg8bH/A4Oz2tnRUJVVWs9BZa6gXZ1d3UKe89C+Mm+olGBELvA==}
@@ -7309,15 +7305,6 @@ snapshots:
   '@maplibre/geojson-vt@6.1.1':
     dependencies:
       kdbush: 4.1.0
-
-  '@maplibre/maplibre-gl-style-spec@25.0.1':
-    dependencies:
-      '@mapbox/jsonlint-lines-primitives': 2.0.3
-      '@mapbox/unitbezier': 1.0.0
-      json-stringify-pretty-compact: 4.0.0
-      minimist: 1.2.8
-      quickselect: 3.0.0
-      tinyqueue: 3.0.0
 
   '@maplibre/maplibre-gl-style-spec@26.4.4':
     dependencies:
