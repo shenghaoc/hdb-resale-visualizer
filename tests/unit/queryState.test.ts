@@ -150,6 +150,25 @@ describe("queryState", () => {
     expect(parsed.areaMax).toBe(100_000);
   });
 
+  it("drops non-finite patched numeric filters instead of sending them to the API", () => {
+    expect(
+      clampFilterRanges({
+        ...DEFAULT_FILTERS,
+        budgetMin: Number.NaN,
+        budgetMax: Number.POSITIVE_INFINITY,
+        areaMin: Number.NEGATIVE_INFINITY,
+        mrtMax: Number.NaN,
+        remainingLeaseMin: Number.POSITIVE_INFINITY,
+      }),
+    ).toMatchObject({
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      mrtMax: null,
+      remainingLeaseMin: null,
+    });
+  });
+
   it.each(["2026-00", "2026-13", "2026-1", "not-a-month", "a".repeat(300)])(
     "drops invalid calendar month %s from deep links",
     (month) => {

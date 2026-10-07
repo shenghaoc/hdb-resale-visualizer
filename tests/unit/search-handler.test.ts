@@ -152,4 +152,26 @@ describe("/api/search handler", () => {
     expect(preparedSql[1]).toContain("flat_type_cohorts_json");
     expect(preparedSql[1]).not.toContain("WHERE 0 = 1");
   });
+
+  it("returns 400 when a numeric bound is outside the shared search contract", async () => {
+    const ctx = {
+      request: new Request("http://localhost/api/search?budgetMin=-1"),
+      env: { DB: { prepare: () => ({ bind: () => ({ all: async () => ({ results: [] }) }) }) } },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    expect(resp.status).toBe(400);
+    await expect(resp.json()).resolves.toEqual({ error: "invalid budgetMin" });
+  });
+
+  it("returns 400 when a query parameter exceeds the length cap", async () => {
+    const ctx = {
+      request: new Request(`http://localhost/api/search?town=${"a".repeat(300)}`),
+      env: { DB: { prepare: () => ({ bind: () => ({ all: async () => ({ results: [] }) }) }) } },
+    } as unknown as Parameters<typeof onRequestGet>[0];
+
+    const resp = await onRequestGet(ctx);
+    expect(resp.status).toBe(400);
+    await expect(resp.json()).resolves.toEqual({ error: "query parameter too long" });
+  });
 });
