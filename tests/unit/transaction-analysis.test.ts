@@ -4,6 +4,7 @@ import {
   buildTrendEnvelope,
   computeBlockTrajectory,
   findComparableTransactions,
+  monthDiff,
   parseStoreyMidpoint,
   sliceTrendByRange,
   summarizeComparables,
@@ -25,6 +26,23 @@ function tx(overrides: Partial<AddressDetailTransaction>): AddressDetailTransact
     pricePerSqft: overrides.pricePerSqft ?? 599.2,
   };
 }
+
+describe("monthDiff", () => {
+  it("returns the signed month span between two YYYY-MM values", () => {
+    expect(monthDiff("2026-04", "2026-04")).toBe(0);
+    expect(monthDiff("2024-06", "2026-04")).toBe(22);
+    expect(monthDiff("2026-04", "2024-06")).toBe(-22);
+    expect(monthDiff("2025-11", "2026-01")).toBe(2);
+  });
+
+  it("returns 0 for missing, short, or non-numeric inputs instead of NaN", () => {
+    expect(monthDiff(null, "2026-04")).toBe(0);
+    expect(monthDiff("2026-04", undefined)).toBe(0);
+    expect(monthDiff("2026", "2026-04")).toBe(0);
+    expect(monthDiff("abcd-ef", "2026-04")).toBe(0);
+    expect(monthDiff("2026-04", "xxxx-01")).toBe(0);
+  });
+});
 
 describe("parseStoreyMidpoint", () => {
   it("parses 'X TO Y' ranges to midpoint", () => {

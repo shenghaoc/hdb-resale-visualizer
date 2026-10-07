@@ -125,6 +125,62 @@ describe("search query builder", () => {
     expect(err).toBe("invalid budgetMin");
   });
 
+  it("rejects out-of-range MRT, lease, area, and calendar-month bounds", () => {
+    const base = {
+      town: "",
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      mrtMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+    };
+
+    expect(validateSearchRequest({ ...base, mrtMax: 20_001 })).toBe("invalid mrtMax");
+    expect(validateSearchRequest({ ...base, remainingLeaseMin: 100 })).toBe(
+      "invalid remainingLeaseMin",
+    );
+    expect(validateSearchRequest({ ...base, areaMax: -1 })).toBe("invalid areaMax");
+    expect(validateSearchRequest({ ...base, startMonth: "2026-13" })).toBe("invalid startMonth");
+    expect(validateSearchRequest({ ...base, endMonth: "2026-00" })).toBe("invalid endMonth");
+  });
+
+  it("orders inverted numeric and month ranges the same way the client does", () => {
+    const parsed = parseSearchRequest(
+      new URL(
+        "http://localhost/api/search?budgetMin=800000&budgetMax=500000&areaMin=120&areaMax=80&startMonth=2024-12&endMonth=2024-01",
+      ),
+    );
+
+    expect(parsed.ok).toBe(true);
+    if (parsed.ok) {
+      expect(parsed.request.budgetMin).toBe(500_000);
+      expect(parsed.request.budgetMax).toBe(800_000);
+      expect(parsed.request.areaMin).toBe(80);
+      expect(parsed.request.areaMax).toBe(120);
+      expect(parsed.request.startMonth).toBe("2024-01");
+      expect(parsed.request.endMonth).toBe("2024-12");
+    }
+  });
+
+  it("treats blank and non-finite numeric params as open bounds", () => {
+    const parsed = parseSearchRequest(
+      new URL("http://localhost/api/search?budgetMin=&budgetMax=abc&areaMin=NaN&mrtMax=Infinity"),
+    );
+
+    expect(parsed.ok).toBe(true);
+    if (parsed.ok) {
+      expect(parsed.request.budgetMin).toBeNull();
+      expect(parsed.request.budgetMax).toBeNull();
+      expect(parsed.request.areaMin).toBeNull();
+      expect(parsed.request.mrtMax).toBeNull();
+    }
+  });
+
   it("rejects oversized query parameters with 400", () => {
     const longTown = "a".repeat(300);
     const parsed = parseSearchRequest(new URL(`http://localhost/api/search?town=${longTown}`));

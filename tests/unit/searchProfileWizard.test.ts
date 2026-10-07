@@ -67,6 +67,22 @@ describe("search profile wizard logic", () => {
     });
   });
 
+  it("rounds monetary answers to whole dollars so decimals survive persistence", () => {
+    expect(
+      buildSearchProfileFromWizard(
+        makeDraft({
+          maxBudget: "700000.4",
+          cpfOABalance: "120000.5",
+          monthlyIncome: "9000.6",
+        }),
+      ),
+    ).toMatchObject({
+      maxBudget: 700000,
+      cpfOABalance: 120001,
+      monthlyIncome: 9001,
+    });
+  });
+
   it("turns empty optional inputs into null without mutating the draft", () => {
     const draft = makeDraft({
       maxBudget: "",

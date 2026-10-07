@@ -103,4 +103,123 @@ describe("D1Client", () => {
 
     expect(fetchMock).toHaveBeenCalled();
   });
+
+  it("joins D1 error messages and falls back when the error list is empty", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse({
+          success: false,
+          errors: [{ message: "no such table: blocks" }, { message: "auth failed" }],
+          result: [],
+        }),
+      )
+      .mockResolvedValueOnce(jsonResponse({ success: false, errors: [], result: [] }));
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new D1Client(config);
+
+    await expect(client.query({ sql: "SELECT 1" })).rejects.toThrow(
+      "D1: no such table: blocks; auth failed",
+    );
+    await expect(client.query({ sql: "SELECT 1" })).rejects.toThrow("D1: D1 query failed");
+  });
+
+  it("rejects a 200 body that is not JSON", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("not-json", { status: 200 })));
+    const client = new D1Client(config);
+
+    await expect(client.query({ sql: "SELECT 1" })).rejects.toThrow("D1: invalid JSON response");
+  });
+
+  it("returns rows from the last statement and an empty list when results are missing", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(
+        jsonResponse({
+          success: true,
+          errors: [],
+          result: [{ results: [{ id: 1 }] }, { results: [{ id: 2 }] }],
+        }),
+      )
+      .mockResolvedValueOnce(
+        jsonResponse({ success: true, errors: [], result: [{ success: true }] }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new D1Client(config);
+
+    await expect(
+      client.query([{ sql: "DELETE FROM blocks" }, { sql: "SELECT id FROM blocks" }]),
+    ).resolves.toEqual([{ id: 2 }]);
+    await expect(client.query({ sql: "DELETE FROM blocks" })).resolves.toEqual([]);
+  });
+
+  it("rejects a row whose column count does not match before calling D1", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new D1Client(config);
+
+    await expect(
+      client.batchInsert({
+        table: "blocks",
+        columns: ["address_key", "town"],
+        rows: [1],
+        mapRow: () => ["only-one"],
+      }),
+    ).rejects.toThrow("batchInsert(blocks): row provided 1 values for 2 columns");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("deletes an empty preDelete table and upserts with INSERT OR REPLACE", async () => {
+    const fetchMock = vi.fn<typeof fetch>(async () =>
+      jsonResponse({ success: true, errors: [], result: [{ success: true }] }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new D1Client(config);
+
+    await client.batchInsert({
+      table: "blocks",
+      columns: ["address_key"],
+      rows: [],
+      mapRow: () => [],
+      preDelete: true,
+    });
+    await client.batchInsert({
+      table: "walking_time_cache",
+      columns: ["cache_key", "walking_time_seconds"],
+      rows: ["k"],
+      mapRow: () => ["k", 90],
+      upsert: true,
+    });
+
+    expect(parseRequestBody(fetchMock.mock.calls[0]?.[1])).toEqual({
+      sql: "DELETE FROM blocks",
+      params: [],
+    });
+    expect(parseRequestBody(fetchMock.mock.calls[1]?.[1])).toEqual({
+      sql: "INSERT OR REPLACE INTO walking_time_cache (cache_key,walking_time_seconds) VALUES (?,?)",
+      params: ["k", 90],
+    });
+  });
+
+  it("does not call D1 for an empty insert without preDelete", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const client = new D1Client(config);
+
+    await client.batchInsert({
+      table: "blocks",
+      columns: ["address_key"],
+      rows: [],
+      mapRow: () => [],
+    });
+
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
 });
+
+function jsonResponse(body: unknown): Response {
+  return new Response(JSON.stringify(body), {
+    status: 200,
+    headers: { "content-type": "application/json" },
+  });
+}

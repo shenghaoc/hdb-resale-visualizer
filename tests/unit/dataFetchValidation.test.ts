@@ -280,4 +280,60 @@ describe("artifact fetch validation", () => {
 
     expect(result.cohortMetadataAvailable).toBe(true);
   });
+
+  it("does not clear a newer search cache when an older in-flight request fails", async () => {
+    setFetchRetryDelayForTests(0);
+
+    const emptyParams = {
+      town: "",
+      flatType: "",
+      flatModel: "",
+      budgetMin: null,
+      budgetMax: null,
+      areaMin: null,
+      areaMax: null,
+      remainingLeaseMin: null,
+      startMonth: null,
+      endMonth: null,
+      mrtMax: null,
+    };
+    const bedokParams = { ...emptyParams, town: "BEDOK" };
+
+    let resolveOlder: ((value: Response) => void) | undefined;
+    let resolveNewer: ((value: Response) => void) | undefined;
+    const olderRequest = new Promise<Response>((resolve) => {
+      resolveOlder = resolve;
+    });
+    const newerRequest = new Promise<Response>((resolve) => {
+      resolveNewer = resolve;
+    });
+
+    const fetchMock = vi.fn((input: RequestInfo | URL) => {
+      const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+      if (url.includes("town=BEDOK")) {
+        return newerRequest;
+      }
+      return olderRequest;
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const olderSearch = fetchBlocksBySearch(emptyParams);
+    const newerSearch = fetchBlocksBySearch(bedokParams);
+
+    resolveNewer!(
+      mockJsonResponse({
+        blocks: [],
+        truncated: false,
+        limit: 2000,
+        cohortMetadataAvailable: true,
+      }),
+    );
+    await expect(newerSearch).resolves.toMatchObject({ truncated: false, limit: 2000 });
+
+    resolveOlder!(mockJsonResponse({ error: "stale" }, false, 400));
+    await expect(olderSearch).rejects.toThrow(/Failed to load \/api\/search: 400/);
+
+    await expect(fetchBlocksBySearch(bedokParams)).resolves.toMatchObject({ limit: 2000 });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
 });

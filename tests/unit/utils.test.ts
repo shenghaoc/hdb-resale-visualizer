@@ -67,5 +67,16 @@ describe("utils", () => {
       expect(townToFilename("KALLANG/WHAMPOA")).toBe("kallang-whampoa");
       expect(townFilenameToCanonical("kallang-whampoa")).toBe("KALLANG/WHAMPOA");
     });
+
+    it("strips a trailing .json suffix before canonicalizing", () => {
+      expect(townFilenameToCanonical("kallang-whampoa.json")).toBe("KALLANG/WHAMPOA");
+      expect(townFilenameToCanonical("BEDOK.JSON")).toBe("BEDOK");
+    });
+
+    it("does not inherit Object.prototype keys as town names", () => {
+      expect(townFilenameToCanonical("constructor")).toBe("CONSTRUCTOR");
+      expect(townFilenameToCanonical("__proto__")).toBe("__PROTO__");
+      expect(townFilenameToCanonical("toString")).toBe("TOSTRING");
+    });
   });
 });

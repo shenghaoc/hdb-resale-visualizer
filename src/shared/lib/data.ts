@@ -213,6 +213,10 @@ export function fetchBlocksByTown(town: string): Promise<BlockSummary[]> {
   return request;
 }
 
+export function resetBlocksByTownCacheForTests(): void {
+  blocksByTownPromises.clear();
+}
+
 export function resetTownFlatTypeTrendsCacheForTests(): void {
   townFlatTrendsPromise = null;
 }

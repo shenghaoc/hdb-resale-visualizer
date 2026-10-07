@@ -80,4 +80,134 @@ describe("sync-data coordinator helpers", () => {
     expect(flushCacheFn).toHaveBeenCalledTimes(2);
     expect(geocodeCache.updatedAt).toBe("2026-05-14T01:00:00.000Z");
   });
+
+  it("keeps later addresses when earlier geocodes miss or throw", async () => {
+    const geocodeCache = makeGeocodeCache();
+    const geocodeAddressFn = vi.fn(async (searchValue: string) => {
+      if (searchValue === "NO RESULT") return null;
+      if (searchValue === "THROWS") throw new Error("onemap down");
+      if (searchValue === "NON_ERROR") throw "socket reset";
+      return {
+        lat: 1.3,
+        lng: 103.8,
+        postalCode: "123456",
+        displayName: searchValue,
+        searchValue,
+      };
+    });
+
+    const result = await geocodeMissingAddresses(
+      {
+        missingAddresses: [
+          ["miss", "NO RESULT"],
+          ["boom", "THROWS"],
+          ["ok", "GOOD"],
+          ["weird", "NON_ERROR"],
+        ],
+        geocodeCache,
+        geocodeEndpoint: new URL("https://example.test/geocode"),
+        skipGeocoding: false,
+        concurrency: 1,
+        flushCacheFn: vi.fn().mockResolvedValue(undefined),
+      },
+      { geocodeAddressFn, now: () => "2026-05-14T01:00:00.000Z" },
+    );
+
+    expect(result.geocodeFailureCount).toBe(3);
+    expect(result.geocodeFailureSamples).toEqual([
+      "NO RESULT: no geocode result",
+      "THROWS: onemap down",
+      "NON_ERROR: unknown error",
+    ]);
+    expect(geocodeCache.entries.ok).toMatchObject({ lat: 1.3, lng: 103.8, searchValue: "GOOD" });
+    expect(geocodeCache.entries.miss).toBeUndefined();
+    expect(geocodeCache.entries.boom).toBeUndefined();
+    expect(geocodeCache.entries.weird).toBeUndefined();
+  });
+
+  it("caps geocode failure samples at five while still counting every failure", async () => {
+    const result = await geocodeMissingAddresses(
+      {
+        missingAddresses: Array.from({ length: 6 }, (_, index) => [
+          `fail-${index}`,
+          `FAIL ${index}`,
+        ]) as [string, string][],
+        geocodeCache: makeGeocodeCache(),
+        geocodeEndpoint: new URL("https://example.test/geocode"),
+        skipGeocoding: false,
+        concurrency: 1,
+        flushCacheFn: vi.fn().mockResolvedValue(undefined),
+      },
+      {
+        geocodeAddressFn: vi.fn(async () => null),
+        now: () => "2026-05-14T01:00:00.000Z",
+      },
+    );
+
+    expect(result.geocodeFailureCount).toBe(6);
+    expect(result.geocodeFailureSamples).toEqual([
+      "FAIL 0: no geocode result",
+      "FAIL 1: no geocode result",
+      "FAIL 2: no geocode result",
+      "FAIL 3: no geocode result",
+      "FAIL 4: no geocode result",
+    ]);
+  });
+
+  it("does not geocode when the pass is skipped or the queue is empty", async () => {
+    const geocodeAddressFn = vi.fn();
+    const flushCacheFn = vi.fn();
+    const skipped = await geocodeMissingAddresses(
+      {
+        missingAddresses: [["address-1", "1 TEST STREET"]],
+        geocodeCache: makeGeocodeCache(),
+        geocodeEndpoint: new URL("https://example.test/geocode"),
+        skipGeocoding: true,
+        concurrency: 2,
+        flushCacheFn,
+      },
+      { geocodeAddressFn },
+    );
+    const empty = await geocodeMissingAddresses(
+      {
+        missingAddresses: [],
+        geocodeCache: makeGeocodeCache(),
+        geocodeEndpoint: new URL("https://example.test/geocode"),
+        skipGeocoding: false,
+        concurrency: 2,
+        flushCacheFn,
+      },
+      { geocodeAddressFn },
+    );
+
+    expect(skipped).toEqual({ geocodeFailureCount: 0, geocodeFailureSamples: [] });
+    expect(empty).toEqual({ geocodeFailureCount: 0, geocodeFailureSamples: [] });
+    expect(geocodeAddressFn).not.toHaveBeenCalled();
+    expect(flushCacheFn).not.toHaveBeenCalled();
+  });
+
+  it("surfaces a geocode cache flush failure instead of reporting success", async () => {
+    await expect(
+      geocodeMissingAddresses(
+        {
+          missingAddresses: [["address-1", "1 TEST STREET"]],
+          geocodeCache: makeGeocodeCache(),
+          geocodeEndpoint: new URL("https://example.test/geocode"),
+          skipGeocoding: false,
+          concurrency: 1,
+          flushCacheFn: vi.fn().mockRejectedValue(new Error("d1 write failed")),
+        },
+        {
+          geocodeAddressFn: vi.fn(async (searchValue: string) => ({
+            lat: 1.3,
+            lng: 103.8,
+            postalCode: null,
+            displayName: searchValue,
+            searchValue,
+          })),
+          now: () => "2026-05-14T01:00:00.000Z",
+        },
+      ),
+    ).rejects.toThrow("d1 write failed");
+  });
 });

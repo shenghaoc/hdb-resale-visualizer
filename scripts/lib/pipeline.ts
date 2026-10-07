@@ -10,6 +10,7 @@ import type {
 } from "../../shared/data-types";
 import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
 import { parseStoreyMidpoint } from "../../shared/comparable-engine";
+import { MAX_LEASE_DURATION } from "../../shared/product/lease";
 import { yearMonthIndex } from "../../shared/yearMonth";
 import { getStationDetails } from "./mrt";
 import type { TransactionRow } from "./schemas";
@@ -483,7 +484,12 @@ export function parseRemainingLease(value: string | undefined, leaseCommenceDate
   }
 
   const currentYear = new Date().getFullYear();
-  const remaining = Math.max(0, 99 - (currentYear - leaseCommenceDate));
+  // A flat cannot have more than the full lease left, so a future or malformed
+  // lease-commence year is capped instead of emitting something like "100 years".
+  const remaining = Math.min(
+    MAX_LEASE_DURATION,
+    Math.max(0, MAX_LEASE_DURATION - (currentYear - leaseCommenceDate)),
+  );
   return `${remaining} years`;
 }
 

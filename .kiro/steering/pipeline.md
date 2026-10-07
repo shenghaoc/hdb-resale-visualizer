@@ -22,6 +22,7 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from 
 - `comparisons` — one JSON blob per address key (amenity counts + percentile ranks).
 - `town_flat_type_trends` — normalized trend points.
 - `mrt_geojson` — two rows (`stations`, `exits`).
+- `transactions` — one row per registered resale (listing-check evidence). `storey_midpoint` and `price_per_sqm` are derived at read time, not stored.
 
 **Persistent (upserted, never truncated):**
 - `geocode_cache` — `(cache_key, lat, lng, postal_code, display_name, search_value)`.
@@ -41,11 +42,18 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from 
 | `GET /api/trends/town-flat-type` | `town_flat_type_trends` | Returns all rows. |
 | `GET /api/mrt-stations` | `mrt_geojson` | GeoJSON FeatureCollection. |
 | `GET /api/mrt-exits` | `mrt_geojson` | GeoJSON FeatureCollection. |
+| `GET /api/search` | `blocks` | Coarse filters only; text/geographic search and affordability stay client-side. Cap 2000. |
+| `GET /api/suggest` | `blocks` | Typeahead (`q`, 2–256 chars). Groups: town, street, block, mrt, postal. |
+| `POST /api/comparable-transactions` | `transactions` | Listing Check evidence. `?adjust=time` applies trend-based time adjustment. |
+| `POST /api/shortlist` | `shortlists` | Opt-in create/replace. Only runtime D1 write path. 10 writes / IP / colo / 60s. |
+| `GET /api/shortlist/{syncCode}` | `shortlists` | Lookup by SHA-256 of the bearer code. 404 for unknown or malformed codes. |
 
-All endpoints return JSON shapes validated by the Zod schemas in `src/lib/dataSchemas.ts` — that contract is intentionally unchanged from the previous static-artifact era so frontend code paths stay identical.
+The Worker (`worker/index.ts`) also serves `/sitemap.xml`, `/robots.txt`, `/og/block/{addressKey}.png`, `/og/compare/{townA}/{townB}.png`, and HTML SEO rewrites. A daily cron (`0 3 * * *`) purges shortlist rows unused for 180 days. Full request contracts live in [docs/architecture/artifact-contracts.md](../../docs/architecture/artifact-contracts.md).
+
+JSON shapes are validated by the Zod schemas in `src/shared/lib/dataSchemas.ts`.
 
 ## Frontend Responsibilities
 - **Mapping**: Consumes `/api/block-summaries` and `/api/mrt-exits` via MapLibre GL JS.
-- **Charts**: Consumes `/api/trends/*` and `/api/details/*` via Apache ECharts.
-- **Filtering**: Performs client-side filtering and sorting on the preloaded blocks array.
+- **Charts**: Consumes `/api/trends/*` and `/api/details/*` via Recharts (lazy-loaded where practical).
+- **Filtering**: Coarse filters can run on the server via `/api/search`; text/geographic search, CPF-based affordability, and sorting stay in the browser. Remaining-lease filters require a `FilterEvaluationContext` with an explicit `currentYear`.
 - **Persistence**: Shortlists and user notes are stored in `localStorage` by default. Optionally, a user can enable cloud sync with an anonymous sync code; the shortlist is then mirrored to the `shortlists` D1 table through `functions/api/shortlist/*` (the only runtime D1 write path). `localStorage` remains the offline baseline on each device.
