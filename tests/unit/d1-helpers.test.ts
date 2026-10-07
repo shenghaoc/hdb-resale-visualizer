@@ -167,7 +167,9 @@ describe("rowToBlockSummary", () => {
         median_price_by_flat_type_json: "{",
         nearest_mrt_json: "null-ish",
         nearby_mrts_json: null,
-        flat_type_cohorts_json: "[]",
+        // Malformed on purpose: valid-but-wrong-shape JSON such as "[]" is not a
+        // parse failure, and blockSummarySchema rejects an array for this field.
+        flat_type_cohorts_json: "{not-json",
       }),
     );
 
@@ -176,6 +178,6 @@ describe("rowToBlockSummary", () => {
     expect(summary.medianPriceByFlatType).toBeUndefined();
     expect(summary.nearestMrt).toBeNull();
     expect(summary.nearbyMrts).toEqual([]);
-    expect(summary.flatTypeCohorts).toEqual([]);
+    expect(summary.flatTypeCohorts).toBeUndefined();
   });
 });
