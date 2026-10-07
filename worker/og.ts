@@ -12,6 +12,7 @@ import {
 import { initWasm, Resvg } from "@resvg/resvg-wasm";
 import wasmModule from "@resvg/resvg-wasm/index_bg.wasm";
 import interFont from "./Inter-Regular.ttf";
+import type { PublicDataCache } from "./public-read-backend";
 
 type ManifestJson = {
   generatedAt?: string;
@@ -32,13 +33,25 @@ const MAX_OG_ADDRESS_KEY_LENGTH = 128;
 const MAX_OG_TOWN_SLUG_LENGTH = 64;
 const MANIFEST_CACHE_TTL_MS = 5 * 60 * 1000;
 
-let manifestCache: { expiresAt: number; version: string; dataWindow: DataWindow } | null = null;
+let manifestCache: {
+  expiresAt: number;
+  version: string;
+  dataWindow: DataWindow;
+  db: D1Database;
+  namespace: string;
+} | null = null;
 
 async function readManifestMetadata(
   env: Env,
 ): Promise<{ version: string; dataWindow: DataWindow }> {
   const now = workerNowEpochMilliseconds();
-  if (manifestCache && manifestCache.expiresAt > now) {
+  const namespace = env.PUBLIC_DATA_CACHE_NAMESPACE ?? "legacy-d1";
+  if (
+    manifestCache &&
+    manifestCache.expiresAt > now &&
+    manifestCache.db === env.DB &&
+    manifestCache.namespace === namespace
+  ) {
     return { version: manifestCache.version, dataWindow: manifestCache.dataWindow };
   }
 
@@ -61,7 +74,7 @@ async function readManifestMetadata(
     version: parsed.generatedAt ?? "unknown",
     dataWindow: parsed.dataWindow ?? { minMonth: "N/A", maxMonth: "N/A" },
   };
-  manifestCache = { expiresAt: now + MANIFEST_CACHE_TTL_MS, ...value };
+  manifestCache = { expiresAt: now + MANIFEST_CACHE_TTL_MS, db: env.DB, namespace, ...value };
   return value;
 }
 
@@ -77,24 +90,39 @@ function cacheOrigin(request: Request): string {
   return url.origin.replace(/^http:/, "https:");
 }
 
-function buildCacheKey(request: Request, key: string, version: string): Request {
-  return new Request(`${cacheOrigin(request)}/__og-cache/${key}?v=${encodeURIComponent(version)}`);
+function buildCacheKey(request: Request, key: string, version: string, env: Env): Request {
+  const namespace = encodeURIComponent(env.PUBLIC_DATA_CACHE_NAMESPACE ?? "legacy-d1");
+  return new Request(
+    `${cacheOrigin(request)}/__og-cache/${namespace}/${key}?v=${encodeURIComponent(version)}`,
+  );
 }
 
-async function readCache(cacheKey: Request): Promise<Response | undefined> {
-  if (typeof caches === "undefined" || !caches.default) return undefined;
+async function readCache(
+  cacheKey: Request,
+  override?: PublicDataCache | null,
+): Promise<Response | undefined> {
+  const cache =
+    override === undefined ? (typeof caches !== "undefined" ? caches.default : null) : override;
+  if (!cache) return undefined;
   try {
-    return await caches.default.match(cacheKey);
+    return await cache.match(cacheKey);
   } catch (err) {
     console.warn("Cache match failed:", err);
     return undefined;
   }
 }
 
-function writeCache(ctx: ExecutionContext, cacheKey: Request, response: Response): void {
-  if (typeof caches === "undefined" || !caches.default) return;
+function writeCache(
+  ctx: ExecutionContext,
+  cacheKey: Request,
+  response: Response,
+  override?: PublicDataCache | null,
+): void {
+  const cache =
+    override === undefined ? (typeof caches !== "undefined" ? caches.default : null) : override;
+  if (!cache) return;
   ctx.waitUntil(
-    caches.default.put(cacheKey, response.clone()).catch((err) => {
+    cache.put(cacheKey, response.clone()).catch((err) => {
       console.warn("Cache put failed:", err);
     }),
   );
@@ -169,13 +197,14 @@ export async function handleBlockOg(
   env: Env,
   addressKey: string,
   ctx: ExecutionContext,
+  cache?: PublicDataCache | null,
 ): Promise<Response> {
   if (addressKey.length > MAX_OG_ADDRESS_KEY_LENGTH) return fallbackCard(request);
 
   const { version, dataWindow } = await readManifestMetadata(env);
-  const cacheKey = buildCacheKey(request, `block/${encodeURIComponent(addressKey)}`, version);
+  const cacheKey = buildCacheKey(request, `block/${encodeURIComponent(addressKey)}`, version, env);
 
-  const cached = await readCache(cacheKey);
+  const cached = await readCache(cacheKey, cache);
   if (cached) return cached;
 
   const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?")
@@ -187,7 +216,7 @@ export async function handleBlockOg(
   const props = mapBlockToOgProps(rowToBlockSummary(row), dataWindow);
   const png = renderPng(blockCardSvg(props));
   const response = new Response(png, { headers: IMAGE_HEADERS });
-  writeCache(ctx, cacheKey, response);
+  writeCache(ctx, cacheKey, response, cache);
   return response;
 }
 
@@ -197,6 +226,7 @@ export async function handleCompareOg(
   townA: string,
   townB: string,
   ctx: ExecutionContext,
+  cache?: PublicDataCache | null,
 ): Promise<Response> {
   if (townA.length > MAX_OG_TOWN_SLUG_LENGTH || townB.length > MAX_OG_TOWN_SLUG_LENGTH) {
     return fallbackCard(request);
@@ -210,9 +240,10 @@ export async function handleCompareOg(
     request,
     `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`,
     version,
+    env,
   );
 
-  const cached = await readCache(cacheKey);
+  const cached = await readCache(cacheKey, cache);
   if (cached) return cached;
 
   const rows = await env.DB.prepare(
@@ -251,6 +282,6 @@ export async function handleCompareOg(
     }),
   );
   const response = new Response(png, { headers: IMAGE_HEADERS });
-  writeCache(ctx, cacheKey, response);
+  writeCache(ctx, cacheKey, response, cache);
   return response;
 }
