@@ -1,5 +1,6 @@
-import { createNeonReadDb } from "./neon-read-db";
-import type { PublicReadQuery } from "./neon-public-read-sql";
+import type { PublicData } from "../functions/_lib/public-data";
+import { createD1PublicData } from "./public-data-d1";
+import { createNeonPublicData, type PublicReadQuery } from "./public-data-neon";
 
 export type PublicReadTransport = {
   query: PublicReadQuery;
@@ -24,11 +25,22 @@ export function namespacePublicCache(cache: PublicDataCache | null, namespace: s
   };
 }
 
-/** Capture one backend for every public read; private shortlist storage stays on original DB. */
+/** One request's public reads, all from the backend it captured at entry. */
+export type PublicReadScope = {
+  backend: "d1" | "neon";
+  /** `<backend>-<epoch>`: every cache entry built from these reads is kept under it. */
+  namespace: string;
+  data: PublicData;
+  /** Runs `respond` on one consistent snapshot (Neon: a read-only repeatable-read transaction). */
+  comparableSnapshot: <T>(respond: () => Promise<T>) => Promise<T>;
+  close: () => Promise<void>;
+};
+
+/** Capture one backend for every public read; private shortlist storage stays on the D1 binding. */
 export function createPublicReadScope(
   env: Env,
   factory: (binding: Hyperdrive) => PublicReadTransport,
-) {
+): PublicReadScope {
   const backend = env.PUBLIC_DATA_BACKEND ?? "d1";
   if (backend !== "d1" && backend !== "neon") throw new Error("Invalid public read backend");
   const epoch =
@@ -41,16 +53,10 @@ export function createPublicReadScope(
     if (!env.HDB_PUBLIC_NEON) throw new Error("Missing Neon public read binding");
     transport = factory(env.HDB_PUBLIC_NEON);
   }
-  const publicEnv: Env = {
-    ...env,
-    PUBLIC_DATA_BACKEND: backend,
-    PUBLIC_DATA_CACHE_NAMESPACE: `${backend}-${epoch}`,
-    DB: transport ? (createNeonReadDb(transport.query) as unknown as D1Database) : env.DB,
-  };
   return {
     backend,
-    publicEnv,
-    namespace: publicEnv.PUBLIC_DATA_CACHE_NAMESPACE!,
+    namespace: `${backend}-${epoch}`,
+    data: transport ? createNeonPublicData(transport.query) : createD1PublicData(env.DB),
     comparableSnapshot: <T>(respond: () => Promise<T>) =>
       transport ? transport.snapshot(respond) : respond(),
     close: async () => transport?.close(),

@@ -1,19 +1,18 @@
 import { jsonResponse, notFound, parseSlugParam, serverError } from "../../_lib/d1";
+import type { PublicRouteHandler } from "../../_lib/public-data";
 
-export const onRequestGet: PagesFunction<Env> = async ({ env, params }) => {
+export const onRequestGet: PublicRouteHandler = async ({ publicData, params }) => {
   const addressKey = parseSlugParam(params, "addressKey");
   if (!addressKey) {
     return notFound("addressKey required");
   }
 
   try {
-    const row = await env.DB.prepare("SELECT json FROM block_details WHERE address_key = ?")
-      .bind(addressKey)
-      .first<{ json: string }>();
-    if (!row) {
+    const json = await publicData.blockDetailJson(addressKey);
+    if (json === null) {
       return notFound("Not found");
     }
-    return jsonResponse(JSON.parse(row.json));
+    return jsonResponse(JSON.parse(json));
   } catch (error) {
     console.error("detail lookup failed:", error);
     return serverError("Internal server error");

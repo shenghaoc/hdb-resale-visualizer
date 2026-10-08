@@ -2,8 +2,11 @@
  * Cloudflare Worker entry point.
  *
  * Replaces the old Cloudflare Pages Functions routing.  API paths are forwarded
- * to their existing `onRequestGet` handlers; everything else is served as a
- * static asset (SPA fallback via `not_found_handling`).
+ * to their `onRequestGet`/`onRequestPost` handlers; everything else is served as
+ * a static asset (SPA fallback via `not_found_handling`). Public data routes,
+ * OG cards, the sitemap and the SEO rewrite read through the request's
+ * public-read scope (`public-read-backend.ts`); only the private shortlist
+ * routes and the cleanup cron use the D1 binding directly.
  */
 
 import { onRequestGet as manifestHandler } from "../functions/api/manifest";
@@ -34,8 +37,11 @@ import { withPublicDataCache } from "./public-data-cache";
 import { townToFilename } from "../shared/geo";
 import { createPublicReadScope, namespacePublicCache } from "./public-read-backend";
 import { createNeonPublicTransport } from "./neon-transport";
+import type { PublicData, PublicRouteHandler } from "../functions/_lib/public-data";
 
-const apiHandlers: Record<ApiRouteId, PagesFunction<Env>> = {
+type ShortlistRouteId = "shortlist-create" | "shortlist-get";
+
+const publicApiHandlers: Record<Exclude<ApiRouteId, ShortlistRouteId>, PublicRouteHandler> = {
   manifest: manifestHandler,
   "block-summaries": blockSummariesHandler,
   "blocks-by-town": blocksByTownHandler,
@@ -47,6 +53,8 @@ const apiHandlers: Record<ApiRouteId, PagesFunction<Env>> = {
   search: searchHandler,
   suggest: suggestHandler,
   "comparable-transactions": comparableTransactionsHandler,
+};
+const shortlistHandlers: Record<ShortlistRouteId, PagesFunction<Env>> = {
   "shortlist-create": shortlistCreateHandler,
   "shortlist-get": shortlistGetHandler,
 };
@@ -56,9 +64,18 @@ const compareOgPattern = new URLPattern({ pathname: "/og/compare/:townA/:townB.p
 
 // ---- context helper -------------------------------------------------------
 
+/** URLPattern group values may be undefined for optional segments; handlers only see defined params. */
+function definedParams(groups: Record<string, string | undefined>): Record<string, string> {
+  const params: Record<string, string> = {};
+  for (const [key, value] of Object.entries(groups)) {
+    if (value !== undefined) params[key] = value;
+  }
+  return params;
+}
+
 /**
  * Build a context compatible with the PagesFunction signature consumed by
- * each `onRequestGet` handler.  The Worker `Request` type differs from the
+ * the shortlist handlers.  The Worker `Request` type differs from the
  * Pages `Request<unknown, IncomingRequestCfProperties>` — they are identical
  * at runtime, so we cast here.  The explicit helper avoids `as` on the
  * entire context, limiting the suppression to just the request type.
@@ -69,16 +86,9 @@ function buildPagesContext(
   groups: Record<string, string | undefined>,
   ctx: ExecutionContext,
 ): Record<string, unknown> {
-  // URLPattern group values may be undefined for optional segments.
-  // Filter them out so handlers only see defined params.
-  const params: Record<string, string> = {};
-  for (const [key, value] of Object.entries(groups)) {
-    if (value !== undefined) params[key] = value;
-  }
-
   return {
     env,
-    params,
+    params: definedParams(groups),
     request,
     functionPath: "",
     data: null,
@@ -94,29 +104,13 @@ function buildPagesContext(
   };
 }
 
-async function getManifest(env: Env): Promise<ManifestLike | null> {
-  const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{
-    json: string;
-  }>();
-  return row ? (JSON.parse(row.json) as ManifestLike) : null;
+async function getManifest(data: PublicData): Promise<ManifestLike | null> {
+  const json = await data.manifestJson();
+  return json === null ? null : (JSON.parse(json) as ManifestLike);
 }
 
-async function getBlock(env: Env, addressKey: string): Promise<BlockSummaryLike | null> {
-  const row = await env.DB.prepare(
-    "SELECT address_key,town,display_name,median_price,transaction_count,available_min_month,available_max_month,floor_area_min,floor_area_max FROM blocks WHERE address_key = ?1",
-  )
-    .bind(addressKey)
-    .first<{
-      address_key: string;
-      town: string;
-      display_name: string | null;
-      median_price: number;
-      transaction_count: number;
-      available_min_month: string;
-      available_max_month: string;
-      floor_area_min: number;
-      floor_area_max: number;
-    }>();
+async function getBlock(data: PublicData, addressKey: string): Promise<BlockSummaryLike | null> {
+  const row = await data.block(addressKey);
   if (!row) return null;
   return {
     addressKey: row.address_key,
@@ -145,25 +139,6 @@ function publicOrigin(url: URL): string {
   return url.origin.replace(/^http:/, "https:");
 }
 
-/** Paginate past D1's 10k-row cap so the sitemap includes every block. */
-async function fetchAllBlockRows(env: Env): Promise<Array<{ address_key: string; town: string }>> {
-  const blockRows: Array<{ address_key: string; town: string }> = [];
-  const pageSize = 10_000;
-  let offset = 0;
-
-  while (true) {
-    const chunk = await env.DB.prepare("SELECT address_key, town FROM blocks LIMIT ?1 OFFSET ?2")
-      .bind(pageSize, offset)
-      .all<{ address_key: string; town: string }>();
-    const results = chunk.results ?? [];
-    blockRows.push(...results);
-    if (results.length < pageSize) break;
-    offset += pageSize;
-  }
-
-  return blockRows;
-}
-
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const capturedEnv = { ...env };
@@ -180,7 +155,7 @@ export default {
           return await (key
             ? handleBlockOg(
                 request,
-                publicReads().publicEnv,
+                publicReads(),
                 key,
                 ctx,
                 namespacePublicCache(
@@ -196,7 +171,7 @@ export default {
           return await (townA && townB
             ? handleCompareOg(
                 request,
-                publicReads().publicEnv,
+                publicReads(),
                 townA,
                 townB,
                 ctx,
@@ -210,27 +185,26 @@ export default {
 
         const apiMatch = matchApiRoute(url, request.method);
         if (apiMatch.kind === "handler") {
-          const handler = apiHandlers[apiMatch.routeId];
-          if (apiMatch.routeId === "shortlist-create" || apiMatch.routeId === "shortlist-get")
+          const { routeId } = apiMatch;
+          if (routeId === "shortlist-create" || routeId === "shortlist-get") {
+            const handler = shortlistHandlers[routeId];
             return await handler(
               buildPagesContext(request, capturedEnv, apiMatch.groups, ctx) as Parameters<
                 typeof handler
               >[0],
             );
+          }
           const reads = publicReads();
           const publicCache = namespacePublicCache(
             typeof caches !== "undefined" ? caches.default : null,
             reads.namespace,
           );
+          const handler = publicApiHandlers[routeId];
           const handle = () =>
-            withPublicDataCache(request, reads.publicEnv.DB, publicCache, async () =>
-              handler(
-                buildPagesContext(request, reads.publicEnv, apiMatch.groups, ctx) as Parameters<
-                  typeof handler
-                >[0],
-              ),
+            withPublicDataCache(request, reads.data, publicCache, () =>
+              handler({ request, params: definedParams(apiMatch.groups), publicData: reads.data }),
             );
-          return await (apiMatch.routeId === "comparable-transactions"
+          return await (routeId === "comparable-transactions"
             ? reads.comparableSnapshot(handle)
             : handle());
         }
@@ -269,8 +243,8 @@ export default {
           if (cached) return cached;
 
           const [manifest, blockRows] = await Promise.all([
-            getManifest(reads.publicEnv),
-            fetchAllBlockRows(reads.publicEnv),
+            getManifest(reads.data),
+            reads.data.blockIndex(),
           ]);
           const generatedAt = manifest?.generatedAt;
           const towns = manifest?.filterOptions?.towns ?? [];
@@ -287,7 +261,7 @@ export default {
             })),
           ];
           const response = textResponse(sitemapXml(urls), "application/xml");
-          // Sitemap changes infrequently; use longer cache lifetimes to reduce D1 reads.
+          // Sitemap changes infrequently; use longer cache lifetimes to reduce database reads.
           response.headers.set("cache-control", "public, max-age=86400, s-maxage=604800");
           if (cache) {
             ctx.waitUntil(
@@ -315,8 +289,8 @@ export default {
 
         try {
           const [block, manifest] = await Promise.all([
-            selected ? getBlock(publicReads().publicEnv, selected) : Promise.resolve(null),
-            getManifest(publicReads().publicEnv),
+            selected ? getBlock(publicReads().data, selected) : Promise.resolve(null),
+            getManifest(publicReads().data),
           ]);
           if (manifest) {
             const validTowns = manifest.filterOptions?.towns ?? [];

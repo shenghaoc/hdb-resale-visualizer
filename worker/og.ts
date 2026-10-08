@@ -1,4 +1,4 @@
-import { rowToBlockSummary, townFilenameToCanonical, type BlockRow } from "../functions/_lib/d1";
+import { rowToBlockSummary, townFilenameToCanonical } from "../functions/_lib/d1";
 import { workerNowEpochMilliseconds } from "../functions/_lib/worker-time";
 import {
   escapeXml,
@@ -12,7 +12,10 @@ import {
 import { initWasm, Resvg } from "@resvg/resvg-wasm";
 import wasmModule from "@resvg/resvg-wasm/index_bg.wasm";
 import interFont from "./Inter-Regular.ttf";
-import type { PublicDataCache } from "./public-read-backend";
+import type { PublicDataCache, PublicReadScope } from "./public-read-backend";
+
+/** The request's public reads and the cache namespace they belong to. */
+type OgReads = Pick<PublicReadScope, "data" | "namespace">;
 
 type ManifestJson = {
   generatedAt?: string;
@@ -38,7 +41,7 @@ const UNKNOWN_VERSION = "unknown";
 
 /**
  * Per-isolate memo of the manifest metadata. It is keyed by the validated public cache namespace
- * (`<backend>-<epoch>`), never by `env.DB`: in Neon mode `env.DB` is a new request-scoped adapter on every
+ * (`<backend>-<epoch>`), never by the reads object: in Neon mode that is a new request-scoped adapter on every
  * request, so an identity check would never match and every `/og/*` request would query the manifest (and open
  * a connection) before it could reach the image cache. A backend or epoch switch changes the namespace and
  * so retires the memo.
@@ -51,10 +54,10 @@ let manifestCache: {
 } | null = null;
 
 async function readManifestMetadata(
-  env: Env,
+  reads: OgReads,
 ): Promise<{ version: string; dataWindow: DataWindow; complete: boolean }> {
   const now = workerNowEpochMilliseconds();
-  const namespace = env.PUBLIC_DATA_CACHE_NAMESPACE ?? "legacy-d1";
+  const { namespace } = reads;
   if (manifestCache && manifestCache.expiresAt > now && manifestCache.namespace === namespace) {
     // Only complete reads are ever remembered.
     return {
@@ -64,13 +67,11 @@ async function readManifestMetadata(
     };
   }
 
-  const row = await env.DB.prepare("SELECT json FROM manifest WHERE id = 1").first<{
-    json: string;
-  }>();
+  const json = await reads.data.manifestJson();
   const parsed: ManifestJson = {};
-  if (row) {
+  if (json !== null) {
     try {
-      const data = JSON.parse(row.json);
+      const data = JSON.parse(json);
       if (data && typeof data === "object" && !Array.isArray(data)) {
         parsed.generatedAt = (data as ManifestJson).generatedAt;
         parsed.dataWindow = (data as ManifestJson).dataWindow;
@@ -108,10 +109,9 @@ function cacheOrigin(request: Request): string {
   return url.origin.replace(/^http:/, "https:");
 }
 
-function buildCacheKey(request: Request, key: string, version: string, env: Env): Request {
-  const namespace = encodeURIComponent(env.PUBLIC_DATA_CACHE_NAMESPACE ?? "legacy-d1");
+function buildCacheKey(request: Request, key: string, version: string, namespace: string): Request {
   return new Request(
-    `${cacheOrigin(request)}/__og-cache/${namespace}/${key}?v=${encodeURIComponent(version)}`,
+    `${cacheOrigin(request)}/__og-cache/${encodeURIComponent(namespace)}/${key}?v=${encodeURIComponent(version)}`,
   );
 }
 
@@ -212,22 +212,25 @@ function renderPng(svg: string): Uint8Array {
 
 export async function handleBlockOg(
   request: Request,
-  env: Env,
+  reads: OgReads,
   addressKey: string,
   ctx: ExecutionContext,
   cache?: PublicDataCache | null,
 ): Promise<Response> {
   if (addressKey.length > MAX_OG_ADDRESS_KEY_LENGTH) return fallbackCard(request);
 
-  const { version, dataWindow, complete } = await readManifestMetadata(env);
-  const cacheKey = buildCacheKey(request, `block/${encodeURIComponent(addressKey)}`, version, env);
+  const { version, dataWindow, complete } = await readManifestMetadata(reads);
+  const cacheKey = buildCacheKey(
+    request,
+    `block/${encodeURIComponent(addressKey)}`,
+    version,
+    reads.namespace,
+  );
 
   const cached = await readCache(cacheKey, cache);
   if (cached) return cached;
 
-  const row = await env.DB.prepare("SELECT * FROM blocks WHERE address_key = ?")
-    .bind(addressKey)
-    .first<BlockRow>();
+  const row = await reads.data.block(addressKey);
   if (!row) return fallbackCard(request);
 
   await resvgReady;
@@ -240,7 +243,7 @@ export async function handleBlockOg(
 
 export async function handleCompareOg(
   request: Request,
-  env: Env,
+  reads: OgReads,
   townA: string,
   townB: string,
   ctx: ExecutionContext,
@@ -253,25 +256,21 @@ export async function handleCompareOg(
   const canonicalA = townFilenameToCanonical(townA);
   const canonicalB = townFilenameToCanonical(townB);
 
-  const { version, complete } = await readManifestMetadata(env);
+  const { version, complete } = await readManifestMetadata(reads);
   const cacheKey = buildCacheKey(
     request,
     `compare/${encodeURIComponent(townA)}/${encodeURIComponent(townB)}`,
     version,
-    env,
+    reads.namespace,
   );
 
   const cached = await readCache(cacheKey, cache);
   if (cached) return cached;
 
-  const rows = await env.DB.prepare(
-    "SELECT town, median_price, transaction_count FROM blocks WHERE town IN (?, ?)",
-  )
-    .bind(canonicalA, canonicalB)
-    .all<TownAggregateRow>();
+  const rows = await reads.data.townBlockPrices(canonicalA, canonicalB);
 
   const grouped = new Map<string, TownAggregateRow[]>();
-  for (const row of rows.results ?? []) {
+  for (const row of rows) {
     const existing = grouped.get(row.town) ?? [];
     existing.push(row);
     grouped.set(row.town, existing);

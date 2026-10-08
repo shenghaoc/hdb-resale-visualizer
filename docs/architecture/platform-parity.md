@@ -72,7 +72,7 @@ The shared evaluator returns only flat-type, budget, and lease dimension results
 
 ## Cloudflare/API-only code
 
-Pages Functions, Worker routing, D1 access, rate limiting, runtime API request parsing, and the opt-in shortlist cloud-sync write path remain in `functions/` and `worker/`. Runtime API code reads D1 and may call shared deterministic logic, but it must not geocode, fetch upstream public datasets, or add new user-data write paths outside shortlist sync.
+Pages Functions, Worker routing, D1 access, rate limiting, runtime API request parsing, and the opt-in shortlist cloud-sync write path remain in `functions/` and `worker/`. Runtime API code reads public data through the public-read boundary (D1 or Neon) and may call shared deterministic logic, but it must not geocode, fetch upstream public datasets, or add new user-data write paths outside shortlist sync.
 
 ## Map rendering-only code
 

@@ -1,11 +1,9 @@
-import { type BlockRow, jsonResponse, rowToBlockSummary, serverError } from "../_lib/d1";
+import { jsonResponse, rowToBlockSummary, serverError } from "../_lib/d1";
+import type { PublicRouteHandler } from "../_lib/public-data";
 
-export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+export const onRequestGet: PublicRouteHandler = async ({ publicData }) => {
   try {
-    const result = await env.DB.prepare(
-      "SELECT * FROM blocks ORDER BY median_price DESC, transaction_count DESC",
-    ).all<BlockRow>();
-    const summaries = (result.results ?? []).map(rowToBlockSummary);
+    const summaries = (await publicData.allBlocks()).map(rowToBlockSummary);
     return jsonResponse(summaries);
   } catch (error) {
     console.error("block-summaries lookup failed:", error);

@@ -27,8 +27,8 @@ function setup() {
     }),
   };
   let json = '{"generatedAt":"v1"}';
-  const first = vi.fn(async () => ({ json }));
-  const db = { prepare: vi.fn(() => ({ first })) };
+  /** The request's public reads; the cache layer only ever reads the manifest. */
+  const db = { manifestJson: vi.fn(async (): Promise<string | null> => json) };
   const respond = vi.fn(
     async () =>
       new Response(JSON.stringify({ version: json }), {
@@ -47,18 +47,18 @@ function setup() {
 }
 
 describe("public data shared cache", () => {
-  it("MISS reads version twice; HIT avoids every D1 read and the handler", async () => {
+  it("MISS reads version twice; HIT avoids every database read and the handler", async () => {
     const { cache, db, respond } = setup();
     const request = new Request("https://example.com/api/block-summaries");
     expect(
       (await withPublicDataCache(request, db, cache, respond)).headers.get("x-data-cache"),
     ).toBe("MISS");
-    expect(db.prepare).toHaveBeenCalledTimes(2);
-    db.prepare.mockClear();
+    expect(db.manifestJson).toHaveBeenCalledTimes(2);
+    db.manifestJson.mockClear();
     expect(
       (await withPublicDataCache(request, db, cache, respond)).headers.get("x-data-cache"),
     ).toBe("HIT");
-    expect(db.prepare).not.toHaveBeenCalled();
+    expect(db.manifestJson).not.toHaveBeenCalled();
     expect(respond).toHaveBeenCalledOnce();
   });
   it("isolates query parameters and discovers new version after pointer expiry", async () => {
@@ -86,7 +86,7 @@ describe("public data shared cache", () => {
     const { cache, db, respond } = setup();
     await withPublicDataCache(new Request(url), db, cache, respond);
     expect(cache.match).not.toHaveBeenCalled();
-    expect(db.prepare).not.toHaveBeenCalled();
+    expect(db.manifestJson).not.toHaveBeenCalled();
   });
   it("never stores errors or responses spanning a version change", async () => {
     const { cache, db, setVersion } = setup();
@@ -108,7 +108,7 @@ describe("public data shared cache", () => {
     expect(spanning.headers.get("x-data-cache")).toBe("BYPASS-UNSTABLE");
     expect(spanning.headers.get("cache-control")).toBe("no-store");
   });
-  it("cache put failure returns the fetched response without repeating D1 work", async () => {
+  it("cache put failure returns the fetched response without repeating database work", async () => {
     const { cache, db, respond } = setup();
     cache.put.mockRejectedValue(new Error("cache unavailable"));
     expect(
@@ -133,28 +133,28 @@ it("ignores unrelated params on full datasets and canonicalizes validated numeri
     cache,
     respond,
   );
-  db.prepare.mockClear();
+  db.manifestJson.mockClear();
   await withPublicDataCache(
     new Request("https://example.com/api/block-summaries?nonce=2"),
     db,
     cache,
     respond,
   );
-  expect(db.prepare).not.toHaveBeenCalled();
+  expect(db.manifestJson).not.toHaveBeenCalled();
   await withPublicDataCache(
     new Request("https://example.com/api/search?town=BEDOK&budgetMax=0500000"),
     db,
     cache,
     respond,
   );
-  db.prepare.mockClear();
+  db.manifestJson.mockClear();
   await withPublicDataCache(
     new Request("https://example.com/api/search?nonce=3&budgetMax=500000&town=BEDOK"),
     db,
     cache,
     respond,
   );
-  expect(db.prepare).not.toHaveBeenCalled();
+  expect(db.manifestJson).not.toHaveBeenCalled();
 });
 
 describe("while a D1 publication is in progress", () => {
@@ -204,10 +204,10 @@ describe("while a D1 publication is in progress", () => {
     const ctx = setup();
     await withPublicDataCache(request(), ctx.db, ctx.cache, ctx.respond); // pointer + data stored
     ctx.setVersion(await stamped('{"generatedAt":"v1"}'));
-    ctx.db.prepare.mockClear();
+    ctx.db.manifestJson.mockClear();
     const response = await withPublicDataCache(request(), ctx.db, ctx.cache, ctx.respond);
     expect(response.headers.get("x-data-cache")).toBe("HIT");
-    expect(ctx.db.prepare).not.toHaveBeenCalled();
+    expect(ctx.db.manifestJson).not.toHaveBeenCalled();
   });
 
   it("does not store a response whose handler ran while the publication began", async () => {
@@ -244,7 +244,7 @@ describe("while a D1 publication is in progress", () => {
 
   it("labels the absence of any manifest, and stores nothing, so nobody downstream keeps it", async () => {
     const { cache, respond } = setup();
-    const noManifest = { prepare: vi.fn(() => ({ first: async () => null })) };
+    const noManifest = { manifestJson: vi.fn(async () => null) };
     const response = await withPublicDataCache(request(), noManifest, cache, respond);
     expect(response.status).toBe(200);
     expect(response.headers.get("x-data-cache")).toBe("BYPASS-NO-MANIFEST");

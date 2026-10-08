@@ -1,8 +1,8 @@
 /**
- * Shared helpers for Pages Functions backed by the D1 binding `DB`.
- *
- * All endpoints under `functions/api/*` import from here. Keep this module
- * dependency-free (no Node imports) so it runs in the Workers runtime.
+ * Response helpers and `blocks` row shaping shared by the API routes under
+ * `functions/api/*`, whichever backend produced the rows (see `public-data.ts`;
+ * the file name predates the Neon backend). Keep this module dependency-free
+ * (no Node imports) so it runs in the Workers runtime.
  */
 
 import type { BlockFlatTypeCohort, NearestMrt } from "../../shared/data-types";
@@ -211,9 +211,6 @@ export function rowToBlockSummary(row: BlockRow) {
 }
 
 export { type BlockRow };
-
-/** All columns required by `rowToBlockSummary`, including optional cohort JSON added by migrations. */
-export const BLOCK_SUMMARY_SELECT_SQL = "blocks.*";
 
 export { townFilenameToCanonical } from "../../shared/geo";
 

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import { onRequestGet } from "../../functions/api/search";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
 type SearchContext = Parameters<typeof onRequestGet>[0];
 
@@ -11,7 +12,7 @@ function searchContext(
 ): SearchContext {
   return {
     request: new Request(url),
-    env: { DB: { prepare } },
+    publicData: createD1PublicData({ prepare } as unknown as D1Database),
   } as unknown as SearchContext;
 }
 

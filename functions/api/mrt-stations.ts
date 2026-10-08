@@ -1,14 +1,13 @@
 import { jsonResponse, notFound, serverError } from "../_lib/d1";
+import type { PublicRouteHandler } from "../_lib/public-data";
 
-export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
+export const onRequestGet: PublicRouteHandler = async ({ publicData }) => {
   try {
-    const row = await env.DB.prepare("SELECT json FROM mrt_geojson WHERE kind = 'stations'").first<{
-      json: string;
-    }>();
-    if (!row) {
+    const json = await publicData.mrtGeoJson("stations");
+    if (json === null) {
       return notFound("MRT stations not synced yet");
     }
-    return jsonResponse(JSON.parse(row.json));
+    return jsonResponse(JSON.parse(json));
   } catch (error) {
     console.error("MRT stations lookup failed:", error);
     return serverError("Internal server error");

@@ -24,9 +24,9 @@ inclusion: always
   - `src/components` — app-shell or HDB-aware components that do not belong to a single feature
   - `src/hooks` — residual cross-feature app orchestration hooks
   - `src/types` — frontend type re-exports and local types
-- `functions/api/`: runtime API route modules backed by D1.
-- `functions/_lib/`: D1 query, validation, shortlist, search, and rate-limit helpers.
-- `worker/`: Cloudflare Worker entry point, API dispatch, SEO routing, sitemap, OG image generation, and Worker-only helpers.
+- `functions/api/`: runtime API route modules. Public data routes read through the public-read boundary; shortlist routes use D1.
+- `functions/_lib/`: the public-read boundary (`public-data.ts`), response and row-shaping, validation, shortlist, search, and rate-limit helpers.
+- `worker/`: Cloudflare Worker entry point, API dispatch, SEO routing, sitemap, OG image generation, the public-read backends (D1 and Neon implementations, Hyperdrive transport, per-request selection), and Worker-only helpers.
 - `shared/`: types and pure utilities used across frontend, Worker/API, tests, and scripts.
 - `scripts/`: Node-only build-time data pipeline and guard scripts.
 - `types/`: top-level ambient TypeScript declarations.

@@ -1,14 +1,15 @@
 /**
  * POST /api/comparable-transactions
  *
- * Accepts a CandidateListing JSON body, queries the transactions D1 table
- * with three widening passes, scores results with the shared comparable
- * engine, and returns a ListingComparableSet.
+ * Accepts a CandidateListing JSON body, reads the stored transactions with
+ * three widening passes, scores results with the shared comparable engine,
+ * and returns a ListingComparableSet.
  *
  * Deterministic, no AI, no external API calls, no runtime geocoding.
  */
 
 import { privateJsonResponse, readBodyWithLimit } from "../_lib/d1";
+import type { PublicRouteHandler, TransactionRecord, TransactionScope } from "../_lib/public-data";
 import {
   type CandidateListing,
   type ListingComparableSet,
@@ -42,9 +43,6 @@ const candidateListingSchema = z.object({
 
 // Body size limit: 8 KB is more than enough for a CandidateListing payload.
 const MAX_BODY_BYTES = 8192;
-/** Recency window for the winning widening pass. Narrower scopes are merged
- *  in separately so older same-block rows are not dropped by this LIMIT. */
-const COMPARABLE_FETCH_LIMIT = 150;
 
 function transactionRowKey(row: TransactionRow): string {
   return (
@@ -84,7 +82,7 @@ function isValidLeaseCommenceYear(
 }
 
 // ---------------------------------------------------------------------------
-// D1 ↔ TS mapping
+// Stored row ↔ TS mapping
 // ---------------------------------------------------------------------------
 
 function normalizeComparableId(value: unknown): string {
@@ -93,10 +91,10 @@ function normalizeComparableId(value: unknown): string {
   return "";
 }
 
-/** Map a snake_case D1 row to a camelCase TransactionRow.
- *  `storey_midpoint` and `price_per_sqm` are no longer stored in D1 —
+/** Map a snake_case `transactions` row to a camelCase TransactionRow.
+ *  `storey_midpoint` and `price_per_sqm` are no longer stored —
  *  they are derived here at read time to save ~374 MB of index storage. */
-function mapD1Row(row: Record<string, unknown>): TransactionRow {
+function toTransactionRow(row: TransactionRecord): TransactionRow {
   const storeyRange = (row.storey_range as string) ?? "";
   const floorAreaSqm = (row.floor_area_sqm as number) ?? 0;
   const resalePrice = (row.resale_price as number) ?? 0;
@@ -110,7 +108,7 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     flatType: canonicalFlatType(row.flat_type as string),
     storeyRange,
     // Fallback to 0 is defensive only — pipeline.ts filters out rows whose
-    // storey_range cannot be parsed, so every row reaching D1 has a valid range.
+    // storey_range cannot be parsed, so every stored row has a valid range.
     storeyMidpoint: parseStoreyMidpoint(storeyRange) ?? 0,
     floorAreaSqm,
     leaseCommenceDate: (row.lease_commence_year as number) ?? null,
@@ -118,32 +116,6 @@ function mapD1Row(row: Record<string, unknown>): TransactionRow {
     pricePerSqm: floorAreaSqm > 0 ? Math.round((resalePrice / floorAreaSqm) * 100) / 100 : 0,
     flatModel: (row.flat_model as string) ?? "",
   };
-}
-
-// ---------------------------------------------------------------------------
-// D1 queries
-// ---------------------------------------------------------------------------
-
-async function queryCount(db: D1Database, sql: string, ...params: unknown[]): Promise<number> {
-  let stmt = db.prepare(sql);
-  if (params.length > 0) {
-    stmt = stmt.bind(...params);
-  }
-  const result = await stmt.first<{ cnt: number }>();
-  return result?.cnt ?? 0;
-}
-
-async function queryRows(
-  db: D1Database,
-  sql: string,
-  ...params: unknown[]
-): Promise<TransactionRow[]> {
-  let stmt = db.prepare(sql);
-  if (params.length > 0) {
-    stmt = stmt.bind(...params);
-  }
-  const result = await stmt.all<Record<string, unknown>>();
-  return (result.results ?? []).map(mapD1Row);
 }
 
 // ---------------------------------------------------------------------------
@@ -157,7 +129,7 @@ const VALID_ADJUST_VALUES = new Set(["time"]);
 // Handler
 // ---------------------------------------------------------------------------
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PublicRouteHandler = async ({ request, publicData }) => {
   // 0. Parse query parameter for optional time adjustment
   const url = new URL(request.url);
   const adjustParam = url.searchParams.get("adjust");
@@ -195,56 +167,40 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
   parsed = { ...parsed, flatType: canonicalFlatType(parsed.flatType) };
 
-  // 2. Run three parallel COUNT(*) queries for scope counts
+  // 2. Count each scope in parallel
+  const blockScope: TransactionScope = {
+    kind: "block",
+    town: parsed.town,
+    block: parsed.block,
+    flatType: parsed.flatType,
+  };
+  const streetScope: TransactionScope = {
+    kind: "street",
+    streetName: parsed.streetName,
+    flatType: parsed.flatType,
+  };
+  const townScope: TransactionScope = {
+    kind: "town",
+    town: parsed.town,
+    flatType: parsed.flatType,
+  };
   const [sameBlockCount, sameStreetCount, sameTownCount] = await Promise.all([
-    queryCount(
-      env.DB,
-      "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3",
-      parsed.town,
-      parsed.block,
-      parsed.flatType,
-    ),
-    queryCount(
-      env.DB,
-      "SELECT COUNT(*) AS cnt FROM transactions WHERE street_name = ?1 AND flat_type = ?2",
-      parsed.streetName,
-      parsed.flatType,
-    ),
-    queryCount(
-      env.DB,
-      "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND flat_type = ?2",
-      parsed.town,
-      parsed.flatType,
-    ),
+    publicData.countTransactions(blockScope),
+    publicData.countTransactions(streetScope),
+    publicData.countTransactions(townScope),
   ]);
 
   // 3. Fetch the narrowest pass that meets MIN_COMPARABLES, then merge in any
-  // narrower-scope rows the recency LIMIT would otherwise drop. Quiet blocks
-  // often have a handful of older same-block sales while the town has 150+
-  // newer transactions; scoring only the recent town window would hide the
-  // listing's own evidence and skew the asking-price verdict.
-  const fetchBlockRows = () =>
-    queryRows(
-      env.DB,
-      `SELECT * FROM transactions WHERE town = ?1 AND block = ?2 AND flat_type = ?3 ORDER BY month DESC LIMIT ${COMPARABLE_FETCH_LIMIT}`,
-      parsed.town,
-      parsed.block,
-      parsed.flatType,
-    );
-  const fetchStreetRows = () =>
-    queryRows(
-      env.DB,
-      `SELECT * FROM transactions WHERE street_name = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT ${COMPARABLE_FETCH_LIMIT}`,
-      parsed.streetName,
-      parsed.flatType,
-    );
-  const fetchTownRows = () =>
-    queryRows(
-      env.DB,
-      `SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT ${COMPARABLE_FETCH_LIMIT}`,
-      parsed.town,
-      parsed.flatType,
-    );
+  // narrower-scope rows the recency limit (RECENT_TRANSACTIONS_LIMIT per scope)
+  // would otherwise drop. Quiet blocks often have a handful of older same-block
+  // sales while the town has 150+ newer transactions; scoring only the recent
+  // town window would hide the listing's own evidence and skew the asking-price
+  // verdict.
+  const fetchRows = async (scope: TransactionScope) =>
+    (await publicData.recentTransactions(scope)).map(toTransactionRow);
+  const fetchBlockRows = () => fetchRows(blockScope);
+  const fetchStreetRows = () => fetchRows(streetScope);
+  const fetchTownRows = () => fetchRows(townScope);
 
   let sameBlockRows: TransactionRow[] = [];
   let sameStreetRows: TransactionRow[] = [];
@@ -289,7 +245,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (applyAdjustment && result.comparables.length > 0) {
     try {
       // Collect unique town × flat type pairs from the comparables so we
-      // only query the subset of trend data we actually need.
+      // only read the subset of trend data we actually need.
       const uniquePairs = new Map<string, { town: string; flatType: string }>();
       for (const c of result.comparables) {
         const key = `${c.town}__${c.flatType}`;
@@ -298,30 +254,9 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         }
       }
 
-      // Build a parameterized IN clause: WHERE (town, flat_type) IN ((?1,?2), (?3,?4), ...)
-      const placeholders: string[] = [];
-      const params: string[] = [];
-      let idx = 0;
-      for (const pair of uniquePairs.values()) {
-        placeholders.push(`(?${idx + 1},?${idx + 2})`);
-        params.push(pair.town, pair.flatType);
-        idx += 2;
-      }
-
-      const trendRows = await env.DB.prepare(
-        `SELECT town, flat_type, month, median_price_per_sqm, transaction_count
-         FROM town_flat_type_trends
-         WHERE (town, flat_type) IN (${placeholders.join(", ")})`,
-      )
-        .bind(...params)
-        .all<{
-          town: string;
-          flat_type: string;
-          month: string;
-          median_price_per_sqm: number;
-          transaction_count: number;
-        }>();
-      const trendLookup = buildTrendLookup(trendRows.results ?? []);
+      const trendLookup = buildTrendLookup(
+        await publicData.trendHistory([...uniquePairs.values()]),
+      );
       const adjustmentResult = computeTimeAdjustments(
         result.comparables.map((c) => ({
           town: c.town,

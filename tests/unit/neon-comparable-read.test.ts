@@ -1,8 +1,10 @@
 import { DatabaseSync } from "node:sqlite";
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import { onRequestPost } from "../../functions/api/comparable-transactions";
-import { compileRuntimeRead, createNeonReadDb } from "../../worker/neon-read-db";
+import type { PublicData } from "../../functions/_lib/public-data";
 import { createPublicReadScope } from "../../worker/public-read-backend";
+import { createD1PublicData } from "../../worker/public-data-d1";
+import { createNeonPublicData } from "../../worker/public-data-neon";
 
 const opened: DatabaseSync[] = [];
 afterEach(() => {
@@ -50,7 +52,7 @@ function fixture() {
       source
         .prepare("INSERT INTO town_flat_type_trends VALUES(?,?,?,?,?)")
         .run(town, "4 ROOM", month, price, 10);
-  const sqlite = {
+  const d1 = {
     prepare: (sql: string) => {
       const statement = (params: unknown[]) => ({
         bind: (...bindings: unknown[]) => statement(bindings),
@@ -72,7 +74,7 @@ function fixture() {
     const rows = source.prepare(testSql).all(...(params as (string | number | null)[]));
     return rows.map((r) => ({ ...r, ...("id" in r ? { id: String(r.id) } : {}) }));
   });
-  return { sqlite, native, neon: createNeonReadDb(native) as unknown as D1Database };
+  return { d1, sqlite: createD1PublicData(d1), native, neon: createNeonPublicData(native) };
 }
 const candidate = {
   town: "BEDOK",
@@ -84,7 +86,11 @@ const candidate = {
   leaseCommenceYear: 1990,
   referenceMonth: "2026-09",
 };
-async function invoke(db: D1Database, changes: Partial<typeof candidate> = {}, adjust = false) {
+async function invoke(
+  publicData: PublicData,
+  changes: Partial<typeof candidate> = {},
+  adjust = false,
+) {
   const body = JSON.stringify({ ...candidate, ...changes });
   return onRequestPost({
     request: new Request(
@@ -95,11 +101,8 @@ async function invoke(db: D1Database, changes: Partial<typeof candidate> = {}, a
         body,
       },
     ),
-    env: { DB: db },
     params: {},
-    data: {},
-    waitUntil: vi.fn(),
-    next: vi.fn(),
+    publicData,
   } as unknown as Parameters<typeof onRequestPost>[0]);
 }
 
@@ -146,9 +149,7 @@ describe("faithful Neon comparable reads", () => {
       if (sql.includes("town_flat_type_trends")) throw Error("Controlled trend failure");
       return f.native(sql, params);
     });
-    const body = await (
-      await invoke(createNeonReadDb(query) as unknown as D1Database, {}, true)
-    ).json();
+    const body = await (await invoke(createNeonPublicData(query), {}, true)).json();
     expect(body).toMatchObject({
       adjustmentApplied: false,
       adjustmentCaveats: ["Time adjustment could not be applied — trend data query failed."],
@@ -159,43 +160,32 @@ describe("faithful Neon comparable reads", () => {
     expect((await invoke(f.neon, { floorAreaSqm: -1 })).status).toBe(400);
     expect(f.native).not.toHaveBeenCalled();
   });
-  it("does not admit SQL injection, extra bindings, arbitrary limits or excessive trend pairs", () => {
-    expect(() =>
-      compileRuntimeRead(
-        "SELECT * FROM transactions WHERE town = ?1 AND flat_type = ?2 ORDER BY month DESC LIMIT 151",
-        ["BEDOK", "4 ROOM"],
-      ),
-    ).toThrow();
-    expect(() =>
-      compileRuntimeRead(
-        "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND flat_type = ?2; DELETE FROM manifest",
-        ["BEDOK", "4 ROOM"],
-      ),
-    ).toThrow();
-    expect(() =>
-      compileRuntimeRead(
-        "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND flat_type = ?2",
-        ["BEDOK"],
-      ),
-    ).toThrow();
-    expect(() =>
-      compileRuntimeRead(
-        "SELECT town, flat_type, month, median_price_per_sqm, transaction_count FROM town_flat_type_trends WHERE (town, flat_type) IN ((?1,?2))",
-        Array(62).fill("x"),
-      ),
-    ).toThrow();
-    const bound = compileRuntimeRead(
-      "SELECT COUNT(*) AS cnt FROM transactions WHERE town = ?1 AND flat_type = ?2",
-      ["x' OR 1=1 --", "4 ROOM"],
-    );
-    expect(bound.sql).not.toContain("OR 1=1");
-    expect(bound.params[0]).toBe("x' OR 1=1 --");
+  it("binds every request value, and reads nothing for an empty trend request", async () => {
+    const calls: { sql: string; params: readonly unknown[] }[] = [];
+    const neon = createNeonPublicData(async (sql, params) => {
+      calls.push({ sql, params });
+      return [];
+    });
+    const hostile = "x' OR 1=1; DELETE FROM manifest --";
+    await neon.countTransactions({ kind: "town", town: hostile, flatType: "4 ROOM" });
+    await neon.recentTransactions({ kind: "street", streetName: hostile, flatType: hostile });
+    await neon.trendHistory([{ town: hostile, flatType: "4 ROOM" }]);
+    expect(calls).toHaveLength(3);
+    for (const { sql, params } of calls) {
+      expect(sql).not.toContain("OR 1=1");
+      expect(sql).toMatch(/^SELECT /);
+      expect(params).toContain(hostile);
+    }
+    expect(calls[1]?.sql).toMatch(/ LIMIT 150$/);
+    calls.length = 0;
+    expect(await neon.trendHistory([])).toEqual([]);
+    expect(calls).toEqual([]);
   });
   it("captures the backend for all public reads and restores every read to D1 on rollback", async () => {
     const f = fixture();
     const snapshot = vi.fn(async <T>(respond: () => Promise<T>) => respond());
     const env = {
-      DB: f.sqlite,
+      DB: f.d1,
       PUBLIC_DATA_BACKEND: "neon",
       HDB_PUBLIC_NEON: { connectionString: "test" },
     } as Env;
@@ -205,17 +195,18 @@ describe("faithful Neon comparable reads", () => {
       close: async () => {},
     }));
     env.PUBLIC_DATA_BACKEND = "d1";
-    await scope.comparableSnapshot(() => invoke(scope.publicEnv.DB));
+    await scope.comparableSnapshot(() => invoke(scope.data));
     expect(snapshot).toHaveBeenCalledTimes(1);
     expect(f.native).toHaveBeenCalledTimes(4);
     expect(scope.backend).toBe("neon");
-    expect(scope.publicEnv.PUBLIC_DATA_BACKEND).toBe("neon");
     f.native.mockClear();
     const rollback = createPublicReadScope(env, () => {
       throw Error("Neon must not open");
     });
-    await invoke(rollback.publicEnv.DB);
+    const rolledBack = await invoke(rollback.data);
     expect(f.native).not.toHaveBeenCalled();
-    expect(rollback.publicEnv.DB).toBe(f.sqlite);
+    expect(rollback.backend).toBe("d1");
+    // Served from the D1 binding: the same response the D1 implementation gives directly.
+    expect(await rolledBack.json()).toEqual(await (await invoke(f.sqlite)).json());
   });
 });

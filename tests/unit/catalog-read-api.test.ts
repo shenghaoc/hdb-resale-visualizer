@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { onRequestGet as blockSummariesHandler } from "../../functions/api/block-summaries";
 import { onRequestGet as townTrendsHandler } from "../../functions/api/trends/town-flat-type";
+import { createD1PublicData } from "../../worker/public-data-d1";
 
 type BlockRow = {
   address_key: string;
@@ -85,8 +86,8 @@ async function invoke(
 ): Promise<Response> {
   return handler({
     request: new Request("http://localhost/api"),
-    env: { DB: db },
     params: {},
+    publicData: createD1PublicData(db as D1Database),
   } as never);
 }
 

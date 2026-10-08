@@ -45,7 +45,7 @@ This policy applies to **all review agents** (Claude, Gemini, Kiro, Codex). Plat
 
 - `fetch()` in `src/` or `functions/` targeting external domains (OneMap, data.gov.sg) — critical (those calls belong only in `scripts/sync-data.ts`)
 - Geocoding or MRT distance calculations in `src/` or `functions/` — critical (build-time only)
-- D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
+- D1 schema changes in `migrations/*.sql` without matching updates to `scripts/lib/sync/store.ts`, `functions/_lib/d1.ts`, both public-read implementations (`worker/public-data-d1.ts`, `worker/public-data-neon.ts`) and their parity test, `shared/data-types.ts`, and `scripts/lib/schemas.ts`
 - `scripts/lib/schemas.ts` changed without matching update to the corresponding TypeScript types in `shared/data-types.ts` (or vice versa)
 - `bun.lock`, `yarn.lock`, or `package-lock.json` present — Node 24 + pnpm
 
