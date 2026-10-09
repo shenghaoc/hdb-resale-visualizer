@@ -39,6 +39,11 @@ const exitRow = {
 };
 const ctx = { waitUntil: () => {} } as unknown as ExecutionContext;
 
+/** A stand-in for a Workers Rate Limiting binding that always answers `success`. */
+const limiter = (success: boolean) => ({
+  limit: vi.fn(async (_options: { key: string }) => ({ success })),
+});
+
 /** The shipped `wrangler.jsonc` shape: Neon selected, Hyperdrive bound, spatial release gate off. */
 const deployedEnv = (overrides: Record<string, unknown> = {}) =>
   ({
@@ -53,9 +58,13 @@ const deployedEnv = (overrides: Record<string, unknown> = {}) =>
     NEON_SPATIAL_ENABLED: "false",
     HDB_PUBLIC_NEON: { connectionString: "test" },
     ASSETS: { fetch: async () => new Response("<html></html>") },
+    // Like the shipped wrangler.jsonc, the limiter bindings exist; individual tests replace them.
+    NEARBY_IP_LIMITER: limiter(true),
+    NEARBY_ORIGIN_LIMITER: limiter(true),
     ...overrides,
   }) as unknown as Env;
-const call = (env: Env, path: string) => worker.fetch(new Request(`https://test${path}`), env, ctx);
+const call = (env: Env, path: string, headers?: Record<string, string>) =>
+  worker.fetch(new Request(`https://test${path}`, { headers }), env, ctx);
 const nearbyPath = "/api/nearby-places?lat=1.35&lng=103.75&radius=1500&limit=25&types=mrt_exit";
 
 const inMemoryCache = () => {
@@ -71,22 +80,22 @@ const inMemoryCache = () => {
   return entries;
 };
 
-describe("spatial release gate in the Worker entry", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    spies.query.mockImplementation(async (sql: string) => {
-      if (sql.includes("FROM public.manifest")) return [{ json: manifest }];
-      if (sql === NEARBY_SPATIAL_SQL) return [exitRow];
-      return [];
-    });
-    spies.snapshot.mockImplementation(async (respond: () => Promise<unknown>) => respond());
-    spies.close.mockResolvedValue(undefined);
-    vi.stubGlobal("caches", undefined);
+beforeEach(() => {
+  vi.clearAllMocks();
+  spies.query.mockImplementation(async (sql: string) => {
+    if (sql.includes("FROM public.manifest")) return [{ json: manifest }];
+    if (sql === NEARBY_SPATIAL_SQL) return [exitRow];
+    return [];
   });
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
+  spies.snapshot.mockImplementation(async (respond: () => Promise<unknown>) => respond());
+  spies.close.mockResolvedValue(undefined);
+  vi.stubGlobal("caches", undefined);
+});
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
+describe("spatial release gate in the Worker entry", () => {
   it.each([["false"], [undefined], ["TRUE"], ["1"], [""]])(
     "NEON_SPATIAL_ENABLED=%j answers a no-store 503 before any Neon transport exists",
     async (flag) => {
@@ -207,5 +216,108 @@ describe("spatial release gate in the Worker entry", () => {
     // "available" never means that the spatial migration has been applied.
     expect(spies.factory).not.toHaveBeenCalled();
     expect(spies.query).not.toHaveBeenCalled();
+  });
+});
+
+describe("nearby rate limiting in the Worker entry", () => {
+  const open = { NEON_SPATIAL_ENABLED: "true" };
+  const nearbySqlCalls = () =>
+    spies.query.mock.calls.filter(([sql]) => sql === NEARBY_SPATIAL_SQL).length;
+
+  it("never consults a limiter while the gate is closed", async () => {
+    const ip = limiter(true);
+    const origin = limiter(true);
+    const response = await call(
+      deployedEnv({ NEARBY_IP_LIMITER: ip, NEARBY_ORIGIN_LIMITER: origin }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(ip.limit).not.toHaveBeenCalled();
+    expect(origin.limit).not.toHaveBeenCalled();
+  });
+
+  it("answers 429 with Retry-After before the cache, a transport or the database is touched", async () => {
+    const entries = inMemoryCache();
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_IP_LIMITER: limiter(false) }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(429);
+    expect(response.headers.get("retry-after")).toBe("60");
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Too Many Requests" });
+    expect(spies.factory).not.toHaveBeenCalled();
+    expect(spies.query).not.toHaveBeenCalled();
+    expect(entries.size).toBe(0);
+  });
+
+  it("keys the client limit on the IPv4 address, or on the IPv6 /64 prefix", async () => {
+    const ip = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_IP_LIMITER: ip });
+    await call(env, nearbyPath, { "CF-Connecting-IP": "203.0.113.9" });
+    await call(env, nearbyPath, { "CF-Connecting-IP": "2001:db8:1:2:aaaa:bbbb:cccc:dddd" });
+    await call(env, nearbyPath, { "CF-Connecting-IP": "2001:db8:1:2::1" });
+    expect(ip.limit.mock.calls.map(([options]) => options.key)).toEqual([
+      "203.0.113.9",
+      "v6:2001:0db8:0001:0002",
+      "v6:2001:0db8:0001:0002",
+    ]);
+  });
+
+  it("fails closed with 503 when a limiter binding is missing while the gate is open", async () => {
+    const noClient = await call(deployedEnv({ ...open, NEARBY_IP_LIMITER: undefined }), nearbyPath);
+    expect(noClient.status).toBe(503);
+    expect(await noClient.json()).toEqual({ error: "Nearby search is not configured" });
+    expect(spies.factory).not.toHaveBeenCalled();
+
+    const noOrigin = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: undefined }),
+      nearbyPath,
+    );
+    expect(noOrigin.status).toBe(503);
+    expect(await noOrigin.json()).toEqual({ error: "Nearby search is not configured" });
+    expect(nearbySqlCalls()).toBe(0);
+  });
+
+  it("spends the origin budget on cache misses only, never on hits", async () => {
+    const entries = inMemoryCache();
+    const ip = limiter(true);
+    const origin = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_IP_LIMITER: ip, NEARBY_ORIGIN_LIMITER: origin });
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("MISS");
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("HIT");
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("HIT");
+    expect(ip.limit).toHaveBeenCalledTimes(3);
+    expect(origin.limit).toHaveBeenCalledTimes(1);
+    expect(origin.limit.mock.calls[0][0]).toEqual({ key: "nearby-origin" });
+    expect(nearbySqlCalls()).toBe(1);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(1);
+  });
+
+  it("answers 503 when the origin budget is spent, runs no spatial SQL and caches nothing", async () => {
+    const entries = inMemoryCache();
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: limiter(false) }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(response.headers.get("retry-after")).toBe("60");
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Nearby search is busy, try again shortly" });
+    expect(nearbySqlCalls()).toBe(0);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
+  });
+
+  it("lets a request through when a limiter throws, and says so in the log", async () => {
+    const boom = { limit: vi.fn(async () => Promise.reject(new Error("limiter down"))) };
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_IP_LIMITER: boom, NEARBY_ORIGIN_LIMITER: boom }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(200);
+    expect(nearbySqlCalls()).toBe(1);
+    expect(log).toHaveBeenCalledTimes(2);
+    log.mockRestore();
   });
 });

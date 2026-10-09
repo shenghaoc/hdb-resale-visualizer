@@ -41,6 +41,10 @@ import { createNeonPublicTransport } from "./neon-transport";
 import type { PublicData, PublicRouteHandler } from "../functions/_lib/public-data";
 import { privateJsonResponse } from "../functions/_lib/d1";
 import { isNeonSpatialEnabled } from "../shared/nearby-places";
+import {
+  checkNearbyClientRateLimit,
+  checkNearbyOriginRateLimit,
+} from "../functions/_lib/nearby-rate-limit";
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
 type SpecialRouteId = ShortlistRouteId | "nearby-capabilities";
@@ -218,16 +222,33 @@ export default {
               { error: "Spatial search has not been enabled" },
               { status: 503 },
             );
+          // Per-client limit first: a limited request touches neither the cache nor the database.
+          if (routeId === "nearby-places") {
+            const limited = await checkNearbyClientRateLimit(
+              request,
+              capturedEnv.NEARBY_IP_LIMITER,
+            );
+            if (limited) return limited;
+          }
           const reads = publicReads();
           const publicCache = namespacePublicCache(
             typeof caches !== "undefined" ? caches.default : null,
             reads.namespace,
           );
           const handler = publicApiHandlers[routeId];
-          const handle = () =>
-            withPublicDataCache(request, reads.data, publicCache, () =>
-              handler({ request, params: definedParams(apiMatch.groups), publicData: reads.data }),
-            );
+          // The cache layer calls this only when the answer must come from the database.
+          const dispatch = async () => {
+            if (routeId === "nearby-places") {
+              const busy = await checkNearbyOriginRateLimit(capturedEnv.NEARBY_ORIGIN_LIMITER);
+              if (busy) return busy;
+            }
+            return handler({
+              request,
+              params: definedParams(apiMatch.groups),
+              publicData: reads.data,
+            });
+          };
+          const handle = () => withPublicDataCache(request, reads.data, publicCache, dispatch);
           return await (routeId === "comparable-transactions"
             ? reads.comparableSnapshot(handle)
             : handle());
