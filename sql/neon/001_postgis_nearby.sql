@@ -67,7 +67,8 @@ CREATE INDEX IF NOT EXISTS block_locations_location_gist
   ON public.block_locations USING GIST (location);
 
 CREATE OR REPLACE FUNCTION public.sync_block_location()
-RETURNS TRIGGER LANGUAGE plpgsql AS $function$
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = pg_catalog, pg_temp AS $function$
 BEGIN
   IF TG_OP = 'UPDATE'
     AND NEW.lat IS NOT DISTINCT FROM OLD.lat
@@ -117,7 +118,8 @@ CREATE INDEX IF NOT EXISTS poi_locations_location_gist
 -- the same transaction rather than materialising a false partial snapshot.
 CREATE OR REPLACE FUNCTION public.refresh_mrt_poi_locations(
   p_kind text,p_document jsonb
-) RETURNS void LANGUAGE plpgsql AS $function$
+) RETURNS void LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = pg_catalog, pg_temp AS $function$
 DECLARE resolved_kind text; expected_count integer; inserted_count integer;
 BEGIN
   IF p_kind NOT IN ('stations','exits') THEN
@@ -154,7 +156,8 @@ END
 $function$;
 
 CREATE OR REPLACE FUNCTION public.refresh_mrt_poi_locations_trigger()
-RETURNS TRIGGER LANGUAGE plpgsql AS $function$
+RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = pg_catalog, pg_temp AS $function$
 BEGIN
   IF TG_OP='DELETE' THEN
     PERFORM public.refresh_mrt_poi_locations(OLD.kind,NULL);
@@ -172,6 +175,10 @@ BEGIN
 END
 $function$;
 
+-- Only the trusted migration owner can execute these directly. The publisher
+-- continues to hold DML on the authoritative source tables, not derived POIs.
+-- SECURITY DEFINER allows its row triggers to synchronize derived tables.
+REVOKE EXECUTE ON FUNCTION public.sync_block_location() FROM PUBLIC;
 REVOKE EXECUTE ON FUNCTION public.refresh_mrt_poi_locations(text,jsonb) FROM PUBLIC;
 REVOKE EXECUTE ON FUNCTION public.refresh_mrt_poi_locations_trigger() FROM PUBLIC;
 
