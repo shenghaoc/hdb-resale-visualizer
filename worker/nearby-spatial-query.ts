@@ -1,6 +1,6 @@
 /**
  * Neon-only, parameterized index-aware proximity query. Do not insert coordinates
- * into SQL text. The generated PostGIS geography columns have matching GiST indexes.
+ * into SQL text. The separate derived PostGIS geography tables have matching GiST indexes.
  */
 import { snapNearbyCenter, type NearbyPlace, type NearbyPlacesRequest, type NearbyPlaceKind } from "../shared/nearby-places";
 
@@ -16,10 +16,11 @@ WITH center AS (
   SELECT 'hdb_block'::text AS kind, b.address_key::text AS id,
     COALESCE(NULLIF(b.display_name,''), b.block || ' ' || b.street_name) AS name,
     b.lat, b.lng, b.address_key,
-    ST_Distance(b.location, center.point) AS distance_meters
-  FROM public.blocks AS b CROSS JOIN center
+    ST_Distance(p.location, center.point) AS distance_meters
+  FROM public.block_locations AS p
+  JOIN public.blocks AS b ON b.address_key=p.address_key CROSS JOIN center
   WHERE 'hdb_block' = ANY($4::text[])
-    AND ST_DWithin(b.location, center.point, $3::double precision)
+    AND ST_DWithin(p.location, center.point, $3::double precision)
   UNION ALL
   SELECT p.poi_kind AS kind,
     (p.source || ':' || p.poi_kind || ':' || p.source_id) AS id,
