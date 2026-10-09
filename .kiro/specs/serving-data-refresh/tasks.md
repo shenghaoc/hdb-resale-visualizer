@@ -22,7 +22,12 @@
 - [x] **T0.4** Write requirements, design and tasks.
   -> This directory.
 
-## Phase 1 — Schema-version-aware admission (offline)
+## Phase 1 — Schema-version-aware admission (offline; needed only for in-place publication)
+
+> Under the recommended blue/green design the publisher only ever writes the
+> benchmark branch (schema version 0), so version 1 never needs admitting and an
+> unknown catalog is already refused today. Build this phase if the owner chooses
+> in-place publication on a migrated branch (decision 1).
 
 - [ ] **T1.1** Build schema version 0 (the publisher schema,
   `scripts/neon-benchmark/schema.sql`) in a local database, capture
@@ -43,10 +48,19 @@
 ## Phase 2 — Target registry and approval gate (offline)
 
 - [ ] **T2.1** Add `neon-targets` with the benchmark target and a
-  disposable-fork target that requires an explicit branch id and the benchmark as
-  its parent. The serving endpoint is not in the registry.
-  -> Tests: serving host, unknown host, wrong database, wrong parent, missing TLS
-  verification each refused. (R3.2)
+  disposable-fork target that requires an explicit branch id. The serving and
+  default branches are on a deny list, and the serving endpoint is not in the
+  registry.
+  -> Tests: serving host, unknown host, wrong database, deny-listed branch,
+  missing TLS verification each refused. (R3.2)
+
+- [ ] **T2.1a** Assert the target from the server, not only from the host name:
+  Neon exposes `neon.project_id`, `neon.branch_id` and `neon.endpoint_id` as
+  settings (read on a fork on 2026-10-10), so the publisher can compare them with
+  the registry before the transaction begins.
+  -> A URL whose host looks right but whose branch is not the registered one
+  fails before any statement that reads data. The extra command is added to the
+  command-shape pin. (R3.2)
 
 - [ ] **T2.2** Make apply require `--approve-plan <sha256>`; recompute and refuse
   on mismatch; make `--plan` the default.
