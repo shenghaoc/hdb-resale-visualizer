@@ -40,6 +40,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
+- [**Serving Data Refresh**](.kiro/specs/serving-data-refresh/tasks.md) — Repeatable, reviewed refresh of the serving Neon data: plan hash approval, benchmark-only publisher target, schema-version-aware admission, copy-on-write promotion and rollback.
 
 **Completed:**
 
