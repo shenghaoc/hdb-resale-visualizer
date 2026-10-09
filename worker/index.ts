@@ -16,6 +16,7 @@ import { onRequestGet as detailHandler } from "../functions/api/details/[address
 import { onRequestGet as comparisonHandler } from "../functions/api/comparisons/[addressKey]";
 import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-stations";
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
+import { onRequestGet as nearbyPlacesHandler } from "../functions/api/nearby-places";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
 import { onRequestGet as suggestHandler } from "../functions/api/suggest";
@@ -38,6 +39,8 @@ import { townToFilename } from "../shared/geo";
 import { createPublicReadScope, namespacePublicCache } from "./public-read-backend";
 import { createNeonPublicTransport } from "./neon-transport";
 import type { PublicData, PublicRouteHandler } from "../functions/_lib/public-data";
+import { privateJsonResponse } from "../functions/_lib/d1";
+import { isNeonSpatialEnabled } from "../shared/nearby-places";
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
 
@@ -49,6 +52,7 @@ const publicApiHandlers: Record<Exclude<ApiRouteId, ShortlistRouteId>, PublicRou
   comparisons: comparisonHandler,
   "mrt-stations": mrtStationsHandler,
   "mrt-exits": mrtExitsHandler,
+  "nearby-places": nearbyPlacesHandler,
   "trends-town-flat-type": trendsHandler,
   search: searchHandler,
   suggest: suggestHandler,
@@ -194,6 +198,16 @@ export default {
               >[0],
             );
           }
+          // No Neon connection on previews or in production until a separately
+          // approved spatial migration, publisher verification and rollout.
+          if (
+            routeId === "nearby-places" &&
+            !isNeonSpatialEnabled(capturedEnv.NEON_SPATIAL_ENABLED)
+          )
+            return privateJsonResponse(
+              { error: "Spatial search has not been enabled" },
+              { status: 503 },
+            );
           const reads = publicReads();
           const publicCache = namespacePublicCache(
             typeof caches !== "undefined" ? caches.default : null,

@@ -15,6 +15,7 @@ export type ApiRouteId =
   | "comparisons"
   | "mrt-stations"
   | "mrt-exits"
+  | "nearby-places"
   | "trends-town-flat-type"
   | "search"
   | "suggest"
@@ -37,6 +38,7 @@ export const apiRouteDefinitions: ApiRouteDefinition[] = [
   { id: "comparisons", pattern: new URLPattern({ pathname: "/api/comparisons/:addressKey{/}?" }) },
   { id: "mrt-stations", pattern: new URLPattern({ pathname: "/api/mrt-stations{/}?" }) },
   { id: "mrt-exits", pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }) },
+  { id: "nearby-places", pattern: new URLPattern({ pathname: "/api/nearby-places{/}?" }) },
   {
     id: "trends-town-flat-type",
     pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }),

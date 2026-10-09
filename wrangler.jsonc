@@ -57,6 +57,7 @@
     "PUBLIC_DATA_BACKEND": "neon",
     "D1_PUBLIC_CACHE_EPOCH": "d1-cutover-v1",
     "NEON_PUBLIC_CACHE_EPOCH": "neon-20261007-2",
+    "NEON_SPATIAL_ENABLED": "false",
   },
   "triggers": {
     "crons": ["0 3 * * *"],

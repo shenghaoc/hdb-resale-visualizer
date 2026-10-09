@@ -24,6 +24,7 @@ import { workerCurrentUtcYear } from "../functions/_lib/worker-time";
 import { canonicalFlatType } from "../shared/filter-options";
 import { requiresFlatTypeCohortMetadata } from "../shared/product/flat-type-cohort";
 import { MAX_LEASE_DURATION_YEARS } from "../shared/search-bounds";
+import { queryNearbyPlaces } from "./nearby-spatial-query";
 
 export type PublicReadRow = Record<string, unknown>;
 export type PublicReadQuery = (sql: string, params: readonly unknown[]) => Promise<PublicReadRow[]>;
@@ -229,6 +230,7 @@ export function createNeonPublicData(query: PublicReadQuery): PublicData {
       ]),
     mrtGeoJson: (kind) =>
       json("SELECT json::text AS json FROM public.mrt_geojson WHERE kind = $1", [kind]),
+    nearbyPlaces: (request) => queryNearbyPlaces(query, request),
     townFlatTypeTrends: () =>
       rows<TownFlatTypeTrendRow>(
         `SELECT town, flat_type, month, median_price, median_price_per_sqm, transaction_count FROM public.town_flat_type_trends ${TREND_ORDER}`,
