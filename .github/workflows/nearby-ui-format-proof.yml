@@ -1,0 +1,22 @@
+name: Nearby UI formatter proof (temporary)
+on:
+  push:
+    branches: ["feat/postgis-nearby-web-ui"]
+permissions:
+  contents: read
+jobs:
+  formatted-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: voidzero-dev/setup-vp@v1.21.1
+      - run: vp install
+      - name: Capture canonical nearby UI files for review
+        shell: bash
+        run: |
+          vp fmt src/features/block-detail/NearbyMrtExits.tsx src/features/block-detail/nearbyMrtExitsApi.ts tests/unit/NearbyMrtExits.test.tsx
+          for f in src/features/block-detail/NearbyMrtExits.tsx src/features/block-detail/nearbyMrtExitsApi.ts tests/unit/NearbyMrtExits.test.tsx; do
+            printf 'NEARBYFMT_BEGIN:%s\n' "$f"
+            base64 -w 0 "$f"
+            printf '\nNEARBYFMT_END:%s\n' "$f"
+          done
