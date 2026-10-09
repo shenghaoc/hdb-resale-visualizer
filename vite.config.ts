@@ -44,6 +44,9 @@ export default defineConfig({
       "docs/archive",
       "public/data",
       "tests/e2e/**",
+      // Imports the Neon pilot's git-ignored private scratch state, which a checkout does not have, so the
+      // type-aware rules cannot resolve it (see NEEDS_PRIVATE_PILOT_STATE in vitest.config.ts).
+      "tests/unit/neon-pilot-entrypoint.test.ts",
     ],
     overrides: [
       {
