@@ -1,0 +1,92 @@
+/** Runtime extension of the frozen public GET compiler; only known handler SELECTs. */
+import { MAX_COMPARABLES } from "../shared/comparable-engine";
+import {
+  compilePublicRead,
+  type PublicReadQuery,
+  type PublicReadRow,
+} from "./neon-public-read-sql";
+
+const SCOPES = [
+  "town = ?1 AND block = ?2 AND flat_type = ?3",
+  "street_name = ?1 AND flat_type = ?2",
+  "town = ?1 AND flat_type = ?2",
+] as const;
+const TRANSACTION_COLUMNS =
+  "id, month, town, block, street_name, address_key, flat_type, storey_range, floor_area_sqm, lease_commence_year, resale_price, flat_model";
+
+export function compileRuntimeRead(sql: string, bindings: readonly unknown[] = []) {
+  const source = sql.trim().replace(/\s+/g, " ");
+  const exact = (nativeSql: string, count: number) => {
+    if (bindings.length !== count) throw new Error("Unexpected runtime-read binding count");
+    return { sql: nativeSql, params: [...bindings] };
+  };
+  for (const scope of SCOPES) {
+    const count = scope.includes("block =") ? 3 : 2;
+    const nativeScope = scope.replace(/\?(\d+)/g, "$$$1");
+    if (source === `SELECT COUNT(*) AS cnt FROM transactions WHERE ${scope}`)
+      return exact(
+        `SELECT COUNT(*)::integer AS cnt FROM public.transactions WHERE ${nativeScope}`,
+        count,
+      );
+    if (source === `SELECT * FROM transactions WHERE ${scope} ORDER BY month DESC LIMIT 150`)
+      // SQLite's matching month-DESC indexes visit equal months in integer rowid order.
+      // Keep that deterministic order, including legitimate duplicate source occurrences.
+      return exact(
+        `SELECT ${TRANSACTION_COLUMNS} FROM public.transactions WHERE ${nativeScope} ORDER BY month DESC, id ASC LIMIT 150`,
+        count,
+      );
+  }
+  const trendPrefix =
+    "SELECT town, flat_type, month, median_price_per_sqm, transaction_count FROM town_flat_type_trends WHERE (town, flat_type) IN ";
+  if (source.startsWith(trendPrefix)) {
+    const pairs = bindings.length / 2;
+    if (!Number.isInteger(pairs) || pairs < 1 || pairs > MAX_COMPARABLES)
+      throw new Error("Unexpected comparable trend pair count");
+    const expected = Array.from({ length: pairs }, (_, i) => `(?${i * 2 + 1},?${i * 2 + 2})`);
+    if (source !== `${trendPrefix}(${expected.join(", ")})`)
+      throw new Error("SQL outside the comparable trend allowlist");
+    const native = Array.from({ length: pairs }, (_, i) => `($${i * 2 + 1},$${i * 2 + 2})`);
+    // Full matching history is required by the unchanged time-adjustment engine.
+    return exact(
+      `SELECT town, flat_type, month, median_price_per_sqm, transaction_count FROM public.town_flat_type_trends WHERE (town, flat_type) IN (${native.join(", ")}) ORDER BY town COLLATE "C", flat_type COLLATE "C", month COLLATE "C"`,
+      bindings.length,
+    );
+  }
+  if (
+    source ===
+    "SELECT address_key,town,display_name,median_price,transaction_count,available_min_month,available_max_month,floor_area_min,floor_area_max FROM blocks WHERE address_key = ?1"
+  )
+    return exact(source.replace("FROM blocks", "FROM public.blocks").replace("?1", "$1"), 1);
+  if (source === "SELECT address_key, town FROM blocks LIMIT ?1 OFFSET ?2")
+    return exact(
+      'SELECT address_key, town FROM public.blocks ORDER BY address_key COLLATE "C" LIMIT $1 OFFSET $2',
+      2,
+    );
+  if (source === "SELECT town, median_price, transaction_count FROM blocks WHERE town IN (?, ?)")
+    return exact(
+      "SELECT town, median_price, transaction_count FROM public.blocks WHERE town IN ($1, $2)",
+      2,
+    );
+  if (source === "SELECT * FROM blocks WHERE address_key = ?") {
+    const projection = compilePublicRead(
+      "SELECT * FROM blocks ORDER BY median_price DESC, transaction_count DESC",
+    ).sql.replace("ORDER BY median_price DESC, transaction_count DESC", "WHERE address_key = $1");
+    return exact(projection, 1);
+  }
+  return compilePublicRead(sql, bindings);
+}
+
+export function createNeonReadDb(query: PublicReadQuery) {
+  const statement = (sql: string, bindings: readonly unknown[] = []) => {
+    const rows = async () => {
+      const compiled = compileRuntimeRead(sql, bindings);
+      return query(compiled.sql, compiled.params);
+    };
+    return {
+      bind: (...params: unknown[]) => statement(sql, params),
+      all: async <T = PublicReadRow>() => ({ results: (await rows()) as T[] }),
+      first: async <T = PublicReadRow>() => ((await rows())[0] as T | undefined) ?? null,
+    };
+  };
+  return { prepare: (sql: string) => statement(sql) };
+}

@@ -1,0 +1,33 @@
+diff --git a/README.md b/README.md
+index 3e01b3198..9e4a96fff 100644
+--- a/README.md
++++ b/README.md
+@@ -93,7 +93,9 @@ vp run dev:functions        # builds, then runs `wrangler dev` against local D1
+ 
+ You can seed the local D1 from `tests/fixtures/public-data/` using `wrangler d1 execute hdb-resale --local --file=<sql>` if needed.
+ 
+-Run `vp run sync-data` to refresh live data from data.gov.sg and OneMap into **remote** D1 (requires Cloudflare credentials — normally only CI runs this).
++Production refresh remains frozen. `vp run sync-data --plan` reports upstream hints only; `vp run sync-data --plan --reconcile-manual` explicitly requests a read-only transaction preflight. The adopted [monthly/manual policy](docs/neon-monthly-refresh-policy.md) does not enable a schedule or switch the backend.
++
++The [isolated Neon manual publisher](docs/neon-manual-publication-2026-10-04.md) is prepared locally as `vp run sync-data:neon`. It targets only the benchmark branch, requires a fresh authoritative provider usage receipt with explicit uncertainty, and leaves the D1 runtime in place. Its workflow has `workflow_dispatch` only; it has not been published or dispatched. The [reconciliation decision](docs/neon-reconciliation-proposal-2026-10-04.md) records approval of five unresolved retentions and the exact snapshot-pinned 2,595 catch-up, with the routine guard unchanged. Remote retry is blocked: mandatory transaction and block-price mutations alone forecast 25,659, above the unchanged 25,000 guard. Proposed reviews are rejected before network activity; approved reviews still require private source captures, exact pins and all publication/resource guards.
+ 
+ ## Scripts
+ 
+@@ -118,7 +120,7 @@ vp run test:browser:watch  # Browser Mode in watch mode (opens Chromium)
+ vp run test:e2e
+ vp run check               # full quality gate: format check + lint + typecheck + unit tests + build
+ vp run check:pr            # pre-PR gate: everything in `check` plus the Playwright E2E suite
+-vp run sync-data           # remote D1 sync (requires CF credentials)
++vp run sync-data --plan    # read-only hint observation (requires CF credentials)
+ vp run db:migrate:local
+ vp run db:migrate:remote
+ ```
+@@ -187,7 +189,7 @@ CLOUDFLARE_D1_DATABASE_ID=...
+ 
+ - **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `vp run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
+ - **CI** (`.github/workflows/ci.yml`): `vp install` then `vp run check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
+-- **Data refresh**: disabled. The nightly `refresh-data.yml` workflow was removed because data.gov.sg rate-limited the sync and Cloudflare has announced strict D1 rate enforcement. The dataset in D1 is frozen at its last successful sync; `vp run sync-data` can still be run manually against remote D1 if a one-off refresh is ever needed.
++- **Data refresh**: disabled. The nightly `refresh-data.yml` workflow remains removed, and remote apply is blocked in both the coordinator and publisher. The adopted policy is one explicit reconciliation per UTC calendar month plus budgeted manual runs; upstream hints are observability only. The inactive [workflow proposal](docs/proposals/refresh-data-monthly.yml) sits outside `.github/workflows` and currently supports read-only D1 preflight, with no publication or app deployment.
+ 
+ ## Notes
+ 

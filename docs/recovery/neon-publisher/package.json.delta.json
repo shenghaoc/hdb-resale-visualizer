@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "sync-data:neon": "tsx scripts/sync-neon.ts"
+  },
+  "dependencies": {
+    "@neon/config": "^1.8.3",
+    "@neon/env": "^1.5.0"
+  },
+  "devDependencies": {
+    "@neondatabase/serverless": "^1.2.0",
+    "@types/pg": "^8.23.1",
+    "@types/pg-copy-streams": "^1.2.5",
+    "pg": "^8.23.1",
+    "pg-copy-streams": "^7.0.0"
+  },
+  "NOT_CARRIED": {
+    "packageManager": "pnpm@12.9.1",
+    "reason": "pnpm 12 upgrade is deliberately held; its two-document lockfile blinds GitHub's dependency graph"
+  }
+}

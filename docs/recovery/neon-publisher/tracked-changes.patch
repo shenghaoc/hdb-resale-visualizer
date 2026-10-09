@@ -1,0 +1,2146 @@
+diff --git a/.kiro/steering/pipeline.md b/.kiro/steering/pipeline.md
+index 8b2989542..5f7ed6e89 100644
+--- a/.kiro/steering/pipeline.md
++++ b/.kiro/steering/pipeline.md
+@@ -4,21 +4,21 @@
+ The application separates **build-time ingestion** (Node + GitHub Actions) from **runtime serving** (Cloudflare Pages Functions + D1):
+ - **Frontend**: React 19 SPA. Only talks to `/api/*` (same-origin Pages Functions).
+ - **Runtime API**: `functions/api/*` Pages Functions, backed by the `DB` D1 binding.
+-- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required.
++- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The candidate script now permits read-only upstream/preflight probes; remote apply is blocked pending exact quota and isolated atomicity evidence. Local SQLite rehearsal does not authorize a production refresh. See `docs/d1-free-sustainability.md`.
+ 
+ ## Data Pipeline Flow (`scripts/sync-data.ts`)
+ 1. **Ingestion**: Fetches raw data from official Singapore sources (data.gov.sg, LTA).
+ 2. **Normalization**: Sanitizes addresses, derives price/sqm + price/sqft, standardizes lease commencement years.
+-3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are upserted back to D1 in batches of 250.
++3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are staged for the validated local publication; no cache write precedes preflight.
+ 4. **MRT walking times (one-time)**: Same pattern with the `walking_time_cache` table.
+ 5. **Artifact build**: `buildArtifacts()` produces the same logical shapes as before (block summaries, address details, comparisons, town × flat-type trends, MRT GeoJSON) — but they are now written to D1, not files.
+-6. **D1 write**: `scripts/lib/sync/store.ts` truncates and reinserts the generated tables in batched `INSERT OR REPLACE … VALUES (…),(…),…` statements via the D1 HTTP API.
++6. **D1 write**: `scripts/lib/sync/store.ts` compares source multisets and generated values, retains integer transaction rowids, and stages changed-only indexed writes plus manifest last in one guarded local batch. Missing/corrected facts require explicit reconciliation. Remote REST atomicity/billing remains unproven; production apply and schedule remain disabled.
+ 
+ ## D1 Tables
+-**Generated (rebuilt every sync):**
++**Generated (only changed values published after validation):**
+ - `manifest` — single-row metadata blob.
+ - `blocks` — normalized columns + JSON blobs for `flat_types`, `nearby_mrts`, etc.
+-- `block_details` — one JSON blob per address key (full transaction history + monthly trend).
++- `block_details` — one JSON blob per address key (capped recent transactions + full monthly trend).
+ - `comparisons` — one JSON blob per address key (amenity counts + percentile ranks).
+ - `town_flat_type_trends` — normalized trend points.
+ - `mrt_geojson` — two rows (`stations`, `exits`).
+@@ -42,7 +42,7 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from
+ | `GET /api/mrt-stations` | `mrt_geojson` | GeoJSON FeatureCollection. |
+ | `GET /api/mrt-exits` | `mrt_geojson` | GeoJSON FeatureCollection. |
+ 
+-All endpoints return JSON shapes validated by the Zod schemas in `src/lib/dataSchemas.ts` — that contract is intentionally unchanged from the previous static-artifact era so frontend code paths stay identical.
++All endpoints return JSON shapes validated by the Zod schemas in `src/shared/lib/dataSchemas.ts` — that contract is intentionally unchanged from the previous static-artifact era so frontend code paths stay identical.
+ 
+ ## Frontend Responsibilities
+ - **Mapping**: Consumes `/api/block-summaries` and `/api/mrt-exits` via MapLibre GL JS.
+diff --git a/docs/guide/user-guide.md b/docs/guide/user-guide.md
+index b949c9a38..90122bc00 100644
+--- a/docs/guide/user-guide.md
++++ b/docs/guide/user-guide.md
+@@ -253,3 +253,7 @@ The profile never acts as a second hidden visibility filter, and personal financ
+ - No account is required. Your filters, theme preference, buyer profile, and shortlist are stored in your browser's local storage.
+ - Cloud sync (optional) uses an anonymous code — no account, email, or password. It uploads the saved board, including any notes you entered, so treat the code like a private link. Local buyer-profile finance inputs are not synced.
+ - The app works offline as a Progressive Web App (PWA) after the first load.
++
++### Refresh status
++
++The production dataset remains at its last successful refresh while D1 Free safety work is validated. A prepared implementation uses public response caching and a bounded incremental sync rehearsal; it is not deployed or scheduled yet. Historical evidence remains historical, and freshness labels continue to identify the published source version. See [refresh evidence and remaining validation](../d1-free-sustainability.md).
+diff --git a/functions/_lib/d1.ts b/functions/_lib/d1.ts
+index 276d48f77..6ae8c9153 100644
+--- a/functions/_lib/d1.ts
++++ b/functions/_lib/d1.ts
+@@ -5,8 +5,6 @@
+  * dependency-free (no Node imports) so it runs in the Workers runtime.
+  */
+ 
+-import type { BlockFlatTypeCohort, NearestMrt } from "../../shared/data-types";
+-
+ type JsonValue = unknown;
+ 
+ const CACHE_HEADERS = {
+@@ -136,81 +134,7 @@ export async function readBodyWithLimit(
+  * Keys, ordering, and null/undefined choices match the original artifact
+  * JSON contract enforced by `blockSummarySchema` in `src/lib/dataSchemas.ts`.
+  */
+-type BlockRow = {
+-  address_key: string;
+-  town: string;
+-  block: string;
+-  street_name: string;
+-  display_name: string | null;
+-  lat: number;
+-  lng: number;
+-  median_price: number;
+-  price_per_sqm_median: number;
+-  transaction_count: number;
+-  floor_area_min: number;
+-  floor_area_max: number;
+-  lease_commence_year: number;
+-  latest_month: string;
+-  available_min_month: string;
+-  available_max_month: string;
+-  flat_types_json: string;
+-  flat_models_json: string;
+-  median_price_by_flat_type_json: string | null;
+-  median_price_per_sqm_by_flat_type_json: string | null;
+-  flat_type_cohorts_json?: string | null;
+-  nearest_mrt_json: string | null;
+-  nearby_mrts_json: string | null;
+-  postal_code: string | null;
+-};
+-
+-function parseJsonOr<T>(value: string | null, fallback: T): T {
+-  if (value === null || value === "") return fallback;
+-  try {
+-    return JSON.parse(value) as T;
+-  } catch {
+-    console.error(
+-      `parseJsonOr: failed to parse JSON, using fallback — ${typeof value === "string" ? value.slice(0, 200) : typeof value}`,
+-    );
+-    return fallback;
+-  }
+-}
+-
+-export function rowToBlockSummary(row: BlockRow) {
+-  return {
+-    addressKey: row.address_key,
+-    town: row.town,
+-    block: row.block,
+-    streetName: row.street_name,
+-    displayName: row.display_name,
+-    coordinates: { lat: row.lat, lng: row.lng },
+-    medianPrice: row.median_price,
+-    pricePerSqmMedian: row.price_per_sqm_median,
+-    transactionCount: row.transaction_count,
+-    floorAreaRange: [row.floor_area_min, row.floor_area_max],
+-    leaseCommenceRange: [row.lease_commence_year, row.lease_commence_year],
+-    latestMonth: row.latest_month,
+-    availableDateRange: [row.available_min_month, row.available_max_month],
+-    flatTypes: parseJsonOr<string[]>(row.flat_types_json, []),
+-    flatModels: parseJsonOr<string[]>(row.flat_models_json, []),
+-    medianPriceByFlatType: parseJsonOr<Record<string, number> | undefined>(
+-      row.median_price_by_flat_type_json,
+-      undefined,
+-    ),
+-    medianPricePerSqmByFlatType: parseJsonOr<Record<string, number> | undefined>(
+-      row.median_price_per_sqm_by_flat_type_json,
+-      undefined,
+-    ),
+-    flatTypeCohorts: parseJsonOr<Record<string, BlockFlatTypeCohort> | undefined>(
+-      row.flat_type_cohorts_json ?? null,
+-      undefined,
+-    ),
+-    nearestMrt: parseJsonOr<NearestMrt | null>(row.nearest_mrt_json, null),
+-    nearbyMrts: parseJsonOr<NearestMrt[]>(row.nearby_mrts_json, []),
+-    postalCode: row.postal_code,
+-  };
+-}
+-
+-export { type BlockRow };
++export { rowToBlockSummary, type BlockRow } from "../../shared/d1-block-row";
+ 
+ /** All columns required by `rowToBlockSummary`, including optional cohort JSON added by migrations. */
+ export const BLOCK_SUMMARY_SELECT_SQL = "blocks.*";
+diff --git a/scripts/lib/pipeline.ts b/scripts/lib/pipeline.ts
+index 25f5c4f48..829daa174 100644
+--- a/scripts/lib/pipeline.ts
++++ b/scripts/lib/pipeline.ts
+@@ -1,3 +1,5 @@
++import { createHash } from "node:crypto";
++import type { TransactionDelta } from "./sync/incremental";
+ import type {
+   AddressDetail,
+   AddressDetailSummary,
+@@ -97,6 +99,8 @@ export type BuildArtifactsInput = {
+    */
+   walkingTimes?: Map<string, number>;
+   metadata: Manifest["sources"];
++  sourceVersionHints?: Record<string, string>;
++  incremental?: { previous: GeneratedArtifacts; delta: TransactionDelta };
+ };
+ 
+ export type SchoolLocation = {
+@@ -113,6 +117,13 @@ export type AmenityLocation = {
+ };
+ 
+ export type GeneratedArtifacts = {
++  computation?: {
++    blocks: number;
++    trendGroups: number;
++    comparisonBlocks: number;
++    contextChanged: boolean;
++    thresholdChanged: boolean;
++  };
+   manifest: Manifest;
+   blockSummaries: BlockSummary[];
+   blocksByTown: Record<string, BlockSummary[]>;
+@@ -562,6 +573,89 @@ export function buildMrtStationsGeoJson(mrtExits: MrtExit[]): MrtStationFeatureC
+   };
+ }
+ 
++export function toTransactionRow(tx: ResaleTransaction): TransactionRow | null {
++  if (parseStoreyMidpoint(tx.storeyRange) == null) return null;
++  return {
++    month: tx.month,
++    town: tx.town,
++    block: tx.block,
++    street_name: tx.streetName,
++    address_key: tx.addressKey,
++    flat_type: canonicalFlatType(tx.flatType),
++    storey_range: tx.storeyRange,
++    floor_area_sqm: tx.floorAreaSqm,
++    lease_commence_year: tx.leaseCommenceDate || null,
++    resale_price: tx.resalePrice,
++    flat_model: tx.flatModel,
++  };
++}
++
++function stableContextDigest(context: unknown): string {
++  const canonical = (value: unknown): unknown => {
++    if (Array.isArray(value))
++      return value
++        .map(canonical)
++        .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
++    if (value && typeof value === "object")
++      return Object.fromEntries(
++        Object.entries(value)
++          .sort(([a], [b]) => a.localeCompare(b))
++          .map(([key, entry]) => [key, canonical(entry)]),
++      );
++    return value ?? null;
++  };
++  return createHash("sha256")
++    .update(JSON.stringify(canonical(context)))
++    .digest("hex");
++}
++
++function detailLeasePresentationMatches(
++  detail: AddressDetail,
++  source: ResaleTransaction[],
++): boolean {
++  const key = (row: {
++    month: string;
++    flatType: string;
++    storeyRange: string;
++    floorAreaSqm: number;
++    leaseCommenceDate: number;
++    resalePrice: number;
++    flatModel: string;
++    remainingLease: string;
++  }) =>
++    JSON.stringify([
++      row.month,
++      row.flatType,
++      row.storeyRange,
++      row.floorAreaSqm,
++      row.leaseCommenceDate,
++      row.resalePrice,
++      row.flatModel,
++      row.remainingLease,
++    ]);
++  const available = new Map<string, number>();
++  for (const row of source) {
++    const tuple = key(row);
++    available.set(tuple, (available.get(tuple) ?? 0) + 1);
++  }
++  for (const row of detail.recentTransactions) {
++    const tuple = key(row);
++    const count = available.get(tuple) ?? 0;
++    if (!count) return false;
++    available.set(tuple, count - 1);
++  }
++  return true;
++}
++
++/** Facts excluded by the existing comparable-storey parser still affect public aggregates. */
++export function excludedTransactionDigest(transactions: ResaleTransaction[]): string {
++  const facts = transactions
++    .filter((row) => !toTransactionRow(row))
++    .map(({ id: _id, ...row }) => JSON.stringify(row))
++    .sort();
++  return stableContextDigest(facts);
++}
++
+ export function buildArtifacts({
+   transactions,
+   propertyInfo,
+@@ -573,6 +667,8 @@ export function buildArtifacts({
+   parks,
+   walkingTimes,
+   metadata,
++  sourceVersionHints,
++  incremental,
+ }: BuildArtifactsInput): GeneratedArtifacts {
+   const runTimestamp = new Date().toISOString();
+   const grouped = new Map<string, ResaleTransaction[]>();
+@@ -607,6 +703,47 @@ export function buildArtifacts({
+     throw new Error(`Missing validated month index for "${maxMonth}"`);
+   }
+   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
++  const contextDigest = stableContextDigest({
++    propertyInfo,
++    mrtExits,
++    geocodes,
++    schools,
++    hawkers,
++    supermarkets,
++    parks,
++    walkingTimes: [...(walkingTimes ?? [])],
++    leaseYear: new Date().getUTCFullYear(),
++  });
++  const excludedSourceDigest = excludedTransactionDigest(transactions);
++  const priorState = incremental?.previous.manifest.syncBuildState;
++  const excludedChanged = priorState?.excludedSourceDigest !== excludedSourceDigest;
++  const contextChanged =
++    !priorState || priorState.algorithmVersion !== 1 || priorState.contextDigest !== contextDigest;
++  const thresholdChanged = priorState?.recentThreshold !== recentThreshold;
++  const fullBlocks = contextChanged || thresholdChanged || excludedChanged;
++  const fullComparisons =
++    fullBlocks || incremental?.previous.manifest.dataWindow.maxMonth !== maxMonth;
++  const previousBlocks = new Map(
++    incremental?.previous.blockSummaries.map((block) => [block.addressKey, block]) ?? [],
++  );
++  const previousTrends = new Map(
++    incremental?.previous.townFlatTypeTrend.map((point) => [
++      JSON.stringify([point.town, point.flatType, point.month]),
++      point,
++    ]) ?? [],
++  );
++  const comparisonCohorts = new Set(incremental?.delta.affectedTownTypes ?? []);
++  for (const address of incremental?.delta.affectedBlocks ?? []) {
++    const old = incremental?.previous.comparisons?.[address];
++    if (old) comparisonCohorts.add(JSON.stringify([old.town, old.flatType]));
++  }
++  const computation = {
++    blocks: 0,
++    trendGroups: 0,
++    comparisonBlocks: 0,
++    contextChanged,
++    thresholdChanged,
++  };
+   const blockSummaries: BlockSummary[] = [];
+   const details: Record<string, AddressDetail> = {};
+   const townFlatTypeGroups = new Map<string, ResaleTransaction[]>();
+@@ -622,30 +759,26 @@ export function buildArtifacts({
+   // Collect full transaction rows for the comparable engine v2 (all rows,
+   // not capped). Rows with unparseable storey ranges are filtered out here;
+   // storey_midpoint and price_per_sqm are derived at read time in the API.
+-  const allTransactions: TransactionRow[] = [];
++  const allTransactions = transactions.flatMap((tx) => {
++    const row = toTransactionRow(tx);
++    return row ? [row] : [];
++  });
+ 
+   for (const [addressKey, blockTransactions] of grouped.entries()) {
+-    const sortedTransactions = sortTransactionsByLatest(blockTransactions);
+-
+-    // Map ALL sorted transactions (before the 20-row cap) to D1 rows.
+-    // storey_midpoint and price_per_sqm are derived at read time in the API.
+-    for (const tx of sortedTransactions) {
+-      if (parseStoreyMidpoint(tx.storeyRange) == null) continue; // skip unparseable storey ranges
+-      allTransactions.push({
+-        month: tx.month,
+-        town: tx.town,
+-        block: tx.block,
+-        street_name: tx.streetName,
+-        address_key: tx.addressKey,
+-        flat_type: canonicalFlatType(tx.flatType),
+-        storey_range: tx.storeyRange,
+-        floor_area_sqm: tx.floorAreaSqm,
+-        lease_commence_year: tx.leaseCommenceDate || null,
+-        resale_price: tx.resalePrice,
+-        flat_model: tx.flatModel,
+-      });
++    const previous = previousBlocks.get(addressKey);
++    if (
++      !fullBlocks &&
++      !incremental?.delta.affectedBlocks.has(addressKey) &&
++      previous &&
++      incremental?.previous.details[addressKey] &&
++      detailLeasePresentationMatches(incremental.previous.details[addressKey], blockTransactions)
++    ) {
++      blockSummaries.push(previous);
++      details[addressKey] = incremental.previous.details[addressKey];
++      continue;
+     }
+-
++    computation.blocks++;
++    const sortedTransactions = sortTransactionsByLatest(blockTransactions);
+     const summaryWindow = sortedTransactions.filter(
+       (transaction) => transaction.month >= recentThreshold,
+     );
+@@ -823,6 +956,15 @@ export function buildArtifacts({
+   const townFlatTypeTrend: TownFlatTypeTrendPoint[] = [...townFlatTypeGroups.entries()]
+     .map(([groupKey, groupTransactions]) => {
+       const [town, flatType, month] = groupKey.split("__");
++      const prior = previousTrends.get(JSON.stringify([town, flatType, month]));
++      if (
++        incremental &&
++        !excludedChanged &&
++        !incremental.delta.affectedTownTypes.has(JSON.stringify([town, flatType])) &&
++        prior
++      )
++        return prior;
++      computation.trendGroups++;
+       return {
+         town,
+         flatType,
+@@ -867,7 +1009,9 @@ export function buildArtifacts({
+   const filterOptions = buildFilterOptions(blockSummaries);
+ 
+   // Generate comparison artifacts if amenity data is available
+-  const comparisons: Record<string, ComparisonArtifact> = {};
++  const comparisons: Record<string, ComparisonArtifact> = fullComparisons
++    ? {}
++    : { ...incremental?.previous.comparisons };
+   const schoolsData: SchoolLocation[] = schools ?? [];
+   const hawkersData: AmenityLocation[] = hawkers ?? [];
+   const supermarketsData: AmenityLocation[] = supermarkets ?? [];
+@@ -882,6 +1026,15 @@ export function buildArtifacts({
+     const blockMetrics: ComparisonBlockMetric[] = [];
+ 
+     for (const [addressKey, blockTransactions] of grouped.entries()) {
++      // The newest cohort is determined without sorting untouched histories.
++      const newest = blockTransactions.reduce((best, row) =>
++        row.month > best.month || (row.month === best.month && row.flatType < best.flatType)
++          ? row
++          : best,
++      );
++      const cohortKey = JSON.stringify([newest.town, newest.flatType]);
++      if (!fullComparisons && !comparisonCohorts.has(cohortKey)) continue;
++      computation.comparisonBlocks++;
+       const sortedTransactions = sortTransactionsByLatest(blockTransactions);
+       const cohort = sortedTransactions[0];
+       if (!cohort) {
+@@ -1005,6 +1158,14 @@ export function buildArtifacts({
+ 
+   const manifest: Manifest = {
+     schemaVersion: "2.0.0",
++    syncBuildState: {
++      contextDigest,
++      excludedSourceDigest,
++      recentThreshold,
++      algorithmVersion: 1,
++      sourceVersionHints,
++      reconciledAt: runTimestamp,
++    },
+     generatedAt: runTimestamp,
+     dataWindow: {
+       minMonth: sortedMonths[0],
+@@ -1022,6 +1183,7 @@ export function buildArtifacts({
+   };
+ 
+   return {
++    computation,
+     manifest,
+     blockSummaries,
+     blocksByTown,
+diff --git a/scripts/lib/schemas.ts b/scripts/lib/schemas.ts
+index 76ce2f3bf..6978988e6 100644
+--- a/scripts/lib/schemas.ts
++++ b/scripts/lib/schemas.ts
+@@ -150,3 +150,27 @@ export const transactionRowSchema = z.object({
+ });
+ 
+ export type TransactionRow = z.infer<typeof transactionRowSchema>;
++
++/** Build-state provenance inside the existing manifest JSON; no D1 table/schema migration. */
++export const syncBuildStateSchema = z.object({
++  contextDigest: z.string().regex(/^[a-f0-9]{64}$/),
++  excludedSourceDigest: z
++    .string()
++    .regex(/^[a-f0-9]{64}$/)
++    .optional(),
++  recentThreshold: yearMonthSchema,
++  algorithmVersion: z.literal(1),
++  sourceVersionHints: z.record(z.string(), z.string()).optional(),
++  reconciledAt: z.string().optional(),
++});
++
++export const datasetMetadataSchema = z.object({
++  code: z.number().int(),
++  errorMsg: z.string().optional(),
++  data: z.object({
++    datasetId: z.string().min(1),
++    lastUpdatedAt: z
++      .string()
++      .refine((value) => Number.isFinite(Date.parse(value)), "Invalid source timestamp"),
++  }),
++});
+diff --git a/scripts/lib/sync/d1.ts b/scripts/lib/sync/d1.ts
+index aa3c8c424..2dca0d2a3 100644
+--- a/scripts/lib/sync/d1.ts
++++ b/scripts/lib/sync/d1.ts
+@@ -8,12 +8,12 @@
+  *   POST /accounts/{account_id}/d1/database/{database_id}/query
+  *   POST /accounts/{account_id}/d1/database/{database_id}/raw
+  *
+- * The `/query` endpoint accepts either a single `{ sql, params }` object or a
+- * batch wrapper `{ batch: [{ sql, params }, ...] }`. Each statement has a
+- * 100KB body cap, so we issue batched `INSERT ... VALUES (?,?),(?,?),...`
+- * multi-row inserts in chunks.
++ * The current batch wrapper is exercised by the isolated local adapter only.
++ * Remote apply remains disabled until the REST envelope, atomicity and execution
++ * bounds are established with exact D1 metadata. JSON parameters keep SQL and
++ * parameter counts small without rewriting unchanged historical payloads.
+  */
+-import { fetchWithRetry } from "./fetchers";
++import { MAX_ATOMIC_BYTES, MAX_ATOMIC_STATEMENTS } from "./statements";
+ 
+ export type D1Config = {
+   accountId: string;
+@@ -23,7 +23,7 @@ export type D1Config = {
+   endpoint?: string;
+ };
+ 
+-type D1Statement = { sql: string; params?: unknown[] };
++export type D1Statement = { sql: string; params?: unknown[] };
+ 
+ type D1QueryBody = D1Statement | { batch: D1Statement[] };
+ 
+@@ -56,9 +56,67 @@ function buildQueryUrl(config: D1Config): string {
+   return `${base}/client/v4/accounts/${config.accountId}/d1/database/${config.databaseId}/query`;
+ }
+ 
++export type D1UsageRecord = {
++  phase: string;
++  table: string;
++  operation: string;
++  rowsRead: number | null;
++  rowsWritten: number | null;
++  durationMs: number | null;
++  changes: number | null;
++  success: boolean;
++};
++
+ export class D1Client {
++  private staging = false;
++  private staged: D1Statement[] = [];
++  private usageIncomplete = false;
++  private phase = "unclassified";
++  readonly usage: D1UsageRecord[] = [];
++
+   constructor(private readonly config: D1Config) {}
+ 
++  beginWriteStaging(): void {
++    this.staging = true;
++  }
++  stagedWrites(): D1Statement[] {
++    return this.staged.slice();
++  }
++  async publishStagedBatch(statements: D1Statement[]): Promise<void> {
++    this.staging = false;
++    try {
++      await this.query(statements);
++      this.staged = [];
++    } finally {
++      this.staging = true;
++    }
++  }
++
++  setPhase(phase: string): void {
++    this.phase = phase;
++  }
++
++  get isLocalRehearsal(): boolean {
++    if (!this.config.endpoint) return false;
++    const url = new URL(this.config.endpoint);
++    return url.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
++  }
++
++  usageReport() {
++    const sum = (key: "rowsRead" | "rowsWritten" | "durationMs") =>
++      this.usageIncomplete || this.usage.some((record) => record[key] === null)
++        ? null
++        : this.usage.reduce((total, record) => total + (record[key] ?? 0), 0);
++    return {
++      provenance: this.isLocalRehearsal ? "local-emulator" : "remote-d1-http",
++      statements: this.usage.length,
++      rowsRead: sum("rowsRead"),
++      rowsWritten: sum("rowsWritten"),
++      durationMs: sum("durationMs"),
++      records: this.usage,
++    };
++  }
++
+   /**
+    * Run one or more parametric statements. Returns the typed rows from the
+    * last statement's `results` array (mirroring `wrangler d1 execute`).
+@@ -66,7 +124,45 @@ export class D1Client {
+   async query<TRow = Record<string, unknown>>(
+     statement: D1Statement | D1Statement[],
+   ): Promise<TRow[]> {
+-    const response = await fetchWithRetry(buildQueryUrl(this.config), {
++    const queries = Array.isArray(statement) ? statement : [statement];
++    if (
++      this.staging &&
++      queries.some((query) => /^(?:INSERT|UPDATE|DELETE|REPLACE)\b/i.test(query.sql.trim()))
++    ) {
++      if (queries.some((query) => !/^(?:INSERT|UPDATE|DELETE|REPLACE)\b/i.test(query.sql.trim())))
++        throw new Error("Cannot stage mixed read/write batch");
++      this.staged.push(...queries);
++      if (
++        this.staged.length > MAX_ATOMIC_STATEMENTS ||
++        new TextEncoder().encode(JSON.stringify(this.staged)).byteLength > MAX_ATOMIC_BYTES
++      )
++        throw new Error("Staged cache write budget exceeded before any D1 write");
++      return [];
++    }
++    const usageBefore = this.usage.length;
++    try {
++      return await this.queryOnce<TRow>(statement);
++    } catch (error) {
++      if (this.usage.length === usageBefore) {
++        for (const query of Array.isArray(statement) ? statement : [statement]) {
++          this.usage.push({
++            phase: this.phase,
++            table: query.sql.match(/\b(?:FROM|INTO|UPDATE)\s+([a-z_]+)/i)?.[1] ?? "unknown",
++            operation: query.sql.trim().split(/\s+/)[0].toUpperCase(),
++            rowsRead: null,
++            rowsWritten: null,
++            durationMs: null,
++            changes: null,
++            success: false,
++          });
++        }
++      }
++      throw error;
++    }
++  }
++
++  private async queryOnce<TRow>(statement: D1Statement | D1Statement[]): Promise<TRow[]> {
++    const response = await fetch(buildQueryUrl(this.config), {
+       method: "POST",
+       headers: {
+         authorization: `Bearer ${this.config.apiToken}`,
+@@ -99,7 +195,29 @@ export class D1Client {
+       }
+       throw new Error(`D1: invalid JSON response${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`);
+     }
+-    if (!payload.success) {
++    const statements = Array.isArray(statement) ? statement : [statement];
++    if (payload.result?.length !== statements.length) this.usageIncomplete = true;
++    for (const [index, query] of statements.entries()) {
++      const result = payload.result?.[index];
++      const metric = (value: number | undefined) =>
++        typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
++      this.usage.push({
++        phase: this.phase,
++        table: query.sql.match(/\b(?:FROM|INTO|UPDATE)\s+([a-z_]+)/i)?.[1] ?? "unknown",
++        operation: query.sql.trim().split(/\s+/)[0].toUpperCase(),
++        rowsRead: metric(result?.meta?.rows_read),
++        rowsWritten: metric(result?.meta?.rows_written),
++        durationMs: metric(result?.meta?.duration),
++        changes: metric(result?.meta?.changes),
++        success: response.ok && payload.success && !!result && result.success !== false,
++      });
++    }
++    if (
++      !response.ok ||
++      !payload.success ||
++      payload.result?.length !== statements.length ||
++      payload.result?.some((result) => result.success === false)
++    ) {
+       const message = payload.errors?.map((e) => e.message).join("; ") || "D1 query failed";
+       throw new Error(`D1: ${message}`);
+     }
+@@ -114,13 +232,10 @@ export class D1Client {
+   /**
+    * Batch-insert rows using multi-row `VALUES (...)` tuples. Each chunk is one
+    * HTTP request so callers can pick a chunk size that keeps the request body
+-   * comfortably under D1's 100KB-per-statement limit (rows per chunk × bytes
+-   * per row < 100_000). Each statement also has a 100-bound-param limit, so the
++   * small for persistent cache additions. Each statement has a conservative
++   * 100-bound-param cap, so the
+    * default chunk size is computed from the column count when not specified.
+    *
+-   * When `preDelete` is true the first request batches `DELETE FROM <table>`
+-   * together with the first INSERT chunk to avoid a window where the table is
+-   * empty if the process is interrupted.
+    */
+   async batchInsert<TRow>(options: {
+     table: string;
+@@ -130,14 +245,9 @@ export class D1Client {
+     chunkSize?: number;
+     /** When true, emit `INSERT OR REPLACE` instead of `INSERT`. */
+     upsert?: boolean;
+-    /** When true, batch `DELETE FROM <table>` with the first INSERT chunk. */
+-    preDelete?: boolean;
+   }): Promise<void> {
+     const { table, columns, rows, mapRow } = options;
+     if (rows.length === 0) {
+-      if (options.preDelete) {
+-        await this.execute(`DELETE FROM ${table}`);
+-      }
+       return;
+     }
+     // Cap at D1's 100-bound-param limit regardless of caller-provided or default value.
+@@ -161,21 +271,7 @@ export class D1Client {
+       }
+       const sql = sqlPrefix + Array.from({ length: chunk.length }, () => placeholders).join(",");
+ 
+-      // First chunk with preDelete: batch DELETE + INSERT into one request.
+-      if (i === 0 && options.preDelete) {
+-        await this.query([{ sql: `DELETE FROM ${table}` }, { sql, params }]);
+-      } else {
+-        await this.execute(sql, params);
+-      }
++      await this.execute(sql, params);
+     }
+   }
+-
+-  /**
+-   * Replace the entire contents of a table — used for artifacts that are
+-   * rebuilt from scratch on every sync (blocks, trends, etc.). Persistent
+-   * caches must NOT be cleared; they are upserted in place.
+-   */
+-  async truncate(table: string): Promise<void> {
+-    await this.execute(`DELETE FROM ${table}`);
+-  }
+ }
+diff --git a/scripts/lib/sync/fetchers.ts b/scripts/lib/sync/fetchers.ts
+index 4bfb06dc7..baa2ce168 100644
+--- a/scripts/lib/sync/fetchers.ts
++++ b/scripts/lib/sync/fetchers.ts
+@@ -1,4 +1,5 @@
+ import Papa from "papaparse";
++import { createHash } from "node:crypto";
+ import { classifyUpstreamService, sleep, waitForUpstreamSlot } from "./rate-limits";
+ 
+ function getHeaders(): Record<string, string> {
+@@ -6,8 +7,13 @@ function getHeaders(): Record<string, string> {
+   return apiKey ? { "x-api-key": apiKey } : {};
+ }
+ 
+-function getJsonHeaders(headers?: RequestInit["headers"]): Headers {
+-  const nextHeaders = new Headers({ "content-type": "application/json", ...getHeaders() });
++function getJsonHeaders(url: string, headers?: RequestInit["headers"]): Headers {
++  const hostname = new URL(url).hostname;
++  const dataGov = hostname === "api-open.data.gov.sg" || hostname === "api-production.data.gov.sg";
++  const nextHeaders = new Headers({
++    "content-type": "application/json",
++    ...(dataGov ? getHeaders() : {}),
++  });
+   new Headers(headers).forEach((value, key) => {
+     nextHeaders.set(key, value);
+   });
+@@ -28,13 +34,17 @@ export async function fetchWithRetry(
+   init?: RequestInit,
+   { attempts = 6, retryDelayMs = 2200 }: FetchRetryOptions = {},
+ ): Promise<Response> {
++  const safeUrl = (() => {
++    const parsed = new URL(url);
++    return `${parsed.origin}${parsed.pathname}`;
++  })();
+   let lastError: Error | null = null;
+   for (let attempt = 0; attempt < attempts; attempt += 1) {
+     let response: Response;
+     try {
+       response = await fetch(url, init);
+     } catch (error) {
+-      lastError = error instanceof Error ? error : new Error(`Request failed for ${url}`);
++      lastError = error instanceof Error ? error : new Error(`Request failed for ${safeUrl}`);
+       if (attempt < attempts - 1) {
+         await sleep(retryDelayMs * (attempt + 1));
+       }
+@@ -51,16 +61,16 @@ export async function fetchWithRetry(
+       } catch {
+         /* ignore */
+       }
+-      throw new Error(`Request failed for ${url}: ${response.status}${detail}`);
++      throw new Error(`Request failed for ${safeUrl}: ${response.status}${detail}`);
+     }
+ 
+-    lastError = new Error(`Request failed for ${url}: ${response.status}`);
++    lastError = new Error(`Request failed for ${safeUrl}: ${response.status}`);
+     if (attempt < attempts - 1) {
+       await sleep(retryDelayMs * (attempt + 1));
+     }
+   }
+ 
+-  throw lastError ?? new Error(`Request failed for ${url}`);
++  throw lastError ?? new Error(`Request failed for ${safeUrl}`);
+ }
+ 
+ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
+@@ -70,7 +80,7 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T>
+   }
+   const response = await fetchWithRetry(url, {
+     ...init,
+-    headers: getJsonHeaders(init?.headers),
++    headers: getJsonHeaders(url, init?.headers),
+   });
+   const ct = response.headers.get("content-type") ?? "";
+   if (!ct.includes("application/json") && !ct.includes("text/plain")) {
+@@ -84,21 +94,8 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T>
+ 
+ async function getDatasetDownloadUrl(datasetId: string) {
+   const base = `https://api-open.data.gov.sg/v1/public/api/datasets/${datasetId}`;
+-  try {
+-    await fetchJson(`${base}/initiate-download`, {
+-      method: "POST",
+-      body: JSON.stringify({}),
+-    });
+-  } catch (err) {
+-    // Some datasets expose the file directly through poll-download without
+-    // initiation.  Log non-404 errors so we can distinguish "expected skip"
+-    // from genuine upstream failures.
+-    if (err instanceof Error && !err.message.includes("404")) {
+-      console.warn(
+-        `initiate-download for ${datasetId} failed (attempting poll-download): ${err.message}`,
+-      );
+-    }
+-  }
++  // Official download flow uses GET; access denial is terminal, not a poll fallback.
++  await fetchJson(`${base}/initiate-download`);
+   for (let attempt = 0; attempt < 8; attempt += 1) {
+     const payload = await fetchJson<{ code: number; data?: { url?: string } }>(
+       `${base}/poll-download`,
+@@ -109,13 +106,36 @@ async function getDatasetDownloadUrl(datasetId: string) {
+   throw new Error(`Timed out waiting for dataset download URL: ${datasetId}`);
+ }
+ 
+-export async function fetchCsvRows(datasetId: string) {
++export type CsvCapture = {
++  datasetId: string;
++  bodySHA256: string;
++  bytes: number;
++  rows: number;
++  capturedAtUTC: string;
++};
++export async function fetchCsvRows(
++  datasetId: string,
++  capture?: (receipt: CsvCapture, body: Uint8Array) => void,
++) {
+   const downloadUrl = await getDatasetDownloadUrl(datasetId);
+   const response = await fetchWithRetry(downloadUrl);
+-  const csv = await response.text();
++  // The existing D1 caller retains its text path. Optional Neon evidence captures raw delivered bytes.
++  const body = capture ? new Uint8Array(await response.arrayBuffer()) : undefined;
++  const csv = body ? new TextDecoder().decode(body) : await response.text();
+   const parsed = Papa.parse<Record<string, string>>(csv, { header: true, skipEmptyLines: true });
+   if (parsed.errors.length > 0)
+     throw new Error(`CSV parse error for ${datasetId}: ${parsed.errors[0]?.message ?? "unknown"}`);
++  if (capture && body)
++    capture(
++      {
++        datasetId,
++        bodySHA256: createHash("sha256").update(body).digest("hex"),
++        bytes: body.byteLength,
++        rows: parsed.data.length,
++        capturedAtUTC: new Date().toISOString(),
++      },
++      body,
++    );
+   return parsed.data;
+ }
+ 
+diff --git a/scripts/lib/sync/geocode.ts b/scripts/lib/sync/geocode.ts
+index ad7205b69..0b3934502 100644
+--- a/scripts/lib/sync/geocode.ts
++++ b/scripts/lib/sync/geocode.ts
+@@ -1,5 +1,7 @@
+ import { fetchJson } from "./fetchers";
+ import { oneMapResponseSchema } from "../schemas";
++import { resolveOneMapTokenEndpoint } from "../syncGuards";
++import { resolveOneMapToken } from "./routing";
+ import type { GeocodeCacheFile } from "../pipeline";
+ import type { D1Client } from "./d1";
+ 
+@@ -77,23 +79,54 @@ export async function saveGeocodeCacheEntries(
+ }
+ 
+ export async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
+-  const url = new URL(geocodeEndpoint);
+-  url.searchParams.set("searchVal", searchValue);
+-  url.searchParams.set("returnGeom", "Y");
+-  url.searchParams.set("getAddrDetails", "Y");
+-  url.searchParams.set("pageNum", "1");
++  try {
++    // Credentials belong only on the official endpoint, never in an override URL or redirect.
++    if (
++      geocodeEndpoint.origin !== "https://www.onemap.gov.sg" ||
++      geocodeEndpoint.pathname !== "/api/common/elastic/search" ||
++      geocodeEndpoint.username ||
++      geocodeEndpoint.password ||
++      geocodeEndpoint.search ||
++      geocodeEndpoint.hash
++    ) {
++      throw new Error("Untrusted OneMap Search endpoint");
++    }
++    const token = await resolveOneMapToken({
++      email: process.env.ONEMAP_EMAIL,
++      password: process.env.ONEMAP_PASSWORD,
++      token: process.env.ONEMAP_TOKEN,
++      tokenEndpoint: resolveOneMapTokenEndpoint(),
++    });
++    if (!token) return null;
+ 
+-  const payload = await fetchJson<unknown>(url.toString());
++    const url = new URL(geocodeEndpoint);
++    url.searchParams.set("searchVal", searchValue);
++    url.searchParams.set("returnGeom", "Y");
++    url.searchParams.set("getAddrDetails", "Y");
++    url.searchParams.set("pageNum", "1");
+ 
+-  const parsed = oneMapResponseSchema.parse(payload);
+-  const match = parsed.results[0];
+-  if (!match) return null;
++    const payload = await fetchJson<unknown>(url.toString(), {
++      // The Search API documents the raw access token in Authorization.
++      headers: { authorization: token },
++      redirect: "manual",
++    });
++    // Authentication failures can be HTTP 200 with empty results; they are not address evidence.
++    if (payload && typeof payload === "object" && "error" in payload) {
++      throw new Error("OneMap Search rejected the request");
++    }
++    const parsed = oneMapResponseSchema.parse(payload);
++    const match = parsed.results[0];
++    if (!match) return null;
+ 
+-  return {
+-    lat: Number(match.LATITUDE),
+-    lng: Number(match.LONGITUDE),
+-    postalCode: match.POSTAL,
+-    displayName: match.BUILDING ?? match.ADDRESS ?? null,
+-    searchValue,
+-  };
++    return {
++      lat: Number(match.LATITUDE),
++      lng: Number(match.LONGITUDE),
++      postalCode: match.POSTAL,
++      displayName: match.BUILDING ?? match.ADDRESS ?? null,
++      searchValue,
++    };
++  } catch {
++    // Provider bodies, parse errors and transport messages may echo credentials.
++    throw new Error("OneMap Search lookup failed; response details omitted.");
++  }
+ }
+diff --git a/scripts/lib/sync/routing.ts b/scripts/lib/sync/routing.ts
+index fa8c9e0ef..b361cf3a2 100644
+--- a/scripts/lib/sync/routing.ts
++++ b/scripts/lib/sync/routing.ts
+@@ -98,16 +98,25 @@ export async function resolveOneMapToken(options: OneMapTokenOptions): Promise<s
+   }
+ 
+   try {
++    if (
++      options.tokenEndpoint.origin !== "https://www.onemap.gov.sg" ||
++      options.tokenEndpoint.pathname !== "/api/auth/post/getToken" ||
++      options.tokenEndpoint.username ||
++      options.tokenEndpoint.password ||
++      options.tokenEndpoint.search ||
++      options.tokenEndpoint.hash
++    ) {
++      throw new Error("Untrusted OneMap token endpoint");
++    }
+     const payload = await fetchJson<unknown>(options.tokenEndpoint.toString(), {
+       method: "POST",
+       body: JSON.stringify({ email: options.email, password: options.password }),
++      redirect: "manual",
+     });
+     const parsed = oneMapTokenResponseSchema.parse(payload);
+     return parsed.access_token;
+-  } catch (error) {
+-    console.warn(
+-      `Failed to resolve OneMap token: ${error instanceof Error ? error.message : "unknown error"}. Falling back to walking-time estimates.`,
+-    );
++  } catch {
++    console.warn("Failed to resolve OneMap token. Authenticated OneMap requests are unavailable.");
+     return null;
+   }
+ }
+diff --git a/scripts/lib/sync/store.ts b/scripts/lib/sync/store.ts
+index 82f45c12a..ee5f543d2 100644
+--- a/scripts/lib/sync/store.ts
++++ b/scripts/lib/sync/store.ts
+@@ -3,14 +3,29 @@
+  * old `writer.ts` which serialized the same shapes to JSON files under
+  * `public/data/`.
+  *
+- * Generated artifacts are fully overwritten on each run (truncate + insert).
++ * Generated artifacts are compared to the previous snapshot; only changed rows are upserted.
+  * Persistent caches (geocode, walking time) are written via the dedicated
+  * cache modules and are never truncated here.
+  */
+-import type { BlockSummary } from "../../../shared/data-types";
+-import type { D1Client } from "./d1";
++import {
++  jsonInsertStatements,
++  jsonDetailPatchStatements,
++  jsonUpdateStatements,
++  MAX_ATOMIC_BYTES,
++  MAX_ATOMIC_STATEMENTS,
++  MAX_FORECAST_WRITES,
++} from "./statements";
++import { createHash } from "node:crypto";
++import { rowToBlockSummary, type BlockRow } from "../../../shared/d1-block-row";
++import type { BlockSummary, Manifest, TownFlatTypeTrendPoint } from "../../../shared/data-types";
++import type { D1Client, D1Statement } from "./d1";
++import {
++  planTransactionDelta,
++  readTransactionSnapshot,
++  transactionStatements,
++  type TransactionDelta,
++} from "./incremental";
+ import type { GeneratedArtifacts, MrtStationFeatureCollection } from "../pipeline";
+-import type { TransactionRow } from "../schemas";
+ 
+ type MrtExitsGeoJson = { type: "FeatureCollection"; features: unknown[] };
+ 
+@@ -21,7 +36,7 @@ function jsonOrNull(value: unknown): string | null {
+   return JSON.stringify(value);
+ }
+ 
+-function mapBlockRow(block: BlockSummary): unknown[] {
++export function mapBlockRow(block: BlockSummary): unknown[] {
+   return [
+     block.addressKey,
+     block.town,
+@@ -50,7 +65,7 @@ function mapBlockRow(block: BlockSummary): unknown[] {
+   ];
+ }
+ 
+-const BLOCK_COLUMNS = [
++export const BLOCK_COLUMNS = [
+   "address_key",
+   "town",
+   "block",
+@@ -77,225 +92,390 @@ const BLOCK_COLUMNS = [
+   "postal_code",
+ ];
+ 
+-export async function writeArtifactsToD1(
+-  db: D1Client,
+-  artifacts: GeneratedArtifacts,
+-  mrtExitsGeoJson: MrtExitsGeoJson,
+-  mrtStationsGeoJson: MrtStationFeatureCollection,
+-  updatedAt: string,
+-): Promise<void> {
+-  console.log("Writing artifacts to D1...");
+-
+-  // NOTE: the `shortlists` table (migration 0003) is intentionally absent here.
+-  // Suggest prefix indexes (migration 0005) live on `blocks` and require no sync changes.
+-  // It holds opt-in, runtime user state written only by the Worker
+-  // (functions/api/shortlist/*). The sync pipeline must never truncate or
+-  // rewrite it, or it would wipe users' cloud-backed shortlists.
++type ArtifactTable =
++  | "blocks"
++  | "block_details"
++  | "comparisons"
++  | "town_flat_type_trends"
++  | "mrt_geojson";
++type SnapshotRow = Record<string, unknown> & { _cursor: number };
+ 
+-  // Blocks — truncate and reinsert. ~10k rows.
+-  // preDelete batches DELETE with the first INSERT chunk to avoid a window
+-  // where the table is empty if the process is interrupted.
+-  await db.batchInsert<BlockSummary>({
+-    table: "blocks",
+-    columns: BLOCK_COLUMNS,
+-    rows: artifacts.blockSummaries,
+-    mapRow: mapBlockRow,
+-    preDelete: true,
+-  });
+-
+-  // Block details — truncate and reinsert. JSON blob per address_key.
+-  const detailRows = Object.entries(artifacts.details).map(([key, detail]) => ({
+-    key,
+-    json: JSON.stringify(detail),
+-  }));
+-  await db.batchInsert({
+-    table: "block_details",
+-    columns: ["address_key", "json"],
+-    rows: detailRows,
+-    mapRow: (row) => [row.key, row.json],
+-    preDelete: true,
+-  });
+-
+-  // Comparisons — optional, truncate and reinsert.
+-  if (artifacts.comparisons) {
+-    const comparisonRows = Object.entries(artifacts.comparisons).map(([key, comparison]) => ({
+-      key,
+-      json: JSON.stringify(comparison),
+-    }));
+-    await db.batchInsert({
+-      table: "comparisons",
+-      columns: ["address_key", "json"],
+-      rows: comparisonRows,
+-      mapRow: (row) => [row.key, row.json],
+-      preDelete: true,
++async function readArtifactRows(
++  db: D1Client,
++  table: ArtifactTable,
++  columns: string[],
++): Promise<SnapshotRow[]> {
++  db.setPhase(`artifact-preflight:${table}`);
++  const rows: SnapshotRow[] = [];
++  const writesBefore = db.usageReport().rowsWritten;
++  let cursor = 0;
++  while (true) {
++    const page = await db.query<SnapshotRow>({
++      sql: `SELECT rowid AS _cursor, ${columns.join(",")} FROM ${table} WHERE rowid > ? ORDER BY rowid LIMIT ?`,
++      params: [cursor, 1000],
+     });
+-  } else {
+-    await db.truncate("comparisons");
+-  }
+-
+-  // Town × flat-type trends — normalized rows.
+-  await db.batchInsert({
+-    table: "town_flat_type_trends",
+-    columns: [
+-      "town",
+-      "flat_type",
+-      "month",
+-      "median_price",
+-      "median_price_per_sqm",
+-      "transaction_count",
+-    ],
+-    rows: artifacts.townFlatTypeTrend,
+-    mapRow: (point) => [
+-      point.town,
+-      point.flatType,
+-      point.month,
+-      point.medianPrice,
+-      point.medianPricePerSqm,
+-      point.transactionCount,
+-    ],
+-    preDelete: true,
+-  });
+-
+-  // MRT GeoJSON — two rows keyed by kind.
+-  await db.execute("INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)", [
+-    "exits",
+-    JSON.stringify(mrtExitsGeoJson),
+-    updatedAt,
+-  ]);
+-  await db.execute("INSERT OR REPLACE INTO mrt_geojson (kind, json, updated_at) VALUES (?, ?, ?)", [
+-    "stations",
+-    JSON.stringify(mrtStationsGeoJson),
+-    updatedAt,
+-  ]);
+-
+-  // Transactions — full normalized table for the comparable engine v2.
+-  if (artifacts.transactions && artifacts.transactions.length > 0) {
+-    await insertTransactions(db, artifacts.transactions);
+-  } else {
+-    await db.truncate("transactions");
++    rows.push(...page);
++    const usage = db.usageReport();
++    if (usage.rowsRead === null || usage.rowsWritten === null)
++      throw new Error("Missing exact D1 preflight metadata");
++    if (usage.rowsRead > 2_000_000 || usage.rowsWritten !== writesBefore)
++      throw new Error("Preflight read budget exceeded");
++    if (page.length < 1000) return rows;
++    cursor = page[page.length - 1]._cursor;
+   }
++}
+ 
+-  // Manifest — written last so a matching timestamp implies a successful sync.
+-  await db.execute("INSERT OR REPLACE INTO manifest (id, json, updated_at) VALUES (1, ?, ?)", [
+-    JSON.stringify(artifacts.manifest),
+-    updatedAt,
++export async function readPublishedArtifacts(
++  db: D1Client,
++  manifestJson: string | null,
++): Promise<GeneratedArtifacts | undefined> {
++  if (!manifestJson) return undefined;
++  const blocks = await readArtifactRows(db, "blocks", BLOCK_COLUMNS);
++  const details = await readArtifactRows(db, "block_details", ["address_key", "json"]);
++  const comparisons = await readArtifactRows(db, "comparisons", ["address_key", "json"]);
++  const trends = await readArtifactRows(db, "town_flat_type_trends", [
++    "town",
++    "flat_type",
++    "month",
++    "median_price",
++    "median_price_per_sqm",
++    "transaction_count",
+   ]);
+-
+-  console.log(
+-    `D1 write complete: ${artifacts.blockSummaries.length} blocks, ${detailRows.length} details, ${artifacts.townFlatTypeTrend.length} trend points, ${artifacts.transactions?.length ?? 0} transactions.`,
+-  );
++  return {
++    manifest: JSON.parse(manifestJson) as Manifest,
++    blockSummaries: blocks.map((row) => rowToBlockSummary(row as unknown as BlockRow)),
++    blocksByTown: {},
++    details: Object.fromEntries(
++      details.map((row) => [row.address_key, JSON.parse(row.json as string)]),
++    ),
++    comparisons: comparisons.length
++      ? Object.fromEntries(
++          comparisons.map((row) => [row.address_key, JSON.parse(row.json as string)]),
++        )
++      : undefined,
++    townFlatTypeTrend: trends.map((row) => ({
++      town: row.town,
++      flatType: row.flat_type,
++      month: row.month,
++      medianPrice: row.median_price,
++      medianPricePerSqm: row.median_price_per_sqm,
++      transactionCount: row.transaction_count,
++    })) as TownFlatTypeTrendPoint[],
++  };
+ }
+ 
+-export async function readManifestUpdatedAt(db: D1Client): Promise<string | null> {
+-  const rows = await db.query<{ json: string }>({
+-    sql: "SELECT json FROM manifest WHERE id = 1",
+-  });
+-  if (rows.length === 0) {
+-    return null;
++export type ArtifactWritePlan = {
++  statements: D1Statement[];
++  changedRows: Record<string, number>;
++  forecastWriteUpperBound: number;
++};
++
++export async function planArtifactWrites(
++  db: D1Client,
++  artifacts: GeneratedArtifacts,
++  mrtExitsGeoJson: MrtExitsGeoJson,
++  mrtStationsGeoJson: MrtStationFeatureCollection,
++  updatedAt: string,
++  delta: TransactionDelta,
++  options: { enforceBudget?: boolean } = {},
++): Promise<ArtifactWritePlan> {
++  const statements = [...db.stagedWrites(), ...transactionStatements(delta)];
++  const changedRows: Record<string, number> = {
++    transactions: delta.inserts.length + delta.updates.length,
++  };
++  for (const statement of db.stagedWrites()) {
++    const table = statement.sql.match(/INTO\s+([a-z_]+)/i)?.[1];
++    if (!table || !["geocode_cache", "walking_time_cache"].includes(table))
++      throw new Error("Unexpected staged write target");
++    changedRows[table] = (changedRows[table] ?? 0) + (statement.sql.match(/\(\?/g) ?? []).length;
+   }
+-  try {
+-    const parsed = JSON.parse(rows[0].json) as { sources?: { lastUpdatedAt?: string } };
+-    return parsed.sources?.lastUpdatedAt ?? null;
+-  } catch {
+-    return null;
++  const mutations: { table: string; rows: number; inserted: boolean; columns: string[] }[] = [
++    { table: "transactions", rows: delta.inserts.length, inserted: true, columns: [] },
++    {
++      table: "transactions",
++      rows: delta.updates.length,
++      inserted: false,
++      columns: [
++        "town",
++        "block",
++        "flat_type",
++        "street_name",
++        "month",
++        "lease_commence_year",
++        "floor_area_sqm",
++      ],
++    },
++  ];
++  for (const [table, count] of Object.entries(changedRows))
++    if (table !== "transactions")
++      // INSERT OR REPLACE can remove an existing record and its indexes before inserting.
++      mutations.push({ table, rows: count * 2, inserted: true, columns: [] });
++  const tables: { table: ArtifactTable; columns: string[]; keys: string[]; rows: unknown[][] }[] = [
++    {
++      table: "blocks",
++      columns: BLOCK_COLUMNS,
++      keys: ["address_key"],
++      rows: artifacts.blockSummaries.map(mapBlockRow),
++    },
++    {
++      table: "block_details",
++      columns: ["address_key", "json"],
++      keys: ["address_key"],
++      rows: Object.entries(artifacts.details).map(([key, detail]) => [key, JSON.stringify(detail)]),
++    },
++    {
++      table: "comparisons",
++      columns: ["address_key", "json"],
++      keys: ["address_key"],
++      rows: Object.entries(artifacts.comparisons ?? {}).map(([key, comparison]) => [
++        key,
++        JSON.stringify(comparison),
++      ]),
++    },
++    {
++      table: "town_flat_type_trends",
++      columns: [
++        "town",
++        "flat_type",
++        "month",
++        "median_price",
++        "median_price_per_sqm",
++        "transaction_count",
++      ],
++      keys: ["town", "flat_type", "month"],
++      rows: artifacts.townFlatTypeTrend.map((point) => [
++        point.town,
++        point.flatType,
++        point.month,
++        point.medianPrice,
++        point.medianPricePerSqm,
++        point.transactionCount,
++      ]),
++    },
++    {
++      table: "mrt_geojson",
++      columns: ["kind", "json", "updated_at"],
++      keys: ["kind"],
++      rows: [
++        ["exits", JSON.stringify(mrtExitsGeoJson), updatedAt],
++        ["stations", JSON.stringify(mrtStationsGeoJson), updatedAt],
++      ],
++    },
++  ];
++  for (const { table, columns, keys, rows } of tables) {
++    const oldRows = await readArtifactRows(db, table, columns);
++    const keyIndexes = keys.map((key) => columns.indexOf(key));
++    const keyFor = (values: unknown[]) => JSON.stringify(keyIndexes.map((index) => values[index]));
++    const oldByKey = new Map(
++      oldRows.map((row) => [keyFor(columns.map((column) => row[column])), row]),
++    );
++    const changed: unknown[][] = [];
++    const inserted: unknown[][] = [];
++    const updates = new Map<
++      string,
++      { columns: string[]; rows: unknown[][]; jsonFields?: string[] }
++    >();
++    for (const values of rows) {
++      const key = keyFor(values);
++      const previous = oldByKey.get(key);
++      if (previous && table === "comparisons") {
++        const old = JSON.parse(previous.json as string) as Record<string, unknown>;
++        const next = JSON.parse(values[1] as string) as Record<string, unknown>;
++        // Preserve generatedAt when evidence is unchanged; time passing can still change percentile evidence.
++        next.generatedAt = old.generatedAt;
++        const withoutTimestampChange = JSON.stringify(next);
++        if (withoutTimestampChange === previous.json) values[1] = withoutTimestampChange;
++      }
++      if (table === "block_details") {
++        const next = JSON.parse(values[1] as string) as {
++          recentTransactions: Record<string, unknown>[];
++        };
++        const old = previous
++          ? (JSON.parse(previous.json as string) as {
++              recentTransactions: Record<string, unknown>[];
++            })
++          : { recentTransactions: [] };
++        if (
++          !Object.hasOwn(next, "summary") ||
++          !Array.isArray((next as Record<string, unknown>).monthlyTrend) ||
++          !Array.isArray(next.recentTransactions)
++        )
++          throw new Error("Invalid detail candidate: required JSON fields missing or invalid");
++        // Preserve forward-compatible stored fields which this builder does not own.
++        for (const [field, value] of Object.entries(old))
++          if (
++            !["summary", "monthlyTrend", "recentTransactions"].includes(field) &&
++            !Object.hasOwn(next, field)
++          )
++            (next as Record<string, unknown>)[field] = value;
++        const identity = (row: Record<string, unknown>) =>
++          JSON.stringify([
++            row.month,
++            row.flatType,
++            row.storeyRange,
++            row.floorAreaSqm,
++            row.leaseCommenceDate,
++            row.resalePrice,
++            row.flatModel,
++          ]);
++        const oldIds = new Map<string, unknown[]>();
++        for (const row of old.recentTransactions) {
++          const key = identity(row);
++          oldIds.set(key, [...(oldIds.get(key) ?? []), row.id]);
++        }
++        const occurrences = new Map<string, number>();
++        for (const row of next.recentTransactions) {
++          const key = identity(row);
++          const occurrence = occurrences.get(key) ?? 0;
++          occurrences.set(key, occurrence + 1);
++          const previousId = oldIds.get(key)?.shift();
++          row.id =
++            previousId ?? `source:${createHash("sha256").update(key).digest("hex")}:${occurrence}`;
++        }
++        values[1] = JSON.stringify(next);
++      }
++      if (previous && table === "mrt_geojson" && values[1] === previous.json)
++        values[2] = previous.updated_at;
++      const dirtyColumns = columns.filter(
++        (column, index) => previous && previous[column] !== values[index],
++      );
++      if (!previous) {
++        inserted.push(values);
++        changed.push(values);
++      } else if (dirtyColumns.length) {
++        if (table === "block_details") {
++          const old = JSON.parse(previous.json as string) as Record<string, unknown>;
++          const next = JSON.parse(values[1] as string) as Record<string, unknown>;
++          const fields = ["summary", "monthlyTrend", "recentTransactions"].filter(
++            (field) => JSON.stringify(old[field]) !== JSON.stringify(next[field]),
++          );
++          const supported =
++            Object.keys(next).every(
++              (field) =>
++                ["summary", "monthlyTrend", "recentTransactions"].includes(field) ||
++                JSON.stringify(next[field]) === JSON.stringify(old[field]),
++            ) && Object.keys(old).every((field) => field in next);
++          if (supported) {
++            if (fields.length) {
++              const groupKey = `detail:${JSON.stringify(fields)}`;
++              const group = updates.get(groupKey) ?? {
++                columns: ["json"],
++                rows: [],
++                jsonFields: fields,
++              };
++              group.rows.push([values[0], ...fields.map((field) => next[field])]);
++              updates.set(groupKey, group);
++              changed.push(values);
++            }
++            oldByKey.delete(key);
++            continue;
++          }
++        }
++        const updateColumns = dirtyColumns.filter((column) => !keys.includes(column));
++        const groupKey = JSON.stringify(updateColumns);
++        const group = updates.get(groupKey) ?? { columns: updateColumns, rows: [] };
++        group.rows.push([
++          ...keys.map((key) => values[columns.indexOf(key)]),
++          ...updateColumns.map((column) => values[columns.indexOf(column)]),
++        ]);
++        updates.set(groupKey, group);
++        changed.push(values);
++      }
++      oldByKey.delete(key);
++    }
++    if (oldByKey.size)
++      throw new Error(`Reconciliation required: ${table} would lose ${oldByKey.size} entities`);
++    changedRows[table] = changed.length;
++    statements.push(...jsonInsertStatements(table, columns, inserted));
++    mutations.push({ table, rows: inserted.length, inserted: true, columns: [] });
++    for (const group of updates.values()) {
++      statements.push(
++        ...(group.jsonFields
++          ? jsonDetailPatchStatements(group.jsonFields, group.rows)
++          : jsonUpdateStatements(table, keys, group.columns, group.rows)),
++      );
++      mutations.push({ table, rows: group.rows.length, inserted: false, columns: group.columns });
++    }
+   }
++  // Conservative index-aware bound for each inserted/updated row, including old/new index entries.
++  // No index is added or rebuilt. This is a forecast, never billable metadata or account headroom.
++  db.setPhase("index-budget-preflight");
++  const indexes = await db.query<{ tbl_name: string; sql: string | null }>({
++    sql: "SELECT tbl_name, sql FROM sqlite_master WHERE type='index' AND tbl_name IN ('transactions','blocks','block_details','comparisons','town_flat_type_trends','mrt_geojson','manifest','geocode_cache','walking_time_cache')",
++  });
++  const forecastWriteUpperBound = mutations.reduce((sum, mutation) => {
++    const affectedIndexes = indexes.filter(
++      (index) =>
++        index.tbl_name === mutation.table &&
++        (mutation.inserted ||
++          (index.sql !== null &&
++            mutation.columns.some((column) =>
++              new RegExp(`\\b${column}\\b`, "i").test(index.sql!),
++            ))),
++    ).length;
++    return sum + mutation.rows * (1 + (mutation.inserted ? 1 : 2) * affectedIndexes);
++  }, 1);
++  if (options.enforceBudget !== false && forecastWriteUpperBound > MAX_FORECAST_WRITES)
++    throw new Error("Index-aware write safety budget exceeded");
++  return { statements, changedRows, forecastWriteUpperBound };
+ }
+ 
+-const TX_COLUMNS = [
+-  "month",
+-  "town",
+-  "block",
+-  "street_name",
+-  "address_key",
+-  "flat_type",
+-  "storey_range",
+-  "floor_area_sqm",
+-  "lease_commence_year",
+-  "resale_price",
+-  "flat_model",
+-];
+-
+-function mapTxRow(row: TransactionRow): unknown[] {
++export function buildPublicationBatch(
++  statements: D1Statement[],
++  manifest: Manifest,
++  updatedAt: string,
++  manifestJson: string | null,
++): D1Statement[] {
+   return [
+-    row.month,
+-    row.town,
+-    row.block,
+-    row.street_name,
+-    row.address_key,
+-    row.flat_type,
+-    row.storey_range,
+-    row.floor_area_sqm,
+-    row.lease_commence_year,
+-    row.resale_price,
+-    row.flat_model,
++    // Force a statement error on a stale baseline; atomic adapters roll back the whole batch.
++    {
++      sql: "SELECT CASE WHEN (SELECT json FROM manifest WHERE id=1) IS ? THEN 1 ELSE json('stale sync snapshot') END",
++      params: [manifestJson],
++    },
++    ...statements,
++    {
++      sql: "INSERT INTO manifest (id,json,updated_at) VALUES (1,?,?) ON CONFLICT(id) DO UPDATE SET json=excluded.json,updated_at=excluded.updated_at",
++      params: [JSON.stringify(manifest), updatedAt],
++    },
+   ];
+ }
+ 
+-/**
+- * Truncate and re-insert the full transactions table. Called during sync after
+- * all block details are built, using the *full* sorted transaction array (not
+- * the 20-row capped slice stored in block_details).
+- *
+- * Uses batched multi-row INSERTs packed into D1 batch API calls to stay under
+- * the 100-bound-param per-statement limit (ROWS_PER_INSERT is computed
+- * dynamically from the column count) while minimising HTTP round-trips (up
+- * to 100 INSERTs per batch call).
+- *
+- * TODO: At production scale (~1M transactions), this still issues ~1.4k D1
+- * HTTP requests per sync (~20–30 min wall time). A future D1 bulk-import API
+- * or raw-SQL endpoint without param limits would reduce this to a single
+- * request. Tracked as follow-up — not blocking merge.
+- */
+-export async function insertTransactions(
++export async function writeArtifactsToD1(
+   db: D1Client,
+-  transactions: TransactionRow[],
++  artifacts: GeneratedArtifacts,
++  mrtExitsGeoJson: MrtExitsGeoJson,
++  mrtStationsGeoJson: MrtStationFeatureCollection,
++  updatedAt: string,
++  prepared?: { delta: TransactionDelta; manifestJson: string | null },
+ ): Promise<void> {
+-  console.log(`Writing ${transactions.length} transactions to D1...`);
+-
+-  if (transactions.length === 0) {
+-    await db.truncate("transactions");
+-    console.log("Transactions write complete (truncated).");
+-    return;
+-  }
+-
+-  // Dynamically calculate the max rows per INSERT to stay under the
+-  // 100-bound-param limit. Adapts automatically if columns are added/removed.
+-  const ROWS_PER_INSERT = Math.max(1, Math.floor(100 / TX_COLUMNS.length));
+-  // D1 batch endpoint allows up to 100 statements per request.
+-  const MAX_BATCH_STMTS = 100;
+-  const placeholders = `(${TX_COLUMNS.map(() => "?").join(",")})`;
+-  const sqlPrefix = `INSERT INTO transactions (${TX_COLUMNS.join(",")}) VALUES `;
+-
+-  // Phase 1: DELETE to clear the table (single statement, batched with first
+-  // INSERT batch to avoid an empty-table window).
+-  let firstBatch = true;
+-
+-  // Build INSERT statements: each has ROWS_PER_INSERT rows.
+-  const statements: Array<{ sql: string; params: unknown[] }> = [];
+-  for (let i = 0; i < transactions.length; i += ROWS_PER_INSERT) {
+-    const chunk = transactions.slice(i, i + ROWS_PER_INSERT);
+-    const params: unknown[] = [];
+-    for (const row of chunk) {
+-      const values = mapTxRow(row);
+-      if (values.length !== TX_COLUMNS.length) {
+-        throw new Error(
+-          `insertTransactions: row provided ${values.length} values for ${TX_COLUMNS.length} columns`,
+-        );
+-      }
+-      params.push(...values);
+-    }
+-    const sql = sqlPrefix + Array.from({ length: chunk.length }, () => placeholders).join(",");
+-    statements.push({ sql, params });
+-
+-    // Flush when we hit the batch statement limit or end of data
+-    if (statements.length >= MAX_BATCH_STMTS || i + ROWS_PER_INSERT >= transactions.length) {
+-      const batch = firstBatch ? [{ sql: "DELETE FROM transactions" }, ...statements] : statements;
+-
+-      await db.query(batch);
+-      firstBatch = false;
+-      statements.length = 0;
+-    }
+-  }
+-
+-  console.log("Transactions write complete.");
++  // Do not transfer binding batch atomicity to an unverified REST API envelope.
++  // Production stays frozen until authenticated isolated remote rehearsal establishes that contract and quota.
++  if (!db.isLocalRehearsal)
++    throw new Error("Remote apply disabled: exact D1 quota and REST atomicity rehearsal required");
++  const previousManifest = await db.query<{ json: string }>({
++    sql: "SELECT json FROM manifest WHERE id = 1",
++  });
++  const manifestJson = prepared ? prepared.manifestJson : (previousManifest[0]?.json ?? null);
++  if ((previousManifest[0]?.json ?? null) !== manifestJson)
++    throw new Error("Stale sync snapshot rejected before artifact preflight");
++  const delta =
++    prepared?.delta ??
++    planTransactionDelta(await readTransactionSnapshot(db), artifacts.transactions ?? []);
++  const plan = await planArtifactWrites(
++    db,
++    artifacts,
++    mrtExitsGeoJson,
++    mrtStationsGeoJson,
++    updatedAt,
++    delta,
++  );
++  const batch = buildPublicationBatch(plan.statements, artifacts.manifest, updatedAt, manifestJson);
++  if (
++    batch.length > MAX_ATOMIC_STATEMENTS ||
++    new TextEncoder().encode(JSON.stringify({ batch })).byteLength > MAX_ATOMIC_BYTES
++  )
++    throw new Error("Atomic rehearsal batch safety budget exceeded; no writes performed");
++  db.setPhase("atomic-local-publish");
++  await db.publishStagedBatch(batch);
++  console.log(JSON.stringify({ ...plan, statements: batch.length, actual: db.usageReport() }));
+ }
+diff --git a/scripts/sync-data.ts b/scripts/sync-data.ts
+index 8f588343b..69252936e 100644
+--- a/scripts/sync-data.ts
++++ b/scripts/sync-data.ts
+@@ -1,7 +1,10 @@
+ import path from "node:path";
++
+ import { fileURLToPath } from "node:url";
+ import {
+   buildArtifacts,
++  excludedTransactionDigest,
++  toTransactionRow,
+   buildMrtStationsGeoJson,
+   pickNearestStations,
+   walkingTimeLookupKey,
+@@ -46,7 +49,18 @@ import {
+   validateGeneratedArtifacts,
+ } from "./lib/syncGuards";
+ import { D1Client, resolveD1ConfigFromEnv } from "./lib/sync/d1";
+-import { readManifestUpdatedAt, writeArtifactsToD1 } from "./lib/sync/store";
++import { fetchSourceVersionHints, sourceVersionHintsChanged } from "./lib/sync/source-version";
++import {
++  requiresSourceReconciliation,
++  resolveReconciliationTrigger,
++} from "./lib/sync/refresh-policy";
++import type { Manifest } from "../shared/data-types";
++import { readPublishedArtifacts, writeArtifactsToD1 } from "./lib/sync/store";
++import {
++  assignStableTransactionIds,
++  planTransactionDelta,
++  readTransactionSnapshot,
++} from "./lib/sync/incremental";
+ 
+ type CollectionMetadata = { childDatasets: string[]; lastUpdatedAt: string };
+ type TimestampFactory = () => string;
+@@ -98,6 +112,7 @@ export async function fetchAmenityData(
+   let supermarkets: AmenityLocation[] = [];
+   let parks: AmenityLocation[] = [];
+   let geocodedCount = 0;
++  const failedSources: string[] = [];
+ 
+   try {
+     const schoolRows = await fetchCsvRowsFn(MOE_SCHOOL_DATASET_ID);
+@@ -106,6 +121,7 @@ export async function fetchAmenityData(
+     geocodedCount += schoolResult.geocodedCount;
+     console.log(`Processed ${schools.length} primary schools.`);
+   } catch (error) {
++    failedSources.push("schools");
+     warnAmenityStep("schools", error);
+   }
+ 
+@@ -114,6 +130,7 @@ export async function fetchAmenityData(
+     hawkers = normalizeAmenityGeoJsonFn(hawkerGeoJson);
+     console.log(`Processed ${hawkers.length} hawker centres.`);
+   } catch (error) {
++    failedSources.push("hawkers");
+     warnAmenityStep("hawkers", error);
+   }
+ 
+@@ -128,6 +145,7 @@ export async function fetchAmenityData(
+     geocodedCount += supermarketResult.geocodedCount;
+     console.log(`Processed ${supermarkets.length} supermarkets.`);
+   } catch (error) {
++    failedSources.push("supermarkets");
+     warnAmenityStep("supermarkets", error);
+   }
+ 
+@@ -136,6 +154,7 @@ export async function fetchAmenityData(
+     parks = normalizeAmenityGeoJsonFn(parksGeoJson);
+     console.log(`Processed ${parks.length} parks.`);
+   } catch (error) {
++    failedSources.push("parks");
+     warnAmenityStep("parks", error);
+   }
+ 
+@@ -149,6 +168,7 @@ export async function fetchAmenityData(
+     supermarkets,
+     parks,
+     geocodedCount,
++    failedSources,
+   };
+ }
+ 
+@@ -336,7 +356,7 @@ export async function computeWalkingTimes(
+ }
+ 
+ export async function runSyncData(argv = process.argv.slice(2)) {
+-  const force = argv.includes("--force");
++  const reconciliationTrigger = resolveReconciliationTrigger(argv);
+   const skipGeocoding = argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
+   const skipAmenities = argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
+   const skipRouting = argv.includes("--skip-routing") || process.env.SKIP_ROUTING === "1";
+@@ -351,16 +371,58 @@ export async function runSyncData(argv = process.argv.slice(2)) {
+     );
+   }
+   const db = new D1Client(d1Config);
++  const checkOnly = argv.includes("--check-upstream");
++  const planOnly = argv.includes("--plan") || checkOnly;
++  if (!planOnly && (!db.isLocalRehearsal || !argv.includes("--apply-rehearsal"))) {
++    throw new Error(
++      "Production sync remains frozen: use --plan for read-only preflight, or --apply-rehearsal with a loopback emulator. Remote quota/atomicity proof is required before enabling apply.",
++    );
++  }
++  db.setPhase("source-version-preflight");
+ 
++  const baselineRows = await db.query<{ json: string }>({
++    sql: "SELECT json FROM manifest WHERE id = 1",
++  });
++  const manifestJson = baselineRows[0]?.json ?? null;
+   const resaleCollection = await fetchCollectionMetadata();
+-  if (!force) {
+-    const previousLastUpdatedAt = await readManifestUpdatedAt(db);
+-    if (previousLastUpdatedAt && previousLastUpdatedAt === resaleCollection.lastUpdatedAt) {
+-      console.log(
+-        `No upstream resale collection change detected (${resaleCollection.lastUpdatedAt}).`,
+-      );
+-      return;
+-    }
++  const baselineManifest = manifestJson ? (JSON.parse(manifestJson) as Manifest) : undefined;
++  const sourceVersionHints = await fetchSourceVersionHints([
++    ...resaleCollection.childDatasets,
++    PROPERTY_DATASET_ID,
++    MRT_DATASET_ID,
++    ...(!skipAmenities
++      ? [
++          MOE_SCHOOL_DATASET_ID,
++          NEA_HAWKER_DATASET_ID,
++          SFA_SUPERMARKET_DATASET_ID,
++          NPARKS_PARKS_DATASET_ID,
++        ]
++      : []),
++  ]);
++  const reconciliationRequired = requiresSourceReconciliation({
++    trigger: reconciliationTrigger,
++    previousReconciledAt: baselineManifest?.syncBuildState?.reconciledAt,
++  });
++  if (checkOnly || !reconciliationRequired) {
++    console.log(
++      JSON.stringify({
++        mode: "read-only-source-probe",
++        reconciliationTrigger,
++        reconciliationRequired,
++        collectionHintChanged:
++          baselineManifest?.sources.lastUpdatedAt !== resaleCollection.lastUpdatedAt,
++        sourceHintsChanged: sourceVersionHintsChanged(
++          baselineManifest?.syncBuildState?.sourceVersionHints,
++          sourceVersionHints,
++        ),
++        sourceVersion: resaleCollection.lastUpdatedAt,
++        sourceVersionHints,
++        actual: db.usageReport(),
++        limitation:
++          "Hints are observability only; reconciliation requires explicit monthly or manual intent. Production apply remains frozen.",
++      }),
++    );
++    return;
+   }
+ 
+   console.log(`Downloading ${resaleCollection.childDatasets.length} resale datasets...`);
+@@ -368,12 +430,54 @@ export async function runSyncData(argv = process.argv.slice(2)) {
+   for (const [index, datasetId] of resaleCollection.childDatasets.entries()) {
+     const datasetRows = await fetchCsvRows(datasetId);
+     const normalized = normalizeResaleRows(datasetRows);
++    if (normalized.length !== datasetRows.length)
++      throw new Error(
++        `Invalid or partial source: dataset ${datasetId} had ${datasetRows.length - normalized.length} rejected rows`,
++      );
+     for (const transaction of normalized) transactions.push(transaction);
+     console.log(
+       `Processed resale dataset ${index + 1}/${resaleCollection.childDatasets.length}: ${normalized.length} transactions (${transactions.length} total).`,
+     );
+   }
+ 
++  // Validate the complete transaction multiset BEFORE geocode/routing cache writes.
++  const transactionRows = transactions.flatMap((row) => {
++    const fact = toTransactionRow(row);
++    return fact ? [fact] : [];
++  });
++  const excludedDigest = excludedTransactionDigest(transactions);
++  const previousExcludedDigest = baselineManifest?.syncBuildState?.excludedSourceDigest;
++  if (
++    (previousExcludedDigest && previousExcludedDigest !== excludedDigest) ||
++    (!previousExcludedDigest && transactions.length !== transactionRows.length)
++  )
++    throw new Error(
++      "Excluded storey-range facts require explicit manual reconciliation before publication",
++    );
++  const stored = await readTransactionSnapshot(db);
++  const delta = planTransactionDelta(stored, transactionRows);
++  assignStableTransactionIds(transactions, stored, delta, toTransactionRow);
++  if (planOnly) {
++    console.log(
++      JSON.stringify({
++        mode: "read-only-plan",
++        sourceVersion: resaleCollection.lastUpdatedAt,
++        sourceDatasets: resaleCollection.childDatasets,
++        sourceRows: transactionRows.length,
++        inserts: delta.inserts.length,
++        updates: delta.updates.length,
++        affectedBlocks: delta.affectedBlocks.size,
++        affectedTownTypes: delta.affectedTownTypes.size,
++        actual: db.usageReport(),
++        limitation:
++          "Transaction preflight only; derived write costs, account headroom and remote atomicity are not proven",
++      }),
++    );
++    return;
++  }
++
++  const previousArtifacts = await readPublishedArtifacts(db, manifestJson);
++  db.beginWriteStaging();
+   const propertyRows = await fetchCsvRows(PROPERTY_DATASET_ID);
+   const normalizedPropertyInfo = normalizePropertyRows(propertyRows);
+   console.log(`Processed ${normalizedPropertyInfo.length} property rows.`);
+@@ -394,6 +498,8 @@ export async function runSyncData(argv = process.argv.slice(2)) {
+       skipGeocoding,
+       geocodeEndpoint,
+     });
++    if (amenityData.failedSources.length)
++      throw new Error(`Incomplete amenity snapshot: ${amenityData.failedSources.join(", ")}`);
+     amenities = amenityData;
+     if (geocodedCount > 0) {
+       for (const key of Object.keys(geocodeCache.entries)) {
+@@ -458,6 +564,8 @@ export async function runSyncData(argv = process.argv.slice(2)) {
+     geocodes: geocodeCache.entries,
+     walkingTimes,
+     ...amenities,
++    sourceVersionHints,
++    incremental: previousArtifacts ? { previous: previousArtifacts, delta } : undefined,
+     metadata: {
+       resaleCollectionId: RESALE_COLLECTION_ID,
+       resaleDatasetIds: resaleCollection.childDatasets,
+@@ -478,7 +586,10 @@ export async function runSyncData(argv = process.argv.slice(2)) {
+   });
+ 
+   const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
+-  await writeArtifactsToD1(db, artifacts, mrtGeoJson, stationsGeoJson, nowTimestamp());
++  await writeArtifactsToD1(db, artifacts, mrtGeoJson, stationsGeoJson, nowTimestamp(), {
++    delta,
++    manifestJson,
++  });
+ }
+ 
+ function isDirectExecution() {
+diff --git a/shared/data-types.ts b/shared/data-types.ts
+index 88ddb6dd7..aab0bfd02 100644
+--- a/shared/data-types.ts
++++ b/shared/data-types.ts
+@@ -87,7 +87,17 @@ export type FilterOptions = {
+   flatModels: string[];
+ };
+ 
++export type SyncBuildState = {
++  contextDigest: string;
++  excludedSourceDigest?: string;
++  recentThreshold: string;
++  algorithmVersion: 1;
++  sourceVersionHints?: Record<string, string>;
++  reconciledAt?: string;
++};
++
+ export type Manifest = {
++  syncBuildState?: SyncBuildState;
+   schemaVersion: string;
+   generatedAt?: string;
+   dataWindow: {
+diff --git a/src/shared/lib/dataSchemas.ts b/src/shared/lib/dataSchemas.ts
+index 273850ce8..12882bb77 100644
+--- a/src/shared/lib/dataSchemas.ts
++++ b/src/shared/lib/dataSchemas.ts
+@@ -110,6 +110,19 @@ export const townFlatTypeTrendPointSchema = z.object({
+ export const manifestSchema = z
+   .object({
+     schemaVersion: z.string(),
++    syncBuildState: z
++      .object({
++        contextDigest: z.string().regex(/^[a-f0-9]{64}$/),
++        excludedSourceDigest: z
++          .string()
++          .regex(/^[a-f0-9]{64}$/)
++          .optional(),
++        recentThreshold: monthSchema,
++        algorithmVersion: z.literal(1),
++        sourceVersionHints: z.record(z.string(), z.string()).optional(),
++        reconciledAt: z.string().optional(),
++      })
++      .optional(),
+     generatedAt: z.string().optional(),
+     dataWindow: z.object({ minMonth: monthSchema, maxMonth: monthSchema }),
+     sources: z
+diff --git a/tests/unit/d1-client.test.ts b/tests/unit/d1-client.test.ts
+index 266869d41..614242071 100644
+--- a/tests/unit/d1-client.test.ts
++++ b/tests/unit/d1-client.test.ts
+@@ -104,3 +104,131 @@ describe("D1Client", () => {
+     expect(fetchMock).toHaveBeenCalled();
+   });
+ });
++
++describe("exact D1 metadata accounting", () => {
++  afterEach(() => vi.unstubAllGlobals());
++  it("sums every batch statement including index writes, labeled by phase/table", async () => {
++    vi.stubGlobal(
++      "fetch",
++      vi.fn(
++        async () =>
++          new Response(
++            JSON.stringify({
++              success: true,
++              result: [
++                {
++                  success: true,
++                  results: [],
++                  meta: { changes: 1, duration: 2, rows_read: 3, rows_written: 8 },
++                },
++                {
++                  success: true,
++                  results: [],
++                  meta: { changes: 2, duration: 4, rows_read: 5, rows_written: 16 },
++                },
++              ],
++            }),
++            { headers: { "content-type": "application/json" } },
++          ),
++      ),
++    );
++    const db = new D1Client(config);
++    db.setPhase("publish");
++    await db.query([
++      { sql: "INSERT INTO transactions VALUES (?)", params: [1] },
++      { sql: "UPDATE blocks SET town=?", params: ["TEST"] },
++    ]);
++    expect(db.usageReport()).toMatchObject({
++      rowsRead: 8,
++      rowsWritten: 24,
++      durationMs: 6,
++      statements: 2,
++    });
++    expect(db.usage.map((record) => [record.phase, record.table])).toEqual([
++      ["publish", "transactions"],
++      ["publish", "blocks"],
++    ]);
++  });
++  it("marks absent metrics and timeouts UNKNOWN, never zero or retried writes", async () => {
++    const fetchMock = vi.fn().mockRejectedValue(new Error("network timeout"));
++    vi.stubGlobal("fetch", fetchMock);
++    const db = new D1Client(config);
++    await expect(db.execute("INSERT INTO transactions VALUES (?)", [1])).rejects.toThrow("timeout");
++    expect(fetchMock).toHaveBeenCalledOnce();
++    expect(db.usageReport()).toMatchObject({
++      rowsRead: null,
++      rowsWritten: null,
++      durationMs: null,
++      statements: 1,
++    });
++  });
++  it("rejects per-result failure and missing result count while retaining metadata", async () => {
++    vi.stubGlobal(
++      "fetch",
++      vi.fn(
++        async () =>
++          new Response(
++            JSON.stringify({
++              success: true,
++              result: [{ success: false, meta: { rows_read: 5, rows_written: 0 } }],
++            }),
++            { headers: { "content-type": "application/json" } },
++          ),
++      ),
++    );
++    const db = new D1Client(config);
++    await expect(
++      db.query([{ sql: "SELECT * FROM blocks" }, { sql: "SELECT * FROM manifest" }]),
++    ).rejects.toThrow("D1 query failed");
++    expect(db.usageReport().rowsRead).toBeNull();
++    expect(db.usage[0].rowsRead).toBe(5);
++  });
++});
++
++it("extra REST results invalidate aggregate certainty", async () => {
++  vi.stubGlobal(
++    "fetch",
++    vi.fn(
++      async () =>
++        new Response(
++          JSON.stringify({
++            success: true,
++            result: [
++              { success: true, meta: { rows_read: 1, rows_written: 0, duration: 1 } },
++              { success: true, meta: { rows_read: 99, rows_written: 0, duration: 1 } },
++            ],
++          }),
++          { headers: { "content-type": "application/json" } },
++        ),
++    ),
++  );
++  const db = new D1Client(config);
++  await expect(db.query({ sql: "SELECT * FROM manifest" })).rejects.toThrow();
++  expect(db.usageReport()).toMatchObject({ rowsRead: null, rowsWritten: null, durationMs: null });
++  vi.unstubAllGlobals();
++});
++
++it("retains exact statement metadata from a failed non-2xx JSON response without retry", async () => {
++  const mock = vi.fn().mockResolvedValue(
++    new Response(
++      JSON.stringify({
++        success: false,
++        errors: [{ message: "budget exhausted" }],
++        result: [
++          { success: false, meta: { rows_read: 7, rows_written: 2, duration: 3, changes: 0 } },
++        ],
++      }),
++      { status: 429, headers: { "content-type": "application/json" } },
++    ),
++  );
++  vi.stubGlobal("fetch", mock);
++  try {
++    const db = new D1Client(config);
++    await expect(db.query({ sql: "SELECT * FROM blocks" })).rejects.toThrow("budget exhausted");
++    expect(mock).toHaveBeenCalledOnce();
++    expect(db.usageReport()).toMatchObject({ rowsRead: 7, rowsWritten: 2, durationMs: 3 });
++    expect(db.usage[0].success).toBe(false);
++  } finally {
++    vi.unstubAllGlobals();
++  }
++});
+diff --git a/tests/unit/fetchers.test.ts b/tests/unit/fetchers.test.ts
+index fe2674422..59a72b670 100644
+--- a/tests/unit/fetchers.test.ts
++++ b/tests/unit/fetchers.test.ts
+@@ -1,5 +1,12 @@
+ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
+-import { fetchWithRetry } from "../../scripts/lib/sync/fetchers";
++import { createHash } from "node:crypto";
++import { fetchCsvRows, fetchJson, fetchWithRetry } from "../../scripts/lib/sync/fetchers";
++
++// Fetcher tests exercise request/response semantics; pacing has its own rate-limit suite.
++vi.mock("../../scripts/lib/sync/rate-limits", async (importOriginal) => ({
++  ...(await importOriginal<typeof import("../../scripts/lib/sync/rate-limits")>()),
++  waitForUpstreamSlot: vi.fn().mockResolvedValue(undefined),
++}));
+ 
+ const mockFetch = vi.fn<typeof fetch>();
+ 
+@@ -53,3 +60,79 @@ describe("fetchWithRetry", () => {
+     expect(mockFetch).toHaveBeenCalledTimes(1);
+   });
+ });
++
++describe("official data.gov.sg download flow", () => {
++  beforeEach(() => {
++    vi.stubGlobal("fetch", mockFetch);
++    mockFetch.mockReset();
++  });
++  afterEach(() => {
++    vi.unstubAllGlobals();
++    vi.unstubAllEnvs();
++  });
++  it("initiates with GET and stops on access denial instead of polling", async () => {
++    mockFetch.mockResolvedValueOnce(new Response("denied", { status: 403 }));
++    await expect(fetchCsvRows("test-dataset")).rejects.toThrow("403");
++    expect(mockFetch).toHaveBeenCalledOnce();
++    const [url, init] = mockFetch.mock.calls[0];
++    expect(url).toContain("/initiate-download");
++    expect(init?.method ?? "GET").toBe("GET");
++    expect(init?.body).toBeUndefined();
++  });
++  it("captures exact delivered BOM bytes without changing the default parsed result", async () => {
++    const body = new TextEncoder().encode("\uFEFFmonth,town\r\n2026-09,BEDOK\r\n");
++    const respond = () => {
++      mockFetch
++        .mockResolvedValueOnce(new Response("{}"))
++        .mockResolvedValueOnce(
++          new Response(JSON.stringify({ data: { url: "https://example.test/fixture.csv" } })),
++        )
++        .mockResolvedValueOnce(new Response(body));
++    };
++    respond();
++    const capture = vi.fn();
++    const observed = await fetchCsvRows("fixture", capture);
++    expect(observed).toEqual([{ month: "2026-09", town: "BEDOK" }]);
++    expect(capture).toHaveBeenCalledOnce();
++    expect(capture.mock.calls[0][0]).toEqual({
++      datasetId: "fixture",
++      bodySHA256: createHash("sha256").update(body).digest("hex"),
++      bytes: body.length,
++      rows: 1,
++      capturedAtUTC: expect.any(String),
++    });
++    expect(Array.from(capture.mock.calls[0][1] as Uint8Array)).toEqual(Array.from(body));
++    respond();
++    expect(await fetchCsvRows("fixture")).toEqual(observed);
++  });
++  it("does not persist a CSV checkpoint when the parser rejects the body", async () => {
++    mockFetch
++      .mockResolvedValueOnce(new Response("{}"))
++      .mockResolvedValueOnce(
++        new Response(JSON.stringify({ data: { url: "https://example.test/fixture.csv" } })),
++      )
++      .mockResolvedValueOnce(new Response('month,town\n2026-09,"unterminated'));
++    const capture = vi.fn();
++    await expect(fetchCsvRows("fixture", capture)).rejects.toThrow("CSV parse error");
++    expect(capture).not.toHaveBeenCalled();
++  });
++});
++
++it("scopes the optional data.gov.sg API key to official API hosts", async () => {
++  vi.stubEnv("DATA_GOV_API_KEY", "fixture-key");
++  const fetchMock = vi
++    .fn()
++    .mockImplementation(
++      async () => new Response("{}", { headers: { "content-type": "application/json" } }),
++    );
++  vi.stubGlobal("fetch", fetchMock);
++  try {
++    await fetchJson("https://api-production.data.gov.sg/v2/public/api/datasets/fixture/metadata");
++    await fetchJson("https://www.onemap.gov.sg/api/common/elastic/search");
++    expect(new Headers(fetchMock.mock.calls[0][1].headers).get("x-api-key")).toBe("fixture-key");
++    expect(new Headers(fetchMock.mock.calls[1][1].headers).get("x-api-key")).toBeNull();
++  } finally {
++    vi.unstubAllEnvs();
++    vi.unstubAllGlobals();
++  }
++});
+diff --git a/tests/unit/syncDataCoordinator.test.ts b/tests/unit/syncDataCoordinator.test.ts
+index 679480342..35fd59d70 100644
+--- a/tests/unit/syncDataCoordinator.test.ts
++++ b/tests/unit/syncDataCoordinator.test.ts
+@@ -41,6 +41,7 @@ describe("sync-data coordinator helpers", () => {
+     expect(result.supermarkets).toHaveLength(1);
+     expect(result.parks).toEqual([]);
+     expect(result.geocodedCount).toBe(2);
++    expect(result.failedSources).toEqual(["schools", "parks"]);
+     expect(warnSpy).toHaveBeenCalledTimes(2);
+     warnSpy.mockRestore();
+   });

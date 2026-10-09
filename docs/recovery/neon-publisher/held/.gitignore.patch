@@ -1,0 +1,14 @@
+diff --git a/.gitignore b/.gitignore
+index 47cc24f90..ad1a581cb 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -161,3 +161,9 @@ public/api/
+ # Legacy on-disk geocode/routing caches — replaced by D1 tables.
+ data/cache/
+ .impeccable/
++.neon
++
++# Neon agent tooling and private benchmark scratch state
++.claude/skills/
++skills-lock.json
++.neon-benchmark/
