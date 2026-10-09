@@ -32,7 +32,7 @@ The migration's source-failure test is `sql/neon/verify_mrt_failclosed.sql` (san
 
 ## Bounded nearby search and cache
 
-Accepted query coordinates are restricted to latitude [1.15, 1.55] and longitude [103.55, 104.15]. The query centre is snapped to the nearest **0.0001°** on *both* axes before **both** the SQL call and the Worker Cache API key are formed. The response publishes the snapped centre, never an unrounded centre masquerading as the query point.
+Accepted query coordinates are restricted to latitude [1.15, 1.55] and longitude [103.55, 104.15]. The query centre is snapped to the nearest **0.0001°** on _both_ axes before **both** the SQL call and the Worker Cache API key are formed. The response publishes the snapped centre, never an unrounded centre masquerading as the query point.
 
 Each coordinate differs by at most 0.00005°, or approximately **7.88 m at worst along the diagonal** using the conservative 111.32 km/degree bound. For a 100 m minimum radius this can shift the inclusion boundary by up to ~7.9 m; results are explicitly approximate near a radius edge. A finer grid would reduce that error at the cost of a larger cache key space.
 
@@ -44,23 +44,23 @@ The spatial query searches `block_locations` joined by primary key to `blocks` a
 
 Disposable Neon branch **`postgis-type-safe-review-20261009`** (`br-orange-sky-b30msckg`), forked from `br-rough-frost-b3e2ks1b`; PG18/PostGIS 3.6 series. Administrative/migration connection was `neondb_owner`.
 
-| Sandbox observation | Verified |
-| --- | ---: |
-| HDB source blocks / derived block points | 9,730 / 9,730 |
-| MRT stations / MRT exits | 190 / 613 |
-| Coordinate discrepancies across both derived tables | 0 |
-| Unsupported types in the nine scanned publisher tables | 0 |
-| Generated location and two GiST indexes | Present |
-| HDB + MRT 1 km query returned results | 25 |
-| Measured single execution / planning time | 1.785 ms / 0.542 ms |
-| Spatial indexes in the query plan | Both GiST indexes |
-| Changing a block coordinate updated derived point, then restored | Passed |
-| Missing exit code, duplicate station name, non-Point geometry | All rejected; source/POI hashes unchanged |
-| Unchanged MRT source update | No POI MVCC row changes |
-| Sandbox trigger source writes as `neondb_owner` (current writer role) | Passed; non-coordinate updates leave derived `xmin` intact |
-| Actual secret publisher connection | **Not inspected**; role inventory and source writes verified as current owner |
-| Web-serving candidate update method | **Static snapshot**; no refresh publisher or schedule currently targets it |
-| Production migration or Worker serving probe | **Not attempted** |
+| Sandbox observation                                                   |                                                                      Verified |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------: |
+| HDB source blocks / derived block points                              |                                                                 9,730 / 9,730 |
+| MRT stations / MRT exits                                              |                                                                     190 / 613 |
+| Coordinate discrepancies across both derived tables                   |                                                                             0 |
+| Unsupported types in the nine scanned publisher tables                |                                                                             0 |
+| Generated location and two GiST indexes                               |                                                                       Present |
+| HDB + MRT 1 km query returned results                                 |                                                                            25 |
+| Measured single execution / planning time                             |                                                           1.785 ms / 0.542 ms |
+| Spatial indexes in the query plan                                     |                                                             Both GiST indexes |
+| Changing a block coordinate updated derived point, then restored      |                                                                        Passed |
+| Missing exit code, duplicate station name, non-Point geometry         |                                     All rejected; source/POI hashes unchanged |
+| Unchanged MRT source update                                           |                                                       No POI MVCC row changes |
+| Sandbox trigger source writes as `neondb_owner` (current writer role) |                    Passed; non-coordinate updates leave derived `xmin` intact |
+| Actual secret publisher connection                                    | **Not inspected**; role inventory and source writes verified as current owner |
+| Web-serving candidate update method                                   |    **Static snapshot**; no refresh publisher or schedule currently targets it |
+| Production migration or Worker serving probe                          |                                                             **Not attempted** |
 
 The 1.785 ms sample is a single plan/execution, **not** p50/p95 or an edge/Hyperdrive measurement. PostgreSQL planner and network results for future 1M-point data remain unmeasured.
 

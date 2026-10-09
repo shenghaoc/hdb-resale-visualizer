@@ -66,7 +66,9 @@ describe("bounded PostGIS nearby endpoint", () => {
 
   it("buckets radii upward and collapses equivalent requests onto one SQL/cache key", () => {
     const first = parseNearbyPlacesRequest(url("?lat=1.350001&lng=103.750001&radius=101"));
-    const second = parseNearbyPlacesRequest(url("?lat=1.350049&lng=103.750049&radius=249&limit=25"));
+    const second = parseNearbyPlacesRequest(
+      url("?lat=1.350049&lng=103.750049&radius=249&limit=25"),
+    );
     expect(first.ok).toBe(true);
     expect(second.ok).toBe(true);
     if (!first.ok || !second.ok) return;

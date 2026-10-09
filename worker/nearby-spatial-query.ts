@@ -2,7 +2,14 @@
  * Neon-only, parameterized index-aware proximity query. Do not insert coordinates
  * into SQL text. The separate derived PostGIS geography tables have matching GiST indexes.
  */
-import { bucketNearbyRadius, NEARBY_FIXED_LIMIT, snapNearbyCenter, type NearbyPlace, type NearbyPlacesRequest, type NearbyPlaceKind } from "../shared/nearby-places";
+import {
+  bucketNearbyRadius,
+  NEARBY_FIXED_LIMIT,
+  snapNearbyCenter,
+  type NearbyPlace,
+  type NearbyPlacesRequest,
+  type NearbyPlaceKind,
+} from "../shared/nearby-places";
 
 export type SpatialReadQuery = (
   sql: string,
