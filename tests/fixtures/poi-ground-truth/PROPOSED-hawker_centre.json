@@ -1,0 +1,1544 @@
+{
+  "notice": "AGENT-PROPOSED AND UNREVIEWED. These labels were proposed by an AI agent from small samples fetched on 2026-10-09 (UTC). They are NOT a ground truth until the project owner approves them under the labelling protocol in .kiro/specs/poi-source-integration/design.md. Until then do not import this file in any test, do not use it to tune thresholds, and do not compute or report precision, recall or any other accuracy figure against it. The entries were hand-picked to illustrate cases; they are not a random sample and cannot support any rate estimate even after approval.",
+  "status": "PROPOSED-UNAPPROVED",
+  "schemaVersion": 1,
+  "poiKind": "hawker_centre",
+  "proposedOn": "2026-10-10",
+  "proposedBy": "AI agent (Claude), from the saved samples only",
+  "approvedBy": null,
+  "approvedOn": null,
+  "metricsPolicy": "Metrics (precision, recall, false-merge rate) are only ever reported against owner-approved labels, drawn from a seeded random sample of candidate pairs. This file is neither. No such figure has been computed anywhere.",
+  "labellingProtocol": ".kiro/specs/poi-source-integration/design.md#labelling-protocol",
+  "classSemantics": "proposedClass is the strength-of-evidence class that the rule table in design.md assigns to the two records shown, independent of whether either source is admitted. proposedRelationHolds is the separate truth proposal (yes, no, part-of, undetermined, no-counterpart-in-sample) the owner is asked to confirm or correct.",
+  "relationVocabulary": {
+    "same-entity": "The two records describe the same real-world place.",
+    "same-physical-exit": "Two records inside one source that might describe one physical exit (intra-source duplicate check).",
+    "exit-belongs-to-station-footprint": "An exit point and a station outline: membership, not identity.",
+    "intra-source-sibling": "Two records of one source that might be mistaken for each other."
+  },
+  "classVocabulary": {
+    "verified": "Two independent sources agree on identity through a shared key or exact name AND tight geometry, uniquely (rule ids R-VER-*).",
+    "rule-supported": "No shared key, but one named rule in design.md is satisfied by a unique mutual candidate (rule ids R-RS-*).",
+    "ambiguous": "More than one candidate, conflicting channels, granularity mismatch, or too little evidence. Never auto-merged (rule ids R-AMB-*).",
+    "unmatched": "No candidate in the other sampled source satisfies even the weakest rule (R-UNM-NO-CANDIDATE). It says nothing about whether the place exists.",
+    "rejected": "A candidate that passed blocking and failed a hard-negative rule (rule ids R-REJ-*). Kept so it is never re-proposed."
+  },
+  "ruleVocabulary": {
+    "R-AMB-GEO-ONLY": "Geometry agrees, names disagree or one is address-style.",
+    "R-REJ-DOMINATED": "A record of the pair is already taken by a stronger verified or rule-supported partner, and this pair is only a spelling variant, a subtype variant or a different name.",
+    "R-REJ-LIFECYCLE": "Lifecycle or subtype conflict (under construction vs existing, MRT vs LRT, monorail, former railway).",
+    "R-REJ-NAME-FAR": "Names differ (or the name is unusable) and the points are beyond the wide band.",
+    "R-RS-ALIAS-GEO": "Name equal only through a record-supplied alias, geometry within the tight or wide band.",
+    "R-RS-EXACT-WIDE": "Name exact, geometry in the wide band only.",
+    "R-RS-NEAR-GEO": "Name near (spelling, strict extension or subtype-subset), geometry within the tight or wide band.",
+    "R-UNM-NO-CANDIDATE": "No candidate passes the minimum predicate in the other sampled source.",
+    "R-VER-NAME-GEO": "No key; name exact AND geometry within the tight band, unique mutual candidate."
+  },
+  "sources": {
+    "nea-hawker-centres-geojson": {
+      "publisher": "National Environment Agency (managedBy in dataset metadata)",
+      "title": "Hawker Centres (GEOJSON)",
+      "datasetId": "d_4a086da0a5553be1d89383cd90d07ecd",
+      "datasetUrl": "https://data.gov.sg/datasets/d_4a086da0a5553be1d89383cd90d07ecd/view",
+      "licence": {
+        "name": "Singapore Open Data Licence version 1.0",
+        "url": "https://data.gov.sg/open-data-licence"
+      },
+      "retrievedAt": "2026-10-09T19:04:14Z",
+      "upstreamLastUpdatedAt": "2026-10-09T10:06:43+08:00",
+      "recordsInSample": 129,
+      "crs": "WGS84 lon/lat geometry; LANDXADDRESSPOINT/LANDYADDRESSPOINT are SVY21 (EPSG:3414) attributes"
+    },
+    "wikidata-sparql": {
+      "publisher": "Wikidata community (Wikimedia Foundation)",
+      "title": "Wikidata Query Service (SPARQL) results",
+      "datasetId": "https://query.wikidata.org/sparql",
+      "datasetUrl": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+      "licence": {
+        "name": "CC0 1.0 (structured data)",
+        "url": "https://www.wikidata.org/wiki/Wikidata:Licensing"
+      },
+      "retrievedAt": {
+        "stations": "2026-10-09T19:24:20Z",
+        "schools": "2026-10-09T19:25:03Z",
+        "parksHawkerSupermarket": "2026-10-09T19:25:44Z"
+      },
+      "upstreamLastUpdatedAt": null,
+      "recordsInSample": "stations 242 items with coordinates, schools 236, parks/gardens/reserves 140, hawker-or-food-centre labels 46",
+      "crs": "WGS84 lon/lat (WKT Point(lon lat)); coordinates are often copied from Wikipedia and sometimes DMS-rounded",
+      "note": "Not an admitted source. Used only as evidence for these proposals; 39 of 46 hawker items and 94 of 236 school items carry no reference on the coordinate statement (see docs/architecture/poi-source-admission.md)."
+    }
+  },
+  "entryCount": 38,
+  "entries": [
+    {
+      "id": "hawker_centre-001",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119468",
+        "name": "Zion Riverside Food Centre",
+        "lon": 103.831189,
+        "lat": 1.2923422,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "247792",
+          "ADDRESSBUILDINGNAME": "ZION RIVERSIDE FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q131579932",
+        "name": "Zion Riverside Food Centre",
+        "lon": 103.831189,
+        "lat": 1.292342,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q131579932",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Zion Riverside Food Centre'); 0 m apart; unique.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-002",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119467",
+        "name": "Bedok Food Centre",
+        "lon": 103.9554776,
+        "lat": 1.3203502,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "469572",
+          "ADDRESSBUILDINGNAME": "BEDOK FOOD CENTRE",
+          "FMEL_UPD_D": "20250807100106"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803636",
+        "name": "Bedok Food Centre",
+        "lon": 103.9554883,
+        "lat": 1.3203553,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803636",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 1.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Bedok Food Centre'); 1.3 m apart; unique.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-003",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119479",
+        "name": "Golden Mile Food Centre",
+        "lon": 103.8638776,
+        "lat": 1.3031418,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "199583",
+          "ADDRESSBUILDINGNAME": "GOLDEN MILE FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803921",
+        "name": "Golden Mile Food Centre",
+        "lon": 103.8638432,
+        "lat": 1.3031618,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803921",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 4.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Golden Mile Food Centre'); 4.4 m apart; unique.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-004",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119450",
+        "name": "Margaret Drive Hawker Centre",
+        "lon": 103.8046938,
+        "lat": 1.2974866,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing (replacement)",
+          "ADDRESSPOSTALCODE": "142038",
+          "ADDRESSBUILDINGNAME": "SKYRESIDENCE @ DAWSON",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135679108",
+        "name": "Margaret Drive Hawker Centre",
+        "lon": 103.804675,
+        "lat": 1.297531,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135679108",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 5.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact; 5.3 m apart; NEA status 'Existing (replacement)' is an existing lifecycle state.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-005",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119466",
+        "name": "Pasir Panjang Food Centre",
+        "lon": 103.7914109,
+        "lat": 1.275918,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "118543",
+          "ADDRESSBUILDINGNAME": "PASIR PANJANG FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135679134",
+        "name": "Pasir Panjang Food Centre",
+        "lon": 103.791315,
+        "lat": 1.275961,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135679134",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 11.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Pasir Panjang Food Centre'); 11.7 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-006",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119489",
+        "name": "Chomp Chomp Food Centre",
+        "lon": 103.866527,
+        "lat": 1.3642325,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "557269",
+          "ADDRESSBUILDINGNAME": "CHOMP CHOMP FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803674",
+        "name": "Chomp Chomp Food Centre",
+        "lon": 103.8663889,
+        "lat": 1.3641667,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803674",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 17,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Chomp Chomp Food Centre'); 17 m apart; the neighbouring NEA record Serangoon Garden Market is not a candidate for this item (see its own entry).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-007",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119488",
+        "name": "Holland Village Market and Food Centre",
+        "lon": 103.7948764,
+        "lat": 1.311073,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "277700",
+          "ADDRESSBUILDINGNAME": "HOLLAND VILLAGE MARKET & FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803937",
+        "name": "Holland Village Market & Food Centre",
+        "lon": 103.794901,
+        "lat": 1.311129,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803937",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        },
+        "alternateCoordinates": [
+          {
+            "lon": 103.7947603,
+            "lat": 1.3110194,
+            "distanceFromRecordAMetres": 14.2
+          }
+        ]
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 6.8,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names equal after '&' and 'and' are unified; 6.8 m apart. Wikidata lists two coordinate values for the item; the nearer one is used here.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-008",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119373",
+        "name": "Pasir Ris Central Hawker Centre",
+        "lon": 103.9515713,
+        "lat": 1.3734725,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing (new)",
+          "ADDRESSPOSTALCODE": "519641",
+          "ADDRESSBUILDINGNAME": "PASIR RIS CENTRAL HAWKER CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685422",
+        "name": "Pasir Ris Central Hawker Centre",
+        "lon": 103.951548,
+        "lat": 1.373377,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685422",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 10.9,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Pasir Ris Central Hawker Centre'); 10.9 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-009",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119459",
+        "name": "Woodleigh Village Hawker Centre",
+        "lon": 103.8720138,
+        "lat": 1.339791,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing (new)",
+          "ADDRESSPOSTALCODE": "363202",
+          "ADDRESSBUILDINGNAME": "WOODLEIGH VILLAGE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685859",
+        "name": "Woodleigh Village Hawker Centre",
+        "lon": 103.871578,
+        "lat": 1.339824,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685859",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 48.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names exact ('Woodleigh Village Hawker Centre'); 48.6 m apart, inside the tight band.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-010",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119469",
+        "name": "Maxwell Food Centre (Kim Hua Market)",
+        "lon": 103.8447472,
+        "lat": 1.2803314,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "069184",
+          "ADDRESSBUILDINGNAME": "MAXWELL FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107145227",
+        "name": "Maxwell Food Centre",
+        "lon": 103.844767,
+        "lat": 1.280336,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107145227",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 2.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "The NEA name before the parenthesis ('Maxwell Food Centre') equals the Wikidata label; the parenthesised 'Kim Hua Market' is an alias; 2.3 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-011",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119473",
+        "name": "Sembawang Hills Food Centre (Jalan Leban Food Centre)",
+        "lon": 103.8290181,
+        "lat": 1.3723195,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "574419",
+          "ADDRESSBUILDINGNAME": "SEMBAWANG HILLS FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q131742778",
+        "name": "Sembawang Hills Food Centre",
+        "lon": 103.8288889,
+        "lat": 1.3722222,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q131742778",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 18,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "The NEA name before the parenthesis equals the Wikidata label; 18 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-012",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119426",
+        "name": "Geylang Bahru Blk 69 (Blk 69 Geylang Bahru Market and Food Centre)",
+        "lon": 103.870005,
+        "lat": 1.3214631,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "330069",
+          "ADDRESSBUILDINGNAME": "GEYLANG BAHRU MARKET AND FOOD CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135680381",
+        "name": "Blk 69 Geylang Bahru Market and Food Centre",
+        "lon": 103.8700349,
+        "lat": 1.3214245,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135680381",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 5.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-ALIAS-GEO"],
+      "reason": "The Wikidata label equals the parenthesised alias in the NEA name (the NEA NAME mixes an address label and a common name); 5.4 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-013",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119434",
+        "name": "Jalan Batu Blk 4A (Blk 4A Jalan Batu Hawker Centre/Market)",
+        "lon": 103.8839095,
+        "lat": 1.3023603,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "432004",
+          "ADDRESSBUILDINGNAME": "JALAN BATU HAWKER CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685020",
+        "name": "Blk 4A Jalan Batu Hawker Centre & Market",
+        "lon": 103.883892,
+        "lat": 1.302342,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685020",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 2.8,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-ALIAS-GEO"],
+      "reason": "Wikidata label equals the NEA alias; 2.8 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-014",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119424",
+        "name": "Empress Road Blk 7 (Empress Road Market and Food Centre)",
+        "lon": 103.8056367,
+        "lat": 1.3162405,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "260007",
+          "ADDRESSBUILDINGNAME": "EMPRESS ROAD MARKET AND FOOD CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135680351",
+        "name": "Empress Road Market and Food Centre",
+        "lon": 103.805644,
+        "lat": 1.316229,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135680351",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 1.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-ALIAS-GEO"],
+      "reason": "Wikidata label equals the NEA alias; 1.5 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-015",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119378",
+        "name": "Sims Place Blk 49 (Sims Vista Market and Food Centre)",
+        "lon": 103.8793099,
+        "lat": 1.317035,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "380049",
+          "ADDRESSBUILDINGNAME": "SIMS VISTA MARKET AND FOOD CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685125",
+        "name": "Sims Vista Market and Food Centre",
+        "lon": 103.879297,
+        "lat": 1.317026,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685125",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 1.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-ALIAS-GEO"],
+      "reason": "Wikidata label equals the NEA alias ('Sims Vista Market and Food Centre'); 1.7 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-016",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119374",
+        "name": "Queen Street Blk 270 (Albert Centre)",
+        "lon": 103.8541158,
+        "lat": 1.301102,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "180270",
+          "ADDRESSBUILDINGNAME": "ALBERT CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135679423",
+        "name": "Albert Centre Market & Food Centre",
+        "lon": 103.8541,
+        "lat": 1.301055,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135679423",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 5.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "NEA alias 'Albert Centre' is a subset of the Wikidata name 'Albert Centre Market & Food Centre' (subtype words added); 5.5 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-017",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119484",
+        "name": "Adam Road Food Centre",
+        "lon": 103.8141659,
+        "lat": 1.3241599,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "289876",
+          "ADDRESSBUILDINGNAME": "ADAM FOOD CENTRE",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803618",
+        "name": "Adam Food Centre",
+        "lon": 103.814157,
+        "lat": 1.324164,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803618",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        },
+        "alternateCoordinates": [
+          {
+            "lon": 103.8144444,
+            "lat": 1.3241667,
+            "distanceFromRecordAMetres": 31
+          }
+        ]
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 1.1,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "'Adam Road Food Centre' strictly extends 'Adam Food Centre'; 1.1 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-018",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119433",
+        "name": "Hougang Street 21 Blk 209 (Kovan Hougang Market and Food Centre)",
+        "lon": 103.8860554,
+        "lat": 1.3590838,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "530209",
+          "ADDRESSBUILDINGNAME": "KOVAN HOUGANG MARKET AND FOOD CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685052",
+        "name": "Kovan Market and Food Centre",
+        "lon": 103.886091,
+        "lat": 1.359082,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685052",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "The NEA alias 'Kovan Hougang Market and Food Centre' extends the Wikidata label 'Kovan Market and Food Centre'; 4 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-019",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119372",
+        "name": "Old Airport Road Blk 51 (51 Old Airport Road Food Centre and Shopping Mall)",
+        "lon": 103.8858087,
+        "lat": 1.3082518,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "390051",
+          "ADDRESSBUILDINGNAME": "51 OLD AIRPORT ROAD FOOD CENTRE AND SHOPPING MALL",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803720",
+        "name": "Old Airport Road Food Centre",
+        "lon": 103.8855315,
+        "lat": 1.3078803,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803720",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 51.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "The NEA alias adds 'Shopping Mall' and a street number to 'Old Airport Road Food Centre'; 51.4 m apart, inside the wide band.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-020",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119432",
+        "name": "Hawker Centre @ Our Tampines Hub",
+        "lon": 103.9404081,
+        "lat": 1.3531336,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing (new)",
+          "ADDRESSPOSTALCODE": "528523",
+          "ADDRESSBUILDINGNAME": "OUR TAMPINES HUB",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685305",
+        "name": "The Hawker Centre @ Our Tampines Hub",
+        "lon": 103.939891,
+        "lat": 1.353765,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685305",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 90.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-EXACT-WIDE"],
+      "reason": "Names equal once the leading 'The' is dropped, but the points are 90.5 m apart: wide band only.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-021",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119454",
+        "name": "Bukit Canberra Hawker Centre",
+        "lon": 103.8227636,
+        "lat": 1.4482634,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing (new)",
+          "ADDRESSPOSTALCODE": "756973",
+          "ADDRESSBUILDINGNAME": "BUKIT CANBERRA",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q122964274",
+        "name": "Bukit Canberra Hawker Centre",
+        "lon": 103.822713,
+        "lat": 1.448912,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q122964274",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 71.9,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-EXACT-WIDE"],
+      "reason": "Names exact, but the points are 71.9 m apart: wide band only.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-022",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119486",
+        "name": "New Market Road Blk 32 (People's Park Food Centre)",
+        "lon": 103.8425788,
+        "lat": 1.2848586,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "050032",
+          "ADDRESSBUILDINGNAME": null,
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803732",
+        "name": "People's Park Food Centre",
+        "lon": 103.842578,
+        "lat": 1.285011,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803732",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 16.9,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-ALIAS-GEO"],
+      "reason": "The Wikidata label equals the NEA alias ('People's Park Food Centre'); 16.9 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-023",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119449",
+        "name": "Yishun Ring Road Blk 104/105 (Chong Pang Market and Food Centre)",
+        "lon": 103.8285377,
+        "lat": 1.4314478,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "760104",
+          "ADDRESSBUILDINGNAME": "CHONG PANG MARKET & FOOD CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135680049",
+        "name": "Chong Pang Market & Food Centre",
+        "lon": 103.828228,
+        "lat": 1.431665,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135680049",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "nea-hawker-centres-geojson",
+          "sourceRecordId": "119474",
+          "name": "Chong Pang Hawker Centre & Market",
+          "lon": 103.8290174,
+          "lat": 1.430854,
+          "positionKind": "source-point",
+          "properties": {
+            "STATUS": "Under Construction",
+            "ADDRESSPOSTALCODE": "768677",
+            "ADDRESSBUILDINGNAME": "Chong Pang City",
+            "FMEL_UPD_D": "20250405100117"
+          },
+          "distanceFromRecordAMetres": 84.6
+        }
+      ],
+      "distanceMetres": 42,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-ALIAS-GEO"],
+      "reason": "The Wikidata label equals the NEA alias of the existing centre (42 m away). A second NEA record, the under-construction replacement, has a near-identical name but is excluded by its lifecycle status, which keeps this candidate unique.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-024",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119370",
+        "name": "New Upper Changi Road Blk 208B",
+        "lon": 103.9305703,
+        "lat": 1.3247824,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "462208",
+          "ADDRESSBUILDINGNAME": "HAWKER CENTRE (BLK 208B NEW UPPER CHANGI ROAD)",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685071",
+        "name": "Bedok Interchange Hawker Centre",
+        "lon": 103.93057,
+        "lat": 1.324668,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685071",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 12.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-GEO-ONLY"],
+      "reason": "NEA names this record only by address ('New Upper Changi Road Blk 208B'); Wikidata calls the item Bedok Interchange Hawker Centre; the points are 12.6 m apart. Geometry agrees, names cannot be compared.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-025",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119474",
+        "name": "Chong Pang Hawker Centre & Market",
+        "lon": 103.8290174,
+        "lat": 1.430854,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Under Construction",
+          "ADDRESSPOSTALCODE": "768677",
+          "ADDRESSBUILDINGNAME": "Chong Pang City",
+          "FMEL_UPD_D": "20250405100117"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135680049",
+        "name": "Chong Pang Market & Food Centre",
+        "lon": 103.828228,
+        "lat": 1.431665,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135680049",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "nea-hawker-centres-geojson",
+          "sourceRecordId": "119449",
+          "name": "Yishun Ring Road Blk 104/105 (Chong Pang Market and Food Centre)",
+          "lon": 103.8285377,
+          "lat": 1.4314478,
+          "positionKind": "source-point",
+          "properties": {
+            "STATUS": "Existing",
+            "ADDRESSPOSTALCODE": "760104",
+            "ADDRESSBUILDINGNAME": "CHONG PANG MARKET & FOOD CENTRE",
+            "FMEL_UPD_D": "20260313100124"
+          },
+          "distanceFromRecordAMetres": 84.6
+        }
+      ],
+      "distanceMetres": 125.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-DOMINATED"],
+      "reason": "NEA status is 'Under Construction' (a replacement for the existing centre, whose NEA alias equals the Wikidata label and which is the dominant partner); the points are 125.5 m apart. The admission gate excludes this record before matching anyway.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-026",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119375",
+        "name": "Redhill Lane Blk 79 (Redhill Market)",
+        "lon": 103.8183521,
+        "lat": 1.2878432,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "150079",
+          "ADDRESSBUILDINGNAME": "REDHILL MARKET",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685113",
+        "name": "Redhill Food Centre",
+        "lon": 103.8183277,
+        "lat": 1.2872986,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685113",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "nea-hawker-centres-geojson",
+          "sourceRecordId": "119376",
+          "name": "Redhill Lane Blk 85 (Redhill Food Centre)",
+          "lon": 103.8183112,
+          "lat": 1.2873075,
+          "positionKind": "source-point",
+          "properties": {
+            "STATUS": "Existing",
+            "ADDRESSPOSTALCODE": "150085",
+            "ADDRESSBUILDINGNAME": "REDHILL FOOD CENTRE",
+            "FMEL_UPD_D": "20260313100124"
+          },
+          "distanceFromRecordAMetres": 59.4
+        }
+      ],
+      "distanceMetres": 60.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-DOMINATED"],
+      "reason": "'Redhill Market' (Blk 79) and 'Redhill Food Centre' (Blk 85) are two NEA records; the Wikidata item is the food centre and is 60.3 m from this one but a few metres from Blk 85, the dominant exact partner.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-027",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119472",
+        "name": "Serangoon Garden Market",
+        "lon": 103.8667249,
+        "lat": 1.363085,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "555945",
+          "ADDRESSBUILDINGNAME": "SERANGOON GARDEN MARKET",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q107803674",
+        "name": "Chomp Chomp Food Centre",
+        "lon": 103.8663889,
+        "lat": 1.3641667,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q107803674",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 125.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-DOMINATED"],
+      "reason": "Serangoon Garden Market is 125.3 m from the Chomp Chomp item, whose exact partner is the NEA record Chomp Chomp Food Centre.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-028",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119379",
+        "name": "Smith Street Blk 335 (Chinatown Complex Market)",
+        "lon": 103.8432385,
+        "lat": 1.282275,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "050335",
+          "ADDRESSBUILDINGNAME": "CHINATOWN COMPLEX",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q111180930",
+        "name": "Hawker Chan",
+        "lon": 103.842927,
+        "lat": 1.2829894,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q111180930",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q107803670",
+          "name": "Chinatown Complex Market and Food Centre",
+          "lon": 103.843316,
+          "lat": 1.282596,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q107803670",
+          "properties": {
+            "instanceOfClosureMatched": ["label:hawker"]
+          },
+          "distanceFromRecordAMetres": 36.5
+        }
+      ],
+      "distanceMetres": 86.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-DOMINATED"],
+      "reason": "The Wikidata item 'Hawker Chan' is a restaurant brand whose label contains 'hawker'; it is 86.3 m from the Chinatown Complex record, whose real partner is the Chinatown Complex item.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-029",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119427",
+        "name": "Geylang Serai Market",
+        "lon": 103.8982279,
+        "lat": 1.3167363,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "402001",
+          "ADDRESSBUILDINGNAME": "SRI GEYLANG SERAI",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135680407",
+        "name": "Haig Road Market and Cooked Food Centre",
+        "lon": 103.895484,
+        "lat": 1.315411,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135680407",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 338.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-NAME-FAR"],
+      "reason": "Different names and 338.7 m apart: Geylang Serai Market and Haig Road Market are different places.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-030",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119401",
+        "name": "Bedok North Street 1 Blk 216",
+        "lon": 103.933218,
+        "lat": 1.3270627,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "460216",
+          "ADDRESSBUILDINGNAME": "MARKET & HAWKER CENTRE (BLK 216 BEDOK NORTH STREET 1)",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q135685071",
+        "name": "Bedok Interchange Hawker Centre",
+        "lon": 103.93057,
+        "lat": 1.324668,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q135685071",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 396.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-NAME-FAR"],
+      "reason": "An address-only NEA name 396.2 m from the Bedok Interchange item (whose own NEA record is a few metres away).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-031",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119465",
+        "name": "Tanglin Halt Hawker Centre & Market",
+        "lon": 103.7980317,
+        "lat": 1.299651,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Under Construction",
+          "ADDRESSPOSTALCODE": "141017",
+          "ADDRESSBUILDINGNAME": "Tanglin Halt Courtyard",
+          "FMEL_UPD_D": "20250807100106"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119475",
+        "name": "Tanglin Halt Market",
+        "lon": 103.797738,
+        "lat": 1.3005441,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "148813",
+          "ADDRESSBUILDINGNAME": "TANGLIN HALT MARKET",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 104,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "Tanglin Halt Hawker Centre & Market is 'Under Construction'; Tanglin Halt Market is 'Existing'; 104 m apart. A replacement under construction must not be merged with the existing market.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-032",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119460",
+        "name": "Bukit Timah Interim Hawker Centre and Market",
+        "lon": 103.7752147,
+        "lat": 1.3407879,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Interim Centre",
+          "ADDRESSPOSTALCODE": "599213",
+          "ADDRESSBUILDINGNAME": null,
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119463",
+        "name": "Bukit Timah Market",
+        "lon": 103.7763304,
+        "lat": 1.3392366,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Under Construction",
+          "ADDRESSPOSTALCODE": "588215",
+          "ADDRESSBUILDINGNAME": "BUKIT TIMAH MARKET",
+          "FMEL_UPD_D": "20250807100106"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 211.8,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "'Interim Centre' against 'Under Construction' for the same neighbourhood; different lifecycle states (and the interim record's SVY21 X/Y attributes are swapped in the source file).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-033",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119462",
+        "name": "Telok Blangah Hawker Centre & Market",
+        "lon": 103.808429,
+        "lat": 1.2732499,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Under Construction",
+          "ADDRESSPOSTALCODE": "103078",
+          "ADDRESSBUILDINGNAME": "TELOK BLANGAH BEACON",
+          "FMEL_UPD_D": "20250807100106"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119383",
+        "name": "Telok Blangah Drive Blk 79 (Telok Blangah Food Centre)",
+        "lon": 103.8076181,
+        "lat": 1.273356,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "100079",
+          "ADDRESSBUILDINGNAME": "TELOK BLANGAH FOOD CENTRE",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 91,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "Telok Blangah Hawker Centre & Market is 'Under Construction'; the Blk 79 food centre is 'Existing'; 91 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-034",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119478",
+        "name": "Tiong Bahru Market",
+        "lon": 103.8321815,
+        "lat": 1.2847856,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "168898",
+          "ADDRESSBUILDINGNAME": "TIONG BAHRU MARKET",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": null,
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "No Wikidata item with a hawker or food-centre label lies within 400 m. Says nothing about whether Tiong Bahru Market exists.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-035",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119408",
+        "name": "Buffalo Road Blk 665 (Tekka Centre/Zhu Jiao Market)",
+        "lon": 103.8505856,
+        "lat": 1.3061866,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Existing",
+          "ADDRESSPOSTALCODE": "210665",
+          "ADDRESSBUILDINGNAME": "ZHUJIAO CENTRE (TEKKA MARKET)",
+          "FMEL_UPD_D": "20260313100124"
+        }
+      },
+      "recordB": null,
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "No Wikidata item with a hawker or food-centre label within 400 m.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-036",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119464",
+        "name": "Tampines North Hawker Centre",
+        "lon": 103.9377764,
+        "lat": 1.3668484,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Under Construction",
+          "ADDRESSPOSTALCODE": "529385",
+          "ADDRESSBUILDINGNAME": "Parktown",
+          "FMEL_UPD_D": "20250807100106"
+        }
+      },
+      "recordB": null,
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "NEA status 'Under Construction'; no Wikidata counterpart. Under the status gate this record is excluded from the serving set.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-037",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "nea-hawker-centres-geojson",
+        "sourceRecordId": "119480",
+        "name": "Yew Tee Hawker Centre",
+        "lon": 103.7459216,
+        "lat": 1.3971847,
+        "positionKind": "source-point",
+        "properties": {
+          "STATUS": "Under Construction",
+          "ADDRESSPOSTALCODE": "680628",
+          "ADDRESSBUILDINGNAME": "Heart of Yew Tee",
+          "FMEL_UPD_D": "20241211100036"
+        }
+      },
+      "recordB": null,
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "NEA status 'Under Construction'; no Wikidata counterpart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "hawker_centre-038",
+      "relation": "same-entity",
+      "recordA": null,
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q5328142",
+        "name": "East Coast Seafood Centre",
+        "lon": 103.93,
+        "lat": 1.3052778,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q5328142",
+        "properties": {
+          "instanceOfClosureMatched": ["label:hawker"]
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "East Coast Seafood Centre: no NEA hawker record within 400 m. It is a seafood-restaurant cluster, not necessarily an NEA hawker centre.",
+      "reviewStatus": "unapproved"
+    }
+  ]
+}

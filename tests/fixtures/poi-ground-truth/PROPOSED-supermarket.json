@@ -1,0 +1,873 @@
+{
+  "notice": "AGENT-PROPOSED AND UNREVIEWED. These labels were proposed by an AI agent from small samples fetched on 2026-10-09 (UTC). They are NOT a ground truth until the project owner approves them under the labelling protocol in .kiro/specs/poi-source-integration/design.md. Until then do not import this file in any test, do not use it to tune thresholds, and do not compute or report precision, recall or any other accuracy figure against it. The entries were hand-picked to illustrate cases; they are not a random sample and cannot support any rate estimate even after approval.",
+  "status": "PROPOSED-UNAPPROVED",
+  "schemaVersion": 1,
+  "poiKind": "supermarket",
+  "proposedOn": "2026-10-10",
+  "proposedBy": "AI agent (Claude), from the saved samples only",
+  "approvedBy": null,
+  "approvedOn": null,
+  "metricsPolicy": "Metrics (precision, recall, false-merge rate) are only ever reported against owner-approved labels, drawn from a seeded random sample of candidate pairs. This file is neither. No such figure has been computed anywhere.",
+  "labellingProtocol": ".kiro/specs/poi-source-integration/design.md#labelling-protocol",
+  "classSemantics": "proposedClass is the strength-of-evidence class that the rule table in design.md assigns to the two records shown, independent of whether either source is admitted. proposedRelationHolds is the separate truth proposal (yes, no, part-of, undetermined, no-counterpart-in-sample) the owner is asked to confirm or correct.",
+  "relationVocabulary": {
+    "same-entity": "The two records describe the same real-world place.",
+    "same-physical-exit": "Two records inside one source that might describe one physical exit (intra-source duplicate check).",
+    "exit-belongs-to-station-footprint": "An exit point and a station outline: membership, not identity.",
+    "intra-source-sibling": "Two records of one source that might be mistaken for each other."
+  },
+  "classVocabulary": {
+    "verified": "Two independent sources agree on identity through a shared key or exact name AND tight geometry, uniquely (rule ids R-VER-*).",
+    "rule-supported": "No shared key, but one named rule in design.md is satisfied by a unique mutual candidate (rule ids R-RS-*).",
+    "ambiguous": "More than one candidate, conflicting channels, granularity mismatch, or too little evidence. Never auto-merged (rule ids R-AMB-*).",
+    "unmatched": "No candidate in the other sampled source satisfies even the weakest rule (R-UNM-NO-CANDIDATE). It says nothing about whether the place exists.",
+    "rejected": "A candidate that passed blocking and failed a hard-negative rule (rule ids R-REJ-*). Kept so it is never re-proposed."
+  },
+  "ruleVocabulary": {
+    "R-AMB-INTRA-COLLISION": "Intra-source: two records of one source with equal identity key (label and exit code, or licensee and postal code) and positions within the block radius. Never merged automatically; both kept and flagged.",
+    "R-REJ-INTRA-DISTINCT-KEY": "Intra-source: two records of one source with different identity keys (exit code, licensee). Distinct by construction.",
+    "R-UNM-NO-CANDIDATE": "No candidate passes the minimum predicate in the other sampled source."
+  },
+  "sources": {
+    "nea-sfa-list-of-supermarket-licences": {
+      "publisher": "National Environment Agency (managedBy in dataset metadata; the register concerns Singapore Food Agency supermarket licences)",
+      "title": "List of Supermarket Licences",
+      "datasetId": "d_11edd0117280c5776651d7891114c88c",
+      "datasetUrl": "https://data.gov.sg/datasets/d_11edd0117280c5776651d7891114c88c/view",
+      "licence": {
+        "name": "Singapore Open Data Licence version 1.0",
+        "url": "https://data.gov.sg/open-data-licence"
+      },
+      "retrievedAt": "2026-10-09T19:06:47Z",
+      "upstreamLastUpdatedAt": "2024-06-06T14:23:57+08:00",
+      "recordsInSample": 478,
+      "crs": "none: the register has no coordinates",
+      "note": "Licensees that are natural persons are deliberately not used in any entry."
+    }
+  },
+  "scopeNote": "The register has no coordinates and no second coordinate-bearing supermarket source was sampled (OpenStreetMap Overpass answered 504/500 on every attempt on 2026-10-09; the Overture Places sample is out of reach without new tooling). Entries are therefore intra-source pairs that a naive 'same postal code' join would merge. Licensees that are natural persons are intentionally not used.",
+  "entryCount": 19,
+  "entries": [
+    {
+      "id": "supermarket-001",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "E02027N000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PARKWAY PARADE SHOPPING CENTRE",
+          "block_house_num": "80",
+          "street_name": "MARINE PARADE ROAD",
+          "level_num": "B1",
+          "unit_num": "84",
+          "postal_code": "449269"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "E02196C000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PARKWAY PARADE",
+          "block_house_num": "80",
+          "street_name": "MARINE PARADE ROAD",
+          "level_num": "3",
+          "unit_num": "27/62",
+          "postal_code": "449269"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same licensee and the same postal code (80 Marine Parade Road) on different levels with different unit numbers: one store holding two licences, or two stores. The register cannot say.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-002",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "CE12096L000",
+        "name": "SHENG SIONG SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "NEW WORLD CENTRE",
+          "block_house_num": "1",
+          "street_name": "JALAN BERSEH",
+          "level_num": "B1",
+          "unit_num": "44621",
+          "postal_code": "209037"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "E02140N000",
+        "name": "SHENG SIONG SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "NEW WORLD CENTRE",
+          "block_house_num": "1",
+          "street_name": "JALAN BERSEH",
+          "level_num": "B1",
+          "unit_num": "2",
+          "postal_code": "209037"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same licensee and postal code (New World Centre), unit numbers #44621 and #2: one store with two licences, or two outlets.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-003",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "E02027N000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PARKWAY PARADE SHOPPING CENTRE",
+          "block_house_num": "80",
+          "street_name": "MARINE PARADE ROAD",
+          "level_num": "B1",
+          "unit_num": "84",
+          "postal_code": "449269"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SE05244V000",
+        "name": "THE BUTCHER (SINGAPORE) PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PARKWAY PARADE",
+          "block_house_num": "80",
+          "street_name": "MARINE PARADE ROAD",
+          "level_num": "B1",
+          "unit_num": "83B",
+          "postal_code": "449269"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same postal code, different licensee: a supermarket company and a butchery. Distinct licences and distinct businesses.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-004",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "E02027N000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PARKWAY PARADE SHOPPING CENTRE",
+          "block_house_num": "80",
+          "street_name": "MARINE PARADE ROAD",
+          "level_num": "B1",
+          "unit_num": "84",
+          "postal_code": "449269"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SE10553J000",
+        "name": "FOUR SEASONS ORGANIC MARKET PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PARKWAY PARADE",
+          "block_house_num": "80",
+          "street_name": "MARINE PARADE ROAD",
+          "level_num": "B1",
+          "unit_num": "83A",
+          "postal_code": "449269"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same postal code, different licensee (organic market operator).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-005",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW14817E000",
+        "name": "SHENG SIONG SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PENJURU RECREATION CENTRE",
+          "block_house_num": "27",
+          "street_name": "PENJURU WALK",
+          "level_num": "1",
+          "unit_num": "24",
+          "postal_code": "608538"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW14A33P000",
+        "name": "VINAYAK TRADERS PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PENJURU RECREATION CENTRE",
+          "block_house_num": "27",
+          "street_name": "PENJURU WALK",
+          "level_num": "1",
+          "unit_num": "42621",
+          "postal_code": "608538"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same postal code (27 Penjuru Walk), different licensees.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-006",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW14817E000",
+        "name": "SHENG SIONG SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PENJURU RECREATION CENTRE",
+          "block_house_num": "27",
+          "street_name": "PENJURU WALK",
+          "level_num": "1",
+          "unit_num": "24",
+          "postal_code": "608538"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW14A98C000",
+        "name": "GURU'S MARKETING PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PENJURU RECREATION CENTRE",
+          "block_house_num": "27",
+          "street_name": "PENJURU WALK",
+          "level_num": "1",
+          "unit_num": "15",
+          "postal_code": "608538"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same postal code, different licensees.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-007",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW14817E000",
+        "name": "SHENG SIONG SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PENJURU RECREATION CENTRE",
+          "block_house_num": "27",
+          "street_name": "PENJURU WALK",
+          "level_num": "1",
+          "unit_num": "24",
+          "postal_code": "608538"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW15051V000",
+        "name": "ARCHANA PROVISION STORES PTE. LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "PENJURU RECREATION CENTRE",
+          "block_house_num": "27",
+          "street_name": "PENJURU WALK",
+          "level_num": "1",
+          "unit_num": "42557",
+          "postal_code": "608538"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same postal code, different licensees.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-008",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW16856V000",
+        "name": "ARCHANA SUPERMARKET PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "1",
+          "street_name": "JALAN PAPAN",
+          "level_num": "1",
+          "unit_num": "29",
+          "postal_code": "619392"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW16814X000",
+        "name": "VINAYAK TRADERS PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "1",
+          "street_name": "JALAN PAPAN",
+          "level_num": "1",
+          "unit_num": "33",
+          "postal_code": "619392"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same address (1 Jalan Papan), different licensees and units.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-009",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW16735N000",
+        "name": "GURU'S MARKETING PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "1",
+          "street_name": "JALAN PAPAN",
+          "level_num": "1",
+          "unit_num": "31",
+          "postal_code": "619392"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW16921N000",
+        "name": "CHENNAI TRADING & SUPERMART PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "1",
+          "street_name": "JALAN PAPAN",
+          "level_num": "1",
+          "unit_num": "35",
+          "postal_code": "619392"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same address (1 Jalan Papan), different licensees and units.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-010",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "W02068J000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "GREAT WORLD CITY",
+          "block_house_num": "1",
+          "street_name": "KIM SENG PROMENADE",
+          "level_num": "B1",
+          "unit_num": "18/19",
+          "postal_code": "237994"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "CE10G36A000",
+        "name": "FOUR SEASONS ORGANIC MARKET PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "GREAT WORLD CITY",
+          "block_house_num": "1",
+          "street_name": "KIM SENG PROMENADE",
+          "level_num": "B2",
+          "unit_num": "42557",
+          "postal_code": "237994"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same mall, different licensees.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-011",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "W02068J000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "GREAT WORLD CITY",
+          "block_house_num": "1",
+          "street_name": "KIM SENG PROMENADE",
+          "level_num": "B1",
+          "unit_num": "18/19",
+          "postal_code": "237994"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "CE06837J000",
+        "name": "THE BUTCHER'S DOG PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "GREAT WORLD CITY",
+          "block_house_num": "1",
+          "street_name": "KIM SENG PROMENADE",
+          "level_num": "B2",
+          "unit_num": "42715",
+          "postal_code": "237994"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same mall, different licensees (supermarket company and a butcher).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-012",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "W90084A000",
+        "name": "NTUC Fairprice Co-operative Ltd",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "CHINATOWN POINT",
+          "block_house_num": "133",
+          "street_name": "NEW BRIDGE ROAD",
+          "level_num": "B1",
+          "unit_num": "1",
+          "postal_code": "059413"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "CE14938E000",
+        "name": "SONG FISH DEALER PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "CHINATOWN POINT",
+          "block_house_num": "133",
+          "street_name": "NEW BRIDGE ROAD",
+          "level_num": "B1",
+          "unit_num": "26",
+          "postal_code": "059413"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same building, different licensees (supermarket company and a fishmonger).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-013",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW07331C000",
+        "name": "SHENG SIONG SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "352",
+          "street_name": "CLEMENTI AVENUE 2",
+          "level_num": "1",
+          "unit_num": "91&99",
+          "postal_code": "120352"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW12F58E000",
+        "name": "NTUC Fairprice Co-operative Ltd",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "CLEMENTI AVENUE 2 SHOPPING CENTRE",
+          "block_house_num": "352",
+          "street_name": "CLEMENTI AVENUE 2",
+          "level_num": "1",
+          "unit_num": "141",
+          "postal_code": "120352"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same postal code (352 Clementi Avenue 2), two competing supermarket chains.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-014",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW08807K000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "#B1-19 WEST COAST PLAZA",
+          "block_house_num": "154",
+          "street_name": "WEST COAST ROAD",
+          "level_num": "na",
+          "unit_num": "0",
+          "postal_code": "127371"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW13368A000",
+        "name": "L M MEAT PTE. LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "WEST COAST PLAZA",
+          "block_house_num": "154",
+          "street_name": "WEST COAST ROAD",
+          "level_num": "B1",
+          "unit_num": "14",
+          "postal_code": "127371"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same mall, different licensees (supermarket company and a meat trader).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-015",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW12J97L000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "#B1-35/36 AND 02 THE STAR VISTA",
+          "block_house_num": "1",
+          "street_name": "VISTA EXCHANGE GREEN",
+          "level_num": "na",
+          "unit_num": "0",
+          "postal_code": "138617"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW12J94X000",
+        "name": "TANESEI TRADING PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "THE STAR VISTA",
+          "block_house_num": "1",
+          "street_name": "VISTA EXCHANGE GREEN",
+          "level_num": "B1",
+          "unit_num": "28",
+          "postal_code": "138617"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same mall, different licensees.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-016",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "NE04047K000",
+        "name": "NTUC Fairprice Co-operative Ltd",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "138",
+          "street_name": "TAMPINES STREET 11",
+          "level_num": "1",
+          "unit_num": "136",
+          "postal_code": "521138"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "NE12J52X000",
+        "name": "YES SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "138",
+          "street_name": "TAMPINES STREET 11",
+          "level_num": "1",
+          "unit_num": "110",
+          "postal_code": "521138"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same block (138 Tampines Street 11), two different chains.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-017",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SE10564B000",
+        "name": "NTUC Fairprice Co-operative Ltd",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "NEX",
+          "block_house_num": "23",
+          "street_name": "SERANGOON CENTRAL",
+          "level_num": "3",
+          "unit_num": "42",
+          "postal_code": "556083"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SE10579K000",
+        "name": "COLD STORAGE SINGAPORE (1983) PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "NEX",
+          "block_house_num": "23",
+          "street_name": "SERANGOON CENTRAL",
+          "level_num": "B2",
+          "unit_num": "44/45",
+          "postal_code": "556083"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same mall, two different chains on different levels.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-018",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW14718K000",
+        "name": "AJMAL SUPER MART PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "TUAS VIEW DORMITORY",
+          "block_house_num": "70",
+          "street_name": "TUAS SOUTH AVENUE 1",
+          "level_num": "1",
+          "unit_num": "40",
+          "postal_code": "637285"
+        }
+      },
+      "recordB": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "SW15053P000",
+        "name": "LAI LAI SUPERMART PTE. LTD.",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "TUAS VIEW DORMITORY",
+          "block_house_num": "70",
+          "street_name": "TUAS SOUTH AVENUE 1",
+          "level_num": "1",
+          "unit_num": "39",
+          "postal_code": "637285"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Same dormitory address, different licensees.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "supermarket-019",
+      "relation": "intra-source-sibling",
+      "recordA": {
+        "sourceId": "nea-sfa-list-of-supermarket-licences",
+        "sourceRecordId": "NE04155C000",
+        "name": "YES SUPERMARKET PTE LTD",
+        "lon": null,
+        "lat": null,
+        "positionKind": "none",
+        "properties": {
+          "building_name": "na",
+          "block_house_num": "na",
+          "street_name": "na",
+          "level_num": "na",
+          "unit_num": "0",
+          "postal_code": "0na"
+        }
+      },
+      "recordB": null,
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "The record has building 'na', block 'na', street 'na' and postal code '0na': there is no usable address key, so it can be neither geocoded nor matched. A quarantine candidate, not evidence about any store.",
+      "reviewStatus": "unapproved"
+    }
+  ]
+}
