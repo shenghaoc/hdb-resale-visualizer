@@ -43,8 +43,9 @@ import { privateJsonResponse } from "../functions/_lib/d1";
 import { isNeonSpatialEnabled } from "../shared/nearby-places";
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
+type SpecialRouteId = ShortlistRouteId | "nearby-capabilities";
 
-const publicApiHandlers: Record<Exclude<ApiRouteId, ShortlistRouteId>, PublicRouteHandler> = {
+const publicApiHandlers: Record<Exclude<ApiRouteId, SpecialRouteId>, PublicRouteHandler> = {
   manifest: manifestHandler,
   "block-summaries": blockSummariesHandler,
   "blocks-by-town": blocksByTownHandler,
@@ -190,6 +191,15 @@ export default {
         const apiMatch = matchApiRoute(url, request.method);
         if (apiMatch.kind === "handler") {
           const { routeId } = apiMatch;
+          // Feature availability is independent of database reads.
+          if (routeId === "nearby-capabilities") {
+            return privateJsonResponse({
+              available:
+                capturedEnv.PUBLIC_DATA_BACKEND === "neon" &&
+                !!capturedEnv.HDB_PUBLIC_NEON &&
+                isNeonSpatialEnabled(capturedEnv.NEON_SPATIAL_ENABLED),
+            });
+          }
           if (routeId === "shortlist-create" || routeId === "shortlist-get") {
             const handler = shortlistHandlers[routeId];
             return await handler(

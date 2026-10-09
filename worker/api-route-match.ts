@@ -16,6 +16,7 @@ export type ApiRouteId =
   | "mrt-stations"
   | "mrt-exits"
   | "nearby-places"
+  | "nearby-capabilities"
   | "trends-town-flat-type"
   | "search"
   | "suggest"
@@ -39,6 +40,10 @@ export const apiRouteDefinitions: ApiRouteDefinition[] = [
   { id: "mrt-stations", pattern: new URLPattern({ pathname: "/api/mrt-stations{/}?" }) },
   { id: "mrt-exits", pattern: new URLPattern({ pathname: "/api/mrt-exits{/}?" }) },
   { id: "nearby-places", pattern: new URLPattern({ pathname: "/api/nearby-places{/}?" }) },
+  {
+    id: "nearby-capabilities",
+    pattern: new URLPattern({ pathname: "/api/nearby-capabilities{/}?" }),
+  },
   {
     id: "trends-town-flat-type",
     pattern: new URLPattern({ pathname: "/api/trends/town-flat-type{/}?" }),

@@ -71,6 +71,7 @@ import { classifyPrimarySchoolDistance } from "@/entities/block/school-proximity
 import { FlatTypePriceLadder } from "./FlatTypePriceLadder";
 import { ShareButton } from "@/shared-ui/ShareButton";
 import { useBlockDetailController } from "./useBlockDetailController";
+import { NearbyMrtExits } from "./NearbyMrtExits";
 import { resolveEffectiveMedianPrice } from "@shared/product/filtering";
 import { canonicalFlatType } from "@shared/filter-options";
 
@@ -781,6 +782,13 @@ export function DetailDrawer({
                         t={t}
                         locale={locale}
                       />
+                      {currentSummary ? (
+                        <NearbyMrtExits
+                          key={currentSummary.addressKey}
+                          lat={currentSummary.coordinates.lat}
+                          lng={currentSummary.coordinates.lng}
+                        />
+                      ) : null}
                     </section>
                   )}
 
