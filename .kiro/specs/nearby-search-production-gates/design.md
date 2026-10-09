@@ -125,6 +125,11 @@ credential file. The fork is left for its owner to delete.
   Residual: no global quota exists.
 - **Limiter semantics.** The binding is permissive and eventually consistent.
   The limits are guard rails, not accounting.
+- **Free-plan query budget.** Hyperdrive Free allows 100,000 statements a day for
+  the whole account and a nearby miss costs three, so about 33,000 misses a day
+  starve every other route until 00:00 UTC. The two limits bound load, not that
+  budget. Mitigations are a paid plan, a lower per-client limit, or a daily budget
+  guard; choose before the flag opens (task T4.2).
 - **Phase 3 needs a database credential.** A temporary SELECT-only role and a
   Hyperdrive configuration need a connection string. Provisioning it is an
   owner-approved step.

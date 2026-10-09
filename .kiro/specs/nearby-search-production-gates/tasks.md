@@ -74,5 +74,9 @@
 - [ ] **T4.1** Run `vp run check` and `vp run check:pr`; record the exit codes.
   -> Phase 1-2 gate recorded in the PR description.
 
-- [ ] **T4.2** Ask for approval before the migration is applied to the serving
+- [ ] **T4.2** Decide how the Hyperdrive Free daily budget (100,000 statements, three
+  per nearby miss) is protected before the flag opens: paid plan, lower per-client
+  limit, or a daily budget guard. (R5.4)
+
+- [ ] **T4.3** Ask for approval before the migration is applied to the serving
   branch or the flag is opened. (R3.2)
