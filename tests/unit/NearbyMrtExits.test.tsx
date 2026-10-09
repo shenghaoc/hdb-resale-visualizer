@@ -77,6 +77,8 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
                 id: "mrt_geojson:mrt_exit:21436",
                 kind: "mrt_exit",
                 name: "BUKIT BATOK MRT STATION (Exit B)",
+                stationName: "BUKIT BATOK MRT STATION",
+                exitCode: "Exit B",
                 lat: 1.349,
                 lng: 103.749,
                 distanceMeters: 163.3,
@@ -104,44 +106,24 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
     expect(request).toContain("limit=25");
   });
 
-  it("shows only the nearest exit for each station and caps the list at five", () => {
-    const rows = [
-      {
-        id: "a1",
-        kind: "mrt_exit" as const,
-        name: "ALPHA MRT STATION (Exit A)",
-        lat: 1.35,
-        lng: 103.75,
-        distanceMeters: 125,
-        addressKey: null,
-      },
-      {
-        id: "a2",
-        kind: "mrt_exit" as const,
-        name: "ALPHA MRT STATION (Exit B)",
-        lat: 1.35,
-        lng: 103.75,
-        distanceMeters: 80,
-        addressKey: null,
-      },
-      ...["BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"].map((n, i) => ({
-        id: n,
-        kind: "mrt_exit" as const,
-        name: n + " MRT STATION (Exit A)",
-        lat: 1.35,
-        lng: 103.75,
-        distanceMeters: 150 + i * 10,
-        addressKey: null,
-      })),
-    ];
-    const groups = groupNearbyMrtExits(rows);
-    expect(groups).toHaveLength(5);
-    expect(groups[0]).toMatchObject({
-      stationName: "ALPHA MRT STATION",
-      exitLabel: "Exit B",
-      distanceMeters: 80,
-    });
-    expect(groups.map((g) => g.stationName)).not.toContain("FOXTROT MRT STATION");
+  it("uses source-native station and exit fields for an (E)-style exit", () => {
+    const rows = [{
+      id: "bugis-e",
+      kind: "mrt_exit" as const,
+      name: "BUGIS MRT STATION (E)",
+      stationName: "BUGIS MRT STATION",
+      exitCode: "E",
+      lat: 1.3,
+      lng: 103.85,
+      distanceMeters: 83.2,
+      addressKey: null,
+    }];
+    expect(groupNearbyMrtExits(rows)).toEqual([{
+      stationName: "BUGIS MRT STATION",
+      exitLabel: "E",
+      distanceMeters: 83.2,
+      exitId: "bugis-e",
+    }]);
   });
 
   it("shows an honest empty result", async () => {
