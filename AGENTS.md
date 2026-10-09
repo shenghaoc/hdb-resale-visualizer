@@ -40,10 +40,10 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Geospatial Programme**](.kiro/specs/geospatial-programme/tasks.md) — Standing coordinate-system, provenance, determinism and safety rules for all geospatial work; the coordinate-system decisions and the prioritised roadmap.
 - [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
+- [**POI Source Integration**](.kiro/specs/poi-source-integration/tasks.md) — Multi-source provenance, deterministic entity resolution with explicit uncertainty, an SVY21 coordinate contract and quarantine for the PostGIS nearby kinds (design and research only; no source is admitted). Analysis: `docs/architecture/poi-source-admission.md`.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
 - [**Nearby Search Production Gates**](.kiro/specs/nearby-search-production-gates/tasks.md) — Both fail-closed limiters and one labelled PostGIS statement per miss; no counter, public activation needs global cost control, and the deployed Worker → Hyperdrive → PostGIS verification that must precede opening `NEON_SPATIAL_ENABLED`.
-- [**POI Source Integration**](.kiro/specs/poi-source-integration/tasks.md) — Multi-source provenance, deterministic entity resolution with explicit uncertainty, an SVY21 coordinate contract and quarantine for the PostGIS nearby kinds (design and research only; no source is admitted). Analysis: `docs/architecture/poi-source-admission.md`.
 
 **Completed:**
 
