@@ -117,6 +117,26 @@ percentiles (one 1.8 ms single-execution sample exists).
 Note: the Neon plans page gives storage in GB without saying whether decimal or
 binary; the API figure (1 GiB) is what the existing notes use.
 
+### Actual project limits and use (V, Neon API read 2026-10-10 03:40 SGT)
+
+`describe_project` for the project reports: subscription `free_v3`; `branches_limit` 10;
+`branch_logical_size_limit_bytes` 1,073,741,824; history retention 21,600 s (6 h); default
+compute 0.25 to 2 CU with no custom suspend timeout. Use in the current period (from
+2026-10-01): 1,048,958,993 B transferred (about 1.05 GB of the 5 GB allowance), 11,881
+compute seconds, `synthetic_storage_size` 452,190,208 B. Six of ten branches exist:
+
+| Branch                        | Id                              | Parent       | Role                                                        |
+| ----------------------------- | ------------------------------- | ------------ | ----------------------------------------------------------- |
+| `production` (default)        | `br-broad-credit-b3bz9b61`      | none         | project default, nearly empty (31.7 MB)                     |
+| `benchmark-d1-migration`      | `br-wispy-boat-b34glczl`        | production   | the only publisher target                                   |
+| `production-candidate-20261005` | `br-rough-frost-b3e2ks1b`     | benchmark    | serving (Hyperdrive origin)                                 |
+| `postgis-lbs-sandbox-20261009` | `br-sparkling-silence-b37kaz0y` | serving    | disposable, earlier PostGIS work                            |
+| `postgis-type-safe-review-20261009` | `br-orange-sky-b30msckg` | serving      | disposable, review fork                                     |
+| `postgis-realpath-20261010`   | `br-broad-cake-b3wl94ei`        | serving      | disposable, migration applied, held for the deployed-path run |
+
+None of the three disposable forks has been deleted; deleting any branch needs the owner's
+approval.
+
 ## 5. Discrepancy register
 
 Items 1 to 17 come from the 2026-10-09 audit of `main` at `a2afa050b` and were
