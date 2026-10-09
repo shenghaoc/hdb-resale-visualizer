@@ -4,7 +4,7 @@ PostGIS is an optional, **Neon-only** serving path for nearby HDB blocks and MRT
 
 ## Reproducible migration prerequisites
 
-The Neon publisher (`scripts/sync-neon.ts`, `scripts/lib/sync/neon*.ts`) was recovered from a locally untracked working tree and is now in the repository. The base schema and role scripts (`scripts/neon-benchmark/`) are not part of this branch; the byte-exact recovery snapshot ([commit b80446400](https://github.com/shenghaoc/hdb-resale-visualizer/tree/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6)) preserves their provenance. Before adoption, reviewers must still inspect the publisher code itself and verify its current revision/identity.
+The Neon publisher (`scripts/sync-neon.ts`, `scripts/lib/sync/neon*.ts`) and the base schema and role scripts (`scripts/neon-benchmark/`) were recovered from a locally untracked working tree and are now in the repository; the byte-exact recovery snapshot ([commit b80446400](https://github.com/shenghaoc/hdb-resale-visualizer/tree/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6)) preserves their provenance. Before adoption, reviewers must still inspect the publisher code itself and verify its current revision/identity.
 
 The inspected local publisher (`scripts/sync-neon.ts`) is reported to use only in-place `INSERT INTO <table> (explicit_columns) SELECT ...` and `UPDATE ... FROM` operations, with no `DELETE`, `TRUNCATE` or table swap. It is **manual and pinned to the benchmark branch** `br-wispy-boat-b34glczl`; it does not refresh the web-serving snapshot.
 

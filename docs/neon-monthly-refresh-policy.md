@@ -6,7 +6,7 @@
 
 The adopted policy is **one explicit reconciliation per UTC calendar month plus explicit manual runs**. Upstream timestamps/content hints are observability only. Their changes and seven-day age no longer trigger expensive reconciliation. This replaces the old daily-hint/seven-day proposal; it does not change the exact reconciliation algorithm or activate a schedule.
 
-Prepared on October 4, 2026 in `feat/d1-free-incremental-refresh`, HEAD `482be1eba9ff2091c1580f5757d7b33e20b26515`. The uncommitted Neon prototype, D1 implementation and [benchmark evidence](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/neon-benchmark-2026-10-04.md) are preserved. No remote database queries/mutations, resource creation, production cutover, Worker secret changes, commits, push, PR or merge were performed for this policy preparation.
+Prepared on October 4, 2026 in `feat/d1-free-incremental-refresh`, HEAD `482be1eba9ff2091c1580f5757d7b33e20b26515`. The uncommitted Neon prototype, D1 implementation and [benchmark evidence](neon-benchmark-2026-10-04.md) are preserved. No remote database queries/mutations, resource creation, production cutover, Worker secret changes, commits, push, PR or merge were performed for this policy preparation.
 
 ## Invocation and state
 

@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "projectId": "wispy-mouse-67963002",
+  "branchId": "br-wispy-boat-b34glczl",
+  "reviewStatus": "approved",
+  "decisionReference": "User decision 2026-10-04: retain all five unresolved; exact captured 2595-occurrence one-time manual catch-up only; unchanged routine/publication guards; remote retry conditional on authoritative plan passing, no schedule or production cutover",
+  "initialSourceFactsSHA256": "90b8d365c031da247c5a41966afd1b0f6be5dcf5c95fb8598b37bf095165d9d3",
+  "initialBaselineManifestSHA256": "fe8332dc7e95f89d401c036065bec451f44bc4284f6cb8bb4f8c59bf818f2a2b",
+  "maxNewRetentions": 5,
+  "maxOutstandingRetentions": 5,
+  "maxCorrections": 0,
+  "maxRemovals": 0,
+  "retentions": [
+    {
+      "id": 550818,
+      "fact": {
+        "month": "2026-05",
+        "town": "TOA PAYOH",
+        "block": "58",
+        "street_name": "LOR 4 TOA PAYOH",
+        "address_key": "toa-payoh-58-lor-4-toa-payoh",
+        "flat_type": "2 ROOM",
+        "storey_range": "01 TO 03",
+        "floor_area_sqm": 45,
+        "lease_commence_year": 1967,
+        "resale_price": 258000,
+        "flat_model": "STANDARD"
+      },
+      "disposition": "retain-unresolved",
+      "evidence": "Exact old multiplicity 1 / active current multiplicity 0; no upstream transaction/unit identifier or confirmed removal/correction notice. See neon-source-offline-capture-2026-10-04.json.",
+      "remainingLease": "40 years 01 month",
+      "possibleReplacementTuples": []
+    },
+    {
+      "id": 601171,
+      "fact": {
+        "month": "2026-04",
+        "town": "KALLANG/WHAMPOA",
+        "block": "55",
+        "street_name": "JLN BAHAGIA",
+        "address_key": "kallang-whampoa-55-jln-bahagia",
+        "flat_type": "3 ROOM",
+        "storey_range": "01 TO 03",
+        "floor_area_sqm": 93.6,
+        "lease_commence_year": 1972,
+        "resale_price": 1028000,
+        "flat_model": "TERRACE"
+      },
+      "disposition": "retain-unresolved",
+      "evidence": "Exact old multiplicity 1 / active current multiplicity 0; no upstream transaction/unit identifier or confirmed removal/correction notice. See neon-source-offline-capture-2026-10-04.json.",
+      "remainingLease": "45 years 03 months",
+      "possibleReplacementTuples": []
+    },
+    {
+      "id": 934839,
+      "fact": {
+        "month": "2026-07",
+        "town": "KALLANG/WHAMPOA",
+        "block": "8A",
+        "street_name": "UPP BOON KENG RD",
+        "address_key": "kallang-whampoa-8a-upp-boon-keng-rd",
+        "flat_type": "3 ROOM",
+        "storey_range": "10 TO 12",
+        "floor_area_sqm": 70,
+        "lease_commence_year": 2017,
+        "resale_price": 780000,
+        "flat_model": "PREMIUM APARTMENT"
+      },
+      "disposition": "retain-unresolved",
+      "evidence": "Exact old multiplicity 1 / active current multiplicity 0; no upstream transaction/unit identifier or confirmed removal/correction notice. See neon-source-offline-capture-2026-10-04.json.",
+      "remainingLease": "90 years 01 month",
+      "possibleReplacementTuples": []
+    },
+    {
+      "id": 955489,
+      "fact": {
+        "month": "2026-07",
+        "town": "BUKIT BATOK",
+        "block": "445A",
+        "street_name": "BT BATOK WEST AVE 8",
+        "address_key": "bukit-batok-445a-bt-batok-west-ave-8",
+        "flat_type": "4 ROOM",
+        "storey_range": "01 TO 03",
+        "floor_area_sqm": 92,
+        "lease_commence_year": 2019,
+        "resale_price": 625000,
+        "flat_model": "MODEL A"
+      },
+      "disposition": "retain-unresolved",
+      "evidence": "Exact old multiplicity 1 / active current multiplicity 0; no upstream transaction/unit identifier or confirmed removal/correction notice. See neon-source-offline-capture-2026-10-04.json.",
+      "remainingLease": "91 years 07 months",
+      "possibleReplacementTuples": [
+        {
+          "month": "2026-09",
+          "town": "BUKIT BATOK",
+          "block": "445A",
+          "street_name": "BT BATOK WEST AVE 8",
+          "address_key": "bukit-batok-445a-bt-batok-west-ave-8",
+          "flat_type": "4 ROOM",
+          "storey_range": "01 TO 03",
+          "floor_area_sqm": 92,
+          "lease_commence_year": 2019,
+          "resale_price": 625000,
+          "flat_model": "MODEL A"
+        }
+      ]
+    },
+    {
+      "id": 959788,
+      "fact": {
+        "month": "2026-08",
+        "town": "WOODLANDS",
+        "block": "182A",
+        "street_name": "WOODLANDS ST 13",
+        "address_key": "woodlands-182a-woodlands-st-13",
+        "flat_type": "2 ROOM",
+        "storey_range": "13 TO 15",
+        "floor_area_sqm": 47,
+        "lease_commence_year": 2019,
+        "resale_price": 378888,
+        "flat_model": "MODEL A"
+      },
+      "disposition": "retain-unresolved",
+      "evidence": "Exact old multiplicity 1 / active current multiplicity 0; no upstream transaction/unit identifier or confirmed removal/correction notice. See neon-source-offline-capture-2026-10-04.json.",
+      "remainingLease": "92 years 02 months",
+      "possibleReplacementTuples": []
+    }
+  ],
+  "growth": {
+    "scopeDatasetId": "d_8b84c4ee58e3cfc0ece0d773c8ca6abc",
+    "scopeMinMonth": "2017-01",
+    "evidenceQuality": "uncalibrated-recurring-policy",
+    "independentSnapshotIntervals": 0,
+    "relativeCeiling": 0.005,
+    "absoluteCeiling": 1000,
+    "maxMonthlyElapsedDays": 35,
+    "maxManualElapsedDays": 35
+  },
+  "oneTimeAllowance": {
+    "baselineScopedFactsSHA256": "c4235c0796c4bccfb4147d11b7b2da1cde26903a90e9aae04b8967a41b501f8c",
+    "incomingScopedFactsSHA256": "88b6c6252b2329edcb9856491cec5d05f5ca92f1340640ed90291fe2c7466356",
+    "rawCSVBodySHA256": "9835dfe6cd92a46a1302fabf3a692bf893ee5b86ec95638d10dfce61dbfbdb9a",
+    "positiveFactsSHA256": "675832229ab451be4d5aed5e4b611ef310a0f2f3072969dd664bb7dc7a599dee",
+    "baselineScopedRows": 239330,
+    "incomingScopedRows": 241920,
+    "exactInserts": 2595,
+    "exactMissingIds": [550818, 601171, 934839, 955489, 959788],
+    "maxElapsedDays": 62,
+    "rationale": "Proposed explicit one-time manual exception for this exact reviewed snapshot/diff, not a calibrated recurring growth threshold. Active-scoped 2595/239330 exceeds 0.5%; the 1000 recurring guard is unchanged. All publication/resource budgets remain independently mandatory."
+  }
+}

@@ -49,7 +49,7 @@ Unknown disappearances fail with a structured discrepancy receipt. Independent l
 
 Changed raw CSV bytes advance the accepted checkpoint even when canonical facts are equal. Exact same-source replay in the same UTC month preserves checkpoint/ledger bytes and skips a redundant manifest publication when there are no other mutations. A changed ledger, another semantic manifest change or a new UTC month prevents that shortcut. Changed artifacts and staged caches publish first, with the manifest/ledger last in the same PostgreSQL transaction and a locked expected-manifest equality guard. A late failure rolls back all changes. An ambiguous COMMIT response still requires authoritative manifest inspection and reconciliation; there is no blind automatic retry.
 
-These are new **local** regression results. Earlier isolated PostgreSQL rollback/ambiguous-outcome evidence remains preserved in the [benchmark report](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/neon-benchmark-2026-10-04.md); this stage did not repeat it remotely.
+These are new **local** regression results. Earlier isolated PostgreSQL rollback/ambiguous-outcome evidence remains preserved in the [benchmark report](neon-benchmark-2026-10-04.md); this stage did not repeat it remotely.
 
 ## Growth guard and exact one-time exception
 
@@ -68,7 +68,7 @@ This candidate is **2,595 / 239,330 = 1.084277%**, and its checkpoint gap also e
 - a maximum checkpoint gap of 62 days, without admitting any other snapshot;
 - an explicit decision reference and durable marker consuming the exception once.
 
-The exception is not reusable by a later source or monthly run. Its schema ceiling of 5,000 does not grant that many inserts; exact pins require **2,595**. The persisted review file (`docs/evidence/neon-reconciliation-review-2026-10-04.json`) now records **`reviewStatus: approved`** and the explicit user decision. It preserves every original fact/diff/hash pin and all routine/publication guard values. The CLI still rejects proposed reviews before network activity; that regression test uses a dedicated local proposed fixture. The original pre-approval analysis remains a dated historical receipt. Approval does not bypass resource or full-publication guards.
+The exception is not reusable by a later source or monthly run. Its schema ceiling of 5,000 does not grant that many inserts; exact pins require **2,595**. The persisted [review file](evidence/neon-reconciliation-review-2026-10-04.json) now records **`reviewStatus: approved`** and the explicit user decision. It preserves every original fact/diff/hash pin and all routine/publication guard values. The CLI still rejects proposed reviews before network activity; that regression test uses a dedicated local proposed fixture. The original pre-approval analysis remains a dated historical receipt. Approval does not bypass resource or full-publication guards.
 
 The source-policy decision is complete. The user authorized a bounded benchmark retry only if the authoritative plan fits the existing guards. That condition is not met: the mandatory source/price subset already exceeds the write guard, so no retry is performed. New temporary Worker/Hyperdrive access would also require action-time approval; none was requested or created.
 

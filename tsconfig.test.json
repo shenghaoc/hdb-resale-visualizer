@@ -11,5 +11,7 @@
     "tests/setup.ts",
     "cloudflare-env.d.ts"
   ],
-  "exclude": ["tests/e2e/**"]
+  // neon-pilot-entrypoint.test.ts imports the pilot's git-ignored private scratch state (.neon-benchmark/),
+  // which does not exist in a checkout; see NEEDS_PRIVATE_PILOT_STATE in vitest.config.ts.
+  "exclude": ["tests/e2e/**", "tests/unit/neon-pilot-entrypoint.test.ts"]
 }

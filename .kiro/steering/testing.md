@@ -20,6 +20,7 @@ inclusion: always
 - Hook tests live under `tests/hooks`.
 - Integration tests live under `tests/integration`.
 - Source-owned pure library tests may live under `src/lib/__tests__`, while feature and entity tests should be colocated within their respective directories.
+- Tests that need the Neon pilot's git-ignored scratch state (`.neon-benchmark/`) cannot run from a checkout: `tests/unit/neon-pilot-entrypoint.test.ts` is left out of the default run unless `NEON_PRIVATE_PILOT=1` (`vitest.config.ts`), and one test in `tests/unit/neon-pilot-import-recovery.test.ts` skips, visibly, when its input is absent. `tests/unit/neon-staged-publisher.test.ts` reads the committed reviewed-decision record `docs/evidence/neon-reconciliation-review-2026-10-04.json` and skips, visibly, only if that file is removed.
 - E2E tests live under `tests/e2e` and run with Playwright Chromium against a production build on `localhost:4173`.
 - E2E uses `vp run setup:fixtures`, `vp run build`, and `vp preview` through `playwright.config.ts`.
 
