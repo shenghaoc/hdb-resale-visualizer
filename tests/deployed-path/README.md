@@ -47,8 +47,10 @@ spent, and no caching of either. It does **not** show Hyperdrive behaviour, Clou
    serving branch's `hdb_benchmark_runtime` role and its password; use the fork's direct endpoint host:
 
    ```bash
+   read -rs HDB_RUNTIME_PASSWORD && export HDB_RUNTIME_PASSWORD   # type the existing password; it stays out of shell history
    npx wrangler hyperdrive create hdb-realpath-20261010 --caching-disabled \
-     --connection-string "postgresql://hdb_benchmark_runtime:<PASSWORD>@<fork-endpoint-host>/neondb?sslmode=require"
+     --connection-string "postgresql://hdb_benchmark_runtime:${HDB_RUNTIME_PASSWORD}@<fork-endpoint-host>/neondb?sslmode=require"
+   unset HDB_RUNTIME_PASSWORD
    npx wrangler hyperdrive update <id printed above> --origin-connection-limit 5
    ```
 
