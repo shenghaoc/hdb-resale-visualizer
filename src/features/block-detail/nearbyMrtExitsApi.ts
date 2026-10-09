@@ -32,9 +32,7 @@ export const NEARBY_MRT_STATION_DISPLAY_LIMIT = 5;
  * closest exit for each. This does not claim to enumerate every station when
  * more than 25 exit features fall within the selected radius.
  */
-export function groupNearbyMrtExits(
-  exits: readonly NearbyMrtExit[],
-): NearbyMrtStation[] {
+export function groupNearbyMrtExits(exits: readonly NearbyMrtExit[]): NearbyMrtStation[] {
   const byStation = new Map<string, NearbyMrtStation>();
   for (const exit of exits) {
     // The persisted MRT admission source builds "STATION_NA (EXIT_CODE)".
