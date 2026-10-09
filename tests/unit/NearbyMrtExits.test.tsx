@@ -107,23 +107,27 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
   });
 
   it("uses source-native station and exit fields for an (E)-style exit", () => {
-    const rows = [{
-      id: "bugis-e",
-      kind: "mrt_exit" as const,
-      name: "BUGIS MRT STATION (E)",
-      stationName: "BUGIS MRT STATION",
-      exitCode: "E",
-      lat: 1.3,
-      lng: 103.85,
-      distanceMeters: 83.2,
-      addressKey: null,
-    }];
-    expect(groupNearbyMrtExits(rows)).toEqual([{
-      stationName: "BUGIS MRT STATION",
-      exitLabel: "E",
-      distanceMeters: 83.2,
-      exitId: "bugis-e",
-    }]);
+    const rows = [
+      {
+        id: "bugis-e",
+        kind: "mrt_exit" as const,
+        name: "BUGIS MRT STATION (E)",
+        stationName: "BUGIS MRT STATION",
+        exitCode: "E",
+        lat: 1.3,
+        lng: 103.85,
+        distanceMeters: 83.2,
+        addressKey: null,
+      },
+    ];
+    expect(groupNearbyMrtExits(rows)).toEqual([
+      {
+        stationName: "BUGIS MRT STATION",
+        exitLabel: "E",
+        distanceMeters: 83.2,
+        exitId: "bugis-e",
+      },
+    ]);
   });
 
   it("shows an honest empty result", async () => {
