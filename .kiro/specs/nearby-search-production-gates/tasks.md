@@ -44,11 +44,18 @@
   -> Done on `postgis-realpath-20261010` (`br-broad-cake-b3wl94ei`): 9,730
   blocks, 9,730 block points, 190 stations, 613 exits, 2 triggers. (R2.2)
 
-- [ ] **T3.2** Create a SELECT-only role on the fork and a temporary Hyperdrive
-  configuration (query caching off, origin limit 5) that uses it.
-  -> BLOCKED: the role's password must be generated and held in a local file for
-  the Hyperdrive create call, and the sandbox classifier refused that step.
-  Needs an owner decision on how the credential is provisioned. (R2.3)
+- [x] **T3.1a** Local rehearsal of the whole check against a seeded local PostGIS
+  database and the real Worker under workerd (`tests/deployed-path/`).
+  -> 11 of 11 samples equal the shipped SQL; MISS then HIT on a canonical key;
+  `429` after exactly 30 requests; `503` once the origin budget is spent; neither
+  cached. Not the Hyperdrive path. (R2.4, R2.5)
+
+- [ ] **T3.2** Create a temporary Hyperdrive configuration (query caching off,
+  origin limit 5) for the fork.
+  -> BLOCKED on the owner: it needs the runtime role's password (the fork inherits
+  the serving branch's `hdb_benchmark_runtime` and its password), and generating or
+  entering credentials is not something this work may do. The two commands are in
+  `tests/deployed-path/README.md`. (R2.3)
 
 - [ ] **T3.3** Build and deploy the temporary Worker with its own name, its own
   rate-limit namespace ids, the flag on and the origin limit lowered.
