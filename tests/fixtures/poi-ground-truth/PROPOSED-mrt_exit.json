@@ -1,0 +1,1149 @@
+{
+  "notice": "AGENT-PROPOSED AND UNREVIEWED. These labels were proposed by an AI agent from small samples fetched on 2026-10-09 (UTC). They are NOT a ground truth until the project owner approves them under the labelling protocol in .kiro/specs/poi-source-integration/design.md. Until then do not import this file in any test, do not use it to tune thresholds, and do not compute or report precision, recall or any other accuracy figure against it. The entries were hand-picked to illustrate cases; they are not a random sample and cannot support any rate estimate even after approval.",
+  "status": "PROPOSED-UNAPPROVED",
+  "schemaVersion": 1,
+  "poiKind": "mrt_exit",
+  "proposedOn": "2026-10-10",
+  "proposedBy": "AI agent (Claude), from the saved samples only",
+  "approvedBy": null,
+  "approvedOn": null,
+  "metricsPolicy": "Metrics (precision, recall, false-merge rate) are only ever reported against owner-approved labels, drawn from a seeded random sample of candidate pairs. This file is neither. No such figure has been computed anywhere.",
+  "labellingProtocol": ".kiro/specs/poi-source-integration/design.md#labelling-protocol",
+  "classSemantics": "proposedClass is the strength-of-evidence class that the rule table in design.md assigns to the two records shown, independent of whether either source is admitted. proposedRelationHolds is the separate truth proposal (yes, no, part-of, undetermined, no-counterpart-in-sample) the owner is asked to confirm or correct.",
+  "relationVocabulary": {
+    "same-entity": "The two records describe the same real-world place.",
+    "same-physical-exit": "Two records inside one source that might describe one physical exit (intra-source duplicate check).",
+    "exit-belongs-to-station-footprint": "An exit point and a station outline: membership, not identity.",
+    "intra-source-sibling": "Two records of one source that might be mistaken for each other."
+  },
+  "classVocabulary": {
+    "verified": "Two independent sources agree on identity through a shared key or exact name AND tight geometry, uniquely (rule ids R-VER-*).",
+    "rule-supported": "No shared key, but one named rule in design.md is satisfied by a unique mutual candidate (rule ids R-RS-*).",
+    "ambiguous": "More than one candidate, conflicting channels, granularity mismatch, or too little evidence. Never auto-merged (rule ids R-AMB-*).",
+    "unmatched": "No candidate in the other sampled source satisfies even the weakest rule (R-UNM-NO-CANDIDATE). It says nothing about whether the place exists.",
+    "rejected": "A candidate that passed blocking and failed a hard-negative rule (rule ids R-REJ-*). Kept so it is never re-proposed."
+  },
+  "ruleVocabulary": {
+    "R-AMB-CHANNEL-CONFLICT": "Name exact but geometry beyond the wide band, or key conflict.",
+    "R-AMB-GEO-ONLY": "Geometry agrees, names disagree or one is address-style.",
+    "R-AMB-INTRA-COLLISION": "Intra-source: two records of one source with equal identity key (label and exit code, or licensee and postal code) and positions within the block radius. Never merged automatically; both kept and flagged.",
+    "R-REJ-INTRA-DISTINCT-KEY": "Intra-source: two records of one source with different identity keys (exit code, licensee). Distinct by construction.",
+    "R-REJ-INTRA-FAR": "Intra-source: equal identity key but beyond the block radius. Distinct entities that collide on the key.",
+    "R-REJ-LIFECYCLE": "Lifecycle or subtype conflict (under construction vs existing, MRT vs LRT, monorail, former railway).",
+    "R-RS-REGISTRY-CODE": "The label is a station code resolved to a name by a registry, that name matches the other record, and the geometry is within the tight or wide band.",
+    "R-RS-SPATIAL-ONLY": "One side has no usable name (null or a code with no registry row); geometry within the tight band; unique candidate. Stations only.",
+    "R-VER-NAME-GEO": "No key; name exact AND geometry within the tight band, unique mutual candidate."
+  },
+  "sources": {
+    "lta-mrt-exit-geojson": {
+      "publisher": "Land Transport Authority (managedBy in dataset metadata)",
+      "title": "LTA MRT Station Exit (GEOJSON)",
+      "datasetId": "d_b39d3a0871985372d7e1637193335da5",
+      "datasetUrl": "https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view",
+      "licence": {
+        "name": "Singapore Open Data Licence version 1.0",
+        "url": "https://data.gov.sg/open-data-licence"
+      },
+      "retrievedAt": "2026-10-09T19:02:16Z",
+      "upstreamLastUpdatedAt": "2026-09-16T10:06:48+08:00",
+      "recordsInSample": 613,
+      "crs": "WGS84 lon/lat (GeoJSON default; the file has no crs member)"
+    },
+    "ura-mp2019-rail-station-amendment": {
+      "publisher": "Urban Redevelopment Authority (managedBy in dataset metadata)",
+      "title": "Amendment to Master Plan 2019 Rail Station layer",
+      "datasetId": "d_9a6bdc9d93bd041eb0cfbb6a8cb3248f",
+      "datasetUrl": "https://data.gov.sg/datasets/d_9a6bdc9d93bd041eb0cfbb6a8cb3248f/view",
+      "licence": {
+        "name": "Singapore Open Data Licence version 1.0",
+        "url": "https://data.gov.sg/open-data-licence"
+      },
+      "retrievedAt": "2026-10-09T19:11:55Z",
+      "upstreamLastUpdatedAt": "2025-12-26T10:07:18+08:00",
+      "recordsInSample": 257,
+      "crs": "WGS84 lon/lat (GeoJSON default). Indicative station outlines; the layer includes planned stations and has no status field."
+    }
+  },
+  "scopeNote": "No second source of exits was sampled (OpenStreetMap Overpass answered 504/500 on every attempt on 2026-10-09). So this file holds intra-source duplicate checks and exit-to-station-footprint membership checks only; cross-source same-exit pairs are absent, not 'unmatched'.",
+  "entryCount": 28,
+  "entries": [
+    {
+      "id": "mrt_exit-001",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21373",
+        "name": "CHOA CHU KANG MRT STATION / Exit A",
+        "lon": 103.74456,
+        "lat": 1.3854,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21505",
+        "name": "CHOA CHU KANG MRT STATION / Exit A",
+        "lon": 103.7445571,
+        "lat": 1.3854313,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 3.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same STATION_NA label and the same EXIT_CODE, 3.5 m apart: one exit digitised twice, or two entrances sharing a letter. (STATION_NA, EXIT_CODE) is not a unique key.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-002",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21375",
+        "name": "CHOA CHU KANG MRT STATION / Exit C",
+        "lon": 103.74447,
+        "lat": 1.38573,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG MRT STATION",
+          "EXIT_CODE": "Exit C",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21504",
+        "name": "CHOA CHU KANG MRT STATION / Exit C",
+        "lon": 103.7445178,
+        "lat": 1.3857362,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG MRT STATION",
+          "EXIT_CODE": "Exit C",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 5.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same label and EXIT_CODE ('Exit C'), 5.4 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-003",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21376",
+        "name": "CHOA CHU KANG MRT STATION / Exit D",
+        "lon": 103.74411,
+        "lat": 1.38537,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG MRT STATION",
+          "EXIT_CODE": "Exit D",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21439",
+        "name": "CHOA CHU KANG MRT STATION / Exit D",
+        "lon": 103.7442236,
+        "lat": 1.3857054,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG MRT STATION",
+          "EXIT_CODE": "Exit D",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 39.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same label and EXIT_CODE ('Exit D'), 39.2 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-004",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21537",
+        "name": "BEDOK NORTH MRT STATION / Exit B",
+        "lon": 103.9190628,
+        "lat": 1.3341661,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BEDOK NORTH MRT STATION",
+          "EXIT_CODE": "Exit B",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21542",
+        "name": "BEDOK NORTH MRT STATION / Exit B",
+        "lon": 103.9191343,
+        "lat": 1.3343725,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BEDOK NORTH MRT STATION",
+          "EXIT_CODE": "Exit B",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 24.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same label and EXIT_CODE ('Exit B'), 24.2 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-005",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21392",
+        "name": "EXPO MRT STATION / Exit A",
+        "lon": 103.9618368,
+        "lat": 1.3354828,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "EXPO MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21671",
+        "name": "EXPO MRT STATION / Exit A",
+        "lon": 103.961943,
+        "lat": 1.3353217,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "EXPO MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 21.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same label and EXIT_CODE ('Exit A'), 21.4 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-006",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21532",
+        "name": "UPPER CHANGI MRT STATION / Exit A",
+        "lon": 103.9613285,
+        "lat": 1.3418612,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "UPPER CHANGI MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21536",
+        "name": "UPPER CHANGI MRT STATION / Exit A",
+        "lon": 103.9609606,
+        "lat": 1.3420065,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "UPPER CHANGI MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 44,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same label and EXIT_CODE ('Exit A'), 44 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-007",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21449",
+        "name": "BUKIT PANJANG MRT STATION / Exit A",
+        "lon": 103.7620344,
+        "lat": 1.3787662,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BUKIT PANJANG MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21640",
+        "name": "BUKIT PANJANG MRT STATION / Exit A",
+        "lon": 103.7619229,
+        "lat": 1.379008,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BUKIT PANJANG MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 29.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-INTRA-COLLISION"],
+      "reason": "Same label and EXIT_CODE ('Exit A'), 29.5 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-008",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21599",
+        "name": "HARBOURFRONT MRT STATION / Exit A",
+        "lon": 103.8225098,
+        "lat": 1.265085,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "HARBOURFRONT MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21658",
+        "name": "HARBOURFRONT MRT STATION / Exit A",
+        "lon": 103.8204684,
+        "lat": 1.2660132,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "HARBOURFRONT MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 249.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-FAR"],
+      "reason": "Same label and EXIT_CODE but 249.3 m apart: far too far for one entrance; two exits that collide on the letter (the station has two interchanging lines).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-009",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21185",
+        "name": "BUKIT PANJANG MRT STATION / Exit A",
+        "lon": 103.7595978,
+        "lat": 1.3807451,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BUKIT PANJANG MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21449",
+        "name": "BUKIT PANJANG MRT STATION / Exit A",
+        "lon": 103.7620344,
+        "lat": 1.3787662,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BUKIT PANJANG MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 348.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-FAR"],
+      "reason": "Same label and EXIT_CODE but 348.4 m apart.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-010",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21377",
+        "name": "CHOA CHU KANG LRT STATION / Exit E",
+        "lon": 103.74462,
+        "lat": 1.385,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG LRT STATION",
+          "EXIT_CODE": "Exit E",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21459",
+        "name": "CHOA CHU KANG LRT STATION / Exit B",
+        "lon": 103.7445951,
+        "lat": 1.3849797,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CHOA CHU KANG LRT STATION",
+          "EXIT_CODE": "Exit B",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 3.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Different EXIT_CODE (E and B) although only 3.6 m apart: distinct entrances.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-011",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21353",
+        "name": "SERANGOON MRT STATION / Exit G",
+        "lon": 103.8728667,
+        "lat": 1.3507902,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "SERANGOON MRT STATION",
+          "EXIT_CODE": "Exit G",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21355",
+        "name": "SERANGOON MRT STATION / Exit E",
+        "lon": 103.8729021,
+        "lat": 1.3508202,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "SERANGOON MRT STATION",
+          "EXIT_CODE": "Exit E",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 5.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Different EXIT_CODE (G and E), 5.2 m apart: distinct entrances.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-012",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21255",
+        "name": "COMMONWEALTH MRT STATION / Exit C",
+        "lon": 103.7987786,
+        "lat": 1.302077,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "COMMONWEALTH MRT STATION",
+          "EXIT_CODE": "Exit C",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21256",
+        "name": "COMMONWEALTH MRT STATION / Exit D",
+        "lon": 103.7987203,
+        "lat": 1.3020127,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "COMMONWEALTH MRT STATION",
+          "EXIT_CODE": "Exit D",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 9.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Different EXIT_CODE (C and D), 9.6 m apart: distinct entrances.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-013",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21628",
+        "name": "BISHAN MRT STATION / Exit A",
+        "lon": 103.848305,
+        "lat": 1.3505796,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BISHAN MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21695",
+        "name": "BISHAN MRT STATION / Exit C",
+        "lon": 103.8482093,
+        "lat": 1.3505849,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BISHAN MRT STATION",
+          "EXIT_CODE": "Exit C",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 10.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Different EXIT_CODE (A and C), 10.7 m apart: distinct entrances.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-014",
+      "relation": "same-physical-exit",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21624",
+        "name": "BAYFRONT MRT STATION / Exit C",
+        "lon": 103.8595969,
+        "lat": 1.2828349,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BAYFRONT MRT STATION",
+          "EXIT_CODE": "Exit C",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21678",
+        "name": "BAYFRONT MRT STATION / Exit D",
+        "lon": 103.8594938,
+        "lat": 1.2828344,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BAYFRONT MRT STATION",
+          "EXIT_CODE": "Exit D",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 11.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-INTRA-DISTINCT-KEY"],
+      "reason": "Different EXIT_CODE (C and D), 11.5 m apart: distinct entrances.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-015",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21404",
+        "name": "SPRINGLEAF MRT STATION / Exit 1",
+        "lon": 103.8180034,
+        "lat": 1.3987872,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "SPRINGLEAF MRT STATION",
+          "EXIT_CODE": "Exit 1",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5244",
+        "name": "SPRINGLEAF",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8180319,
+        "lat": 1.3982614
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "The exit's label names the station and the point is 0 m from the outline named SPRINGLEAF.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-016",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21583",
+        "name": "BUKIT PANJANG LRT STATION / Exit A",
+        "lon": 103.7630636,
+        "lat": 1.3780204,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BUKIT PANJANG LRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5329",
+        "name": "BUKIT PANJANG",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "LRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7630236,
+        "lat": 1.3779087
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0.1,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "LRT exit of BUKIT PANJANG LRT STATION; the outline is the LRT outline with the same name, 0.1 m away.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-017",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21583",
+        "name": "BUKIT PANJANG LRT STATION / Exit A",
+        "lon": 103.7630636,
+        "lat": 1.3780204,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "BUKIT PANJANG LRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5271",
+        "name": "BUKIT PANJANG",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7615768,
+        "lat": 1.3790732
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "The outline is the MRT outline with the same name (0 m away); subtype conflict with an LRT exit.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-018",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21218",
+        "name": "CC9 / E",
+        "lon": 103.8932344,
+        "lat": 1.3182875,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CC9",
+          "EXIT_CODE": "E",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5200",
+        "name": "PAYA LEBAR INTERCHANGE",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8922628,
+        "lat": 1.317426
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 62.5,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-REGISTRY-CODE"],
+      "reason": "The exit's label is the code CC9; the LTA registry maps CC9 to Paya Lebar and the outline PAYA LEBAR INTERCHANGE is 62.5 m away.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-019",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21248",
+        "name": "DT18 / E",
+        "lon": 103.8475,
+        "lat": 1.2827,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "DT18",
+          "EXIT_CODE": "E",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5168",
+        "name": "TELOK AYER",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8483599,
+        "lat": 1.2823232
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 6.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-REGISTRY-CODE"],
+      "reason": "Label DT18; the registry maps DT18 to Telok Ayer; the outline TELOK AYER is 6.6 m away.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-020",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21249",
+        "name": "DT4 / 2",
+        "lon": 103.7686517,
+        "lat": 1.3548287,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "DT4",
+          "EXIT_CODE": "2",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5268",
+        "name": "HUME",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7691779,
+        "lat": 1.3544283
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 1.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Label DT4 has no registry row; the only outline within the tight band is HUME (1.6 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-021",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21286",
+        "name": "NE18 / 1",
+        "lon": 103.9095329,
+        "lat": 1.4148361,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "NE18",
+          "EXIT_CODE": "1",
+          "FMEL_UPD_D": "20260717145318"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5185",
+        "name": "PUNGGOL COAST",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.9102834,
+        "lat": 1.4149799
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Label NE18 has no registry row; the only outline within the tight band is PUNGGOL COAST (0 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-022",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21288",
+        "name": "CC30 / 1",
+        "lon": 103.8295953,
+        "lat": 1.2696653,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CC30",
+          "EXIT_CODE": "1",
+          "FMEL_UPD_D": "20260717145318"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5364",
+        "name": "KEPPEL",
+        "geometryType": "MultiPolygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20230411155157"
+        },
+        "lon": 103.8303624,
+        "lat": 1.270118
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Label CC30; the only outline within the tight band is KEPPEL (0 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-023",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21293",
+        "name": "CC31 / 1",
+        "lon": 103.8357026,
+        "lat": 1.2721321,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CC31",
+          "EXIT_CODE": "1",
+          "FMEL_UPD_D": "20260717145318"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5376",
+        "name": "CANTONMENT",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8369499,
+        "lat": 1.273106
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Label CC31; the only outline within the tight band is CANTONMENT (0 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-024",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21291",
+        "name": "CC32 / 1",
+        "lon": 103.8455753,
+        "lat": 1.2730338,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "CC32",
+          "EXIT_CODE": "1",
+          "FMEL_UPD_D": "20260717145318"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5334",
+        "name": "PRINCE EDWARD ROAD",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8473613,
+        "lat": 1.2732755
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Label CC32; the only outline within the tight band is PRINCE EDWARD ROAD (0 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-025",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21544",
+        "name": "FORT CANNING MRT STATION / Exit A",
+        "lon": 103.84417,
+        "lat": 1.2924061,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "FORT CANNING MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5341",
+        "name": "RIVER VALLEY",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8442552,
+        "lat": 1.2923976
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-GEO-ONLY"],
+      "reason": "The exit of FORT CANNING MRT STATION lies 0 m from an outline URA names RIVER VALLEY: geometry agrees, names do not.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-026",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21278",
+        "name": "DOWNTOWN MRT STATION / Exit A",
+        "lon": 103.8526466,
+        "lat": 1.2797735,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "DOWNTOWN MRT STATION",
+          "EXIT_CODE": "Exit A",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5208",
+        "name": null,
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8528687,
+        "lat": 1.2794135
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Exit of DOWNTOWN MRT STATION inside an outline whose NAME is null (0 m); the only outline within the tight band.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-027",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21551",
+        "name": "MAXWELL MRT STATION / Exit 3",
+        "lon": 103.8429163,
+        "lat": 1.2801915,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "MAXWELL MRT STATION",
+          "EXIT_CODE": "Exit 3",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5308",
+        "name": null,
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8440569,
+        "lat": 1.2806037
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "Exit of MAXWELL MRT STATION inside an outline whose NAME is null (0 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_exit-028",
+      "relation": "exit-belongs-to-station-footprint",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "21227",
+        "name": "MARINE PARADE MRT STATION / Exit 5",
+        "lon": 103.9090937,
+        "lat": 1.3055802,
+        "positionKind": "source-point",
+        "properties": {
+          "STATION_NA": "MARINE PARADE MRT STATION",
+          "EXIT_CODE": "Exit 5",
+          "FMEL_UPD_D": "20251202172807"
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5300",
+        "name": "MARINE PARADE",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.9055696,
+        "lat": 1.3029221
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 333.9,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-CHANNEL-CONFLICT"],
+      "reason": "Exit 5 of MARINE PARADE MRT STATION is 333.9 m from the outline with the same name, farther than any other exit of that station: the outline is indicative and does not cover every exit. No outline lies within 100 m of this exit.",
+      "reviewStatus": "unapproved"
+    }
+  ]
+}
