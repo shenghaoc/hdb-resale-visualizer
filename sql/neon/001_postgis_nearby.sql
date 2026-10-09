@@ -70,6 +70,10 @@ CREATE OR REPLACE FUNCTION public.sync_block_location()
 RETURNS TRIGGER LANGUAGE plpgsql SECURITY DEFINER
 SET search_path = pg_catalog, pg_temp AS $function$
 BEGIN
+  IF TG_OP = 'DELETE' THEN
+    DELETE FROM public.block_locations WHERE address_key = OLD.address_key;
+    RETURN OLD;
+  END IF;
   IF TG_OP = 'UPDATE'
     AND NEW.lat IS NOT DISTINCT FROM OLD.lat
     AND NEW.lng IS NOT DISTINCT FROM OLD.lng THEN
@@ -87,7 +91,7 @@ $function$;
 
 DROP TRIGGER IF EXISTS block_location_sync ON public.blocks;
 CREATE TRIGGER block_location_sync
-  AFTER INSERT OR UPDATE OF lat,lng ON public.blocks
+  AFTER INSERT OR DELETE OR UPDATE OF lat,lng ON public.blocks
   FOR EACH ROW EXECUTE FUNCTION public.sync_block_location();
 
 INSERT INTO public.block_locations(address_key,lat,lng)
