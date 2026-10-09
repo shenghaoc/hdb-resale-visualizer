@@ -9,8 +9,10 @@ export const onRequestGet: PublicRouteHandler = async ({ request, publicData }) 
   // D1 rollback still serves every established route. This new indexed
   // PostGIS-only operation is explicitly unavailable, never a fake empty result.
   if (!publicData.nearbyPlaces)
-    return privateJsonResponse({ error: "Spatial search is unavailable on this backend" },
-      { status: 503 });
+    return privateJsonResponse(
+      { error: "Spatial search is unavailable on this backend" },
+      { status: 503 },
+    );
   try {
     const places = await publicData.nearbyPlaces(parsed.request);
     return jsonResponse({

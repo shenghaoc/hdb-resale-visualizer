@@ -4,8 +4,10 @@
  */
 import type { NearbyPlace, NearbyPlacesRequest, NearbyPlaceKind } from "../shared/nearby-places";
 
-export type SpatialReadQuery = (sql: string, params: readonly unknown[]) =>
-  Promise<Record<string, unknown>[]>;
+export type SpatialReadQuery = (
+  sql: string,
+  params: readonly unknown[],
+) => Promise<Record<string, unknown>[]>;
 
 export const NEARBY_SPATIAL_SQL = `
 WITH center AS (
@@ -39,7 +41,11 @@ export async function queryNearbyPlaces(
   request: NearbyPlacesRequest,
 ): Promise<NearbyPlace[]> {
   const rows = await query(NEARBY_SPATIAL_SQL, [
-    request.lat, request.lng, request.radiusMeters, request.kinds, request.limit,
+    request.lat,
+    request.lng,
+    request.radiusMeters,
+    request.kinds,
+    request.limit,
   ]);
   return rows.map((r) => ({
     id: String(r.id),

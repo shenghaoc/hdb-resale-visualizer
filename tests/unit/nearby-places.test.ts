@@ -1,10 +1,7 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import type { PublicData } from "../../functions/_lib/public-data";
 import { onRequestGet } from "../../functions/api/nearby-places";
-import {
-  canonicalNearbyPlacesParams,
-  parseNearbyPlacesRequest,
-} from "../../shared/nearby-places";
+import { canonicalNearbyPlacesParams, parseNearbyPlacesRequest } from "../../shared/nearby-places";
 import { createNeonPublicData } from "../../worker/public-data-neon";
 import { matchApiRoute } from "../../worker/api-route-match";
 
@@ -23,7 +20,10 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     expect(parsed.request).toEqual({
-      lat: 1.35, lng: 103.75, radiusMeters: 800, limit: 5,
+      lat: 1.35,
+      lng: 103.75,
+      radiusMeters: 800,
+      limit: 5,
       kinds: ["mrt_station", "mrt_exit"],
     });
     expect(canonicalNearbyPlacesParams(parsed.request).toString()).toBe(
@@ -53,7 +53,8 @@ describe("bounded PostGIS nearby endpoint", () => {
       request: { kinds: ["mrt_station", "mrt_exit"], limit: 15, radiusMeters: 1000 },
     });
     expect(parseNearbyPlacesRequest(url("?lat=1.35&lng=103.75&types=hdb_block"))).toMatchObject({
-      ok: true, request: { kinds: ["hdb_block"] },
+      ok: true,
+      request: { kinds: ["hdb_block"] },
     });
   });
 
@@ -64,18 +65,24 @@ describe("bounded PostGIS nearby endpoint", () => {
   });
 
   it("only dispatches a bounded parameterized PostGIS query", async () => {
-    const query = vi.fn(async (_sql: string, _params: readonly unknown[]) => [{
-      id: "mrt_geojson:mrt_station:BUKIT BATOK MRT STATION",
-      kind: "mrt_station",
-      name: "BUKIT BATOK MRT STATION",
-      lat: 1.349, lng: 103.749, address_key: null, distance_meters: 151.2,
-    }]);
+    const query = vi.fn(async (_sql: string, _params: readonly unknown[]) => [
+      {
+        id: "mrt_geojson:mrt_station:BUKIT BATOK MRT STATION",
+        kind: "mrt_station",
+        name: "BUKIT BATOK MRT STATION",
+        lat: 1.349,
+        lng: 103.749,
+        address_key: null,
+        distance_meters: 151.2,
+      },
+    ]);
     const data = createNeonPublicData(query);
     const response = await fetchResult(data);
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body).toMatchObject({
-      radiusMeters: 800, distanceBasis: "straight-line",
+      radiusMeters: 800,
+      distanceBasis: "straight-line",
       places: [{ kind: "mrt_station", distanceMeters: 151.2, addressKey: null }],
     });
     expect(query).toHaveBeenCalledOnce();
@@ -90,10 +97,12 @@ describe("bounded PostGIS nearby endpoint", () => {
 
   it("routes GET and rejects POST without falling back to assets", () => {
     expect(matchApiRoute(url(valid), "GET")).toMatchObject({
-      kind: "handler", routeId: "nearby-places",
+      kind: "handler",
+      routeId: "nearby-places",
     });
     expect(matchApiRoute(url(valid), "POST")).toMatchObject({
-      kind: "method_not_allowed", allow: ["GET"],
+      kind: "method_not_allowed",
+      allow: ["GET"],
     });
   });
 });
