@@ -6,14 +6,15 @@ import { useI18n } from "@/shared/lib/i18n";
 import {
   fetchNearbyMrtExits,
   getNearbySpatialAvailable,
-  type NearbyMrtExit,
+  groupNearbyMrtExits,
+  type NearbyMrtStation,
 } from "./nearbyMrtExitsApi";
 
 type ResultState =
   | { status: "idle" }
   | { status: "loading" }
   | { status: "error" }
-  | { status: "ready"; places: NearbyMrtExit[] };
+  | { status: "ready"; places: NearbyMrtStation[] };
 
 /**
  * An opt-in supplement to the existing MRT walking-time panel.
@@ -43,7 +44,8 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
     setResult({ status: "loading" });
     void fetchNearbyMrtExits(lat, lng, controller.signal)
       .then((places) => {
-        if (!controller.signal.aborted) setResult({ status: "ready", places });
+        if (!controller.signal.aborted)
+          setResult({ status: "ready", places: groupNearbyMrtExits(places) });
       })
       .catch(() => {
         if (!controller.signal.aborted) setResult({ status: "error" });
@@ -85,10 +87,10 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
           ) : (
             <ul className="flex flex-col gap-1" aria-label={t("detail.spatialExits.show")}>
               {result.places.map((place) => (
-                <li key={place.id} className="flex justify-between gap-2 text-xs">
-                  <span className="min-w-0 truncate">{place.name}</span>
+                <li key={place.exitId} className="flex justify-between gap-2 text-xs">
+                  <span className="min-w-0 truncate">{place.stationName}</span>
                   <span className="shrink-0 font-mono tabular-nums text-muted-foreground">
-                    {formatMeters(place.distanceMeters, t, locale)}
+                    {place.exitLabel} · {formatMeters(place.distanceMeters, t, locale)}
                   </span>
                 </li>
               ))}

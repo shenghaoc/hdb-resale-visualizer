@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 import { NearbyMrtExits } from "@/features/block-detail/NearbyMrtExits";
 import {
   getNearbySpatialAvailable,
+  groupNearbyMrtExits,
   resetNearbySpatialAvailableForTests,
 } from "@/features/block-detail/nearbyMrtExitsApi";
 import { I18nProvider } from "@/shared/lib/i18n";
@@ -88,7 +89,8 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
     const toggle = await screen.findByRole("button", { name: "View nearby MRT exits" });
     expect(mock).toHaveBeenCalledOnce();
     fireEvent.click(toggle);
-    expect(await screen.findByText("BUKIT BATOK MRT STATION (Exit B)")).toBeInTheDocument();
+    expect(await screen.findByText("BUKIT BATOK MRT STATION")).toBeInTheDocument();
+    expect(screen.getByText(/Exit B/)).toBeInTheDocument();
     expect(
       screen.getByText("Straight-line distances; actual walking routes may be longer."),
     ).toBeInTheDocument();
@@ -98,6 +100,24 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
     expect(request).toContain("lng=103.75");
     expect(request).toContain("types=mrt_exit");
     expect(request).toContain("radius=1500");
+    expect(request).toContain("limit=25");
+  });
+
+  it("shows only the nearest exit for each station and caps the list at five", () => {
+    const rows = [
+      { id: "a1", kind: "mrt_exit" as const, name: "ALPHA MRT STATION (Exit A)", lat: 1.35, lng: 103.75, distanceMeters: 125, addressKey: null },
+      { id: "a2", kind: "mrt_exit" as const, name: "ALPHA MRT STATION (Exit B)", lat: 1.35, lng: 103.75, distanceMeters: 80, addressKey: null },
+      ...["BRAVO", "CHARLIE", "DELTA", "ECHO", "FOXTROT"].map((n, i) => ({
+        id: n, kind: "mrt_exit" as const, name: n + " MRT STATION (Exit A)",
+        lat: 1.35, lng: 103.75, distanceMeters: 150 + i * 10, addressKey: null,
+      })),
+    ];
+    const groups = groupNearbyMrtExits(rows);
+    expect(groups).toHaveLength(5);
+    expect(groups[0]).toMatchObject({
+      stationName: "ALPHA MRT STATION", exitLabel: "Exit B", distanceMeters: 80,
+    });
+    expect(groups.map((g) => g.stationName)).not.toContain("FOXTROT MRT STATION");
   });
 
   it("shows an honest empty result", async () => {
