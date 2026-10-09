@@ -1,5 +1,7 @@
 /** Deterministic, bounded Singapore spatial query contract (straight-line distances only). */
 export const NEARBY_PLACE_KINDS = ["hdb_block", "mrt_station", "mrt_exit"] as const;
+/** Absent or false never unlocks a PostGIS query. */
+export const isNeonSpatialEnabled = (value: string | undefined): boolean => value === "true";
 export type NearbyPlaceKind = (typeof NEARBY_PLACE_KINDS)[number];
 export type NearbyPlace = {
   id: string;

@@ -39,6 +39,8 @@ import { townToFilename } from "../shared/geo";
 import { createPublicReadScope, namespacePublicCache } from "./public-read-backend";
 import { createNeonPublicTransport } from "./neon-transport";
 import type { PublicData, PublicRouteHandler } from "../functions/_lib/public-data";
+import { privateJsonResponse } from "../functions/_lib/d1";
+import { isNeonSpatialEnabled } from "../shared/nearby-places";
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
 
@@ -196,6 +198,16 @@ export default {
               >[0],
             );
           }
+          // No Neon connection on previews or in production until a separately
+          // approved spatial migration, publisher verification and rollout.
+          if (
+            routeId === "nearby-places" &&
+            !isNeonSpatialEnabled(capturedEnv.NEON_SPATIAL_ENABLED)
+          )
+            return privateJsonResponse(
+              { error: "Spatial search has not been enabled" },
+              { status: 503 },
+            );
           const reads = publicReads();
           const publicCache = namespacePublicCache(
             typeof caches !== "undefined" ? caches.default : null,

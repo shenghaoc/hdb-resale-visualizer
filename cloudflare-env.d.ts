@@ -15,6 +15,8 @@ interface Env {
   PUBLIC_DATA_BACKEND?: "d1" | "neon";
   D1_PUBLIC_CACHE_EPOCH?: string;
   NEON_PUBLIC_CACHE_EPOCH?: string;
+  /** Explicit release gate for the PostGIS nearby endpoint; default off. */
+  NEON_SPATIAL_ENABLED?: "true" | "false";
   /** Static asset serving — worker-routed requests for non-API paths. */
   ASSETS: Fetcher;
   /** Per-IP rate limit for POST /api/shortlist before any D1 write. */

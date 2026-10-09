@@ -1,7 +1,11 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import type { PublicData } from "../../functions/_lib/public-data";
 import { onRequestGet } from "../../functions/api/nearby-places";
-import { canonicalNearbyPlacesParams, parseNearbyPlacesRequest } from "../../shared/nearby-places";
+import {
+  canonicalNearbyPlacesParams,
+  isNeonSpatialEnabled,
+  parseNearbyPlacesRequest,
+} from "../../shared/nearby-places";
 import { createNeonPublicData } from "../../worker/public-data-neon";
 import { matchApiRoute } from "../../worker/api-route-match";
 
@@ -15,6 +19,11 @@ const fetchResult = (publicData: PublicData, suffix = valid) =>
   });
 
 describe("bounded PostGIS nearby endpoint", () => {
+  it("does not activate from an absent or false release flag", () => {
+    expect(isNeonSpatialEnabled(undefined)).toBe(false);
+    expect(isNeonSpatialEnabled("false")).toBe(false);
+    expect(isNeonSpatialEnabled("true")).toBe(true);
+  });
   it("parses and canonicalizes input independently of type ordering", () => {
     const parsed = parseNearbyPlacesRequest(url(valid));
     expect(parsed.ok).toBe(true);

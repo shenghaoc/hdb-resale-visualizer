@@ -14,9 +14,10 @@ This is an **additive Neon-only** feature for `hdb-resale-visualizer`, motivated
 
 1. Review and run `sql/neon/001_postgis_nearby.sql` **on an isolated Neon branch** before any candidate or production migration. The full script should be executed atomically with a transactional runner (for example, `psql --single-transaction -v ON_ERROR_STOP=1 -f ...`) and output recorded.
 2. Verify count/identity/coordinate hashes, affected-row and trigger rollback behavior, query plans and fixed corpus publication invariants; the new source trigger changes write amplification if `mrt_geojson` changes, so previous publisher bounds **cannot** be assumed unchanged in that scenario.
-3. Keep existing `PUBLIC_DATA_BACKEND` selection intact. The new route is only available when the Neon spatial method exists; D1 rollback returns an explicit unavailable status for this _new_ optional route. All pre-existing routes stay fully functional on D1.
-4. Confirm Neon Free storage/compute/transfer headroom, source and publication freshness, and Worker caching/cold-query performance before exposing UI callers. Do **not** auto-deploy the database migration or enable CI to run it against production.
-5. Only after backend acceptance: add an unobtrusive buyer-facing nearby-place section. Keep precomputed walking times distinct. Schools, supermarkets, hawkers and parks remain follow-up source-ingestion milestones.
+3. Keep `NEON_SPATIAL_ENABLED=false` until separately approved database and serving acceptance. The Worker returns 503/no-store **without opening a Neon transport** while this feature is disabled; enable it only with a coordinated release and cache epoch.
+4. Keep existing `PUBLIC_DATA_BACKEND` selection intact. The new route is only available when the Neon spatial method exists; D1 rollback returns an explicit unavailable status for this _new_ optional route. All pre-existing routes stay fully functional on D1.
+5. Confirm Neon Free storage/compute/transfer headroom, source and publication freshness, and Worker caching/cold-query performance before exposing UI callers. Do **not** auto-deploy the database migration or enable CI to run it against production.
+6. Only after backend acceptance: add an unobtrusive buyer-facing nearby-place section. Keep precomputed walking times distinct. Schools, supermarkets, hawkers and parks remain follow-up source-ingestion milestones.
 
 ## Example read-only validation SQL
 
