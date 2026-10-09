@@ -33,6 +33,8 @@ const exitRow = {
   lat: 1.2842747760727764,
   lng: 103.84546253179646,
   address_key: null,
+  station_name: "CHINATOWN MRT STATION",
+  exit_code: "Exit F",
   distance_meters: 89.6,
 };
 const ctx = { waitUntil: () => {} } as unknown as ExecutionContext;
@@ -69,7 +71,7 @@ const inMemoryCache = () => {
   return entries;
 };
 
-describe("nearby-places release gate in the Worker entry", () => {
+describe("spatial release gate in the Worker entry", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     spies.query.mockImplementation(async (sql: string) => {
@@ -114,7 +116,16 @@ describe("nearby-places release gate in the Worker entry", () => {
       limit: 25,
       types: ["mrt_exit"],
       distanceBasis: "straight-line",
-      places: [{ kind: "mrt_exit", addressKey: null, distanceMeters: 89.6 }],
+      places: [
+        {
+          kind: "mrt_exit",
+          name: "CHINATOWN MRT STATION (Exit F)",
+          stationName: "CHINATOWN MRT STATION",
+          exitCode: "Exit F",
+          addressKey: null,
+          distanceMeters: 89.6,
+        },
+      ],
     });
     const nearbyCalls = spies.query.mock.calls.filter(([sql]) => sql === NEARBY_SPATIAL_SQL);
     expect(nearbyCalls).toHaveLength(1);
@@ -163,5 +174,38 @@ describe("nearby-places release gate in the Worker entry", () => {
     );
     const prefix = (key: string | undefined) => key?.slice(0, key.indexOf("/api/"));
     expect(prefix(nearbyKeys[0])).toBe(prefix(manifestKey));
+  });
+
+  it("answers the capability probe from configuration alone: off while the gate is closed", async () => {
+    const response = await call(deployedEnv(), "/api/nearby-capabilities");
+    expect(response.status).toBe(200);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ available: false });
+    expect(spies.factory).not.toHaveBeenCalled();
+    expect(spies.query).not.toHaveBeenCalled();
+    expect(spies.d1).not.toHaveBeenCalled();
+  });
+
+  it.each([
+    { label: "gate open on Neon with the binding", overrides: {}, available: true },
+    {
+      label: "gate open on the D1 backend",
+      overrides: { PUBLIC_DATA_BACKEND: "d1" },
+      available: false,
+    },
+    {
+      label: "gate open without the Hyperdrive binding",
+      overrides: { HDB_PUBLIC_NEON: undefined },
+      available: false,
+    },
+    { label: "gate closed", overrides: { NEON_SPATIAL_ENABLED: "false" }, available: false },
+  ])("capability, $label: available is $available", async ({ overrides, available }) => {
+    const env = deployedEnv({ NEON_SPATIAL_ENABLED: "true", ...overrides });
+    const response = await call(env, "/api/nearby-capabilities");
+    expect(await response.json()).toEqual({ available });
+    // Flag, backend and binding only: no transport is opened and no table is read, so
+    // "available" never means that the spatial migration has been applied.
+    expect(spies.factory).not.toHaveBeenCalled();
+    expect(spies.query).not.toHaveBeenCalled();
   });
 });
