@@ -40,6 +40,10 @@ export type NearbyPlace = {
   /** Ellipsoidal straight-line distance in metres, not routing/walking distance. */
   distanceMeters: number;
   addressKey: string | null;
+  /** Source STATION_NA of the nearest MRT exit; null for other kinds. */
+  stationName: string | null;
+  /** Source EXIT_CODE, preserved verbatim (e.g. "E" or "Exit B"). */
+  exitCode: string | null;
 };
 export type NearbyPlacesRequest = {
   lat: number;

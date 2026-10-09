@@ -10,6 +10,7 @@ import {
   snapNearbyCenter,
 } from "../../shared/nearby-places";
 import { createNeonPublicData } from "../../worker/public-data-neon";
+import { NEARBY_SPATIAL_SQL, queryNearbyPlaces } from "../../worker/nearby-spatial-query";
 import { matchApiRoute } from "../../worker/api-route-match";
 
 const url = (suffix: string) => new URL("https://example.com/api/nearby-places" + suffix);
@@ -143,6 +144,49 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(sql).toContain("ORDER BY distance_meters");
     expect(params).toEqual([1.35, 103.75, 1000, ["mrt_station", "mrt_exit"], 25]);
     expect(sql).not.toContain("103.75");
+  });
+
+  it("groups MRT exits in SQL by the official station name before LIMIT", async () => {
+    const fakeQuery = vi.fn(async (_sql: string, _params: readonly unknown[]) => [
+      {
+        id: "mrt_geojson:mrt_exit:21437",
+        kind: "mrt_exit",
+        name: "BUGIS MRT STATION (E)",
+        station_name: "BUGIS MRT STATION",
+        exit_code: "E",
+        lat: 1.3,
+        lng: 103.86,
+        address_key: null,
+        distance_meters: 250.3,
+      },
+    ]);
+    const places = await queryNearbyPlaces(fakeQuery, {
+      lat: 1.3,
+      lng: 103.86,
+      radiusMeters: 1500,
+      limit: 25,
+      kinds: ["mrt_exit"],
+    });
+    expect(places).toEqual([
+      {
+        id: "mrt_geojson:mrt_exit:21437",
+        kind: "mrt_exit",
+        name: "BUGIS MRT STATION (E)",
+        stationName: "BUGIS MRT STATION",
+        exitCode: "E",
+        lat: 1.3,
+        lng: 103.86,
+        addressKey: null,
+        distanceMeters: 250.3,
+      },
+    ]);
+    expect(NEARBY_SPATIAL_SQL).toContain("p.source_properties->>'STATION_NA'");
+    expect(NEARBY_SPATIAL_SQL).toContain("p.source_properties->>'EXIT_CODE'");
+    expect(NEARBY_SPATIAL_SQL).toContain("ROW_NUMBER() OVER");
+    expect(NEARBY_SPATIAL_SQL.indexOf("WHERE station_rank=1")).toBeLessThan(
+      NEARBY_SPATIAL_SQL.lastIndexOf("LIMIT $5"),
+    );
+    expect(fakeQuery).toHaveBeenCalledOnce();
   });
 
   it("routes GET and rejects POST without falling back to assets", () => {

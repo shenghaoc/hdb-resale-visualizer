@@ -97,6 +97,10 @@ Click a block dot on the map (or a row in the Results list) to open the **detail
 - **Nearby amenities** — MRT stations, primary schools
 - **Comparable blocks** — similar blocks in the area for quick comparison
 
+Use **View nearby MRT exits** inside the block detail's **Connectivity** section when the optional spatial database feature has been explicitly enabled and the block has MRT connectivity information. The control is hidden when the backend does not support this feature; the existing walking-time evidence remains visible. Open the control to look for exits within a **1.5 km straight-line radius**. PostgreSQL considers **all matching exits**, keeps the nearest exit for each station name recorded in the official source data, and only then applies the fixed **25-entry result limit**. The app displays up to **five closest entries**, each with its exit code and distance. Each source-recorded station name appears once, but the list is **not guaranteed to be one entry per physical station**: a few official records label a station by its station code (for example `DT18`) instead of its name, so such a station can appear under both its code and its name, and a few stations appear only under a code.
+
+These PostGIS distances are measured along the Earth's surface from an approximately **0.0001°-snapped** search centre and are **not walking distances or walking times**. Road/path routing, station access and building entrances can make a walking journey longer. The existing nearest-MRT walking-time estimate is a separate cached routing result and has not been replaced. If no exits match, the control explains that; a temporary lookup failure offers a retry instead of claiming there are no exits.
+
 Use the **bookmark icon** to save the block. Saved comparisons are block-level, so their prices are explicitly labelled as block-wide medians rather than inheriting a temporary flat-type filter.
 
 ## Results list
