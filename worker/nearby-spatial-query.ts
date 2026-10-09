@@ -44,6 +44,9 @@ ORDER BY distance_meters ASC, kind COLLATE "C" ASC, id COLLATE "C" ASC
 LIMIT $5
 `;
 
+/** `pg` returns `text` columns as strings and NULL as null; anything else is treated as absent. */
+const textOrNull = (value: unknown): string | null => (typeof value === "string" ? value : null);
+
 export async function queryNearbyPlaces(
   query: SpatialReadQuery,
   request: NearbyPlacesRequest,
@@ -62,7 +65,7 @@ export async function queryNearbyPlaces(
     name: String(r.name),
     lat: Number(r.lat),
     lng: Number(r.lng),
-    addressKey: r.address_key == null ? null : String(r.address_key),
+    addressKey: textOrNull(r.address_key),
     distanceMeters: Number(r.distance_meters),
   }));
 }
