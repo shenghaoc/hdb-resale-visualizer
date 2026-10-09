@@ -1,0 +1,22 @@
+name: PostGIS formatting proof (temporary)
+on:
+  push:
+    branches: ["feat/postgis-lbs-nearby"]
+permissions:
+  contents: read
+jobs:
+  formatted-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: voidzero-dev/setup-vp@v1.21.1
+      - run: vp install
+      - name: Emit canonical formatted files without modifying repository
+        shell: bash
+        run: |
+          vp fmt docs/architecture/postgis-nearby.md tests/unit/nearby-places.test.ts worker/nearby-spatial-query.ts
+          for f in docs/architecture/postgis-nearby.md tests/unit/nearby-places.test.ts worker/nearby-spatial-query.ts; do
+            printf 'POSTGISFMT_BEGIN:%s\n' "$f"
+            base64 -w 0 "$f"
+            printf '\nPOSTGISFMT_END:%s\n' "$f"
+          done
