@@ -56,6 +56,17 @@ The browser asks `GET /api/nearby-capabilities` whether to offer the optional MR
 
 Client behaviour (`src/features/block-detail/nearbyMrtExitsApi.ts`): a successful answer, `true` or `false`, is remembered for the page session. A network error, non-2xx status or malformed body counts as "not available" for that mount but is **not** remembered, so the next block selected probes again. The PWA service worker's `NetworkFirst` API rule admits only responses that carry a Worker cache label, so this unlabelled `no-store` answer is never kept for offline use. While the flag is `"false"` the probe is the only request this feature makes, and `GET /api/nearby-places` answers a `no-store` 503 before any Neon connection is created. `tests/unit/nearby-places-worker-gate.test.ts` drives the real Worker entry through both behaviours.
 
+## Coordinate-system contract
+
+Stored coordinates are WGS84 (EPSG:4326) in longitude, latitude order. Every distance that decides a result is a geodesic on `geography` (the spheroid), reported in metres. Planar, metre-based work belongs in SVY21 (EPSG:3414) and is reached only with `ST_Transform`; `ST_SetSRID` is a label and is used for exactly one thing, `ST_SetSRID(ST_MakePoint(lng, lat), 4326)`. The standing rules are R1 in `.kiro/specs/geospatial-programme/requirements.md`.
+
+Two guards keep the contract from eroding:
+
+- `tests/unit/crs-contract.test.ts` runs in CI. It reads the migration, the verifiers and the shipped query and fails on a swapped `ST_MakePoint`, an `ST_SetSRID` that is not the one allowed form, an `ST_Transform` to anything but 3414 or 4326, and an `ST_DWithin` or `ST_Distance` that is not on `geography`. It also fails if PostGIS appears anywhere in `functions/`, `shared/`, `src/` or `scripts/` (apart from the local benchmark), and checks that the query binds latitude as `$1` and longitude as `$2`.
+- `sql/neon/verify_crs_contract.sql` is the executable counterpart. It needs only PostGIS, writes nothing, and asserts that a longitude/latitude swap and a relabelled SVY21 point fall outside the Singapore bounding box, that `ST_DWithin(…, 500)` on `geometry(4326)` means 500 degrees while on `geography` it means 500 metres, and that over 500 deterministic pairs up to 3 km apart the SVY21 round trip and SVY21 planar distance agree with the geodesic. Local run (PostgreSQL 18.6, PostGIS 3.6.3): SVY21 round trip within floating-point noise, SVY21 distance within 0.020 m of the geodesic, and the spherical distance between −0.112% and +0.561% of it.
+
+The approximations that remain are deliberate and listed: the browser's near-me filter and the build-time nearest-amenity distances use haversine on a 6,371 km sphere, which reads north-south distances 0.56% high and east-west distances 0.11% low at Singapore's latitude; the `<->` operator ranks by sphere too, so it is a candidate generator and never the decision. Measurements and their reproduction are in the geospatial programme design.
+
 ## Measured disposable-branch evidence
 
 Disposable Neon branch **`postgis-type-safe-review-20261009`** (`br-orange-sky-b30msckg`), forked from `br-rough-frost-b3e2ks1b`; PG18/PostGIS 3.6 series. Administrative/migration connection was `neondb_owner`.
