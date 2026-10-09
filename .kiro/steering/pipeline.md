@@ -4,21 +4,23 @@
 The application separates **build-time ingestion** (Node + GitHub Actions) from **runtime serving** (Cloudflare Worker + D1, with an optional Neon read backend selected by `PUBLIC_DATA_BACKEND`):
 - **Frontend**: React 19 SPA. Only talks to `/api/*` (same-origin Pages Functions).
 - **Runtime API**: `functions/api/*` route handlers. Public data routes read through the `PublicData` boundary (`functions/_lib/public-data.ts`), answered by D1 or, when `PUBLIC_DATA_BACKEND=neon`, by Neon through Hyperdrive; shortlists stay on D1. Production currently selects Neon, so `scripts/sync-data.ts` refreshing D1 does not change what the site serves until the selector is switched back. See `docs/architecture/public-read-backend.md`.
-- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required.
+- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required. Its opt-in `--plan` / `--check-upstream` modes are read-only upstream probes and `--apply-rehearsal` applies an incremental plan to a loopback emulator only; none of them changes the full publication described below. See `docs/d1-free-sustainability.md`.
+- **Neon publisher (manual only)**: `scripts/sync-neon.ts` (`vp run sync-data:neon`, workflow `.github/workflows/refresh-neon.yml`, `workflow_dispatch` only) reconciles the official sources against the stored Neon publication and writes the changed rows in one PostgreSQL transaction. Its connection URL is validated against the single isolated benchmark branch named in `scripts/lib/sync/neon.ts`; nothing schedules it, it writes no D1, and a new `NEON_PUBLIC_CACHE_EPOCH` stays a separate manual step. See `docs/neon-monthly-refresh-policy.md`.
 
 ## Data Pipeline Flow (`scripts/sync-data.ts`)
 1. **Ingestion**: Fetches raw data from official Singapore sources (data.gov.sg, LTA).
 2. **Normalization**: Sanitizes addresses, derives price/sqm + price/sqft, standardizes lease commencement years.
-3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are upserted back to D1 in batches of 250.
+3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are upserted back to D1 in batches of 250 (the incremental modes stage them in memory until the plan has validated).
 4. **MRT walking times (one-time)**: Same pattern with the `walking_time_cache` table.
 5. **Artifact build**: `buildArtifacts()` produces the same logical shapes as before (block summaries, address details, comparisons, town × flat-type trends, MRT GeoJSON) — but they are now written to D1, not files.
 6. **D1 write**: `scripts/lib/sync/store.ts` stamps a `publicationInProgress` marker (owned by this run) into the stored manifest and reads it back, truncates and reinserts the generated tables in batched statements via the D1 HTTP API (every write is conditional on still owning the marker, inside the statement, so a superseded run changes nothing), and writes the manifest last with a statement that is conditional on that ownership and read back; that final write replaces the document and so removes the marker. While the marker is present the Worker's public-data cache stores nothing (see `docs/architecture/public-read-backend.md`). If a run aborts the marker stays, and the next `sync-data` run publishes again even when upstream is unchanged. Run one `sync-data` at a time.
+   The incremental planner (`readPublishedArtifacts` / `planArtifactWrites`, also used by the Neon publisher) instead compares source multisets and generated values with the stored rows, retains integer transaction rowids, and plans changed-only writes with the manifest last. It never builds on a manifest that carries the marker: half-replaced tables are not a generation, so a full publication has to complete first.
 
 ## D1 Tables
-**Generated (rebuilt every sync):**
+**Generated (rebuilt by every full sync; the incremental modes rewrite only changed rows):**
 - `manifest` — single-row metadata blob.
 - `blocks` — normalized columns + JSON blobs for `flat_types`, `nearby_mrts`, etc.
-- `block_details` — one JSON blob per address key (full transaction history + monthly trend).
+- `block_details` — one JSON blob per address key (capped recent transactions + full monthly trend).
 - `comparisons` — one JSON blob per address key (amenity counts + percentile ranks).
 - `town_flat_type_trends` — normalized trend points.
 - `mrt_geojson` — two rows (`stations`, `exits`).
