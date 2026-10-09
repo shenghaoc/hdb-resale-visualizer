@@ -4,7 +4,10 @@ import { onRequestGet } from "../../functions/api/nearby-places";
 import {
   canonicalNearbyPlacesParams,
   isNeonSpatialEnabled,
+  MAX_NEARBY_CENTER_KEYS,
+  MAX_NEARBY_CACHE_KEYS,
   parseNearbyPlacesRequest,
+  snapNearbyCenter,
 } from "../../shared/nearby-places";
 import { createNeonPublicData } from "../../worker/public-data-neon";
 import { matchApiRoute } from "../../worker/api-route-match";
@@ -38,6 +41,27 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(canonicalNearbyPlacesParams(parsed.request).toString()).toBe(
       "lat=1.35&lng=103.75&radius=800&limit=5&types=mrt_station%2Cmrt_exit",
     );
+  });
+
+  it("snaps nearby raw coordinates to exactly the same SQL centre and cache key", () => {
+    const first = parseNearbyPlacesRequest(url("?lat=1.350001&lng=103.750001&radius=100"));
+    const second = parseNearbyPlacesRequest(url("?lat=1.350049&lng=103.750049&radius=100"));
+    expect(first.ok).toBe(true);
+    expect(second.ok).toBe(true);
+    if (!first.ok || !second.ok) return;
+    expect(first.request.lat).toBe(1.35);
+    expect(first.request.lng).toBe(103.75);
+    expect(second.request).toEqual(first.request);
+    expect(canonicalNearbyPlacesParams(first.request).toString()).toBe(
+      canonicalNearbyPlacesParams(second.request).toString(),
+    );
+    expect(snapNearbyCenter(1.350049, 103.750049)).toEqual({ lat: 1.35, lng: 103.75 });
+  });
+
+  it("has a finite documented upper bound for the canonical cache key space", () => {
+    expect(MAX_NEARBY_CENTER_KEYS).toBe(4_001 * 6_001);
+    expect(MAX_NEARBY_CACHE_KEYS).toBe(10_088_402_170_175);
+    expect(Number.isSafeInteger(MAX_NEARBY_CACHE_KEYS)).toBe(true);
   });
 
   it.each([

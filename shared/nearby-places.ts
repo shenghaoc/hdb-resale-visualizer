@@ -1,5 +1,25 @@
 /** Deterministic, bounded Singapore spatial query contract (straight-line distances only). */
 export const NEARBY_PLACE_KINDS = ["hdb_block", "mrt_station", "mrt_exit"] as const;
+/**
+ * One cache centre per 0.0001° grid cell (11.14 m or less per axis).
+ * At most ~7.88 m of straight-line distance error to an arbitrary point.
+ * The 100 m minimum radius remains much larger than this displacement.
+ */
+const NEARBY_GRID_SCALE = 10_000;
+export const NEARBY_GRID_DEGREES = 1 / NEARBY_GRID_SCALE;
+/** 4,001 latitude positions × 6,001 longitude positions, including endpoints. */
+export const MAX_NEARBY_CENTER_KEYS = 4_001 * 6_001;
+/** All possible canonical keys: centres × integer radii × limits × nonempty kind sets. */
+export const MAX_NEARBY_CACHE_KEYS =
+  MAX_NEARBY_CENTER_KEYS * (2_500 - 100 + 1) * 25 * ((1 << 3) - 1);
+
+export function snapNearbyCenter(lat: number, lng: number): { lat: number; lng: number } {
+  return {
+    lat: Math.round(lat * NEARBY_GRID_SCALE) / NEARBY_GRID_SCALE,
+    lng: Math.round(lng * NEARBY_GRID_SCALE) / NEARBY_GRID_SCALE,
+  };
+}
+
 /** Absent or false never unlocks a PostGIS query. */
 export const isNeonSpatialEnabled = (value: string | undefined): boolean => value === "true";
 export type NearbyPlaceKind = (typeof NEARBY_PLACE_KINDS)[number];
@@ -67,14 +87,16 @@ export function parseNearbyPlacesRequest(url: URL): ParsedNearby {
   )
     return { ok: false, error: "types may include hdb_block,mrt_station,mrt_exit" };
   const sorted = NEARBY_PLACE_KINDS.filter((k) => kinds.includes(k));
-  return { ok: true, request: { lat, lng, radiusMeters, limit, kinds: [...sorted] } };
+  const center = snapNearbyCenter(lat, lng);
+  return { ok: true, request: { ...center, radiusMeters, limit, kinds: [...sorted] } };
 }
 
 /** Stable canonical Worker Cache API key; input type order and spelling do not fragment the cache. */
 export function canonicalNearbyPlacesParams(request: NearbyPlacesRequest): URLSearchParams {
   const params = new URLSearchParams();
-  params.set("lat", String(request.lat));
-  params.set("lng", String(request.lng));
+  const center = snapNearbyCenter(request.lat, request.lng);
+  params.set("lat", String(center.lat));
+  params.set("lng", String(center.lng));
   params.set("radius", String(request.radiusMeters));
   params.set("limit", String(request.limit));
   params.set("types", request.kinds.join(","));

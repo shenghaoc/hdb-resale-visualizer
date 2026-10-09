@@ -2,7 +2,7 @@
  * Neon-only, parameterized index-aware proximity query. Do not insert coordinates
  * into SQL text. The generated PostGIS geography columns have matching GiST indexes.
  */
-import type { NearbyPlace, NearbyPlacesRequest, NearbyPlaceKind } from "../shared/nearby-places";
+import { snapNearbyCenter, type NearbyPlace, type NearbyPlacesRequest, type NearbyPlaceKind } from "../shared/nearby-places";
 
 export type SpatialReadQuery = (
   sql: string,
@@ -40,9 +40,10 @@ export async function queryNearbyPlaces(
   query: SpatialReadQuery,
   request: NearbyPlacesRequest,
 ): Promise<NearbyPlace[]> {
+  const center = snapNearbyCenter(request.lat, request.lng);
   const rows = await query(NEARBY_SPATIAL_SQL, [
-    request.lat,
-    request.lng,
+    center.lat,
+    center.lng,
     request.radiusMeters,
     request.kinds,
     request.limit,
