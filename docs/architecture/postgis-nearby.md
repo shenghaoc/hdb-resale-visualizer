@@ -40,6 +40,8 @@ The bounded input region has **4,001 × 6,001 = 24,010,001** distinct snapped ce
 
 The spatial query searches `block_locations` joined by primary key to `blocks` and independently searches `poi_locations`, using `ST_DWithin`. These are straight-line spheroidal distances, **not** walking routes; the old walking-time estimates remain separate.
 
+For MRT exit results, the query partitions all radius-matched source observations by `source_properties->>'STATION_NA'`, chooses the nearest exit with a deterministic source-ID tie-break, and only **then** applies the global fixed limit. It returns the source `STATION_NA` and `EXIT_CODE` independently as `stationName` and `exitCode`; the client does not parse display-name suffixes. On disposable branch `postgis-type-safe-review-20261009`, `central-area-535-upp-cross-st` has **91 nearby exits belonging to 20 stations** at 1,500 m, whereas a naive pre-group limit of 25 exits includes only **6 stations**. The corrected Worker SQL returned **20 station records** with **0 exit-ID mismatches** against an independent `DISTINCT ON` nearest-per-station oracle. The read-only regression script is `sql/neon/verify_nearest_mrt_exit_per_station.sql`.
+
 ## Measured disposable-branch evidence
 
 Disposable Neon branch **`postgis-type-safe-review-20261009`** (`br-orange-sky-b30msckg`), forked from `br-rough-frost-b3e2ks1b`; PG18/PostGIS 3.6 series. Administrative/migration connection was `neondb_owner`.
