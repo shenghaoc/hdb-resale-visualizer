@@ -1,0 +1,43 @@
+{
+  // TEMPORARY verification Worker for the deployed-path check of GET /api/nearby-places. NOT production.
+  // Fill the __PLACEHOLDERS__ (see README.md), deploy with `wrangler deploy --config <filled file>`, delete the Worker
+  // and the Hyperdrive configuration when the check is finished.
+  //
+  // Rate-limit namespace ids are account-wide: production owns 1002, 1003 and 1004, so this Worker uses ids of its own.
+  // There is no D1 binding, no cron and no static assets; only the API routes are meaningful here.
+  "name": "__WORKER_NAME__",
+  "main": "__REPO_ROOT__/worker/index.ts",
+  "compatibility_date": "2026-04-19",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "rules": [
+    { "type": "Data", "globs": ["**/*.ttf"] },
+    { "type": "CompiledWasm", "globs": ["**/*.wasm"] },
+  ],
+  "ratelimits": [
+    {
+      "name": "NEARBY_IP_LIMITER",
+      "namespace_id": "9003",
+      "simple": { "limit": 30, "period": 60 },
+    },
+    // 300 matches production. For the origin-limit phase change it to 10 (README.md) so the 503 path is reachable.
+    {
+      "name": "NEARBY_ORIGIN_LIMITER",
+      "namespace_id": "9004",
+      "simple": { "limit": 300, "period": 60 },
+    },
+  ],
+  "hyperdrive": [
+    {
+      "binding": "HDB_PUBLIC_NEON",
+      "id": "__HYPERDRIVE_ID__",
+      "localConnectionString": "postgresql://local:local@localhost:5432/hdb_local",
+    },
+  ],
+  "vars": {
+    "PUBLIC_DATA_BACKEND": "neon",
+    "D1_PUBLIC_CACHE_EPOCH": "unused",
+    "NEON_PUBLIC_CACHE_EPOCH": "__CACHE_EPOCH__",
+    "NEON_SPATIAL_ENABLED": "true",
+  },
+}

@@ -87,7 +87,8 @@ account-wide, so reusing `1003` or `1004` would share counters with production),
 `NEON_SPATIAL_ENABLED="true"`, `PUBLIC_DATA_BACKEND="neon"` and a throwaway
 cache epoch. The origin limit is lowered there so the `503` path is reachable.
 
-Checks, each recorded with its result:
+The harness is `tests/deployed-path/` (client, shipped-SQL fingerprints, Worker
+template, local rehearsal). Checks, each recorded with its result:
 
 1. The capability probe answers `true`.
 2. A recorded sample of requests, including the grounded case, returns the same
