@@ -40,6 +40,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
+- [**Geospatial Programme**](.kiro/specs/geospatial-programme/tasks.md) — Standing coordinate-system, provenance, determinism and safety rules for all geospatial work; the baseline audit, discrepancy register and prioritised roadmap.
 
 **Completed:**
 
