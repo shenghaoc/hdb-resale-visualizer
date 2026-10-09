@@ -17,15 +17,10 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "../..");
-const args = Object.fromEntries(
-  process.argv
-    .slice(2)
-    .reduce(
-      (pairs, arg, i, all) =>
-        arg.startsWith("--") ? [...pairs, [arg.slice(2), all[i + 1]]] : pairs,
-      [],
-    ),
-);
+const args = {};
+const argv = process.argv.slice(2);
+for (let i = 0; i < argv.length; i++)
+  if (argv[i].startsWith("--")) args[argv[i].slice(2)] = argv[i + 1];
 const sizes = (args.sizes ?? "10000").split(",").map(Number);
 const seconds = Number(args.seconds ?? 15);
 const outDir = path.resolve(args.out ?? "bench-out");
