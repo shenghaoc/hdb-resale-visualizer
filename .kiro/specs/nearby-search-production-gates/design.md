@@ -63,8 +63,9 @@ mirrors them and `tests/unit/nearby-rate-limit.test.ts` pins the two together.
 - **Fail closed on a missing binding, fail open on a limiter fault.** A missing
   binding while the flag is on is a deployment mistake that should be loud. A
   throwing limiter is a platform fault; the feature is optional and the
-  database is still bounded by the cache, the Hyperdrive origin limit and the
-  transport's 15 s connect and 60 s query timeouts.
+  database is still bounded by the cache, the Hyperdrive origin limit, the
+  runtime role's server-side 60 s `statement_timeout` and the transport's
+  client-side 15 s connect and 60 s query timeouts.
 - **Anonymous IP keys are a compromise.** Cloudflare advises against IP keys
   because users share addresses. The route has no other identity. 30 per minute
   is well above ordinary use, and `429` is retryable.
@@ -117,9 +118,10 @@ credential file. The fork is left for its owner to delete.
 - **Shared NAT.** Many users behind one address share a bucket and may see `429`
   during bursts. Mitigation: a generous limit and `Retry-After`.
 - **Distributed clients.** Many addresses together can exceed the per-location
-  origin budget in aggregate. Mitigation: the origin cap and the Hyperdrive
-  origin limit. Residual: no global quota exists, and the runtime role has no
-  server-side statement timeout (the transport's `query_timeout` is client-side).
+  origin budget in aggregate. Mitigation: the origin cap, the Hyperdrive origin
+  limit and the runtime role's 60 s `statement_timeout` (read back on a fork of
+  the serving branch: `default_transaction_read_only=on`, `statement_timeout=60s`).
+  Residual: no global quota exists.
 - **Limiter semantics.** The binding is permissive and eventually consistent.
   The limits are guard rails, not accounting.
 - **Phase 3 needs a database credential.** A temporary SELECT-only role and a
