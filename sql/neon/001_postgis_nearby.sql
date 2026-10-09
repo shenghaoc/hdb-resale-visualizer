@@ -77,6 +77,11 @@ BEGIN
     PERFORM public.refresh_mrt_poi_locations(OLD.kind,NULL);
     RETURN OLD;
   END IF;
+  -- Avoid rewriting all dependent POI rows for an unchanged source document.
+  IF TG_OP='UPDATE' AND NEW.kind IS NOT DISTINCT FROM OLD.kind
+     AND NEW.json IS NOT DISTINCT FROM OLD.json THEN
+    RETURN NEW;
+  END IF;
   IF TG_OP='UPDATE' AND NEW.kind IS DISTINCT FROM OLD.kind THEN
     PERFORM public.refresh_mrt_poi_locations(OLD.kind,NULL);
   END IF;
@@ -84,6 +89,8 @@ BEGIN
   RETURN NEW;
 END
 $func$;
+REVOKE EXECUTE ON FUNCTION public.refresh_mrt_poi_locations(TEXT,JSONB) FROM PUBLIC;
+REVOKE EXECUTE ON FUNCTION public.refresh_mrt_poi_locations_trigger() FROM PUBLIC;
 DROP TRIGGER IF EXISTS mrt_geojson_poi_sync ON public.mrt_geojson;
 CREATE TRIGGER mrt_geojson_poi_sync
   AFTER INSERT OR UPDATE OR DELETE ON public.mrt_geojson
