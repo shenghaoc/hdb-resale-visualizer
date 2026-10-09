@@ -40,6 +40,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
+- [**Nearby Search Production Gates**](.kiro/specs/nearby-search-production-gates/tasks.md) — Rate limiting for the PostGIS nearby route and the deployed Worker → Hyperdrive → PostGIS verification that must precede opening `NEON_SPATIAL_ENABLED`.
 
 **Completed:**
 
