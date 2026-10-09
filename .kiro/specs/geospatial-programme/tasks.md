@@ -38,7 +38,9 @@
 ## Phase G — Production gates for nearby search (`nearby-search-production-gates`)
 
 - [~] **TG.1** Rate limiting (#421).
-  -> Gate green (216 files, 2,216 tests); four mutations caught.
+  -> Gate green (217 files, 2,224 tests); four mutations caught; local rehearsal of
+  the whole check passes; the Free-plan Hyperdrive query budget is documented
+  and unprotected (T4.2 in that spec).
 
 - [~] **TG.2** Deployed-path verification on a disposable fork with a temporary
   Worker and Hyperdrive. Everything except the database credential is prepared and
@@ -57,12 +59,15 @@
 ## Phase 1 — Multi-source POI integration (`poi-source-integration`)
 
 - [~] **T1.1** Source inventory, licence analysis and admission recommendation
-  (research in progress).
-  -> Each licence read from its primary text; owner decision on any share-alike
-  source. Risk: licence obligations that conflict with storing derived rows.
+  (#428, draft).
+  -> Each licence read from its primary text; owner decisions OD1 to OD8, among
+  them OpenStreetMap under ODbL share-alike. Only `mrt_station` has two
+  independent, licence-clear, anonymous sources. Risk: licence obligations that
+  conflict with storing derived rows.
 
-- [ ] **T1.2** CRS contract tests (register item 26 and `design.md` 2.4).
-  -> Swap, relabel, degrees-as-metres and round-trip tests, run in CI.
+- [~] **T1.2** CRS contract tests (register item 26 and `design.md` 2.4) (#427, draft).
+  -> Static CI guard plus a read-only PostGIS verifier (swap, relabel,
+  degrees-as-metres, SVY21 round trip); passes locally and on a Neon fork.
 
 - [ ] **T1.3** Ingestion of admitted sources (build-time) with provenance columns;
   MRT preflight validation so one bad feature cannot block a publication.
@@ -91,14 +96,15 @@
 
 ## Phase 3 — Benchmarks on local PostgreSQL/PostGIS
 
-- [ ] **T3.1** Methodology and harness: synthetic datasets at 10k, 100k and 1M
-  points, fixed seeds, warm and cold runs, p50/p95/p99, plans with buffers,
-  hardware and version capture.
+- [~] **T3.1** Methodology and harness: synthetic datasets at 10k, 100k and 1M
+  points, fixed seeds, p50/p95/p99, plans with buffers, hardware and version
+  capture, noise detection (#426, draft; warm runs only, no cold run).
   -> One command regenerates the report. Risk: laptop numbers are not edge
   numbers; the report says so.
 
-- [ ] **T3.2** Exact versus KNN versus grid candidate strategies with their
-  disagreement rates.
+- [~] **T3.2** Exact versus KNN candidate strategy with its disagreement rate
+  (#426: slower at 10k, 4.1x faster at 100k, 21x at 1M, no top-25 difference in
+  2,000 centres per size); a grid strategy is not measured.
   -> Extends the 500-block measurement in `design.md` 2.3.
 
 ## Phase 4 — Planning hierarchy
