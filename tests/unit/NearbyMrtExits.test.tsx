@@ -1,7 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { NearbyMrtExits } from "@/features/block-detail/NearbyMrtExits";
-import { resetNearbySpatialAvailableForTests } from "@/features/block-detail/nearbyMrtExitsApi";
+import {
+  getNearbySpatialAvailable,
+  resetNearbySpatialAvailableForTests,
+} from "@/features/block-detail/nearbyMrtExitsApi";
 import { I18nProvider } from "@/shared/lib/i18n";
 
 const json = (body: unknown, status = 200) =>
@@ -24,6 +27,33 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
   });
   afterEach(() => {
     vi.unstubAllGlobals();
+  });
+
+  it("memoizes only successful boolean capability responses", async () => {
+    let calls = 0;
+    const responses = [
+      json({ error: "temporary" }, 503),
+      json({ available: "yes" }),
+      json({ available: false }),
+    ];
+    const probe = vi.fn(async () => responses[calls++] ?? json({ available: true }));
+    vi.stubGlobal("fetch", probe);
+    expect(await getNearbySpatialAvailable()).toBe(false); // HTTP error not cached
+    expect(await getNearbySpatialAvailable()).toBe(false); // malformed not cached
+    expect(await getNearbySpatialAvailable()).toBe(false); // valid false cached
+    expect(await getNearbySpatialAvailable()).toBe(false); // valid false reused
+    expect(probe).toHaveBeenCalledTimes(3);
+  });
+
+  it("retries after a rejected capability fetch", async () => {
+    const probe = vi.fn()
+      .mockRejectedValueOnce(new Error("temporary network failure"))
+      .mockResolvedValue(json({ available: true }));
+    vi.stubGlobal("fetch", probe);
+    expect(await getNearbySpatialAvailable()).toBe(false);
+    expect(await getNearbySpatialAvailable()).toBe(true);
+    expect(await getNearbySpatialAvailable()).toBe(true);
+    expect(probe).toHaveBeenCalledTimes(2);
   });
 
   it("is absent when the backend is disabled", async () => {

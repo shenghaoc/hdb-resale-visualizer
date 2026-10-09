@@ -21,18 +21,32 @@ export type NearbyMrtExit = z.infer<typeof nearbyExitSchema>;
 
 let capabilityPromise: Promise<boolean> | null = null;
 
-/** Capability is stable during one deployed page session; cache the probe. */
+/**
+ * Memoise only successful boolean capability probes, including successful false.
+ * Errors and malformed responses are transient and can be retried on next selection.
+ */
 export function getNearbySpatialAvailable(): Promise<boolean> {
-  capabilityPromise ??= fetch("/api/nearby-capabilities", { cache: "no-store" })
+  if (capabilityPromise) return capabilityPromise;
+  const pending = fetch("/api/nearby-capabilities", { cache: "no-store" })
     .then(async (response) => {
-      if (!response.ok) return false;
+      if (!response.ok) throw new Error("Nearby capability probe failed");
       const body: unknown = await response.json();
-      return (
-        typeof body === "object" && body !== null && "available" in body && body.available === true
-      );
+      if (
+        typeof body !== "object" ||
+        body === null ||
+        !("available" in body) ||
+        typeof body.available !== "boolean"
+      ) {
+        throw new Error("Invalid nearby capability response");
+      }
+      return body.available;
     })
-    .catch(() => false);
-  return capabilityPromise;
+    .catch(() => {
+      if (capabilityPromise === pending) capabilityPromise = null;
+      return false;
+    });
+  capabilityPromise = pending;
+  return pending;
 }
 
 export function resetNearbySpatialAvailableForTests(): void {
