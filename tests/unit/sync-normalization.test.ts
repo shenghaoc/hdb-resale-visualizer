@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { GeocodeCacheFile, GeocodeEntry } from "../../scripts/lib/pipeline";
 import {
   normalizeAmenityGeoJson,
@@ -9,8 +9,11 @@ import {
   normalizeSupermarketRows,
   rekeyPropertyInfo,
 } from "../../scripts/lib/sync/normalization";
+import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
 
-const GEOCODE_ENDPOINT = new URL("https://example.test/api/common/elastic/search");
+// OneMap Search needs an access token, and credentials only ever go to the official endpoint
+// (scripts/lib/sync/geocode.ts), so these tests use it with a token and a mocked fetch.
+const GEOCODE_ENDPOINT = new URL("https://www.onemap.gov.sg/api/common/elastic/search");
 
 const resaleBase = {
   month: "2026-01",
@@ -59,9 +62,17 @@ function jsonFetch(body: unknown) {
   return { fetchMock, requestedUrls };
 }
 
+beforeEach(() => {
+  vi.stubEnv("ONEMAP_TOKEN", "fixture-token");
+  vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "1");
+  resetUpstreamThrottleForTests();
+});
+
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+  resetUpstreamThrottleForTests();
 });
 
 describe("resale sync normalization", () => {

@@ -1,0 +1,50 @@
+# INACTIVE: stored outside .github/workflows. No application deployment or publication.
+# This candidate performs read-only D1 preflight with the new monthly/manual policy.
+# Neon ingestion/cutover and actual billing gates require separate implementation/approval.
+name: Proposed monthly refresh — read-only preflight
+
+on:
+  schedule:
+    - cron: "0 2 1 * *" # Once per calendar month, first day at 02:00 UTC.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: data-refresh-monthly-and-manual
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+          node-version: "24"
+          run-install: false
+
+      - name: Install dependencies
+        run: vp install
+
+      - name: Report static transfer assumptions
+        run: vp exec tsx scripts/report-neon-refresh-budget.ts
+
+      - name: Explicit monthly or manual read-only preflight
+        env:
+          REFRESH_EVENT: ${{ github.event_name }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_D1_DATABASE_ID: ${{ secrets.CLOUDFLARE_D1_DATABASE_ID }}
+          DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
+        run: |
+          if [ "$REFRESH_EVENT" = "workflow_dispatch" ]; then
+            vp run sync-data --plan --reconcile-manual
+          else
+            vp run sync-data --plan --reconcile-monthly
+          fi
