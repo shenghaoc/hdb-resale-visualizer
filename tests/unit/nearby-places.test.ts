@@ -13,7 +13,7 @@ import { createNeonPublicData } from "../../worker/public-data-neon";
 import { matchApiRoute } from "../../worker/api-route-match";
 
 const url = (suffix: string) => new URL("https://example.com/api/nearby-places" + suffix);
-const valid = "?lat=1.35&lng=103.75&radius=800&limit=5&types=mrt_exit,mrt_station";
+const valid = "?lat=1.35&lng=103.75&radius=800&limit=25&types=mrt_exit,mrt_station";
 const fetchResult = (publicData: PublicData, suffix = valid) =>
   onRequestGet({
     publicData,
@@ -34,12 +34,12 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(parsed.request).toEqual({
       lat: 1.35,
       lng: 103.75,
-      radiusMeters: 800,
-      limit: 5,
+      radiusMeters: 1000,
+      limit: 25,
       kinds: ["mrt_station", "mrt_exit"],
     });
     expect(canonicalNearbyPlacesParams(parsed.request).toString()).toBe(
-      "lat=1.35&lng=103.75&radius=800&limit=5&types=mrt_station%2Cmrt_exit",
+      "lat=1.35&lng=103.75&radius=1000&types=mrt_station%2Cmrt_exit",
     );
   });
 
@@ -60,8 +60,22 @@ describe("bounded PostGIS nearby endpoint", () => {
 
   it("has a finite documented upper bound for the canonical cache key space", () => {
     expect(MAX_NEARBY_CENTER_KEYS).toBe(4_001 * 6_001);
-    expect(MAX_NEARBY_CACHE_KEYS).toBe(10_088_402_170_175);
+    expect(MAX_NEARBY_CACHE_KEYS).toBe(1_008_420_042);
     expect(Number.isSafeInteger(MAX_NEARBY_CACHE_KEYS)).toBe(true);
+  });
+
+  it("buckets radii upward and collapses equivalent requests onto one SQL/cache key", () => {
+    const first = parseNearbyPlacesRequest(url("?lat=1.350001&lng=103.750001&radius=101"));
+    const second = parseNearbyPlacesRequest(url("?lat=1.350049&lng=103.750049&radius=249&limit=25"));
+    expect(first.ok).toBe(true);
+    expect(second.ok).toBe(true);
+    if (!first.ok || !second.ok) return;
+    expect(first.request.radiusMeters).toBe(250);
+    expect(second.request).toEqual(first.request);
+    expect(canonicalNearbyPlacesParams(first.request).toString()).toBe(
+      canonicalNearbyPlacesParams(second.request).toString(),
+    );
+    expect(canonicalNearbyPlacesParams(first.request).get("limit")).toBeNull();
   });
 
   it.each([
@@ -70,6 +84,7 @@ describe("bounded PostGIS nearby endpoint", () => {
     "?lat=1.35&lng=103.75&radius=0",
     "?lat=1.35&lng=103.75&radius=3000",
     "?lat=1.35&lng=103.75&limit=26",
+    "?lat=1.35&lng=103.75&limit=5",
     "?lat=1.35&lng=103.75&types=mrt_station,mrt_station",
     "?lat=1.35&lng=103.75&types=school",
     "?lat=1.35&lng=103.75&lat=1.36",
@@ -83,7 +98,7 @@ describe("bounded PostGIS nearby endpoint", () => {
   it("allows the default MRT-only query and single-type block queries", () => {
     expect(parseNearbyPlacesRequest(url("?lat=1.35&lng=103.75"))).toMatchObject({
       ok: true,
-      request: { kinds: ["mrt_station", "mrt_exit"], limit: 15, radiusMeters: 1000 },
+      request: { kinds: ["mrt_station", "mrt_exit"], limit: 25, radiusMeters: 1000 },
     });
     expect(parseNearbyPlacesRequest(url("?lat=1.35&lng=103.75&types=hdb_block"))).toMatchObject({
       ok: true,
@@ -114,7 +129,7 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body).toMatchObject({
-      radiusMeters: 800,
+      radiusMeters: 1000,
       distanceBasis: "straight-line",
       places: [{ kind: "mrt_station", distanceMeters: 151.2, addressKey: null }],
     });
@@ -124,7 +139,7 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(sql).toContain("public.poi_locations");
     expect(sql).toContain("public.blocks");
     expect(sql).toContain("ORDER BY distance_meters");
-    expect(params).toEqual([1.35, 103.75, 800, ["mrt_station", "mrt_exit"], 5]);
+    expect(params).toEqual([1.35, 103.75, 1000, ["mrt_station", "mrt_exit"], 25]);
     expect(sql).not.toContain("103.75");
   });
 

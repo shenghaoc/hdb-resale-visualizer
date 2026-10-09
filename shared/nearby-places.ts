@@ -9,9 +9,17 @@ const NEARBY_GRID_SCALE = 10_000;
 export const NEARBY_GRID_DEGREES = 1 / NEARBY_GRID_SCALE;
 /** 4,001 latitude positions × 6,001 longitude positions, including endpoints. */
 export const MAX_NEARBY_CENTER_KEYS = 4_001 * 6_001;
-/** All possible canonical keys: centres × integer radii × limits × nonempty kind sets. */
+/** Fixed public query radius buckets in metres; we round *up* without shrinking a search. */
+export const NEARBY_RADIUS_BUCKETS = [100, 250, 500, 1000, 1500, 2500] as const;
+/** One fixed SQL LIMIT: caller-supplied alternate limits are rejected. */
+export const NEARBY_FIXED_LIMIT = 25;
+/** Centres × six radii × seven nonempty kind sets; limit has no key dimension. */
 export const MAX_NEARBY_CACHE_KEYS =
-  MAX_NEARBY_CENTER_KEYS * (2_500 - 100 + 1) * 25 * ((1 << 3) - 1);
+  MAX_NEARBY_CENTER_KEYS * NEARBY_RADIUS_BUCKETS.length * ((1 << 3) - 1);
+
+export function bucketNearbyRadius(requestedMetres: number): number {
+  return NEARBY_RADIUS_BUCKETS.find((radius) => requestedMetres <= radius) ?? 2500;
+}
 
 export function snapNearbyCenter(lat: number, lng: number): { lat: number; lng: number } {
   return {
@@ -67,13 +75,14 @@ export function parseNearbyPlacesRequest(url: URL): ParsedNearby {
   )
     return { ok: false, error: "Coordinates must be within Singapore" };
   const radiusText = url.searchParams.get("radius");
-  const radiusMeters = radiusText === null ? 1000 : integer(radiusText);
-  if (!Number.isSafeInteger(radiusMeters) || radiusMeters < 100 || radiusMeters > 2500)
+  const requestedRadius = radiusText === null ? 1000 : integer(radiusText);
+  if (!Number.isSafeInteger(requestedRadius) || requestedRadius < 100 || requestedRadius > 2500)
     return { ok: false, error: "radius must be an integer between 100 and 2500 metres" };
+  const radiusMeters = bucketNearbyRadius(requestedRadius);
   const limitText = url.searchParams.get("limit");
-  const limit = limitText === null ? 15 : integer(limitText);
-  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 25)
-    return { ok: false, error: "limit must be an integer between 1 and 25" };
+  if (limitText !== null && integer(limitText) !== NEARBY_FIXED_LIMIT)
+    return { ok: false, error: "limit must be 25 when provided" };
+  const limit = NEARBY_FIXED_LIMIT;
   const types = url.searchParams.get("types");
   const kinds =
     types === null
@@ -97,8 +106,7 @@ export function canonicalNearbyPlacesParams(request: NearbyPlacesRequest): URLSe
   const center = snapNearbyCenter(request.lat, request.lng);
   params.set("lat", String(center.lat));
   params.set("lng", String(center.lng));
-  params.set("radius", String(request.radiusMeters));
-  params.set("limit", String(request.limit));
+  params.set("radius", String(bucketNearbyRadius(request.radiusMeters)));
   params.set("types", request.kinds.join(","));
   return params;
 }
