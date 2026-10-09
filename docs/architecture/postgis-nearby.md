@@ -6,7 +6,9 @@ PostGIS is an optional, **Neon-only** serving path for nearby HDB blocks and MRT
 
 The original Neon publisher and base schema remain in a separate **locally untracked** codebase, not in the reviewed repository. Before adoption, reviewers must inspect the publisher code itself and verify its current revision/identity.
 
-The publisher is reported to use only in-place `INSERT INTO <table> (explicit_columns) SELECT ...` and `UPDATE ... FROM` operations, with no `DELETE`, `TRUNCATE` or table swap. Its `NeonPlanningStore.inspectSchema()` accepts only `text`, `int2`, `int4`, `int8`, `float8`, `jsonb` and `timestamptz` on these **nine** scanned tables: `transactions`, `blocks`, `block_details`, `comparisons`, `town_flat_type_trends`, `mrt_geojson`, `manifest`, `geocode_cache`, `walking_time_cache`. **Never add a PostGIS column to any of them, and do not widen the publisher's allowlist to accommodate this migration.**
+The inspected local publisher (`scripts/sync-neon.ts`) is reported to use only in-place `INSERT INTO <table> (explicit_columns) SELECT ...` and `UPDATE ... FROM` operations, with no `DELETE`, `TRUNCATE` or table swap. It is **manual and pinned to the benchmark branch** `br-wispy-boat-b34glczl`; it does not refresh the web-serving snapshot.
+
+The web-serving branch `br-rough-frost-b3e2ks1b` (`production-candidate-20261005`) was forked on **2026-10-05**, and its manifest was last written **2026-10-04T15:30Z**. It is a **static snapshot**: no publisher or scheduled refresh job targets it (project-owner verification). The derived spatial tables stay correct while that snapshot remains unchanged. For any future in-place update, the `block_location_sync` and `mrt_geojson_poi_sync` triggers must remain installed and enabled. No `TRUNCATE` or table swap may bypass/destroy them. A future serving-branch refresh must connect as a writer role for which the `SECURITY DEFINER` trigger functions have been tested; retest if any new dedicated publisher role appears. Its `NeonPlanningStore.inspectSchema()` accepts only `text`, `int2`, `int4`, `int8`, `float8`, `jsonb` and `timestamptz` on these **nine** scanned tables: `transactions`, `blocks`, `block_details`, `comparisons`, `town_flat_type_trends`, `mrt_geojson`, `manifest`, `geocode_cache`, `walking_time_cache`. **Never add a PostGIS column to any of them, and do not widen the publisher's allowlist to accommodate this migration.**
 
 The expected base schema is `scripts/neon-benchmark/schema.sql`: `blocks(address_key PK, lat/lng NOT NULL)` and `mrt_geojson(kind PK)`. The SELECT-only runtime role `hdb_benchmark_runtime` is created by `scripts/neon-benchmark/runtime-role.mjs`. The migration checks the required tables, coordinate columns, role and absence of a previously added `blocks.location` before any DDL. A base-schema or role mismatch **must stop** the migration, not silently fall back.
 
@@ -56,13 +58,14 @@ Disposable Neon branch **`postgis-type-safe-review-20261009`** (`br-orange-sky-b
 | Missing exit code, duplicate station name, non-Point geometry | All rejected; source/POI hashes unchanged |
 | Unchanged MRT source update | No POI MVCC row changes |
 | Sandbox trigger source writes as `neondb_owner` (current writer role) | Passed; non-coordinate updates leave derived `xmin` intact |
-| Exact secret publisher connection / serving refresh mechanism | **Not inspected / unresolved** |
+| Actual secret publisher connection | **Not inspected**; role inventory and source writes verified as current owner |
+| Web-serving candidate update method | **Static snapshot**; no refresh publisher or schedule currently targets it |
 | Production migration or Worker serving probe | **Not attempted** |
 
 The 1.785 ms sample is a single plan/execution, **not** p50/p95 or an edge/Hyperdrive measurement. PostgreSQL planner and network results for future 1M-point data remain unmeasured.
 
 ## Release gates
 
-Before merging or enabling the feature: re-verify any newly introduced publisher role and identify the still-unknown serving-branch refresh path; inspect exact untracked publisher and schema-fingerprint admission against the derived tables and triggers; run replay/rollback/WAL/storage proof on an isolated branch; verify the Worker response/cache contracts against an isolated test endpoint; separately approve any production migration and rollout. `NEON_SPATIAL_ENABLED` remains `"false"`. The browser preview must not access the disabled spatial endpoint.
+Before enabling or refreshing the static serving branch: confirm that any future writer uses a tested role and preserves the synchronization triggers; inspect exact untracked publisher and schema-fingerprint admission against the derived tables and triggers; run replay/rollback/WAL/storage proof on an isolated branch; verify the Worker response/cache contracts against an isolated test endpoint; separately approve any production migration and rollout. `NEON_SPATIAL_ENABLED` remains `"false"`. The browser preview must not access the disabled spatial endpoint.
 
 POI admission/quarantine, multi-source matching and aggregation, a second authoritative dataset, reverse geocoding and a 1M-point benchmark are separate follow-up PRs and are **not** claimed implemented or measured here.
