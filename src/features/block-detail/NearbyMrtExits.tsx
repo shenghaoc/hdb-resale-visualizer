@@ -6,8 +6,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import {
   fetchNearbyMrtExits,
   getNearbySpatialAvailable,
-  groupNearbyMrtExits,
   NEARBY_MRT_RADIUS_METERS,
+  toNearbyMrtStations,
   type NearbyMrtStation,
 } from "./nearbyMrtExitsApi";
 
@@ -42,11 +42,12 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
   useEffect(() => {
     if (!expanded) return;
     const controller = new AbortController();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setResult({ status: "loading" });
     void fetchNearbyMrtExits(lat, lng, controller.signal)
       .then((places) => {
         if (!controller.signal.aborted)
-          setResult({ status: "ready", places: groupNearbyMrtExits(places) });
+          setResult({ status: "ready", places: toNearbyMrtStations(places) });
       })
       .catch(() => {
         if (!controller.signal.aborted) setResult({ status: "error" });
@@ -79,7 +80,12 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
               <span className="text-xs text-muted-foreground">
                 {t("detail.spatialExits.error")}
               </span>
-              <Button size="sm" variant="ghost" onClick={() => setRetryToken((value) => value + 1)}>
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                onClick={() => setRetryToken((value) => value + 1)}
+              >
                 {t("detail.spatialExits.retry")}
               </Button>
             </div>

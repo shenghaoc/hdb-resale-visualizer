@@ -3,8 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 import { NearbyMrtExits } from "@/features/block-detail/NearbyMrtExits";
 import {
   getNearbySpatialAvailable,
-  groupNearbyMrtExits,
   resetNearbySpatialAvailableForTests,
+  toNearbyMrtStations,
 } from "@/features/block-detail/nearbyMrtExitsApi";
 import { I18nProvider } from "@/shared/lib/i18n";
 
@@ -120,7 +120,7 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
         addressKey: null,
       },
     ];
-    expect(groupNearbyMrtExits(rows)).toEqual([
+    expect(toNearbyMrtStations(rows)).toEqual([
       {
         stationName: "BUGIS MRT STATION",
         exitLabel: "E",
@@ -128,6 +128,30 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
         exitId: "bugis-e",
       },
     ]);
+  });
+
+  it("keeps only the five nearest of the server's stations, in server order", () => {
+    const rows = Array.from({ length: 25 }, (_, index) => ({
+      id: `exit-${index}`,
+      kind: "mrt_exit" as const,
+      name: `STATION ${index} MRT STATION (X${index})`,
+      stationName: `STATION ${index} MRT STATION`,
+      exitCode: `Exit ${index}`,
+      lat: 1.3,
+      lng: 103.85,
+      distanceMeters: 100 + index,
+      addressKey: null,
+    }));
+    const stations = toNearbyMrtStations(rows);
+    expect(stations.map((station) => station.exitId)).toEqual([
+      "exit-0",
+      "exit-1",
+      "exit-2",
+      "exit-3",
+      "exit-4",
+    ]);
+    // `name` is display text only: its decoy suffix never reaches the projection.
+    expect(JSON.stringify(stations)).not.toContain("(X");
   });
 
   it("shows an honest empty result", async () => {

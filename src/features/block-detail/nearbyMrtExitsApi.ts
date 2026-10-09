@@ -30,12 +30,11 @@ export const NEARBY_MRT_RADIUS_METERS = 1500;
 export const NEARBY_MRT_EXIT_REQUEST_LIMIT = 25;
 export const NEARBY_MRT_STATION_DISPLAY_LIMIT = 5;
 
-/** SQL provides distinct stations; no name-based client reconciliation. */
 /**
- * SQL already groups MRT exits by source_properties.STATION_NA before LIMIT.
- * The client only projects the server's independent source fields.
+ * The server already returns the nearest exit per source STATION_NA label, nearest first, so the
+ * client only takes the closest few and projects the source-native fields. It never parses `name`.
  */
-export function groupNearbyMrtExits(exits: readonly NearbyMrtExit[]): NearbyMrtStation[] {
+export function toNearbyMrtStations(exits: readonly NearbyMrtExit[]): NearbyMrtStation[] {
   return exits.slice(0, NEARBY_MRT_STATION_DISPLAY_LIMIT).map((exit) => ({
     stationName: exit.stationName,
     exitLabel: exit.exitCode,
