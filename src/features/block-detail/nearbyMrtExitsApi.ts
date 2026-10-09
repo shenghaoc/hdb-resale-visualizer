@@ -24,6 +24,7 @@ export type NearbyMrtStation = {
   distanceMeters: number;
   exitId: string;
 };
+export const NEARBY_MRT_RADIUS_METERS = 1500;
 export const NEARBY_MRT_EXIT_REQUEST_LIMIT = 25;
 export const NEARBY_MRT_STATION_DISPLAY_LIMIT = 5;
 
@@ -107,7 +108,7 @@ export async function fetchNearbyMrtExits(
   const params = new URLSearchParams({
     lat: String(lat),
     lng: String(lng),
-    radius: "1500",
+    radius: String(NEARBY_MRT_RADIUS_METERS),
     limit: String(NEARBY_MRT_EXIT_REQUEST_LIMIT),
     types: "mrt_exit",
   });

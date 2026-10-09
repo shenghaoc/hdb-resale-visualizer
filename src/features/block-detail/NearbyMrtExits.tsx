@@ -7,6 +7,7 @@ import {
   fetchNearbyMrtExits,
   getNearbySpatialAvailable,
   groupNearbyMrtExits,
+  NEARBY_MRT_RADIUS_METERS,
   type NearbyMrtStation,
 } from "./nearbyMrtExitsApi";
 
@@ -83,7 +84,9 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
               </Button>
             </div>
           ) : result.places.length === 0 ? (
-            <p className="text-xs text-muted-foreground">{t("detail.spatialExits.empty")}</p>
+            <p className="text-xs text-muted-foreground">{t("detail.spatialExits.empty", {
+              distance: formatMeters(NEARBY_MRT_RADIUS_METERS, t, locale),
+            })}</p>
           ) : (
             <ul className="flex flex-col gap-1" aria-label={t("detail.spatialExits.show")}>
               {result.places.map((place) => (
