@@ -42,6 +42,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
 - [**Nearby Search Production Gates**](.kiro/specs/nearby-search-production-gates/tasks.md) — Both fail-closed limiters and one labelled PostGIS statement per miss; no counter, public activation needs global cost control, and the deployed Worker → Hyperdrive → PostGIS verification that must precede opening `NEON_SPATIAL_ENABLED`.
+- [**Geospatial Programme**](.kiro/specs/geospatial-programme/tasks.md) — Standing coordinate-system, provenance, determinism and safety rules for all geospatial work; the baseline audit, discrepancy register and prioritised roadmap.
 
 **Completed:**
 
