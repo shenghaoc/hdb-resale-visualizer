@@ -1,40 +1,67 @@
-# PostGIS location search — isolated LBS milestone
+# PostGIS nearby spatial queries
 
-This is an **additive Neon-only** feature for `hdb-resale-visualizer`, motivated by real HDB buyer nearby-place searches and general LBS data engineering. It does not replace any existing search, MRT walking-time estimate, D1 rollback path or published public response.
+PostGIS is an optional, **Neon-only** serving path for nearby HDB blocks and MRT locations. The existing D1 rollback, existing public routes, current precomputed walking times and raw transaction facts are unchanged.
 
-## Data contract and current proof
+## Reproducible migration prerequisites
 
-- `blocks` retains `lat` and `lng` and adds a **stored generated** `geography(Point,4326)` `location`. Longitude is X, latitude is Y. Never put geographic coordinates on every transaction row.
-- `poi_locations` stores provenance `(source,poi_kind,source_id)`, original scalar coordinates, original nonprivate MRT source properties, and a generated geographic point. No confidence or geocodes are fabricated.
-- `mrt_geojson` remains authoritative. A database trigger rebuilds its dependent `mrt_station` or `mrt_exit` rows in the **same transaction** when a source row is inserted, updated or deleted. Invalid feature coverage aborts that source change instead of silently dropping observations. An unchanged GeoJSON update leaves the POI rows untouched, avoiding unnecessary index and WAL churn. Future source-type integrations need their own independently reviewed ingestion and publication strategy.
-- A GiST index on `blocks.location` and another on `poi_locations.location` support index-aware `ST_DWithin` queries. Distances are **straight-line geographic metres**, not walking distances or travel times.
-- Exact measurements on the isolated Neon sandbox `postgis-lbs-sandbox-20261009`: PostGIS 3.6.4; 9,730 HDB blocks, 190 MRT stations and 613 exits with matching source coordinates; no original block rows or D1 data changed.
+The original Neon publisher and base schema remain in a separate **locally untracked** codebase, not in the reviewed repository. Before adoption, reviewers must inspect the publisher code itself and verify its current revision/identity.
 
-## Publication and rollout
+The publisher is reported to use only in-place \`INSERT INTO <table> (explicit_columns) SELECT ...\` and \`UPDATE ... FROM\` operations, with no \`DELETE\`, \`TRUNCATE\` or table swap. Its \`NeonPlanningStore.inspectSchema()\` accepts only \`text\`, \`int2\`, \`int4\`, \`int8\`, \`float8\`, \`jsonb\` and \`timestamptz\` on these **nine** scanned tables: \`transactions\`, \`blocks\`, \`block_details\`, \`comparisons\`, \`town_flat_type_trends\`, \`mrt_geojson\`, \`manifest\`, \`geocode_cache\`, \`walking_time_cache\`. **Never add a PostGIS column to any of them, and do not widen the publisher's allowlist to accommodate this migration.**
 
-1. Review and run `sql/neon/001_postgis_nearby.sql` **on an isolated Neon branch** before any candidate or production migration. The full script should be executed atomically with a transactional runner (for example, `psql --single-transaction -v ON_ERROR_STOP=1 -f ...`) and output recorded.
-2. Verify count/identity/coordinate hashes, affected-row and trigger rollback behavior, query plans and fixed corpus publication invariants; the new source trigger changes write amplification if `mrt_geojson` changes, so previous publisher bounds **cannot** be assumed unchanged in that scenario.
-3. Keep `NEON_SPATIAL_ENABLED=false` until separately approved database and serving acceptance. The Worker returns 503/no-store **without opening a Neon transport** while this feature is disabled; enable it only with a coordinated release and cache epoch.
-4. Keep existing `PUBLIC_DATA_BACKEND` selection intact. The new route is only available when the Neon spatial method exists; D1 rollback returns an explicit unavailable status for this _new_ optional route. All pre-existing routes stay fully functional on D1.
-5. Confirm Neon Free storage/compute/transfer headroom, source and publication freshness, and Worker caching/cold-query performance before exposing UI callers. Do **not** auto-deploy the database migration or enable CI to run it against production.
-6. Only after backend acceptance: add an unobtrusive buyer-facing nearby-place section. Keep precomputed walking times distinct. Schools, supermarkets, hawkers and parks remain follow-up source-ingestion milestones.
+The expected base schema is \`scripts/neon-benchmark/schema.sql\`: \`blocks(address_key PK, lat/lng NOT NULL)\` and \`mrt_geojson(kind PK)\`. The SELECT-only runtime role \`hdb_benchmark_runtime\` is created by \`scripts/neon-benchmark/runtime-role.mjs\`. The migration checks the required tables, coordinate columns, role and absence of a previously added \`blocks.location\` before any DDL. A base-schema or role mismatch **must stop** the migration, not silently fall back.
 
-## Example read-only validation SQL
+Run \`sql/neon/001_postgis_nearby.sql\` atomically **only on a disposable Neon branch** and verify the full publisher admission fingerprint; do not run against production, change \`migrations/*.sql\`, or deploy a Worker. \`NEON_SPATIAL_ENABLED\` stays \`"false"\`.
 
-```sql
-SELECT extversion FROM pg_extension WHERE extname='postgis';
-SELECT count(*) AS total, count(location) AS located,
-  count(*) FILTER (WHERE ST_X(location::geometry)<>lng OR
-                         ST_Y(location::geometry)<>lat) AS mismatched
-FROM public.blocks;
-SELECT poi_kind, count(*) AS total,
-  count(*) FILTER (WHERE ST_X(location::geometry)<>lng OR
-                         ST_Y(location::geometry)<>lat) AS mismatched
-FROM public.poi_locations GROUP BY poi_kind;
-EXPLAIN SELECT source,source_id,name FROM public.poi_locations
-WHERE ST_DWithin(location,
-  ST_SetSRID(ST_MakePoint(103.75,1.35),4326)::geography,1000)
-LIMIT 25;
-```
+## Derived spatial model and ownership
 
-Unresolved HDB addresses retain their original nonspatial transactions and provenance. No OneMap token or runtime upstream requests are required.
+- \`blocks\` remains unchanged. \`block_locations\` holds \`(address_key,lat,lng,location)\`, with \`location\` a stored generated \`geography(Point,4326)\` and a GiST index. An INSERT or coordinate UPDATE on \`blocks\` maintains this relation in the same transaction. A foreign key with \`ON DELETE CASCADE\` keeps source deletion safe. Unchanged coordinates cause no derived writes.
+- \`poi_locations\` contains authoritative MRT station and MRT exit source observations, their source identifiers and a generated point with GiST index. Other POI kinds are reserved until independently admitted source data is available; no missing coordinates are invented.
+- Triggers use tightly scoped \`SECURITY DEFINER\` functions with \`search_path = pg_catalog, pg_temp\` and schema-qualified access. They are owned by the trusted migration owner. The publisher should only need its pre-existing INSERT/UPDATE privileges on the authoritative source tables; it must **not** be granted write access to either derived table. \`hdb_benchmark_runtime\` retains SELECT-only access.
+
+**Publisher-role verification remains open.** The Neon administrative connection reported \`current_user=neondb_owner\`, which establishes only the migrator's identity. The actual untracked publisher's login role and credentials are not accessible through this repository/connection. The A2 acceptance test is a direct \`SELECT current_user\` using the publisher's **actual connection**, followed by a source-table write and rollback on the disposable branch, with before/after derived hashes. Do not claim this proof passed until the exact connection was tested; do not expose passwords in the PR.
+
+## Deliberate MRT publication invariant
+
+The first migration is intentionally **fail-closed** for a complete MRT GeoJSON source replacement. It rejects non-Point/invalid geometry, missing required fields including \`EXIT_CODE\`, and duplicate source IDs (including station names). The corresponding source UPDATE rolls back atomically with all derived POI changes; it must not produce a partial published amenity dataset. The entire prepared publication may therefore fail if official MRT data breaks those assumptions. This is deliberate; future quarantine/integration/aggregation work belongs in separate follow-up PRs with explicit review and provenance.
+
+An MRT UPDATE that does not change the GeoJSON has no derived POI writes. A genuine change rebuilds only the affected station/exit kind. No changed-MRT publisher cost or WAL envelope has been proven yet.
+
+The migration's source-failure test is \`sql/neon/verify_mrt_failclosed.sql\` (sandbox-only). It verifies expected SQL errors, unchanged source/POI digests and no-op avoidance.
+
+## Bounded nearby search and cache
+
+Accepted query coordinates are restricted to latitude [1.15, 1.55] and longitude [103.55, 104.15]. The query centre is snapped to the nearest **0.0001°** on *both* axes before **both** the SQL call and the Worker Cache API key are formed. The response publishes the snapped centre, never an unrounded centre masquerading as the query point.
+
+Each coordinate differs by at most 0.00005°, or approximately **7.88 m at worst along the diagonal** using the conservative 111.32 km/degree bound. For a 100 m minimum radius this can shift the inclusion boundary by up to ~7.9 m; results are explicitly approximate near a radius edge. A finer grid would reduce that error at the cost of a larger cache key space.
+
+The bounded input region has **4,001 × 6,001 = 24,010,001** distinct snapped centres. Combining 2,401 allowed integer radii (100..2500), 25 limits (1..25) and seven nonempty combinations of three POI kinds gives at most **10,088,402,170,175 canonical keys**. This is an intentionally finite upper bound, **not** a claim all keys fit in cache, nor a request rate limit: cache misses still query Neon. The browser loads the nearby MRT exit list only when the user expands it.
+
+The spatial query searches \`block_locations\` joined by primary key to \`blocks\` and independently searches \`poi_locations\`, using \`ST_DWithin\`. These are straight-line spheroidal distances, **not** walking routes; the old walking-time estimates remain separate.
+
+## Measured disposable-branch evidence
+
+Disposable Neon branch **\`postgis-type-safe-review-20261009\`** (\`br-orange-sky-b30msckg\`), forked from \`br-rough-frost-b3e2ks1b\`; PG18/PostGIS 3.6 series. Administrative/migration connection was \`neondb_owner\`.
+
+| Sandbox observation | Verified |
+| --- | ---: |
+| HDB source blocks / derived block points | 9,730 / 9,730 |
+| MRT stations / MRT exits | 190 / 613 |
+| Coordinate discrepancies across both derived tables | 0 |
+| Unsupported types in the nine scanned publisher tables | 0 |
+| Generated location and two GiST indexes | Present |
+| HDB + MRT 1 km query returned results | 25 |
+| Measured single execution / planning time | 1.785 ms / 0.542 ms |
+| Spatial indexes in the query plan | Both GiST indexes |
+| Changing a block coordinate updated derived point, then restored | Passed |
+| Missing exit code, duplicate station name, non-Point geometry | All rejected; source/POI hashes unchanged |
+| Unchanged MRT source update | No POI MVCC row changes |
+| Actual publisher-credential INSERT/UPDATE test | **Not verified** |
+| Production migration or Worker serving probe | **Not attempted** |
+
+The 1.785 ms sample is a single plan/execution, **not** p50/p95 or an edge/Hyperdrive measurement. PostgreSQL planner and network results for future 1M-point data remain unmeasured.
+
+## Release gates
+
+Before merging or enabling the feature: confirm actual publisher role/privileges; inspect exact untracked publisher and schema-fingerprint admission against the generated derived tables and triggers; run replay/rollback/WAL/storage proof on an isolated branch; verify the Worker response/cache contracts against an isolated test endpoint; separately approve any production migration and rollout. \`NEON_SPATIAL_ENABLED\` remains \`"false"\`. The browser preview must not access the disabled spatial endpoint.
+
+POI admission/quarantine, multi-source matching and aggregation, a second authoritative dataset, reverse geocoding and a 1M-point benchmark are separate follow-up PRs and are **not** claimed implemented or measured here.
