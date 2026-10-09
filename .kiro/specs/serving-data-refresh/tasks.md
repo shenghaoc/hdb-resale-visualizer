@@ -11,8 +11,8 @@
   README.
 
 - [ ] **T0.2** Port the publisher onto `main` and split it for review.
-  -> Core publisher and benchmark harness as two stacked PRs; this item closes
-  when both merge.
+  -> Core publisher (#423) and benchmark harness (#424) as two stacked PRs; this
+  item closes when both merge.
 
 - [x] **T0.3** Verify the facts this design rests on (F1 to F10).
   -> Read-only: Cloudflare Hyperdrive and Worker listing, a catalog query on a
