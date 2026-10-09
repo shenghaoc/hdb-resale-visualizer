@@ -13,6 +13,7 @@
  */
 import type { BlockRow } from "./d1";
 import type { SearchRequest } from "./search";
+import type { NearbyPlace, NearbyPlacesRequest } from "../../shared/nearby-places";
 
 export type { BlockRow };
 
@@ -65,6 +66,8 @@ export type PublicData = {
   /** A block's amenity comparison document (`/api/comparisons`), or `null`. */
   blockComparisonJson: (addressKey: string) => Promise<string | null>;
   mrtGeoJson: (kind: "stations" | "exits") => Promise<string | null>;
+  /** Additive PostGIS search; intentionally unavailable on D1 rollback. */
+  nearbyPlaces?: (request: NearbyPlacesRequest) => Promise<NearbyPlace[]>;
   /** Every trend point, by town, flat type and month in byte order. */
   townFlatTypeTrends: () => Promise<TownFlatTypeTrendRow[]>;
   /** Whether there is at least one block and every block carries flat-type cohort metadata. */

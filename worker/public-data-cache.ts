@@ -1,12 +1,13 @@
 import type { PublicData } from "../functions/_lib/public-data";
 import { parseSearchRequest, validateSearchRequest } from "../functions/_lib/search";
 import { parseSuggestRequest } from "../functions/_lib/suggest";
+import { parseNearbyPlacesRequest, canonicalNearbyPlacesParams } from "../shared/nearby-places";
 import { manifestVersion, readPublicationState } from "../shared/publication-state";
 /** Shared Cache API is per data center. The pointer intentionally bounds freshness to 60s. */
 const POINTER_TTL_SECONDS = 60;
 const DATA_TTL_SECONDS = 3600;
 const PUBLIC_PATH =
-  /^\/api\/(?:manifest|block-summaries|blocks\/[^/]+|details\/[^/]+|comparisons\/[^/]+|trends\/town-flat-type|mrt-stations|mrt-exits|search|suggest)\/?$/;
+  /^\/api\/(?:manifest|block-summaries|blocks\/[^/]+|details\/[^/]+|comparisons\/[^/]+|trends\/town-flat-type|mrt-stations|mrt-exits|search|suggest|nearby-places)\/?$/;
 
 type SharedCache = {
   match: (request: Request) => Promise<Response | undefined>;
@@ -72,6 +73,10 @@ export async function withPublicDataCache(
     const parsed = parseSuggestRequest(url);
     if (!parsed.ok) return respond();
     canonical.searchParams.set("q", parsed.normalizedQuery);
+  } else if (/\/nearby-places\/?$/.test(url.pathname)) {
+    const parsed = parseNearbyPlacesRequest(url);
+    if (!parsed.ok) return respond();
+    canonical.search = canonicalNearbyPlacesParams(parsed.request).toString();
   }
   const pointerKey = new Request(`${url.origin}/__public-data-cache/v1/pointer`);
   const dataKey = (version: string) => {

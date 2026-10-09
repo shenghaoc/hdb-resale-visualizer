@@ -16,6 +16,7 @@ import { onRequestGet as detailHandler } from "../functions/api/details/[address
 import { onRequestGet as comparisonHandler } from "../functions/api/comparisons/[addressKey]";
 import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-stations";
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
+import { onRequestGet as nearbyPlacesHandler } from "../functions/api/nearby-places";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
 import { onRequestGet as suggestHandler } from "../functions/api/suggest";
@@ -49,6 +50,7 @@ const publicApiHandlers: Record<Exclude<ApiRouteId, ShortlistRouteId>, PublicRou
   comparisons: comparisonHandler,
   "mrt-stations": mrtStationsHandler,
   "mrt-exits": mrtExitsHandler,
+  "nearby-places": nearbyPlacesHandler,
   "trends-town-flat-type": trendsHandler,
   search: searchHandler,
   suggest: suggestHandler,

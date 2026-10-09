@@ -1,0 +1,53 @@
+/**
+ * Neon-only, parameterized index-aware proximity query. Do not insert coordinates
+ * into SQL text. The generated PostGIS geography columns have matching GiST indexes.
+ */
+import type { NearbyPlace, NearbyPlacesRequest, NearbyPlaceKind } from "../shared/nearby-places";
+
+export type SpatialReadQuery = (sql: string, params: readonly unknown[]) =>
+  Promise<Record<string, unknown>[]>;
+
+export const NEARBY_SPATIAL_SQL = `
+WITH center AS (
+  SELECT ST_SetSRID(ST_MakePoint($2::double precision,$1::double precision),4326)::geography AS point
+), candidate AS (
+  SELECT 'hdb_block'::text AS kind, b.address_key::text AS id,
+    COALESCE(NULLIF(b.display_name,''), b.block || ' ' || b.street_name) AS name,
+    b.lat, b.lng, b.address_key,
+    ST_Distance(b.location, center.point) AS distance_meters
+  FROM public.blocks AS b CROSS JOIN center
+  WHERE 'hdb_block' = ANY($4::text[])
+    AND ST_DWithin(b.location, center.point, $3::double precision)
+  UNION ALL
+  SELECT p.poi_kind AS kind,
+    (p.source || ':' || p.poi_kind || ':' || p.source_id) AS id,
+    p.name, p.lat, p.lng, NULL::text AS address_key,
+    ST_Distance(p.location, center.point) AS distance_meters
+  FROM public.poi_locations AS p CROSS JOIN center
+  WHERE p.poi_kind = ANY($4::text[])
+    AND ST_DWithin(p.location, center.point, $3::double precision)
+)
+SELECT kind, id, name, lat, lng, address_key,
+  ROUND(distance_meters::numeric,1)::double precision AS distance_meters
+FROM candidate
+ORDER BY distance_meters ASC, kind COLLATE "C" ASC, id COLLATE "C" ASC
+LIMIT $5
+`;
+
+export async function queryNearbyPlaces(
+  query: SpatialReadQuery,
+  request: NearbyPlacesRequest,
+): Promise<NearbyPlace[]> {
+  const rows = await query(NEARBY_SPATIAL_SQL, [
+    request.lat, request.lng, request.radiusMeters, request.kinds, request.limit,
+  ]);
+  return rows.map((r) => ({
+    id: String(r.id),
+    kind: r.kind as NearbyPlaceKind,
+    name: String(r.name),
+    lat: Number(r.lat),
+    lng: Number(r.lng),
+    addressKey: r.address_key == null ? null : String(r.address_key),
+    distanceMeters: Number(r.distance_meters),
+  }));
+}
