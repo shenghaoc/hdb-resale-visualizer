@@ -213,7 +213,7 @@ The three Cloudflare variables are required for `vp run sync-data`; everything e
 
 - This is not a prediction product.
 - Coordinates are resolved during the build-time sync and persisted in D1; the browser never geocodes.
-- OneMap attribution must remain visible when the map is rendered.
+- OneMap attribution must remain visible when the map is rendered, and so must the data.gov.sg credit with its link to the Singapore Open Data Licence v1.0 (both are `src/components/DataAttribution.tsx`, pinned by `tests/components/DataAttribution.test.tsx`). The licence notice for each dataset is the guide page `src/features/docs/content/data-sources.md`; add a dataset there when the sync starts using one (`tests/unit/data-sources-doc.test.ts` fails if a sync dataset is missing).
 
 ## Troubleshooting
 
