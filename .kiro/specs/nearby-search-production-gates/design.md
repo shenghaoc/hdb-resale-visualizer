@@ -60,12 +60,16 @@ mirrors them and `tests/unit/nearby-rate-limit.test.ts` pins the two together.
   otherwise rotate addresses to dodge a per-address limit.
 - **Missing or malformed address shares one key.** A client cannot mint fresh
   buckets with a bad header; the cost is that such clients share a bucket.
-- **Fail closed on a missing binding, fail open on a limiter fault.** A missing
-  binding while the flag is on is a deployment mistake that should be loud. A
-  throwing limiter is a platform fault; the feature is optional and the
-  database is still bounded by the cache, the Hyperdrive origin limit, the
-  runtime role's server-side 60 s `statement_timeout` and the transport's
-  client-side 15 s connect and 60 s query timeouts.
+- **Fail closed on a missing binding and on a faulty origin limiter; fail open
+  only on a faulty client limiter.** A missing binding while the flag is on is a
+  deployment mistake that should be loud. The origin limiter is the guard in
+  front of the metered database, so when it throws the request is refused (503)
+  rather than forwarded unchecked; hits still work because they never reach it.
+  The client limiter is about fairness between clients: when it throws the
+  request proceeds, because the origin checks still bound the database (together
+  with the Hyperdrive origin limit, the runtime role's server-side 60 s
+  `statement_timeout` and the transport's client-side 15 s connect and 60 s
+  query timeouts).
 - **Anonymous IP keys are a compromise.** Cloudflare advises against IP keys
   because users share addresses. The route has no other identity. 30 per minute
   is well above ordinary use, and `429` is retryable.

@@ -13,8 +13,9 @@
 - [x] **T1.2** Add `functions/_lib/nearby-rate-limit.ts`: `nearbyClientRateLimitKey`,
   `checkNearbyClientRateLimit`, `checkNearbyOriginRateLimit`.
   -> IPv4, IPv4-mapped and `/64` keys; fallback key; 429 and 503 with
-  `Retry-After` and `no-store`; fail closed on a missing binding, fail open on a
-  throwing limiter. (R1.2, R1.4, R1.5, R1.6)
+  `Retry-After` and `no-store`; fail closed on a missing binding and on a throwing
+  origin limiter, fail open only on a throwing client limiter. (R1.2, R1.4, R1.5,
+  R1.6)
 
 - [x] **T1.3** Wire the checks into `worker/index.ts`: client check before the
   cache, origin check inside the cache's miss path.

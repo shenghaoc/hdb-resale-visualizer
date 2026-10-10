@@ -18,8 +18,12 @@
   missing or malformed address shares one fallback key, so a bad header cannot
   mint fresh buckets.
 - **R1.6** WHEN a limiter binding is missing while the gate is open THEN the
-  route answers `503` (fail closed). WHEN a limiter call throws THEN the request
-  proceeds and the error is logged.
+  route answers `503` (fail closed). WHEN the origin limiter call throws THEN the
+  request is refused with `503` and `no-store`, the error is logged and nothing
+  reaches the database (fail closed); cache hits are unaffected. WHEN only the
+  client limiter call throws THEN the request proceeds and the error is logged,
+  because every request that reaches the database still passes the origin
+  checks.
 - **R1.7** The limits are defined once in `shared/nearby-limits.ts`. A test
   fails when `wrangler.jsonc` disagrees, when the period is not one the binding
   supports, or when two namespace ids collide.
