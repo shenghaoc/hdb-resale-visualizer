@@ -1,0 +1,1202 @@
+{
+  "base": {
+    "statement": "base",
+    "environment": {
+      "machine": "10 cores, 16 GiB RAM, Apple M5",
+      "platform": "Darwin 27.0.0",
+      "node": "v24.21.0",
+      "versions": "18.6 / PostGIS 3.6.3 / GEOS 3.14.1 / PROJ 9.7.1",
+      "settings": "effective_cache_size=4193288kB, fsync=on, jit=on, max_connections=100, max_parallel_workers_per_gather=2, random_page_cost=4, shared_buffers=163848kB, synchronous_commit=on, work_mem=4096kB",
+      "pgbench": "pgbench (PostgreSQL) 18.6 (Postgres.app)",
+      "at": "2026-10-10T01:20:11.349Z"
+    },
+    "seconds": 10,
+    "concurrencies": [1, 8],
+    "results": [
+      {
+        "scenario": "blocks-r100",
+        "clients": 1,
+        "tps": 3569.134442,
+        "n": 35716,
+        "p50": 0.277,
+        "p95": 0.297,
+        "p99": 0.327,
+        "max": 17.049,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r100",
+        "clients": 8,
+        "tps": 16152.70353,
+        "n": 161602,
+        "p50": 0.502,
+        "p95": 0.66,
+        "p99": 0.831,
+        "max": 28.617,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r500",
+        "clients": 1,
+        "tps": 3013.657396,
+        "n": 30156,
+        "p50": 0.326,
+        "p95": 0.397,
+        "p99": 0.436,
+        "max": 16.999,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r500",
+        "clients": 8,
+        "tps": 13047.279003,
+        "n": 130507,
+        "p50": 0.586,
+        "p95": 0.878,
+        "p99": 1.105,
+        "max": 29.87,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r1000",
+        "clients": 1,
+        "tps": 2163.086639,
+        "n": 21645,
+        "p50": 0.451,
+        "p95": 0.664,
+        "p99": 0.747,
+        "max": 17.443,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r1000",
+        "clients": 8,
+        "tps": 8359.725256,
+        "n": 83607,
+        "p50": 0.891,
+        "p95": 1.548,
+        "p99": 1.969,
+        "max": 29.876,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r2500",
+        "clients": 1,
+        "tps": 828.860534,
+        "n": 8295,
+        "p50": 1.168,
+        "p95": 1.992,
+        "p99": 2.305,
+        "max": 18.622,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r2500",
+        "clients": 8,
+        "tps": 3550.677534,
+        "n": 35527,
+        "p50": 2.175,
+        "p95": 3.845,
+        "p99": 4.649,
+        "max": 30.192,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r100",
+        "clients": 1,
+        "tps": 3786.58839,
+        "n": 37892,
+        "p50": 0.251,
+        "p95": 0.28,
+        "p99": 0.491,
+        "max": 27.005,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r100",
+        "clients": 8,
+        "tps": 18231.547675,
+        "n": 182334,
+        "p50": 0.447,
+        "p95": 0.594,
+        "p99": 0.742,
+        "max": 22.69,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r500",
+        "clients": 1,
+        "tps": 3877.704384,
+        "n": 38809,
+        "p50": 0.253,
+        "p95": 0.276,
+        "p99": 0.317,
+        "max": 13.004,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r500",
+        "clients": 8,
+        "tps": 17072.584947,
+        "n": 170817,
+        "p50": 0.466,
+        "p95": 0.606,
+        "p99": 0.726,
+        "max": 28.352,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r1000",
+        "clients": 1,
+        "tps": 3861.129335,
+        "n": 38614,
+        "p50": 0.256,
+        "p95": 0.276,
+        "p99": 0.301,
+        "max": 13.282,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r1000",
+        "clients": 8,
+        "tps": 16185.351275,
+        "n": 161975,
+        "p50": 0.478,
+        "p95": 0.671,
+        "p99": 0.902,
+        "max": 31.099,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r2500",
+        "clients": 1,
+        "tps": 3531.72285,
+        "n": 35342,
+        "p50": 0.278,
+        "p95": 0.312,
+        "p99": 0.355,
+        "max": 17.028,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r2500",
+        "clients": 8,
+        "tps": 15154.589866,
+        "n": 151672,
+        "p50": 0.516,
+        "p95": 0.743,
+        "p99": 0.929,
+        "max": 28.893,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r100",
+        "clients": 1,
+        "tps": 3352.747061,
+        "n": 33536,
+        "p50": 0.287,
+        "p95": 0.324,
+        "p99": 0.523,
+        "max": 17.327,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r100",
+        "clients": 8,
+        "tps": 14565.872455,
+        "n": 145780,
+        "p50": 0.532,
+        "p95": 0.74,
+        "p99": 1.006,
+        "max": 62.012,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r500",
+        "clients": 1,
+        "tps": 2937.955581,
+        "n": 29409,
+        "p50": 0.335,
+        "p95": 0.406,
+        "p99": 0.443,
+        "max": 17.027,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r500",
+        "clients": 8,
+        "tps": 12674.661686,
+        "n": 126759,
+        "p50": 0.61,
+        "p95": 0.887,
+        "p99": 1.084,
+        "max": 28.658,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r1000",
+        "clients": 1,
+        "tps": 2090.612661,
+        "n": 20929,
+        "p50": 0.466,
+        "p95": 0.69,
+        "p99": 0.77,
+        "max": 17.492,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r1000",
+        "clients": 8,
+        "tps": 8488.406924,
+        "n": 84956,
+        "p50": 0.891,
+        "p95": 1.441,
+        "p99": 1.754,
+        "max": 30.175,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r2500",
+        "clients": 1,
+        "tps": 806.970079,
+        "n": 8076,
+        "p50": 1.196,
+        "p95": 2.029,
+        "p99": 2.331,
+        "max": 17.96,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r2500",
+        "clients": 8,
+        "tps": 3130.425609,
+        "n": 31335,
+        "p50": 2.45,
+        "p95": 4.348,
+        "p99": 5.194,
+        "max": 32.299,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      }
+    ]
+  },
+  "labelled": {
+    "statement": "labelled",
+    "environment": {
+      "machine": "10 cores, 16 GiB RAM, Apple M5",
+      "platform": "Darwin 27.0.0",
+      "node": "v24.21.0",
+      "versions": "18.6 / PostGIS 3.6.3 / GEOS 3.14.1 / PROJ 9.7.1",
+      "settings": "effective_cache_size=4193288kB, fsync=on, jit=on, max_connections=100, max_parallel_workers_per_gather=2, random_page_cost=4, shared_buffers=163848kB, synchronous_commit=on, work_mem=4096kB",
+      "pgbench": "pgbench (PostgreSQL) 18.6 (Postgres.app)",
+      "at": "2026-10-10T01:25:03.039Z"
+    },
+    "seconds": 10,
+    "concurrencies": [1, 8],
+    "results": [
+      {
+        "scenario": "blocks-r100",
+        "clients": 1,
+        "tps": 2561.296773,
+        "n": 25635,
+        "p50": 0.385,
+        "p95": 0.416,
+        "p99": 0.448,
+        "max": 17.358,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r100",
+        "clients": 8,
+        "tps": 10378.640105,
+        "n": 103839,
+        "p50": 0.737,
+        "p95": 1.051,
+        "p99": 1.312,
+        "max": 30.777,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r500",
+        "clients": 1,
+        "tps": 2241.124266,
+        "n": 22427,
+        "p50": 0.44,
+        "p95": 0.515,
+        "p99": 0.552,
+        "max": 18.213,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r500",
+        "clients": 8,
+        "tps": 8727.808789,
+        "n": 87351,
+        "p50": 0.88,
+        "p95": 1.24,
+        "p99": 1.47,
+        "max": 30.975,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r1000",
+        "clients": 1,
+        "tps": 1724.064195,
+        "n": 17254,
+        "p50": 0.57,
+        "p95": 0.783,
+        "p99": 0.87,
+        "max": 17.799,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r1000",
+        "clients": 8,
+        "tps": 5829.584127,
+        "n": 58303,
+        "p50": 1.291,
+        "p95": 2.109,
+        "p99": 2.658,
+        "max": 29.527,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r2500",
+        "clients": 1,
+        "tps": 752.479533,
+        "n": 7525,
+        "p50": 1.284,
+        "p95": 2.096,
+        "p99": 2.407,
+        "max": 18.341,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r2500",
+        "clients": 8,
+        "tps": 2888.064766,
+        "n": 28881,
+        "p50": 2.677,
+        "p95": 4.551,
+        "p99": 5.337,
+        "max": 31.87,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r100",
+        "clients": 1,
+        "tps": 2751.194248,
+        "n": 27531,
+        "p50": 0.359,
+        "p95": 0.383,
+        "p99": 0.411,
+        "max": 13.511,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r100",
+        "clients": 8,
+        "tps": 11386.210708,
+        "n": 113917,
+        "p50": 0.686,
+        "p95": 0.891,
+        "p99": 1.077,
+        "max": 23.268,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r500",
+        "clients": 1,
+        "tps": 2731.294718,
+        "n": 27334,
+        "p50": 0.362,
+        "p95": 0.387,
+        "p99": 0.414,
+        "max": 13.394,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r500",
+        "clients": 8,
+        "tps": 11270.825646,
+        "n": 112767,
+        "p50": 0.688,
+        "p95": 0.918,
+        "p99": 1.11,
+        "max": 21.695,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r1000",
+        "clients": 1,
+        "tps": 2713.132925,
+        "n": 27142,
+        "p50": 0.365,
+        "p95": 0.391,
+        "p99": 0.416,
+        "max": 17.165,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r1000",
+        "clients": 8,
+        "tps": 11396.133825,
+        "n": 114034,
+        "p50": 0.691,
+        "p95": 0.875,
+        "p99": 1.027,
+        "max": 27.918,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r2500",
+        "clients": 1,
+        "tps": 2560.713283,
+        "n": 25630,
+        "p50": 0.387,
+        "p95": 0.421,
+        "p99": 0.444,
+        "max": 17.24,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r2500",
+        "clients": 8,
+        "tps": 10621.368876,
+        "n": 106232,
+        "p50": 0.734,
+        "p95": 0.97,
+        "p99": 1.167,
+        "max": 28.976,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r100",
+        "clients": 1,
+        "tps": 2422.691861,
+        "n": 24238,
+        "p50": 0.399,
+        "p95": 0.471,
+        "p99": 0.545,
+        "max": 22.135,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r100",
+        "clients": 8,
+        "tps": 9942.256068,
+        "n": 99464,
+        "p50": 0.773,
+        "p95": 1.053,
+        "p99": 1.253,
+        "max": 34.953,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r500",
+        "clients": 1,
+        "tps": 2212.876435,
+        "n": 22144,
+        "p50": 0.446,
+        "p95": 0.521,
+        "p99": 0.557,
+        "max": 18.271,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r500",
+        "clients": 8,
+        "tps": 8762.011052,
+        "n": 87648,
+        "p50": 0.873,
+        "p95": 1.221,
+        "p99": 1.492,
+        "max": 30.529,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r1000",
+        "clients": 1,
+        "tps": 1682.705663,
+        "n": 16840,
+        "p50": 0.583,
+        "p95": 0.804,
+        "p99": 0.886,
+        "max": 18.125,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r1000",
+        "clients": 8,
+        "tps": 5994.564241,
+        "n": 59988,
+        "p50": 1.288,
+        "p95": 1.929,
+        "p99": 2.235,
+        "max": 32.397,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r2500",
+        "clients": 1,
+        "tps": 728.956914,
+        "n": 7296,
+        "p50": 1.326,
+        "p95": 2.182,
+        "p99": 2.48,
+        "max": 18.65,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r2500",
+        "clients": 8,
+        "tps": 2593.523177,
+        "n": 25953,
+        "p50": 2.97,
+        "p95": 5.023,
+        "p99": 5.83,
+        "max": 33.813,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      }
+    ]
+  },
+  "multi": {
+    "statement": "multi",
+    "environment": {
+      "machine": "10 cores, 16 GiB RAM, Apple M5",
+      "platform": "Darwin 27.0.0",
+      "node": "v24.21.0",
+      "versions": "18.6 / PostGIS 3.6.3 / GEOS 3.14.1 / PROJ 9.7.1",
+      "settings": "effective_cache_size=4193288kB, fsync=on, jit=on, max_connections=100, max_parallel_workers_per_gather=2, random_page_cost=4, shared_buffers=163848kB, synchronous_commit=on, work_mem=4096kB",
+      "pgbench": "pgbench (PostgreSQL) 18.6 (Postgres.app)",
+      "at": "2026-10-10T01:15:19.805Z"
+    },
+    "seconds": 10,
+    "concurrencies": [1, 8],
+    "results": [
+      {
+        "scenario": "blocks-r100",
+        "clients": 1,
+        "tps": 2562.646013,
+        "n": 25633,
+        "p50": 0.385,
+        "p95": 0.416,
+        "p99": 0.456,
+        "max": 17.267,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r100",
+        "clients": 8,
+        "tps": 10649.124525,
+        "n": 106543,
+        "p50": 0.722,
+        "p95": 1.056,
+        "p99": 1.415,
+        "max": 33.161,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r500",
+        "clients": 1,
+        "tps": 2197.998619,
+        "n": 21987,
+        "p50": 0.443,
+        "p95": 0.526,
+        "p99": 0.628,
+        "max": 19.494,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r500",
+        "clients": 8,
+        "tps": 9831.371066,
+        "n": 98312,
+        "p50": 0.781,
+        "p95": 1.132,
+        "p99": 1.424,
+        "max": 28.747,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r1000",
+        "clients": 1,
+        "tps": 1727.523054,
+        "n": 17279,
+        "p50": 0.567,
+        "p95": 0.786,
+        "p99": 0.873,
+        "max": 17.697,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r1000",
+        "clients": 8,
+        "tps": 7875.759701,
+        "n": 78764,
+        "p50": 0.94,
+        "p95": 1.55,
+        "p99": 1.906,
+        "max": 74.728,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r2500",
+        "clients": 1,
+        "tps": 754.286386,
+        "n": 7545,
+        "p50": 1.288,
+        "p95": 2.114,
+        "p99": 2.455,
+        "max": 18.428,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "blocks-r2500",
+        "clients": 8,
+        "tps": 3352.169332,
+        "n": 33530,
+        "p50": 2.298,
+        "p95": 3.93,
+        "p99": 4.741,
+        "max": 30.298,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r100",
+        "clients": 1,
+        "tps": 2709.178275,
+        "n": 27099,
+        "p50": 0.365,
+        "p95": 0.391,
+        "p99": 0.426,
+        "max": 13.269,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r100",
+        "clients": 8,
+        "tps": 13128.634177,
+        "n": 131298,
+        "p50": 0.597,
+        "p95": 0.789,
+        "p99": 0.929,
+        "max": 20.846,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r500",
+        "clients": 1,
+        "tps": 2687.300764,
+        "n": 26880,
+        "p50": 0.367,
+        "p95": 0.397,
+        "p99": 0.441,
+        "max": 13.338,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r500",
+        "clients": 8,
+        "tps": 12962.620248,
+        "n": 129720,
+        "p50": 0.605,
+        "p95": 0.81,
+        "p99": 0.959,
+        "max": 25.27,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r1000",
+        "clients": 1,
+        "tps": 2594.380784,
+        "n": 25955,
+        "p50": 0.375,
+        "p95": 0.411,
+        "p99": 0.493,
+        "max": 13.49,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r1000",
+        "clients": 8,
+        "tps": 12219.347806,
+        "n": 122223,
+        "p50": 0.632,
+        "p95": 0.875,
+        "p99": 1.169,
+        "max": 32.766,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r2500",
+        "clients": 1,
+        "tps": 2522.2166,
+        "n": 25230,
+        "p50": 0.39,
+        "p95": 0.427,
+        "p99": 0.475,
+        "max": 16.959,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "exits-r2500",
+        "clients": 8,
+        "tps": 12085.409398,
+        "n": 120894,
+        "p50": 0.65,
+        "p95": 0.881,
+        "p99": 1.053,
+        "max": 28.315,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r100",
+        "clients": 1,
+        "tps": 2463.113523,
+        "n": 24641,
+        "p50": 0.399,
+        "p95": 0.435,
+        "p99": 0.493,
+        "max": 16.933,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r100",
+        "clients": 8,
+        "tps": 11231.007686,
+        "n": 112306,
+        "p50": 0.698,
+        "p95": 0.992,
+        "p99": 1.255,
+        "max": 26.926,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r500",
+        "clients": 1,
+        "tps": 2168.230055,
+        "n": 21685,
+        "p50": 0.452,
+        "p95": 0.527,
+        "p99": 0.571,
+        "max": 17.679,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r500",
+        "clients": 8,
+        "tps": 9846.851302,
+        "n": 98515,
+        "p50": 0.786,
+        "p95": 1.142,
+        "p99": 1.355,
+        "max": 29.677,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r1000",
+        "clients": 1,
+        "tps": 1632.453132,
+        "n": 16337,
+        "p50": 0.593,
+        "p95": 0.84,
+        "p99": 0.987,
+        "max": 18.027,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r1000",
+        "clients": 8,
+        "tps": 6179.618334,
+        "n": 61826,
+        "p50": 1.194,
+        "p95": 2.113,
+        "p99": 3.129,
+        "max": 41.173,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r2500",
+        "clients": 1,
+        "tps": 609.265146,
+        "n": 6099,
+        "p50": 1.511,
+        "p95": 2.813,
+        "p99": 4.807,
+        "max": 20.298,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      },
+      {
+        "scenario": "all-r2500",
+        "clients": 8,
+        "tps": 2669.543009,
+        "n": 26717,
+        "p50": 2.754,
+        "p95": 5.169,
+        "p99": 7.684,
+        "max": 124.564,
+        "noise": {
+          "before": 0,
+          "after": 0,
+          "attempts": 1,
+          "noisy": false
+        }
+      }
+    ]
+  }
+}
