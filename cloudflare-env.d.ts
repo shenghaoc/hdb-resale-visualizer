@@ -12,6 +12,8 @@ interface Env {
   DB: D1Database;
   /** Public-read backend selector; see docs/architecture/public-read-backend.md (absent means D1). */
   HDB_PUBLIC_NEON?: Hyperdrive;
+  /** Distinct minimal Neon role allowed to execute only the atomic nearby budget function. */
+  HDB_NEARBY_BUDGET?: Hyperdrive;
   PUBLIC_DATA_BACKEND?: "d1" | "neon";
   D1_PUBLIC_CACHE_EPOCH?: string;
   NEON_PUBLIC_CACHE_EPOCH?: string;
@@ -29,7 +31,7 @@ interface Env {
   /** Per-location cap on cache-miss nearby queries. Required once the spatial gate is open. */
   NEARBY_ORIGIN_LIMITER?: RateLimit;
   /**
-   * Overrides the global daily Hyperdrive statement ceiling for nearby searches (whole number, at most the Free
+   * Overrides the Neon-backed admitted spatial-query ceiling for nearby searches (whole number, at most 10,000 of the Free
    * allowance); absent means `NEARBY_DAILY_STATEMENT_CEILING` in shared/nearby-limits.ts. A present but invalid
    * value makes nearby misses fail closed.
    */
