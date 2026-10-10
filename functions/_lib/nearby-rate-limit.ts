@@ -55,7 +55,9 @@ const notConfigured = () =>
 /**
  * Per-client limit, checked before the cache or the database is touched. A missing binding while the
  * feature is enabled is a deployment mistake, so it answers 503 instead of silently running unlimited.
- * A limiter that throws is treated as unavailable: the request proceeds and the failure is logged.
+ * A limiter that throws is treated as unavailable: the request proceeds and the failure is logged. That is
+ * safe only because this limit is about fairness between clients, not about protecting the database: every
+ * request that would reach the database still has to pass the origin checks, which fail closed.
  */
 export async function checkNearbyClientRateLimit(
   request: Request,
@@ -78,6 +80,10 @@ export async function checkNearbyClientRateLimit(
 /**
  * Per-location cap on cache-miss queries, checked only when the answer has to come from the database.
  * Answers 503 (the service is protecting itself) rather than 429 (the client did nothing wrong).
+ *
+ * This is the guard in front of the metered database, so it FAILS CLOSED: a limiter that throws means the
+ * request is refused (and logged), never forwarded unchecked. Cached answers are unaffected because hits
+ * never reach this check.
  */
 export async function checkNearbyOriginRateLimit(
   limiter: NearbyRateLimiter | undefined,
@@ -87,8 +93,11 @@ export async function checkNearbyOriginRateLimit(
     const { success } = await limiter.limit({ key: NEARBY_ORIGIN_RATE_LIMIT_KEY });
     if (success) return null;
   } catch (error) {
-    console.error("Nearby origin rate limiter failed, allowing request:", error);
-    return null;
+    console.error("Nearby origin rate limiter failed, refusing request:", error);
+    return privateJsonResponse(
+      { error: "Nearby search is temporarily unavailable" },
+      { status: 503, headers: { "Retry-After": String(NEARBY_RATE_LIMIT_PERIOD_SEC) } },
+    );
   }
   return privateJsonResponse(
     { error: "Nearby search is busy, try again shortly" },

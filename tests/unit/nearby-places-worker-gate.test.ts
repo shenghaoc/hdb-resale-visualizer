@@ -308,16 +308,45 @@ describe("nearby rate limiting in the Worker entry", () => {
     expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
   });
 
-  it("lets a request through when a limiter throws, and says so in the log", async () => {
-    const boom = { limit: vi.fn(async () => Promise.reject(new Error("limiter down"))) };
+  const boom = () => ({ limit: vi.fn(async () => Promise.reject(new Error("limiter down"))) });
+
+  it("fails closed when the origin limiter throws: 503, no spatial SQL, nothing cached, logged", async () => {
+    const entries = inMemoryCache();
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
     const response = await call(
-      deployedEnv({ ...open, NEARBY_IP_LIMITER: boom, NEARBY_ORIGIN_LIMITER: boom }),
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: boom() }),
       nearbyPath,
     );
+    expect(response.status).toBe(503);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Nearby search is temporarily unavailable" });
+    expect(nearbySqlCalls()).toBe(0);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
+    expect(log).toHaveBeenCalledOnce();
+    log.mockRestore();
+  });
+
+  it("keeps serving cached answers while the origin limiter is down, because hits never reach it", async () => {
+    inMemoryCache();
+    const origin = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin });
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("MISS");
+    origin.limit.mockImplementation(async () => Promise.reject(new Error("limiter down")));
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const hit = await call(env, nearbyPath);
+    expect(hit.status).toBe(200);
+    expect(hit.headers.get("x-data-cache")).toBe("HIT");
+    expect(origin.limit).toHaveBeenCalledTimes(1);
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it("lets a request through when only the client limiter throws, because the origin guards still apply", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const response = await call(deployedEnv({ ...open, NEARBY_IP_LIMITER: boom() }), nearbyPath);
     expect(response.status).toBe(200);
     expect(nearbySqlCalls()).toBe(1);
-    expect(log).toHaveBeenCalledTimes(2);
+    expect(log).toHaveBeenCalledOnce();
     log.mockRestore();
   });
 });

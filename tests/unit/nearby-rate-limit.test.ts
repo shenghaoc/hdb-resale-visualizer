@@ -140,11 +140,21 @@ describe("checkNearbyOriginRateLimit", () => {
     expect(response?.headers.get("cache-control")).toBe("no-store");
   });
 
-  it("fails closed when the binding is missing and open when the limiter throws", async () => {
-    expect((await checkNearbyOriginRateLimit(undefined))?.status).toBe(503);
+  it("fails closed when the binding is missing", async () => {
+    const response = await checkNearbyOriginRateLimit(undefined);
+    expect(response?.status).toBe(503);
+    expect(await response?.json()).toEqual({ error: "Nearby search is not configured" });
+  });
+
+  it("fails closed when the limiter itself throws: refuses the request, logs, and never lets it through", async () => {
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
-    expect(await checkNearbyOriginRateLimit(limiter("throw"))).toBeNull();
+    const response = await checkNearbyOriginRateLimit(limiter("throw"));
+    expect(response?.status).toBe(503);
+    expect(response?.headers.get("retry-after")).toBe(String(NEARBY_RATE_LIMIT_PERIOD_SEC));
+    expect(response?.headers.get("cache-control")).toBe("no-store");
+    expect(await response?.json()).toEqual({ error: "Nearby search is temporarily unavailable" });
     expect(log).toHaveBeenCalledOnce();
+    expect(String(log.mock.calls[0][0])).toContain("refusing request");
   });
 });
 
