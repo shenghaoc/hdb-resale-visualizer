@@ -41,4 +41,7 @@ JOIN bench_clusters c ON c.id = 1 + (abs(hashint8(g * 17)::bigint) % 40);
 GRANT USAGE ON SCHEMA public TO hdb_benchmark_runtime;
 GRANT SELECT ON transactions, blocks, block_details, comparisons, town_flat_type_trends, manifest, mrt_geojson
   TO hdb_benchmark_runtime;
-INSERT INTO manifest (id, json, updated_at) VALUES (1, '{"schemaVersion":1,"benchmark":true}'::jsonb, now());
+-- About the serving branch's manifest size (10.6 KB), so the statement that hashes the manifest (NEARBY_LABELLED_SQL) does
+-- realistic work. The places-only statement never reads it.
+INSERT INTO manifest (id, json, updated_at)
+VALUES (1, jsonb_build_object('schemaVersion', 1, 'benchmark', true, 'padding', repeat('0123456789', 1000)), now());

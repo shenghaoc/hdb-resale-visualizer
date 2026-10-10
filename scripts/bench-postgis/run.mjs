@@ -8,12 +8,24 @@
  * runs the SHIPPED NEARBY_SPATIAL_SQL under pgbench for 12 scenarios (3 kind sets x 4 radii) at 1 and 8 clients,
  * derives p50/p95/p99 from pgbench's per-transaction logs, records EXPLAIN (ANALYZE, BUFFERS) for three scenarios,
  * and compares a KNN-candidate strategy with the exact one. Nothing leaves the machine.
+ *
+ * It works in databases it creates itself, `hdb_bench_<n>_<random run id>`, refuses to start if a name is taken, and drops
+ * only what it created (never with FORCE; see scripts/lib/scratch-database.ts). `--keep-databases true` keeps them and
+ * prints their names. `--statement labelled` benchmarks the statement the Worker sends (NEARBY_LABELLED_SQL) instead of the
+ * verified places query it embeds (the default, `base`, NEARBY_SPATIAL_SQL). `--statement multi` reproduces the database-side
+ * work the shared cache used to spend on a miss: the manifest read, the places query, the manifest read, as three statements
+ * of one transaction (it leaves out the two extra network round trips a deployed miss also paid).
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  cleanupOnSignals,
+  createScratchDatabases,
+  describeCleanup,
+} from "../lib/scratch-database.ts";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "../..");
@@ -47,9 +59,15 @@ const psqlFile = (db, file, vars = {}) =>
   ]);
 const log = (...parts) => console.log("[bench]", ...parts);
 
-const { NEARBY_SPATIAL_SQL } = await import(
+const { NEARBY_SPATIAL_SQL, NEARBY_LABELLED_SQL } = await import(
   pathToFileURL(path.join(repoRoot, "worker/nearby-spatial-query.ts")).href
 );
+const statementName = args.statement ?? "base";
+if (!["base", "labelled", "multi"].includes(statementName))
+  throw new Error("--statement must be base, labelled or multi");
+const SHIPPED_SQL = statementName === "labelled" ? NEARBY_LABELLED_SQL : NEARBY_SPATIAL_SQL;
+/** What `manifestJson()` sends on the Neon backend; the old miss path sent it before and after the places query. */
+const MANIFEST_READ_SQL = "SELECT json::text AS json FROM public.manifest WHERE id = 1";
 
 const KIND_SETS = {
   blocks: ["hdb_block"],
@@ -62,7 +80,7 @@ const PLAN_SCENARIOS = ["blocks-r500", "exits-r1000", "all-r2500"];
 /** The shipped query with $1..$5 replaced the way pgbench can run it: a centre looked up by :id, a literal radius. */
 function scenarioSql(kinds, radius, id) {
   const centre = (column) => `(SELECT ${column} FROM bench_centres WHERE id = ${id})`;
-  return NEARBY_SPATIAL_SQL.replaceAll("$1", centre("lat"))
+  return SHIPPED_SQL.replaceAll("$1", centre("lat"))
     .replaceAll("$2", centre("lng"))
     .replaceAll("$3", String(radius))
     .replaceAll("$4", `ARRAY[${kinds.map((k) => `'${k}'`).join(",")}]::text[]`)
@@ -100,12 +118,15 @@ function environment() {
     "postgres",
     `SELECT string_agg(name || '=' || setting || coalesce(unit, ''), ', ' ORDER BY name) FROM pg_settings WHERE name IN ('shared_buffers','work_mem','effective_cache_size','max_parallel_workers_per_gather','jit','random_page_cost','max_connections','synchronous_commit','fsync')`,
   );
+  // The extension is created in a scratch database of this run, never in the cluster's own `postgres` database.
+  const probe = scratch.create("hdb_bench_probe");
   const versions = psql(
-    "postgres",
+    probe,
     `CREATE EXTENSION IF NOT EXISTS postgis; SELECT split_part(version(), ' ', 2) || ' / PostGIS ' || postgis_lib_version() || ' / GEOS ' || split_part(postgis_geos_version(), '-', 1) || ' / PROJ ' || split_part(postgis_proj_version(), ' ', 1)`,
   )
     .split("\n")
     .at(-1);
+  scratch.drop(probe);
   return {
     machine: `${os.cpus().length} cores, ${Math.round(os.totalmem() / 2 ** 30)} GiB RAM, ${os.cpus()[0].model}`,
     platform: `${os.type()} ${os.release()}`,
@@ -118,9 +139,7 @@ function environment() {
 }
 
 function buildDataset(n) {
-  const db = `hdb_bench_${n}`;
-  psql("postgres", `DROP DATABASE IF EXISTS ${db} WITH (FORCE)`);
-  psql("postgres", `CREATE DATABASE ${db}`);
+  const db = scratch.create(`hdb_bench_${n}`); // throws if the name is taken; only databases created here are ever dropped
   psql(
     "postgres",
     `DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'hdb_benchmark_runtime') THEN CREATE ROLE hdb_benchmark_runtime LOGIN; END IF; END $$`,
@@ -159,9 +178,10 @@ const otherActiveSessions = (db) =>
 
 function benchScenario(db, name, kinds, radius, clients, dir) {
   const script = path.join(dir, `${name}.pgbench`);
+  const places = `${scenarioSql(kinds, radius, ":id").trim()};\n`;
   writeFileSync(
     script,
-    `\\set id random(1, 10000)\n${scenarioSql(kinds, radius, ":id").trim()};\n`,
+    `\\set id random(1, 10000)\n${statementName === "multi" ? `${MANIFEST_READ_SQL};\n${places}${MANIFEST_READ_SQL};\n` : places}`,
   );
   const common = [
     "-n",
@@ -271,36 +291,67 @@ END $do$`;
   throw new Error("strategy comparison did not report");
 }
 
-const report = { environment: environment(), seconds, concurrencies, knnCandidates, sizes: {} };
-for (const n of sizes) {
-  const dir = path.join(outDir, String(n));
-  mkdirSync(dir, { recursive: true });
-  const dataset = buildDataset(n);
-  const results = [];
-  for (const [kindName, kinds] of Object.entries(KIND_SETS)) {
-    for (const radius of RADII) {
-      for (const clients of concurrencies) {
-        const result = benchScenario(
-          dataset.db,
-          `${kindName}-r${radius}`,
-          kinds,
-          radius,
-          clients,
-          dir,
-        );
-        results.push(result);
-        log(
-          `${n} ${result.scenario} c${clients}: p50 ${result.p50.toFixed(2)} ms, p95 ${result.p95.toFixed(2)} ms, p99 ${result.p99.toFixed(2)} ms, ${result.tps} tps (n=${result.n})`,
-        );
+const keepDatabases = args["keep-databases"] === "true";
+const scratch = createScratchDatabases((db, sql) => psql(db, sql), {
+  runId: process.env.SCRATCH_RUN_ID,
+});
+cleanupOnSignals(() => {
+  if (!keepDatabases) for (const line of describeCleanup(scratch.dropAll()).lines) log(line);
+});
+const report = {
+  statement: statementName,
+  runId: scratch.runId,
+  environment: environment(),
+  seconds,
+  concurrencies,
+  knnCandidates,
+  sizes: {},
+};
+try {
+  for (const n of sizes) {
+    const dir = path.join(outDir, String(n));
+    mkdirSync(dir, { recursive: true });
+    const dataset = buildDataset(n);
+    const results = [];
+    for (const [kindName, kinds] of Object.entries(KIND_SETS)) {
+      for (const radius of RADII) {
+        for (const clients of concurrencies) {
+          const result = benchScenario(
+            dataset.db,
+            `${kindName}-r${radius}`,
+            kinds,
+            radius,
+            clients,
+            dir,
+          );
+          results.push(result);
+          log(
+            `${n} ${result.scenario} c${clients}: p50 ${result.p50.toFixed(2)} ms, p95 ${result.p95.toFixed(2)} ms, p99 ${result.p99.toFixed(2)} ms, ${result.tps} tps (n=${result.n})`,
+          );
+        }
       }
     }
+    explainPlans(dataset.db, dir);
+    const strategy = strategyComparison(dataset.db);
+    log(`${n} strategy: ${JSON.stringify(strategy)}`);
+    report.sizes[n] = { ...dataset, results, strategy };
+    writeFileSync(path.join(outDir, "report.json"), JSON.stringify(report, null, 2));
+    if (!keepDatabases) {
+      const left = scratch.drop(dataset.db);
+      if (left) log(`database ${dataset.db} was left in place: ${left}`);
+      else log(`dropped database ${dataset.db}`);
+    }
   }
-  explainPlans(dataset.db, dir);
-  const strategy = strategyComparison(dataset.db);
-  log(`${n} strategy: ${JSON.stringify(strategy)}`);
-  report.sizes[n] = { ...dataset, results, strategy };
-  writeFileSync(path.join(outDir, "report.json"), JSON.stringify(report, null, 2));
-  if (args["keep-databases"] !== "true")
-    psql("postgres", `DROP DATABASE IF EXISTS ${dataset.db} WITH (FORCE)`);
+  console.log(JSON.stringify(report, null, 2));
+} finally {
+  if (keepDatabases) {
+    for (const name of scratch.created())
+      log(
+        `kept database ${name}; drop it when done: psql -d postgres -c 'DROP DATABASE "${name}"'`,
+      );
+  } else {
+    const cleanup = describeCleanup(scratch.dropAll());
+    for (const line of cleanup.lines) log(line);
+    if (!cleanup.complete) process.exitCode = 1;
+  }
 }
-console.log(JSON.stringify(report, null, 2));

@@ -1,6 +1,6 @@
 # Local PostGIS benchmark for `nearby-places`
 
-Measures the **shipped** query (`NEARBY_SPATIAL_SQL`, `worker/nearby-spatial-query.ts`) on a local PostgreSQL + PostGIS
+Measures the **shipped** query (`NEARBY_SPATIAL_SQL`, `worker/nearby-spatial-query.ts`; `--statement labelled` measures the statement the Worker actually sends, `NEARBY_LABELLED_SQL`, which embeds it) on a local PostgreSQL + PostGIS
 database at three data sizes, so the planner behaviour and the scaling of the exact approach are known before anyone argues
 for a faster approximate one. It deliberately does not use the free Neon project: large synthetic loads would burn its
 transfer and compute allowances, and the results would depend on the neighbours.
@@ -9,7 +9,7 @@ transfer and compute allowances, and the results would depend on the neighbours.
 
 For each size (default 10,000, 100,000 and 1,000,000 blocks):
 
-1. creates database `hdb_bench_<n>`, the publisher base schema (`tests/deployed-path/base-schema.sql`) and the role
+1. creates database `hdb_bench_<n>_<run id>` (a random id per run, so it never reuses a name), the publisher base schema (`tests/deployed-path/base-schema.sql`) and the role
    `hdb_benchmark_runtime`;
 2. loads `n` blocks, applies `sql/neon/001_postgis_nearby.sql` (which backfills `block_locations` and creates
    `poi_locations`), then adds `n/50` stations and `n/16` exits (the real ratios: 9,730 blocks, 190 stations, 613 exits) and
@@ -35,7 +35,16 @@ PG_BIN=/path/to/postgres/bin PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres \
 node scripts/bench-postgis/render.mjs /tmp/bench/report.json > /tmp/bench/report.md
 ```
 
-`--keep-databases true` keeps the generated databases. A full run takes roughly half an hour on a laptop.
+`--keep-databases true` keeps the generated databases and prints their names and the command to drop them. A full run takes
+roughly half an hour on a laptop.
+
+**What it will and will not touch.** It works only in databases it creates itself: it refuses to start (and touches nothing)
+if `hdb_bench_<n>_<run id>` already exists, never drops with `FORCE`, never terminates a session, and drops only the databases
+it created in the same run, also on a failure or Ctrl-C. If a session of someone else is still connected to one of its
+databases it waits up to 20 s, then leaves the database in place, prints `LEFT IN PLACE` with the `DROP DATABASE` command and
+exits non-zero. The PostGIS version probe runs in a scratch database too, so the cluster's own `postgres` database is never
+modified. The cluster-level role `hdb_benchmark_runtime` is created if missing and left, because concurrent runs share it.
+`SCRATCH_RUN_ID=<6-16 lowercase letters or digits>` fixes the run id. The logic is in `scripts/lib/scratch-database.ts`.
 
 ## Reading the numbers
 
