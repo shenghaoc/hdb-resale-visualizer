@@ -1,0 +1,22 @@
+# One-time formatter inspection only. Never upload artifacts.
+name: Temporary format check
+on:
+  push:
+    branches:
+      - feat/precomputed-block-mrt-exits
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+          node-version: "24"
+          run-install: false
+      - run: vp install
+      - run: |
+          vp fmt tests/integration/precomputed-block-mrt-exits.mjs tests/unit/NearbyMrtExits.test.tsx
+          git diff -- tests/integration/precomputed-block-mrt-exits.mjs tests/unit/NearbyMrtExits.test.tsx
