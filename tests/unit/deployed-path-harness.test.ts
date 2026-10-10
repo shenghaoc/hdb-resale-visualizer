@@ -5,7 +5,7 @@ import { buildDirectBlock, parseFingerprints } from "../deployed-path/direct-sql
 import { SAMPLES, canonical, queryString } from "../deployed-path/samples.mjs";
 import { NEARBY_CLIENT_RATE_LIMIT, NEARBY_RATE_LIMIT_PERIOD_SEC } from "../../shared/nearby-limits";
 import { parseNearbyPlacesRequest } from "../../shared/nearby-places";
-import { NEARBY_SPATIAL_SQL } from "../../worker/nearby-spatial-query";
+import { NEARBY_LABELLED_SQL, NEARBY_SPATIAL_SQL } from "../../worker/nearby-spatial-query";
 
 const harness = (name: string) =>
   readFileSync(join(process.cwd(), "tests/deployed-path", name), "utf8");
@@ -64,19 +64,33 @@ describe("deployed-path verification harness", () => {
     }
   });
 
-  it("runs the shipped SQL verbatim and writes nothing", () => {
-    const block = buildDirectBlock(SAMPLES, NEARBY_SPATIAL_SQL);
+  it("runs the statement the Worker sends verbatim, next to the verified places query, and writes nothing", () => {
+    const block = buildDirectBlock(SAMPLES, {
+      labelled: NEARBY_LABELLED_SQL,
+      base: NEARBY_SPATIAL_SQL,
+    });
+    expect(block).toContain(NEARBY_LABELLED_SQL);
     expect(block).toContain(NEARBY_SPATIAL_SQL);
-    expect(block.replace(NEARBY_SPATIAL_SQL, "")).not.toMatch(
-      /\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE|GRANT|COPY)\b/i,
+    // The harness fails the run unless both return the same places and the labelled one has exactly one header.
+    expect(block).toContain("LABELLED-DIFFERS");
+    expect(block).toContain("LABELLED-HEADER");
+    const write = /\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE|GRANT|COPY)\b/i;
+    expect(block.replace(NEARBY_LABELLED_SQL, "").replace(NEARBY_SPATIAL_SQL, "")).not.toMatch(
+      write,
     );
-    expect(NEARBY_SPATIAL_SQL).not.toMatch(
-      /\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE|GRANT|COPY)\b/i,
-    );
+    expect(NEARBY_LABELLED_SQL).not.toMatch(write);
   });
 
   it("refuses a shipped SQL text that could close the harness's dollar quotes", () => {
-    expect(() => buildDirectBlock(SAMPLES, "SELECT $q$")).toThrow("dollar-quote collision");
+    const fine = "SELECT 1";
+    for (const tag of ["$q$", "$b$", "$f$", "$do$"]) {
+      expect(() => buildDirectBlock(SAMPLES, { labelled: `SELECT ${tag}`, base: fine })).toThrow(
+        "dollar-quote collision",
+      );
+      expect(() => buildDirectBlock(SAMPLES, { labelled: fine, base: `SELECT ${tag}` })).toThrow(
+        "dollar-quote collision",
+      );
+    }
   });
 
   it("reads fingerprint lines out of a runner's error text and ignores the rest", () => {

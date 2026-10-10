@@ -16,7 +16,10 @@ import { onRequestGet as detailHandler } from "../functions/api/details/[address
 import { onRequestGet as comparisonHandler } from "../functions/api/comparisons/[addressKey]";
 import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-stations";
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
-import { onRequestGet as nearbyPlacesHandler } from "../functions/api/nearby-places";
+import {
+  onRequestGet as nearbyPlacesHandler,
+  readNearbyPlaces,
+} from "../functions/api/nearby-places";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
 import { onRequestGet as suggestHandler } from "../functions/api/suggest";
@@ -34,7 +37,7 @@ import {
 } from "./seo";
 import { matchApiRoute, methodNotAllowedResponse, type ApiRouteId } from "./api-route-match";
 import { purgeStaleShortlists } from "../functions/_lib/shortlist";
-import { withPublicDataCache } from "./public-data-cache";
+import { withPublicDataCache, type AtomicRead } from "./public-data-cache";
 import { townToFilename } from "../shared/geo";
 import { createPublicReadScope, namespacePublicCache } from "./public-read-backend";
 import { createNeonPublicTransport } from "./neon-transport";
@@ -45,6 +48,18 @@ import {
   checkNearbyClientRateLimit,
   checkNearbyOriginRateLimit,
 } from "../functions/_lib/nearby-rate-limit";
+import { reserveNearbyStatements } from "../functions/_lib/nearby-budget";
+
+/**
+ * Everything that must hold before a nearby cache miss may send its statement to Neon: the per-location rate
+ * limit, then the global daily statement ceiling. Both fail closed; the first refusal is the answer.
+ */
+async function admitNearbyDatabaseRead(env: Env): Promise<Response | null> {
+  return (
+    (await checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER)) ??
+    (await reserveNearbyStatements(env.DB, env.NEARBY_DAILY_STATEMENT_CEILING))
+  );
+}
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
 type SpecialRouteId = ShortlistRouteId | "nearby-capabilities";
@@ -236,19 +251,24 @@ export default {
             reads.namespace,
           );
           const handler = publicApiHandlers[routeId];
+          const routeContext = () => ({
+            request,
+            params: definedParams(apiMatch.groups),
+            publicData: reads.data,
+          });
+          // Nearby answers come from ONE statement that also reports the publication it read, so the cache layer
+          // needs no manifest reads around it. The cache layer calls this only when the answer must come from the
+          // database; the admission checks run inside it, after validation and just before that statement, so a
+          // request that never reaches the database never spends the rate-limit or statement allowance.
+          const atomic: AtomicRead | undefined =
+            routeId === "nearby-places"
+              ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv))
+              : undefined;
           // The cache layer calls this only when the answer must come from the database.
-          const dispatch = async () => {
-            if (routeId === "nearby-places") {
-              const busy = await checkNearbyOriginRateLimit(capturedEnv.NEARBY_ORIGIN_LIMITER);
-              if (busy) return busy;
-            }
-            return handler({
-              request,
-              params: definedParams(apiMatch.groups),
-              publicData: reads.data,
-            });
-          };
-          const handle = () => withPublicDataCache(request, reads.data, publicCache, dispatch);
+          const dispatch = async () =>
+            atomic ? (await atomic()).response : handler(routeContext());
+          const handle = () =>
+            withPublicDataCache(request, reads.data, publicCache, dispatch, atomic);
           return await (routeId === "comparable-transactions"
             ? reads.comparableSnapshot(handle)
             : handle());

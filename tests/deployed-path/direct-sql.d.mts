@@ -1,5 +1,6 @@
 import type { Sample } from "./samples.mjs";
 
-export function loadShippedSql(): Promise<string>;
-export function buildDirectBlock(samples: Sample[], shippedSql: string): string;
+export type ShippedSql = { labelled: string; base: string };
+export function loadShippedSql(): Promise<ShippedSql>;
+export function buildDirectBlock(samples: Sample[], shipped: ShippedSql): string;
 export function parseFingerprints(text: string): Record<string, { n: number; md5: string }>;

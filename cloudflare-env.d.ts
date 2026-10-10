@@ -28,4 +28,10 @@ interface Env {
   NEARBY_IP_LIMITER?: RateLimit;
   /** Per-location cap on cache-miss nearby queries. Required once the spatial gate is open. */
   NEARBY_ORIGIN_LIMITER?: RateLimit;
+  /**
+   * Overrides the global daily Hyperdrive statement ceiling for nearby searches (whole number, at most the Free
+   * allowance); absent means `NEARBY_DAILY_STATEMENT_CEILING` in shared/nearby-limits.ts. A present but invalid
+   * value makes nearby misses fail closed.
+   */
+  NEARBY_DAILY_STATEMENT_CEILING?: string;
 }
