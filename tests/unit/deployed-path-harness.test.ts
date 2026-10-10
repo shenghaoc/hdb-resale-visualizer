@@ -102,13 +102,22 @@ describe("deployed-path verification harness", () => {
   });
 
   describe("temporary Worker template", () => {
-    const filled = parseJsonc(
-      harness("wrangler.deployed.template.jsonc")
-        .replaceAll("__WORKER_NAME__", "hdb-realpath-verify-test")
-        .replaceAll("__REPO_ROOT__", "/repo")
-        .replaceAll("__HYPERDRIVE_ID__", "0".repeat(32))
-        .replaceAll("__CACHE_EPOCH__", "realpath-test"),
-    ) as {
+    const template = harness("wrangler.deployed.template.jsonc");
+    const placeholders: Record<string, string> = {
+      __WORKER_NAME__: "hdb-realpath-verify-test",
+      __REPO_ROOT__: "/repo",
+      __HYPERDRIVE_ID__: "0".repeat(32),
+      __CACHE_EPOCH__: "realpath-test",
+      __BUDGET_DB_NAME__: "hdb-realpath-budget-test",
+      __BUDGET_DB_ID__: "11111111-1111-4111-8111-111111111111",
+      __CEILING__: "6",
+    };
+    const fillTemplate = () =>
+      Object.entries(placeholders).reduce(
+        (text, [name, value]) => text.replaceAll(name, value),
+        template,
+      );
+    const filled = parseJsonc(fillTemplate()) as {
       name: string;
       ratelimits: {
         name: string;
@@ -116,13 +125,20 @@ describe("deployed-path verification harness", () => {
         simple: { limit: number; period: number };
       }[];
       vars: Record<string, string>;
-      d1_databases?: unknown;
+      d1_databases?: { binding: string; database_name: string; database_id: string }[];
     };
     const production = parseJsonc(readFileSync(join(process.cwd(), "wrangler.jsonc"), "utf8")) as {
       name: string;
       ratelimits: { namespace_id: string }[];
       vars: Record<string, string>;
+      d1_databases: { database_name: string; database_id: string }[];
     };
+
+    it("has no placeholder the test does not fill, and leaves none behind", () => {
+      const used = new Set(template.match(/__[A-Z0-9_]+__/g));
+      expect([...used].sort()).toEqual(Object.keys(placeholders).sort());
+      expect(fillTemplate()).not.toMatch(/__[A-Z0-9_]+__/);
+    });
 
     it("never shares a rate-limit namespace id or the Worker name with production", () => {
       const productionIds = new Set(production.ratelimits.map((r) => r.namespace_id));
@@ -134,13 +150,32 @@ describe("deployed-path verification harness", () => {
       expect(filled.name).not.toBe(production.name);
     });
 
-    it("keeps the production client limit and window, and binds no database but Hyperdrive", () => {
+    it("keeps the production client limit and window", () => {
       const client = filled.ratelimits.find((r) => r.name === "NEARBY_IP_LIMITER");
       expect(client?.simple).toEqual({
         limit: NEARBY_CLIENT_RATE_LIMIT,
         period: NEARBY_RATE_LIMIT_PERIOD_SEC,
       });
-      expect(filled.d1_databases).toBeUndefined();
+    });
+
+    it("binds only a throwaway budget database of its own, never the production one", () => {
+      expect(filled.d1_databases).toEqual([
+        {
+          binding: "DB",
+          database_name: placeholders.__BUDGET_DB_NAME__,
+          database_id: placeholders.__BUDGET_DB_ID__,
+        },
+      ]);
+      const [productionDatabase] = production.d1_databases;
+      expect(template).not.toContain(productionDatabase.database_id);
+      expect(template).not.toContain(productionDatabase.database_name);
+      expect(filled.d1_databases?.[0].database_id).not.toBe(productionDatabase.database_id);
+      expect(filled.d1_databases?.[0].database_name).not.toBe(productionDatabase.database_name);
+    });
+
+    it("takes the daily ceiling from a placeholder, which the runbook sets small for the ceiling phase", () => {
+      expect(filled.vars.NEARBY_DAILY_STATEMENT_CEILING).toBe("6");
+      expect(Number(placeholders.__CEILING__)).toBeLessThan(NEARBY_CLIENT_RATE_LIMIT - 3);
     });
 
     it("opens the spatial gate only in the temporary Worker, never in production", () => {

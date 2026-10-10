@@ -210,8 +210,10 @@ const phases = {
     const ceiling = Number(process.env.EXPECT_CEILING);
     if (!Number.isInteger(ceiling) || ceiling < 1)
       throw new Error("EXPECT_CEILING must be the whole-number ceiling the Worker runs under");
+    // lng 103.83 (the origin-limit phase uses 103.82, budget-unavailable 103.84) so no earlier phase's cached entry can
+    // answer these centres without drawing from the allowance.
     const centre = (i) =>
-      `/api/nearby-places?lat=1.${3000 + i}&lng=103.8200&radius=500&types=mrt_exit`;
+      `/api/nearby-places?lat=1.${3000 + i}&lng=103.8300&radius=500&types=mrt_exit`;
     const rows = [];
     for (let i = 0; i < ceiling + 3; i++) {
       const response = await get(centre(i));
@@ -239,7 +241,7 @@ const phases = {
     const rows = [];
     for (let i = 0; i < 3; i++) {
       const response = await get(
-        `/api/nearby-places?lat=1.${3000 + i}&lng=103.8200&radius=500&types=mrt_exit`,
+        `/api/nearby-places?lat=1.${3000 + i}&lng=103.8400&radius=500&types=mrt_exit`,
       );
       rows.push({
         i,

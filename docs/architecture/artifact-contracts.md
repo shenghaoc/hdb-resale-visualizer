@@ -87,7 +87,7 @@ Selected-type refinements that need `flat_type_cohorts_json` return no rows when
 - The handler widens block → street → town on the `transactions` table, then scores with `shared/comparable-engine.ts`. Price is never a selection input.
 - `?adjust=time` (the Check tab always sends this) time-adjusts prices using `town_flat_type_trends`. If trends are missing, the response still includes `adjustmentApplied: false` and caveats instead of silently using raw prices.
 
-### Shortlist sync (only runtime D1 write path)
+### Shortlist sync (only runtime D1 write path for user data)
 
 - `POST /api/shortlist` body: `{ syncCode?: string, items: ShortlistItem[] }` (max 20 items, 64 KB). Omit `syncCode` to mint a new 128-bit URL-safe code.
 - Server stores only `SHA-256(syncCode)`. The raw code is returned once and kept in the browser (`hdb_resale_sync_code_v1`).
@@ -113,7 +113,7 @@ Static assets fall through to `dist/` with SPA `not_found_handling`.
 2. Geocoding and proximity metrics are computed in `scripts/` only and persisted to D1; the cache tables are upserted, never truncated.
 3. Shared data structures must live in `shared/` and be imported by both `scripts/` and `src/`.
 4. D1 schema changes are forward-only: add a new file to `migrations/`, never edit a previously-applied migration.
-5. The only runtime D1 write path is opt-in shortlist sync. Do not add other user-data writes.
+5. The only runtime D1 write path for user data is opt-in shortlist sync. Do not add other user-data writes. The one other runtime write is the operational counter `nearby_statement_budget` (migration `0012`), which holds a daily statement count and no user data.
 
 ## Enforcement Checks
 

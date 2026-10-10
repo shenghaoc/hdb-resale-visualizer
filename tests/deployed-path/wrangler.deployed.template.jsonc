@@ -1,10 +1,12 @@
 {
   // TEMPORARY verification Worker for the deployed-path check of GET /api/nearby-places. NOT production.
-  // Fill the __PLACEHOLDERS__ (see README.md), deploy with `wrangler deploy --config <filled file>`, delete the Worker
+  // Fill the double-underscore placeholders (see README.md), deploy with `wrangler deploy --config <filled file>`, delete the Worker
   // and the Hyperdrive configuration when the check is finished.
   //
   // Rate-limit namespace ids are account-wide: production owns 1002, 1003 and 1004, so this Worker uses ids of its own.
-  // There is no D1 binding, no cron and no static assets; only the API routes are meaningful here.
+  // The only D1 binding is a THROWAWAY database made for this run that carries just the daily statement budget table
+  // (migrations/0012_nearby_statement_budget.sql); it is never the production database. There is no cron and no static
+  // assets; only the API routes are meaningful here.
   "name": "__WORKER_NAME__",
   "main": "__REPO_ROOT__/worker/index.ts",
   "compatibility_date": "2026-04-19",
@@ -13,6 +15,9 @@
   "rules": [
     { "type": "Data", "globs": ["**/*.ttf"] },
     { "type": "CompiledWasm", "globs": ["**/*.wasm"] },
+  ],
+  "d1_databases": [
+    { "binding": "DB", "database_name": "__BUDGET_DB_NAME__", "database_id": "__BUDGET_DB_ID__" },
   ],
   "ratelimits": [
     {
@@ -39,5 +44,7 @@
     "D1_PUBLIC_CACHE_EPOCH": "unused",
     "NEON_PUBLIC_CACHE_EPOCH": "__CACHE_EPOCH__",
     "NEON_SPATIAL_ENABLED": "true",
+    // The daily statement ceiling. 100000 never trips; the `ceiling` phase redeploys with a small number (README.md).
+    "NEARBY_DAILY_STATEMENT_CEILING": "__CEILING__",
   },
 }
