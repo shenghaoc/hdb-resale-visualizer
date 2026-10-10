@@ -1,3 +1,5 @@
+import type { PublicationLabel } from "./publication-state";
+
 /** Deterministic, bounded Singapore spatial query contract (straight-line distances only). */
 export const NEARBY_PLACE_KINDS = ["hdb_block", "mrt_station", "mrt_exit"] as const;
 /**
@@ -45,6 +47,12 @@ export type NearbyPlace = {
   /** Source EXIT_CODE, preserved verbatim (e.g. "E" or "Exit B"). */
   exitCode: string | null;
 };
+/**
+ * The places of one request together with the publication they were read from, taken in the same statement
+ * (null: the database stores no manifest). See `NEARBY_LABELLED_SQL` in `worker/nearby-spatial-query.ts`.
+ */
+export type LabelledNearbyPlaces = { places: NearbyPlace[]; publication: PublicationLabel | null };
+
 export type NearbyPlacesRequest = {
   lat: number;
   lng: number;

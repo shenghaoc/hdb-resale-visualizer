@@ -5,6 +5,7 @@ import {
   PUBLICATION_MARKER_KEY,
   PUBLICATION_OWNER_JSON_PATH,
   manifestVersion,
+  publicationLabel,
   readPublicationState,
   stampPublicationMarker,
 } from "../../shared/publication-state";
@@ -142,5 +143,70 @@ describe("stampPublicationMarker", () => {
     const document = JSON.parse(await stamp(manifest, "t", "owner-a"));
     const path = PUBLICATION_OWNER_JSON_PATH.replace(/^\$\./, "").split(".");
     expect(path.reduce((value, key) => value?.[key], document)).toBe("owner-a");
+  });
+});
+
+describe("publicationLabel", () => {
+  /** The three fields the labelled SQL returns for a stored manifest text: sha256, jsonb_typeof, marker text. */
+  async function sqlFields(text: string) {
+    const document: unknown = JSON.parse(text);
+    const type = Array.isArray(document)
+      ? "array"
+      : document === null
+        ? "null"
+        : typeof document === "object"
+          ? "object"
+          : typeof document;
+    const marker =
+      type === "object" && Object.hasOwn(document as object, PUBLICATION_MARKER_KEY)
+        ? JSON.stringify((document as Record<string, unknown>)[PUBLICATION_MARKER_KEY])
+        : null;
+    return [await manifestVersion(text), type, marker] as const;
+  }
+
+  it("agrees with reading the full manifest, for every state a manifest can be in", async () => {
+    const texts = [
+      manifest,
+      await stamp(manifest),
+      await stamp(await stamp(manifest)),
+      JSON.stringify({
+        [PUBLICATION_MARKER_KEY]: {
+          baseVersion: null,
+          startedAt: "2026-10-07T01:00:00.000Z",
+          owner: "a",
+        },
+      }),
+      JSON.stringify({ ...JSON.parse(manifest), [PUBLICATION_MARKER_KEY]: null }),
+      JSON.stringify({
+        ...JSON.parse(manifest),
+        [PUBLICATION_MARKER_KEY]: { baseVersion: "not-a-version" },
+      }),
+      JSON.stringify({ ...JSON.parse(manifest), [PUBLICATION_MARKER_KEY]: "text" }),
+      "[]",
+      "null",
+      '"a string"',
+      "42",
+      "true",
+    ];
+    for (const text of texts) {
+      const label = publicationLabel(...(await sqlFields(text)));
+      expect(label, text).toEqual({
+        version: await manifestVersion(text),
+        state: readPublicationState(text),
+      });
+    }
+  });
+
+  it("refuses fields it cannot trust", () => {
+    const good = "a".repeat(64);
+    expect(() => publicationLabel(undefined, "object", null)).toThrow("version");
+    expect(() => publicationLabel("A".repeat(64), "object", null)).toThrow("version");
+    expect(() => publicationLabel(good.slice(1), "object", null)).toThrow("version");
+    expect(() => publicationLabel(good, undefined, null)).toThrow("shape");
+    expect(() => publicationLabel(good, "object", 5)).toThrow("shape");
+    expect(publicationLabel(good, "object", null)).toEqual({
+      version: good,
+      state: { inProgress: false },
+    });
   });
 });

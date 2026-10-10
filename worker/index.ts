@@ -16,7 +16,10 @@ import { onRequestGet as detailHandler } from "../functions/api/details/[address
 import { onRequestGet as comparisonHandler } from "../functions/api/comparisons/[addressKey]";
 import { onRequestGet as mrtStationsHandler } from "../functions/api/mrt-stations";
 import { onRequestGet as mrtExitsHandler } from "../functions/api/mrt-exits";
-import { onRequestGet as nearbyPlacesHandler } from "../functions/api/nearby-places";
+import {
+  onRequestGet as nearbyPlacesHandler,
+  readNearbyPlaces,
+} from "../functions/api/nearby-places";
 import { onRequestGet as trendsHandler } from "../functions/api/trends/town-flat-type";
 import { onRequestGet as searchHandler } from "../functions/api/search";
 import { onRequestGet as suggestHandler } from "../functions/api/suggest";
@@ -34,13 +37,22 @@ import {
 } from "./seo";
 import { matchApiRoute, methodNotAllowedResponse, type ApiRouteId } from "./api-route-match";
 import { purgeStaleShortlists } from "../functions/_lib/shortlist";
-import { withPublicDataCache } from "./public-data-cache";
+import { withPublicDataCache, type AtomicRead } from "./public-data-cache";
 import { townToFilename } from "../shared/geo";
 import { createPublicReadScope, namespacePublicCache } from "./public-read-backend";
 import { createNeonPublicTransport } from "./neon-transport";
 import type { PublicData, PublicRouteHandler } from "../functions/_lib/public-data";
 import { privateJsonResponse } from "../functions/_lib/d1";
 import { isNeonSpatialEnabled } from "../shared/nearby-places";
+import {
+  checkNearbyClientRateLimit,
+  checkNearbyOriginRateLimit,
+} from "../functions/_lib/nearby-rate-limit";
+
+/** Cache misses must pass this fail-closed limiter before a single PostGIS SELECT. */
+async function admitNearbyDatabaseRead(env: Env): Promise<Response | null> {
+  return checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER);
+}
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
 type SpecialRouteId = ShortlistRouteId | "nearby-capabilities";
@@ -218,16 +230,38 @@ export default {
               { error: "Spatial search has not been enabled" },
               { status: 503 },
             );
+          // Per-client limit first: a limited request touches neither the cache nor the database.
+          if (routeId === "nearby-places") {
+            const limited = await checkNearbyClientRateLimit(
+              request,
+              capturedEnv.NEARBY_IP_LIMITER,
+            );
+            if (limited) return limited;
+          }
           const reads = publicReads();
           const publicCache = namespacePublicCache(
             typeof caches !== "undefined" ? caches.default : null,
             reads.namespace,
           );
           const handler = publicApiHandlers[routeId];
+          const routeContext = () => ({
+            request,
+            params: definedParams(apiMatch.groups),
+            publicData: reads.data,
+          });
+          // Nearby answers come from ONE statement that also reports the publication it read, so the cache layer
+          // needs no manifest reads around it. The cache layer calls this only when the answer must come from the
+          // database; the admission checks run inside it, after validation and just before that statement, so a
+          // invalid requests never consume a cache-miss rate-limit allowance.
+          const atomic: AtomicRead | undefined =
+            routeId === "nearby-places"
+              ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv))
+              : undefined;
+          // The cache layer calls this only when the answer must come from the database.
+          const dispatch = async () =>
+            atomic ? (await atomic()).response : handler(routeContext());
           const handle = () =>
-            withPublicDataCache(request, reads.data, publicCache, () =>
-              handler({ request, params: definedParams(apiMatch.groups), publicData: reads.data }),
-            );
+            withPublicDataCache(request, reads.data, publicCache, dispatch, atomic);
           return await (routeId === "comparable-transactions"
             ? reads.comparableSnapshot(handle)
             : handle());

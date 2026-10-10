@@ -50,6 +50,57 @@ Seven `STATION_NA` values in the current serving snapshot (manifest 2026-10-04) 
 
 This stack groups by the source label verbatim and deliberately does **not** normalise codes to names: that needs an authoritative code-to-name mapping and belongs to the POI-integration follow-up. Until then the user guide describes the list as one entry per source-recorded station name, not per physical station.
 
+## Rate limiting, without a global daily counter
+
+A cache miss on `GET /api/nearby-places` runs a spatial query on a metered Neon branch through Hyperdrive, and the canonical keyspace above (about 1.0 billion keys) is far too large for the cache to bound that work: a client walking the grid never hits. Two approximate per-location rate limits shape its traffic, but neither limits global daily usage. All are inert while `NEON_SPATIAL_ENABLED` is `"false"`, because the flag gate answers 503 before any of them runs.
+
+| Control                 | Where                        | Limit                      | Key                             | Spent                                      | Over the limit                       | If the control itself fails     |
+| ----------------------- | ---------------------------- | -------------------------- | ------------------------------- | ------------------------------------------ | ------------------------------------ | ------------------------------- |
+| `NEARBY_IP_LIMITER`     | Rate Limiting binding `1003` | 30 per 60 s, per location  | client key (below)              | by every request that passes the flag gate | `429`, `Retry-After: 60`, `no-store` | request proceeds, error logged  |
+| `NEARBY_ORIGIN_LIMITER` | Rate Limiting binding `1004` | 300 per 60 s, per location | one shared key, `nearby-origin` | on a cache miss, just before the statement | `503`, `Retry-After: 60`, `no-store` | **refused** `503`, error logged |
+
+Order in the Worker (`worker/index.ts`): flag gate, then the per-client limit, then the public-read cache; on a miss only, once the request is known to be valid and answerable, the origin limiter, then one labelled PostGIS statement. A limited client touches neither the cache nor the database; a cache hit spends neither origin control, so popular locations stay cheap; a request that never reaches the database (invalid input, a backend without PostGIS) spends neither. The origin controls answer `503` rather than `429` because the client did nothing wrong; the service is protecting itself. None of these answers is stored: the public-read cache keeps only `200` responses marked `public`, and the PWA's `NetworkFirst` API rule admits only `200`s with a consistent cache label.
+
+**Client key** (`nearbyClientRateLimitKey`, `functions/_lib/nearby-rate-limit.ts`) comes from `CF-Connecting-IP`, the address Cloudflare reports for the connecting client. IPv4 is used as it is; an IPv4-mapped IPv6 address (`::ffff:a.b.c.d`) maps to the embedded IPv4; any other IPv6 address collapses to `v6:` plus its first four hextets (its `/64`), because one subscriber normally owns a whole `/64` and could otherwise rotate addresses inside it; a missing or malformed value shares one `unknown-ip` bucket, so a bad header cannot mint fresh buckets. Cloudflare advises against IP addresses as keys because many users share one. The route is anonymous, so the address is the only identity available. 30 requests a minute is well above ordinary use (one request when a block's MRT list is expanded, repeated centres served from cache), which makes it unlikely that users behind a shared NAT notice, and `429` is retryable.
+
+**What the two rate limits are, and are not.** Counters are local to each Cloudflare location, and Cloudflare describes the binding as permissive and eventually consistent, not an accurate accounting system. The numbers are therefore per location and approximate. A client that moves between locations, or many clients together, can exceed them in aggregate. They shape bursts and per-client fairness; they cannot bound a day, because the binding only supports 10 and 60 second windows and never shares a counter between locations. Neither limiter is a global quota. Public activation is forbidden until a separately approved global cost-control design exists.
+
+### Why a cache miss used to cost three statements, and why nearby now costs one
+
+Hyperdrive's Free plan allows [100,000 database statements a day](https://developers.cloudflare.com/hyperdrive/platform/pricing/) across the account, reset at 00:00 UTC, and counts every statement, cached or not. Every route that reads Neon spends from it, so a runaway nearby workload would starve the rest of the site, whose reads then fail until the reset.
+
+The shared public-data cache (`worker/public-data-cache.ts`) labels every stored answer with the generation of data it was computed from (the SHA-256 of the manifest text), and must be sure an answer did not mix two generations while the publisher replaced tables under it. It does that **around** the handler, so a cache miss on any route costs three statements:
+
+1. read the manifest before: learn the current generation, and whether a publication is in progress;
+2. the handler's own query;
+3. read the manifest again: store the answer only if the two reads are identical.
+
+Two of the three statements move the whole manifest, **10,618 bytes** on the serving branch, to carry a 64-character identity. For the block panel's nearby answer (average 1,259 bytes, p95 3,446 bytes, measured below) the manifest is about 94% of the bytes a miss moves out of Neon, which also counts against its 5 GB a month transfer allowance. This is how every other route behaves today; it is measured, not assumed: the local rehearsal's control request (`/api/mrt-stations`: one miss and one hit) sends exactly three statements.
+
+Nearby search is a single-statement route, so the label can be taken in the same statement. `NEARBY_LABELLED_SQL` (`worker/nearby-spatial-query.ts`) embeds the verified places query verbatim and adds a header row: `version` (the SHA-256 of `manifest.json::text`, computed in SQL so the manifest never leaves the database), the manifest's JSON type and its `publicationInProgress` marker. One SQL statement sees one snapshot, and the publisher stamps the marker before it touches any table, so the manifest as of that snapshot says whether the tables were mid-replacement; the before and after reads have nothing left to prove. The shared cache gets an additive `AtomicRead` mode for this and the multi-statement path every other route uses is unchanged (its tests pass unchanged). Result:
+
+| Request                             | Before                        | Now                           |
+| ----------------------------------- | ----------------------------- | ----------------------------- |
+| cache hit on a live 60 s pointer    | 0 statements                  | 0 statements                  |
+| cache hit after the pointer expired | 1 statement (manifest)        | 1 statement (the answer)      |
+| cache miss                          | **3** statements, about 22 KB | **1** statement, about 1.4 KB |
+
+Verified, on PostgreSQL 18.6 with PostGIS 3.6.3 and the real D1 emulator (local rehearsal, not Hyperdrive): 10 cache misses produced exactly 10 statements from the runtime role, all of them the labelled statement; the SQL-side hash equals `manifestVersion` on a 10 KB manifest containing non-ASCII text; the labelled statement returns the same places in the same order as the verified base query for every sample, and exactly one header row (the deployed-path check asserts the same on the fork). `sql/neon/verify_nearby_spatial_sql.sql` still verifies the embedded base query against its brute-force oracle. A publication in progress is not cached and is labelled `BYPASS` (or the previous generation is served as `HIT-STALE`), exactly as for the other routes.
+
+### No budget counter is implemented
+
+The earlier D1 statement-budget proposal was removed. PR #431 (the Neon-counter alternative) was closed **without merging**. A refused PostgreSQL reservation itself spends a Hyperdrive statement, so that design cannot impose a hard account-wide statement cap. The remaining Workers Rate Limiting bindings are per Cloudflare location and approximate: 300 misses/minute/location is potentially 432,000 requests per location per day, well beyond the shared 100,000 Hyperdrive statements/day allowance. **The production `NEON_SPATIAL_ENABLED` flag must remain `"false"`; enabling public arbitrary-coordinate searches requires an independent global budget control first.**
+
+The fixed block-detail MRT-exit UI is moving to publish-time materialization in separate draft PR #432; this runtime route remains available only behind its disabled feature flag. A single-read-only-Hyperdrive deployed-path verification on a disposable Neon fork is independent of the future public-budget decision.
+
+### What a cache miss costs when the answer is a fixed fact about a block
+
+The only caller today asks the same fixed question for each of the 9,730 blocks. [nearby-exits-precompute-evaluation.md](./nearby-exits-precompute-evaluation.md) evaluates computing those lists once at publish time instead (41,172 rows, 802 ms to compute, about 10 MB as JSON) and recommends it for the block panel as part of the serving-refresh work. It is not built.
+
+**Failure handling.** Both the per-client and the per-location limiter fail closed on missing bindings and thrown errors, responding with `503`, `Retry-After: 60` and `no-store`. A normal exceeded client limit answers `429`; the origin limit answers `503`. Invalid inputs do not consume origin-limit attempts. A previously cached answer may continue to be served when the origin limiter is down; it never opens a database connection.
+
+**Configuration.** `shared/nearby-limits.ts` pins the existing rate-limiting bindings in `wrangler.jsonc`; `tests/unit/nearby-rate-limit.test.ts` also asserts the production spatial flag is `"false"`. A temporary verification Worker must have its own name and limiter namespace IDs and uses **one** fork-scoped read-only Hyperdrive config, with no D1 counter or write-capable role.
+
 ## Capability probe: `GET /api/nearby-capabilities`
 
 The browser asks `GET /api/nearby-capabilities` whether to offer the optional MRT-exit control. The Worker answers `{ "available": boolean }` as a `no-store` response **without opening a database connection**. `available` is `true` only when all three configuration facts hold: `NEON_SPATIAL_ENABLED` is exactly `"true"`, `PUBLIC_DATA_BACKEND` is `"neon"`, and the `HDB_PUBLIC_NEON` Hyperdrive binding exists. It does **not** mean that `sql/neon/001_postgis_nearby.sql` has been applied to the serving branch, that the derived tables are populated, or that anything keeps them in sync. Enabling the flag before the migration shows the control and makes each lookup fail into the retryable error state (never a false "no exits"), so the release gates below keep the order: migrate and verify first, flip the flag last.
@@ -83,6 +134,6 @@ The 1.785 ms sample is a single plan/execution, **not** p50/p95 or an edge/Hyper
 
 ## Release gates
 
-Before enabling or refreshing the static serving branch: confirm that any future writer uses a tested role and preserves the synchronization triggers; inspect exact untracked publisher and schema-fingerprint admission against the derived tables and triggers; run replay/rollback/WAL/storage proof on an isolated branch; verify the Worker response/cache contracts against an isolated test endpoint; separately approve any production migration and rollout. The capability probe reports configuration only, so apply and verify the migration on the serving branch (and run `sql/neon/verify_nearby_spatial_sql.sql` on a disposable fork of it) before flipping `NEON_SPATIAL_ENABLED`. It remains `"false"`. The browser preview must not access the disabled spatial endpoint.
+Before enabling or refreshing the static serving branch: confirm that any future writer uses a tested role and preserves the synchronization triggers; inspect exact untracked publisher and schema-fingerprint admission against the derived tables and triggers; run replay/rollback/WAL/storage proof on an isolated branch; verify the Worker response/cache contracts against an isolated test endpoint; separately approve any production migration and rollout.
 
-POI admission/quarantine, multi-source matching and aggregation, a second authoritative dataset, reverse geocoding and a 1M-point benchmark are separate follow-up PRs and are **not** claimed implemented or measured here.
+**Verification:** The previous local rehearsal (PostgreSQL 18.6 and PostGIS 3.6.3) demonstrated one labelled spatial statement per uncached request, identical SQL fingerprints, cache MISS/HIT and the per-client and origin-limit denials. That older run included a D1 counter experiment that is **no longer part of the design**; do not cite its budget phase as current evidence. The streamlined single-config harness in `tests/deployed-path/` still requires real Worker → Hyperdrive → fork verification before any deployment. The test Worker may temporarily enable the flag on the isolated fork, but production must remain disabled until a global budget is approved and verified.
