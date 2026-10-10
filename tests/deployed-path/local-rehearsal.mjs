@@ -600,6 +600,7 @@ try {
       .map((sample) => `${sample.cacheFirst}->${sample.cacheSecond}`)
       .join(" "),
     cacheContract: functional?.cacheContract,
+    versionAgreement: functional?.versionAgreement,
     badRequest: functional?.badRequest,
     clientLimit: results["client-limit"] && {
       ok200: results["client-limit"].ok200,

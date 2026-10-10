@@ -104,7 +104,13 @@ function summarise(values) {
 
 const phases = {
   async functional() {
-    const results = { capability: null, samples: [], cacheContract: null, badRequest: null };
+    const results = {
+      capability: null,
+      samples: [],
+      cacheContract: null,
+      versionAgreement: null,
+      badRequest: null,
+    };
     const capability = await get("/api/nearby-capabilities");
     results.capability = {
       status: capability.status,
@@ -149,6 +155,19 @@ const phases = {
         ok: reordered.cache === "HIT",
       };
     }
+    // The label nearby answers are stored under is computed IN SQL; /api/manifest labels its own answer from the manifest
+    // text in JS, and both write the one shared pointer. If the two hashes ever disagreed, asking for the manifest would
+    // move the pointer and the nearby entry stored a moment ago would stop matching: the repeat below would be a MISS.
+    // Only meaningful when /api/manifest answered 200 and the base request above had been cached.
+    const manifestResponse = await get("/api/manifest");
+    const repeat = base ? await get(`/api/nearby-places?${queryString(base)}`) : null;
+    results.versionAgreement = {
+      manifestStatus: manifestResponse.status,
+      manifestCache: manifestResponse.cache,
+      nearbyRepeatCache: repeat?.cache ?? null,
+      exercised: manifestResponse.status === 200 && repeat !== null,
+      ok: manifestResponse.status === 200 && repeat?.cache === "HIT",
+    };
     const bad = await get("/api/nearby-places?lat=2&lng=103.8");
     results.badRequest = { status: bad.status, cacheControl: bad.cacheControl, cache: bad.cache };
     return results;

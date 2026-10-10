@@ -79,11 +79,13 @@ missing, and no caching of any refusal. It does **not** show Hyperdrive behaviou
    trips except in the `ceiling` phase):
 
    ```bash
+   # fill <daily ceiling> <origin limit per 60 s>
    fill() { sed -e "s|__WORKER_NAME__|hdb-realpath-verify-20261010|" -e "s|__REPO_ROOT__|$PWD|" \
        -e "s|__HYPERDRIVE_ID__|<hyperdrive id>|" -e "s|__CACHE_EPOCH__|realpath-20261010|" \
        -e "s|__BUDGET_DB_NAME__|hdb-realpath-budget-20261010|" -e "s|__BUDGET_DB_ID__|<budget database id>|" \
-       -e "s|__CEILING__|$1|" tests/deployed-path/wrangler.deployed.template.jsonc; }
-   fill 100000 > /tmp/wrangler.realpath.jsonc
+       -e "s|__CEILING__|$1|" -e '/NEARBY_ORIGIN_LIMITER/,/simple/s/"limit": 300/"limit": '"$2"'/' \
+       tests/deployed-path/wrangler.deployed.template.jsonc; }
+   fill 100000 300 > /tmp/wrangler.realpath.jsonc
    npx wrangler deploy --config /tmp/wrangler.realpath.jsonc
    ```
 
@@ -99,15 +101,15 @@ missing, and no caching of any refusal. It does **not** show Hyperdrive behaviou
    node tests/deployed-path/verify-client.mjs latency      /tmp/latency.json
    ```
 
-   For `origin-limit`, redeploy with the origin limit at 10 (add `-e '/NEARBY_ORIGIN_LIMITER/s/"limit": 300/"limit": 10/'` to
-   the `sed`) and run `verify-client.mjs origin-limit`.
+   For `origin-limit`, redeploy with the origin limit at 10 (`fill 100000 10 > ...`, then `wrangler deploy` again) and run
+   `verify-client.mjs origin-limit`.
 
    For `ceiling`, empty the throwaway counter first (earlier phases spent from it), redeploy with a small ceiling, run the phase
    with the same number, and read the counter back:
 
    ```bash
    npx wrangler d1 execute hdb-realpath-budget-20261010 --remote --command "DELETE FROM nearby_statement_budget"
-   fill 6 > /tmp/wrangler.realpath.jsonc && npx wrangler deploy --config /tmp/wrangler.realpath.jsonc
+   fill 6 300 > /tmp/wrangler.realpath.jsonc && npx wrangler deploy --config /tmp/wrangler.realpath.jsonc
    EXPECT_CEILING=6 node tests/deployed-path/verify-client.mjs ceiling /tmp/ceiling.json
    npx wrangler d1 execute hdb-realpath-budget-20261010 --remote --command "SELECT * FROM nearby_statement_budget"
    ```
@@ -124,7 +126,8 @@ missing, and no caching of any refusal. It does **not** show Hyperdrive behaviou
 - the capability probe answers `{"available": true}`;
 - every sample's row count and md5 equal the expected fingerprint;
 - each sample's first answer is a cache `MISS` and the repeat a `HIT`; the 101 m request is served from the 250 m entry; the
-  reordered, perturbed request is a `HIT`;
+  reordered, perturbed request is a `HIT`; and after a request to `/api/manifest` a repeated nearby request is still a `HIT`
+  (`versionAgreement.ok`: the SQL-side and JS-side hashes of the real manifest agree, or the shared pointer would have moved);
 - a repeated request is answered `429` with `Retry-After: 60` and `no-store`; distinct cache-missing centres are answered
   `503` with `Retry-After: 60` and `no-store` once the origin budget is spent; neither is cached;
 - with the ceiling at N, the first N distinct cache-missing centres are answered, the next are `503` ("...reached its daily

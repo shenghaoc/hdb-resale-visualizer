@@ -3,7 +3,11 @@ import { join } from "node:path";
 import { describe, expect, it } from "vite-plus/test";
 import { buildDirectBlock, parseFingerprints } from "../deployed-path/direct-sql.mjs";
 import { SAMPLES, canonical, queryString } from "../deployed-path/samples.mjs";
-import { NEARBY_CLIENT_RATE_LIMIT, NEARBY_RATE_LIMIT_PERIOD_SEC } from "../../shared/nearby-limits";
+import {
+  NEARBY_CLIENT_RATE_LIMIT,
+  NEARBY_ORIGIN_RATE_LIMIT,
+  NEARBY_RATE_LIMIT_PERIOD_SEC,
+} from "../../shared/nearby-limits";
 import { parseNearbyPlacesRequest } from "../../shared/nearby-places";
 import { NEARBY_LABELLED_SQL, NEARBY_SPATIAL_SQL } from "../../worker/nearby-spatial-query";
 
@@ -156,6 +160,21 @@ describe("deployed-path verification harness", () => {
         limit: NEARBY_CLIENT_RATE_LIMIT,
         period: NEARBY_RATE_LIMIT_PERIOD_SEC,
       });
+    });
+
+    it("lets the runbook's sed lower the origin limit and nothing else", () => {
+      // README.md: sed -e '/NEARBY_ORIGIN_LIMITER/,/simple/s/"limit": 300/"limit": N/'. A sed range runs from the line
+      // that matches the first pattern to the next line that matches the second, so the limit it rewrites must sit on
+      // that closing "simple" line, and the client limiter's limit must not be 300.
+      const lines = template.split("\n");
+      const start = lines.findIndex((line) => line.includes("NEARBY_ORIGIN_LIMITER"));
+      const end = lines.findIndex((line, index) => index >= start && line.includes("simple"));
+      expect(start).toBeGreaterThan(0);
+      const range = lines.slice(start, end + 1).filter((line) => line.includes('"limit": 300'));
+      expect(range).toHaveLength(1);
+      const outside = [...lines.slice(0, start), ...lines.slice(end + 1)];
+      expect(outside.some((line) => line.includes('"limit": 300'))).toBe(false);
+      expect(NEARBY_ORIGIN_RATE_LIMIT).toBe(300);
     });
 
     it("binds only a throwaway budget database of its own, never the production one", () => {
