@@ -68,7 +68,10 @@ try {
   );
   psql("postgres", `GRANT CONNECT ON DATABASE ${DB} TO hdb_benchmark_runtime`);
   // Separate quota-only login: keep the public runtime role transaction-read-only.
-  psql("postgres", `DO $ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'hdb_nearby_budget') THEN CREATE ROLE hdb_nearby_budget LOGIN PASSWORD 'local-test-only'; END IF; END $`);
+  psql(
+    "postgres",
+    `DO $role$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'hdb_nearby_budget') THEN CREATE ROLE hdb_nearby_budget LOGIN PASSWORD 'local-test-only'; END IF; END $role$`,
+  );
   psql("postgres", `GRANT CONNECT ON DATABASE ${DB} TO hdb_nearby_budget`);
   psqlFile(DB, path.join(here, "base-schema.sql"));
   psql(
@@ -119,7 +122,10 @@ try {
   // 2. The shipped migration, then the catalog defaults the serving branch's runtime role has.
   psqlFile(DB, path.join(repoRoot, "sql/neon/001_postgis_nearby.sql"));
   psqlFile(DB, BUDGET_MIGRATION);
-  psql(DB, `ALTER ROLE hdb_nearby_budget IN DATABASE ${DB} SET default_transaction_read_only = off`);
+  psql(
+    DB,
+    `ALTER ROLE hdb_nearby_budget IN DATABASE ${DB} SET default_transaction_read_only = off`,
+  );
   psql(DB, `ALTER ROLE hdb_nearby_budget IN DATABASE ${DB} SET statement_timeout = '5s'`);
   psql(
     DB,
@@ -391,11 +397,15 @@ try {
             id: "00000000000000000000000000000000",
             localConnectionString: `postgresql://hdb_benchmark_runtime:local@${process.env.PGHOST ?? "127.0.0.1"}:${process.env.PGPORT ?? "5432"}/${DB}`,
           },
-          ...(budgetEnabled ? [          {
-            binding: "HDB_NEARBY_BUDGET",
-            id: "11111111111111111111111111111111",
-            localConnectionString: `postgresql://hdb_nearby_budget:local-test-only@${process.env.PGHOST ?? "127.0.0.1"}:${process.env.PGPORT ?? "5432"}/${DB}`,
-          }] : []),
+          ...(budgetEnabled
+            ? [
+                {
+                  binding: "HDB_NEARBY_BUDGET",
+                  id: "11111111111111111111111111111111",
+                  localConnectionString: `postgresql://hdb_nearby_budget:local-test-only@${process.env.PGHOST ?? "127.0.0.1"}:${process.env.PGPORT ?? "5432"}/${DB}`,
+                },
+              ]
+            : []),
         ],
         vars: {
           PUBLIC_DATA_BACKEND: "neon",
@@ -472,7 +482,10 @@ try {
       await sleep(1000);
       if (wrangler.exitCode === null) wrangler.kill("SIGKILL");
       writeFileSync(path.join(outDir, `wrangler-${label}.log`), output);
-      budgetAfter[label] = psql(DB, "SELECT day::text, used FROM public.nearby_daily_budget ORDER BY day").trim();
+      budgetAfter[label] = psql(
+        DB,
+        "SELECT day::text, used FROM public.nearby_daily_budget ORDER BY day",
+      ).trim();
     }
   }
 
