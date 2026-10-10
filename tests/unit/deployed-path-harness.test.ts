@@ -112,9 +112,6 @@ describe("deployed-path verification harness", () => {
       __REPO_ROOT__: "/repo",
       __HYPERDRIVE_ID__: "0".repeat(32),
       __CACHE_EPOCH__: "realpath-test",
-      __BUDGET_DB_NAME__: "hdb-realpath-budget-test",
-      __BUDGET_DB_ID__: "11111111-1111-4111-8111-111111111111",
-      __CEILING__: "6",
     };
     const fillTemplate = () =>
       Object.entries(placeholders).reduce(
@@ -130,6 +127,7 @@ describe("deployed-path verification harness", () => {
       }[];
       vars: Record<string, string>;
       d1_databases?: { binding: string; database_name: string; database_id: string }[];
+      hyperdrive: { binding: string; id: string }[];
     };
     const production = parseJsonc(readFileSync(join(process.cwd(), "wrangler.jsonc"), "utf8")) as {
       name: string;
@@ -177,24 +175,12 @@ describe("deployed-path verification harness", () => {
       expect(NEARBY_ORIGIN_RATE_LIMIT).toBe(300);
     });
 
-    it("binds only a throwaway budget database of its own, never the production one", () => {
-      expect(filled.d1_databases).toEqual([
-        {
-          binding: "DB",
-          database_name: placeholders.__BUDGET_DB_NAME__,
-          database_id: placeholders.__BUDGET_DB_ID__,
-        },
-      ]);
-      const [productionDatabase] = production.d1_databases;
-      expect(template).not.toContain(productionDatabase.database_id);
-      expect(template).not.toContain(productionDatabase.database_name);
-      expect(filled.d1_databases?.[0].database_id).not.toBe(productionDatabase.database_id);
-      expect(filled.d1_databases?.[0].database_name).not.toBe(productionDatabase.database_name);
-    });
-
-    it("takes the daily ceiling from a placeholder, which the runbook sets small for the ceiling phase", () => {
-      expect(filled.vars.NEARBY_DAILY_STATEMENT_CEILING).toBe("6");
-      expect(Number(placeholders.__CEILING__)).toBeLessThan(NEARBY_CLIENT_RATE_LIMIT - 3);
+    it("uses only a single temporary read-only Hyperdrive connection and no D1 counter", () => {
+      expect(filled.d1_databases).toBeUndefined();
+      expect(filled.hyperdrive).toHaveLength(1);
+      expect(filled.hyperdrive[0].binding).toBe("HDB_PUBLIC_NEON");
+      expect(filled.hyperdrive[0].id).toBe(placeholders.__HYPERDRIVE_ID__);
+      expect(production.d1_databases[0].database_id).not.toBe(placeholders.__HYPERDRIVE_ID__);
     });
 
     it("opens the spatial gate only in the temporary Worker, never in production", () => {

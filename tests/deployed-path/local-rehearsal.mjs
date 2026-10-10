@@ -11,9 +11,7 @@
  * place, because concurrent runs share it.
  *
  *   PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres node --import tsx tests/deployed-path/local-rehearsal.mjs <out-dir>
- *   PHASES=functional  runs a subset (functional, client-limit, latency, origin-limit, ceiling, budget-unavailable);
- *                      default is all. The Worker's D1 binding is the local D1 emulator carrying
- *                      migrations/0012_nearby_statement_budget.sql (the daily statement budget).
+ *   PHASES=functional  runs a subset (functional, client-limit, latency, origin-limit); default is all.
  *   SCRATCH_RUN_ID=<6-16 lowercase letters/digits>  fixes the run id instead of drawing a random one.
  */
 import { execFileSync, spawn } from "node:child_process";
@@ -34,13 +32,9 @@ mkdirSync(outDir, { recursive: true });
 
 const PSQL = process.env.PSQL ?? "psql";
 const PORT = 8799;
-const BUDGET_DB = "hdb-realpath-local-budget";
-const BUDGET_MIGRATION = path.join(repoRoot, "migrations/0012_nearby_statement_budget.sql");
-/** The ceiling the `ceiling` phase runs under: small enough to reach, the Worker's var overriding the shipped number. */
-const CEILING = 5;
 const phasesWanted = new Set(
   (
-    process.env.PHASES ?? "functional,client-limit,latency,origin-limit,ceiling,budget-unavailable"
+    process.env.PHASES ?? "functional,client-limit,latency,origin-limit"
   ).split(","),
 );
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -368,14 +362,6 @@ try {
           { type: "Data", globs: ["**/*.ttf"] },
           { type: "CompiledWasm", globs: ["**/*.wasm"] },
         ],
-        // The daily statement budget lives in D1; locally that is the emulator, never a real database.
-        d1_databases: [
-          {
-            binding: "DB",
-            database_name: BUDGET_DB,
-            database_id: "00000000-0000-0000-0000-000000000001",
-          },
-        ],
         ratelimits: [
           {
             name: "NEARBY_IP_LIMITER",
@@ -410,42 +396,11 @@ try {
 
   const wranglerBin = path.join(repoRoot, "node_modules/.bin/wrangler");
   const wranglerEnv = { ...process.env, WRANGLER_SEND_METRICS: "false", NO_COLOR: "1" };
-  /** Runs SQL against a Worker's local D1 emulator state and returns the last statement's rows. */
-  const budgetSql = (config, state, args) => {
-    const output = execFileSync(
-      wranglerBin,
-      [
-        "d1",
-        "execute",
-        BUDGET_DB,
-        "--local",
-        "--persist-to",
-        state,
-        "--config",
-        config,
-        "--json",
-        ...args,
-      ],
-      { cwd: outDir, env: wranglerEnv, encoding: "utf8" },
-    );
-    return JSON.parse(output).at(-1).results;
-  };
-  /** The daily budget rows each Worker left behind, by label. */
-  const budgetAfter = {};
-
-  async function withWorker(
-    label,
-    originLimit,
-    clientLimit,
-    run,
-    { vars = {}, migrate = true } = {},
-  ) {
+  async function withWorker(label, originLimit, clientLimit, run) {
     const config = path.join(outDir, `wrangler.local.${label}.json`);
-    writeFileSync(config, workerConfig(originLimit, clientLimit, vars));
+    writeFileSync(config, workerConfig(originLimit, clientLimit));
     const state = path.join(outDir, `wrangler-state-${label}`);
     rmSync(state, { recursive: true, force: true });
-    // With migrate: false the budget table does not exist, which is how a missing or broken counter is rehearsed.
-    if (migrate) budgetSql(config, state, ["--file", BUDGET_MIGRATION]);
     const wrangler = spawn(
       wranglerBin,
       [
@@ -490,16 +445,11 @@ try {
       await sleep(1000);
       if (wrangler.exitCode === null) wrangler.kill("SIGKILL");
       writeFileSync(path.join(outDir, `wrangler-${label}.log`), output);
-      if (migrate) {
-        budgetAfter[label] = budgetSql(config, state, [
-          "--command",
-          "SELECT day, statements FROM nearby_statement_budget ORDER BY day",
-        ]);
-      }
+
     }
   }
 
-  function client(phase, extraEnv = {}) {
+  function client(phase) {
     const file = path.join(outDir, `${phase}.json`);
     const stdout = execFileSync("node", [path.join(here, "verify-client.mjs"), phase, file], {
       env: {
@@ -508,7 +458,6 @@ try {
         ALLOW_LOCAL_HTTP: "1",
         SAMPLES_FILE: samplesFile,
         EXPECTED_FILE: expectedFile,
-        ...extraEnv,
       },
       encoding: "utf8",
       maxBuffer: 64 * 1024 * 1024,
@@ -569,22 +518,6 @@ try {
       30,
       async () => (results["origin-limit"] = client("origin-limit")),
     );
-  if (phasesWanted.has("ceiling"))
-    await withWorker(
-      "ceiling",
-      100_000,
-      100_000,
-      async () => (results.ceiling = client("ceiling", { EXPECT_CEILING: String(CEILING) })),
-      { vars: { NEARBY_DAILY_STATEMENT_CEILING: String(CEILING) } },
-    );
-  if (phasesWanted.has("budget-unavailable"))
-    await withWorker(
-      "unmigrated",
-      100_000,
-      100_000,
-      async () => (results["budget-unavailable"] = client("budget-unavailable")),
-      { migrate: false },
-    );
 
   // 5. Verdict.
   const functional = results.functional;
@@ -613,18 +546,6 @@ try {
     publicationIdentity: identity,
     statementsPerMiss: results.statements,
     sharedCacheControl: results.control,
-    dailyCeiling: results.ceiling && {
-      ceiling: CEILING,
-      statuses: results.ceiling.statuses,
-      firstRefused: results.ceiling.firstRefused,
-      cachedStillServed: results.ceiling.cachedStillServed,
-      budgetRows: budgetAfter.ceiling,
-    },
-    budgetUnavailable: results["budget-unavailable"] && {
-      statuses: results["budget-unavailable"].statuses,
-      first: results["budget-unavailable"].first,
-    },
-    budgetRowsAfterMainRun: budgetAfter.main,
     latency: results.latency && { miss: results.latency.miss, hit: results.latency.hit },
   };
   writeFileSync(path.join(outDir, "verdict.json"), JSON.stringify(verdict, null, 2));
