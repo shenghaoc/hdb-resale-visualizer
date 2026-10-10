@@ -252,7 +252,8 @@ The profile never acts as a second hidden visibility filter, and personal financ
 
 ## Data and privacy
 
-- All transaction data comes from [data.gov.sg](https://data.gov.sg). The header shows the latest month in this copy; the live dataset is not refreshed on a nightly schedule. HDB publication can also lag the actual sale by weeks.
+- All transaction data comes from [data.gov.sg](https://data.gov.sg), made available under the [Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence). The header shows the latest month in this copy; the live dataset is not refreshed on a nightly schedule. HDB publication can also lag the actual sale by weeks.
+- **Credit and licence.** Whenever the map is on screen, a short credit at its lower right shows "© OneMap contributors", "Data from data.gov.sg under the Singapore Open Data Licence v1.0" (a link to the licence) and a **Data sources** link. That link opens the guide page _Data sources and licence_, which lists every dataset the app uses, who publishes it, and the full notice. The app is an independent tool: none of the agencies endorses it.
 - Map tiles and geocoding use [OneMap](https://www.onemap.gov.sg).
 - No account is required. Your filters, theme preference, buyer profile, and shortlist are stored in your browser's local storage.
 - Cloud sync (optional) uses an anonymous code — no account, email, or password. It uploads the saved board, including any notes you entered, so treat the code like a private link. Local buyer-profile finance inputs are not synced.

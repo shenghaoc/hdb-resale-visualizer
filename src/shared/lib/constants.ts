@@ -95,6 +95,9 @@ export const ONEMAP_DEFAULT_TILE_URL =
   "https://www.onemap.gov.sg/maps/tiles/Default/{z}/{x}/{y}.png";
 export const ONEMAP_NIGHT_TILE_URL = "https://www.onemap.gov.sg/maps/tiles/Night/{z}/{x}/{y}.png";
 export const MAP_GLYPHS_URL = "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf";
+export const ONEMAP_HOME_URL = "https://www.onemap.gov.sg/home";
+/** The licence page the Singapore Open Data Licence asks every user of its datasets to link to (the latest version). */
+export const SINGAPORE_OPEN_DATA_LICENCE_URL = "https://data.gov.sg/open-data-licence";
 export const ONEMAP_ATTRIBUTION =
   '<img src="https://www.onemap.gov.sg/web-assets/images/logo/om_logo.png" style="height:20px;width:20px;" loading="lazy" decoding="async" alt="OneMap logo"/>&nbsp;<a href="https://www.onemap.gov.sg/" target="_blank" rel="noopener noreferrer">OneMap</a>&nbsp;&copy;&nbsp;contributors&nbsp;&copy;&nbsp;<a href="https://www.sla.gov.sg/" target="_blank" rel="noopener noreferrer">Singapore Land Authority</a>';
 export const DEFAULT_GEOGRAPHIC_SEARCH_RADIUS_METERS = 1000;

@@ -2,7 +2,7 @@
 
 ## Where does the data come from?
 
-All resale transaction data comes from [data.gov.sg](https://data.gov.sg) (the official HDB resale dataset). Map tiles, addresses, and walking times use [OneMap](https://www.onemap.gov.sg). The header badge shows **Data through** the latest month in this copy; wider screens also show a last-synced timestamp and source labels when that metadata is present. The live copy is not updated every night — use the header, not calendar time, to judge how current the numbers are.
+All resale transaction data comes from [data.gov.sg](https://data.gov.sg) (the official HDB resale dataset), made available under the [Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence); every dataset, its publisher and the licence notice are on [Data sources and licence](/docs/data-sources), and a short credit stays on the map. Map tiles, addresses, and walking times use [OneMap](https://www.onemap.gov.sg). The header badge shows **Data through** the latest month in this copy; wider screens also show a last-synced timestamp and source labels when that metadata is present. The live copy is not updated every night — use the header, not calendar time, to judge how current the numbers are.
 
 ## Is the price check a valuation?
 
