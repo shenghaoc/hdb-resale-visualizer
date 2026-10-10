@@ -111,11 +111,15 @@ const pauseSync = (ms: number) => {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 };
 
+/** The last line psql printed (its ERROR line), or the error's own message. */
 const messageOf = (error: unknown) => {
+  const stderr = (error as { stderr?: unknown } | null)?.stderr;
   const text =
-    error instanceof Error
-      ? String((error as { stderr?: unknown }).stderr || error.message)
-      : String(error);
+    typeof stderr === "string" && stderr !== ""
+      ? stderr
+      : error instanceof Error
+        ? error.message
+        : "unknown error";
   return text.trim().split("\n").at(-1) ?? text;
 };
 

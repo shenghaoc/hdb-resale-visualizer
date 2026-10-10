@@ -11,7 +11,9 @@
  * place, because concurrent runs share it.
  *
  *   PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres node --import tsx tests/deployed-path/local-rehearsal.mjs <out-dir>
- *   PHASES=functional  runs a subset (functional, client-limit, latency, origin-limit); default is all.
+ *   PHASES=functional  runs a subset (functional, client-limit, latency, origin-limit, ceiling, budget-unavailable);
+ *                      default is all. The Worker's D1 binding is the local D1 emulator carrying
+ *                      migrations/0012_nearby_statement_budget.sql (the daily statement budget).
  *   SCRATCH_RUN_ID=<6-16 lowercase letters/digits>  fixes the run id instead of drawing a random one.
  */
 import { execFileSync, spawn } from "node:child_process";
@@ -32,8 +34,14 @@ mkdirSync(outDir, { recursive: true });
 
 const PSQL = process.env.PSQL ?? "psql";
 const PORT = 8799;
+const BUDGET_DB = "hdb-realpath-local-budget";
+const BUDGET_MIGRATION = path.join(repoRoot, "migrations/0012_nearby_statement_budget.sql");
+/** The ceiling the `ceiling` phase runs under: small enough to reach, the Worker's var overriding the shipped number. */
+const CEILING = 5;
 const phasesWanted = new Set(
-  (process.env.PHASES ?? "functional,client-limit,latency,origin-limit").split(","),
+  (
+    process.env.PHASES ?? "functional,client-limit,latency,origin-limit,ceiling,budget-unavailable"
+  ).split(","),
 );
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const log = (...parts) => console.log("[rehearsal]", ...parts);
@@ -96,7 +104,9 @@ try {
   );
   psql(
     DB,
-    `INSERT INTO manifest(id, json, updated_at) VALUES (1, '{"schemaVersion":1,"generatedAt":"2026-10-10T00:00:00.000Z","rehearsal":true}'::jsonb, now())`,
+    // About 10 KB (the serving branch's is 10.6 KB) and not ASCII-only, so the SQL-side and JS-side hashes of its text are
+    // compared on something that could tell UTF-8 from anything else.
+    `INSERT INTO manifest(id, json, updated_at) VALUES (1, jsonb_build_object('schemaVersion', 1, 'generatedAt', '2026-10-10T00:00:00.000Z', 'rehearsal', true, 'note', 'Résumé — 新加坡 組屋 — Ångström ✓', 'padding', repeat('0123456789', 1000)), now())`,
   );
   psql(DB, `GRANT USAGE ON SCHEMA public TO hdb_benchmark_runtime`);
   psql(
@@ -254,8 +264,100 @@ try {
       .join(" "),
   );
 
+  // The label the Worker stores a nearby answer under is computed IN SQL, by the labelled statement itself; every other
+  // route computes it in JS from the manifest text. They must be the same string, or the shared pointer would flip.
+  const { manifestVersion } = await import(
+    pathToFileURL(path.join(repoRoot, "shared/publication-state.ts")).href
+  );
+  const { NEARBY_LABELLED_SQL } = await import(
+    pathToFileURL(path.join(repoRoot, "worker/nearby-spatial-query.ts")).href
+  );
+  const manifestText = execFileSync(
+    PSQL,
+    [
+      "-d",
+      DB,
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-At",
+      "-q",
+      "-c",
+      "SELECT json::text FROM manifest WHERE id = 1",
+    ],
+    { encoding: "utf8" },
+  ).replace(/\n$/, "");
+  const labelledOutput = execFileSync(
+    PSQL,
+    [
+      "-d",
+      DB,
+      "-v",
+      "ON_ERROR_STOP=1",
+      "-At",
+      "-q",
+      "-c",
+      `PREPARE labelled(double precision, double precision, double precision, text[], int) AS ${NEARBY_LABELLED_SQL}; EXECUTE labelled(1.3, 103.85, 100, ARRAY['mrt_exit'], 25)`,
+    ],
+    { encoding: "utf8" },
+  );
+  const sqlVersion = labelledOutput
+    .split("\n")
+    .find((line) => line.startsWith("publication|"))
+    ?.split("|")[1];
+  const jsVersion = await manifestVersion(manifestText);
+  const identity = {
+    manifestBytes: Buffer.byteLength(manifestText, "utf8"),
+    nonAscii: Buffer.byteLength(manifestText, "utf8") !== manifestText.length,
+    sql: sqlVersion,
+    js: jsVersion,
+    equal: sqlVersion === jsVersion,
+  };
+  if (!identity.equal)
+    throw new Error(
+      `the labelled statement and manifestVersion disagree: ${JSON.stringify(identity)}`,
+    );
+  log(
+    `publication identity: SQL and JS agree (${jsVersion.slice(0, 12)}…, ${identity.manifestBytes} bytes, non-ASCII ${identity.nonAscii})`,
+  );
+
+  /**
+   * What the Worker's database role has sent, from pg_stat_statements: every query it sends is one statement, which is
+   * how Hyperdrive counts them. Needs the library loaded in the cluster (`shared_preload_libraries`); when it is not,
+   * the check says "not measured" instead of passing silently.
+   */
+  let statementsMeasured = true;
+  let statementsUnavailable = "";
+  try {
+    psql(DB, "CREATE EXTENSION IF NOT EXISTS pg_stat_statements");
+    psql(DB, "SELECT count(*) FROM pg_stat_statements");
+  } catch (error) {
+    statementsMeasured = false;
+    statementsUnavailable = String(error.stderr ?? error.message)
+      .trim()
+      .split("\n")
+      .at(-1);
+  }
+  const runtimeRole = `(SELECT oid FROM pg_roles WHERE rolname = 'hdb_benchmark_runtime')`;
+  const thisDatabase = `(SELECT oid FROM pg_database WHERE datname = current_database())`;
+  const resetStatements = () =>
+    statementsMeasured &&
+    psql(DB, `SELECT pg_stat_statements_reset(${runtimeRole}, ${thisDatabase}, 0)`);
+  const runtimeStatements = () => {
+    const [calls, distinct, onlyLabelled] = psql(
+      DB,
+      `SELECT coalesce(sum(calls), 0), count(*), coalesce(bool_and(query LIKE '%row_type%'), false) FROM pg_stat_statements WHERE userid = ${runtimeRole} AND dbid = ${thisDatabase}`,
+    )
+      .trim()
+      .split("|");
+    return {
+      calls: Number(calls),
+      distinctStatements: Number(distinct),
+      onlyLabelled: onlyLabelled === "t",
+    };
+  };
+
   // 4. The Worker under workerd.
-  function workerConfig(originLimit, clientLimit) {
+  function workerConfig(originLimit, clientLimit, vars = {}) {
     return JSON.stringify(
       {
         name: "hdb-realpath-local",
@@ -265,6 +367,14 @@ try {
         rules: [
           { type: "Data", globs: ["**/*.ttf"] },
           { type: "CompiledWasm", globs: ["**/*.wasm"] },
+        ],
+        // The daily statement budget lives in D1; locally that is the emulator, never a real database.
+        d1_databases: [
+          {
+            binding: "DB",
+            database_name: BUDGET_DB,
+            database_id: "00000000-0000-0000-0000-000000000001",
+          },
         ],
         ratelimits: [
           {
@@ -290,6 +400,7 @@ try {
           D1_PUBLIC_CACHE_EPOCH: "unused",
           NEON_PUBLIC_CACHE_EPOCH: "local-rehearsal",
           NEON_SPATIAL_ENABLED: "true",
+          ...vars,
         },
       },
       null,
@@ -297,13 +408,46 @@ try {
     );
   }
 
-  async function withWorker(label, originLimit, clientLimit, run) {
+  const wranglerBin = path.join(repoRoot, "node_modules/.bin/wrangler");
+  const wranglerEnv = { ...process.env, WRANGLER_SEND_METRICS: "false", NO_COLOR: "1" };
+  /** Runs SQL against a Worker's local D1 emulator state and returns the last statement's rows. */
+  const budgetSql = (config, state, args) => {
+    const output = execFileSync(
+      wranglerBin,
+      [
+        "d1",
+        "execute",
+        BUDGET_DB,
+        "--local",
+        "--persist-to",
+        state,
+        "--config",
+        config,
+        "--json",
+        ...args,
+      ],
+      { cwd: outDir, env: wranglerEnv, encoding: "utf8" },
+    );
+    return JSON.parse(output).at(-1).results;
+  };
+  /** The daily budget rows each Worker left behind, by label. */
+  const budgetAfter = {};
+
+  async function withWorker(
+    label,
+    originLimit,
+    clientLimit,
+    run,
+    { vars = {}, migrate = true } = {},
+  ) {
     const config = path.join(outDir, `wrangler.local.${label}.json`);
-    writeFileSync(config, workerConfig(originLimit, clientLimit));
+    writeFileSync(config, workerConfig(originLimit, clientLimit, vars));
     const state = path.join(outDir, `wrangler-state-${label}`);
     rmSync(state, { recursive: true, force: true });
+    // With migrate: false the budget table does not exist, which is how a missing or broken counter is rehearsed.
+    if (migrate) budgetSql(config, state, ["--file", BUDGET_MIGRATION]);
     const wrangler = spawn(
-      path.join(repoRoot, "node_modules/.bin/wrangler"),
+      wranglerBin,
       [
         "dev",
         "--config",
@@ -318,10 +462,7 @@ try {
         "--log-level",
         "warn",
       ],
-      {
-        cwd: outDir,
-        env: { ...process.env, WRANGLER_SEND_METRICS: "false", NO_COLOR: "1" },
-      },
+      { cwd: outDir, env: wranglerEnv },
     );
     let output = "";
     wrangler.stdout.on("data", (chunk) => (output += chunk));
@@ -349,10 +490,16 @@ try {
       await sleep(1000);
       if (wrangler.exitCode === null) wrangler.kill("SIGKILL");
       writeFileSync(path.join(outDir, `wrangler-${label}.log`), output);
+      if (migrate) {
+        budgetAfter[label] = budgetSql(config, state, [
+          "--command",
+          "SELECT day, statements FROM nearby_statement_budget ORDER BY day",
+        ]);
+      }
     }
   }
 
-  function client(phase) {
+  function client(phase, extraEnv = {}) {
     const file = path.join(outDir, `${phase}.json`);
     const stdout = execFileSync("node", [path.join(here, "verify-client.mjs"), phase, file], {
       env: {
@@ -361,6 +508,7 @@ try {
         ALLOW_LOCAL_HTTP: "1",
         SAMPLES_FILE: samplesFile,
         EXPECTED_FILE: expectedFile,
+        ...extraEnv,
       },
       encoding: "utf8",
       maxBuffer: 64 * 1024 * 1024,
@@ -371,7 +519,36 @@ try {
   const results = {};
   if (phasesWanted.has("functional") || phasesWanted.has("client-limit")) {
     await withWorker("main", 300, 30, async () => {
-      if (phasesWanted.has("functional")) results.functional = client("functional");
+      if (phasesWanted.has("functional")) {
+        resetStatements();
+        results.functional = client("functional");
+        // One statement per cache miss and none for hits (before this change a miss cost three).
+        const misses = results.functional.samples.filter(
+          (sample) => sample.cacheFirst === "MISS",
+        ).length;
+        results.statements = statementsMeasured
+          ? (({ calls, ...rest }) => ({
+              measured: true,
+              calls,
+              expected: misses,
+              ...rest,
+              equal: calls === misses && rest.onlyLabelled && rest.distinctStatements === 1,
+            }))(runtimeStatements())
+          : { measured: false, reason: statementsUnavailable };
+        if (statementsMeasured) {
+          // Control: a route that still goes through the shared cache's before/after manifest reads. One miss and one
+          // hit of /api/mrt-stations show where the other two statements of a miss come from.
+          resetStatements();
+          const get = async () => {
+            const response = await fetch(`http://127.0.0.1:${PORT}/api/mrt-stations`);
+            await response.arrayBuffer();
+            return response.headers.get("x-data-cache");
+          };
+          const labels = [await get(), await get()];
+          const { calls, distinctStatements } = runtimeStatements();
+          results.control = { route: "/api/mrt-stations", labels, calls, distinctStatements };
+        }
+      }
       if (phasesWanted.has("client-limit")) {
         if (results.functional) await sleep(61_000); // let the 60 s window pass so this phase counts from zero
         results["client-limit"] = client("client-limit");
@@ -391,6 +568,22 @@ try {
       10,
       30,
       async () => (results["origin-limit"] = client("origin-limit")),
+    );
+  if (phasesWanted.has("ceiling"))
+    await withWorker(
+      "ceiling",
+      100_000,
+      100_000,
+      async () => (results.ceiling = client("ceiling", { EXPECT_CEILING: String(CEILING) })),
+      { vars: { NEARBY_DAILY_STATEMENT_CEILING: String(CEILING) } },
+    );
+  if (phasesWanted.has("budget-unavailable"))
+    await withWorker(
+      "unmigrated",
+      100_000,
+      100_000,
+      async () => (results["budget-unavailable"] = client("budget-unavailable")),
+      { migrate: false },
     );
 
   // 5. Verdict.
@@ -416,6 +609,21 @@ try {
       statuses: results["origin-limit"].statuses,
       first503: results["origin-limit"].first503,
     },
+    publicationIdentity: identity,
+    statementsPerMiss: results.statements,
+    sharedCacheControl: results.control,
+    dailyCeiling: results.ceiling && {
+      ceiling: CEILING,
+      statuses: results.ceiling.statuses,
+      firstRefused: results.ceiling.firstRefused,
+      cachedStillServed: results.ceiling.cachedStillServed,
+      budgetRows: budgetAfter.ceiling,
+    },
+    budgetUnavailable: results["budget-unavailable"] && {
+      statuses: results["budget-unavailable"].statuses,
+      first: results["budget-unavailable"].first,
+    },
+    budgetRowsAfterMainRun: budgetAfter.main,
     latency: results.latency && { miss: results.latency.miss, hit: results.latency.hit },
   };
   writeFileSync(path.join(outDir, "verdict.json"), JSON.stringify(verdict, null, 2));
