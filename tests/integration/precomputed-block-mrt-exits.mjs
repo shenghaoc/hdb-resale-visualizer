@@ -83,7 +83,9 @@ try {
       ('mrt_geojson','mrt_exit','902','THIRD STATION (Exit B)',1.3519,103.751,
        '{"STATION_NA":"THIRD STATION","EXIT_CODE":"Exit B"}'::jsonb);
   `);
-  const oldVersion = await client.query("SELECT json::text AS json FROM public.manifest WHERE id=1");
+  const oldVersion = await client.query(
+    "SELECT json::text AS json FROM public.manifest WHERE id=1",
+  );
   await client.query(publisher);
   const docs = await documentJson();
   assert.equal(docs.length, 2);
@@ -93,27 +95,44 @@ try {
   assert.equal(populated[0].exitLabel, "E", "Source EXIT_CODE must not be parsed from name");
   const centre = snapNearbyCenter(1.350049, 103.750049);
   const oracle = await client.query(NEARBY_SPATIAL_SQL, [
-    centre.lat,centre.lng,1500,["mrt_exit"],25,
+    centre.lat,
+    centre.lng,
+    1500,
+    ["mrt_exit"],
+    25,
   ]);
-  const expected = oracle.rows.slice(0,5).map((row) => ({
-    stationName:row.station_name,
-    exitLabel:row.exit_code,
-    distanceMeters:row.distance_meters,
-    exitId:row.id,
+  const expected = oracle.rows.slice(0, 5).map((row) => ({
+    stationName: row.station_name,
+    exitLabel: row.exit_code,
+    distanceMeters: row.distance_meters,
+    exitId: row.id,
   }));
   assert.deepEqual(populated, expected, "Published list differs from the shipped SQL oracle");
 
   const firstDocuments = JSON.stringify(docs);
-  const firstMarker = (await client.query("SELECT json::text AS doc FROM public.manifest WHERE id=1")).rows[0].doc;
+  const firstMarker = (
+    await client.query("SELECT json::text AS doc FROM public.manifest WHERE id=1")
+  ).rows[0].doc;
   assert.notEqual(firstMarker, oldVersion.rows[0].json, "Internal manifest identity must change");
   assert.deepEqual(JSON.parse(firstMarker).nearbyMrtExitsMaterialization, {
-    version:1,radiusMeters:1500,maxStations:5,
+    version: 1,
+    radiusMeters: 1500,
+    maxStations: 5,
   });
   await client.query(publisher);
-  assert.equal(JSON.stringify(await documentJson()),firstDocuments,"Repeat publication must be idempotent");
-  assert.equal((await client.query("SELECT json::text AS doc FROM public.manifest WHERE id=1")).rows[0].doc,firstMarker);
+  assert.equal(
+    JSON.stringify(await documentJson()),
+    firstDocuments,
+    "Repeat publication must be idempotent",
+  );
+  assert.equal(
+    (await client.query("SELECT json::text AS doc FROM public.manifest WHERE id=1")).rows[0].doc,
+    firstMarker,
+  );
 
-  console.log("PostGIS publish-time MRT exits: passed; exact SQL parity, top-five grouping, empty, marker and idempotence");
+  console.log(
+    "PostGIS publish-time MRT exits: passed; exact SQL parity, top-five grouping, empty, marker and idempotence",
+  );
 } finally {
   await client.end().catch(() => {});
 }

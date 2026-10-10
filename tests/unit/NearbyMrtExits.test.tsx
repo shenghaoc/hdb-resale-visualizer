@@ -36,7 +36,9 @@ describe("published nearby MRT exits", () => {
     expect(toggle).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByText("BUGIS MRT STATION")).toBeInTheDocument();
     expect(screen.getByText(/E · 83/)).toBeInTheDocument();
-    expect(screen.getByText("Straight-line distances; actual walking routes may be longer.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Straight-line distances; actual walking routes may be longer."),
+    ).toBeInTheDocument();
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
