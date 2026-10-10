@@ -1,93 +1,39 @@
-# Evaluation: precomputing the nearest MRT exits per block at publish time
+# Evaluation: precompute nearest MRT exits for known HDB blocks
 
-**Status: evaluation only. Nothing in this document is built, and it needs the owner's decision.** It answers one
-question: should the block panel's "nearest MRT exits" list be computed once per block when the data is published,
-instead of by a spatial query on every cache miss? The runtime endpoint it would replace for that one caller is
-described in [postgis-nearby.md](./postgis-nearby.md).
+**Decision (2026-10-10):** Compute the block-detail panel's results **at publish time**, not via the anonymous runtime PostGIS endpoint. The implementation is in [draft PR #432](https://github.com/shenghaoc/hdb-resale-visualizer/pull/432), while the required blue/green publication ordering is in the [serving refresh specification (#422)](https://github.com/shenghaoc/hdb-resale-visualizer/pull/422).
 
-## What the UI path actually asks
+## Why this is practical
 
-The only caller of `GET /api/nearby-places` is the opt-in exit list in the block-detail drawer
-(`src/features/block-detail/NearbyMrtExits.tsx`). It sends **the selected block's own coordinates**, radius
-**1,500 m**, **exits only**, and shows at most five stations. Its answer is therefore a pure function of one block and
-the exits table: one fixed question per block, 9,730 blocks (9,728 distinct snapped centres). It is not the open-ended
-"anything near any point" question the runtime endpoint is built for, and that is what makes precomputation possible.
+The UI always asks one deterministic question: the five nearest source-recorded MRT exit labels within a **1,500 m spheroidal straight-line radius** of the selected HDB block. Its coordinate is snapped to the same **0.0001° grid** as `NEARBY_SPATIAL_SQL`. With 9,730 blocks and 613 MRT exits, every answer can be generated once during the publication of a new serving child.
 
-## Measurements
+## Measured document size (disposable Neon PostGIS fork, read-only SQL)
 
-Taken on 2026-10-10, read-only, on the disposable fork `postgis-realpath-20261010` (a copy of the serving branch with the
-spatial migration applied), using the same rule as the shipped query (nearest exit per source `STATION_NA` label within
-1,500 m), from each block's exact coordinates.
+The measurement uses the same `ST_DWithin`, spheroidal `ST_Distance`, grouping by source/kind/`STATION_NA` **before limiting**, deterministic tie-breaking and radius as the live endpoint, and stores only the closest five entries.
 
-| Quantity                                          | Value                                                         |
-| ------------------------------------------------- | ------------------------------------------------------------- |
-| Blocks / stations / exits in the data             | 9,730 / 190 / 613                                             |
-| Result rows over all blocks (one per station)     | 41,172                                                        |
-| Rows per block                                    | mean 4.23, median 3, p95 13, maximum 21                       |
-| Blocks with no exit within 1,500 m                | 272 (2.8%)                                                    |
-| Size of all answers as JSON                       | 10,594,956 bytes (10.1 MiB)                                   |
-| Size of one answer (the Worker's JSON)            | mean 1,259 B, median 953 B, p95 3,446 B, maximum 5,510 B      |
-| Manifest the shared cache reads twice per miss    | 10,618 bytes                                                  |
-| Publish-time cost of computing every block's list | 802 ms, one set-based statement (`EXPLAIN ANALYZE`, parallel) |
+| Quantity | Measured |
+| --- | ---: |
+| Published block-detail documents | 9,730 |
+| Stored exit results | 29,602 |
+| Verified empty arrays | 268 |
+| Added JSON text, total | 4,032,907 bytes |
+| Mean delta / document | 414.48 bytes |
+| Median delta | 414 bytes |
+| 95th percentile delta | 674 bytes |
+| Maximum delta | 685 bytes |
+| Minimum delta (empty) | 22 bytes |
+| Mean full document before | 14,941.2 bytes |
+| Mean full document after | 15,355.7 bytes |
 
-The normalised alternative (one row per block and station) was not measured; at 41,172 rows of a few dozen bytes it
-would be a few megabytes plus an index. That figure is an estimate, the JSON size above is measured.
+The original untrimmed, unsnapped experiment returned 41,172 rows and about 10.6 MB of JSON. That is **not** the published contract. The current top-five, snapped-centre values above are the ones used by #432. These sizes are logical `jsonb::text` differences, **not** measurements of WAL, TOAST storage or physical billed bytes.
 
-## What the runtime path costs after this change, and what precomputing would cost
+## Effect on the refresh design
 
-| Path                                             | Statements per cold request          | Bytes from Neon per cold request          | Needs                                                    |
-| ------------------------------------------------ | ------------------------------------ | ----------------------------------------- | -------------------------------------------------------- |
-| Runtime query through the shared cache, before   | 3                                    | about 21.2 KB manifest + 1.3 KB answer    | PostGIS, flag, both limiters                             |
-| Runtime query, single labelled statement (now)   | 1                                    | about 1.3 KB + a header of about 0.1 KB   | PostGIS, flag, both limiters, the daily ceiling (1 draw) |
-| Precomputed, carried inside a per-block document | 0 extra                              | +1.3 KB inside a document already fetched | the publisher only                                       |
-| Precomputed, its own endpoint through the cache  | 3 today (1 if made single-statement) | 1.3 KB (+ 21.2 KB while it costs 3)       | the publisher, one route                                 |
+The October source stage used **89,758,647 / 90,000,000 bytes** of its allowed COPY input. Naively appending 4 MB of MRT exits to it would exceed the limit. The approved design instead publishes the existing core tables and verifies benchmark digests, forks the candidate, applies PostGIS migration 001 and executes the **child-only** MRT-exit materialization in one transaction with the private manifest identity updated last. It then verifies every block's stored values, derived delta, cache-generation identity, no-op replay and storage headroom before approving the Hyperdrive origin change.
 
-## What precomputing buys
+This is a new, separately bounded serving-child step, **not** a relaxation of the transaction change-count guard or COPY ceiling.
 
-1. **The block panel stops depending on the spatial stack.** No PostGIS query, no `NEON_SPATIAL_ENABLED`, no rate
-   limiters, no D1 counter, no daily ceiling for the only UI path. It also works on the D1 rollback backend, where the
-   runtime endpoint is deliberately unavailable and the panel simply disappears today.
-2. **A bounded, cacheable key space and no per-request statements** when the list rides inside a document the drawer
-   already fetches (for example the block's comparison document).
-3. **Exact distances.** The runtime endpoint measures from a centre snapped to 0.0001 degrees (up to about 8 m away
-   from the block); a precomputed list uses the block's own coordinates. The displayed distances can differ by a few
-   metres, in the more accurate direction.
-4. **A strong test.** Every block's precomputed list can be compared with the runtime endpoint's answer for the same
-   block (9,730 comparisons) before the panel is switched.
-5. **The architecture rule already says so.** Distance calculations belong to the build/publish step; the runtime
-   endpoint is the documented exception for arbitrary centres, not for a fixed per-block fact.
+## Consequences
 
-## What it costs and risks
+The block-detail UI reads `nearbyMrtExits` from the existing `/api/details/{addressKey}` document; it does not send a new request when the panel expands. Older D1/Neon documents without the field remain valid and simply hide the new control. A published empty array means no exits; a missing field means the older publication did not include this evidence.
 
-1. **It is publisher work.** The list must be produced, reconciled and promoted by the same machinery as the rest of
-   the data (see `.kiro/specs/serving-data-refresh/`). The publisher's schema admission rejects triggers, so it would be
-   an explicit refresh step after the base tables are loaded, not a trigger like `block_locations` today.
-2. **The change guard.** The publisher's guard (at most 1,000 changed rows per publication) exists to catch bad source
-   data and is sized for about 2,100 changed transaction rows a month. A naive full rewrite of a derived table touches
-   9,730 rows each refresh, so it needs a diff-aware write, or to be kept outside that count, or it would trip a guard
-   that is working as designed.
-3. **Storage.** About 10 to 11 MB as JSON, roughly 1% of the Free plan's 1 GiB, on every branch that holds a copy
-   (benchmark, serving, forks).
-4. **It does not replace the endpoint.** A future "what is near this point" map feature, or any non-block centre, still
-   needs the runtime query and the controls around it. The endpoint stays, behind its flag.
-5. **Contract and docs.** A new field or route means schema, contract tests and `docs/guide/` updates.
-6. **Unmeasured:** the production site's current Hyperdrive usage, so how much headroom the controls actually protect
-   is not known from here.
-
-## Recommendation
-
-**Adopt it for the block panel, as part of the serving-refresh work, and not in the controls PR.** The runtime controls
-(one statement per miss, the origin limiter that fails closed, the daily ceiling) are still needed for any
-arbitrary-centre use and are what make it safe to switch the endpoint on at all. But for the one caller that exists,
-a per-block fact should not cost a spatial query, a rate limiter and a slice of a shared daily budget on every cache
-miss. Suggested order:
-
-1. Keep `NEON_SPATIAL_ENABLED` at `"false"`; ship the controls.
-2. Specify the derived per-block list in `serving-data-refresh` (its own table, diff-aware write, differential test
-   against the runtime endpoint for all blocks, guard accounting).
-3. Switch the panel to the precomputed list and stop calling the capability probe from it.
-4. Decide separately whether the runtime endpoint is wanted at all once nothing in the UI calls it.
-
-If the owner would rather keep one mechanism, the cost of the runtime path is now low and bounded (1 statement, about
-1.4 KB, at most 10,000 a day), so not precomputing is a defensible choice. It trades a permanent spatial dependency
-for less publisher work.
+The general `/api/nearby-places` endpoint and its tests remain available behind **`NEON_SPATIAL_ENABLED="false"`** in production. **Do not publicly enable arbitrary-coordinate search without a separately approved global budget control.** The two fail-closed Workers rate-limiters are only local, approximate protections and cannot guarantee account-wide Hyperdrive cost bounds.
