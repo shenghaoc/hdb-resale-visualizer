@@ -50,7 +50,7 @@ Seven `STATION_NA` values in the current serving snapshot (manifest 2026-10-04) 
 
 This stack groups by the source label verbatim and deliberately does **not** normalise codes to names: that needs an authoritative code-to-name mapping and belongs to the POI-integration follow-up. Until then the user guide describes the list as one entry per source-recorded station name, not per physical station.
 
-## Rate limiting, the daily ceiling and origin protection
+## Rate limiting, without a global daily counter
 
 A cache miss on `GET /api/nearby-places` runs a spatial query on a metered Neon branch through Hyperdrive, and the canonical keyspace above (about 1.0 billion keys) is far too large for the cache to bound that work: a client walking the grid never hits. Two approximate per-location rate limits shape its traffic, but neither limits global daily usage. All are inert while `NEON_SPATIAL_ENABLED` is `"false"`, because the flag gate answers 503 before any of them runs.
 
