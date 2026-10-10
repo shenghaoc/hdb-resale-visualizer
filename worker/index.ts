@@ -48,16 +48,16 @@ import {
   checkNearbyClientRateLimit,
   checkNearbyOriginRateLimit,
 } from "../functions/_lib/nearby-rate-limit";
-import { reserveNearbyStatements } from "../functions/_lib/nearby-budget";
+import { reserveNearbyStatements, type NearbyBudgetQuery } from "../functions/_lib/nearby-budget";
 
 /**
  * Everything that must hold before a nearby cache miss may send its statement to Neon: the per-location rate
  * limit, then the global daily statement ceiling. Both fail closed; the first refusal is the answer.
  */
-async function admitNearbyDatabaseRead(env: Env): Promise<Response | null> {
+async function admitNearbyDatabaseRead(env: Env, budgetQuery: NearbyBudgetQuery | undefined): Promise<Response | null> {
   return (
     (await checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER)) ??
-    (await reserveNearbyStatements(env.DB, env.NEARBY_DAILY_STATEMENT_CEILING))
+    (await reserveNearbyStatements(budgetQuery, env.NEARBY_DAILY_STATEMENT_CEILING))
   );
 }
 
@@ -167,6 +167,13 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const capturedEnv = { ...env };
     let readScope: ReturnType<typeof createPublicReadScope> | undefined;
+    let budgetTransport: ReturnType<typeof createNeonPublicTransport> | undefined;
+    const budgetQuery: NearbyBudgetQuery | undefined = capturedEnv.HDB_NEARBY_BUDGET
+      ? (sql, params) => {
+          budgetTransport ??= createNeonPublicTransport(capturedEnv.HDB_NEARBY_BUDGET!);
+          return budgetTransport.query(sql, params);
+        }
+      : undefined;
     const publicReads = () =>
       (readScope ??= createPublicReadScope(capturedEnv, createNeonPublicTransport));
     const respond = async () => {
@@ -216,6 +223,7 @@ export default {
               available:
                 capturedEnv.PUBLIC_DATA_BACKEND === "neon" &&
                 !!capturedEnv.HDB_PUBLIC_NEON &&
+                !!capturedEnv.HDB_NEARBY_BUDGET &&
                 isNeonSpatialEnabled(capturedEnv.NEON_SPATIAL_ENABLED),
             });
           }
@@ -262,7 +270,7 @@ export default {
           // request that never reaches the database never spends the rate-limit or statement allowance.
           const atomic: AtomicRead | undefined =
             routeId === "nearby-places"
-              ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv))
+              ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv, budgetQuery))
               : undefined;
           // The cache layer calls this only when the answer must come from the database.
           const dispatch = async () =>
