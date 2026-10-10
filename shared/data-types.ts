@@ -66,10 +66,20 @@ export type AddressTrendPoint = {
   medianPricePerSqm: number;
 };
 
+/** Precomputed at publication on the Neon serving child, not fetched from PostGIS at runtime. */
+export type PrecomputedMrtExit = {
+  stationName: string;
+  exitLabel: string;
+  distanceMeters: number;
+  exitId: string;
+};
+
 export type AddressDetail = {
   summary: AddressDetailSummary;
   recentTransactions: AddressDetailTransaction[];
   monthlyTrend: AddressTrendPoint[];
+  /** Missing on earlier publications; [] means the published search found no exit within 1.5 km. */
+  nearbyMrtExits?: PrecomputedMrtExit[];
 };
 
 export type TownFlatTypeTrendPoint = {

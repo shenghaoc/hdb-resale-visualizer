@@ -1,61 +1,24 @@
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { TrainFront } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatMeters } from "@/shared/lib/format";
 import { useI18n } from "@/shared/lib/i18n";
-import {
-  fetchNearbyMrtExits,
-  getNearbySpatialAvailable,
-  NEARBY_MRT_RADIUS_METERS,
-  toNearbyMrtStations,
-  type NearbyMrtStation,
-} from "./nearbyMrtExitsApi";
+import type { PrecomputedMrtExit } from "@shared/data-types";
 
-type ResultState =
-  | { status: "idle" }
-  | { status: "loading" }
-  | { status: "error" }
-  | { status: "ready"; places: NearbyMrtStation[] };
+/** The publish-time PostGIS query uses this radius and stores the closest five. */
+const PRECOMPUTED_MRT_RADIUS_METERS = 1500;
 
 /**
- * An opt-in supplement to the existing MRT walking-time panel.
- * Only the capability probe runs before a user opens the exit list.
+ * The optional block-detail artifact carries nearest MRT exits. No capability
+ * probe, runtime spatial request, database connection or background fetch.
+ * Undefined = older publication; [] = an authoritative published empty result.
  */
-export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
+export function NearbyMrtExits({ exits }: { exits?: readonly PrecomputedMrtExit[] }) {
   const { locale, t } = useI18n();
   const panelId = useId();
-  const [available, setAvailable] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [retryToken, setRetryToken] = useState(0);
-  const [result, setResult] = useState<ResultState>({ status: "idle" });
 
-  useEffect(() => {
-    let mounted = true;
-    void getNearbySpatialAvailable().then((enabled) => {
-      if (mounted) setAvailable(enabled);
-    });
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!expanded) return;
-    const controller = new AbortController();
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
-    setResult({ status: "loading" });
-    void fetchNearbyMrtExits(lat, lng, controller.signal)
-      .then((places) => {
-        if (!controller.signal.aborted)
-          setResult({ status: "ready", places: toNearbyMrtStations(places) });
-      })
-      .catch(() => {
-        if (!controller.signal.aborted) setResult({ status: "error" });
-      });
-    return () => controller.abort();
-  }, [expanded, lat, lng, retryToken]);
-
-  if (!available) return null;
+  if (exits === undefined) return null;
 
   return (
     <div className="mt-2 border-t border-border/40 pt-2" data-testid="nearby-mrt-exits">
@@ -73,35 +36,19 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
       </Button>
       {expanded ? (
         <div id={panelId} className="pt-2" aria-live="polite">
-          {result.status === "loading" || result.status === "idle" ? (
-            <p className="text-xs text-muted-foreground">{t("detail.spatialExits.loading")}</p>
-          ) : result.status === "error" ? (
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">
-                {t("detail.spatialExits.error")}
-              </span>
-              <Button
-                type="button"
-                size="sm"
-                variant="ghost"
-                onClick={() => setRetryToken((value) => value + 1)}
-              >
-                {t("detail.spatialExits.retry")}
-              </Button>
-            </div>
-          ) : result.places.length === 0 ? (
+          {exits.length === 0 ? (
             <p className="text-xs text-muted-foreground">
               {t("detail.spatialExits.empty", {
-                distance: formatMeters(NEARBY_MRT_RADIUS_METERS, t, locale),
+                distance: formatMeters(PRECOMPUTED_MRT_RADIUS_METERS, t, locale),
               })}
             </p>
           ) : (
             <ul className="flex flex-col gap-1" aria-label={t("detail.spatialExits.show")}>
-              {result.places.map((place) => (
-                <li key={place.exitId} className="flex justify-between gap-2 text-xs">
-                  <span className="min-w-0 truncate">{place.stationName}</span>
+              {exits.map((exit) => (
+                <li key={exit.exitId} className="flex justify-between gap-2 text-xs">
+                  <span className="min-w-0 truncate">{exit.stationName}</span>
                   <span className="shrink-0 font-mono tabular-nums text-muted-foreground">
-                    {place.exitLabel} · {formatMeters(place.distanceMeters, t, locale)}
+                    {exit.exitLabel} · {formatMeters(exit.distanceMeters, t, locale)}
                   </span>
                 </li>
               ))}
