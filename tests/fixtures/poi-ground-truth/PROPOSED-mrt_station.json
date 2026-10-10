@@ -1,0 +1,2223 @@
+{
+  "notice": "AGENT-PROPOSED AND UNREVIEWED. These labels were proposed by an AI agent from small samples fetched on 2026-10-09 (UTC). They are NOT a ground truth until the project owner approves them under the labelling protocol in .kiro/specs/poi-source-integration/design.md. Until then do not import this file in any test, do not use it to tune thresholds, and do not compute or report precision, recall or any other accuracy figure against it. The entries were hand-picked to illustrate cases; they are not a random sample and cannot support any rate estimate even after approval.",
+  "status": "PROPOSED-UNAPPROVED",
+  "schemaVersion": 1,
+  "poiKind": "mrt_station",
+  "proposedOn": "2026-10-10",
+  "proposedBy": "AI agent (Claude), from the saved samples only",
+  "approvedBy": null,
+  "approvedOn": null,
+  "metricsPolicy": "Metrics (precision, recall, false-merge rate) are only ever reported against owner-approved labels, drawn from a seeded random sample of candidate pairs. This file is neither. No such figure has been computed anywhere.",
+  "labellingProtocol": ".kiro/specs/poi-source-integration/design.md#labelling-protocol",
+  "classSemantics": "proposedClass is the strength-of-evidence class that the rule table in design.md assigns to the two records shown, independent of whether either source is admitted. proposedRelationHolds is the separate truth proposal (yes, no, part-of, undetermined, no-counterpart-in-sample) the owner is asked to confirm or correct.",
+  "relationVocabulary": {
+    "same-entity": "The two records describe the same real-world place.",
+    "same-physical-exit": "Two records inside one source that might describe one physical exit (intra-source duplicate check).",
+    "exit-belongs-to-station-footprint": "An exit point and a station outline: membership, not identity.",
+    "intra-source-sibling": "Two records of one source that might be mistaken for each other."
+  },
+  "classVocabulary": {
+    "verified": "Two independent sources agree on identity through a shared key or exact name AND tight geometry, uniquely (rule ids R-VER-*).",
+    "rule-supported": "No shared key, but one named rule in design.md is satisfied by a unique mutual candidate (rule ids R-RS-*).",
+    "ambiguous": "More than one candidate, conflicting channels, granularity mismatch, or too little evidence. Never auto-merged (rule ids R-AMB-*).",
+    "unmatched": "No candidate in the other sampled source satisfies even the weakest rule (R-UNM-NO-CANDIDATE). It says nothing about whether the place exists.",
+    "rejected": "A candidate that passed blocking and failed a hard-negative rule (rule ids R-REJ-*). Kept so it is never re-proposed."
+  },
+  "ruleVocabulary": {
+    "R-AMB-CHANNEL-CONFLICT": "Name exact but geometry beyond the wide band, or key conflict.",
+    "R-AMB-GEO-ONLY": "Geometry agrees, names disagree or one is address-style.",
+    "R-AMB-MULTI": "At least two equal-strength candidates in the same tier (for name extensions the count is taken within the block radius, not the wide band).",
+    "R-REJ-DOMINATED": "A record of the pair is already taken by a stronger verified or rule-supported partner, and this pair is only a spelling variant, a subtype variant or a different name.",
+    "R-REJ-LIFECYCLE": "Lifecycle or subtype conflict (under construction vs existing, MRT vs LRT, monorail, former railway).",
+    "R-RS-EXACT-WIDE": "Name exact, geometry in the wide band only.",
+    "R-RS-NEAR-GEO": "Name near (spelling, strict extension or subtype-subset), geometry within the tight or wide band.",
+    "R-RS-REGISTRY-CODE": "The label is a station code resolved to a name by a registry, that name matches the other record, and the geometry is within the tight or wide band.",
+    "R-RS-SPATIAL-ONLY": "One side has no usable name (null or a code with no registry row); geometry within the tight band; unique candidate. Stations only.",
+    "R-UNM-NO-CANDIDATE": "No candidate passes the minimum predicate in the other sampled source.",
+    "R-VER-KEY-CODE": "Station code equal (the code-named STATION_NA label equals another source's code) AND geometry within the tight band, unique.",
+    "R-VER-NAME-GEO": "No key; name exact AND geometry within the tight band, unique mutual candidate."
+  },
+  "sources": {
+    "lta-mrt-exit-geojson": {
+      "publisher": "Land Transport Authority (managedBy in dataset metadata)",
+      "title": "LTA MRT Station Exit (GEOJSON)",
+      "datasetId": "d_b39d3a0871985372d7e1637193335da5",
+      "datasetUrl": "https://data.gov.sg/datasets/d_b39d3a0871985372d7e1637193335da5/view",
+      "licence": {
+        "name": "Singapore Open Data Licence version 1.0",
+        "url": "https://data.gov.sg/open-data-licence"
+      },
+      "retrievedAt": "2026-10-09T19:02:16Z",
+      "upstreamLastUpdatedAt": "2026-09-16T10:06:48+08:00",
+      "recordsInSample": 613,
+      "crs": "WGS84 lon/lat (GeoJSON default; the file has no crs member)"
+    },
+    "ura-mp2019-rail-station-amendment": {
+      "publisher": "Urban Redevelopment Authority (managedBy in dataset metadata)",
+      "title": "Amendment to Master Plan 2019 Rail Station layer",
+      "datasetId": "d_9a6bdc9d93bd041eb0cfbb6a8cb3248f",
+      "datasetUrl": "https://data.gov.sg/datasets/d_9a6bdc9d93bd041eb0cfbb6a8cb3248f/view",
+      "licence": {
+        "name": "Singapore Open Data Licence version 1.0",
+        "url": "https://data.gov.sg/open-data-licence"
+      },
+      "retrievedAt": "2026-10-09T19:11:55Z",
+      "upstreamLastUpdatedAt": "2025-12-26T10:07:18+08:00",
+      "recordsInSample": 257,
+      "crs": "WGS84 lon/lat (GeoJSON default). Indicative station outlines; the layer includes planned stations and has no status field."
+    },
+    "wikidata-sparql": {
+      "publisher": "Wikidata community (Wikimedia Foundation)",
+      "title": "Wikidata Query Service (SPARQL) results",
+      "datasetId": "https://query.wikidata.org/sparql",
+      "datasetUrl": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+      "licence": {
+        "name": "CC0 1.0 (structured data)",
+        "url": "https://www.wikidata.org/wiki/Wikidata:Licensing"
+      },
+      "retrievedAt": {
+        "stations": "2026-10-09T19:24:20Z",
+        "schools": "2026-10-09T19:25:03Z",
+        "parksHawkerSupermarket": "2026-10-09T19:25:44Z"
+      },
+      "upstreamLastUpdatedAt": null,
+      "recordsInSample": "stations 242 items with coordinates, schools 236, parks/gardens/reserves 140, hawker-or-food-centre labels 46",
+      "crs": "WGS84 lon/lat (WKT Point(lon lat)); coordinates are often copied from Wikipedia and sometimes DMS-rounded",
+      "note": "Not an admitted source. Used only as evidence for these proposals; 39 of 46 hawker items and 94 of 236 school items carry no reference on the coordinate statement (see docs/architecture/poi-source-admission.md)."
+    }
+  },
+  "entryCount": 40,
+  "entries": [
+    {
+      "id": "mrt_station-001",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:BEDOK MRT STATION",
+        "name": "BEDOK MRT STATION",
+        "lon": 103.9294115,
+        "lat": 1.3239705,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 3,
+          "exitObjectIds": [21174, 21689, 21690],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5331",
+        "name": "BEDOK",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.9301523,
+        "lat": 1.3239977
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q3272378",
+          "name": "Bedok MRT station",
+          "lon": 103.930036,
+          "lat": 1.324039,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q3272378",
+          "properties": {
+            "stationCodes": ["EW5"],
+            "dateOfOfficialOpening": "1989-11-04"
+          },
+          "distanceFromRecordAMetres": 69.9
+        }
+      ],
+      "distanceMetres": 0.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Core name 'bedok' equal on both sides (MRT STATION is a suffix word and is ignored for stations); the exit-derived centroid is 0.7 m from the URA outline; one qualifying polygon; the Wikidata station item carries the same name and a station code.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-002",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:ADMIRALTY MRT STATION",
+        "name": "ADMIRALTY MRT STATION",
+        "lon": 103.8008575,
+        "lat": 1.4404069,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21131, 21491, 21673, 21674],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5294",
+        "name": "ADMIRALTY",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8009559,
+        "lat": 1.440613
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q3267849",
+          "name": "Admiralty MRT station",
+          "lon": 103.800933,
+          "lat": 1.440689,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q3267849",
+          "properties": {
+            "stationCodes": ["NS10"],
+            "dateOfOfficialOpening": "1996-02-10"
+          },
+          "distanceFromRecordAMetres": 32.3
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names equal after dropping the suffix words; the exit centroid is 0 m from the outline; unique candidate.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-003",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:BARTLEY MRT STATION",
+        "name": "BARTLEY MRT STATION",
+        "lon": 103.8795823,
+        "lat": 1.3428749,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21324, 21325],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5285",
+        "name": "BARTLEY",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8798253,
+        "lat": 1.3428002
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q1089462",
+          "name": "Bartley MRT station",
+          "lon": 103.88,
+          "lat": 1.3425,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q1089462",
+          "properties": {
+            "stationCodes": ["CC12"],
+            "dateOfOfficialOpening": "2009-05-28"
+          },
+          "distanceFromRecordAMetres": 62.3
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names equal; centroid 0 m from the outline; unique candidate.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-004",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:MAYFLOWER MRT STATION",
+        "name": "MAYFLOWER MRT STATION",
+        "lon": 103.8367656,
+        "lat": 1.3720404,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 7,
+          "exitObjectIds": [21133, 21134, 21135, 21410, 21411, 21412, 21413],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5269",
+        "name": "MAYFLOWER",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8368229,
+        "lat": 1.3720642
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q15693078",
+          "name": "Mayflower station",
+          "lon": 103.83678,
+          "lat": 1.37211,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q15693078",
+          "properties": {
+            "stationCodes": ["TE6"],
+            "dateOfOfficialOpening": "2021-08-28"
+          },
+          "distanceFromRecordAMetres": 7.9
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names equal; centroid 0 m from the outline; unique candidate.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-005",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:SPRINGLEAF MRT STATION",
+        "name": "SPRINGLEAF MRT STATION",
+        "lon": 103.8181585,
+        "lat": 1.3980974,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 3,
+          "exitObjectIds": [21394, 21395, 21404],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5244",
+        "name": "SPRINGLEAF",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8180319,
+        "lat": 1.3982614
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q7581151",
+          "name": "Springleaf MRT station",
+          "lon": 103.81811,
+          "lat": 1.39806,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q7581151",
+          "properties": {
+            "stationCodes": ["TE4"],
+            "dateOfOfficialOpening": "2021-08-28"
+          },
+          "distanceFromRecordAMetres": 6.8
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Names equal; centroid 0 m from the outline; unique candidate.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-006",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:ANG MO KIO MRT STATION",
+        "name": "ANG MO KIO MRT STATION",
+        "lon": 103.8496757,
+        "lat": 1.3696182,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21260, 21675, 21691, 21692],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5170",
+        "name": "ANG MO KIO INTERCHANGE",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8495893,
+        "lat": 1.3699798
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5162",
+          "name": "ANG MO KIO INTERCHANGE",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8512058,
+          "lat": 1.3694131,
+          "distanceFromRecordAMetres": 31.4
+        },
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q2266049",
+          "name": "Ang Mo Kio MRT station",
+          "lon": 103.84945,
+          "lat": 1.3700167,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q2266049",
+          "properties": {
+            "stationCodes": ["NS16"],
+            "dateOfOfficialOpening": "1987-11-07"
+          },
+          "distanceFromRecordAMetres": 50.7
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "URA carries two outlines (one aboveground, one underground) named ANG MO KIO INTERCHANGE; they are footprint siblings of one station (same core name, both within the tight band) and collapse to one candidate. Centroid is 0 m from the nearest outline.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-007",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:DHOBY GHAUT MRT STATION",
+        "name": "DHOBY GHAUT MRT STATION",
+        "lon": 103.8455017,
+        "lat": 1.2994107,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 6,
+          "exitObjectIds": [21509, 21510, 21511, 21512, 21530, 21669],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5263",
+        "name": "DHOBY GHAUT INTERCHANGE",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8455158,
+        "lat": 1.2998211
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5264",
+          "name": "DHOBY GHAUT INTERCHANGE",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8459039,
+          "lat": 1.2990393,
+          "distanceFromRecordAMetres": 10.7
+        },
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5265",
+          "name": "DHOBY GHAUT INTERCHANGE",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8459695,
+          "lat": 1.2987574,
+          "distanceFromRecordAMetres": 39.9
+        },
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q3234475",
+          "name": "Dhoby Ghaut MRT station",
+          "lon": 103.8457361,
+          "lat": 1.2991556,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q3234475",
+          "properties": {
+            "stationCodes": ["CC1", "NE6", "NS24"],
+            "dateOfOfficialOpening": "1987-12-12"
+          },
+          "distanceFromRecordAMetres": 38.4
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Three URA outlines share the core name 'dhoby ghaut' and collapse to one footprint group; the centroid is 0 m from the nearest outline; the Wikidata item lists three station codes for the same place.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-008",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:OUTRAM PARK MRT STATION",
+        "name": "OUTRAM PARK MRT STATION",
+        "lon": 103.8390765,
+        "lat": 1.2807283,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 8,
+          "exitObjectIds": [21132, 21430, 21452, 21453, 21518, 21519, 21549, 21550],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5258",
+        "name": "OUTRAM PARK",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8393286,
+        "lat": 1.2812381
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5138",
+          "name": "OUTRAM PARK",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8399987,
+          "lat": 1.2800613,
+          "distanceFromRecordAMetres": 39.9
+        },
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5311",
+          "name": "OUTRAM PARK",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8389246,
+          "lat": 1.2815286,
+          "distanceFromRecordAMetres": 54.6
+        },
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q2524803",
+          "name": "Outram Park MRT station",
+          "lon": 103.84,
+          "lat": 1.2805556,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q2524803",
+          "properties": {
+            "stationCodes": ["EW16", "NE3", "TE17"],
+            "dateOfOfficialOpening": "1987-12-12"
+          },
+          "distanceFromRecordAMetres": 104.5
+        }
+      ],
+      "distanceMetres": 11.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Three outlines with the same core name collapse to one footprint group; centroid is 11.3 m from the nearest outline.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-009",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:BUKIT PANJANG LRT STATION",
+        "name": "BUKIT PANJANG LRT STATION",
+        "lon": 103.7630541,
+        "lat": 1.3779589,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21583, 21584, 21601, 21602],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5329",
+        "name": "BUKIT PANJANG",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "LRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7630236,
+        "lat": 1.3779087
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q4265715",
+          "name": "Bukit Panjang station",
+          "lon": 103.7616667,
+          "lat": 1.3786111,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q4265715",
+          "properties": {
+            "stationCodes": ["BP6", "DT1"],
+            "dateOfOfficialOpening": "2015-12-27"
+          },
+          "distanceFromRecordAMetres": 170.4
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-NAME-GEO"],
+      "reason": "Label subtype LRT equals the outline's RAIL_TYPE LRT; names equal; centroid 0 m from the outline. The MRT outline with the same name is excluded by subtype (see the rejected entry for the same label).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-010",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CC31",
+        "name": "CC31",
+        "lon": 103.8369767,
+        "lat": 1.2730476,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21293, 21294, 21295, 21296],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q19580291",
+        "name": "Cantonment MRT station",
+        "lon": 103.836659,
+        "lat": 1.272814,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q19580291",
+        "properties": {
+          "stationCodes": ["CC31"],
+          "dateOfOfficialOpening": "2026-07-12"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5376",
+          "name": "CANTONMENT",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8369499,
+          "lat": 1.273106,
+          "distanceFromRecordAMetres": 0
+        }
+      ],
+      "distanceMetres": 43.8,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-KEY-CODE"],
+      "reason": "The STATION_NA label is a station code. The Wikidata item carries station code CC31 and is 43.8 m from the exit centroid; the URA outline named CANTONMENT contains the centroid. Unique candidate.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-011",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CC32",
+        "name": "CC32",
+        "lon": 103.8462182,
+        "lat": 1.2732346,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21291, 21292],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q22082862",
+        "name": "Prince Edward Road MRT Station",
+        "lon": 103.847298,
+        "lat": 1.273254,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q22082862",
+        "properties": {
+          "stationCodes": ["CC32"],
+          "dateOfOfficialOpening": "2026-07-12"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5334",
+          "name": "PRINCE EDWARD ROAD",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8473613,
+          "lat": 1.2732755,
+          "distanceFromRecordAMetres": 8.7
+        }
+      ],
+      "distanceMetres": 120.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-KEY-CODE"],
+      "reason": "Code label equals the Wikidata station code CC32; 120.2 m from the centroid; the URA outline PRINCE EDWARD ROAD is within the tight band.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-012",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:DT18",
+        "name": "DT18",
+        "lon": 103.8478,
+        "lat": 1.28265,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21248, 21250],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q7697794",
+        "name": "Telok Ayer MRT station",
+        "lon": 103.848472,
+        "lat": 1.282125,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q7697794",
+        "properties": {
+          "stationCodes": ["DT18"],
+          "dateOfOfficialOpening": "2013-12-22"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5168",
+          "name": "TELOK AYER",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8483599,
+          "lat": 1.2823232,
+          "distanceFromRecordAMetres": 0
+        },
+        {
+          "sourceId": "lta-mrt-exit-geojson",
+          "sourceRecordId": "STATION_NA:TELOK AYER MRT STATION",
+          "name": "TELOK AYER MRT STATION",
+          "lon": 103.8487072,
+          "lat": 1.2822118,
+          "positionKind": "derived-centroid-of-exits",
+          "properties": {
+            "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+            "exitCount": 3,
+            "exitObjectIds": [21443, 21444, 21643],
+            "labelIsStationCode": false
+          },
+          "distanceFromRecordAMetres": 112
+        }
+      ],
+      "distanceMetres": 94.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-KEY-CODE"],
+      "reason": "Code label equals the Wikidata station code DT18 (94.7 m from the centroid). The LTA station-code registry (d_d312a5b127e1ae74299b8ae664cedd4e, Train Station Chinese Names) maps DT18 to Telok Ayer, and the same station also appears under the name label TELOK AYER MRT STATION (label alias, collapsed). URA TELOK AYER contains the centroid.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-013",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:DT4",
+        "name": "DT4",
+        "lon": 103.7686736,
+        "lat": 1.354946,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21249, 21251],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q62004591",
+        "name": "Hume station",
+        "lon": 103.7691667,
+        "lat": 1.3544444,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q62004591",
+        "properties": {
+          "stationCodes": ["DT4"],
+          "dateOfOfficialOpening": "2025-02-28"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5268",
+          "name": "HUME",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.7691779,
+          "lat": 1.3544283,
+          "distanceFromRecordAMetres": 5.2
+        }
+      ],
+      "distanceMetres": 78,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-KEY-CODE"],
+      "reason": "Code label equals the Wikidata station code DT4 (78 m from the centroid); URA HUME is within the tight band. The LTA registry has no DT4 row (it was last updated 2024-06-06).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-014",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:NE18",
+        "name": "NE18",
+        "lon": 103.9101071,
+        "lat": 1.4149625,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21286, 21287],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q30643856",
+        "name": "Punggol Coast station",
+        "lon": 103.9111111,
+        "lat": 1.4152778,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q30643856",
+        "properties": {
+          "stationCodes": ["NE18"],
+          "dateOfOfficialOpening": "2024-12-10"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5185",
+          "name": "PUNGGOL COAST",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.9102834,
+          "lat": 1.4149799,
+          "distanceFromRecordAMetres": 0
+        }
+      ],
+      "distanceMetres": 117,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-KEY-CODE"],
+      "reason": "Code label equals the Wikidata station code NE18 (117 m from the centroid); URA PUNGGOL COAST contains the centroid; the LTA registry has no NE18 row.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-015",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CC9",
+        "name": "CC9",
+        "lon": 103.8929219,
+        "lat": 1.3175125,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21218, 21219],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q3272113",
+        "name": "Paya Lebar MRT station",
+        "lon": 103.892381,
+        "lat": 1.317767,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q3272113",
+        "properties": {
+          "stationCodes": ["CC9", "EW8"],
+          "dateOfOfficialOpening": "1989-11-04"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "lta-mrt-exit-geojson",
+          "sourceRecordId": "STATION_NA:PAYA LEBAR MRT STATION",
+          "name": "PAYA LEBAR MRT STATION",
+          "lon": 103.8922011,
+          "lat": 1.3178251,
+          "positionKind": "derived-centroid-of-exits",
+          "properties": {
+            "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+            "exitCount": 4,
+            "exitObjectIds": [21126, 21127, 21169, 21170],
+            "labelIsStationCode": false
+          },
+          "distanceFromRecordAMetres": 87.4
+        },
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5200",
+          "name": "PAYA LEBAR INTERCHANGE",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8922628,
+          "lat": 1.317426,
+          "distanceFromRecordAMetres": 38.8
+        }
+      ],
+      "distanceMetres": 66.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "verified",
+      "ruleIds": ["R-VER-KEY-CODE"],
+      "reason": "Code label equals the Wikidata station code CC9 (66.4 m from the centroid). The LTA registry maps CC9 to Paya Lebar and the same physical station also carries the name label PAYA LEBAR MRT STATION (label alias, collapsed); URA PAYA LEBAR INTERCHANGE is near.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-016",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:TAMPINES MRT STATION",
+        "name": "TAMPINES MRT STATION",
+        "lon": 103.943782,
+        "lat": 1.3543165,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 7,
+          "exitObjectIds": [21192, 21206, 21348, 21502, 21503, 21531, 21679],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5122",
+        "name": "TAMPINES",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.9429191,
+        "lat": 1.3550233
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5361",
+          "name": "TAMPINES",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "ABOVEGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.9452167,
+          "lat": 1.3532208,
+          "distanceFromRecordAMetres": 100.8
+        },
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q3272264",
+          "name": "Tampines MRT station",
+          "lon": 103.945322,
+          "lat": 1.352528,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q3272264",
+          "properties": {
+            "stationCodes": ["DT32", "EW2"],
+            "dateOfOfficialOpening": "1989-12-16"
+          },
+          "distanceFromRecordAMetres": 261.7
+        }
+      ],
+      "distanceMetres": 60.1,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-EXACT-WIDE"],
+      "reason": "Names equal, but the 7-exit centroid is 60.1 m from the nearest outline, beyond the tight band and inside the wide band; the aboveground outline is farther. Rule-supported, not verified, because only the wide band holds.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-017",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:JELAPANG LRT STATION",
+        "name": "JELAPANG LRT STATION",
+        "lon": 103.7646768,
+        "lat": 1.3868327,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 1,
+          "exitObjectIds": [21191],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5325",
+        "name": "JELEPANG",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "LRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7645097,
+        "lat": 1.3867049
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q6176620",
+          "name": "Jelapang LRT station",
+          "lon": 103.764414,
+          "lat": 1.386711,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q6176620",
+          "properties": {
+            "stationCodes": ["BP12"],
+            "dateOfOfficialOpening": "1999-11-06"
+          },
+          "distanceFromRecordAMetres": 32.2
+        }
+      ],
+      "distanceMetres": 0.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "URA spells the name JELEPANG (one letter differs); the centroid is 0.7 m from the outline and subtype LRT matches; the Wikidata item spells it Jelapang like the LTA label.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-018",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:SAM KEE LRT STATION",
+        "name": "SAM KEE LRT STATION",
+        "lon": 103.9049154,
+        "lat": 1.4097651,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21589, 21590],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5315",
+        "name": "SUM KEE",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "LRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.9048444,
+        "lat": 1.4096365
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q7407731",
+          "name": "Sam Kee LRT station",
+          "lon": 103.9048889,
+          "lat": 1.4097222,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q7407731",
+          "properties": {
+            "stationCodes": ["PW1"],
+            "dateOfOfficialOpening": "2016-02-29"
+          },
+          "distanceFromRecordAMetres": 5.6
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "URA spells the name SUM KEE (one letter differs); centroid 0 m from the outline; subtype LRT matches; Wikidata spells it Sam Kee.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-019",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:MARINA SOUTH MRT STATION",
+        "name": "MARINA SOUTH MRT STATION",
+        "lon": 103.862211,
+        "lat": 1.2740203,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21568, 21569, 21570, 21571],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5256",
+        "name": "<Null>",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8633167,
+        "lat": 1.274192
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q6763913",
+          "name": "Marina South station",
+          "lon": 103.862919,
+          "lat": 1.274082,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q6763913",
+          "properties": {
+            "stationCodes": [],
+            "dateOfOfficialOpening": null
+          },
+          "distanceFromRecordAMetres": 79.1
+        }
+      ],
+      "distanceMetres": 41.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "The URA outline has no NAME; the 4-exit centroid is 41.2 m from it and it is the only outline within the tight band. Spatial-only evidence; the Wikidata item with the same name is farther away.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-020",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:PUNGGOL LRT STATION",
+        "name": "PUNGGOL LRT STATION",
+        "lon": 103.9019571,
+        "lat": 1.4043695,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21635, 21637],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5213",
+        "name": "PUNGGOL CENTRAL",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "LRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.9023886,
+        "lat": 1.4051596
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q3232625",
+          "name": "Punggol station",
+          "lon": 103.9025,
+          "lat": 1.4052778,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q3232625",
+          "properties": {
+            "stationCodes": ["NE17", "PTC"],
+            "dateOfOfficialOpening": "2003-06-20"
+          },
+          "distanceFromRecordAMetres": 117.2
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-NEAR-GEO"],
+      "reason": "URA names the LRT outline PUNGGOL CENTRAL, a strict extension of the core name 'punggol'; subtype LRT matches; the centroid is 0 m from the outline.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-021",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CC30",
+        "name": "CC30",
+        "lon": 103.83011,
+        "lat": 1.2703867,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 3,
+          "exitObjectIds": [21288, 21289, 21290],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5364",
+        "name": "KEPPEL",
+        "geometryType": "MultiPolygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20230411155157"
+        },
+        "lon": 103.8303624,
+        "lat": 1.270118
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q20983869",
+          "name": "Keppel MRT station",
+          "lon": 103.830385,
+          "lat": 1.269988,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q20983869",
+          "properties": {
+            "stationCodes": [],
+            "dateOfOfficialOpening": "2026-07-12"
+          },
+          "distanceFromRecordAMetres": 53.7
+        }
+      ],
+      "distanceMetres": 16.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "The label is a station code with no registry row and the sampled Wikidata item (Keppel) carries no code, so no key links them. The only URA outline within the tight band is named KEPPEL (16.4 m from the centroid). Spatial-only, flagged as a code-named label.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-022",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CC9",
+        "name": "CC9",
+        "lon": 103.8929219,
+        "lat": 1.3175125,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21218, 21219],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5200",
+        "name": "PAYA LEBAR INTERCHANGE",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8922628,
+        "lat": 1.317426
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5260",
+          "name": "PAYA LEBAR INTERCHANGE",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "ABOVEGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8930871,
+          "lat": 1.3181069,
+          "distanceFromRecordAMetres": 46.6
+        }
+      ],
+      "distanceMetres": 38.8,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-REGISTRY-CODE"],
+      "reason": "The code label is resolved to Paya Lebar by the LTA registry row CC9; the URA outline PAYA LEBAR INTERCHANGE is 38.8 m from the centroid. Rule-supported because URA itself has no code to compare.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-023",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:DT4",
+        "name": "DT4",
+        "lon": 103.7686736,
+        "lat": 1.354946,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21249, 21251],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5268",
+        "name": "HUME",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7691779,
+        "lat": 1.3544283
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q62004591",
+          "name": "Hume station",
+          "lon": 103.7691667,
+          "lat": 1.3544444,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q62004591",
+          "properties": {
+            "stationCodes": ["DT4"],
+            "dateOfOfficialOpening": "2025-02-28"
+          },
+          "distanceFromRecordAMetres": 78
+        }
+      ],
+      "distanceMetres": 5.2,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "No registry row for DT4 in the LTA registry; the URA outline named HUME is the only one within the tight band (5.2 m). Spatial-only; Wikidata corroborates with code DT4.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-024",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:FORT CANNING MRT STATION",
+        "name": "FORT CANNING MRT STATION",
+        "lon": 103.8442975,
+        "lat": 1.2926182,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21541, 21544],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5341",
+        "name": "RIVER VALLEY",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8442552,
+        "lat": 1.2923976
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q3524382",
+          "name": "Fort Canning MRT station",
+          "lon": 103.845163,
+          "lat": 1.291937,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q3524382",
+          "properties": {
+            "stationCodes": ["DT20"],
+            "dateOfOfficialOpening": "2017-10-21"
+          },
+          "distanceFromRecordAMetres": 122.3
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-GEO-ONLY"],
+      "reason": "The outline contains the centroid (0 m) but URA names it RIVER VALLEY while LTA and Wikidata say Fort Canning. Possibly an older planning name (UNVERIFIED); needs an alias entry or owner review.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-025",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:TUAS LINK MRT STATION",
+        "name": "TUAS LINK MRT STATION",
+        "lon": 103.6370432,
+        "lat": 1.3406835,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21384, 21385],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q11149382",
+        "name": "Tuas Link MRT station",
+        "lon": 103.637486,
+        "lat": 1.346859,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q11149382",
+        "properties": {
+          "stationCodes": ["EW33"],
+          "dateOfOfficialOpening": "2017-06-18"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5343",
+          "name": "TUAS LINK",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "ABOVEGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.636583,
+          "lat": 1.3397739,
+          "distanceFromRecordAMetres": 1.4
+        }
+      ],
+      "distanceMetres": 684.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-CHANNEL-CONFLICT"],
+      "reason": "Names equal but the Wikidata point is 684.6 m from the exit centroid, far beyond the wide band, while the URA outline contains it. Evidence that a community coordinate can be hundreds of metres off.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-026",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CHOA CHU KANG LRT STATION",
+        "name": "CHOA CHU KANG LRT STATION",
+        "lon": 103.7446076,
+        "lat": 1.3849898,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21377, 21459],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q2236720",
+        "name": "Choa Chu Kang MRT/LRT station",
+        "lon": 103.744322,
+        "lat": 1.385092,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q2236720",
+        "properties": {
+          "stationCodes": ["BP1", "JS1", "NS4"],
+          "dateOfOfficialOpening": "1999-11-06"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "lta-mrt-exit-geojson",
+          "sourceRecordId": "STATION_NA:CHOA CHU KANG MRT STATION",
+          "name": "CHOA CHU KANG MRT STATION",
+          "lon": 103.7444155,
+          "lat": 1.3854247,
+          "positionKind": "derived-centroid-of-exits",
+          "properties": {
+            "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+            "exitCount": 7,
+            "exitObjectIds": [21373, 21374, 21375, 21376, 21439, 21504, 21505],
+            "labelIsStationCode": false
+          },
+          "distanceFromRecordAMetres": 52.6
+        }
+      ],
+      "distanceMetres": 33.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "undetermined",
+      "proposedClass": "ambiguous",
+      "ruleIds": ["R-AMB-MULTI"],
+      "reason": "One Wikidata item (MRT/LRT station, three codes) matches two LTA labels, the LRT label and the MRT label, 33.7 m away. Granularity mismatch between sources.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-027",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:BENCOOLEN MRT STATION",
+        "name": "BENCOOLEN MRT STATION",
+        "lon": 103.8498919,
+        "lat": 1.2983646,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 3,
+          "exitObjectIds": [21197, 21198, 21370],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q1089384",
+        "name": "Bras Basah MRT station",
+        "lon": 103.850631,
+        "lat": 1.296931,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q1089384",
+        "properties": {
+          "stationCodes": ["CC2"],
+          "dateOfOfficialOpening": "2010-04-17"
+        }
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q4886965",
+          "name": "Bencoolen MRT station",
+          "lon": 103.850392,
+          "lat": 1.298888,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q4886965",
+          "properties": {
+            "stationCodes": ["DT21"],
+            "dateOfOfficialOpening": "2017-10-21"
+          },
+          "distanceFromRecordAMetres": 80.3
+        }
+      ],
+      "distanceMetres": 178.6,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-DOMINATED"],
+      "reason": "Bras Basah is the nearest-but-wrong neighbour (178.6 m); the Wikidata item with the equal name (Bencoolen) exists as the dominant partner.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-028",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:BRAS BASAH MRT STATION",
+        "name": "BRAS BASAH MRT STATION",
+        "lon": 103.8505264,
+        "lat": 1.2970013,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 5,
+          "exitObjectIds": [21338, 21339, 21340, 21341, 21342],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5340",
+        "name": "BENCOOLEN",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8500712,
+        "lat": 1.2985787
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "ura-mp2019-rail-station-amendment",
+          "sourceRecordId": "5252",
+          "name": "BRAS BASAH",
+          "geometryType": "Polygon",
+          "positionKind": "representative-point-of-polygon",
+          "properties": {
+            "RAIL_TYPE": "MRT",
+            "GRND_LEVEL": "UNDERGROUND",
+            "FMEL_UPD_D": "20200519152729"
+          },
+          "lon": 103.8507381,
+          "lat": 1.2967809,
+          "distanceFromRecordAMetres": 0
+        }
+      ],
+      "distanceMetres": 136.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-DOMINATED"],
+      "reason": "URA BENCOOLEN is the adjacent station (136.7 m); the URA outline BRAS BASAH is the dominant exact partner.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-029",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:HARBOURFRONT MRT STATION",
+        "name": "HARBOURFRONT MRT STATION",
+        "lon": 103.8214996,
+        "lat": 1.2654107,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 6,
+          "exitObjectIds": [21468, 21469, 21599, 21656, 21657, 21658],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q124337043",
+        "name": "VivoCity Monorail Station",
+        "lon": 103.8224,
+        "lat": 1.26513,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q124337043",
+        "properties": {
+          "stationCodes": [],
+          "dateOfOfficialOpening": null
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 104.9,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "The Wikidata item is a monorail station (104.9 m away), a different system with a different name; the mainland HarbourFront item has the equal name.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-030",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:TANJONG PAGAR MRT STATION",
+        "name": "TANJONG PAGAR MRT STATION",
+        "lon": 103.8464332,
+        "lat": 1.2765063,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 9,
+          "exitObjectIds": [21155, 21156, 21157, 21369, 21520, 21521, 21522, 21523, 21646],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q1096333",
+        "name": "Tanjong Pagar railway station",
+        "lon": 103.8380556,
+        "lat": 1.2727778,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q1096333",
+        "properties": {
+          "stationCodes": [],
+          "dateOfOfficialOpening": "1932-01-01"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 1019.4,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "The Wikidata item is the former mainland railway station, 1019.4 m away; the MRT station has its own item.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-031",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:CC31",
+        "name": "CC31",
+        "lon": 103.8369767,
+        "lat": 1.2730476,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21293, 21294, 21295, 21296],
+          "labelIsStationCode": true
+        }
+      },
+      "recordB": {
+        "sourceId": "wikidata-sparql",
+        "sourceRecordId": "Q1096333",
+        "name": "Tanjong Pagar railway station",
+        "lon": 103.8380556,
+        "lat": 1.2727778,
+        "positionKind": "source-point",
+        "url": "https://www.wikidata.org/wiki/Q1096333",
+        "properties": {
+          "stationCodes": [],
+          "dateOfOfficialOpening": "1932-01-01"
+        }
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 123.7,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "A railway-station item 123.7 m from the new Cantonment station; the code-bearing item for CC31 is the dominant partner.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-032",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:BUKIT PANJANG LRT STATION",
+        "name": "BUKIT PANJANG LRT STATION",
+        "lon": 103.7630541,
+        "lat": 1.3779589,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 4,
+          "exitObjectIds": [21583, 21584, 21601, 21602],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5271",
+        "name": "BUKIT PANJANG",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7615768,
+        "lat": 1.3790732
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 4.3,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "The outline is an MRT outline (RAIL_TYPE MRT) only 4.3 m from the LRT label's centroid; subtype conflict.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-033",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:PUNGGOL LRT STATION",
+        "name": "PUNGGOL LRT STATION",
+        "lon": 103.9019571,
+        "lat": 1.4043695,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21635, 21637],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5175",
+        "name": "PUNGGOL",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.902345,
+        "lat": 1.4050799
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "no",
+      "proposedClass": "rejected",
+      "ruleIds": ["R-REJ-LIFECYCLE"],
+      "reason": "The outline PUNGGOL is an MRT outline (0 m from the LRT centroid); subtype conflict; the LRT outline is PUNGGOL CENTRAL.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-034",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:DOWNTOWN MRT STATION",
+        "name": "DOWNTOWN MRT STATION",
+        "lon": 103.8527711,
+        "lat": 1.2795532,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 6,
+          "exitObjectIds": [21278, 21279, 21280, 21441, 21442, 21642],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5208",
+        "name": null,
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8528687,
+        "lat": 1.2794135
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q5303492",
+          "name": "Downtown station",
+          "lon": 103.852931,
+          "lat": 1.279458,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q5303492",
+          "properties": {
+            "stationCodes": ["DT17"],
+            "dateOfOfficialOpening": "2013-12-22"
+          },
+          "distanceFromRecordAMetres": 20.7
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "The only URA outline within the tight band has a null NAME; it contains the exit centroid (0 m). No name to compare, so spatial-only. (The Wikidata item named Downtown is close by.)",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-035",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:MAXWELL MRT STATION",
+        "name": "MAXWELL MRT STATION",
+        "lon": 103.8439921,
+        "lat": 1.2807151,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 3,
+          "exitObjectIds": [21551, 21552, 21553],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5308",
+        "name": null,
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8440569,
+        "lat": 1.2806037
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q6796128",
+          "name": "Maxwell MRT station",
+          "lon": 103.844,
+          "lat": 1.2803,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q6796128",
+          "properties": {
+            "stationCodes": [],
+            "dateOfOfficialOpening": "2022-11-13"
+          },
+          "distanceFromRecordAMetres": 45.9
+        }
+      ],
+      "distanceMetres": 0,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "The only URA outline within the tight band has a null NAME; it contains the exit centroid (0 m).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-036",
+      "relation": "same-entity",
+      "recordA": {
+        "sourceId": "lta-mrt-exit-geojson",
+        "sourceRecordId": "STATION_NA:ORCHARD BOULEVARD MRT STATION",
+        "name": "ORCHARD BOULEVARD MRT STATION",
+        "lon": 103.8237668,
+        "lat": 1.3030436,
+        "positionKind": "derived-centroid-of-exits",
+        "properties": {
+          "derivation": "arithmetic mean of the WGS84 lon/lat of the exits sharing this STATION_NA label (as buildMrtStationsGeoJson does)",
+          "exitCount": 2,
+          "exitObjectIds": [21136, 21137],
+          "labelIsStationCode": false
+        }
+      },
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5333",
+        "name": null,
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8235676,
+        "lat": 1.302981
+      },
+      "corroboratingRecords": [
+        {
+          "sourceId": "wikidata-sparql",
+          "sourceRecordId": "Q7100179",
+          "name": "Orchard Boulevard MRT station",
+          "lon": 103.8251,
+          "lat": 1.3024,
+          "positionKind": "source-point",
+          "url": "https://www.wikidata.org/wiki/Q7100179",
+          "properties": {
+            "stationCodes": [],
+            "dateOfOfficialOpening": "2022-11-13"
+          },
+          "distanceFromRecordAMetres": 164.6
+        }
+      ],
+      "distanceMetres": 17.9,
+      "distanceMethod": "PostGIS geography ST_Distance on WGS84 (spheroidal, straight line; never a walking distance; 0 means the point lies inside the polygon)",
+      "proposedRelationHolds": "yes",
+      "proposedClass": "rule-supported",
+      "ruleIds": ["R-RS-SPATIAL-ONLY"],
+      "reason": "The only URA outline within the tight band has a null NAME and is 17.9 m from the exit centroid.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-037",
+      "relation": "same-entity",
+      "recordA": null,
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5255",
+        "name": "AVIATION PARK",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 104.0037452,
+        "lat": 1.3701657
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "The URA outline AVIATION PARK has no LTA exit label within 150 m: the exits file does not list it. The outline layer has no status field, so whether the station is planned, under construction or open is not stated (UNVERIFIED).",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-038",
+      "relation": "same-entity",
+      "recordA": null,
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5130",
+        "name": "JURONG TOWN HALL",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7451952,
+        "lat": 1.3264422
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "The URA outline JURONG TOWN HALL has no LTA exit label within 150 m.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-039",
+      "relation": "same-entity",
+      "recordA": null,
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5278",
+        "name": "TENGAH",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "ABOVEGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.7300135,
+        "lat": 1.3662664
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "The URA outline TENGAH has no LTA exit label within 150 m.",
+      "reviewStatus": "unapproved"
+    },
+    {
+      "id": "mrt_station-040",
+      "relation": "same-entity",
+      "recordA": null,
+      "recordB": {
+        "sourceId": "ura-mp2019-rail-station-amendment",
+        "sourceRecordId": "5133",
+        "name": "DEFU",
+        "geometryType": "Polygon",
+        "positionKind": "representative-point-of-polygon",
+        "properties": {
+          "RAIL_TYPE": "MRT",
+          "GRND_LEVEL": "UNDERGROUND",
+          "FMEL_UPD_D": "20200519152729"
+        },
+        "lon": 103.8998291,
+        "lat": 1.3623925
+      },
+      "corroboratingRecords": [],
+      "distanceMetres": null,
+      "distanceMethod": null,
+      "proposedRelationHolds": "no-counterpart-in-sample",
+      "proposedClass": "unmatched",
+      "ruleIds": ["R-UNM-NO-CANDIDATE"],
+      "reason": "The URA outline DEFU has no LTA exit label within 150 m.",
+      "reviewStatus": "unapproved"
+    }
+  ]
+}
