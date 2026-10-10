@@ -349,7 +349,7 @@ try {
   };
 
   // 4. The Worker under workerd.
-  function workerConfig(originLimit, clientLimit, vars = {}) {
+  function workerConfig(originLimit, clientLimit) {
     return JSON.stringify(
       {
         name: "hdb-realpath-local",
@@ -384,7 +384,6 @@ try {
           D1_PUBLIC_CACHE_EPOCH: "unused",
           NEON_PUBLIC_CACHE_EPOCH: "local-rehearsal",
           NEON_SPATIAL_ENABLED: "true",
-          ...vars,
         },
       },
       null,
