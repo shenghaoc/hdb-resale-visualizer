@@ -1,0 +1,22 @@
+# One-time source formatting inspection, no artifact uploads or external state writes.
+name: Temporary integration formatter preview
+on:
+  push:
+    branches:
+      - feat/neon-nearby-budget
+permissions:
+  contents: read
+jobs:
+  format-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          node-version: "24"
+          cache: true
+          run-install: false
+      - run: vp install
+      - run: |
+          vp fmt tests/integration/neon-nearby-budget.mjs
+          git diff -- tests/integration/neon-nearby-budget.mjs
