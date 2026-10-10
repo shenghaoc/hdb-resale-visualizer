@@ -17,16 +17,16 @@ The existing D1 rollback path may return old detail documents without this optio
 
 The read-only 2026-10-10 SQL calculation covered all **9,730** detail documents using the snapped query centre and the same PostGIS/ordering semantics as the live spatial SQL. The new top-five arrays held **29,602** exits; **268** blocks had a verified empty list.
 
-| Metric | Increase |
-| --- | ---: |
+| Metric                    |        Increase |
+| ------------------------- | --------------: |
 | Total `jsonb::text` delta | 4,032,907 bytes |
-| Mean per document | 414.48 bytes |
-| Median | 414 bytes |
-| 95th percentile | 674 bytes |
-| Maximum | 685 bytes |
-| Minimum (empty) | 22 bytes |
-| Mean full detail before | 14,941.2 bytes |
-| Mean full detail after | 15,355.7 bytes |
+| Mean per document         |    414.48 bytes |
+| Median                    |       414 bytes |
+| 95th percentile           |       674 bytes |
+| Maximum                   |       685 bytes |
+| Minimum (empty)           |        22 bytes |
+| Mean full detail before   |  14,941.2 bytes |
+| Mean full detail after    |  15,355.7 bytes |
 
 These are **logical JSON text** sizes. They are not measurements of PostgreSQL heap/TOAST pages, WAL, Neon billed storage or network egress. Those remain part of #422's child-promotion acceptance.
 
