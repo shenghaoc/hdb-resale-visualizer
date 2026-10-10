@@ -38,6 +38,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**Feature-First Refactor**](.kiro/specs/feature-first-refactor/tasks.md) — Incremental ownership migration across listing check, shortlist, map explorer, search profile, block detail, entities, and shared modules.
 - [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
+- [**POI Source Integration**](.kiro/specs/poi-source-integration/tasks.md) — Multi-source provenance, deterministic entity resolution with explicit uncertainty, an SVY21 coordinate contract and quarantine for the PostGIS nearby kinds (design and research only; no source is admitted). Analysis: `docs/architecture/poi-source-admission.md`.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
 
