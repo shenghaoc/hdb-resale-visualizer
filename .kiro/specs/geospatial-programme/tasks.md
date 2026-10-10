@@ -15,7 +15,11 @@
 
 - [~] **TP0.2** Spec and evidence (#422), including the schema-trigger trap, the
   cadence-versus-guard numbers and the Hyperdrive flip.
-  -> Owner answers decisions 1 to 5 in `design.md`.
+  -> Decided 2026-10-10: blue/green publication (decision 1) and a weekly cadence
+  under the existing 1,000 guard (decision 2), the latter confirmed to fit the
+  monthly transfer allowance (about 0.50 GB of 5 GB for the mirror-verified
+  procedure). Still open: the COPY ceiling or split rule, cache-only coverage and
+  the number of serving children (decisions 3 to 5 in that spec's `design.md`).
 
 - [ ] **TP0.3** Target registry, server-side target assertion, plan-hash approval
   (Phase 2 of that spec).
@@ -60,10 +64,13 @@
 
 - [~] **T1.1** Source inventory, licence analysis and admission recommendation
   (#428, draft).
-  -> Each licence read from its primary text; owner decisions OD1 to OD8, among
-  them OpenStreetMap under ODbL share-alike. Only `mrt_station` has two
-  independent, licence-clear, anonymous sources. Risk: licence obligations that
-  conflict with storing derived rows.
+  -> Each licence read from its primary text; owner decisions OD1 to OD8. OD1 is
+  decided (2026-10-10): OpenStreetMap is not used. Second sources are now proposed
+  with their licences stated (URA rail outlines and Land Use under SODL, Overture
+  Places under CDLA-Permissive-2.0, Apache-2.0 and CC0-1.0 per provider); only
+  `mrt_station` has two sampled, licence-clear, anonymous sources. The label
+  proposals moved to their own PR (#429) for the owner's review before any metric
+  uses them. Risk: licence obligations that conflict with storing derived rows.
 
 - [~] **T1.2** CRS contract tests (register item 26 and `design.md` 2.4) (#427, draft).
   -> Static CI guard plus a read-only PostGIS verifier (swap, relabel,
