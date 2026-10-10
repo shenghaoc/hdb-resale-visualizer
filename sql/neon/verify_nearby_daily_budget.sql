@@ -8,6 +8,8 @@ DECLARE
   second boolean;
   third boolean;
   count_after integer;
+  rejected boolean := false;
+  diagnostic text;
 BEGIN
   DELETE FROM public.nearby_daily_budget
     WHERE day = (clock_timestamp() AT TIME ZONE 'UTC')::date;
@@ -24,10 +26,14 @@ BEGIN
   BEGIN
     PERFORM public.reserve_nearby_statement(10001);
     RAISE EXCEPTION 'Out-of-range ceiling was admitted';
-  EXCEPTION WHEN check_violation OR raise_exception THEN
-    -- A violation of the ceiling is required. Recheck exact message below in application-level tests.
-    NULL;
+  EXCEPTION WHEN raise_exception THEN
+    GET STACKED DIAGNOSTICS diagnostic = MESSAGE_TEXT;
+    IF diagnostic <> 'Invalid nearby daily ceiling' THEN
+      RAISE;
+    END IF;
+    rejected := true;
   END;
+  ASSERT rejected, 'an out-of-range ceiling must be rejected';
   RAISE NOTICE 'Neon nearby daily budget checked, state will be rolled back';
 END;
 $verify$;
