@@ -65,7 +65,7 @@
   `tests/deployed-path/README.md`. (R2.3)
 
 - [ ] **T3.3** Build and deploy the temporary Worker with its own name, its own
-  rate-limit namespace ids, a throwaway D1 database carrying migration 0012, the
+  rate-limit namespace ids, a disposable Neon fork carrying PostGIS migration 001 and quota migration 002, plus a separate budget-only Hyperdrive binding, the
   flag on and the origin limit lowered.
   -> Not started. (R2.3)
 
@@ -74,7 +74,7 @@
   `docs/architecture/postgis-nearby.md`.
   -> Not started. (R2.4-R2.6)
 
-- [ ] **T3.5** Tear down: delete the temporary Worker, its throwaway D1 database and
+- [ ] **T3.5** Tear down: delete the temporary Worker, its temporary budget Hyperdrive and
   the Hyperdrive configuration, and the local credential file. The disposable
   forks are deleted by the owner's instruction once this phase is done.
   -> Not started. (R2.7)
@@ -85,7 +85,7 @@
   -> Phase 1-2 gate recorded in the PR description.
 
 - [x] **T4.2** Protect the Hyperdrive Free daily budget before the flag opens.
-  -> Done as T4.4 to T4.6 below: one statement per miss, a global daily ceiling
+  -> Done as T4.4 to T4.6 below: one spatial SELECT and a branch-scoped Neon daily admission ceiling
   that fails closed, and an evaluation of precomputing the UI path. (R4.1-R4.7)
 
 - [x] **T4.4** One statement per nearby miss: `NEARBY_LABELLED_SQL`, the
@@ -93,9 +93,9 @@
   -> Measured on PostgreSQL 18.6: 10 misses, exactly 10 statements; a control
   route through the shared cache costs 3. Other routes unchanged. (R4.1, R4.5)
 
-- [x] **T4.5** The global daily statement ceiling: `functions/_lib/nearby-budget.ts`,
-  migration `0012_nearby_statement_budget.sql`, `NEARBY_DAILY_STATEMENT_CEILING`.
-  -> Fails closed in every case listed in R4.4; real SQLite and the real D1
+- [x] **T4.5** The Neon daily spatial-admission ceiling: `functions/_lib/nearby-budget.ts`,
+  Neon migration `sql/neon/002_nearby_daily_budget.sql`, `NEARBY_DAILY_STATEMENT_CEILING`.
+  -> Fails closed in every case listed in R4.4; mock response gates and the PostgreSQL-only
   emulator. (R4.2-R4.4, R4.6, R4.7)
 
 - [x] **T4.6** Evaluate precomputing the nearest exits per block at publish time.
@@ -104,9 +104,9 @@
   built.
 
 - [ ] **T4.7** Owner decisions: the ceiling value (10,000, chosen without a
-  measurement of the site's current Hyperdrive use); D1 against a Durable Object
+  measurement of the site's current Hyperdrive use); Neon role isolation and blue/green counter continuity
   in a separate Worker for the counter; whether to adopt the precomputed list.
 
 - [ ] **T4.3** Ask for approval before the spatial migration is applied to the
-  serving branch, migration 0012 is applied to the remote D1 database, or the flag
+  serving branch, Neon migration 002 is verified on the disposable fork, or the flag
   is opened. (R3.2, R4.7)
