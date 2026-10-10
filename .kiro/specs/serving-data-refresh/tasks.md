@@ -109,6 +109,9 @@
   verifier, temporary Worker and Hyperdrive acceptance, teardown.
   -> Receipts; the verifier reports zero mismatches. (R6.1, R6.3)
 
+- [ ] **T5.1a** After the benchmark base digest proof, run PR #432's `sql/neon/publish_block_detail_nearby_mrt_exits.sql` on the unserved serving child (after PostGIS migration 001), with 9,730 SQL-differential checks, full coverage, no-op replay, manifest-version separation and measured JSON/WAL/storage growth. The child-only stage must not inflate the old COPY stage or alter upstream change-count guards.
+  -> Approve only if all checks pass and budgets have headroom. (R6.1a, R6.1b)
+
 - [ ] **T5.2** Rehearse the rollback: origin back to the previous child, pool
   restart, manifest check.
   -> Measured time to a consistent public manifest. (R6.2)

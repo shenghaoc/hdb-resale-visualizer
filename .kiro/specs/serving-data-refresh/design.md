@@ -70,6 +70,8 @@ official sources (anonymous, paced)
    -> verify (digests, counts, replay = no-op)
    -> fork benchmark -> serving candidate (copy-on-write child)
    -> child: role defaults + migration 001 + differential verifier
+   -> child: materialize top-five MRT exits into block_details JSON (draft #432)
+   -> child: verify derived JSON + manifest marker AFTER base digest proof
    -> acceptance through a temporary Worker + Hyperdrive
    -> Hyperdrive origin -> child                                --> OWNER approves flip
    -> observe; keep previous child for rollback; retire later (owner)
@@ -129,6 +131,7 @@ others are read-only or local.
 7. **approval:** apply to the benchmark; verify; replay must be a no-op.
 8. **approval:** fork the benchmark into the next serving child; apply role
    defaults and migration 001; run the differential verifier.
+8a. **child-only derived publication:** after the benchmark's nine-table digest equality proof, run `sql/neon/publish_block_detail_nearby_mrt_exits.sql` from draft #432 on the unserved child. It atomically stores each block's top-five MRT exits and updates a private manifest identity marker LAST; validate 9,730 differential answers, empty lists, total size growth and a replay no-op. The new manifest hash forces a new cache generation. Never include this JSON in the benchmark COPY stage.
 9. **approval:** temporary Worker and Hyperdrive; run the acceptance set; delete
    both.
 10. **approval:** change the Hyperdrive origin to the child; restart the pool;
@@ -234,3 +237,11 @@ Still needed from the owner:
 3. COPY ceiling or a reviewed split rule (F7).
 4. Cache-only coverage, or a way to resolve new addresses.
 5. How many serving children to keep for rollback.
+
+## Child-only PostGIS MRT exit materialization (draft #432)
+
+The existing UI only needs five exits per **known HDB block** and therefore must not depend on the disabled public arbitrary-coordinate endpoint. PR #432 provides `sql/neon/publish_block_detail_nearby_mrt_exits.sql`: after migration 001, it computes nearest-exit-per-source-STATION_NA over all candidates within 1,500 metres, using the API's snapped 0.0001-degree centres, spheroidal PostGIS distance and deterministic tie-breaking. It adds `nearbyMrtExits` to the **already published `block_details.json`** and writes `nearbyMrtExitsMaterialization` in the private manifest as the last statement of a single transaction.
+
+**Stage ordering is mandatory:** the benchmark publisher continues to own its original schema and guarded 89.76 MB COPY stage; child-only materialization runs **after** base digest equality has been proved on the fork but **before** promotion and temporary Worker acceptance. Since the manifest JSON changes in that child, do not demand equality to the benchmark's manifest after child-only derivation; instead independently verify the derived-field hash, manifest marker, block coverage, and that the remaining public source facts still match the benchmark. Any failure rejects the child and leaves the old serving branch unchanged. Replaying on an unchanged child must update zero rows and preserve the manifest identity. The change-count guard for upstream transactions is **not** bypassed or loosened; this is a separately bounded, derived-only child stage.
+
+Read-only measurement on a disposable serving fork, for 9,730 details with the snapped API semantics: stored top-five arrays add **4,032,907 bytes** of JSON text overall; mean **414.48 bytes/document**, median **414**, p95 **674**, maximum **685**, minimum **22**. Mean full detail rises from 14,941.2 to 15,355.7 bytes. The physical storage, WAL impact and full-promotion timing remain unmeasured; #422's plan gate must report these and stop if branch storage or operation budgets are insufficient. No runtime D1/Neon counter, new Hyperdrive configuration or write-capable runtime role is involved.
