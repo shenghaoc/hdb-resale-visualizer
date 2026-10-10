@@ -113,7 +113,7 @@ Static assets fall through to `dist/` with SPA `not_found_handling`.
 2. Geocoding and proximity metrics are computed in `scripts/` only and persisted to D1; the cache tables are upserted, never truncated.
 3. Shared data structures must live in `shared/` and be imported by both `scripts/` and `src/`.
 4. D1 schema changes are forward-only: add a new file to `migrations/`, never edit a previously-applied migration.
-5. The only runtime D1 write path for user data is opt-in shortlist sync. Do not add other user-data writes. The one other runtime write is the operational counter `nearby_statement_budget` (migration `0012`), which holds a daily statement count and no user data.
+5. The only runtime D1 write path for user data is opt-in shortlist sync. Do not add other user-data writes. Nearby-search budget reservations use a narrowly scoped Neon function through a separate Hyperdrive binding; no D1 migration or counter is added.
 
 ## Enforcement Checks
 
