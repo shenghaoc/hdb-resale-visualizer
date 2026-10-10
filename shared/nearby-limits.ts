@@ -30,15 +30,3 @@ export const NEARBY_ORIGIN_RATE_LIMIT_KEY = "nearby-origin";
  */
 export const NEARBY_STATEMENTS_PER_MISS = 1;
 
-/** Workers Free plan: Hyperdrive database statements per day, account-wide, reset at 00:00 UTC. */
-export const HYPERDRIVE_FREE_DAILY_STATEMENTS = 100_000;
-
-/**
- * Global ceiling on the statements the nearby route may send through Hyperdrive per UTC day, kept in D1
- * (functions/_lib/nearby-budget.ts). Once it is spent every cache miss is refused with 503 until 00:00 UTC; cache
- * hits are unaffected. It is a tenth of the Free allowance, so a runaway nearby workload cannot starve the rest of
- * the site's database reads, and at the measured size of the block panel's answer (about 1.3 KB) spending all of it
- * moves roughly 15 MB a day out of Neon. Raise it only together with the plan; `NEARBY_DAILY_STATEMENT_CEILING`
- * in the Worker's vars overrides it (the temporary verification Worker uses a tiny value to see it trip).
- */
-export const NEARBY_DAILY_STATEMENT_CEILING = 10_000;
