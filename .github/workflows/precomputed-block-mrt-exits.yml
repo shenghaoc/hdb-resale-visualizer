@@ -1,0 +1,45 @@
+# Disposable Linux PostgreSQL/PostGIS integration. Never connects to Neon or uploads evidence.
+name: Precomputed MRT exits SQL parity
+on:
+  pull_request:
+    paths:
+      - "sql/neon/publish_block_detail_nearby_mrt_exits.sql"
+      - "tests/integration/precomputed-block-mrt-exits.mjs"
+      - ".github/workflows/precomputed-block-mrt-exits.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  postgis:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:18-3.6
+        env:
+          POSTGRES_DB: hdb_nearby_precompute_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: disposable-only
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd "pg_isready -U postgres -d hdb_nearby_precompute_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+          node-version: "24"
+          run-install: false
+      - run: vp install
+      - name: Verify shipped PostGIS SQL and published document contract
+        run: node --import tsx tests/integration/precomputed-block-mrt-exits.mjs
+        env:
+          HDB_DISPOSABLE_POSTGIS_TEST: "yes"
+          PGHOST: 127.0.0.1
+          PGPORT: "5432"
+          PGDATABASE: hdb_nearby_precompute_test
+          PGUSER: postgres
+          PGPASSWORD: disposable-only
