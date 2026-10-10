@@ -362,7 +362,7 @@ try {
   };
 
   // 4. The Worker under workerd.
-  function workerConfig(originLimit, clientLimit, vars = {}) {
+  function workerConfig(originLimit, clientLimit, vars = {}, budgetEnabled = true) {
     return JSON.stringify(
       {
         name: "hdb-realpath-local",
@@ -372,14 +372,6 @@ try {
         rules: [
           { type: "Data", globs: ["**/*.ttf"] },
           { type: "CompiledWasm", globs: ["**/*.wasm"] },
-        ],
-        // The daily statement budget lives in D1; locally that is the emulator, never a real database.
-        d1_databases: [
-          {
-            binding: "DB",
-            database_name: BUDGET_DB,
-            database_id: "00000000-0000-0000-0000-000000000001",
-          },
         ],
         ratelimits: [
           {
@@ -399,6 +391,11 @@ try {
             id: "00000000000000000000000000000000",
             localConnectionString: `postgresql://hdb_benchmark_runtime:local@${process.env.PGHOST ?? "127.0.0.1"}:${process.env.PGPORT ?? "5432"}/${DB}`,
           },
+          ...(budgetEnabled ? [          {
+            binding: "HDB_NEARBY_BUDGET",
+            id: "11111111111111111111111111111111",
+            localConnectionString: `postgresql://hdb_nearby_budget:local-test-only@${process.env.PGHOST ?? "127.0.0.1"}:${process.env.PGPORT ?? "5432"}/${DB}`,
+          }] : []),
         ],
         vars: {
           PUBLIC_DATA_BACKEND: "neon",
@@ -446,7 +443,7 @@ try {
     { vars = {}, migrate = true } = {},
   ) {
     const config = path.join(outDir, `wrangler.local.${label}.json`);
-    writeFileSync(config, workerConfig(originLimit, clientLimit, vars));
+    writeFileSync(config, workerConfig(originLimit, clientLimit, vars, migrate));
     const state = path.join(outDir, `wrangler-state-${label}`);
     rmSync(state, { recursive: true, force: true });
     // With migrate: false the budget table does not exist, which is how a missing or broken counter is rehearsed.
