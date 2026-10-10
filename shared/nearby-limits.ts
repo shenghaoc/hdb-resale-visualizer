@@ -24,21 +24,22 @@ export const NEARBY_ORIGIN_RATE_LIMIT = 300;
 export const NEARBY_ORIGIN_RATE_LIMIT_KEY = "nearby-origin";
 
 /**
- * Hyperdrive statements one nearby cache miss spends: the labelled spatial query is a single statement (places and
- * publication identity come back together). Every other public route spends three per miss, because the shared
- * cache reads the whole manifest before and after the handler; see docs/architecture/postgis-nearby.md.
+ * One budget-reservation statement through a restricted Neon Hyperdrive role, then one
+ * SELECT through the existing read-only Hyperdrive role. A rejected reservation spends
+ * only its own statement. The spatial SELECT itself still reads places and publication
+ * identity together without extra manifest round trips.
  */
-export const NEARBY_STATEMENTS_PER_MISS = 1;
+export const NEARBY_STATEMENTS_PER_MISS = 2;
 
-/** Workers Free plan: Hyperdrive database statements per day, account-wide, reset at 00:00 UTC. */
+/** Workers Free Hyperdrive hard allowance, counting all statements including refused reservations. */
 export const HYPERDRIVE_FREE_DAILY_STATEMENTS = 100_000;
 
 /**
- * Global ceiling on the statements the nearby route may send through Hyperdrive per UTC day, kept in D1
- * (functions/_lib/nearby-budget.ts). Once it is spent every cache miss is refused with 503 until 00:00 UTC; cache
- * hits are unaffected. It is a tenth of the Free allowance, so a runaway nearby workload cannot starve the rest of
- * the site's database reads, and at the measured size of the block panel's answer (about 1.3 KB) spending all of it
- * moves roughly 15 MB a day out of Neon. Raise it only together with the plan; `NEARBY_DAILY_STATEMENT_CEILING`
- * in the Worker's vars overrides it (the temporary verification Worker uses a tiny value to see it trip).
+ * Hard SQL maximum for admitted spatial searches per UTC day on one serving branch.
+ * The operator can lower this ceiling, never raise it. Unlike the old D1 proposal,
+ * this uses Neon itself: see sql/neon/002_nearby_daily_budget.sql.
+ *
+ * This is NOT a strict account-wide Hyperdrive statement cap: declined reservations
+ * still traverse Hyperdrive, and blue/green branches need controlled counter handoff.
  */
 export const NEARBY_DAILY_STATEMENT_CEILING = 10_000;
