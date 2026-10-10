@@ -115,11 +115,13 @@ describe("checkNearbyClientRateLimit", () => {
     expect(await response?.json()).toEqual({ error: "Nearby search is not configured" });
   });
 
-  it("fails open and logs when the limiter itself throws", async () => {
+  it("fails closed and logs when the client limiter throws", async () => {
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
-    expect(
-      await checkNearbyClientRateLimit(requestFrom("203.0.113.9"), limiter("throw")),
-    ).toBeNull();
+    const response = await checkNearbyClientRateLimit(requestFrom("203.0.113.9"), limiter("throw"));
+    expect(response?.status).toBe(503);
+    expect(response?.headers.get("retry-after")).toBe("60");
+    expect(response?.headers.get("cache-control")).toBe("no-store");
+    expect(await response?.json()).toEqual({ error: "Nearby search is temporarily unavailable" });
     expect(log).toHaveBeenCalledOnce();
   });
 });

@@ -48,17 +48,10 @@ import {
   checkNearbyClientRateLimit,
   checkNearbyOriginRateLimit,
 } from "../functions/_lib/nearby-rate-limit";
-import { reserveNearbyStatements } from "../functions/_lib/nearby-budget";
 
-/**
- * Everything that must hold before a nearby cache miss may send its statement to Neon: the per-location rate
- * limit, then the global daily statement ceiling. Both fail closed; the first refusal is the answer.
- */
+/** Cache misses must pass this fail-closed limiter before a single PostGIS SELECT. */
 async function admitNearbyDatabaseRead(env: Env): Promise<Response | null> {
-  return (
-    (await checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER)) ??
-    (await reserveNearbyStatements(env.DB, env.NEARBY_DAILY_STATEMENT_CEILING))
-  );
+  return checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER);
 }
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
@@ -259,7 +252,7 @@ export default {
           // Nearby answers come from ONE statement that also reports the publication it read, so the cache layer
           // needs no manifest reads around it. The cache layer calls this only when the answer must come from the
           // database; the admission checks run inside it, after validation and just before that statement, so a
-          // request that never reaches the database never spends the rate-limit or statement allowance.
+          // invalid requests never consume a cache-miss rate-limit allowance.
           const atomic: AtomicRead | undefined =
             routeId === "nearby-places"
               ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv))

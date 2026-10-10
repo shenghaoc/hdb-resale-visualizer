@@ -1,6 +1,3 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { DatabaseSync } from "node:sqlite";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { NEARBY_LABELLED_SQL } from "../../worker/nearby-spatial-query";
 
@@ -60,46 +57,18 @@ const limiter = (success: boolean) => ({
   limit: vi.fn(async (_options: { key: string }) => ({ success })),
 });
 
-const budgetMigration = readFileSync(
-  join(process.cwd(), "migrations/0012_nearby_statement_budget.sql"),
-  "utf8",
-);
-/** The daily budget table on real SQLite (the same engine as D1), behind the slice of the D1 API the Worker uses. */
-const budgetDatabase = () => {
-  const sqlite = new DatabaseSync(":memory:");
-  sqlite.exec(budgetMigration);
-  return {
-    sqlite,
-    prepare: (sql: string) => ({
-      bind: (...values: unknown[]) => ({
-        run: async () => ({
-          meta: { changes: Number(sqlite.prepare(sql).run(...(values as never[])).changes) },
-        }),
-      }),
-    }),
-  };
-};
-const budgetRows = (db: ReturnType<typeof budgetDatabase>) =>
-  db.sqlite.prepare("SELECT day, statements FROM nearby_statement_budget").all() as {
-    day: string;
-    statements: number;
-  }[];
-
 /**
  * The shipped `wrangler.jsonc` shape: Neon selected, Hyperdrive bound, spatial release gate off. With the gate open
- * the D1 binding is a fresh budget database; otherwise it is a trap, because nothing may read D1 for these routes.
+ * the D1 binding is a trap: public nearby search must never read it.
  */
 const deployedEnv = (overrides: Record<string, unknown> = {}) =>
   ({
-    DB:
-      overrides.NEON_SPATIAL_ENABLED === "true"
-        ? budgetDatabase()
-        : {
-            prepare: () => {
-              spies.d1();
-              throw new Error("D1 must not be read by these routes");
-            },
-          },
+    DB: {
+      prepare: () => {
+        spies.d1();
+        throw new Error("D1 must not be read for public nearby search");
+      },
+    },
     PUBLIC_DATA_BACKEND: "neon",
     NEON_PUBLIC_CACHE_EPOCH: "neon-test-epoch",
     NEON_SPATIAL_ENABLED: "false",
@@ -391,17 +360,18 @@ describe("nearby rate limiting in the Worker entry", () => {
     log.mockRestore();
   });
 
-  it("lets a request through when only the client limiter throws, because the origin guards still apply", async () => {
+  it("fails closed when the client limiter throws, without touching the database", async () => {
     const log = vi.spyOn(console, "error").mockImplementation(() => {});
     const response = await call(deployedEnv({ ...open, NEARBY_IP_LIMITER: boom() }), nearbyPath);
-    expect(response.status).toBe(200);
-    expect(nearbySqlCalls()).toBe(1);
+    expect(response.status).toBe(503);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(nearbySqlCalls()).toBe(0);
     expect(log).toHaveBeenCalledOnce();
     log.mockRestore();
   });
 });
 
-describe("one statement per cache miss, under a global daily ceiling", () => {
+describe("one labelled SQL statement per cache miss without a counter", () => {
   const open = { NEON_SPATIAL_ENABLED: "true" };
   const labelled = () => spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL);
   /** Statements that read the manifest on their own (the labelled statement reads it inside the same query). */
@@ -409,8 +379,6 @@ describe("one statement per cache miss, under a global daily ceiling", () => {
     spies.query.mock.calls.filter(
       ([sql]) => sql !== NEARBY_LABELLED_SQL && String(sql).includes("FROM public.manifest"),
     ).length;
-  const centre = (index: number) =>
-    `/api/nearby-places?lat=1.${3000 + index}&lng=103.8200&radius=500&types=mrt_exit`;
   const pointerKeys = (entries: Map<string, Response>) =>
     [...entries.keys()].filter((key) => key.endsWith("/__public-data-cache/v1/pointer"));
 
@@ -447,121 +415,10 @@ describe("one statement per cache miss, under a global daily ceiling", () => {
     expect(manifestReads()).toBe(0);
   });
 
-  it("draws one statement from today's allowance per miss and nothing for hits", async () => {
+  it("invalid requests and the D1 rollback backend spend no origin budget", async () => {
     inMemoryCache();
-    const db = budgetDatabase();
-    const env = deployedEnv({ ...open, DB: db });
-    await call(env, nearbyPath);
-    await call(env, nearbyPath);
-    await call(env, nearbyPath);
-    await call(env, centre(1));
-    expect(budgetRows(db)).toEqual([{ day: new Date().toISOString().slice(0, 10), statements: 2 }]);
-  });
-
-  it("refuses misses once the day's ceiling is spent, keeps serving cached answers, and runs no SQL for the refused", async () => {
-    const entries = inMemoryCache();
-    const db = budgetDatabase();
-    const env = deployedEnv({ ...open, DB: db, NEARBY_DAILY_STATEMENT_CEILING: "2" });
-    expect((await call(env, centre(1))).status).toBe(200);
-    expect((await call(env, centre(2))).status).toBe(200);
-    spies.query.mockClear();
-
-    const refused = await call(env, centre(3));
-    expect(refused.status).toBe(503);
-    expect(refused.headers.get("cache-control")).toBe("no-store");
-    expect(Number(refused.headers.get("retry-after"))).toBeGreaterThanOrEqual(60);
-    expect(Number(refused.headers.get("retry-after"))).toBeLessThanOrEqual(86_400);
-    expect(await refused.json()).toEqual({
-      error: "Nearby search has reached its daily limit; try again after 00:00 UTC",
-    });
-    expect(spies.query).not.toHaveBeenCalled();
-    expect(budgetRows(db)[0].statements).toBe(2);
-    expect([...entries.keys()].filter((key) => key.includes(`lat=1.3003`))).toHaveLength(0);
-
-    // Answers that are already cached are unaffected: they never reach the allowance.
-    const cached = await call(env, centre(1));
-    expect(cached.status).toBe(200);
-    expect(cached.headers.get("x-data-cache")).toBe("HIT");
-    expect(spies.query).not.toHaveBeenCalled();
-  });
-
-  it("starts a fresh allowance on the next UTC day", async () => {
-    inMemoryCache();
-    vi.useFakeTimers({ toFake: ["Date"] });
-    try {
-      vi.setSystemTime(new Date("2026-10-10T23:59:30Z"));
-      const db = budgetDatabase();
-      const env = deployedEnv({ ...open, DB: db, NEARBY_DAILY_STATEMENT_CEILING: "1" });
-      expect((await call(env, centre(1))).status).toBe(200);
-      const refused = await call(env, centre(2));
-      expect(refused.status).toBe(503);
-      expect(refused.headers.get("retry-after")).toBe("60"); // never less than the limiter window
-      vi.setSystemTime(new Date("2026-10-11T00:00:01Z"));
-      expect((await call(env, centre(2))).status).toBe(200);
-      expect(budgetRows(db)).toEqual([
-        { day: "2026-10-10", statements: 1 },
-        { day: "2026-10-11", statements: 1 },
-      ]);
-    } finally {
-      vi.useRealTimers();
-    }
-  });
-
-  it("fails closed when the counter cannot be used: no binding, a faulty database, a bad ceiling", async () => {
-    const entries = inMemoryCache();
-    const log = vi.spyOn(console, "error").mockImplementation(() => {});
-
-    const noBinding = await call(deployedEnv({ ...open, DB: undefined }), nearbyPath);
-    expect(noBinding.status).toBe(503);
-    expect(await noBinding.json()).toEqual({ error: "Nearby search is not configured" });
-
-    const broken = {
-      prepare: () => ({
-        bind: () => ({ run: async () => Promise.reject(new Error("D1 unavailable")) }),
-      }),
-    };
-    const faulty = await call(deployedEnv({ ...open, DB: broken }), nearbyPath);
-    expect(faulty.status).toBe(503);
-    expect(await faulty.json()).toEqual({ error: "Nearby search is temporarily unavailable" });
-    expect(faulty.headers.get("retry-after")).toBe("60");
-
-    const missingTable = {
-      prepare: () => {
-        throw new Error("no such table: nearby_statement_budget");
-      },
-    };
-    expect((await call(deployedEnv({ ...open, DB: missingTable }), nearbyPath)).status).toBe(503);
-
-    for (const bad of ["abc", "0", "-5", "1.5", "100001", ""]) {
-      const response = await call(
-        deployedEnv({ ...open, NEARBY_DAILY_STATEMENT_CEILING: bad }),
-        nearbyPath,
-      );
-      expect(response.status, bad).toBe(503);
-      expect(await response.json(), bad).toEqual({ error: "Nearby search is not configured" });
-    }
-    expect(spies.query).not.toHaveBeenCalled();
-    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
-    log.mockRestore();
-  });
-
-  it("does not touch the counter when the origin limiter refuses, nor the database when either refuses", async () => {
-    inMemoryCache();
-    const db = budgetDatabase();
-    const denied = await call(
-      deployedEnv({ ...open, DB: db, NEARBY_ORIGIN_LIMITER: limiter(false) }),
-      nearbyPath,
-    );
-    expect(denied.status).toBe(503);
-    expect(budgetRows(db)).toEqual([]);
-    expect(spies.query).not.toHaveBeenCalled();
-  });
-
-  it("spends no allowance on requests that never reach the database: invalid input and a backend without PostGIS", async () => {
-    inMemoryCache();
-    const db = budgetDatabase();
     const origin = limiter(true);
-    const env = deployedEnv({ ...open, DB: db, NEARBY_ORIGIN_LIMITER: origin });
+    const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin });
     for (const bad of [
       "/api/nearby-places?lat=2&lng=103.8",
       "/api/nearby-places?lat=1.35&lng=103.75&radius=9999",
@@ -571,18 +428,11 @@ describe("one statement per cache miss, under a global daily ceiling", () => {
       expect((await call(env, bad)).status, bad).toBe(400);
     }
     expect(origin.limit).not.toHaveBeenCalled();
-    expect(budgetRows(db)).toEqual([]);
     expect(spies.query).not.toHaveBeenCalled();
-
-    const rollback = deployedEnv({
-      ...open,
-      DB: db,
-      NEARBY_ORIGIN_LIMITER: origin,
-      PUBLIC_DATA_BACKEND: "d1",
-    });
+    const rollback = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin, PUBLIC_DATA_BACKEND: "d1" });
     expect((await call(rollback, nearbyPath)).status).toBe(503);
     expect(origin.limit).not.toHaveBeenCalled();
-    expect(budgetRows(db)).toEqual([]);
+    expect(spies.d1).not.toHaveBeenCalled();
   });
 
   it("does not store, and labels, an answer read while a publication is in progress", async () => {

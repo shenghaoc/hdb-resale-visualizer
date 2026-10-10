@@ -55,9 +55,7 @@ const notConfigured = () =>
 /**
  * Per-client limit, checked before the cache or the database is touched. A missing binding while the
  * feature is enabled is a deployment mistake, so it answers 503 instead of silently running unlimited.
- * A limiter that throws is treated as unavailable: the request proceeds and the failure is logged. That is
- * safe only because this limit is about fairness between clients, not about protecting the database: every
- * request that would reach the database still has to pass the origin checks, which fail closed.
+ * A limiter that throws is treated as unavailable and fails closed with 503; no user request is admitted unchecked.
  */
 export async function checkNearbyClientRateLimit(
   request: Request,
@@ -68,8 +66,11 @@ export async function checkNearbyClientRateLimit(
     const { success } = await limiter.limit({ key: nearbyClientRateLimitKey(request) });
     if (success) return null;
   } catch (error) {
-    console.error("Nearby client rate limiter failed, allowing request:", error);
-    return null;
+    console.error("Nearby client rate limiter failed, refusing request:", error);
+    return privateJsonResponse(
+      { error: "Nearby search is temporarily unavailable" },
+      { status: 503, headers: { "Retry-After": String(NEARBY_RATE_LIMIT_PERIOD_SEC) } },
+    );
   }
   return privateJsonResponse(
     { error: "Too Many Requests" },
