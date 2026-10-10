@@ -175,11 +175,62 @@ with a fresh Console reading and fails closed when it is unknown.
 - **Hyperdrive flip.** Existing pooled connections finish on the old origin.
   Mitigation: restart the pool, then verify the public manifest.
 
-## Decisions needed from the owner
+## Cadence budget (confirmed 2026-10-10)
 
-1. Blue/green (recommended) or in-place publication on the serving branch.
-2. Cadence and guard: monthly with a guard derived from F6 (for example above the
-   observed maximum of 3,036), or weekly under the existing 1,000 guard.
+The owner decided on weekly refreshes under the existing change guard,
+**provided** the monthly transfer cost fits. This is the arithmetic, from
+measurements and the owner's own cutover model (`refresh-policy.ts`:
+5,000,000,000 B transfer allowance, 1,000,000,000 B reserve):
+
+| Item | Value | Source |
+| --- | --- | --- |
+| Transfer allowance, Free (`free_v3`) | 5 GB a month, planning figure 5,000,000,000 B | Neon plans documentation; `NEON_MONTHLY_TRANSFER_LIMIT_BYTES` |
+| Reserve kept | 1,000,000,000 B | `PROPOSED_TRANSFER_RESERVE_BYTES` |
+| One full corpus reconciliation read | 493,707,924 B (219 queries, 14.9 s) | measured baseline, cutover plan |
+| One server-side digest proof (nine tables) | one row per table, well under 1 MB; about a minute of compute | October equality proof; the size is an estimate |
+| Fork, differential verifier, acceptance run | under 1 MB of results; about 0.5 CU-hours of startup reserve | runbook steps 8 and 9 |
+| October so far (2026-10-10, live API reading) | 1,048,962,365 B transferred; 12,224 compute seconds; 452,190,208 B stored (all branches) | Neon project API, period 2026-10-01 to 2026-11-01 |
+
+Five weekly runs is the worst case (a month with five Mondays).
+
+| Scenario (per month) | Full reads | Publisher transfer | Left after the 1 GB reserve for runtime traffic |
+| --- | ---: | ---: | ---: |
+| Monthly cadence, one reconciliation | 1 | 0.494 GB | 3.506 GB |
+| **Weekly, digest proofs, plus the monthly reconciliation (adopted)** | 1 | about 0.50 GB (0.494 + at most 5 x 1 MB) | about 3.50 GB |
+| Weekly, a full corpus read every week (no mirror) | 5 | 2.469 GB | 1.531 GB |
+| Daily full reads (the earlier "daily hint" scenario) | 31 | 15.3 GB | exceeds the allowance |
+
+**Transfer fits** for the adopted procedure with a wide margin. The unmirrored
+weekly variant also fits on paper but leaves 1.5 GB for all runtime traffic, whose
+steady state has never been measured, so it is not adopted (R8.4). Compute also
+fits: a run adds the digest proof (at most 0.03 CU-hours, a minute at the 2 CU
+maximum), the apply (capped at 0.25) and the fork and acceptance (about 0.5), so
+about 0.78 CU-hours, and five runs add about 3.9 to the cutover model's
+reservation of 64.575 of 100, giving about 68.5.
+Branches: with two serving children kept, the benchmark, production and one
+acceptance fork the count stays at five of ten, so long as disposable forks are
+deleted (decision 5 sets the child count). Hyperdrive: the publisher does not use
+it, and the acceptance Worker sends well under a hundred statements.
+
+What the weekly cadence does **not** settle: the change guard holds on average
+(about 491 a week against 1,000) but the weekly distribution is unmeasured (R8.2);
+the first run after a month boundary shifts the 24-month window and rewrites
+thousands of block summaries, which is what pushes the stage towards the COPY
+ceiling (F7, decision 3); and cache-only coverage keeps losing new addresses
+(F8, decision 4).
+
+## Decisions
+
+Recorded 2026-10-10:
+
+1. **Blue/green**: decided. The publisher writes only the benchmark branch; serving
+   is a copy-on-write child promoted by a Hyperdrive origin change (R6.1).
+2. **Cadence**: decided, weekly under the existing 1,000 guard, conditional on the
+   transfer fit above, which holds for the mirror-verified procedure (R8.1, R8.2,
+   R8.4).
+
+Still needed from the owner:
+
 3. COPY ceiling or a reviewed split rule (F7).
 4. Cache-only coverage, or a way to resolve new addresses.
 5. How many serving children to keep for rollback.

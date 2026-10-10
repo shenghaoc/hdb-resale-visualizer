@@ -24,10 +24,11 @@
 
 ## Phase 1 — Schema-version-aware admission (offline; needed only for in-place publication)
 
-> Under the recommended blue/green design the publisher only ever writes the
+> Blue/green is decided (2026-10-10): the publisher only ever writes the
 > benchmark branch (schema version 0), so version 1 never needs admitting and an
-> unknown catalog is already refused today. Build this phase if the owner chooses
-> in-place publication on a migrated branch (decision 1).
+> unknown catalog is already refused today. Build this phase only if the owner
+> later reverses decision 1 and chooses in-place publication on a migrated
+> branch.
 
 - [ ] **T1.1** Build schema version 0 (the publisher schema,
   `scripts/neon-benchmark/schema.sql`) in a local database, capture
@@ -87,7 +88,8 @@
 - [ ] **T3.4** Replay 24 historical months against a mirror to measure stage
   sizes, change counts and statement counts; write the distribution to
   `docs/evidence`.
-  -> Numbers for decisions 2 and 3, with the method. (R8.2, R8.3)
+  -> The weekly change-count distribution for decision 2 (R8.2) and the stage sizes
+  for decision 3, with the method. (R8.2, R8.3)
 
 - [ ] **T3.5** Run the executor against a local database restored from the
   mirror, including `snapshot-rejection`, `failure-before-manifest`, success,
@@ -123,9 +125,14 @@
 
 ## Phase 7 — Cadence (owner approval)
 
-- [ ] **T7.1** Decide cadence and guards from T3.4 and record the decision in this
-  file.
-  -> Requirements R8.2 and R8.3 updated with the chosen values.
+- [x] **T7.1a** Decide the cadence: weekly under the existing 1,000 guard, once the
+  monthly transfer cost is confirmed to fit (2026-10-10).
+  -> Design "Cadence budget": about 0.50 GB of 5 GB for the mirror-verified
+  procedure. Requirements R8.1, R8.2 and R8.4 updated.
+
+- [ ] **T7.1** Re-check the guard with the weekly distribution from T3.4 and record
+  any change to R8.2 and R8.3 (a changed guard is a reviewed repository change).
+  -> Requirements R8.2 and R8.3 updated with the measured values.
 
 - [ ] **T7.2** Keep the workflow `workflow_dispatch` only until the owner approves a
   schedule.

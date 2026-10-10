@@ -64,8 +64,8 @@
 
 ## R6 — Promotion and rollback
 
-- **R6.1** The serving branch is always a copy-on-write child of a verified
-  benchmark publication. Promotion applies the role defaults and the PostGIS
+- **R6.1** (decided 2026-10-10: blue/green) The serving branch is always a
+  copy-on-write child of a verified benchmark publication. Promotion applies the role defaults and the PostGIS
   migration to the child, verifies it, and only then changes the Hyperdrive
   origin.
 - **R6.2** The previous serving child is kept until the owner retires it, so that
@@ -83,12 +83,25 @@
 
 ## R8 — Cadence and guards
 
-- **R8.1** The adopted policy stays: one explicit reconciliation per UTC month
-  plus explicit manual runs; upstream hints are observational.
-- **R8.2** The change-count guard is derived from the measured monthly volume
-  (36 full months, 2023-07 to 2026-06: minimum 1,338, median 2,134, mean 2,166,
-  maximum 3,036) or the cadence is changed so that the existing guard holds. The
-  choice is the owner's and is recorded here.
+- **R8.1** (decided 2026-10-10) Refreshes are **weekly**: one explicit run, one
+  plan and one approval each, plus one reconciliation per UTC month. Upstream
+  hints stay observational, and nothing schedules a run (R3.3). The weekly cadence
+  is conditional on R8.4.
+- **R8.2** (decided 2026-10-10: the cadence is changed so that the existing guard
+  holds) The change-count guard stays at 1,000. Over 36 full months (2023-07 to
+  2026-06) transactions per month were: minimum 1,338, median 2,134, mean 2,166,
+  maximum 3,036, which is about 491 a week for the median month and 685 for the
+  busiest. The source publishes daily, so arrivals are spread rather than
+  monthly, but how they spread over weeks is **not measured** (the dataset
+  carries the transaction month, not the day a row appeared). A week above 1,000
+  stops the run for review; a guard is changed only by a reviewed change to the
+  repository (R2.3). T3.4 measures the weekly distribution.
+- **R8.4** (confirmed 2026-10-10, design "Cadence budget") A weekly cadence is
+  adopted for the mirror-verified procedure only. With server-side digest proofs
+  five weekly runs and the monthly reconciliation use about 0.50 GB of the 5 GB
+  monthly transfer and about 4 of the 100 CU-hours; a full corpus read every week
+  would use 2.47 GB. A plan that would read the full corpus more than once in a
+  UTC month fails closed unless the owner approves it separately (R7.2).
 - **R8.3** The COPY ceiling leaves headroom over the largest measured stage
   (89,758,647 B of 90,000,000 B for the October catch-up) or the plan is split
   by a reviewed rule.
