@@ -46,7 +46,7 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from 
 | `GET /api/suggest` | `blocks` | Typeahead (`q`, 2–256 chars). Groups: town, street, block, mrt, postal. |
 | `POST /api/comparable-transactions` | `transactions` | Listing Check evidence. `?adjust=time` applies trend-based time adjustment. |
 | `POST /api/shortlist` | `shortlists` | Opt-in create/replace. Only runtime D1 write path for user data. 10 writes / IP / colo / 60s. |
-| `GET /api/nearby-places` (cache miss) | `nearby_statement_budget` | Daily statement counter, no user data; one conditional upsert per miss while `NEON_SPATIAL_ENABLED` is `"true"`. |
+| `GET /api/nearby-places` (cache miss) | Neon `nearby_daily_budget` | One atomic function reservation through a minimal budget role, then one labelled PostGIS read through the unchanged SELECT-only role. Feature gate remains off. |
 | `GET /api/shortlist/{syncCode}` | `shortlists` | Lookup by SHA-256 of the bearer code. 404 for unknown or malformed codes. |
 
 The Worker (`worker/index.ts`) also serves `/sitemap.xml`, `/robots.txt`, `/og/block/{addressKey}.png`, `/og/compare/{townA}/{townB}.png`, and HTML SEO rewrites. A daily cron (`0 3 * * *`) purges shortlist rows unused for 180 days. Full request contracts live in [docs/architecture/artifact-contracts.md](../../docs/architecture/artifact-contracts.md).
