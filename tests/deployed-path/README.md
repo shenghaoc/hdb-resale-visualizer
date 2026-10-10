@@ -33,8 +33,15 @@ PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres \
   node --import tsx tests/deployed-path/local-rehearsal.mjs /tmp/nearby-rehearsal
 ```
 
-It creates and drops database `hdb_realpath_local` (the cluster-level role `hdb_benchmark_runtime` is created if missing
-and left). It takes about five minutes because two phases wait out a rate-limit window; `PHASES=functional` runs one phase.
+It works in a database it creates itself, `hdb_realpath_local_<random run id>` (printed at the start), and drops only
+that one at the end, also when a phase fails or on Ctrl-C. It never reuses a name: if the database already exists it
+stops before touching anything (`SCRATCH_RUN_ID=<6-16 lowercase letters or digits>` fixes the id, which is how that
+refusal is exercised on purpose). It never drops with `FORCE` and never terminates a session: it waits up to 20 s for its own
+Worker's connections to close and, if something is still connected, leaves the database in place, prints
+`LEFT IN PLACE: ...` with the exact `DROP DATABASE` command, and exits non-zero. The cluster-level role
+`hdb_benchmark_runtime` is created if missing and left, because concurrent runs share it. The logic is in
+`scripts/lib/scratch-database.ts`, covered by `tests/unit/scratch-database.test.ts`.
+It takes about five minutes because two phases wait out a rate-limit window; `PHASES=functional` runs one phase.
 It shows: capability probe, Worker answers equal to the shipped SQL for every sample (including a code-labelled station and
 a distance tie), cache `MISS` then `HIT` on a canonical key, `429` after exactly 30 requests, `503` once the origin budget is
 spent, and no caching of either. It does **not** show Hyperdrive behaviour, Cloudflare's real counters or edge latency.
