@@ -1,6 +1,6 @@
 # Design: POI Source Integration
 
-> Status: Proposed. This spec adds no code, migration or data. Evidence and the source-by-source analysis are in [`docs/architecture/poi-source-admission.md`](../../../docs/architecture/poi-source-admission.md). Rows tagged "(proposal)" come from `tests/fixtures/poi-ground-truth/PROPOSED-*.json`, which are agent-proposed and **unapproved**: they illustrate the rules, they do not measure them. SQL in this document was run on a local PostGIS 3.6.3 / PostgreSQL 18.6 scratch database against the 2026-10-09 samples; it is a sketch, not a migration.
+> Status: Proposed. This spec adds no code, migration or data. Evidence and the source-by-source analysis are in [`docs/architecture/poi-source-admission.md`](../../../docs/architecture/poi-source-admission.md). Rows tagged "(proposal)" come from `tests/fixtures/poi-ground-truth/PROPOSED-*.json`, which live in their own pull request ([#429](https://github.com/shenghaoc/hdb-resale-visualizer/pull/429), not merged with this one), are agent-proposed and **unapproved**: they illustrate the rules, they do not measure them. OpenStreetMap is excluded by the owner's decision of 2026-10-10. SQL in this document was run on a local PostGIS 3.6.3 / PostgreSQL 18.6 scratch database against the 2026-10-09 samples; it is a sketch, not a migration.
 
 ## Problem
 
@@ -92,7 +92,7 @@ Initial rows (proposal; statuses reflect the admission document, nothing is admi
 | `nea-hawker-centres-geojson` | `nea` | attribution | candidate | `source-point`, status gate |
 | `nparks-parks-points` | `nparks` | attribution | candidate | `source-point`, class gate; the polygon layer is a geometry-quality input, not an independent source |
 | `overture-places` | `overture-places` | permissive | candidate, blocked on OD2 | |
-| `osm-overpass` | `osm-volunteer` | share-alike | candidate, blocked on OD1 | |
+| `osm-overpass` | `osm-volunteer` | share-alike | **excluded** (OD1 decided 2026-10-10: not used); kept only so a future share-alike source has a precedent row | |
 | `lta-station-code-registry`, `wikidata-station-codes` | none | none | alias dictionaries, not observation sources | vendored as reviewed data with their licence noted; never contribute a position |
 
 Independence is a registry claim, and copies happen: a source in another group can still be an import of the one it is compared with. In the proposal sample, `hawker_centre-001` pairs an NEA record with a Wikidata item whose coordinates equal NEA's to six decimals (1 of the 30 hand-picked NEA-Wikidata proposal pairs: an observation, not a rate; admission document 5.4 notes that several hawker items look bulk-created). The resolution run therefore reports, per source pair, the share of mutual pairs whose points coincide within 0.5 m and whose names are equal (R1.6). The report is label-free and changes no class by itself; a high share is evidence for the owner to merge the two groups in the registry, which is a reviewed change that bumps `rule_set_version`.
@@ -555,7 +555,7 @@ Mutants that must fail the verifiers: a generator that clusters before projectin
 - **Single-source honesty versus noise.** Five of six kinds show `SINGLE_SOURCE` everywhere at first. That is the truth; the UI copy and the response grouping must make it calm rather than alarming. Mitigation: caveats are codes, copy lives in one adapter like the existing caveat messages.
 - **Two languages, one decision.** SQL computes features and TypeScript decides. A drift would show as feature rows the decider cannot interpret; the verifiers run the SQL features against the oracle, and the decider's tests use feature rows, not databases.
 - **Placeholder thresholds.** Until approved labels exist the bands are guesses. Mitigation: they are named, versioned, never fitted to unapproved labels, and the classes degrade to `ambiguous`, not to a wrong merge, when evidence is weak.
-- **ODbL.** If the owner chooses C, strict table separation and a public derivative release are real engineering and legal work.
+- **ODbL.** Excluded (OD1 = A, 2026-10-10). Were a share-alike source ever added, strict table separation and a public derivative release would be real engineering and legal work, which is why `licence_class` stays on every source and observation.
 - **Overture quality.** "High junk rate" is the publisher's own statement; the admission gate for it is a sample evaluation (OD2), not an assumption.
 - **Wikidata alias dictionary.** CC0 and useful, but vendored codes can go stale; each entry carries a retrieval date and a reviewer.
 - **Key stability.** Agency `OBJECTID`s may be renumbered; the id table and drift report make that visible rather than silent.
@@ -566,7 +566,7 @@ Mutants that must fail the verifiers: a generator that clusters before projectin
 
 ## Open questions
 
-- Which of the owner decisions OD1 to OD8 (admission document, section 7) are settled, and in what order; OD1 and OD2 gate the most value.
+- Which of the owner decisions OD2 to OD8 (admission document, section 7) are settled, and in what order; OD1 is settled (OpenStreetMap is not used), so OD2 (the Overture sample) now gates the most value.
 - Whether the Wikidata station-code alias dictionary is worth vendoring (it lets the registry-code rule back six of seven code labels with a name channel instead of two, and turns a mismatching code into an `ambiguous` pair; the class stays `rule-supported`).
 - Whether `mrt_station` entities should show the LTA label or a canonical name once resolved, and in which language (the LTA registry also carries Chinese names).
 - Whether the nearby API should expose `ambiguous` entities by default or only on request.
