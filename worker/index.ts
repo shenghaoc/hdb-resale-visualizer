@@ -526,6 +526,9 @@ export default {
       await readScope?.close().catch(() => {
         console.warn("Public read connection cleanup failed");
       });
+      await budgetTransport?.close().catch(() => {
+        console.warn("Nearby budget connection cleanup failed");
+      });
     }
   },
 
