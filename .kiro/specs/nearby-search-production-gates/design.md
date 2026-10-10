@@ -1,7 +1,7 @@
 # Design: Nearby Search Production Gates
 
-> Status: Phase 1, 2 and 4a complete (rate limiting, documentation, one statement
-> per miss, the global daily statement ceiling). Phase 3 (the deployed-path run)
+> Status: Phase 1, 2 and 4a complete (rate limiting, documentation, one labelled spatial statement
+> per miss, a proposed Neon-backed daily admission budget). Phase 3 (the deployed-path run)
 > is open. The feature flag stays `"false"`.
 
 ## Problem
@@ -20,8 +20,7 @@ Worker reaches PostGIS through Hyperdrive and gets the same answer.
 ## Goals
 
 - Bound origin work per client and per location, without a new service.
-- Bound the statements nearby search may spend from Hyperdrive's shared daily
-  allowance, globally and failing closed.
+- Bound accepted spatial queries through an atomic Neon admission budget, failing closed, without adding D1 writes; acknowledge that denied reservations still count against Hyperdrive's account-wide allowance.
 - Spend as few statements and bytes per miss as the cache's guarantees allow.
 - Keep cache hits free, so popular locations stay cheap.
 - Fail loudly on a misconfigured deployment, closed on a fault in front of the
@@ -33,9 +32,7 @@ Worker reaches PostGIS through Hyperdrive and gets the same answer.
 
 - Opening the gate, applying the migration to the serving branch, or changing
   production Worker, Hyperdrive or D1 configuration.
-- A global (cross-location) rate. The Rate Limiting binding does not offer one;
-  the daily statement ceiling is global, but it is a day-long allowance, not a
-  rate.
+- A hard account-wide quota enforced by the app. Hyperdrive Free provides the final 100,000-statement hard cap. The Neon budget is branch-scoped and admits a bounded number of spatial reads, not denied reservations.
 - Treating the verification run as a benchmark. Synthetic scale benchmarks run
   on local PostgreSQL/PostGIS, not through this path.
 
@@ -49,8 +46,8 @@ request
        miss
   -> request valid and answerable?                400 / 503, nothing spent
   -> origin limit  NEARBY_ORIGIN_LIMITER 300 / 60 s   503 + Retry-After, fails closed
-  -> daily ceiling nearby_statement_budget (D1)   503 until 00:00 UTC, fails closed
-  -> ONE statement -> Hyperdrive -> Neon (PostGIS): places + publication label
+  -> Neon admission via HDB_NEARBY_BUDGET: 1 statement, 503 when denied
+  -> ONE labelled SELECT via HDB_PUBLIC_NEON: PostGIS places + publication label
 ```
 
 `functions/_lib/nearby-rate-limit.ts` holds the key derivation and the two
@@ -81,7 +78,7 @@ limits and `tests/unit/nearby-rate-limit.test.ts` pins the two together.
   with the Hyperdrive origin limit, the runtime role's server-side 60 s
   `statement_timeout` and the transport's client-side 15 s connect and 60 s
   query timeouts).
-- **One statement per miss, because the label travels with the data.** The
+- **One SPATIAL statement per miss, because the label travels with the data.** The
   shared cache spends three statements per miss (manifest, handler, manifest) to
   prove that an answer is one generation, and moves the 10.6 KB manifest twice to
   do it. A single SQL statement sees one snapshot, and the publisher stamps its
@@ -93,15 +90,7 @@ limits and `tests/unit/nearby-rate-limit.test.ts` pins the two together.
 - **Admission after validation.** An invalid request, or a backend without
   PostGIS, never sends a statement, so it must not spend the origin limit or the
   day's allowance (it otherwise would, cheaply burning the global allowance).
-- **The daily ceiling lives in D1.** A global day-long counter needs one
-  serialised writer. A Durable Object in the main Worker is a class-lifecycle
-  change that `wrangler versions upload` refuses (every branch preview would fail)
-  and a separate Worker is another deployable; Workers KV is eventually consistent
-  with 1,000 writes a day on Free; Neon's runtime role is read-only and a write
-  would cost a statement. D1 is already bound, serialises writes and allows
-  100,000 rows written a day against at most 10,000 here. Cost: a second runtime
-  D1 write path (a counter, no user data), recorded in `AGENTS.md` and the
-  steering documents; the owner may prefer a Durable Object in a separate Worker.
+- **The daily admission ceiling lives in Neon, not D1.** The dedicated role `hdb_nearby_budget` uses a distinct Hyperdrive binding and may only execute the narrow `public.reserve_nearby_statement(integer)` SECURITY DEFINER function on `nearby_daily_budget`. This preserves the existing reader's `default_transaction_read_only=on` and introduces **no runtime D1 write**. The accepted cold miss spends two Hyperdrive statements (reservation + spatial), and a refused reservation still spends one. Role isolation and a safe blue/green daily-counter handoff must be verified before rollout. Full rationale: `docs/architecture/neon-nearby-counter.md`.
 - **Reservations are not returned.** Giving a statement back after a failure
   would need a second write and could under-count; over-counting only makes the
   guard stricter.
@@ -114,23 +103,17 @@ limits and `tests/unit/nearby-rate-limit.test.ts` pins the two together.
 Counters are local to each Cloudflare location and eventually consistent, so
 the numbers are per location and approximate. Aggregate database load is shaped
 by the number of active locations times 300 per minute, then by the Hyperdrive
-origin limit and query time; this is a design estimate until Phase 3. The
-**total** a day, though, is bounded by the daily ceiling, which is global and
-exact: it counts the statements nearby search itself sends, not the account's.
+origin limit and query time; this is a design estimate until Phase 3. The per-serving-branch **accepted spatial queries** are bounded atomically, but a rejected reservation also reaches Hyperdrive and costs a statement. This is not a hard account-wide quota; Cloudflare still enforces its own Free daily limit.
 
 ## Phase 3: deployed-path verification
 
-A disposable Neon fork of the serving branch carries the shipped migration. A
-SELECT-only role, a temporary Hyperdrive configuration (query caching off,
-origin limit 5) and a temporary Worker built from this branch connect them. The
+A disposable Neon fork of the serving branch carries the shipped migration. Two narrowly scoped roles (the unchanged SELECT-only reader and a separate quota-only login), two temporary Hyperdrive configs (query caching off, origin limit 5) and a temporary Worker connect them. The
 Worker has its own name and its own rate-limit namespace ids (namespace ids are
 account-wide, so reusing `1003` or `1004` would share counters with production),
 `NEON_SPATIAL_ENABLED="true"`, `PUBLIC_DATA_BACKEND="neon"` and a throwaway
 cache epoch. The origin limit is lowered there so the `503` path is reachable.
 
-The temporary Worker binds a throwaway D1 database of its own (created for the run
-and deleted with it) carrying only migration 0012, and sets
-`NEARBY_DAILY_STATEMENT_CEILING` small enough to reach.
+The temporary Worker binds no D1 counter database. The disposable Neon fork carries migration `sql/neon/002_nearby_daily_budget.sql`, and the Worker sets `NEARBY_DAILY_STATEMENT_CEILING` small enough to reach.
 
 The harness is `tests/deployed-path/` (client, shipped-SQL fingerprints, Worker
 template, local rehearsal). Checks, each recorded with its result:
@@ -157,7 +140,7 @@ credential file. The fork is left for its owner to delete.
   (allow, deny, missing binding, throwing limiter), the `wrangler.jsonc` pin and
   the closed-gate tripwire.
 - `tests/unit/nearby-places-worker-gate.test.ts`: the real Worker entry with
-  fake limiters and a real SQLite behind the D1 binding. The gate-closed case
+  fake limiters and a mock Neon budget responses. The gate-closed case
   never consults a limiter; a limited client reaches neither the cache, a
   transport nor the database; the origin budget is spent on misses only; a spent
   origin budget runs no SQL and caches nothing; a miss is exactly one statement
@@ -172,7 +155,7 @@ credential file. The fork is left for its owner to delete.
 - `tests/unit/scratch-database.test.ts`: the rehearsal never drops a database it
   did not create.
 - The local rehearsal (`tests/deployed-path/local-rehearsal.mjs`) runs against
-  real PostgreSQL/PostGIS and the real D1 emulator and counts statements with
+  real PostgreSQL/PostGIS and the disposable PostgreSQL budget table and counts statements with
   `pg_stat_statements`.
 - Mutations of the committed code (Worker admission order, the reservation
   statement, the fail-closed branches, the cache mode, the label) were each caught
@@ -195,7 +178,7 @@ credential file. The fork is left for its owner to delete.
   the route at 10,000 a day. Residual: the ceiling bounds nearby search's own
   spend, not the account's, it was chosen without a measurement of the site's
   current use, and when it is spent nearby search is down until 00:00 UTC by
-  design. The value, and D1 against a Durable Object, are the owner's to confirm
+  design. The value, and Neon admission role and database, are the owner's to confirm
   (T4.7).
 - **Phase 3 needs a database credential.** A temporary SELECT-only role and a
   Hyperdrive configuration need a connection string. Provisioning it is an
