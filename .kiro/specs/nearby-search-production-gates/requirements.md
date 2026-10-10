@@ -36,11 +36,7 @@
 - **R2.2** The isolated database is a disposable fork of the serving branch that
   carries `sql/neon/001_postgis_nearby.sql`. The serving branch and the
   production Worker, Hyperdrive configuration and D1 database are not touched.
-- **R2.3** The temporary Worker and Hyperdrive configuration have names and
-  rate-limit namespace ids of their own, connect as a SELECT-only database role,
-  keep query caching off and use a small origin connection limit. Its D1 binding
-  is a throwaway database of its own that carries only the budget table, never
-  the production database.
+- **R2.3** The temporary Worker has its own name, limiter namespace IDs and two temporary Hyperdrive configurations: one uses the original SELECT-only runtime role for spatial reads; one uses a dedicated budget-only Neon role with EXECUTE permission on the counter function. It must have no D1 counter binding. Neither configuration may use serving-branch credentials.
 - **R2.4** Answers obtained through the Worker equal the shipped SQL's results
   obtained directly, for a recorded sample that includes the grounded
   `central-area-535-upp-cross-st` case.
@@ -58,38 +54,21 @@
 Hyperdrive's Free plan allows 100,000 database statements a day for the whole
 account. Every public route spends from it.
 
-- **R4.1** WHEN a nearby cache miss goes to the database THEN it sends exactly one
-  statement, which returns the places together with the identity of the
-  publication they were read from. A cache hit on a live pointer sends none. The
-  multi-statement path of every other public route is unchanged.
-- **R4.2** WHEN the answer must come from the database THEN, after the request is
-  known to be valid and answerable and the origin limit has passed, the Worker
-  takes one statement from a global per-UTC-day allowance in one atomic statement
-  before it sends the query. The allowance is 10,000 unless the Worker var
-  `NEARBY_DAILY_STATEMENT_CEILING` (a whole number from 1 to 100,000) says
-  otherwise.
+- **R4.1** An admitted cache miss sends exactly two Hyperdrive statements: one atomic Neon quota reservation through its dedicated role, then one labelled PostGIS SELECT through the unchanged read-only runtime role. A declined quota request sends only the reservation statement. A cache hit sends neither. The multi-statement path of all other public routes remains unchanged.
+- **R4.2** After request validation and origin admission, the Worker calls the dedicated Neon function to reserve one spatial-query admission atomically. The hard maximum is 10,000 accepted reservations per UTC day on one serving branch. A valid Worker var `NEARBY_DAILY_STATEMENT_CEILING` may lower that ceiling to 1..10,000, but may not raise it. The admission table cannot directly be modified by either Worker role.
 - **R4.3** WHEN the allowance is spent THEN the response is `503` with
   `Retry-After` set to the seconds until 00:00 UTC (never below 60) and
   `no-store`, no spatial SQL runs and nothing is cached. Cache hits are
   unaffected.
-- **R4.4** (fail closed) WHEN the D1 binding is missing, the ceiling is configured
-  invalidly, the counter errors or does not answer within 2 s, or answers anything
-  other than "granted" or "refused" THEN the request is refused with `503` and
-  nothing reaches the database.
+- **R4.4** (fail closed) WHEN the dedicated Neon budget Hyperdrive binding is missing, the configured ceiling is invalid, or the budget query errors/times out or returns a malformed answer, the Worker refuses the spatial SELECT with `503`. A failed reservation might still have committed, so it must never be retried or refunded automatically.
 - **R4.5** Requests that never reach the database (invalid input, a backend without
   PostGIS) spend neither the origin limit nor the allowance.
 - **R4.6** Granted reservations are never returned, so the counter can only
   over-state a day's spend.
-- **R4.7** The first publication of the budget table is migration
-  `0012_nearby_statement_budget.sql`. It is applied to the remote D1 database only
-  with approval, and before the flag is opened.
+- **R4.7** The budget lives exclusively in the forward-only Neon migration `sql/neon/002_nearby_daily_budget.sql`. The existing public-data PostgreSQL role remains `default_transaction_read_only=on`; a separate minimally privileged account with only EXECUTE access to the quota function is required. Tests must prove privilege separation and concurrency. No D1 counter migration or write is permitted.
 
 ## R3 — The release gate stays closed
 
 - **R3.1** `NEON_SPATIAL_ENABLED` remains `"false"` in `wrangler.jsonc` until a
   separate approval. `tests/unit/nearby-rate-limit.test.ts` asserts it.
-- **R3.2** Opening the gate requires, in order: the spatial migration applied to
-  the serving branch with approval; `sql/neon/verify_nearby_spatial_sql.sql`
-  passing on a disposable fork of it; migration 0012 applied to the remote D1
-  database with approval (R4.7); recorded R2 evidence; explicit approval of the
-  rollout.
+- **R3.2** Opening the gate requires the spatial and Neon quota migrations applied and independently verified on a disposable fork, both fork-scoped Hyperdrive roles proved with negative privilege controls, recorded real Worker/Hyperdrive/PostGIS evidence, an approved blue/green daily-counter handoff procedure, and explicit rollout approval. Both production flags and connections stay unchanged until then.
