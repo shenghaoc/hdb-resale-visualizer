@@ -1,49 +1,37 @@
 import { privateJsonResponse } from "./d1";
 import {
-  HYPERDRIVE_FREE_DAILY_STATEMENTS,
   NEARBY_DAILY_STATEMENT_CEILING,
   NEARBY_RATE_LIMIT_PERIOD_SEC,
-  NEARBY_STATEMENTS_PER_MISS,
 } from "../../shared/nearby-limits";
 
-/** The slice of `D1Database` this module uses, so a test can put SQLite behind it. */
-export type NearbyBudgetDatabase = {
-  prepare(sql: string): {
-    bind(...values: unknown[]): { run(): Promise<{ meta?: { changes?: number } }> };
-  };
-};
-
-/** How long the counter may take before the request is refused instead of waiting on it. */
-const RESERVE_TIMEOUT_MS = 2_000;
-
 /**
- * Takes `?2` statements from the day's allowance `?3` in ONE atomic statement and reports through the number of
- * rows changed: 1 = granted (the day's row was created or incremented), 0 = refused because it would pass the
- * ceiling. D1 serialises writes, so concurrent Workers in every location draw on the same counter. The SELECT has
- * a WHERE clause on purpose: SQLite cannot tell an UPSERT's ON from a join's ON without one.
+ * One call on a dedicated, narrowly privileged Neon/Hyperdrive connection.
+ * The existing HDB_PUBLIC_NEON reader stays transaction-read-only; its role cannot call this function.
  */
-const RESERVE_SQL = `INSERT INTO nearby_statement_budget (day, statements)
-SELECT ?1, ?2 WHERE ?2 <= ?3
-ON CONFLICT (day) DO UPDATE SET statements = statements + ?2 WHERE statements + ?2 <= ?3`;
+export type NearbyBudgetQuery = (
+  sql: string,
+  params: readonly unknown[],
+) => Promise<Record<string, unknown>[]>;
+
+export const NEARBY_RESERVE_SQL =
+  "SELECT public.reserve_nearby_statement($1::integer) AS granted";
+
+/** A network timeout may have committed a reservation: never retry it. */
+const RESERVE_TIMEOUT_MS = 2_000;
 
 export const utcDay = (now: Date): string => now.toISOString().slice(0, 10);
 
-/** Seconds to the next 00:00 UTC, when Hyperdrive's daily allowance (and so this one) starts again. */
 export function secondsUntilUtcMidnight(now: Date): number {
   const next = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
   return Math.max(NEARBY_RATE_LIMIT_PERIOD_SEC, Math.ceil((next - now.getTime()) / 1000));
 }
 
-/**
- * The ceiling in force: the shipped constant unless `NEARBY_DAILY_STATEMENT_CEILING` is set in the Worker's vars.
- * A value that is present but not a whole number within the Free allowance is a deployment mistake, reported as
- * `null` so the route fails closed instead of guessing.
- */
+/** The database function also enforces the 10,000 maximum; a Worker override can only lower it. */
 export function nearbyStatementCeiling(configured: string | undefined): number | null {
   if (configured === undefined) return NEARBY_DAILY_STATEMENT_CEILING;
-  if (!/^[1-9]\d{0,5}$/.test(configured)) return null;
+  if (!/^[1-9]\d{0,4}$/.test(configured)) return null;
   const ceiling = Number(configured);
-  return ceiling <= HYPERDRIVE_FREE_DAILY_STATEMENTS ? ceiling : null;
+  return ceiling <= NEARBY_DAILY_STATEMENT_CEILING ? ceiling : null;
 }
 
 const unavailable = (error: string, headers?: HeadersInit) =>
@@ -55,7 +43,7 @@ async function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
     return await Promise.race([
       work,
       new Promise<never>((_, reject) => {
-        timer = setTimeout(() => reject(new Error("statement budget timed out")), ms);
+        timer = setTimeout(() => reject(new Error("PostgreSQL budget request timed out")), ms);
       }),
     ]);
   } finally {
@@ -64,43 +52,39 @@ async function withTimeout<T>(work: Promise<T>, ms: number): Promise<T> {
 }
 
 /**
- * The global daily guard in front of Hyperdrive's shared allowance. Call it immediately before a cache miss is
- * allowed to send its statement(s); it takes `NEARBY_STATEMENTS_PER_MISS` from today's allowance and answers:
+ * Reserve capacity for one spatial SELECT using the atomic PostgreSQL UPSERT in
+ * sql/neon/002_nearby_daily_budget.sql. No D1 database or table is involved.
  *
- * - `null`   the statements are reserved, go ahead;
- * - `503`    refused. Every way of not knowing is a refusal (FAIL CLOSED): no D1 binding, a ceiling that is
- *            configured wrongly, a D1 error or timeout, or an answer that is neither "granted" nor "refused".
- *            Only a counted reservation lets a request through.
- *
- * Cached answers never get here, so they keep being served after the ceiling is reached. A reservation that was
- * granted is never given back, even if the statement then fails, so the count can only over-state the day's spend.
+ * A granted reservation may be wasted if the spatial SELECT subsequently fails. That is intentional:
+ * refunds after ambiguous outcomes would allow an underestimate. A refused reservation does consume
+ * one Hyperdrive statement because the counter is itself in Neon; therefore this limits admitted
+ * spatial searches, not all Hyperdrive traffic. Cloudflare's account-wide hard quota still applies.
  */
 export async function reserveNearbyStatements(
-  db: NearbyBudgetDatabase | undefined,
+  query: NearbyBudgetQuery | undefined,
   configuredCeiling: string | undefined,
   now: Date = new Date(),
 ): Promise<Response | null> {
-  if (!db) return unavailable("Nearby search is not configured");
+  if (!query) return unavailable("Nearby search is not configured");
   const ceiling = nearbyStatementCeiling(configuredCeiling);
   if (ceiling === null) {
-    console.error("Nearby daily statement ceiling is misconfigured, refusing request");
+    console.error("Nearby PostgreSQL statement ceiling is misconfigured");
     return unavailable("Nearby search is not configured");
   }
   try {
-    const result = await withTimeout(
-      db.prepare(RESERVE_SQL).bind(utcDay(now), NEARBY_STATEMENTS_PER_MISS, ceiling).run(),
-      RESERVE_TIMEOUT_MS,
-    );
-    const changes = result.meta?.changes;
-    if (changes === 1) return null;
-    if (changes === 0) {
+    const rows = await withTimeout(query(NEARBY_RESERVE_SQL, [ceiling]), RESERVE_TIMEOUT_MS);
+    if (rows.length === 1 && rows[0].granted === true) return null;
+    if (rows.length === 1 && rows[0].granted === false)
       return unavailable("Nearby search has reached its daily limit; try again after 00:00 UTC", {
         "Retry-After": String(secondsUntilUtcMidnight(now)),
       });
-    }
-    console.error("Nearby statement budget gave an unexpected answer, refusing request");
+    console.error("Nearby PostgreSQL budget gave an unexpected answer");
   } catch (error) {
-    console.error("Nearby statement budget failed, refusing request:", error);
+    // The shared Neon transport sanitises driver errors; never print connection strings or raw query input.
+    console.error(
+      "Nearby PostgreSQL budget unavailable:",
+      error instanceof Error ? error.name : "unknown",
+    );
   }
   return unavailable("Nearby search is temporarily unavailable", {
     "Retry-After": String(NEARBY_RATE_LIMIT_PERIOD_SEC),
