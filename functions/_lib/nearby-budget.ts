@@ -13,8 +13,7 @@ export type NearbyBudgetQuery = (
   params: readonly unknown[],
 ) => Promise<Record<string, unknown>[]>;
 
-export const NEARBY_RESERVE_SQL =
-  "SELECT public.reserve_nearby_statement($1::integer) AS granted";
+export const NEARBY_RESERVE_SQL = "SELECT public.reserve_nearby_statement($1::integer) AS granted";
 
 /** A network timeout may have committed a reservation: never retry it. */
 const RESERVE_TIMEOUT_MS = 2_000;

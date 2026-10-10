@@ -54,7 +54,10 @@ import { reserveNearbyStatements, type NearbyBudgetQuery } from "../functions/_l
  * Everything that must hold before a nearby cache miss may send its statement to Neon: the per-location rate
  * limit, then the global daily statement ceiling. Both fail closed; the first refusal is the answer.
  */
-async function admitNearbyDatabaseRead(env: Env, budgetQuery: NearbyBudgetQuery | undefined): Promise<Response | null> {
+async function admitNearbyDatabaseRead(
+  env: Env,
+  budgetQuery: NearbyBudgetQuery | undefined,
+): Promise<Response | null> {
   return (
     (await checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER)) ??
     (await reserveNearbyStatements(budgetQuery, env.NEARBY_DAILY_STATEMENT_CEILING))
@@ -270,7 +273,10 @@ export default {
           // request that never reaches the database never spends the rate-limit or statement allowance.
           const atomic: AtomicRead | undefined =
             routeId === "nearby-places"
-              ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv, budgetQuery))
+              ? () =>
+                  readNearbyPlaces(routeContext(), () =>
+                    admitNearbyDatabaseRead(capturedEnv, budgetQuery),
+                  )
               : undefined;
           // The cache layer calls this only when the answer must come from the database.
           const dispatch = async () =>

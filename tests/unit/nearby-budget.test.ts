@@ -31,7 +31,9 @@ function simulatedPostgres() {
 
 describe("Neon nearby budget protocol", () => {
   it("uses one bounded PostgreSQL function call, not a D1 binding", () => {
-    expect(NEARBY_RESERVE_SQL).toBe("SELECT public.reserve_nearby_statement($1::integer) AS granted");
+    expect(NEARBY_RESERVE_SQL).toBe(
+      "SELECT public.reserve_nearby_statement($1::integer) AS granted",
+    );
     expect(NEARBY_RESERVE_SQL).not.toMatch(/nearby_statement_budget|INSERT|UPDATE|DELETE|\bDB\b/i);
   });
 
@@ -54,7 +56,12 @@ describe("Neon nearby budget protocol", () => {
   });
 
   it("fails closed on malformed, empty or unexpected PostgreSQL answers", async () => {
-    for (const rows of [[], [{ granted: null }], [{ granted: 1 }], [{ granted: true }, { granted: true }]]) {
+    for (const rows of [
+      [],
+      [{ granted: null }],
+      [{ granted: 1 }],
+      [{ granted: true }, { granted: true }],
+    ]) {
       const response = await reserveNearbyStatements(async () => rows, "2");
       expect(response?.status).toBe(503);
     }
@@ -62,7 +69,10 @@ describe("Neon nearby budget protocol", () => {
 
   it("fails closed on a rejected query", async () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
-    const response = await reserveNearbyStatements(async () => Promise.reject(new Error("offline")), "2");
+    const response = await reserveNearbyStatements(
+      async () => Promise.reject(new Error("offline")),
+      "2",
+    );
     expect(response?.status).toBe(503);
     expect(error).toHaveBeenCalled();
     error.mockRestore();

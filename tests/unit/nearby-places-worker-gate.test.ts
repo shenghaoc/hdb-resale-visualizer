@@ -229,7 +229,11 @@ describe("spatial release gate in the Worker entry", () => {
       overrides: { HDB_PUBLIC_NEON: undefined },
       available: false,
     },
-    { label: "no budget Hyperdrive", overrides: { HDB_NEARBY_BUDGET: undefined }, available: false },
+    {
+      label: "no budget Hyperdrive",
+      overrides: { HDB_NEARBY_BUDGET: undefined },
+      available: false,
+    },
     { label: "gate closed", overrides: { NEON_SPATIAL_ENABLED: "false" }, available: false },
   ])("capability, $label: available is $available", async ({ overrides, available }) => {
     const env = deployedEnv({ NEON_SPATIAL_ENABLED: "true", ...overrides });
@@ -406,7 +410,10 @@ describe("Neon PostgreSQL admission and labelled PostGIS reads", () => {
       if (sql === NEARBY_LABELLED_SQL) throw new Error("spatial query must not run");
       return [];
     });
-    const response = await call(deployedEnv({ ...open, NEARBY_DAILY_STATEMENT_CEILING: "2" }), unique(0));
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_DAILY_STATEMENT_CEILING: "2" }),
+      unique(0),
+    );
     expect(response.status).toBe(503);
     expect(response.headers.get("retry-after")).toBeTruthy();
     expect(response.headers.get("cache-control")).toBe("no-store");
@@ -460,8 +467,8 @@ describe("Neon PostgreSQL admission and labelled PostGIS reads", () => {
     expect(first.status).toBe(200);
     expect(first.headers.get("x-data-cache")).toBe("MISS");
     const version = await manifestVersionHex(manifest);
-    expect([...entries.keys()].some((key) =>
-      key.includes(`/v1/${version}/api/nearby-places`),
-    )).toBe(true);
+    expect(
+      [...entries.keys()].some((key) => key.includes(`/v1/${version}/api/nearby-places`)),
+    ).toBe(true);
   });
 });
