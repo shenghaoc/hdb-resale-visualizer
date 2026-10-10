@@ -271,4 +271,15 @@ describe("scripts that use scratch databases", () => {
     expect(rehearsal).toContain('scratch.create("hdb_realpath_local")');
     expect(rehearsal).toContain("scratch.dropAll()");
   });
+
+  it("the benchmark runner never drops by a fixed name or with FORCE, and never changes the maintenance database", () => {
+    const runner = source("scripts/bench-postgis/run.mjs");
+    expect(runner).not.toMatch(/WITH\s*\(\s*FORCE\s*\)/i);
+    expect(runner).not.toMatch(/DROP\s+DATABASE\s+IF\s+EXISTS/i);
+    expect(runner).not.toMatch(/pg_terminate_backend/i);
+    expect(runner).toContain("scratch.create(`hdb_bench_${n}`)");
+    // The PostGIS version probe runs in a scratch database, not in `postgres`.
+    expect(runner).not.toMatch(/psql\(\s*"postgres",\s*`CREATE EXTENSION/);
+    expect(runner).toContain('scratch.create("hdb_bench_probe")');
+  });
 });

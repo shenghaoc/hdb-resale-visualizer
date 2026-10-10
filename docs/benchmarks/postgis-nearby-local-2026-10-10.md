@@ -42,12 +42,51 @@ count grows past tens of thousands, the first optimisation to test is the candid
 a disagreement test in CI, not a change to the model. Whatever the database costs, the deployed latency still has to be measured
 through the Worker and Hyperdrive (`tests/deployed-path/`).
 
+## The statement the Worker sends
+
+The document above measures the verified places query (`NEARBY_SPATIAL_SQL`). The Worker no longer sends that alone: it sends `NEARBY_LABELLED_SQL`, which embeds it and adds the publication label in the same statement (a lookup of the manifest row, the SHA-256 of its 10.6 KB text, a union and an outer sort of at most 26 rows), so that a cache miss is one Hyperdrive statement instead of three. The harness can benchmark that statement (`--statement labelled`) and can reproduce the database-side work of the old miss path (`--statement multi`: the manifest read, the places query and the manifest read, as three statements of one transaction; it leaves out the two extra network round trips a deployed miss also paid). 10,000 blocks, 10 s per scenario after a 2 s warm-up, 1 and 8 clients, the three modes run back to back on the same machine; milliseconds, p50 / p99. Raw results: [`postgis-nearby-statement-comparison-2026-10-10.report.json`](postgis-nearby-statement-comparison-2026-10-10.report.json).
+
+| Scenario     | Clients | places only: p50 / p99 | labelled (one statement): p50 / p99 | old flow (three statements): p50 / p99 |
+| ------------ | ------: | ---------------------- | ----------------------------------- | -------------------------------------- |
+| blocks-r100  |       1 | 0.28 / 0.33            | 0.39 / 0.45                         | 0.39 / 0.46                            |
+| blocks-r100  |       8 | 0.50 / 0.83            | 0.74 / 1.31                         | 0.72 / 1.42                            |
+| blocks-r500  |       1 | 0.33 / 0.44            | 0.44 / 0.55                         | 0.44 / 0.63                            |
+| blocks-r500  |       8 | 0.59 / 1.10            | 0.88 / 1.47                         | 0.78 / 1.42                            |
+| blocks-r1000 |       1 | 0.45 / 0.75            | 0.57 / 0.87                         | 0.57 / 0.87                            |
+| blocks-r1000 |       8 | 0.89 / 1.97            | 1.29 / 2.66                         | 0.94 / 1.91                            |
+| blocks-r2500 |       1 | 1.17 / 2.31            | 1.28 / 2.41                         | 1.29 / 2.46                            |
+| blocks-r2500 |       8 | 2.17 / 4.65            | 2.68 / 5.34                         | 2.30 / 4.74                            |
+| exits-r100   |       1 | 0.25 / 0.49            | 0.36 / 0.41                         | 0.36 / 0.43                            |
+| exits-r100   |       8 | 0.45 / 0.74            | 0.69 / 1.08                         | 0.60 / 0.93                            |
+| exits-r500   |       1 | 0.25 / 0.32            | 0.36 / 0.41                         | 0.37 / 0.44                            |
+| exits-r500   |       8 | 0.47 / 0.73            | 0.69 / 1.11                         | 0.60 / 0.96                            |
+| exits-r1000  |       1 | 0.26 / 0.30            | 0.36 / 0.42                         | 0.38 / 0.49                            |
+| exits-r1000  |       8 | 0.48 / 0.90            | 0.69 / 1.03                         | 0.63 / 1.17                            |
+| exits-r2500  |       1 | 0.28 / 0.35            | 0.39 / 0.44                         | 0.39 / 0.47                            |
+| exits-r2500  |       8 | 0.52 / 0.93            | 0.73 / 1.17                         | 0.65 / 1.05                            |
+| all-r100     |       1 | 0.29 / 0.52            | 0.40 / 0.55                         | 0.40 / 0.49                            |
+| all-r100     |       8 | 0.53 / 1.01            | 0.77 / 1.25                         | 0.70 / 1.25                            |
+| all-r500     |       1 | 0.34 / 0.44            | 0.45 / 0.56                         | 0.45 / 0.57                            |
+| all-r500     |       8 | 0.61 / 1.08            | 0.87 / 1.49                         | 0.79 / 1.35                            |
+| all-r1000    |       1 | 0.47 / 0.77            | 0.58 / 0.89                         | 0.59 / 0.99                            |
+| all-r1000    |       8 | 0.89 / 1.75            | 1.29 / 2.23                         | 1.19 / 3.13                            |
+| all-r2500    |       1 | 1.20 / 2.33            | 1.33 / 2.48                         | 1.51 / 4.81                            |
+| all-r2500    |       8 | 2.45 / 5.19            | 2.97 / 5.83                         | 2.75 / 7.68                            |
+
+- **Against the places-only query, the labelled statement costs about 0.1 ms more.** Geometric-mean p50 ratio 1.37 (1.32 at one client, 1.42 at eight). The plan is the same inside; the manifest branch takes about 0.14 ms in `EXPLAIN (ANALYZE)`: fetching the 10 KB document, rendering it as text and hashing it.
+- **Against the old flow's database-side work it costs about the same.** Geometric-mean p50 ratio 1.05 (range 0.88 to 1.37); the old flow was 1.30 over places-only. Replacing two manifest reads by one hash costs about what the second read cost.
+- So the saving is not database CPU. It is what surrounds it: two Hyperdrive statements out of a shared daily allowance, two network round trips, and about 21 KB of transfer out of Neon per miss. At the daily ceiling (10,000 misses) the extra database time is about 1.4 s a day.
+- **Caveats.** A first pair of runs, made while other work was running on the same machine, showed larger gaps at eight clients (up to 2× on the blocks scenarios); they are discarded because that work disturbed them, and the harness cannot see load outside PostgreSQL. The figures here have no row flagged as disturbed by another PostgreSQL session but the machine was not otherwise idle for the whole of the three passes (short lint, format and unit-test runs overlapped), so treat differences under about 20% as noise. Everything in the first sections of this document used the places-only query and is unaffected.
+
 ## Reproduce
 
 ```bash
 PG_BIN=/path/to/postgres/bin PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres \
   node --import tsx scripts/bench-postgis/run.mjs --out /tmp/bench --sizes 10000,100000,1000000 --seconds 15 --clients 1,8
 node scripts/bench-postgis/render.mjs /tmp/bench/report.json
+# the statement the Worker sends, and the old three-statement miss path, at one size:
+node --import tsx scripts/bench-postgis/run.mjs --out /tmp/bench-labelled --sizes 10000 --seconds 10 --statement labelled
+node --import tsx scripts/bench-postgis/run.mjs --out /tmp/bench-multi --sizes 10000 --seconds 10 --statement multi
 ```
 
 An earlier run on the same machine had more rows disturbed by another process using the same PostgreSQL cluster (its harness did
