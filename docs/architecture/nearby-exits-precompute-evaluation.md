@@ -10,19 +10,19 @@ The UI always asks one deterministic question: the five nearest source-recorded 
 
 The measurement uses the same `ST_DWithin`, spheroidal `ST_Distance`, grouping by source/kind/`STATION_NA` **before limiting**, deterministic tie-breaking and radius as the live endpoint, and stores only the closest five entries.
 
-| Quantity | Measured |
-| --- | ---: |
-| Published block-detail documents | 9,730 |
-| Stored exit results | 29,602 |
-| Verified empty arrays | 268 |
-| Added JSON text, total | 4,032,907 bytes |
-| Mean delta / document | 414.48 bytes |
-| Median delta | 414 bytes |
-| 95th percentile delta | 674 bytes |
-| Maximum delta | 685 bytes |
-| Minimum delta (empty) | 22 bytes |
-| Mean full document before | 14,941.2 bytes |
-| Mean full document after | 15,355.7 bytes |
+| Quantity                         |        Measured |
+| -------------------------------- | --------------: |
+| Published block-detail documents |           9,730 |
+| Stored exit results              |          29,602 |
+| Verified empty arrays            |             268 |
+| Added JSON text, total           | 4,032,907 bytes |
+| Mean delta / document            |    414.48 bytes |
+| Median delta                     |       414 bytes |
+| 95th percentile delta            |       674 bytes |
+| Maximum delta                    |       685 bytes |
+| Minimum delta (empty)            |        22 bytes |
+| Mean full document before        |  14,941.2 bytes |
+| Mean full document after         |  15,355.7 bytes |
 
 The original untrimmed, unsnapped experiment returned 41,172 rows and about 10.6 MB of JSON. That is **not** the published contract. The current top-five, snapped-centre values above are the ones used by #432. These sizes are logical `jsonb::text` differences, **not** measurements of WAL, TOAST storage or physical billed bytes.
 
