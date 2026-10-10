@@ -36,6 +36,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 
 - [**UX Docs, Accessibility, and Locale Coherence**](.kiro/specs/ux-docs-a11y-and-locale/tasks.md) — Localized Listing Check presentation, operable buyer controls, and truthful CI/docs contracts.
 - [**Feature-First Refactor**](.kiro/specs/feature-first-refactor/tasks.md) — Incremental ownership migration across listing check, shortlist, map explorer, search profile, block detail, entities, and shared modules.
+- [**Geospatial Programme**](.kiro/specs/geospatial-programme/tasks.md) — Standing coordinate-system, provenance, determinism and safety rules for all geospatial work; the baseline audit, discrepancy register and prioritised roadmap.
 - [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
 - [**Comparable Evidence Table**](.kiro/specs/comparable-evidence-table/tasks.md) — High-density buyer evidence table for listing price check.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
