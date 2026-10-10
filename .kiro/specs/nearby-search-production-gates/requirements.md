@@ -1,95 +1,32 @@
 # Requirements: Nearby Search Production Gates
 
-## R1 — Bounded origin work
+## Scope and release decision
 
-- **R1.1** WHEN `GET /api/nearby-places` passes the feature gate THEN the Worker
-  applies a per-client limit of 30 requests per 60 s before it consults the
-  public-read cache or opens a database connection.
-- **R1.2** WHEN a request exceeds the per-client limit THEN the response is
-  `429` with `Retry-After: 60` and `Cache-Control: no-store`, and no cache or
-  database work is done for it.
-- **R1.3** WHEN an answer must come from the database (a cache miss) THEN the
-  Worker spends one unit of a per-location budget of 300 per 60 s. A cache hit
-  spends none.
-- **R1.4** WHEN the origin budget is spent THEN the response is `503` with
-  `Retry-After: 60` and `no-store`, no spatial SQL runs, and nothing is cached.
-- **R1.5** The client key is the IPv4 address, the embedded IPv4 of an
-  IPv4-mapped IPv6 address, or the `/64` prefix of any other IPv6 address. A
-  missing or malformed address shares one fallback key, so a bad header cannot
-  mint fresh buckets.
-- **R1.6** WHEN a limiter binding is missing while the gate is open THEN the
-  route answers `503` (fail closed). WHEN the origin limiter call throws THEN the
-  request is refused with `503` and `no-store`, the error is logged and nothing
-  reaches the database (fail closed); cache hits are unaffected. WHEN only the
-  client limiter call throws THEN the request proceeds and the error is logged,
-  because every request that reaches the database still passes the origin
-  checks.
-- **R1.7** The limits are defined once in `shared/nearby-limits.ts`. A test
-  fails when `wrangler.jsonc` disagrees, when the period is not one the binding
-  supports, or when two namespace ids collide.
+The `GET /api/nearby-places` endpoint remains in the Worker and its PostGIS tests remain in the repository. **`NEON_SPATIAL_ENABLED` must remain `"false"` on production.** The UI's fixed per-block MRT-exit lookup is being replaced by publish-time detail data in independent PR #432. There is **no global statement-budget counter** in this PR.
 
-## R2 — Real deployed-path verification
+**Enabling arbitrary-coordinate search publicly requires a separately approved and verified global cost-control mechanism.** Workers Rate Limiting counters are per location and approximate, not an account-wide daily quota.
 
-- **R2.1** Before the flag may be considered, the path real Worker, real
-  Hyperdrive configuration, real PostGIS branch is exercised against an isolated
-  database. Mocked tests and direct SQL verification do not satisfy this.
-- **R2.2** The isolated database is a disposable fork of the serving branch that
-  carries `sql/neon/001_postgis_nearby.sql`. The serving branch and the
-  production Worker, Hyperdrive configuration and D1 database are not touched.
-- **R2.3** The temporary Worker and Hyperdrive configuration have names and
-  rate-limit namespace ids of their own, connect as a SELECT-only database role,
-  keep query caching off and use a small origin connection limit. Its D1 binding
-  is a throwaway database of its own that carries only the budget table, never
-  the production database.
-- **R2.4** Answers obtained through the Worker equal the shipped SQL's results
-  obtained directly, for a recorded sample that includes the grounded
-  `central-area-535-upp-cross-st` case.
-- **R2.5** The run observes the cache contract (`MISS` then `HIT`, canonical
-  keys), both limiter paths (`429`, `503`) and the daily ceiling (`503` once it
-  is spent, a cached answer still served) on the deployed Worker.
-- **R2.6** Latency is reported as a distribution with its sample size, vantage
-  point and cache state. It is not presented as a benchmark.
-- **R2.7** Teardown deletes the temporary Worker, the temporary Hyperdrive
-  configuration and any local credential material. The fork is left for its
-  owner to delete.
+## R1 — Both limiters fail closed
 
-## R4 — A bounded Hyperdrive budget
+- **R1.1** Requests passing the flag gate consult a per-client limit of 30/60s before the shared cache or any database connection. Over-limit returns `429`, `Retry-After: 60`, `no-store`.
+- **R1.2** Only valid cache misses consult the shared origin limiter (300/60s per location); cache hits spend nothing. A normal origin refusal returns `503` with `Retry-After: 60`, `no-store`.
+- **R1.3** **Both limiters fail closed** on missing bindings or thrown errors: return `503`, no origin query for that request, no response cached. Invalid requests and D1-backend requests spend no origin-limit unit.
+- **R1.4** Client keys use IPv4, IPv4-mapped IPv6 or IPv6 /64, with one fallback key for missing/invalid addresses. A test pins Wrangler values, distinct namespace IDs and the closed feature flag.
 
-Hyperdrive's Free plan allows 100,000 database statements a day for the whole
-account. Every public route spends from it.
+## R2 — Spatial query and cache consistency
 
-- **R4.1** WHEN a nearby cache miss goes to the database THEN it sends exactly one
-  statement, which returns the places together with the identity of the
-  publication they were read from. A cache hit on a live pointer sends none. The
-  multi-statement path of every other public route is unchanged.
-- **R4.2** WHEN the answer must come from the database THEN, after the request is
-  known to be valid and answerable and the origin limit has passed, the Worker
-  takes one statement from a global per-UTC-day allowance in one atomic statement
-  before it sends the query. The allowance is 10,000 unless the Worker var
-  `NEARBY_DAILY_STATEMENT_CEILING` (a whole number from 1 to 100,000) says
-  otherwise.
-- **R4.3** WHEN the allowance is spent THEN the response is `503` with
-  `Retry-After` set to the seconds until 00:00 UTC (never below 60) and
-  `no-store`, no spatial SQL runs and nothing is cached. Cache hits are
-  unaffected.
-- **R4.4** (fail closed) WHEN the D1 binding is missing, the ceiling is configured
-  invalidly, the counter errors or does not answer within 2 s, or answers anything
-  other than "granted" or "refused" THEN the request is refused with `503` and
-  nothing reaches the database.
-- **R4.5** Requests that never reach the database (invalid input, a backend without
-  PostGIS) spend neither the origin limit nor the allowance.
-- **R4.6** Granted reservations are never returned, so the counter can only
-  over-state a day's spend.
-- **R4.7** The first publication of the budget table is migration
-  `0012_nearby_statement_budget.sql`. It is applied to the remote D1 database only
-  with approval, and before the flag is opened.
+- **R2.1** A valid cache miss issues **one labelled, parameterized PostGIS SELECT** returning places and the publication identity from the same database snapshot. The shared cache makes no extra manifest queries for this route; its legacy multi-statement routes are unchanged.
+- **R2.2** Canonical coordinate grid, radius buckets, nearest MRT exit per `STATION_NA` before result LIMIT, deterministic tie-breaking and version-scoped cache semantics are pinned by unit and SQL differential tests.
+- **R2.3** A cache HIT emits no database statement. A malformed request emits none. Responses from incomplete publications cannot be stored under a finished generation.
 
-## R3 — The release gate stays closed
+## R3 — Safe isolated real-path verification
 
-- **R3.1** `NEON_SPATIAL_ENABLED` remains `"false"` in `wrangler.jsonc` until a
-  separate approval. `tests/unit/nearby-rate-limit.test.ts` asserts it.
-- **R3.2** Opening the gate requires, in order: the spatial migration applied to
-  the serving branch with approval; `sql/neon/verify_nearby_spatial_sql.sql`
-  passing on a disposable fork of it; migration 0012 applied to the remote D1
-  database with approval (R4.7); recorded R2 evidence; explicit approval of the
-  rollout.
+- **R3.1** Run a temporary Worker with its own name and rate-limit namespaces against a **disposable Neon PostGIS fork**, using **one** temporary Hyperdrive configuration with a fork-only SELECT-only role. Do not reuse serving credentials.
+- **R3.2** The temporary Worker is the only place where the spatial flag may be temporarily true for this verification. Do not modify production Worker, Hyperdrive, or D1.
+- **R3.3** Verify independent SQL fingerprints, cache MISS/HIT, canonical keys, both limiter refusals and end-to-end latency. Record results as text only; no credential/evidence uploads.
+- **R3.4** Teardown removes only resources demonstrably created by this run. The safe local rehearsal creates unique per-run databases and never uses `DROP DATABASE ... WITH (FORCE)`.
+
+## R4 — Deferred public release
+
+- **R4.1** The current two per-location limiters do **not** authorize public exposure. An approved global cost budget, including worst-case behaviour during refusals and all Cloudflare locations, must be implemented and verified in a distinct future proposal before opening `NEON_SPATIAL_ENABLED` in production.
+- **R4.2** Neither D1 nor Neon gets a new runtime statement-budget table, write-capable role or Hyperdrive binding in this PR.
