@@ -1,0 +1,21 @@
+name: Temporary nearby formatter check
+on:
+  push:
+    branches:
+      - feat/nearby-rate-limit
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+          node-version: "24"
+          run-install: false
+      - run: vp install
+      - run: |
+          vp fmt docs/architecture/postgis-nearby.md shared/nearby-limits.ts tests/deployed-path/local-rehearsal.mjs tests/unit/nearby-places-worker-gate.test.ts
+          git diff -- docs/architecture/postgis-nearby.md shared/nearby-limits.ts tests/deployed-path/local-rehearsal.mjs tests/unit/nearby-places-worker-gate.test.ts
