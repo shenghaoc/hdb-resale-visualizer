@@ -12,8 +12,8 @@
  *
  *   PGHOST=127.0.0.1 PGPORT=5432 PGUSER=postgres node --import tsx tests/deployed-path/local-rehearsal.mjs <out-dir>
  *   PHASES=functional  runs a subset (functional, client-limit, latency, origin-limit, ceiling, budget-unavailable);
- *                      default is all. The Worker's D1 binding is the local D1 emulator carrying
- *                      migrations/0012_nearby_statement_budget.sql (the daily statement budget).
+ *                      default is all. The budget is in the same disposable PostgreSQL database,
+ *                      accessed through a separate minimal-role Hyperdrive connection.
  *   SCRATCH_RUN_ID=<6-16 lowercase letters/digits>  fixes the run id instead of drawing a random one.
  */
 import { execFileSync, spawn } from "node:child_process";
@@ -34,8 +34,7 @@ mkdirSync(outDir, { recursive: true });
 
 const PSQL = process.env.PSQL ?? "psql";
 const PORT = 8799;
-const BUDGET_DB = "hdb-realpath-local-budget";
-const BUDGET_MIGRATION = path.join(repoRoot, "migrations/0012_nearby_statement_budget.sql");
+const BUDGET_MIGRATION = path.join(repoRoot, "sql/neon/002_nearby_daily_budget.sql");
 /** The ceiling the `ceiling` phase runs under: small enough to reach, the Worker's var overriding the shipped number. */
 const CEILING = 5;
 const phasesWanted = new Set(
@@ -68,6 +67,9 @@ try {
     `DO $$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'hdb_benchmark_runtime') THEN CREATE ROLE hdb_benchmark_runtime LOGIN; END IF; END $$`,
   );
   psql("postgres", `GRANT CONNECT ON DATABASE ${DB} TO hdb_benchmark_runtime`);
+  // Separate quota-only login: keep the public runtime role transaction-read-only.
+  psql("postgres", `DO $ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'hdb_nearby_budget') THEN CREATE ROLE hdb_nearby_budget LOGIN PASSWORD 'local-test-only'; END IF; END $`);
+  psql("postgres", `GRANT CONNECT ON DATABASE ${DB} TO hdb_nearby_budget`);
   psqlFile(DB, path.join(here, "base-schema.sql"));
   psql(
     DB,
@@ -116,6 +118,9 @@ try {
 
   // 2. The shipped migration, then the catalog defaults the serving branch's runtime role has.
   psqlFile(DB, path.join(repoRoot, "sql/neon/001_postgis_nearby.sql"));
+  psqlFile(DB, BUDGET_MIGRATION);
+  psql(DB, `ALTER ROLE hdb_nearby_budget IN DATABASE ${DB} SET default_transaction_read_only = off`);
+  psql(DB, `ALTER ROLE hdb_nearby_budget IN DATABASE ${DB} SET statement_timeout = '5s'`);
   psql(
     DB,
     `ALTER ROLE hdb_benchmark_runtime IN DATABASE ${DB} SET default_transaction_read_only = on`,
