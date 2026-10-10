@@ -3,6 +3,7 @@
 -- default_transaction_read_only=off, and a distinct Hyperdrive origin credential.
 -- Do not change hdb_benchmark_runtime (its default_transaction_read_only remains ON).
 -- Run as a trusted migration owner inside one transaction.
+BEGIN;
 DO $preflight$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'hdb_nearby_budget') THEN
@@ -46,3 +47,4 @@ $function$;
 REVOKE ALL ON FUNCTION public.reserve_nearby_statement(integer) FROM PUBLIC;
 GRANT USAGE ON SCHEMA public TO hdb_nearby_budget;
 GRANT EXECUTE ON FUNCTION public.reserve_nearby_statement(integer) TO hdb_nearby_budget;
+COMMIT;
