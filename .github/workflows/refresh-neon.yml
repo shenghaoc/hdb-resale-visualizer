@@ -10,11 +10,11 @@ on:
         required: true
         type: string
       mode:
-        description: One bounded manual invocation
+        description: One bounded manual invocation. plan reads and reports only; apply writes to the isolated benchmark branch
         required: true
         type: choice
-        options: [apply, plan]
-        default: apply
+        options: [plan, apply]
+        default: plan
       usage_baseline:
         description: Captured Neon Console baseline with explicit uncertainty; API zeros are not accepted
         required: true

@@ -87,6 +87,14 @@ describe("isolated Neon target and explicit intent", () => {
       "workflow_dispatch",
     ]);
   });
+  it("defaults to plan: a dispatch that does not choose a mode writes nothing", () => {
+    const workflow = readFileSync(resolve(".github/workflows/refresh-neon.yml"), "utf8");
+    const mode = /^ {6}mode:\n((?: {8}.*\n)+)/m.exec(workflow)?.[1] ?? "";
+    expect(mode).toMatch(/^ {8}default: plan$/m);
+    expect(mode).toMatch(/^ {8}options: \[plan, apply\]$/m);
+    expect(mode).toMatch(/^ {8}required: true$/m);
+    expect(mode).not.toMatch(/default: apply/);
+  });
   it("runs a script that package.json defines", () => {
     const manifest = JSON.parse(readFileSync(resolve("package.json"), "utf8")) as {
       scripts: Record<string, string>;

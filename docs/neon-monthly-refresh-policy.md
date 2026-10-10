@@ -22,6 +22,10 @@ Monthly/manual flags are mutually exclusive. Monthly checks compare UTC month **
 
 The current coordinator remains D1-backed. Both coordinator and publisher production apply guards remain in place. The transaction multiset algorithm, stable identities and duplicate multiplicity, disappearance/correction guards, artifact dependency tracking, detail patches, staged caches and manifest-last atomic publication are unchanged. The policy is reusable for a future Neon ingestion port; none has been activated.
 
+## Manual workflow: plan by default
+
+`.github/workflows/refresh-neon.yml` is `workflow_dispatch` only. Its `mode` input defaults to **`plan`** (read and report, no write), so a dispatch that does not choose a mode cannot publish. `apply` has to be chosen on purpose, on top of the typed target confirmation and the captured usage baseline the workflow already requires. `tests/unit/neon-refresh.test.ts` pins the default and the option order.
+
 ## Inactive workflow configuration
 
 [`proposals/refresh-data-monthly.yml`](proposals/refresh-data-monthly.yml) is deliberately **outside `.github/workflows`**. The proposal has:
