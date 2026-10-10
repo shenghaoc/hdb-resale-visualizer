@@ -54,10 +54,10 @@ This stack groups by the source label verbatim and deliberately does **not** nor
 
 A cache miss on `GET /api/nearby-places` runs a spatial query on a metered Neon branch through Hyperdrive, and the canonical keyspace above (about 1.0 billion keys) is far too large for the cache to bound that work: a client walking the grid never hits. Two approximate per-location rate limits shape its traffic, but neither limits global daily usage. All are inert while `NEON_SPATIAL_ENABLED` is `"false"`, because the flag gate answers 503 before any of them runs.
 
-| Control                     | Where                              | Limit                                 | Key                             | Spent                                         | Over the limit                                   | If the control itself fails     |
-| --------------------------- | ---------------------------------- | ------------------------------------- | ------------------------------- | --------------------------------------------- | ------------------------------------------------ | ------------------------------- |
-| `NEARBY_IP_LIMITER`         | Rate Limiting binding `1003`       | 30 per 60 s, per location             | client key (below)              | by every request that passes the flag gate    | `429`, `Retry-After: 60`, `no-store`             | request proceeds, error logged  |
-| `NEARBY_ORIGIN_LIMITER`     | Rate Limiting binding `1004`       | 300 per 60 s, per location            | one shared key, `nearby-origin` | on a cache miss, just before the statement    | `503`, `Retry-After: 60`, `no-store`             | **refused** `503`, error logged |
+| Control                 | Where                        | Limit                      | Key                             | Spent                                      | Over the limit                       | If the control itself fails     |
+| ----------------------- | ---------------------------- | -------------------------- | ------------------------------- | ------------------------------------------ | ------------------------------------ | ------------------------------- |
+| `NEARBY_IP_LIMITER`     | Rate Limiting binding `1003` | 30 per 60 s, per location  | client key (below)              | by every request that passes the flag gate | `429`, `Retry-After: 60`, `no-store` | request proceeds, error logged  |
+| `NEARBY_ORIGIN_LIMITER` | Rate Limiting binding `1004` | 300 per 60 s, per location | one shared key, `nearby-origin` | on a cache miss, just before the statement | `503`, `Retry-After: 60`, `no-store` | **refused** `503`, error logged |
 
 Order in the Worker (`worker/index.ts`): flag gate, then the per-client limit, then the public-read cache; on a miss only, once the request is known to be valid and answerable, the origin limiter, then one labelled PostGIS statement. A limited client touches neither the cache nor the database; a cache hit spends neither origin control, so popular locations stay cheap; a request that never reaches the database (invalid input, a backend without PostGIS) spends neither. The origin controls answer `503` rather than `429` because the client did nothing wrong; the service is protecting itself. None of these answers is stored: the public-read cache keeps only `200` responses marked `public`, and the PWA's `NetworkFirst` API rule admits only `200`s with a consistent cache label.
 
@@ -100,7 +100,6 @@ The only caller today asks the same fixed question for each of the 9,730 blocks.
 **Failure handling.** Both the per-client and the per-location limiter fail closed on missing bindings and thrown errors, responding with `503`, `Retry-After: 60` and `no-store`. A normal exceeded client limit answers `429`; the origin limit answers `503`. Invalid inputs do not consume origin-limit attempts. A previously cached answer may continue to be served when the origin limiter is down; it never opens a database connection.
 
 **Configuration.** `shared/nearby-limits.ts` pins the existing rate-limiting bindings in `wrangler.jsonc`; `tests/unit/nearby-rate-limit.test.ts` also asserts the production spatial flag is `"false"`. A temporary verification Worker must have its own name and limiter namespace IDs and uses **one** fork-scoped read-only Hyperdrive config, with no D1 counter or write-capable role.
-
 
 ## Capability probe: `GET /api/nearby-capabilities`
 
