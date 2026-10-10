@@ -412,26 +412,6 @@ try {
 
   const wranglerBin = path.join(repoRoot, "node_modules/.bin/wrangler");
   const wranglerEnv = { ...process.env, WRANGLER_SEND_METRICS: "false", NO_COLOR: "1" };
-  /** Runs SQL against a Worker's local D1 emulator state and returns the last statement's rows. */
-  const budgetSql = (config, state, args) => {
-    const output = execFileSync(
-      wranglerBin,
-      [
-        "d1",
-        "execute",
-        BUDGET_DB,
-        "--local",
-        "--persist-to",
-        state,
-        "--config",
-        config,
-        "--json",
-        ...args,
-      ],
-      { cwd: outDir, env: wranglerEnv, encoding: "utf8" },
-    );
-    return JSON.parse(output).at(-1).results;
-  };
   /** The daily budget rows each Worker left behind, by label. */
   const budgetAfter = {};
 
@@ -446,8 +426,8 @@ try {
     writeFileSync(config, workerConfig(originLimit, clientLimit, vars, migrate));
     const state = path.join(outDir, `wrangler-state-${label}`);
     rmSync(state, { recursive: true, force: true });
-    // With migrate: false the budget table does not exist, which is how a missing or broken counter is rehearsed.
-    if (migrate) budgetSql(config, state, ["--file", BUDGET_MIGRATION]);
+    // Reset only this invocation's PostgreSQL table between independent phases.
+    psql(DB, "DELETE FROM public.nearby_daily_budget");
     const wrangler = spawn(
       wranglerBin,
       [
@@ -492,12 +472,7 @@ try {
       await sleep(1000);
       if (wrangler.exitCode === null) wrangler.kill("SIGKILL");
       writeFileSync(path.join(outDir, `wrangler-${label}.log`), output);
-      if (migrate) {
-        budgetAfter[label] = budgetSql(config, state, [
-          "--command",
-          "SELECT day, statements FROM nearby_statement_budget ORDER BY day",
-        ]);
-      }
+      budgetAfter[label] = psql(DB, "SELECT day::text, used FROM public.nearby_daily_budget ORDER BY day").trim();
     }
   }
 
@@ -635,5 +610,5 @@ try {
   const cleanup = describeCleanup(scratch.dropAll());
   for (const line of cleanup.lines) log(line);
   if (!cleanup.complete) process.exitCode = 1;
-  log("the cluster-level role hdb_benchmark_runtime was left in place");
+  log("cluster-level test roles were left in place; only the owned scratch database was deleted");
 }
