@@ -8,7 +8,7 @@ Terms: a **publication** is one fetched, hashed copy of a source; an **observati
 
 - **R1.1** WHEN a source is proposed THEN it SHALL have a registry record naming its publisher, dataset id and landing page, licence id and licence-text URL, attribution string, independence group, access method, declared CRS, record-key specification and admission status, and nothing SHALL be loaded from a source whose status is not `admitted`.
 - **R1.2** WHEN two sources share an independence group, or one is derived from the other (a station point computed from exits, a geocoded coordinate), THEN agreement between them SHALL NOT count as corroboration.
-- **R1.3** WHEN a source's licence imposes share-alike (ODbL) THEN it SHALL remain `candidate` until a recorded owner decision exists, and its observations SHALL carry `licence_class = share-alike` so that every serving view can exclude or separate them.
+- **R1.3** WHEN a source's licence imposes share-alike (ODbL) THEN it SHALL remain `candidate` until a recorded owner decision exists, and its observations SHALL carry `licence_class = share-alike` so that every serving view can exclude or separate them. OpenStreetMap is excluded by the owner's decision of 2026-10-10 and has no adapter.
 - **R1.4** WHEN a source needs a token, account, API key or registration (OneMap Search, LTA DataMall `AccountKey`) THEN it SHALL NOT be admitted.
 - **R1.5** WHEN data is fetched THEN it SHALL be fetched at build time by a script under `scripts/`; no code under `src/`, `functions/` or `worker/` SHALL request an upstream data source, and no hosted AI or model API SHALL be used anywhere in the pipeline.
 - **R1.6** WHEN two admitted sources of different independence groups are resolved against each other THEN the run SHALL report, per source pair, the share of mutual pairs whose points coincide within 0.5 m and whose names are equal (a label-free copy signal); a high share SHALL be raised to the owner as a candidate registry change (merging the groups) and the report SHALL NOT change any class by itself.
@@ -98,7 +98,7 @@ Terms: a **publication** is one fetched, hashed copy of a source; an **observati
 ## R13 - Licence compliance and attribution
 
 - **R13.1** WHEN a place is shown THEN the attribution strings of its contributing sources SHALL be available from the registry and displayed in the app's existing source information surface.
-- **R13.2** WHEN an ODbL-derived layer is adopted THEN it SHALL live in separate tables and files, SHALL carry the ODbL notice, SHALL be offered for download as the licence requires, and SHALL NOT be blended into SODL rows or columns.
+- **R13.2** WHEN an ODbL-derived layer is ever adopted (none is: OpenStreetMap is excluded) THEN it SHALL live in separate tables and files, SHALL carry the ODbL notice, SHALL be offered for download as the licence requires, and SHALL NOT be blended into SODL rows or columns.
 - **R13.3** WHEN source records contain personal data THEN it SHALL be excluded from storage, fixtures, logs and API responses.
 
 ## R14 - Phasing and verification

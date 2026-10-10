@@ -8,8 +8,8 @@
   -> Every decision has an answer or an explicit "deferred"; phases that depend on a deferred decision stay unstarted. (R1.3, R9.3)
 - [ ] **T0.2** If OD2 is yes: take a one-off Singapore bounding-box extract of Overture Places on a developer machine with tooling that is not a repo dependency, and write the descriptive counts into the admission document: records per relevant category, share with a name, share with confidence above stated cut-offs, overlap with the NEA, NParks and MOE records by postal code or distance. No accuracy figure.
   -> The admission document's "Not verified" list shrinks by the Overture items; the acceptance criteria OD2 asked for are stated, not assumed. (R12.1)
-- [ ] **T0.3** If OD1 is B or C: obtain an OSM extract (Overpass when it answers, or a regional extract) for the six kinds and record counts, `source=*` provenance and whether government imports are visible.
-  -> The OSM items in "Not verified" are resolved or restated; option C also lists the files that would be published. (R1.3)
+- [x] **T0.3** ~~If OD1 is B or C: obtain an OSM extract~~ Not needed: OD1 was decided on 2026-10-10 as option A, OpenStreetMap is not used.
+  -> The OSM items in "Not verified" are closed by the exclusion. (R1.3)
 - [ ] **T0.4** Ask LTA about the DataMall static layers if OD5 is yes; record the answer.
   -> The Train Station layer is either admitted as an `lta`-group source or listed as unavailable.
 
@@ -96,8 +96,8 @@
   -> Offshore and cross-border points that pass the admission box are rejected; documented otherwise as a limit of the box guard.
 - [ ] **T10.4** Supermarkets: register adapter with the OD4 allow-list, legal-entity check, `NO_USABLE_ADDRESS` and the stale-source horizon.
   -> Natural-person licensees are never stored; the `0na` record is excluded with its code. (R11.4)
-- [ ] **T10.5** Overture Places and OSM adapters, only if OD1 and OD2 allow, each with its own licence class, attribution string and, for OSM option C, the separate tables and the public file.
-  -> No ODbL row appears in a view that serves SODL rows unless the owner chose to. (R1.3, R13.2)
+- [ ] **T10.5** Overture Places adapter, only if OD2 allows (OpenStreetMap is excluded by OD1 = A), with a licence class and attribution string per provider and Foursquare's notice kept.
+  -> No share-alike row exists in any view; each provider's credit line is available from the registry. (R1.3, R13.1)
 
 ## Phase 11 - Move MRT onto publications (owner-approved migration)
 
