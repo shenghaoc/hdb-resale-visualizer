@@ -68,6 +68,8 @@
   copy-on-write child of a verified benchmark publication. Promotion applies the role defaults and the PostGIS
   migration to the child, verifies it, and only then changes the Hyperdrive
   origin.
+- **R6.1a** The serving child materializes the five nearest MRT exits per block from PostGIS into `block_details.json` using the shipped API's 1,500 m snapping/grouping/tie semantics. This happens **after** benchmark base-table digest equality and **before** promotion; all 9,730 lists must pass an independent SQL differential check, including empty and short-code exits. The derived JSON and private manifest marker change atomically, with manifest last. Re-running is idempotent. The benchmark COPY stage and upstream transaction change guard remain unchanged.
+- **R6.1b** The plan separately measures JSON text growth, physical/WAL growth, child-only DML time and branch storage budget. It refuses promotion when a derived verifier fails or headroom is inadequate. Only the new child is mutated; serving is untouched until approved cutover.
 - **R6.2** The previous serving child is kept until the owner retires it, so that
   rollback is one Hyperdrive origin change. The D1 rollback target is unchanged.
 - **R6.3** Every promotion step that changes Cloudflare or Neon state is listed
