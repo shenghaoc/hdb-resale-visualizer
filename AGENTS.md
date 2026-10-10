@@ -34,6 +34,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 
 **Active:**
 
+- [**Serving Data Refresh**](.kiro/specs/serving-data-refresh/tasks.md) — Repeatable, reviewed refresh of the serving Neon data: plan hash approval, benchmark-only publisher target, schema-version-aware admission, copy-on-write promotion and rollback.
 - [**UX Docs, Accessibility, and Locale Coherence**](.kiro/specs/ux-docs-a11y-and-locale/tasks.md) — Localized Listing Check presentation, operable buyer controls, and truthful CI/docs contracts.
 - [**Feature-First Refactor**](.kiro/specs/feature-first-refactor/tasks.md) — Incremental ownership migration across listing check, shortlist, map explorer, search profile, block detail, entities, and shared modules.
 - [**Confidence & Caveats System**](.kiro/specs/confidence-and-caveats-system/tasks.md) — Unified evidence-based confidence scoring + machine-readable caveats.
