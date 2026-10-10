@@ -1,0 +1,49 @@
+# Isolated PostgreSQL 18 test. Never connects to Neon and never uploads evidence.
+name: Neon nearby budget integration
+on:
+  pull_request:
+    paths:
+      - "sql/neon/002_nearby_daily_budget.sql"
+      - "sql/neon/verify_nearby_daily_budget.sql"
+      - "tests/integration/neon-nearby-budget.mjs"
+      - ".github/workflows/neon-nearby-budget-integration.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-budget:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18-trixie
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: disposable-integration-only
+          POSTGRES_DB: hdb_nearby_test
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd "pg_isready -U postgres -d hdb_nearby_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+          node-version: "24"
+          run-install: false
+      - run: vp install
+      - name: Verify atomic Neon counter with distinct roles
+        run: node tests/integration/neon-nearby-budget.mjs
+        env:
+          HDB_DISPOSABLE_POSTGRES_TEST: "yes"
+          HDB_TEST_ROLE_PASSWORD: "disposable-role-only"
+          PGHOST: "127.0.0.1"
+          PGPORT: "5432"
+          PGDATABASE: "hdb_nearby_test"
+          PGUSER: "postgres"
+          PGPASSWORD: "disposable-integration-only"
