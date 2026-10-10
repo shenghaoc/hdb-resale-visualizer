@@ -29,4 +29,3 @@ export const NEARBY_ORIGIN_RATE_LIMIT_KEY = "nearby-origin";
  * cache reads the whole manifest before and after the handler; see docs/architecture/postgis-nearby.md.
  */
 export const NEARBY_STATEMENTS_PER_MISS = 1;
-

@@ -429,7 +429,11 @@ describe("one labelled SQL statement per cache miss without a counter", () => {
     }
     expect(origin.limit).not.toHaveBeenCalled();
     expect(spies.query).not.toHaveBeenCalled();
-    const rollback = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin, PUBLIC_DATA_BACKEND: "d1" });
+    const rollback = deployedEnv({
+      ...open,
+      NEARBY_ORIGIN_LIMITER: origin,
+      PUBLIC_DATA_BACKEND: "d1",
+    });
     expect((await call(rollback, nearbyPath)).status).toBe(503);
     expect(origin.limit).not.toHaveBeenCalled();
     expect(spies.d1).not.toHaveBeenCalled();

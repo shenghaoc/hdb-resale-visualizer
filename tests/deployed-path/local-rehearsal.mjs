@@ -33,9 +33,7 @@ mkdirSync(outDir, { recursive: true });
 const PSQL = process.env.PSQL ?? "psql";
 const PORT = 8799;
 const phasesWanted = new Set(
-  (
-    process.env.PHASES ?? "functional,client-limit,latency,origin-limit"
-  ).split(","),
+  (process.env.PHASES ?? "functional,client-limit,latency,origin-limit").split(","),
 );
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const log = (...parts) => console.log("[rehearsal]", ...parts);
@@ -445,7 +443,6 @@ try {
       await sleep(1000);
       if (wrangler.exitCode === null) wrangler.kill("SIGKILL");
       writeFileSync(path.join(outDir, `wrangler-${label}.log`), output);
-
     }
   }
 
