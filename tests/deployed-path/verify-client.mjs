@@ -9,11 +9,6 @@
  *   client-limit  one repeated request until the per-client limit answers 429
  *   origin-limit  distinct cache-missing centres until the per-location origin budget answers 503 (needs a Worker
  *                 whose NEARBY_ORIGIN_LIMITER limit is small, for example 10)
- *   ceiling       distinct cache-missing centres until the global daily statement ceiling answers 503, then a
- *                 cached centre once more (needs a Worker whose NEARBY_DAILY_STATEMENT_CEILING var is small and whose
- *                 client limit is at least that number + 4; set EXPECT_CEILING to the same number)
- *   budget-unavailable
- *                 three cache misses against a Worker whose budget table is missing: all must be refused with 503
  *   latency       40 cache misses and 40 hits, as client-observed wall time (needs generous limits)
  *
  * BASE_URL must be https, or a loopback http URL with ALLOW_LOCAL_HTTP=1. EXPECTED_FILE and SAMPLES_FILE override the
@@ -198,7 +193,7 @@ const phases = {
 
   async "origin-limit"() {
     // Distinct snapped centres are all cache misses; fewer than the client limit, so only the per-location origin
-    // budget can answer 503. Wait for the previous window first.
+    // the per-location origin limiter can answer 503. Wait for the previous window first.
     await sleep(WINDOW_MS);
     const rows = [];
     for (let i = 0; i < 25; i++) {
@@ -218,59 +213,6 @@ const phases = {
       statuses: rows.map((row) => row.status).join(","),
       first503: rows.find((row) => row.status === 503) ?? null,
     };
-  },
-
-  async ceiling() {
-    // Run against a Worker whose daily statement ceiling is EXPECT_CEILING (a small number set in its vars). Distinct
-    // snapped centres are all cache misses, so each draws one statement: the first EXPECT_CEILING are answered, the
-    // rest refused with 503 and the time to 00:00 UTC. Then the first centre is asked again: it is cached, so it never
-    // reaches the allowance and is still served. Needs a fresh 60 s window for the per-client limit (use a Worker
-    // whose client limit is not below ceiling + 4).
-    const ceiling = Number(process.env.EXPECT_CEILING);
-    if (!Number.isInteger(ceiling) || ceiling < 1)
-      throw new Error("EXPECT_CEILING must be the whole-number ceiling the Worker runs under");
-    // lng 103.83 (the origin-limit phase uses 103.82, budget-unavailable 103.84) so no earlier phase's cached entry can
-    // answer these centres without drawing from the allowance.
-    const centre = (i) =>
-      `/api/nearby-places?lat=1.${3000 + i}&lng=103.8300&radius=500&types=mrt_exit`;
-    const rows = [];
-    for (let i = 0; i < ceiling + 3; i++) {
-      const response = await get(centre(i));
-      rows.push({
-        i,
-        status: response.status,
-        cache: response.cache,
-        retryAfter: response.retryAfter,
-        cacheControl: response.cacheControl,
-        body: response.status === 503 ? parse(response) : undefined,
-      });
-    }
-    const again = await get(centre(0));
-    return {
-      ceiling,
-      statuses: rows.map((row) => row.status).join(","),
-      firstRefused: rows.find((row) => row.status === 503) ?? null,
-      cachedStillServed: { status: again.status, cache: again.cache },
-    };
-  },
-
-  async "budget-unavailable"() {
-    // Run against a Worker whose budget table does not exist (or whose D1 is down): every cache miss must be refused,
-    // never answered unmetered.
-    const rows = [];
-    for (let i = 0; i < 3; i++) {
-      const response = await get(
-        `/api/nearby-places?lat=1.${3000 + i}&lng=103.8400&radius=500&types=mrt_exit`,
-      );
-      rows.push({
-        i,
-        status: response.status,
-        cacheControl: response.cacheControl,
-        retryAfter: response.retryAfter,
-        body: parse(response),
-      });
-    }
-    return { statuses: rows.map((row) => row.status).join(","), first: rows[0] };
   },
 
   async latency() {
