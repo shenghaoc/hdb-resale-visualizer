@@ -1,0 +1,73 @@
+# Manual only. Preparing this file locally does not publish/dispatch it on GitHub.
+# Isolated benchmark target only; no D1 writes, production import, migration or application deployment.
+name: Manual Neon benchmark refresh
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_target:
+        description: Enter benchmark-d1-migration to confirm the isolated target
+        required: true
+        type: string
+      mode:
+        description: One bounded manual invocation. plan reads and reports only; apply writes to the isolated benchmark branch
+        required: true
+        type: choice
+        options: [plan, apply]
+        default: plan
+      usage_baseline:
+        description: Captured Neon Console baseline with explicit uncertainty; API zeros are not accepted
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: neon-refresh-br-wispy-boat-b34glczl
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: inputs.confirm_target == 'benchmark-d1-migration'
+    environment: neon-benchmark-refresh
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+          node-version: "24"
+          run-install: false
+      - run: vp install
+      - name: Save operator-supplied provider baseline
+        env:
+          USAGE_BASELINE: ${{ inputs.usage_baseline }}
+        run: |
+          node --input-type=module <<'JS'
+          import { writeFileSync } from 'node:fs';
+          writeFileSync(`${process.env.RUNNER_TEMP}/neon-usage-before.json`, JSON.stringify(JSON.parse(process.env.USAGE_BASELINE)), { mode: 0o600 });
+          JS
+      - name: One manual Neon ingestion/publication
+        env:
+          REFRESH_MODE: ${{ inputs.mode }}
+          NEON_REFRESH_DATABASE_URL: ${{ secrets.NEON_BENCHMARK_REFRESH_DATABASE_URL }}
+          DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
+          ONEMAP_TOKEN: ${{ secrets.ONEMAP_TOKEN }}
+          ONEMAP_EMAIL: ${{ secrets.ONEMAP_EMAIL }}
+          ONEMAP_PASSWORD: ${{ secrets.ONEMAP_PASSWORD }}
+          NODE_OPTIONS: --max-old-space-size=6144
+        run: |
+          vp run sync-data:neon "--$REFRESH_MODE" --reconcile-manual \
+            --branch br-wispy-boat-b34glczl \
+            --usage-before "$RUNNER_TEMP/neon-usage-before.json" \
+            --report "$RUNNER_TEMP/neon-refresh.json"
+      - name: Save sanitized refresh receipt
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: neon-manual-refresh-receipt
+          path: ${{ runner.temp }}/neon-refresh.json
+          retention-days: 14
+          if-no-files-found: ignore

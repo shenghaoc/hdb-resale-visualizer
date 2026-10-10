@@ -150,3 +150,27 @@ export const transactionRowSchema = z.object({
 });
 
 export type TransactionRow = z.infer<typeof transactionRowSchema>;
+
+/** Build-state provenance inside the existing manifest JSON; no D1 table/schema migration. */
+export const syncBuildStateSchema = z.object({
+  contextDigest: z.string().regex(/^[a-f0-9]{64}$/),
+  excludedSourceDigest: z
+    .string()
+    .regex(/^[a-f0-9]{64}$/)
+    .optional(),
+  recentThreshold: yearMonthSchema,
+  algorithmVersion: z.literal(1),
+  sourceVersionHints: z.record(z.string(), z.string()).optional(),
+  reconciledAt: z.string().optional(),
+});
+
+export const datasetMetadataSchema = z.object({
+  code: z.number().int(),
+  errorMsg: z.string().optional(),
+  data: z.object({
+    datasetId: z.string().min(1),
+    lastUpdatedAt: z
+      .string()
+      .refine((value) => Number.isFinite(Date.parse(value)), "Invalid source timestamp"),
+  }),
+});

@@ -1,6 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 import { D1Client } from "../../scripts/lib/sync/d1";
 
+// Retry backoff is real time otherwise; the delays are not what these tests are about.
+vi.mock("../../scripts/lib/sync/rate-limits", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("../../scripts/lib/sync/rate-limits")>()),
+  sleep: vi.fn().mockResolvedValue(undefined),
+}));
+
 const config = {
   accountId: "acct",
   databaseId: "db-id",
@@ -202,9 +208,15 @@ describe("D1Client", () => {
   });
 
   it("makes every statement conditional on a guard, inside the statement itself", async () => {
-    const fetchMock = vi.fn<typeof fetch>(async () =>
-      jsonResponse({ success: true, errors: [], result: [{ success: true }, { success: true }] }),
-    );
+    // One result per statement, like the REST API: the client rejects any other count.
+    const fetchMock = vi.fn<typeof fetch>(async (_url, init) => {
+      const { batch } = parseRequestBody(init) as { batch?: unknown[] };
+      return jsonResponse({
+        success: true,
+        errors: [],
+        result: (batch ?? [null]).map(() => ({ success: true })),
+      });
+    });
     vi.stubGlobal("fetch", fetchMock);
     const client = new D1Client(config);
     const guard = "(SELECT 1) = 1";
@@ -274,6 +286,169 @@ describe("D1Client", () => {
 
     expect(fetchMock).not.toHaveBeenCalled();
   });
+});
+
+describe("transient failures", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it("sends exactly one attempt by default, so a request is never applied twice", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(new Response("busy", { status: 503 }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(new D1Client(config).query({ sql: "SELECT 1" })).rejects.toThrow("503");
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
+  it("retries network errors, HTTP 429 and 5xx when the caller opts in", async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockRejectedValueOnce(new Error("reset"))
+      .mockResolvedValueOnce(new Response("slow down", { status: 429 }))
+      .mockResolvedValueOnce(new Response("busy", { status: 503 }))
+      .mockResolvedValueOnce(
+        jsonResponse({
+          success: true,
+          errors: [],
+          result: [{ success: true, results: [{ n: 1 }] }],
+        }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(new D1Client(config, { retry: true }).query({ sql: "SELECT 1" })).resolves.toEqual(
+      [{ n: 1 }],
+    );
+    expect(fetchMock).toHaveBeenCalledTimes(4);
+  });
+});
+
+describe("exact D1 metadata accounting", () => {
+  afterEach(() => vi.unstubAllGlobals());
+  it("sums every batch statement including index writes, labeled by phase/table", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(
+            JSON.stringify({
+              success: true,
+              result: [
+                {
+                  success: true,
+                  results: [],
+                  meta: { changes: 1, duration: 2, rows_read: 3, rows_written: 8 },
+                },
+                {
+                  success: true,
+                  results: [],
+                  meta: { changes: 2, duration: 4, rows_read: 5, rows_written: 16 },
+                },
+              ],
+            }),
+            { headers: { "content-type": "application/json" } },
+          ),
+      ),
+    );
+    const db = new D1Client(config);
+    db.setPhase("publish");
+    await db.query([
+      { sql: "INSERT INTO transactions VALUES (?)", params: [1] },
+      { sql: "UPDATE blocks SET town=?", params: ["TEST"] },
+    ]);
+    expect(db.usageReport()).toMatchObject({
+      rowsRead: 8,
+      rowsWritten: 24,
+      durationMs: 6,
+      statements: 2,
+    });
+    expect(db.usage.map((record) => [record.phase, record.table])).toEqual([
+      ["publish", "transactions"],
+      ["publish", "blocks"],
+    ]);
+  });
+  it("marks absent metrics and timeouts UNKNOWN, never zero or retried writes", async () => {
+    const fetchMock = vi.fn().mockRejectedValue(new Error("network timeout"));
+    vi.stubGlobal("fetch", fetchMock);
+    const db = new D1Client(config);
+    await expect(db.execute("INSERT INTO transactions VALUES (?)", [1])).rejects.toThrow("timeout");
+    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(db.usageReport()).toMatchObject({
+      rowsRead: null,
+      rowsWritten: null,
+      durationMs: null,
+      statements: 1,
+    });
+  });
+  it("rejects per-result failure and missing result count while retaining metadata", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(
+            JSON.stringify({
+              success: true,
+              result: [{ success: false, meta: { rows_read: 5, rows_written: 0 } }],
+            }),
+            { headers: { "content-type": "application/json" } },
+          ),
+      ),
+    );
+    const db = new D1Client(config);
+    await expect(
+      db.query([{ sql: "SELECT * FROM blocks" }, { sql: "SELECT * FROM manifest" }]),
+    ).rejects.toThrow("D1 query failed");
+    expect(db.usageReport().rowsRead).toBeNull();
+    expect(db.usage[0].rowsRead).toBe(5);
+  });
+});
+
+it("extra REST results invalidate aggregate certainty", async () => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(
+      async () =>
+        new Response(
+          JSON.stringify({
+            success: true,
+            result: [
+              { success: true, meta: { rows_read: 1, rows_written: 0, duration: 1 } },
+              { success: true, meta: { rows_read: 99, rows_written: 0, duration: 1 } },
+            ],
+          }),
+          { headers: { "content-type": "application/json" } },
+        ),
+    ),
+  );
+  const db = new D1Client(config);
+  await expect(db.query({ sql: "SELECT * FROM manifest" })).rejects.toThrow();
+  expect(db.usageReport()).toMatchObject({ rowsRead: null, rowsWritten: null, durationMs: null });
+  vi.unstubAllGlobals();
+});
+
+it("retains exact statement metadata from a failed non-2xx JSON response without retry", async () => {
+  const mock = vi.fn().mockResolvedValue(
+    new Response(
+      JSON.stringify({
+        success: false,
+        errors: [{ message: "budget exhausted" }],
+        result: [
+          { success: false, meta: { rows_read: 7, rows_written: 2, duration: 3, changes: 0 } },
+        ],
+      }),
+      { status: 429, headers: { "content-type": "application/json" } },
+    ),
+  );
+  vi.stubGlobal("fetch", mock);
+  try {
+    const db = new D1Client(config);
+    await expect(db.query({ sql: "SELECT * FROM blocks" })).rejects.toThrow("budget exhausted");
+    expect(mock).toHaveBeenCalledOnce();
+    expect(db.usageReport()).toMatchObject({ rowsRead: 7, rowsWritten: 2, durationMs: 3 });
+    expect(db.usage[0].success).toBe(false);
+  } finally {
+    vi.unstubAllGlobals();
+  }
 });
 
 function jsonResponse(body: unknown): Response {

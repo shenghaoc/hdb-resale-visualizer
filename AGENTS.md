@@ -60,6 +60,7 @@ vp install             # Clean install from the lockfile (what CI runs)
 vp dev                 # Start development server (localhost:5173)
 vp run dev:functions   # Build and run the Worker/API against local D1
 vp run sync-data       # Refresh remote D1 from official sources
+vp run sync-data:neon  # Manual Neon refresh (isolated benchmark branch only; see docs/neon-monthly-refresh-policy.md)
 vp run check:boundaries # Enforce script/runtime import boundaries
 vp run format          # Write formatting fixes
 vp run format:check    # Check formatting only

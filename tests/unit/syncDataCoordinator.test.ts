@@ -41,6 +41,7 @@ describe("sync-data coordinator helpers", () => {
     expect(result.supermarkets).toHaveLength(1);
     expect(result.parks).toEqual([]);
     expect(result.geocodedCount).toBe(2);
+    expect(result.failedSources).toEqual(["schools", "parks"]);
     expect(warnSpy).toHaveBeenCalledTimes(2);
     warnSpy.mockRestore();
   });
