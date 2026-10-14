@@ -26,6 +26,54 @@ The current coordinator remains D1-backed. Both coordinator and publisher produc
 
 `.github/workflows/refresh-neon.yml` is `workflow_dispatch` only. Its `mode` input defaults to **`plan`** (read and report, no write), so a dispatch that does not choose a mode cannot publish. `apply` has to be chosen on purpose, on top of the typed target confirmation and the captured usage baseline the workflow already requires. `tests/unit/neon-refresh.test.ts` pins the default and the option order.
 
+### What each mode touches
+
+| Mode    | Benchmark database                                                    | data.gov.sg                                            | OneMap                                     |
+| ------- | --------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
+| `plan`  | Two `REPEATABLE READ READ ONLY` snapshots; no publication or mutation | Metadata and dataset downloads (needed to plan at all) | None, unless a budget is given (default 0) |
+| `apply` | The same snapshots, then at most one publication transaction          | The same                                               | Only within the given budgets (default 0)  |
+
+OneMap requests made by `plan` are not kept: its staged cache writes are discarded with the plan.
+
+### Transaction boundaries
+
+No network-bound work runs inside a PostgreSQL transaction. A run holds one session (and its advisory lock) and uses it in three phases:
+
+1. **Baseline snapshot** (read only): the publication version, transaction facts, published artifacts and both caches, then `COMMIT`.
+2. **Preparation, with database access closed** (`NeonSessionGuard`): amenity downloads, budgeted OneMap requests, a second read of the upstream inventory (it must equal the first, or the run stops), and the artifact build. Cache writes are staged in memory. Any query sent in this phase is refused before it reaches the server.
+3. **Planning snapshot** (read only): first requires the publication version to be unchanged, then reads the stored rows the planner compares against. With `--apply`, publication runs in its own transaction, re-checks the same version under `SELECT … FOR UPDATE`, writes the data, writes the manifest last and commits.
+
+The publication version is the manifest JSON **and** its `updated_at`. Every publication rewrites `updated_at` in the same transaction as its data, so an unchanged version proves that nothing was published between the two snapshots or before the write, including a republish that left the JSON identical. `idle_in_transaction_session_timeout` stays at 120 s; it now only covers the short snapshots and the publication.
+
+### OneMap budgets
+
+OneMap geocoding and routing are optional enrichments with explicit per-run budgets: `--onemap-search-budget N` and `--onemap-routing-budget N` (workflow inputs `onemap_search_budget` and `onemap_routing_budget`). Both default to **0**, which makes no OneMap request of that kind. Running without OneMap credentials remains fully supported; no token is requested or provisioned.
+
+- Search plus routing plus at most one token request may not exceed **600 requests per run** (about ten minutes at the default pacing of one request per second, half the run deadline). Larger budgets are refused before any network or database activity.
+- A configured `ONEMAP_TOKEN` is used as is. Email and password cost one token request per run, not one per lookup.
+- Block addresses are geocoded before amenities, so a small search budget goes to blocks first.
+- Work beyond the budget is deferred and reported, never attempted. An empty routing cache therefore costs the routing budget, not one request per block and exit (about 29,000 pairs for the full corpus).
+- The run allocates its budget before each piece of work, and an independent ceiling with the same limits is installed where every OneMap request passes (`waitForUpstreamSlot`). The ceiling refuses anything beyond the limits, whichever helper sends it, and records the requests actually sent.
+- A request counts once; the shared fetch helper may retry it on HTTP 429 or 5xx (at most six attempts).
+
+The receipt's `oneMap` section reports, per purpose, candidates, attempts, results, failures and items deferred or not attempted for lack of a token. `unresolved` reports block addresses and amenities left without coordinates, and walking pairs without a route. Unresolved block addresses are not published and count toward the existing geocode-failure guard exactly as failed lookups did. Pairs without a route keep the pipeline's existing straight-line walking-time estimate; the published data does not mark which times are estimates.
+
+### Unsettled usage receipts
+
+A Console reading whose as-of time is unknown (`usageAsOf: "UNKNOWN"`) is accepted only with bounded evidence for every endpoint that could still be consuming:
+
+- `servingOrigin`: the origin of the Hyperdrive configuration that serves the site, as read from Cloudflare (`hyperdriveConfigId`, `host`, `observedAt`). Its id must be the `HDB_PUBLIC_NEON` Hyperdrive committed in `wrangler.jsonc`, and the serving endpoint is derived from its host. Today that is `ep-steep-water-b300tebo` on `production-candidate-20261005`, not the default `production` branch.
+- `knownActivity.endpointInventory: "complete"` with every compute endpoint in the project, including the benchmark endpoint at 1 CU and the serving endpoint.
+
+The check fails closed if:
+
+- the serving origin is missing, stale, not a direct endpoint host, or from another Hyperdrive;
+- the serving endpoint is the refresh write target or sits on the benchmark branch;
+- the inventory omits the serving endpoint or repeats one;
+- any other endpoint is still active.
+
+It reserves the serving endpoint's maximum compute for the run window (20-minute deadline plus 5-minute suspend tail), because traffic can wake it at any time. The run cannot query Cloudflare itself, so the origin is operator-captured evidence checked against the repository's configuration. Settled (`REPORTED`) receipts are unchanged: their provider totals already cover every endpoint up to `settledThrough`.
+
 ## Inactive workflow configuration
 
 [`proposals/refresh-data-monthly.yml`](proposals/refresh-data-monthly.yml) is deliberately **outside `.github/workflows`**. The proposal has:
