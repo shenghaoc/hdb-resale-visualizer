@@ -279,6 +279,7 @@ describe("school sync normalization", () => {
     ).resolves.toEqual({
       schools: [{ name: "River Valley Primary", lat: 1.3, lng: 103.8, mainLevelCode: "PRIMARY" }],
       geocodedCount: 0,
+      skippedNoCoords: 0,
     });
   });
 
@@ -370,6 +371,7 @@ describe("school sync normalization", () => {
         { name: "River Valley Primary", lat: 1.3521, lng: 103.8198, mainLevelCode: "PRIMARY" },
       ],
       geocodedCount: 1,
+      skippedNoCoords: 0,
     });
     expect(cache.entries["school:RIVER VALLEY PRIMARY:560101"]).toMatchObject({
       lat: 1.3521,
@@ -397,7 +399,7 @@ describe("school sync normalization", () => {
       { skipGeocoding: false, geocodeEndpoint: GEOCODE_ENDPOINT },
     );
 
-    expect(result).toEqual({ schools: [], geocodedCount: 0 });
+    expect(result).toEqual({ schools: [], geocodedCount: 0, skippedNoCoords: 1 });
     expect(
       warnSpy.mock.calls.some(([message]) =>
         String(message).includes(
@@ -433,6 +435,7 @@ describe("supermarket sync normalization", () => {
     expect(result).toEqual({
       supermarkets: [{ name: "NTUC", lat: 1.3521, lng: 103.8198 }],
       geocodedCount: 0,
+      skippedNoCoords: 0,
     });
   });
 
@@ -464,6 +467,7 @@ describe("supermarket sync normalization", () => {
     expect(result).toEqual({
       supermarkets: [{ name: "FairPrice", lat: 1.29, lng: 103.85 }],
       geocodedCount: 1,
+      skippedNoCoords: 0,
     });
     expect(cache.entries["supermarket:560101"]?.searchValue).toBe("560101 SINGAPORE");
   });

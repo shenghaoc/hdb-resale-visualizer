@@ -89,6 +89,7 @@ describe("amenity geocode failures", () => {
         { name: "Ok Primary", lat: 1.3521, lng: 103.8198, mainLevelCode: "PRIMARY" },
       ],
       geocodedCount: 1,
+      skippedNoCoords: 1,
     });
     expect(cache.entries["school:FAIL PRIMARY:111111"]).toBeUndefined();
     expect(cache.entries["school:OK PRIMARY:222222"]).toMatchObject({
@@ -137,6 +138,7 @@ describe("amenity geocode failures", () => {
     expect(result).toEqual({
       supermarkets: [{ name: "Ok Mart", lat: 1.29, lng: 103.85 }],
       geocodedCount: 1,
+      skippedNoCoords: 1,
     });
     expect(cache.entries["supermarket:333333"]).toBeUndefined();
     expect(cache.entries["supermarket:444444"]).toMatchObject({

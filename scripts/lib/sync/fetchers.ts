@@ -76,7 +76,7 @@ export async function fetchWithRetry(
 export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   const upstreamService = classifyUpstreamService(url);
   if (upstreamService) {
-    await waitForUpstreamSlot(upstreamService);
+    await waitForUpstreamSlot(upstreamService, url);
   }
   const response = await fetchWithRetry(url, {
     ...init,

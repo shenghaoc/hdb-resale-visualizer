@@ -31,6 +31,7 @@ import {
   normalizeSchoolRows,
   normalizeSupermarketRows,
   rekeyPropertyInfo,
+  type AmenityGeocodeOptions,
 } from "./lib/sync/normalization";
 import {
   MOE_SCHOOL_DATASET_ID,
@@ -102,7 +103,7 @@ function warnAmenityStep(step: string, error: unknown) {
 
 export async function fetchAmenityData(
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+  options: AmenityGeocodeOptions,
   deps: AmenityFetchDependencies = {},
 ) {
   const fetchCsvRowsFn = deps.fetchCsvRowsFn ?? fetchCsvRows;
@@ -117,6 +118,8 @@ export async function fetchAmenityData(
   let supermarkets: AmenityLocation[] = [];
   let parks: AmenityLocation[] = [];
   let geocodedCount = 0;
+  // Amenities left without coordinates (not cached, and not resolved by geocoding in this run).
+  let unlocatedCount = 0;
   const failedSources: string[] = [];
 
   try {
@@ -124,6 +127,7 @@ export async function fetchAmenityData(
     const schoolResult = await normalizeSchoolRowsFn(schoolRows, geocodeCache, options);
     schools = schoolResult.schools;
     geocodedCount += schoolResult.geocodedCount;
+    unlocatedCount += schoolResult.skippedNoCoords ?? 0;
     console.log(`Processed ${schools.length} primary schools.`);
   } catch (error) {
     failedSources.push("schools");
@@ -148,6 +152,7 @@ export async function fetchAmenityData(
     );
     supermarkets = supermarketResult.supermarkets;
     geocodedCount += supermarketResult.geocodedCount;
+    unlocatedCount += supermarketResult.skippedNoCoords ?? 0;
     console.log(`Processed ${supermarkets.length} supermarkets.`);
   } catch (error) {
     failedSources.push("supermarkets");
@@ -173,6 +178,7 @@ export async function fetchAmenityData(
     supermarkets,
     parks,
     geocodedCount,
+    unlocatedCount,
     failedSources,
   };
 }

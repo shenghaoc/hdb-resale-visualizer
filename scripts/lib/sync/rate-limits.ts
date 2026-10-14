@@ -102,7 +102,39 @@ export async function sleep(milliseconds: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-export async function waitForUpstreamSlot(service: UpstreamService): Promise<void> {
+/** The three kinds of OneMap request a run can be budgeted for. */
+export type OneMapBudgetCategory = "auth" | "search" | "routing";
+
+/** A request refused because the run's OneMap budget for that kind is spent. It carries no credentials. */
+export class OneMapBudgetExhaustedError extends Error {
+  constructor(readonly category: OneMapBudgetCategory) {
+    super(`OneMap ${category} request budget exhausted for this run`);
+    this.name = "OneMapBudgetExhaustedError";
+  }
+}
+
+/** Anything that can admit or refuse one OneMap request; `acquire` throws `OneMapBudgetExhaustedError`. */
+export type OneMapBudgetGate = { acquire(category: OneMapBudgetCategory): void };
+
+let oneMapBudgetGate: OneMapBudgetGate | null = null;
+
+/**
+ * Every OneMap request passes `waitForUpstreamSlot`, so a gate installed here bounds a whole run, whichever helper
+ * makes the request. Nothing is installed by default: `sync-data` keeps its existing behaviour.
+ */
+export function installOneMapRequestBudget(gate: OneMapBudgetGate | null): void {
+  oneMapBudgetGate = gate;
+}
+
+export function oneMapBudgetCategory(service: UpstreamService, url?: string): OneMapBudgetCategory {
+  if (service === "onemap-routing") return "routing";
+  return url && new URL(url).pathname.startsWith("/api/auth/") ? "auth" : "search";
+}
+
+export async function waitForUpstreamSlot(service: UpstreamService, url?: string): Promise<void> {
+  // The budget is checked before a pacing slot is reserved: a refused request neither waits nor delays others.
+  if (oneMapBudgetGate && (service === "onemap-search" || service === "onemap-routing"))
+    oneMapBudgetGate.acquire(oneMapBudgetCategory(service, url));
   const intervalMs = upstreamIntervalMs(service);
   const now = Date.now();
   const last = lastRequestAt.get(service) ?? 0;
@@ -119,4 +151,5 @@ export async function waitForUpstreamSlot(service: UpstreamService): Promise<voi
 
 export function resetUpstreamThrottleForTests(): void {
   lastRequestAt.clear();
+  oneMapBudgetGate = null;
 }

@@ -2,6 +2,7 @@ import { fetchJson } from "./fetchers";
 import { oneMapResponseSchema } from "../schemas";
 import { resolveOneMapTokenEndpoint } from "../syncGuards";
 import { resolveOneMapToken } from "./routing";
+import { OneMapBudgetExhaustedError } from "./rate-limits";
 import type { GeocodeCacheFile } from "../pipeline";
 import type { D1Client } from "./d1";
 
@@ -78,19 +79,23 @@ export async function saveGeocodeCacheEntries(
   });
 }
 
+function assertOfficialSearchEndpoint(geocodeEndpoint: URL) {
+  // Credentials belong only on the official endpoint, never in an override URL or redirect.
+  if (
+    geocodeEndpoint.origin !== "https://www.onemap.gov.sg" ||
+    geocodeEndpoint.pathname !== "/api/common/elastic/search" ||
+    geocodeEndpoint.username ||
+    geocodeEndpoint.password ||
+    geocodeEndpoint.search ||
+    geocodeEndpoint.hash
+  ) {
+    throw new Error("Untrusted OneMap Search endpoint");
+  }
+}
+
 export async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
   try {
-    // Credentials belong only on the official endpoint, never in an override URL or redirect.
-    if (
-      geocodeEndpoint.origin !== "https://www.onemap.gov.sg" ||
-      geocodeEndpoint.pathname !== "/api/common/elastic/search" ||
-      geocodeEndpoint.username ||
-      geocodeEndpoint.password ||
-      geocodeEndpoint.search ||
-      geocodeEndpoint.hash
-    ) {
-      throw new Error("Untrusted OneMap Search endpoint");
-    }
+    assertOfficialSearchEndpoint(geocodeEndpoint);
     const token = await resolveOneMapToken({
       email: process.env.ONEMAP_EMAIL,
       password: process.env.ONEMAP_PASSWORD,
@@ -98,35 +103,64 @@ export async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) 
       tokenEndpoint: resolveOneMapTokenEndpoint(),
     });
     if (!token) return null;
-
-    const url = new URL(geocodeEndpoint);
-    url.searchParams.set("searchVal", searchValue);
-    url.searchParams.set("returnGeom", "Y");
-    url.searchParams.set("getAddrDetails", "Y");
-    url.searchParams.set("pageNum", "1");
-
-    const payload = await fetchJson<unknown>(url.toString(), {
-      // The Search API documents the raw access token in Authorization.
-      headers: { authorization: token },
-      redirect: "manual",
-    });
-    // Authentication failures can be HTTP 200 with empty results; they are not address evidence.
-    if (payload && typeof payload === "object" && "error" in payload) {
-      throw new Error("OneMap Search rejected the request");
-    }
-    const parsed = oneMapResponseSchema.parse(payload);
-    const match = parsed.results[0];
-    if (!match) return null;
-
-    return {
-      lat: Number(match.LATITUDE),
-      lng: Number(match.LONGITUDE),
-      postalCode: match.POSTAL,
-      displayName: match.BUILDING ?? match.ADDRESS ?? null,
-      searchValue,
-    };
-  } catch {
-    // Provider bodies, parse errors and transport messages may echo credentials.
-    throw new Error("OneMap Search lookup failed; response details omitted.");
+    return await requestOneMapSearch(searchValue, geocodeEndpoint, token);
+  } catch (error) {
+    throw sanitizedSearchError(error);
   }
+}
+
+/**
+ * Provider bodies, parse errors and transport messages may echo credentials, so the original error is deliberately
+ * not attached as `cause`. A budget refusal carries no credentials and keeps its type.
+ */
+function sanitizedSearchError(error: unknown): Error {
+  if (error instanceof OneMapBudgetExhaustedError) return error;
+  return new Error("OneMap Search lookup failed; response details omitted.");
+}
+
+/**
+ * One OneMap Search request with an already resolved token, so a run that resolves its token once pays for one
+ * token request rather than one per address. Failures carry no provider detail; a refusal by the run's OneMap
+ * budget is passed through as `OneMapBudgetExhaustedError` so it is never mistaken for an address result.
+ */
+export async function searchOneMapAddress(
+  searchValue: string,
+  geocodeEndpoint: URL,
+  token: string,
+): Promise<GeocodeCacheFile["entries"][string] | null> {
+  try {
+    assertOfficialSearchEndpoint(geocodeEndpoint);
+    return await requestOneMapSearch(searchValue, geocodeEndpoint, token);
+  } catch (error) {
+    throw sanitizedSearchError(error);
+  }
+}
+
+async function requestOneMapSearch(searchValue: string, geocodeEndpoint: URL, token: string) {
+  const url = new URL(geocodeEndpoint);
+  url.searchParams.set("searchVal", searchValue);
+  url.searchParams.set("returnGeom", "Y");
+  url.searchParams.set("getAddrDetails", "Y");
+  url.searchParams.set("pageNum", "1");
+
+  const payload = await fetchJson<unknown>(url.toString(), {
+    // The Search API documents the raw access token in Authorization.
+    headers: { authorization: token },
+    redirect: "manual",
+  });
+  // Authentication failures can be HTTP 200 with empty results; they are not address evidence.
+  if (payload && typeof payload === "object" && "error" in payload) {
+    throw new Error("OneMap Search rejected the request");
+  }
+  const parsed = oneMapResponseSchema.parse(payload);
+  const match = parsed.results[0];
+  if (!match) return null;
+
+  return {
+    lat: Number(match.LATITUDE),
+    lng: Number(match.LONGITUDE),
+    postalCode: match.POSTAL,
+    displayName: match.BUILDING ?? match.ADDRESS ?? null,
+    searchValue,
+  };
 }
