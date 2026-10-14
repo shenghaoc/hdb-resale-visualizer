@@ -268,6 +268,88 @@ export function publicationRowCount(statement: D1Statement): number {
 
 export class AmbiguousNeonPublicationError extends Error {}
 
+/** The stored publication changed between preparation snapshots; nothing was planned from mixed generations. */
+export class StaleNeonPreparationError extends Error {}
+
+/**
+ * The identity of the stored publication: the manifest document and its `updated_at`. Every publication rewrites
+ * `updated_at` in the same transaction as its data (manifest last), so an unchanged pair means no publication
+ * committed in between, even one that left the manifest JSON identical.
+ */
+export type NeonPublicationVersion = { manifestJson: string; updatedAt: string };
+
+/** Reads `updated_at` in the caller's snapshot; `manifestJson` comes from the same snapshot's manifest read. */
+export async function readNeonPublicationUpdatedAt(query: PgQuery): Promise<string> {
+  const result = await query("SELECT updated_at::text AS updated_at FROM manifest WHERE id = 1");
+  const updatedAt = result.rows.length === 1 ? result.rows[0].updated_at : undefined;
+  if (typeof updatedAt !== "string" || !updatedAt)
+    throw new Error("Existing faithful baseline manifest required; this job never bootstraps data");
+  return updatedAt;
+}
+
+/** Fails closed unless the stored publication is still exactly `version`. */
+export async function assertNeonPublicationUnchanged(
+  query: PgQuery,
+  version: NeonPublicationVersion,
+): Promise<void> {
+  const result = await query(
+    "SELECT json=$1::jsonb AND updated_at=$2::timestamptz AS matches FROM manifest WHERE id=1",
+    [version.manifestJson, version.updatedAt],
+  );
+  if (result.rows.length !== 1 || result.rows[0].matches !== true)
+    throw new StaleNeonPreparationError(
+      "The stored publication changed during preparation; nothing was planned or written",
+    );
+}
+
+/**
+ * Wraps the refresh connection's query function. It tracks whether a transaction is open on this session and
+ * closes database access entirely while network-bound preparation runs, so upstream downloads, OneMap requests
+ * and artifact builds can never hold a PostgreSQL transaction (or its snapshot) open.
+ */
+export class NeonSessionGuard {
+  private transactionOpen = false;
+  private closedFor: string | null = null;
+
+  constructor(private readonly inner: PgQuery) {}
+
+  get inTransaction(): boolean {
+    return this.transactionOpen;
+  }
+
+  readonly query: PgQuery = async (sql, params) => {
+    if (this.closedFor)
+      throw new Error(`Database access is closed during ${this.closedFor}; no query was sent`);
+    const verb = /^\s*(BEGIN|START\s+TRANSACTION|COMMIT|END|ROLLBACK|ABORT)\b/i
+      .exec(sql)?.[1]
+      .toUpperCase();
+    if (!verb) return this.inner(sql, params);
+    if (verb === "BEGIN" || verb.startsWith("START")) {
+      const result = await this.inner(sql, params);
+      this.transactionOpen = true;
+      return result;
+    }
+    // A COMMIT or ROLLBACK ends the transaction even when its reply is lost (the session is then unusable).
+    try {
+      return await this.inner(sql, params);
+    } finally {
+      this.transactionOpen = false;
+    }
+  };
+
+  /** Runs `work` with database access closed; refuses to start while a transaction is open. */
+  async withoutDatabase<T>(label: string, work: () => Promise<T>): Promise<T> {
+    if (this.transactionOpen)
+      throw new Error(`Refusing ${label} while a PostgreSQL transaction is open`);
+    this.closedFor = label;
+    try {
+      return await work();
+    } finally {
+      this.closedFor = null;
+    }
+  }
+}
+
 export function validateNeonPublicationPlan(plan: ArtifactWritePlan, manifest: Manifest) {
   if (
     plan.forecastWriteUpperBound > MAX_FORECAST_WRITES ||
@@ -284,6 +366,8 @@ export async function publishNeon(
   manifest: Manifest,
   expectedManifest: string,
   updatedAt: string,
+  /** The baseline's `updated_at`; when given, the guard also requires it, so any intervening publication fails. */
+  expectedUpdatedAt?: string,
 ) {
   validateNeonPublicationPlan(plan, manifest);
   const statements = plan.statements.map((statement) => ({
@@ -297,10 +381,15 @@ export async function publishNeon(
   let commitAttempted = false;
   await query("BEGIN");
   try {
-    const guard = await query(
-      "SELECT json=$1::jsonb AS matches FROM manifest WHERE id=1 FOR UPDATE",
-      [expectedManifest],
-    );
+    const guard =
+      expectedUpdatedAt === undefined
+        ? await query("SELECT json=$1::jsonb AS matches FROM manifest WHERE id=1 FOR UPDATE", [
+            expectedManifest,
+          ])
+        : await query(
+            "SELECT json=$1::jsonb AND updated_at=$2::timestamptz AS matches FROM manifest WHERE id=1 FOR UPDATE",
+            [expectedManifest, expectedUpdatedAt],
+          );
     if (guard.rows.length !== 1 || guard.rows[0].matches !== true)
       throw new Error("Stale Neon publication baseline");
     for (const statement of statements) {
@@ -338,5 +427,7 @@ export function createNeonRefreshClient(url: string) {
     application_name: "hdb-neon-refresh",
     statement_timeout: 120_000,
     connectionTimeoutMillis: 30_000,
+    // The session stays connected (holding its advisory lock) while preparation runs without a transaction.
+    keepAlive: true,
   });
 }

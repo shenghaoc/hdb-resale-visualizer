@@ -10,15 +10,25 @@ on:
         required: true
         type: string
       mode:
-        description: One bounded manual invocation. plan reads and reports only; apply writes to the isolated benchmark branch
+        description: One bounded manual invocation. plan downloads the official datasets and reads the benchmark branch in read-only snapshots, then reports; apply also publishes to the isolated benchmark branch
         required: true
         type: choice
         options: [plan, apply]
         default: plan
       usage_baseline:
-        description: Captured Neon Console baseline with explicit uncertainty; API zeros are not accepted
+        description: Captured Neon Console baseline with explicit uncertainty; API zeros are not accepted. An unsettled (UNKNOWN as-of) baseline must include the serving Hyperdrive origin and every Neon endpoint
         required: true
         type: string
+      onemap_search_budget:
+        description: OneMap Search (geocoding) requests this run may make. 0 makes none and is the default; requests made by plan are not kept
+        required: false
+        type: number
+        default: 0
+      onemap_routing_budget:
+        description: OneMap routing (walking time) requests this run may make. 0 makes none and is the default; unrouted pairs are reported
+        required: false
+        type: number
+        default: 0
 
 permissions:
   contents: read
@@ -52,6 +62,8 @@ jobs:
       - name: One manual Neon ingestion/publication
         env:
           REFRESH_MODE: ${{ inputs.mode }}
+          ONEMAP_SEARCH_BUDGET: ${{ inputs.onemap_search_budget }}
+          ONEMAP_ROUTING_BUDGET: ${{ inputs.onemap_routing_budget }}
           NEON_REFRESH_DATABASE_URL: ${{ secrets.NEON_BENCHMARK_REFRESH_DATABASE_URL }}
           DATA_GOV_API_KEY: ${{ secrets.DATA_GOV_API_KEY }}
           ONEMAP_TOKEN: ${{ secrets.ONEMAP_TOKEN }}
@@ -61,6 +73,8 @@ jobs:
         run: |
           vp run sync-data:neon "--$REFRESH_MODE" --reconcile-manual \
             --branch br-wispy-boat-b34glczl \
+            --onemap-search-budget "$ONEMAP_SEARCH_BUDGET" \
+            --onemap-routing-budget "$ONEMAP_ROUTING_BUDGET" \
             --usage-before "$RUNNER_TEMP/neon-usage-before.json" \
             --report "$RUNNER_TEMP/neon-refresh.json"
       - name: Save sanitized refresh receipt
