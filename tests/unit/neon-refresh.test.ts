@@ -375,9 +375,17 @@ describe("provider baseline gate", () => {
       usageAsOf: "UNKNOWN",
       settledThrough: null,
       networkScope: "all-network-upper-bounds-public",
+      // Read from Cloudflare with the receipt; its id must be the Hyperdrive committed in wrangler.jsonc.
+      servingOrigin: {
+        source: "cloudflare-hyperdrive",
+        hyperdriveConfigId: "70f9a7f0a2f64851af0cccba58dcfb0c",
+        host: "ep-steep-water-b300tebo.c-4.ap-southeast-1.aws.neon.tech",
+        observedAt: baseline.observedAt,
+      },
       knownActivity: {
         observedAt: baseline.observedAt,
         priorMeasuredReceivedBytes: 493_707_924,
+        endpointInventory: "complete",
         endpoints: [
           {
             endpointId: "ep-steep-moon-b35xjj4d",
@@ -386,6 +394,14 @@ describe("provider baseline gate", () => {
             maxCU: 1,
             lastActiveAt: "2026-10-04T01:47:44Z",
             suspendedAt: "2026-10-04T01:53:46Z",
+          },
+          {
+            endpointId: "ep-steep-water-b300tebo",
+            branchId: "br-rough-frost-b3e2ks1b",
+            state: "active",
+            maxCU: 1,
+            lastActiveAt: "2026-10-04T02:59:00Z",
+            suspendedAt: null,
           },
           {
             endpointId: "ep-cool-glade-b3bjctpc",
@@ -402,6 +418,8 @@ describe("provider baseline gate", () => {
       pendingTransferReserve: 1_000_000_000,
       pendingComputeReserve: 10,
       remainingAfterPilotAndReserve: 1_896_292_076,
+      servingEndpointId: "ep-steep-water-b300tebo",
+      servingRunWindowComputeReserve: 25 / 60,
     });
     expect(() => checkNeonPilotBudget({ ...unknown, knownActivity: undefined }, now)).toThrow();
     expect(() =>
