@@ -3,7 +3,16 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import pg from "pg";
-import { afterAll, beforeAll, describe, expect, it } from "vite-plus/test";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from "vite-plus/test";
 import { runSyncNeon } from "../../scripts/sync-neon";
 import { NEON_REFRESH_BRANCH } from "../../scripts/lib/sync/neon";
 import {
@@ -46,6 +55,13 @@ describe.skipIf(!LOCAL)("refresh on a real PostgreSQL server", { timeout: 120_00
     if (!["127.0.0.1", "localhost", "::1", "[::1]"].includes(url.hostname))
       throw new Error("HDB_LOCAL_POSTGRES_URL must be a local disposable server");
     await admin.connect();
+  });
+
+  // OneMap is faked at `fetch`; keep the real per-attempt pacing short so SLOW_MS dominates.
+  beforeEach(() => vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "1"));
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
   });
 
   afterAll(async () => {
@@ -109,6 +125,7 @@ describe.skipIf(!LOCAL)("refresh on a real PostgreSQL server", { timeout: 120_00
       "2",
     ];
     const run = async () => {
+      vi.stubGlobal("fetch", harness.fetch);
       try {
         await runSyncNeon(argv, harness.deps);
         return undefined;
@@ -149,6 +166,12 @@ describe.skipIf(!LOCAL)("refresh on a real PostgreSQL server", { timeout: 120_00
     expect(Date.now() - started).toBeGreaterThan(6 * SLOW_MS);
     expect(record.searches).toHaveLength(2);
     expect(record.routes).toBe(2);
+    // The receipt's attempt counts agree with what the fake OneMap actually received.
+    expect(receipt().oneMap).toMatchObject({
+      httpAttempts: { auth: 0, search: 2, routing: 2 },
+      budgetRefusals: { auth: 0, search: 0, routing: 0 },
+      successfulOperations: { auth: 0, search: 2, routing: 2 },
+    });
     const after = await tableCounts(observer);
     expect(after.transactions).toBe(before.transactions + 20);
     expect(after.blocks).toBe(5);

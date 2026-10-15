@@ -132,10 +132,12 @@ export async function fetchWalkingRoute(
   url.searchParams.set("end", `${end.lat},${end.lng}`);
   url.searchParams.set("routeType", "walk");
 
-  await waitForUpstreamSlot("onemap-routing");
-  const response = await fetchWithRetry(url.toString(), {
-    headers: { authorization: `Bearer ${token}` },
-  });
+  // Paced and budgeted before every physical attempt, retries included.
+  const response = await fetchWithRetry(
+    url.toString(),
+    { headers: { authorization: `Bearer ${token}` } },
+    { beforeAttempt: () => waitForUpstreamSlot("onemap-routing", url.toString()) },
+  );
   const payload = await response.json();
   const parsed = oneMapRoutingResponseSchema.parse(payload);
 

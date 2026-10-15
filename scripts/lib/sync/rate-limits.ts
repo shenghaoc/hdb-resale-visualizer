@@ -102,25 +102,26 @@ export async function sleep(milliseconds: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-/** The three kinds of OneMap request a run can be budgeted for. */
+/** The three kinds of OneMap HTTP attempt a run can be budgeted for. */
 export type OneMapBudgetCategory = "auth" | "search" | "routing";
 
-/** A request refused because the run's OneMap budget for that kind is spent. It carries no credentials. */
+/** An HTTP attempt refused (and not sent) because the run's OneMap budget for that kind is spent. No credentials. */
 export class OneMapBudgetExhaustedError extends Error {
   constructor(readonly category: OneMapBudgetCategory) {
-    super(`OneMap ${category} request budget exhausted for this run`);
+    super(`OneMap ${category} HTTP attempt budget exhausted for this run`);
     this.name = "OneMapBudgetExhaustedError";
   }
 }
 
-/** Anything that can admit or refuse one OneMap request; `acquire` throws `OneMapBudgetExhaustedError`. */
+/** Anything that can admit or refuse one OneMap HTTP attempt; `acquire` throws `OneMapBudgetExhaustedError`. */
 export type OneMapBudgetGate = { acquire(category: OneMapBudgetCategory): void };
 
 let oneMapBudgetGate: OneMapBudgetGate | null = null;
 
 /**
- * Every OneMap request passes `waitForUpstreamSlot`, so a gate installed here bounds a whole run, whichever helper
- * makes the request. Nothing is installed by default: `sync-data` keeps its existing behaviour.
+ * Every physical OneMap HTTP attempt, retries included, passes `waitForUpstreamSlot` first, so a gate installed
+ * here bounds a whole run's actual requests, whichever helper sends them. Nothing is installed by default:
+ * `sync-data` keeps its existing behaviour.
  */
 export function installOneMapRequestBudget(gate: OneMapBudgetGate | null): void {
   oneMapBudgetGate = gate;
@@ -131,9 +132,17 @@ export function oneMapBudgetCategory(service: UpstreamService, url?: string): On
   return url && new URL(url).pathname.startsWith("/api/auth/") ? "auth" : "search";
 }
 
+export function isOneMapService(service: UpstreamService): boolean {
+  return service === "onemap-search" || service === "onemap-routing";
+}
+
+/**
+ * Reserves the next pacing slot for one physical HTTP attempt. OneMap callers run it before every attempt,
+ * retries included (`fetchWithRetry`'s `beforeAttempt`), so an installed budget counts and bounds actual HTTP
+ * requests. The budget is checked first: a refused attempt is never sent, neither waits nor delays others.
+ */
 export async function waitForUpstreamSlot(service: UpstreamService, url?: string): Promise<void> {
-  // The budget is checked before a pacing slot is reserved: a refused request neither waits nor delays others.
-  if (oneMapBudgetGate && (service === "onemap-search" || service === "onemap-routing"))
+  if (oneMapBudgetGate && isOneMapService(service))
     oneMapBudgetGate.acquire(oneMapBudgetCategory(service, url));
   const intervalMs = upstreamIntervalMs(service);
   const now = Date.now();

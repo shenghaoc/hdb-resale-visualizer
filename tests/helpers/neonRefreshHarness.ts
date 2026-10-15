@@ -7,7 +7,6 @@
 import { PGlite } from "@electric-sql/pglite";
 import pg from "pg";
 import { fetchAmenityData } from "../../scripts/sync-data";
-import { routeMissingPairs } from "../../scripts/lib/sync/routing";
 import { normalizeResaleRows } from "../../scripts/lib/sync/normalization";
 import {
   MOE_SCHOOL_DATASET_ID,
@@ -277,24 +276,79 @@ export async function seedBaseline(db: Executor, geocoded: string[]) {
   }
 }
 
+/**
+ * OneMap as seen over HTTP. The run uses the real search, token and routing helpers, so every physical attempt
+ * (retries included) passes the real pacing and budget before reaching this fake `fetch`.
+ */
 export type OneMapFake = {
   token?: string;
   email?: string;
-  /** Simulated duration of each OneMap request, applied to the run's clock. */
+  /** Simulated duration of each OneMap HTTP attempt, applied to the run's clock. */
   requestMs?: number;
-  /** Also really waits this long per request (used against a real server). */
+  /** Also really waits this long per attempt (used against a real server). */
   realDelayMs?: number;
-  /** Addresses (search values) the fake OneMap cannot find. */
+  /** Search values OneMap answers with no match (a successful lookup without a result). */
   notFound?: Set<string>;
+  /** Search values OneMap rejects with HTTP 400 (not retried: a failed lookup). */
   failing?: Set<string>;
+  /** Search values whose first attempt gets HTTP 503 and whose retry succeeds. */
+  transient?: Set<string>;
 };
 
+/** Physical HTTP attempts the fake OneMap received, by kind. */
 export type HarnessRecord = {
   tokenRequests: number;
   searches: string[];
   routes: number;
   upstreamCalls: string[];
 };
+
+const oneMapJson = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
+
+function fakeOneMapFetch(
+  oneMap: OneMapFake,
+  record: HarnessRecord,
+  attempt: () => Promise<void>,
+): typeof fetch {
+  const seen = new Map<string, number>();
+  return (async (input: RequestInfo | URL) => {
+    const url = new URL(
+      typeof input === "string" ? input : input instanceof URL ? input : input.url,
+    );
+    if (url.hostname !== "www.onemap.gov.sg")
+      throw new Error(`Unexpected network request to ${url.origin}`);
+    await attempt();
+    if (url.pathname === "/api/auth/post/getToken") {
+      record.tokenRequests += 1;
+      return oneMapJson({ access_token: "fixture-resolved-token" });
+    }
+    if (url.pathname.includes("/route")) {
+      record.routes += 1;
+      return oneMapJson({ route_summary: { total_time: 420, total_distance: 500 } });
+    }
+    const searchValue = url.searchParams.get("searchVal") ?? "";
+    record.searches.push(searchValue);
+    const tries = (seen.get(searchValue) ?? 0) + 1;
+    seen.set(searchValue, tries);
+    if (oneMap.failing?.has(searchValue)) return oneMapJson({ message: "rejected" }, 400);
+    if (oneMap.transient?.has(searchValue) && tries === 1)
+      return oneMapJson({ message: "busy" }, 503);
+    if (oneMap.notFound?.has(searchValue)) return oneMapJson({ found: 0, results: [] });
+    const geocode = geocodeFor(searchValue.replace(/ SINGAPORE$/, ""));
+    return oneMapJson({
+      found: 1,
+      results: [
+        {
+          LATITUDE: String(geocode.lat),
+          LONGITUDE: String(geocode.lng),
+          ADDRESS: searchValue,
+          POSTAL: "460101",
+        },
+      ],
+    });
+  }) as typeof fetch;
+}
 
 export function refreshDependencies(options: {
   client: NeonRefreshClient;
@@ -309,7 +363,7 @@ export function refreshDependencies(options: {
   supermarketRows?: Record<string, string>[];
   idleInTransactionTimeoutMs?: number;
   onUpstream?: (datasetId: string) => Promise<void> | void;
-}): { deps: Partial<SyncNeonDependencies>; record: HarnessRecord } {
+}): { deps: Partial<SyncNeonDependencies>; record: HarnessRecord; fetch: typeof fetch } {
   const record: HarnessRecord = { tokenRequests: 0, searches: [], routes: 0, upstreamCalls: [] };
   const inventories = options.inventories ?? [inventory()];
   let inventoryCalls = 0;
@@ -361,37 +415,13 @@ export function refreshDependencies(options: {
         fetchCsvRowsFn: csv as never,
         fetchGeoJsonFn: geoJson as never,
       }),
-    oneMap: {
-      resolveToken: async (tokenOptions) => {
-        if (tokenOptions.token) return tokenOptions.token;
-        if (!tokenOptions.email || !tokenOptions.password) return null;
-        record.tokenRequests += 1;
-        await oneMapRequest();
-        return "fixture-resolved-token";
-      },
-      search: async (searchValue) => {
-        record.searches.push(searchValue);
-        await oneMapRequest();
-        if (oneMap.failing?.has(searchValue)) throw new Error("OneMap Search lookup failed");
-        if (oneMap.notFound?.has(searchValue)) return null;
-        const key = searchValue.replace(/ SINGAPORE$/, "");
-        const geocode = geocodeFor(key);
-        return { ...geocode, searchValue };
-      },
-      routeMissingPairs: (routeOptions) =>
-        routeMissingPairs(routeOptions, {
-          fetchWalkingRouteFn: async () => {
-            record.routes += 1;
-            await oneMapRequest();
-            return { walkingTimeSeconds: 420, walkingDistanceMeters: 500 };
-          },
-        }),
-    },
+    // The real OneMap helpers; the caller installs `fetch` (below) as the global fetch.
+    oneMap: {},
     createClient: () => options.client,
     servingHyperdriveId: () => FIXTURE_HYPERDRIVE_ID,
     idleInTransactionTimeoutMs: options.idleInTransactionTimeoutMs ?? 120_000,
   };
-  return { deps, record };
+  return { deps, record, fetch: fakeOneMapFetch(oneMap, record, oneMapRequest) };
 }
 
 export async function tableCounts(db: Executor) {

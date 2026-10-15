@@ -1,6 +1,11 @@
 import Papa from "papaparse";
 import { createHash } from "node:crypto";
-import { classifyUpstreamService, sleep, waitForUpstreamSlot } from "./rate-limits";
+import {
+  classifyUpstreamService,
+  isOneMapService,
+  sleep,
+  waitForUpstreamSlot,
+} from "./rate-limits";
 
 function getHeaders(): Record<string, string> {
   const apiKey = process.env.DATA_GOV_API_KEY;
@@ -27,12 +32,17 @@ function shouldRetryStatus(status: number): boolean {
 type FetchRetryOptions = {
   attempts?: number;
   retryDelayMs?: number;
+  /**
+   * Runs immediately before every physical HTTP attempt, retries included. If it throws, that attempt is not
+   * sent and no further attempt is made: the error propagates as is. OneMap passes its pacing and budget here.
+   */
+  beforeAttempt?: () => Promise<void>;
 };
 
 export async function fetchWithRetry(
   url: string,
   init?: RequestInit,
-  { attempts = 6, retryDelayMs = 2200 }: FetchRetryOptions = {},
+  { attempts = 6, retryDelayMs = 2200, beforeAttempt }: FetchRetryOptions = {},
 ): Promise<Response> {
   const safeUrl = (() => {
     const parsed = new URL(url);
@@ -40,6 +50,8 @@ export async function fetchWithRetry(
   })();
   let lastError: Error | null = null;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
+    // Outside the try below: a refusal here ends the request instead of being retried.
+    if (beforeAttempt) await beforeAttempt();
     let response: Response;
     try {
       response = await fetch(url, init);
@@ -75,13 +87,20 @@ export async function fetchWithRetry(
 
 export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   const upstreamService = classifyUpstreamService(url);
-  if (upstreamService) {
+  // OneMap is paced and budgeted per physical attempt, retries included; other upstreams keep one slot per
+  // request with the retry helper's own backoff, as before.
+  const perAttempt = upstreamService !== null && isOneMapService(upstreamService);
+  if (upstreamService && !perAttempt) {
     await waitForUpstreamSlot(upstreamService, url);
   }
-  const response = await fetchWithRetry(url, {
-    ...init,
-    headers: getJsonHeaders(url, init?.headers),
-  });
+  const response = await fetchWithRetry(
+    url,
+    {
+      ...init,
+      headers: getJsonHeaders(url, init?.headers),
+    },
+    perAttempt ? { beforeAttempt: () => waitForUpstreamSlot(upstreamService, url) } : undefined,
+  );
   const ct = response.headers.get("content-type") ?? "";
   if (!ct.includes("application/json") && !ct.includes("text/plain")) {
     const preview = await response.text().catch(() => "");

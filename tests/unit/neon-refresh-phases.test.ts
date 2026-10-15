@@ -2,7 +2,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type { PGlite } from "@electric-sql/pglite";
-import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { runSyncNeon } from "../../scripts/sync-neon";
 import { NEON_REFRESH_BRANCH, NeonSessionGuard, type PgQuery } from "../../scripts/lib/sync/neon";
 import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
@@ -35,9 +35,16 @@ import {
 
 const MINUTE = 60_000;
 
+beforeEach(() => {
+  // Real OneMap pacing applies to every HTTP attempt; 1 ms keeps these runs fast.
+  vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "1");
+});
+
 afterEach(() => {
   resetUpstreamThrottleForTests();
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
 });
 
 type Counts = Record<string, number>;
@@ -52,7 +59,10 @@ type Report = {
   sideEffects: { database: string };
   unresolved: Counts;
   oneMap: {
-    budget: Record<string, unknown>;
+    limits: Counts;
+    httpAttempts: Counts;
+    budgetRefusals: Counts;
+    successfulOperations: Counts;
     blockGeocoding: Counts;
     amenityGeocoding: Counts;
     routing: Counts;
@@ -93,6 +103,8 @@ async function scenario(
       schoolRows: options.schoolRows,
       onUpstream: options.onUpstream ? (id) => options.onUpstream!(db, id) : undefined,
     });
+    // OneMap is faked at the HTTP layer: the real helpers, retries, pacing and budget all run.
+    vi.stubGlobal("fetch", harness.fetch);
     const report = path.join(dir, `report-${events.length}.json`);
     const argv = [
       mode,
@@ -249,11 +261,10 @@ describe("plan mode side effects", () => {
     expect(result.receipt.sideEffects.database).toMatch(/read-only snapshots only/);
     expect(result.receipt.oneMap).toMatchObject({
       tokenStatus: "not-requested",
-      budget: {
-        limits: { auth: 0, search: 0, routing: 0 },
-        used: { auth: 0, search: 0, routing: 0 },
-      },
-      blockGeocoding: { candidates: 2, attempted: 0, deferredByBudget: 2 },
+      limits: { auth: 0, search: 0, routing: 0 },
+      httpAttempts: { auth: 0, search: 0, routing: 0 },
+      budgetRefusals: { auth: 0, search: 0, routing: 0 },
+      blockGeocoding: { candidates: 2, started: 0, deferredByBudget: 2 },
     });
     // Ordinary upstream reads still happen: planning needs the official datasets.
     expect(result.record.upstreamCalls.length).toBeGreaterThan(0);
@@ -271,10 +282,12 @@ describe("plan mode side effects", () => {
     expect(result.record.searches).toHaveLength(1);
     expect(result.receipt.oneMap.blockGeocoding).toMatchObject({
       candidates: 2,
-      attempted: 1,
+      started: 1,
       resolved: 1,
       deferredByBudget: 1,
     });
+    expect(result.receipt.oneMap.httpAttempts).toEqual({ auth: 1, search: 1, routing: 0 });
+    expect(result.receipt.oneMap.successfulOperations).toEqual({ auth: 1, search: 1, routing: 0 });
     expect(result.events.filter((event) => MUTATING_SQL.test(event.sql))).toEqual([]);
     expect(await tableCounts(db)).toEqual(countsBefore);
   });
@@ -365,8 +378,8 @@ describe("OneMap budgets and missing results", () => {
     expect(result.receipt.oneMap).toMatchObject({
       credentialMode: "none",
       tokenStatus: "not-configured",
-      blockGeocoding: { candidates: 2, attempted: 0, notAttemptedWithoutToken: 2 },
-      budget: { used: { auth: 0, search: 0, routing: 0 } },
+      blockGeocoding: { candidates: 2, started: 0, notAttemptedWithoutToken: 2 },
+      httpAttempts: { auth: 0, search: 0, routing: 0 },
     });
     expect(result.receipt.unresolved.blockAddressesWithoutCoordinates).toBe(2);
     expect((await tableCounts(db)).blocks).toBe(3);
@@ -381,14 +394,19 @@ describe("OneMap budgets and missing results", () => {
     });
     const result = await again.run("--apply", ["--onemap-search-budget", "5"]);
     expect(result.error).toBeUndefined();
+    // HTTP 400 is not retried: one attempt each.
     expect(result.record.searches.sort()).toEqual([noMatch, failing].sort());
     expect(result.receipt.oneMap.blockGeocoding).toMatchObject({
       candidates: 2,
-      attempted: 2,
+      started: 2,
       resolved: 0,
       noResult: 1,
       failed: 1,
+      refusedByBudget: 0,
     });
+    expect(result.receipt.oneMap.httpAttempts.search).toBe(2);
+    // A lookup that found nothing still completed; the rejected one did not.
+    expect(result.receipt.oneMap.successfulOperations.search).toBe(1);
     expect(result.receipt.unresolved.blockAddressesWithoutCoordinates).toBe(2);
     expect((await tableCounts(again.db)).blocks).toBe(3);
     expect((await tableCounts(again.db)).geocode_cache).toBe(3);
@@ -407,25 +425,65 @@ describe("OneMap budgets and missing results", () => {
     expect(result.record.searches).toHaveLength(1);
     expect(result.receipt.oneMap.blockGeocoding).toMatchObject({
       candidates: 2,
-      attempted: 1,
+      started: 1,
       resolved: 1,
       deferredByBudget: 1,
     });
     // The amenity geocode came after the block lookup had spent the budget: skipped and counted, not requested.
     expect(result.receipt.oneMap.amenityGeocoding).toMatchObject({
       candidates: 1,
-      attempted: 0,
+      started: 0,
       deferredByBudget: 1,
     });
     expect(result.receipt.unresolved).toMatchObject({
       blockAddressesWithoutCoordinates: 1,
       amenitiesWithoutCoordinates: 1,
     });
-    expect(result.receipt.oneMap.budget).toMatchObject({
+    expect(result.receipt.oneMap).toMatchObject({
       limits: { search: 1 },
-      used: { search: 1 },
-      refused: { auth: 0, search: 0, routing: 0 },
+      httpAttempts: { auth: 0, search: 1, routing: 0 },
+      budgetRefusals: { auth: 0, search: 0, routing: 0 },
     });
+    expect((await tableCounts(db)).blocks).toBe(4);
+  });
+
+  it("counts every HTTP attempt: a retried lookup spends two attempts and both lookups succeed", async () => {
+    const [first, second] = addressKeys(resaleRows(20)).slice(3).map(searchValueFor);
+    const { run, db } = await scenario({
+      geocoded: (all) => all.slice(0, 3),
+      oneMap: { token: "fixture-token", transient: new Set([first]) },
+    });
+    const result = await run("--apply", ["--onemap-search-budget", "3"]);
+    expect(result.error).toBeUndefined();
+    // The fake OneMap received three physical attempts: 503, its retry, and the second lookup.
+    expect(result.record.searches.sort()).toEqual([first, first, second].sort());
+    expect(result.receipt.oneMap).toMatchObject({
+      httpAttempts: { auth: 0, search: 3, routing: 0 },
+      budgetRefusals: { auth: 0, search: 0, routing: 0 },
+      successfulOperations: { search: 2 },
+      blockGeocoding: { started: 2, resolved: 2, failed: 0, refusedByBudget: 0 },
+    });
+    expect((await tableCounts(db)).blocks).toBe(5);
+  });
+
+  it("stops a retry the budget cannot cover: the refused attempt is never sent", async () => {
+    const [first, second] = addressKeys(resaleRows(20)).slice(3).map(searchValueFor);
+    const { run, db } = await scenario({
+      geocoded: (all) => all.slice(0, 3),
+      oneMap: { token: "fixture-token", transient: new Set([first]) },
+    });
+    // Two attempts for two lookups; the first lookup's 503 needs a third for its retry.
+    const result = await run("--apply", ["--onemap-search-budget", "2"]);
+    expect(result.error).toBeUndefined();
+    expect(result.record.searches.sort()).toEqual([first, second].sort());
+    expect(result.receipt.oneMap).toMatchObject({
+      httpAttempts: { search: 2 },
+      budgetRefusals: { search: 1 },
+      successfulOperations: { search: 1 },
+      blockGeocoding: { started: 2, resolved: 1, refusedByBudget: 1, failed: 0 },
+    });
+    // The refused lookup stays unresolved and counts toward the geocode-failure guard; nothing is invented.
+    expect(result.receipt.unresolved.blockAddressesWithoutCoordinates).toBe(1);
     expect((await tableCounts(db)).blocks).toBe(4);
   });
 
@@ -437,10 +495,13 @@ describe("OneMap budgets and missing results", () => {
     // Five blocks × three nearest stations, all uncached.
     expect(result.receipt.oneMap.routing).toMatchObject({
       missingPairs: 15,
-      attempted: 3,
+      started: 3,
       routed: 3,
       deferredByBudget: 12,
+      refusedByBudget: 0,
     });
+    expect(result.receipt.oneMap.httpAttempts.routing).toBe(3);
+    expect(result.receipt.oneMap.successfulOperations.routing).toBe(3);
     expect(result.receipt.unresolved.walkingPairsWithoutRoute).toBe(12);
     expect((await tableCounts(db)).walking_time_cache).toBe(3);
   });
@@ -452,7 +513,7 @@ describe("OneMap budgets and missing results", () => {
     expect(result.record.upstreamCalls).toEqual([]);
     expect(result.events).toEqual([]);
     const overCap = await run("--apply", ["--onemap-routing-budget", "600"]);
-    expect(String(overCap.error)).toMatch("per-run maximum of 600 requests");
+    expect(String(overCap.error)).toMatch("per-run maximum of 600 HTTP attempts");
     expect(overCap.record.upstreamCalls).toEqual([]);
   });
 });

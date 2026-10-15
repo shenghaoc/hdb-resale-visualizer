@@ -57,6 +57,7 @@ import { checkNeonPilotBudget } from "./lib/sync/neon-usage";
 import {
   OneMapRequestBudget,
   OneMapRun,
+  oneMapNotStarted,
   parseOneMapBudget,
   type OneMapRunDependencies,
 } from "./lib/sync/onemap-budget";
@@ -372,7 +373,8 @@ export async function runSyncNeon(
           : "read-only snapshots only; no publication and no mutation",
       upstreamDatasets:
         "data.gov.sg metadata and dataset downloads (resale, property, MRT, amenities), needed to plan at all",
-      oneMap: "only within the explicit per-run budgets reported under oneMap",
+      oneMap:
+        "only within the explicit per-run budgets of HTTP attempts (retries included) reported under oneMap",
     },
     transactionBoundaries: {
       snapshots: "REPEATABLE READ READ ONLY, reads only",
@@ -689,10 +691,7 @@ export async function runSyncNeon(
     if (lock) await query("SELECT pg_advisory_unlock(724921, 1)").catch(() => {});
     evidence.finishedAt = new Date().toISOString();
     evidence.phasesMs = phases;
-    evidence.oneMap = started.oneMap?.report() ?? {
-      budget: oneMapBudget.report(),
-      started: false,
-    };
+    evidence.oneMap = started.oneMap?.report() ?? oneMapNotStarted(oneMapBudget);
     evidence.wireReceivedProxyBytes = stream ? stream.bytesRead - receivedBefore : null;
     evidence.wireSentProxyBytes = stream ? stream.bytesWritten - sentBefore : null;
     evidence.queryCount = queryAwait.length;
