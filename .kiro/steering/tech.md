@@ -48,7 +48,8 @@ inclusion: always
 - `vp run build:deploy`: Cloudflare deployment build path.
 - `vp run build:full`: maintainer-only path that includes remote data sync.
 - `vp run db:migrate:local` / `vp run db:migrate:remote`: D1 migrations.
-- `vp run sync-data`: official dataset refresh into remote D1, requiring Cloudflare and upstream credentials.
+- `vp run sync-data`: official dataset refresh into remote D1, requiring Cloudflare and upstream credentials. OneMap Search and routing need `ONEMAP_TOKEN` (or `ONEMAP_EMAIL` with `ONEMAP_PASSWORD`).
+- `vp run sync-data:neon`: manual-only Neon refresh (`scripts/sync-neon.ts`, `.github/workflows/refresh-neon.yml`), pinned to the isolated benchmark branch; it needs a captured Neon usage receipt and is never scheduled.
 
 ## CI Reality
 

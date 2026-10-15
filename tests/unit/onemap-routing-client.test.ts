@@ -2,7 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
 import { fetchWalkingRoute, resolveOneMapToken } from "../../scripts/lib/sync/routing";
 
-const TOKEN_ENDPOINT = new URL("https://example.test/token");
+// Credentials are only ever posted to the official token endpoint (scripts/lib/sync/routing.ts).
+const TOKEN_ENDPOINT = new URL("https://www.onemap.gov.sg/api/auth/post/getToken");
 const ROUTING_ENDPOINT = new URL("https://example.test/api/public/routingsvc/route");
 
 function jsonResponse(body: unknown, status = 200): Response {
@@ -97,7 +98,10 @@ describe("OneMap routing client", () => {
     ).resolves.toBeNull();
 
     expect(warnSpy).toHaveBeenCalledTimes(2);
-    expect(String(warnSpy.mock.calls[0]?.[0])).toContain("Falling back to walking-time estimates");
+    // The warning never carries the provider's body or error text, which can echo credentials.
+    expect(String(warnSpy.mock.calls[0]?.[0])).toBe(
+      "Failed to resolve OneMap token. Authenticated OneMap requests are unavailable.",
+    );
   });
 
   it("rounds a walking route and sends the walk query with a bearer token", async () => {
