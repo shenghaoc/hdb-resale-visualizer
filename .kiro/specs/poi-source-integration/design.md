@@ -6,11 +6,11 @@
 
 `poi_locations` (`sql/neon/001_postgis_nearby.sql`) holds one source (LTA exits and their derived station centroids), no per-row provenance, and a primary key of `(source, poi_kind, source_id)`. Four of its six kinds are reserved until "independently admitted source data is available". Adding sources by joining on name or proximity would go wrong in ways the evidence already shows:
 
-1. **Names are not identities.** In the exploratory normalisation used for this analysis, `pg_trgm` similarity of 0.79 to 0.82 separates different schools (Zhenghua and Zhonghua; Chua Chu Kang and Yio Chu Kang; Yishun and Yishun Town; Jurong West and Jurong), while the same hawker centre can score 0.29 against its common name ("Queen Street Blk 270 (Albert Centre)" against "Albert Centre Market & Food Centre"). No threshold separates them.
-2. **Labels can be codes.** Seven `STATION_NA` values are station codes; two of those stations also appear under their names, so one physical station takes two result slots (`docs/architecture/postgis-nearby.md`).
-3. **Sources lie about lifecycle and type.** NEA lists six hawker centres under construction and one interim; NParks "parks" are 40 % playgrounds, open spaces, fitness corners and a car park; URA outlines include stations that are not built; Wikidata's "park" class includes theme parks.
+1. **Names are not identities.** Different schools can be closer by name than one hawker centre is to its own common name; no similarity threshold separates them.
+2. **Labels can be codes.** Some `STATION_NA` values are station codes, and a station that also appears under its name takes two result slots (`docs/architecture/postgis-nearby.md`).
+3. **Sources lie about lifecycle and type.** Hawker centres under construction, "parks" that are playgrounds or car parks, planned stations in planning outlines, theme parks under a "park" class.
 4. **Registers have no coordinates.** MOE and the supermarket licence register give identity only, and the one anonymous geocoder is token-gated.
-5. **Coordinate systems bite.** One NEA record has its SVY21 X and Y swapped (20 km off); `ST_DWithin` on SRID 4326 geometry reads its distance in degrees; `ST_SetSRID(point, 3414)` on degrees lands 45 km away.
+5. **Coordinate systems bite.** A source can carry swapped SVY21 attributes; `ST_DWithin` on SRID 4326 geometry reads its distance in degrees; `ST_SetSRID(point, 3414)` on degrees lands tens of kilometres away.
 6. **Licences differ.** SODL, CDLA, CC0 and ODbL impose different obligations, and ODbL's share-alike may attach to a merged table.
 
 ## Goals
@@ -131,17 +131,17 @@ States: `staged` -> `accepted` | `quarantined`; `accepted` -> `superseded` when 
 
 Hard checks (any failure quarantines the **whole** publication):
 
-| Id | Check | Evidence that it is realistic |
-| --- | --- | --- |
-| H1 | Every row parses against the source's Zod schema | |
-| H2 | `source_record_key` is unique and non-empty | LTA `(label, exit code)` is not unique, so the key is `OBJECTID`; uniqueness is checked, not assumed |
-| H3 | Geometry type equals the registry's (Point, or Polygon/MultiPolygon for outlines) | NParks polygons would yield nothing in a Point-only normaliser |
-| H4 | Longitude and latitude finite and inside the admission box (R4.4) | |
-| H5 | No swapped longitude/latitude: a pair whose latitude is inside the longitude range and vice versa | Singapore's longitude (about 103.8) is above 90, so a swapped pair is also an invalid latitude |
-| H6 | SVY21 attribute share: more than 10 % of rows with an attribute pair that disagrees with the transformed geometry by more than 0.05 m | NEA today is 6 of 129 (4.7 %), one of them swapped, so it passes with row flags; a systematic offset would fail |
-| H7 | Record count within the band relative to the previous accepted publication (first publication: owner approval) | |
-| H8 | Allow-listed fields present; no deny-listed (personal-data) column in the allow-list | MOE carries principal names, phone and e-mail |
-| H9 | Encoding sanity: share of U+FFFD and stray trailing `?` below a limit | 12 supermarket licensee names end in `?` today (an encoding loss) |
+| Id | Check |
+| --- | --- |
+| H1 | Every row parses against the source's Zod schema |
+| H2 | `source_record_key` is unique and non-empty. It is the source's own stable identifier (`OBJECTID` for LTA exits, whose `(label, exit code)` pair is not unique); uniqueness is checked, not assumed |
+| H3 | Geometry type equals the registry's (Point, or Polygon/MultiPolygon for outlines) |
+| H4 | Longitude and latitude finite and inside the admission box (R4.4) |
+| H5 | No swapped longitude/latitude: a pair whose latitude is inside the longitude range and vice versa. Singapore's longitude (about 103.8) is above 90, so a swapped pair is also an invalid latitude |
+| H6 | SVY21 attribute share: more than 10 % of rows with an attribute pair that disagrees with the transformed geometry by more than 0.05 m. A few disagreeing rows are row flags; a systematic offset fails the publication |
+| H7 | Record count within the band relative to the previous accepted publication (first publication: owner approval) |
+| H8 | Allow-listed fields present; no deny-listed (personal-data) column in the allow-list |
+| H9 | Encoding sanity: share of U+FFFD and stray trailing `?` below a limit |
 
 Deterministic admission gates (R2.3) are **not** validation failures; they mark observations `excluded` with a code (`STATUS_NOT_EXISTING`, `PARK_CLASS_PLAYGROUND`, `PARK_CLASS_OPEN_SPACE`, `PARK_CLASS_FITNESS_CORNER`, `PARK_CLASS_CAR_PARK`, `NO_USABLE_ADDRESS`, `NOT_ALLOW_LISTED_SUPERMARKET`, `LICENSEE_NOT_A_LEGAL_ENTITY`). The publication report lists counts per code, so a gate that suddenly excludes half a source is visible.
 
@@ -182,12 +182,7 @@ Relationship to the existing MRT trigger: `refresh_mrt_poi_locations_trigger` ab
 | Entity | observations | geography | `poi_entity.location geography(Point,4326)` | position chosen by `position_method` rank, then `anchor_rank`, then id |
 | Serve | `location` | geography | metres | ellipsoidal straight line, never "walking" |
 
-Evidence for the tolerances (2026-10-09 samples, PROJ 9.7.1, EPSG:3414 `+proj=tmerc +lat_0=1.366666666666667 +lon_0=103.8333333333333 +k=1 +x_0=28001.642 +y_0=38744.572 +ellps=WGS84`):
-
-- WGS84 to SVY21 to WGS84 round trip: worst geodesic error 0.000000000 mm over 1,204 points (613 LTA exits, 129 NEA hawker centres, 462 NParks points). The contract tolerance is 1 mm.
-- `ST_Transform(geometry, 3414)` against the agency's own SVY21 attributes: NParks max 0.000 m over 462 rows; NEA 123 of 129 under 1 mm, six larger (section 5.4).
-- Planar SVY21 distance against geodesic distance over 660 candidate pairs up to 800 m: worst difference 0.002 m (relative 6e-6). At island scale (Tuas to Changi, 39,270 m) they differ by 0.1 m.
-- `ST_Transform` works inside a stored generated column on PostGIS 3.6.3 / PostgreSQL 18.6.
+Tolerances: the WGS84 to SVY21 to WGS84 round trip must come back within 1 mm; a source's own SVY21 attributes are compared with the transformed geometry at 0.05 m; planar and geodesic distances for a candidate pair must agree within `0.1 m + 5e-4 * d`. EPSG:3414 is `+proj=tmerc +lat_0=1.366666666666667 +lon_0=103.8333333333333 +k=1 +x_0=28001.642 +y_0=38744.572 +ellps=WGS84`, and `loc_svy21` is a stored generated column built with `ST_Transform`.
 
 #### 5.2 Rules
 
@@ -203,7 +198,7 @@ Evidence for the tolerances (2026-10-09 samples, PROJ 9.7.1, EPSG:3414 `+proj=tm
 | Guard | Where | Effect |
 | --- | --- | --- |
 | `CHECK (lng BETWEEN 103.0 AND 105.0 AND lat BETWEEN 1.0 AND 2.0)` | `poi_observation` | rejects swaps and foreign points at the table |
-| Admission box (lng 103.55 to 104.15, lat 1.15 to 1.47, constants in `shared/poi/region.ts`; a proposal that covers the largest latitude in the samples, 1.462, with margin, and shares its longitude and southern bounds with the nearby route's request box, whose northern bound is 1.55) | validator H4 | hard failure |
+| Admission box (lng 103.55 to 104.15, lat 1.15 to 1.47, constants in `shared/poi/region.ts`; it shares its longitude and southern bounds with the nearby route's request box, whose northern bound is 1.55) | validator H4 | hard failure |
 | SVY21 image of the box, computed with `ST_Transform` at load, not typed in | validator | catches relabelled values |
 | Swap detector | validator H5 | hard failure |
 | Attribute check | validator H6 | row flag, publication failure above 10 % |
@@ -216,18 +211,18 @@ The admission box is a **region** guard, not a land mask: the southern part of J
 
 All run in `tests/unit` (TypeScript guards) and `sql/neon/verify_poi_crs.sql` (PostGIS), and each has a mutant that must fail.
 
-| Case | Input | Expected | Evidence run on the scratch database |
-| --- | --- | --- | --- |
-| Longitude and latitude swapped | `ST_MakePoint(1.3521, 103.8198)` as 4326 then 3414 | error, never a row | `ST_Transform` raises `transform: Invalid coordinate (2049)`; the `lat` check also rejects it |
-| SRID relabel | `ST_SetSRID(ST_MakePoint(103.8198, 1.3521), 3414)` | caught by the SVY21-image guard and the lint | the relabelled point is 45,556 m from the correct SVY21 point and converts back to (103.582685, 1.016277), in the sea south-west of the island |
-| Degrees passed as metres | `ST_DWithin(a4326, b4326, 50)` on points 32,391 m apart | the verifier fails the mutant | returns `true` on SRID 4326 geometry and `false` on 3414; DBSCAN with `eps := 400` on 4326 geometry collapses 168 NEA and Wikidata hawker points into 1 group, against 104 groups on 3414 |
-| Mixed SRIDs | `ST_Distance(a4326, b3414)` | error | `Operation on mixed SRID geometries (Point, 4326) != (Point, 3414)` |
-| Offshore / foreign point | (lng 103.72, lat 1.17), open water off the southern islands by judgement (no land mask was used) and inside both boxes; a point at lat 1.60 | outside the admission box is rejected; inside-box offshore is **not** caught (documented limit) | the first is inside both boxes (`true`), which is why the box is not claimed to be a land mask |
-| SVY21 round trip | WGS84 to 3414 to WGS84 | at most 1 mm | 0.000000000 mm over 1,204 points |
-| Official vector 1 | NEA 119477: WGS84 (103.80036727142618, 1.3069001323584224) | SVY21 (24332.82477688, 32135.91866726) within 0.05 m | computed (24332.8248000, 32135.9186999) |
-| Official vector 2 | NParks 120001: WGS84 (103.7842062105903, 1.3137632887404946) | SVY21 (22534.26299996, 32894.84093008) within 0.05 m | computed (22534.2630000, 32894.8409000) |
-| Swapped SVY21 attributes | NEA 119460: attributes X 35883.10858126, Y 21533.66534254 | `COORD_ATTR_SWAPPED`; geometry used | the geometry transforms to X 21533.6653, Y 35883.1086 |
-| Centre-of-island vector | WGS84 (103.8198, 1.3521) | SVY21 (26495.534871, 37133.868476) within 1 mm | PROJ 9.7.1 |
+| Case | Input | Expected |
+| --- | --- | --- |
+| Longitude and latitude swapped | `ST_MakePoint(1.3521, 103.8198)` as 4326 then 3414 | error, never a row |
+| SRID relabel | `ST_SetSRID(ST_MakePoint(103.8198, 1.3521), 3414)` | caught by the SVY21-image guard and the lint |
+| Degrees passed as metres | `ST_DWithin(a4326, b4326, 50)` on points 32,391 m apart; DBSCAN with `eps := 400` on 4326 geometry | the verifier fails the mutant |
+| Mixed SRIDs | `ST_Distance(a4326, b3414)` | error |
+| Offshore / foreign point | (lng 103.72, lat 1.17), open water off the southern islands by judgement (no land mask is used) and inside both boxes; a point at lat 1.60 | outside the admission box is rejected; inside-box offshore is **not** caught (documented limit) |
+| SVY21 round trip | WGS84 to 3414 to WGS84 | at most 1 mm |
+| Official vector 1 | NEA 119477: WGS84 (103.80036727142618, 1.3069001323584224) | SVY21 (24332.82477688, 32135.91866726) within 0.05 m |
+| Official vector 2 | NParks 120001: WGS84 (103.7842062105903, 1.3137632887404946) | SVY21 (22534.26299996, 32894.84093008) within 0.05 m |
+| Swapped SVY21 attributes | NEA 119460: attributes X 35883.10858126, Y 21533.66534254 | `COORD_ATTR_SWAPPED`; geometry used |
+| Centre-of-island vector | WGS84 (103.8198, 1.3521) | SVY21 (26495.534871, 37133.868476) within 1 mm |
 
 ### 6. Candidate generation
 
@@ -249,7 +244,7 @@ Algorithm (all in SVY21):
 
 DBSCAN is a batching device. It never decides that two observations are the same place; `minpoints` larger than 1 or any density parameter would introduce border-point order dependence and is not allowed.
 
-Evidence (geometry only, no labels), `sql/neon/verify_poi_candidates.sql` shape: on the 2026-10-09 samples (NEA and Wikidata hawker points; LTA label centroids and URA outlines) the DBSCAN-then-`ST_DWithin` generator returned 422 pairs, equal to the brute-force oracle's 422 (no index, no clustering, `ST_Distance` instead of `ST_DWithin`) with 0 missing and 0 extra, under six different input orders with one identical pair digest; DBSCAN partitions of the hawker and station kinds were identical under the same six orders.
+`sql/neon/verify_poi_candidates.sql` compares the generator with a brute-force oracle (no index, no clustering, `ST_Distance` instead of `ST_DWithin`) for every kind: the pair sets must be equal, with one pair digest under at least six input orders.
 
 ### 7. Name normalisation and similarity
 
@@ -278,19 +273,7 @@ Name channel (computed by the decider from two normalised records):
 
 `pg_trgm` is used for two things only: a candidate filter for registers that have no geometry, and a feature `trgm` stored in `poi_match.features` for reviewers. It is never an input to a class above `ambiguous`. The decider's design assumption that no similarity threshold is safe is backed by the pairs in Problem point 1.
 
-Code-named labels. The 17 exits of the seven code labels resolve only through rules, never by rewriting the source:
-
-| Label | LTA registry row | Wikidata item and code | URA outline within the tight band | Result under the rules |
-| --- | --- | --- | --- | --- |
-| `CC9` | yes (Paya Lebar) | Q3272113, CC9 | PAYA LEBAR INTERCHANGE | registry rule; also collapses with the name label `PAYA LEBAR MRT STATION` |
-| `DT18` | yes (Telok Ayer) | Q7697794, DT18 | TELOK AYER | registry rule; collapses with `TELOK AYER MRT STATION` |
-| `DT4` | no | Q62004591, DT4 | HUME | spatial-only |
-| `NE18` | no | Q30643856, NE18 | PUNGGOL COAST | spatial-only |
-| `CC31` | no | Q19580291, CC31 | CANTONMENT | spatial-only |
-| `CC32` | no | Q22082862, CC32 | PRINCE EDWARD ROAD | spatial-only |
-| `CC30` | no | Q20983869 (Keppel), no code statement | KEPPEL | spatial-only |
-
-With only URA admitted (Wikidata is an alias dictionary), the LTA code rows exist for two of seven labels, so five labels resolve by the weaker `R-RS-SPATIAL-ONLY` rule and stay `rule-supported` with `CODE_NAMED_LABEL`. Vendoring Wikidata station codes as a reviewed alias dictionary would let `R-RS-REGISTRY-CODE` back six of them with a name channel instead of two, and would turn a code that names a different station than the nearest outline into an `ambiguous` pair (`R-AMB-GEO-ONLY`) instead of a silent spatial match; the class stays `rule-supported`, because a dictionary-mediated key is a third party's assertion. `R-VER-KEY-CODE` is reserved for a code carried on the other source's own record (as in the Wikidata example below, where Wikidata stands in for such a source). Whether to vendor the dictionary is a choice for the owner (it adds a CC0 data file and a maintenance duty).
+Code-named labels resolve only through rules, never by rewriting the source. With only URA admitted (Wikidata is an alias dictionary), the LTA code registry covers two of the seven code labels, so the other five resolve by the weaker `R-RS-SPATIAL-ONLY` rule and stay `rule-supported` with `CODE_NAMED_LABEL`. Vendoring Wikidata station codes as a reviewed alias dictionary would let `R-RS-REGISTRY-CODE` back six of them with a name channel instead of two, and would turn a code that names a different station than the nearest outline into an `ambiguous` pair (`R-AMB-GEO-ONLY`) instead of a silent spatial match; the class stays `rule-supported`, because a dictionary-mediated key is a third party's assertion. `R-VER-KEY-CODE` is reserved for a code carried on the other source's own record. Whether to vendor the dictionary is a choice for the owner (it adds a CC0 data file and a maintenance duty).
 
 ### 8. Decision classes
 
@@ -303,7 +286,7 @@ For a candidate pair `(a, b)` from two admitted sources of **different independe
 - `geo`: distance `d` in SVY21 metres (0 inside a footprint) mapped by the kind's bands: `T1` (`d <= t1`), `T2` (`t1 < d <= t2`), `FAR` (`t2 < d <= rb`), `BEYOND` (`d > rb`), `NA` when either side has no geometry.
 - `life`: `CONFLICT` when one record is `operational` and the other `planned`, `under_construction` or `interim`, when station subtypes differ (`MRT`, `LRT`, `monorail`, `railway`), or when park classes differ (park against playground); `unknown` is compatible with everything.
 
-Provisional bands in metres (placeholders: chosen from point precision and footprint sizes, informed by the offsets seen in the samples, **not** fitted to labels; replace only through approved labels):
+Provisional bands in metres (placeholders: chosen from point precision and footprint sizes, **not** fitted to labels; replace only through approved labels):
 
 | Kind | `t1` | `t2` | `rb` | Outline `t1` / `t2` / `rb` |
 | --- | --- | --- | --- | --- |
@@ -365,27 +348,6 @@ An entity is a connected component over observations joined by `verified` and `r
 | `ambiguous_with` | entity ids of the other side of each ambiguous pair |
 | `parent_entity_id` | for exits: the entity of the exit's station label observation |
 
-Examples under these rules (all from unapproved proposals; "holds" is the owner-to-confirm truth proposal):
-
-| Proposal id | Pair | Rule | Class |
-| --- | --- | --- | --- |
-| `mrt_station-001` | LTA BEDOK centroid and URA BEDOK outline, 0.7 m, equal names | `R-VER-NAME-GEO` | verified |
-| `mrt_station-010` | LTA `CC31` and Wikidata Cantonment (code CC31) | `R-VER-KEY-CODE` | verified |
-| `mrt_station-021` | LTA `CC30` and URA KEPPEL outline 16.4 m away; no code on either | `R-RS-SPATIAL-ONLY` | rule-supported |
-| `mrt_station-024` | LTA Fort Canning and URA outline named RIVER VALLEY that contains it | `R-AMB-GEO-ONLY` | ambiguous |
-| `mrt_station-027` | LTA Bencoolen and Wikidata Bras Basah, 178.6 m | `R-REJ-DOMINATED` | rejected |
-| `mrt_station-025` | LTA Tuas Link and a Wikidata point 684.6 m away, equal names | `R-AMB-CHANNEL-CONFLICT` | ambiguous |
-| `hawker_centre-020` | NEA "Hawker Centre @ Our Tampines Hub" and Wikidata "The Hawker Centre @ Our Tampines Hub", 90.5 m | `R-RS-EXACT-WIDE` | rule-supported |
-| `hawker_centre-026` | NEA "Redhill Market" and the Wikidata item "Redhill Food Centre" already taken by Blk 85 | `R-REJ-DOMINATED` | rejected |
-| `hawker_centre-024` | NEA address-only name and Wikidata Bedok Interchange Hawker Centre, 12.6 m | `R-AMB-GEO-ONLY` | ambiguous |
-| `school-009` | MOE Radin Mas (postal `99840` as published) and Wikidata (`099840`) | `R-VER-KEY-NAME` | verified |
-| `school-021` | MOE Greenridge and Wikidata, equal names, postal codes disagree | `R-AMB-CHANNEL-CONFLICT` | ambiguous |
-| `school-031` | MOE Zhenghua and Wikidata Zhonghua | `R-REJ-DOMINATED` | rejected |
-| `park-015`, `park-024` | NParks BIDADARI PK (exact) and BIDADARI PARK SOUTH (extension) against one Wikidata item | `R-VER-NAME-GEO`, `R-AMB-EXTENSION` | verified, ambiguous |
-| `mrt_exit-001` | two `CHOA CHU KANG MRT STATION` `Exit A` records 3.5 m apart | `R-AMB-INTRA-COLLISION` | ambiguous |
-
-Wikidata is the second record in the station, hawker, school and park examples only because it was the sampled second source for those kinds. It is not admitted (the registry lists it as an alias dictionary), the fixtures assign the class "independent of whether either source is admitted", and under R7.2 these pairs would not be evaluated at all until a second source in another independence group is admitted. The examples show which rule fires, not that either source is evidence for the other.
-
 #### 8.5 Why thresholds are placeholders
 
 Every band and the 10 % attribute share are written down so they can be reviewed, versioned and replaced; none was tuned against labels, and none will be until the owner approves labels (R7.5, R12.1). Changing one bumps `rule_set_version`, recomputes everything and, once approved labels exist, re-reports the metrics.
@@ -411,7 +373,7 @@ Every band and the 10 % attribute share are written down so they can be reviewed
 
 ### 10. Storage
 
-New Neon-only tables (sketch below was executed on the scratch database; constraint names and exact text will be finalised in Phase 1). None of the nine publisher-scanned tables changes, so `NeonPlanningStore.inspectSchema()` is unaffected.
+New Neon-only tables (a sketch; constraint names and exact text will be finalised in Phase 1). None of the nine publisher-scanned tables changes, so `NeonPlanningStore.inspectSchema()` is unaffected.
 
 ```sql
 CREATE TABLE poi_source (
@@ -487,7 +449,7 @@ CREATE TABLE poi_match (
 
 `poi_entity` carries `entity_id`, `poi_kind`, `anchor_observation`, `canonical_name`, `location geography(Point,4326)`, `location_observation`, `position_uncertainty_m`, `resolution_class` (`verified`, `rule-supported`, `ambiguous`, `unmatched`), `corroboration_scope`, `lifecycle`, `caveats text[]`, `ambiguous_with text[]`, `parent_entity_id` and `rule_set_version`.
 
-Serving view (executed on the scratch database over singleton NEA entities):
+Serving view:
 
 ```sql
 CREATE VIEW poi_serving_v1 AS
@@ -502,8 +464,6 @@ WHERE e.lifecycle IN ('operational','unknown')
                   JOIN poi_publication p ON p.publication_id = o.publication_id
                   WHERE m.entity_id = e.entity_id AND p.status <> 'accepted');
 ```
-
-With the NEA gate applied, the scratch run produced 122 entities (129 records, 7 excluded: 6 `Under Construction`, 1 `Interim Centre`), and a query shaped like `NEARBY_SPATIAL_SQL` over the view (same `ORDER BY distance, kind COLLATE "C", id COLLATE "C"`, `LIMIT`) returned the five nearest around Toa Payoh.
 
 Grants: the writer role (OD3) holds DML on the `poi_*` tables; the existing SELECT-only runtime role gets `SELECT` on `poi_serving_v1` and nothing else; no function in this design is `SECURITY DEFINER`. `poi_locations` keeps serving MRT until Phase 11; the four reserved kinds are never written to `poi_locations`, so there is no dual write path.
 
@@ -534,23 +494,23 @@ Semantics:
 
 ### 12. Source-specific gates
 
-| Source | Gate | Exclusion code | Evidence |
-| --- | --- | --- | --- |
-| NEA hawker | `STATUS` must start with `Existing` | `STATUS_NOT_EXISTING` | 6 `Under Construction`, 1 `Interim Centre` of 129 |
-| NEA hawker | SVY21 attributes checked against geometry (R4.3) | flag only | one swapped pair, five offsets of 0.5 m to 49 m |
-| NParks points | suffix class table decides `park` | `PARK_CLASS_*` | by a simple suffix pattern: 162 playgrounds, 18 open spaces, 5 fitness corners, 1 car park of 462 |
-| MOE | pad postal codes; keep two schools at one postal code separate; keep only allow-listed columns | none | 4 codes lost a zero; 2 shared campuses; personal-data columns |
-| NEA/SFA licences | company legal-entity check, supermarket allow-list (OD4), usable postal code | `LICENSEE_NOT_A_LEGAL_ENTITY`, `NOT_ALLOW_LISTED_SUPERMARKET`, `NO_USABLE_ADDRESS` | natural-person licensees; butchers and fishmongers; one `0na` record; stale since 2024-06-06 |
-| URA outlines | `lifecycle = unknown`; null and `<Null>` names are `NA` | none | 9 unnamed outlines; 39 outlines without an LTA partner |
-| LTA exits | code labels flagged; `(label, code)` is not a key | flag only | 7 code labels, 8 colliding code groups |
-| Geocode cache | `position_method = geocoded-cache`, frozen, never refreshed | none | OneMap Search is token-gated |
+| Source | Gate | Exclusion code |
+| --- | --- | --- |
+| NEA hawker | `STATUS` must start with `Existing` | `STATUS_NOT_EXISTING` |
+| NEA hawker | SVY21 attributes checked against geometry (R4.3) | flag only |
+| NParks points | suffix class table decides `park` | `PARK_CLASS_*` |
+| MOE | pad postal codes (some lost a leading zero); keep two schools at one postal code separate; keep only allow-listed columns (the file carries personal data) | none |
+| NEA/SFA licences | company legal-entity check, supermarket allow-list (OD4), usable postal code | `LICENSEE_NOT_A_LEGAL_ENTITY`, `NOT_ALLOW_LISTED_SUPERMARKET`, `NO_USABLE_ADDRESS` |
+| URA outlines | `lifecycle = unknown`; null and `<Null>` names are `NA` | none |
+| LTA exits | code labels flagged; `(label, code)` is not a key | flag only |
+| Geocode cache | `position_method = geocoded-cache`, frozen, never refreshed | none |
 
 ## Labelling protocol
 
 Purpose: turn agent proposals into evidence the project can trust, and stop anyone reporting a number before that exists.
 
 1. **Who.** The project owner is the approver. A second reviewer is optional (decision OD7). The agent that proposed labels is never a reviewer, and its output is never evidence.
-2. **What is labelled.** Two things per pair, kept apart: `relationHolds` (`yes`, `no`, `part-of`, `undetermined`) and `classShouldBe` (the class the rule table should give from the evidence shown). The PROPOSED files carry both as proposals.
+2. **What is labelled.** Two things per pair, kept apart: `relationHolds` (`yes`, `no`, `part-of`, `undetermined`) and `classShouldBe` (the class the rule table should give from the evidence shown). A proposed label carries both.
 3. **Evidence required.** For each entry the reviewer records at least two independent public channels used, for example the agency's own listing page, a map or aerial view, and the two source records' fields and distance; the entry stores `evidenceUsed` and `reviewedOn`. Scraping brand sites and relying on the proposal text are not evidence.
 4. **Blinding.** For the random sample (below) the reviewer sees the two records, the distance and the sources but not the proposed or pipeline class. Curated entries may show the proposal.
 5. **Agreement rule.** One reviewer: the entry is `approved` when confirmed, `corrected` when changed (both the proposal and the correction are stored). Two reviewers: both must agree on both fields; otherwise the entry is `disputed` and excluded from every metric until the owner settles it in writing. There is no majority vote.
@@ -586,7 +546,7 @@ Mutants that must fail the verifiers: a generator that clusters before projectin
 - **Wikidata alias dictionary.** CC0 and useful, but vendored codes can go stale; each entry carries a retrieval date and a reviewer.
 - **Key stability.** Agency `OBJECTID`s may be renumbered; the id table and drift report make that visible rather than silent.
 - **Stale registers.** The supermarket register is more than two years old at the time of writing; `STALE_SOURCE` and the horizon make that visible.
-- **Cost on Neon.** Entity builds are set-based and index-backed; nothing is measured yet beyond the 2026-10-09 sample sizes (all under a thousand rows per kind). A benchmark is a non-goal here.
+- **Cost on Neon.** Entity builds are set-based and index-backed; nothing is measured yet. A benchmark is a non-goal here.
 - **Cache keyspace.** Seven kinds multiply the bound by about 18; Phase 8 restates it.
 - **Rollback.** D1 holds no POI tables; rolling the Worker back to D1 simply has no nearby feature, as today.
 

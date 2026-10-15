@@ -61,14 +61,14 @@
 - [ ] **T6.1** Adapter without a database: `scripts/poi/adapters/nea-hawker.ts` (fetch via the existing paced helpers, Zod parse, allow-list, status gate, SVY21 attribute check, key `OBJECTID`), a publication writer that emits SQL, and the validation report (H1 to H9).
   -> Tests on a small typed fixture cut from the real file shape: the gate excludes `Under Construction` and `Interim Centre`; the swapped-pair row is flagged and the geometry used; a mutated file (duplicate key, swapped coordinates, more than 10 % attribute mismatches) is rejected whole. (R2.2, R2.3, R3.1, R3.2, R4.3, R11.1)
 - [ ] **T6.2** Load, quarantine and promote on a disposable branch: `sql/neon/verify_poi_quarantine.sql` proves a failing publication changes nothing served and that promotion supersedes atomically; the runner builds singleton entities and the `poi_serving_v1` view.
-  -> The view returns the included NEA records (the sample gives 122 of 129) and nothing from a quarantined publication; no nearby route change yet. (R2.1, R2.4, R9.2)
+  -> The view returns the included NEA records (all but those the status gate excludes) and nothing from a quarantined publication; no nearby route change yet. (R2.1, R2.4, R9.2)
 
 ## Phase 7 - MRT: second source for stations, code labels, exits
 
 - [ ] **T7.1** URA adapter (`scripts/poi/adapters/ura-rail-stations.ts`): outlines transformed to `footprint_svy21`, null and `<Null>` names to `NA`, footprint-sibling collapse, `lifecycle = unknown`.
   -> Tests: 257 outlines in, 9 unnamed, the Dhoby Ghaut siblings collapse to one logical candidate. (R11.5)
 - [ ] **T7.2** LTA observations as publications (`lta-mrt-exit-geojson`) from the same file `sync-data` already fetches: one exit observation per `OBJECTID`, one station observation per `STATION_NA` label with `derived-centroid`, code-label flags, registry aliases (`R-COLLAPSE-REGISTRY`), and the LTA code registry as a reviewed alias dictionary. The MRT trigger and `poi_locations` are untouched.
-  -> Unit tests classify the seven code labels exactly as the table in design 7 says for the admitted sources; exit collisions are flagged `KEY_COLLISION`, never merged. (R6.4, R8.1)
+  -> Unit tests classify the seven code labels as design section 7 describes for the admitted sources (two through the registry rule, five through the spatial-only rule); exit collisions are flagged `KEY_COLLISION`, never merged. (R6.4, R8.1)
 - [ ] **T7.3** Resolve `mrt_station` and `mrt_exit` (membership against outlines, `parent_entity_id`) on a disposable branch and compare the station entities with the stations currently in `poi_locations`.
   -> Every existing station has an entity; any difference is listed, not hidden.
 
@@ -89,7 +89,7 @@
 ## Phase 10 - Remaining kinds, one PR each
 
 - [ ] **T10.1** Parks: NParks points adapter with the versioned suffix class table and `PARK_CLASS_*` gates; the polygon layer as a geometry-quality input if sampled.
-  -> Tests on 462-shaped data: 40 % of records excluded by class, none silently. (R11.2)
+  -> Tests on NParks-shaped data: every class-excluded record is counted, none silently. (R11.2)
 - [ ] **T10.2** Schools: MOE register adapter (allow-list, postal padding, shared-campus rows kept apart), joined to the frozen geocode cache with `position_method = geocoded-cache`.
   -> No personal-data column survives; `POSITION_GEOCODED_FROZEN` appears on every school entity. (R3.2, R3.4, R11.3)
 - [ ] **T10.3** Optional land-mask guard from an admitted polygon source (URA Land Use after its metadata and licence are verified).
