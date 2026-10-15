@@ -9,9 +9,8 @@
 
 ## Phase P0 — Data freshness (`serving-data-refresh`)
 
-- [~] **TP0.1** Land the recovered publisher: core (#423). The benchmark harness is
-  parked at the tag `archive/neon-benchmark-harness`; #424 only points the nearby
-  document at it.
+- [~] **TP0.1** Land the recovered publisher: core (#423). The benchmark harness stays
+  in the recovery snapshot (`b804464`); #424 only points the nearby document at it.
   -> The gate result is in each PR's description. Approval: owner review and merge.
   Risk: 40k lines of unversioned work reviewed late.
 
@@ -48,12 +47,10 @@
   is documented and unprotected (T4.2 in that spec).
 
 - [~] **TG.2** Deployed-path verification on a disposable fork with a temporary
-  Worker and Hyperdrive. The harness is parked at the tag
-  `archive/nearby-deployed-path-harness` and is run from there; it is no longer in
-  #421.
+  Worker and Hyperdrive. The harness is no longer in
+  #421; its last version is commit `c7b2f6b` in that PR's history.
   -> Equality with the shipped SQL for the recorded cases, cache and limiter paths
-  observed, latency distribution. BLOCKED: the temporary Hyperdrive configuration
-  needs a connection string; creating or entering credentials is the owner's step.
+  observed, latency distribution. Decided 2026-10-15: no deployed-path run is made.
 
 - [ ] **TG.3** Apply migration 001 to the serving branch.
   -> Row counts and verifier pass. Approval: owner. Risk: the staged executor
@@ -71,8 +68,8 @@
   with their licences stated (URA rail outlines and Land Use under SODL, Overture
   Places under CDLA-Permissive-2.0, Apache-2.0 and CC0-1.0 per provider); only
   `mrt_station` has two sampled, licence-clear, anonymous sources. The label
-  proposals are unapproved and parked at the tag `archive/poi-label-proposals` (the
-  head of the closed #429); no metric uses them before the owner approves them.
+  proposals are unapproved and stay in the closed #429 (commit `f6daac3`); no metric
+  uses them before the owner approves them.
   Risk: licence obligations that conflict with storing derived rows.
 
 - [~] **T1.2** CRS contract tests (the contract in `design.md` 1.4; the two haversine
@@ -109,8 +106,8 @@
 
 - [~] **T3.1** Methodology and harness: synthetic datasets at 10k, 100k and 1M
   points, fixed seeds, p50/p95/p99, plans with buffers, hardware and version
-  capture, noise detection (#426, closed: the harness is parked at the tag
-  `archive/postgis-local-benchmark`; warm runs only, no cold run).
+  capture, noise detection (#426, closed: the harness is in that PR's head, commit
+  `71f294d`; warm runs only, no cold run).
   -> One command regenerates the report. Risk: laptop numbers are not edge
   numbers; the report says so.
 
