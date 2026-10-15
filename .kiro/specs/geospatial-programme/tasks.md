@@ -5,13 +5,15 @@
 > and the standalone Go experiment (in parallel), then benchmarks, planning
 > hierarchy and address search. Each item names its pull request or spec, its
 > acceptance check, its approvals and its main risk. `[x]` means merged or fully
-> evidenced; `[~]` means open as a draft or blocked.
+> evidenced; `[~]` means open as a draft, blocked, or parked at an archive tag.
 
 ## Phase P0 — Data freshness (`serving-data-refresh`)
 
-- [~] **TP0.1** Land the recovered publisher: core (#423) and harness (#424).
-  -> Both gates green; SQL identity equals the October identity. Approval: owner
-  review and merge. Risk: 40k lines of unversioned work reviewed late.
+- [~] **TP0.1** Land the recovered publisher: core (#423). The benchmark harness is
+  parked at the tag `archive/neon-benchmark-harness`; #424 only points the nearby
+  document at it.
+  -> The gate result is in each PR's description. Approval: owner review and merge.
+  Risk: 40k lines of unversioned work reviewed late.
 
 - [~] **TP0.2** Spec and evidence (#422), including the schema-trigger trap, the
   cadence-versus-guard numbers and the Hyperdrive flip.
@@ -42,14 +44,14 @@
 ## Phase G — Production gates for nearby search (`nearby-search-production-gates`)
 
 - [~] **TG.1** Rate limiting (#421).
-  -> Gate green (217 files, 2,224 tests); four mutations caught; local rehearsal of
-  the whole check passes; the Free-plan Hyperdrive query budget is documented
-  and unprotected (T4.2 in that spec).
+  -> The gate result is in the PR description; the Free-plan Hyperdrive query budget
+  is documented and unprotected (T4.2 in that spec).
 
 - [~] **TG.2** Deployed-path verification on a disposable fork with a temporary
-  Worker and Hyperdrive. Everything except the database credential is prepared and
-  dry-run bundled.
-  -> Equality with the shipped SQL for 13 recorded cases, cache and limiter paths
+  Worker and Hyperdrive. The harness is parked at the tag
+  `archive/nearby-deployed-path-harness` and is run from there; it is no longer in
+  #421.
+  -> Equality with the shipped SQL for the recorded cases, cache and limiter paths
   observed, latency distribution. BLOCKED: the temporary Hyperdrive configuration
   needs a connection string; creating or entering credentials is the owner's step.
 
@@ -69,8 +71,9 @@
   with their licences stated (URA rail outlines and Land Use under SODL, Overture
   Places under CDLA-Permissive-2.0, Apache-2.0 and CC0-1.0 per provider); only
   `mrt_station` has two sampled, licence-clear, anonymous sources. The label
-  proposals moved to their own PR (#429) for the owner's review before any metric
-  uses them. Risk: licence obligations that conflict with storing derived rows.
+  proposals are unapproved and parked at the tag `archive/poi-label-proposals` (the
+  head of the closed #429); no metric uses them before the owner approves them.
+  Risk: licence obligations that conflict with storing derived rows.
 
 - [~] **T1.2** CRS contract tests (the contract in `design.md` 1.4; the two haversine
   implementations disagree with the geodesic by up to +0.56% and −0.11%) (#427, draft).
@@ -106,13 +109,14 @@
 
 - [~] **T3.1** Methodology and harness: synthetic datasets at 10k, 100k and 1M
   points, fixed seeds, p50/p95/p99, plans with buffers, hardware and version
-  capture, noise detection (#426, draft; warm runs only, no cold run).
+  capture, noise detection (#426, closed: the harness is parked at the tag
+  `archive/postgis-local-benchmark`; warm runs only, no cold run).
   -> One command regenerates the report. Risk: laptop numbers are not edge
   numbers; the report says so.
 
 - [~] **T3.2** Exact versus KNN candidate strategy with its disagreement rate
-  (#426: slower at 10k, 4.1x faster at 100k, 21x at 1M, no top-25 difference in
-  2,000 centres per size); a grid strategy is not measured.
+  (measured in #426; the figures are in that PR's closing description); a grid
+  strategy is not measured.
   -> Extends the 500-block KNN comparison recorded in the description of #425.
 
 ## Phase 4 — Planning hierarchy
