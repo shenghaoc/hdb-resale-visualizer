@@ -1,6 +1,6 @@
 # Design: POI Source Integration
 
-> Status: Proposed. This spec adds no code, migration or data. Evidence and the source-by-source analysis are in [`docs/architecture/poi-source-admission.md`](../../../docs/architecture/poi-source-admission.md). Rows tagged "(proposal)" come from `tests/fixtures/poi-ground-truth/PROPOSED-*.json`, which live in their own pull request ([#429](https://github.com/shenghaoc/hdb-resale-visualizer/pull/429), not merged with this one), are agent-proposed and **unapproved**: they illustrate the rules, they do not measure them. OpenStreetMap is excluded by the owner's decision of 2026-10-10. SQL in this document was run on a local PostGIS 3.6.3 / PostgreSQL 18.6 scratch database against the 2026-10-09 samples; it is a sketch, not a migration.
+> Status: Proposed. This spec adds no code, migration or data. The source-by-source analysis (licences, coverage, quality and the admission recommendation) is in the description of PR #428, not in the repository. OpenStreetMap is excluded by the owner's decision of 2026-10-10. The SQL in this document is a sketch, not a migration.
 
 ## Problem
 
@@ -26,12 +26,38 @@
 
 ## Non-goals
 
-- Admitting any source (that is gated by the owner decisions OD1 to OD8 in the admission document).
+- Admitting any source (that is gated by the owner decisions OD1 to OD8 under "Decisions").
 - Walking distances, routing or travel times (OneMap routing stays a separate, token-gated concern).
 - Runtime fetching of any upstream source, runtime geocoding, or any hosted AI, embedding or reranking service.
 - Machine-learning matching. DBSCAN is only a way to batch candidates; every decision is a rule.
 - Changing D1, the nine publisher-scanned Neon tables, or the existing MRT fail-closed trigger.
 - Reverse geocoding, a 1M-point benchmark, or a second authoritative HDB dataset.
+
+## Decisions
+
+Decided by the owner (2026-10-10) or fixed by the project's constraints. The analysis behind each is in the description of PR #428.
+
+| Decision | Reason |
+| --- | --- |
+| **OpenStreetMap is not used** (OD1, option A) | ODbL share-alike attaches to a publicly used derivative database, and the OSMF Collective Database guideline places a merged "own list plus OSM, duplicates removed" outside its safe harbour. The alternatives were rejected: internal corroboration only (B) turns on whether even a boolean is a "Produced Work", and a separate ODbL layer (C) commits the project to publishing a derivative layer |
+| Only Singapore Open Data Licence, CDLA-Permissive-2.0, Apache-2.0 and CC0 sources feed `poi_*` | Anything else needs a new, explicit decision; `licence_class` stays on every source and observation so that a share-alike source could be excluded or separated |
+| No source that needs a token, account or key | OneMap Search has needed a token since 1 October 2025 and the owner ruled tokens out, so geocodes already in `geocode_cache` are frozen, single-source evidence and no new school or supermarket coordinates are produced (OD6) |
+| `mrt_station` is the only kind with two licence-clear, anonymous sources today | LTA exit points (the station point is their centroid) and URA rail-station outlines, both under SODL. Every other kind is single-source by design until a second source is admitted: Overture Places (per-provider CDLA-Permissive-2.0, Apache-2.0 or CC0-1.0; not yet sampled, OD2) and, for parks, URA Land Use polygons as area evidence |
+| Single-source kinds say so | `corroboration_scope = single-source-by-design` and the caveat `SINGLE_SOURCE`; nothing is "verified" without two independent sources agreeing |
+| SQL computes features, TypeScript decides | One authoritative decider that Vitest can test without PostGIS, with the SQL features verified against brute-force oracles (section 1) |
+| Quarantine is additive | The fail-closed MRT trigger stays unchanged until a separate, owner-approved migration (R2.5) |
+
+Open owner decisions. T0.1 records the answers here, with date and rationale.
+
+| Id | Decision | Why it blocks |
+| --- | --- | --- |
+| OD2 | Approve a one-off, local Overture Places extract for a Singapore bounding box with tooling that is not a repo dependency (for example DuckDB on a developer machine), and the acceptance criteria for admitting it | Overture is the best-licensed second coordinate source and has not been sampled |
+| OD3 | Who writes the `poi_*` tables on the serving branch and with which role, and the rule for bumping `NEON_PUBLIC_CACHE_EPOCH` on each promotion | The serving branch is a static snapshot refreshed by no tracked job; the existing triggers and role inventory constrain any writer |
+| OD4 | What counts as a supermarket (allow-list of brands, licence class, or both), and the handling of licensees that are natural persons | The register includes butchers, fishmongers, traders and individuals |
+| OD5 | Ask LTA whether the DataMall static "Train Station" layer may be used under SODL, or ignore it | An official station point would improve the station kind, but its licence is not established |
+| OD6 | Confirm that the token ban stands, so cached geocodes stay frozen | The only anonymous geocoder is gone |
+| OD7 | Label approvers, a second reviewer if any, and minimum sample sizes per kind (see "Labelling protocol") | No metric may be reported before labels are approved |
+| OD8 | Where attributions appear in the app and who owns keeping them current | SODL requires a conspicuous notice |
 
 ## Architecture
 
@@ -80,7 +106,7 @@ The decision logic is **not** duplicated in SQL. SQL computes features (distance
 | `licence_class` | `permissive`, `attribution`, `share-alike`; every observation inherits it, so a serving view can exclude a class |
 | `admission_status` | `candidate`, `admitted`, `suspended`, `rejected`; only `admitted` rows may be loaded |
 
-Initial rows (proposal; statuses reflect the admission document, nothing is admitted by this spec):
+Initial rows (proposal; nothing is admitted by this spec):
 
 | `source_id` | Group | Licence class | Status | Notes |
 | --- | --- | --- | --- | --- |
@@ -95,7 +121,7 @@ Initial rows (proposal; statuses reflect the admission document, nothing is admi
 | `osm-overpass` | `osm-volunteer` | share-alike | **excluded** (OD1 decided 2026-10-10: not used); kept only so a future share-alike source has a precedent row | |
 | `lta-station-code-registry`, `wikidata-station-codes` | none | none | alias dictionaries, not observation sources | vendored as reviewed data with their licence noted; never contribute a position |
 
-Independence is a registry claim, and copies happen: a source in another group can still be an import of the one it is compared with. In the proposal sample, `hawker_centre-001` pairs an NEA record with a Wikidata item whose coordinates equal NEA's to six decimals (1 of the 30 hand-picked NEA-Wikidata proposal pairs: an observation, not a rate; admission document 5.4 notes that several hawker items look bulk-created). The resolution run therefore reports, per source pair, the share of mutual pairs whose points coincide within 0.5 m and whose names are equal (R1.6). The report is label-free and changes no class by itself; a high share is evidence for the owner to merge the two groups in the registry, which is a reviewed change that bumps `rule_set_version`.
+Independence is a registry claim, and copies happen: a source in another group can still be an import of the one it is compared with. The resolution run therefore reports, per source pair, the share of mutual pairs whose points coincide within 0.5 m and whose names are equal (R1.6). The report is label-free and changes no class by itself; a high share is evidence for the owner to merge the two groups in the registry, which is a reviewed change that bumps `rule_set_version`.
 
 ### 3. Publications, validation and quarantine
 
@@ -566,7 +592,7 @@ Mutants that must fail the verifiers: a generator that clusters before projectin
 
 ## Open questions
 
-- Which of the owner decisions OD2 to OD8 (admission document, section 7) are settled, and in what order; OD1 is settled (OpenStreetMap is not used), so OD2 (the Overture sample) now gates the most value.
+- Which of the owner decisions OD2 to OD8 (see "Decisions") are settled, and in what order; OD1 is settled (OpenStreetMap is not used), so OD2 (the Overture sample) now gates the most value.
 - Whether the Wikidata station-code alias dictionary is worth vendoring (it lets the registry-code rule back six of seven code labels with a name channel instead of two, and turns a mismatching code into an `ambiguous` pair; the class stays `rule-supported`).
 - Whether `mrt_station` entities should show the LTA label or a canonical name once resolved, and in which language (the LTA registry also carries Chinese names).
 - Whether the nearby API should expose `ambiguous` entities by default or only on request.

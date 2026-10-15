@@ -4,12 +4,12 @@
 
 ## Phase 0 - Owner decisions and samples (no code)
 
-- [ ] **T0.1** Record the owner's answers to OD1 to OD8 (`docs/architecture/poi-source-admission.md`, section 7) with date and rationale, as a "Decision" column in that table. OD3 names the writer role and the cache-epoch rule.
+- [ ] **T0.1** Record the owner's answers to OD2 to OD8 (`design.md`, "Decisions") with date and rationale, as a "Decision" column in the open-decisions table. OD3 names the writer role and the cache-epoch rule.
   -> Every decision has an answer or an explicit "deferred"; phases that depend on a deferred decision stay unstarted. (R1.3, R9.3)
-- [ ] **T0.2** If OD2 is yes: take a one-off Singapore bounding-box extract of Overture Places on a developer machine with tooling that is not a repo dependency, and write the descriptive counts into the admission document: records per relevant category, share with a name, share with confidence above stated cut-offs, overlap with the NEA, NParks and MOE records by postal code or distance. No accuracy figure.
-  -> The admission document's "Not verified" list shrinks by the Overture items; the acceptance criteria OD2 asked for are stated, not assumed. (R12.1)
+- [ ] **T0.2** If OD2 is yes: take a one-off Singapore bounding-box extract of Overture Places on a developer machine with tooling that is not a repo dependency, and report the descriptive counts: records per relevant category, share with a name, share with confidence above stated cut-offs, overlap with the NEA, NParks and MOE records by postal code or distance. No accuracy figure.
+  -> The Overture items in the "Not verified" list of PR #428 are closed; the acceptance criteria OD2 asked for are stated, not assumed. (R12.1)
 - [x] **T0.3** ~~If OD1 is B or C: obtain an OSM extract~~ Not needed: OD1 was decided on 2026-10-10 as option A, OpenStreetMap is not used.
-  -> The OSM items in "Not verified" are closed by the exclusion. (R1.3)
+  -> Nothing is left to do for OpenStreetMap. (R1.3)
 - [ ] **T0.4** Ask LTA about the DataMall static layers if OD5 is yes; record the answer.
   -> The Train Station layer is either admitted as an `lta`-group source or listed as unavailable.
 
@@ -36,7 +36,7 @@
 ## Phase 3 - Name normalisation
 
 - [ ] **T3.1** Add `shared/poi/lexicon.ts` (versioned: stop words, subtype lexicons, abbreviation maps, level patterns, station-code pattern) and `shared/poi/normalize.ts` implementing design section 7.
-  -> Table-driven tests built from the real strings in the admission document (code labels, `Queen Street Blk 270 (Albert Centre)`, `ST. MARGARET'S SCHOOL (SECONDARY)`, `SENG KANG`, `PK`/`PG`/`OS`/`FC`, `<Null>`, trailing spaces) pass; level and subtype words are never dropped; the function is pure. (R6.1, R6.2, R6.4, R6.5)
+  -> Table-driven tests built from real source strings (code labels, `Queen Street Blk 270 (Albert Centre)`, `ST. MARGARET'S SCHOOL (SECONDARY)`, `SENG KANG`, `PK`/`PG`/`OS`/`FC`, `<Null>`, trailing spaces) pass; level and subtype words are never dropped; the function is pure. (R6.1, R6.2, R6.4, R6.5)
 - [ ] **T3.2** Add the name-channel function (`EXACT`, `ALIAS`, `NEAR_SPELL`, `NEAR_EXT`, `NEAR_SUBTYPE`, `DIFF`, `NA`).
   -> Tests include pairs that a trigram rule would get wrong (Zhenghua/Zhonghua, Chua/Yio Chu Kang, Yishun/Yishun Town) and assert they are not `EXACT` or `ALIAS`. (R6.3)
 

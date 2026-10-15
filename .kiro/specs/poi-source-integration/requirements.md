@@ -1,6 +1,6 @@
 # Requirements: POI Source Integration
 
-Scope: integrate more than one source for the PostGIS `poi_locations` kinds `mrt_station`, `mrt_exit`, `school`, `supermarket`, `hawker_centre` and `park` without hiding uncertainty. Evidence for every claim about a source is in `docs/architecture/poi-source-admission.md`; the mechanism is in `design.md`.
+Scope: integrate more than one source for the PostGIS `poi_locations` kinds `mrt_station`, `mrt_exit`, `school`, `supermarket`, `hawker_centre` and `park` without hiding uncertainty. The analysis of each source is in the description of PR #428; the mechanism is in `design.md`.
 
 Terms: a **publication** is one fetched, hashed copy of a source; an **observation** is one record of a publication with its provenance; an **entity** is a set of observations judged to describe one place; a **resolution class** is one of `verified`, `rule-supported`, `ambiguous`, `unmatched` (entity level) or `rejected` (pair level).
 
