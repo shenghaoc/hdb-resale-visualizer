@@ -21,7 +21,7 @@ The `GET /api/nearby-places` endpoint remains in the Worker and its PostGIS test
 
 ## R3 — Safe isolated real-path verification
 
-- **R3.1** Run a temporary Worker with its own name and rate-limit namespaces against a **disposable Neon PostGIS fork**, using **one** temporary Hyperdrive configuration with a fork-only SELECT-only role. Do not reuse serving credentials. The harness for this is parked at the tag `archive/nearby-deployed-path-harness` ([runbook](https://github.com/shenghaoc/hdb-resale-visualizer/blob/c7b2f6b91be4e135d26757d999eb86cf09bb1e33/tests/deployed-path/README.md)), not in the repository.
+- **R3.1** Run a temporary Worker with its own name and rate-limit namespaces against a **disposable Neon PostGIS fork**, using **one** temporary Hyperdrive configuration with a fork-only SELECT-only role. Do not reuse serving credentials. The harness for this is not in the repository; its last version is commit `c7b2f6b` in this pull request's history ([runbook](https://github.com/shenghaoc/hdb-resale-visualizer/blob/c7b2f6b91be4e135d26757d999eb86cf09bb1e33/tests/deployed-path/README.md)).
 - **R3.2** The temporary Worker is the only place where the spatial flag may be temporarily true for this verification. Do not modify production Worker, Hyperdrive, or D1.
 - **R3.3** Verify independent SQL fingerprints, cache MISS/HIT, canonical keys, both limiter refusals and end-to-end latency. Record results as text only; no credential/evidence uploads.
 - **R3.4** Teardown removes only resources demonstrably created by this run. The local rehearsal in the parked harness creates unique per-run databases and never uses `DROP DATABASE ... WITH (FORCE)`.
