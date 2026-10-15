@@ -22,24 +22,36 @@ official source, and nothing in the repository can refresh it:
 
 This design makes the refresh a repeatable, reviewed procedure.
 
-## Verified findings
+## Constraints
 
-Sources: the owner's recovered notes (permalinks into the preserved snapshot
-commit [`b804464`](https://github.com/shenghaoc/hdb-resale-visualizer/tree/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6)),
-the code on the integration branch, and read-only checks made on 2026-10-10.
+The design starts from these ten facts. How each was confirmed is recorded in the description of PR #422.
 
-| #   | Finding                                                                                                                                                                                                                                                                                                                                                          | Evidence                                                                                                                                                                                                                                      |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| F1  | Serving state is 988,128 transactions, 45,028 trends, 9,730 blocks. Hyperdrive config `hdb-public-neon` points at the serving endpoint `ep-steep-water-b300tebo`, role `hdb_benchmark_runtime`, query cache disabled, origin limit 5. It is the only Hyperdrive config in the account.                                                                          | [cutover plan §1](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/proposals/neon-production-cutover-plan-2026-10-05.md); Cloudflare API read on 2026-10-10                                 |
-| F2  | Both publishers validate the connection against the benchmark endpoint `ep-steep-moon-b35xjj4d` (branch `br-wispy-boat-b34glczl`). Nothing can write the serving branch.                                                                                                                                                                                         | `validateNeonRefreshUrl` in `scripts/lib/sync/neon.ts`; `directBenchmarkTransport` in the staged publisher                                                                                                                                    |
-| F3  | The staged executor accepts one plan only: `assertExecutionInput` throws unless the review allows exactly 2,595 inserts and five retentions.                                                                                                                                                                                                                      | `scripts/neon-benchmark/staged-execution.ts`                                                                                                                                                                                                  |
-| F4  | The client-side planner's guards (25,000 conservative index operations, 100 statements) are D1 write-budget numbers. The October catch-up forecast 40,371 operations and 214 statements, so the planner stopped. The staged path needs 20 commands for the same change.                                                                                          | [manual publication notes](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/neon-manual-publication-2026-10-04.md); [staged execution](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/proposals/neon-staged-execution-2026-10-04.md) |
-| F5  | After `sql/neon/001_postgis_nearby.sql`, the stage tables carry triggers: `blocks.block_location_sync` and `mrt_geojson.mrt_geojson_poi_sync` (checked on a fork of the serving branch). The staged executor's catalog admission requires an empty trigger list and a catalog hash equal to its pin, so it fails closed on such a branch.                         | catalog query on `br-broad-cake-b3wl94ei` (2026-10-10); `SCHEMA_CATALOG_SQL` and `assertExecutionInput`                                                                                                                                      |
-| F6  | Monthly volume is about twice the recurring change guard. Over 36 full months (2023-07 to 2026-06) transactions per month were: minimum 1,338, median 2,134, mean 2,166, maximum 3,036. The guard is `min(1000, floor(0.005 × active baseline))`, which is 1,000.                                                                                                | read-only counts on the owner's local snapshot; [reconciliation proposal](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/neon-reconciliation-proposal-2026-10-04.md)                     |
-| F7  | The October stage used 89,758,647 B of the 90,000,000 B COPY ceiling (99.7%).                                                                                                                                                                                                                                                                                    | [portability publication](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/proposals/neon-portability-publication-2026-10-05.md); `STAGE_MAX_COPY_BYTES`                                  |
-| F8  | The October run omitted unlocated addresses under the cache-only policy: 286 unlocated at publication, 15 of them new. With no OneMap token that number only grows as new blocks appear.                                                                                                                                                                         | [staged execution](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/proposals/neon-staged-execution-2026-10-04.md)                                                                        |
-| F9  | A Hyperdrive configuration can be updated in place, including the origin host; no Worker redeploy is needed, the existing pool is not torn down, and the pool can be restarted to force new connections.                                                                                                                                                         | Cloudflare Hyperdrive "rotate credentials" documentation                                                                                                                                                                                      |
-| F10 | The Worker's public-data cache keys every response by the manifest hash and follows the manifest through a 60 s pointer, so a new publication becomes visible without a deploy. The public manifest route projects the contract keys only.                                                                                                                       | `worker/public-data-cache.ts`; `functions/api/manifest.ts`                                                                                                                                                                                    |
+- **C1. Serving state.** 988,128 transactions, 45,028 trends and 9,730 blocks. The Hyperdrive configuration
+  `hdb-public-neon` points at the serving endpoint `ep-steep-water-b300tebo` with role
+  `hdb_benchmark_runtime`, query cache disabled and an origin limit of 5. It is the only Hyperdrive
+  configuration in the account.
+- **C2. No publisher can write the serving branch.** Both validate the connection against the benchmark
+  endpoint `ep-steep-moon-b35xjj4d` (branch `br-wispy-boat-b34glczl`).
+- **C3. The staged executor accepts one plan.** `assertExecutionInput` throws unless the review allows exactly
+  2,595 inserts and five retentions.
+- **C4. The client-side planner's guards are D1 write budgets.** 25,000 conservative index operations and 100
+  statements stopped the October catch-up, which forecast 40,371 operations and 214 statements. The staged path
+  needs 20 commands for the same change.
+- **C5. The PostGIS migration blocks the staged executor.** After `sql/neon/001_postgis_nearby.sql` the stage
+  tables carry the triggers `blocks.block_location_sync` and `mrt_geojson.mrt_geojson_poi_sync`. The
+  executor's catalog admission requires an empty trigger list and a catalog hash equal to its pin, so it fails
+  closed on such a branch.
+- **C6. Monthly volume is about twice the recurring change guard.** Transactions per month over the 36 full
+  months 2023-07 to 2026-06 were at least 1,338, median 2,134, mean 2,166 and at most 3,036. The guard is
+  `min(1000, floor(0.005 × active baseline))`, which is 1,000.
+- **C7. The October stage used 99.7% of the COPY ceiling:** 89,758,647 B of 90,000,000 B.
+- **C8. Cache-only coverage loses addresses.** The October run omitted unlocated addresses: 286 at publication,
+  15 of them new. With no OneMap token that number only grows as new blocks appear.
+- **C9. Hyperdrive can be repointed in place.** A configuration can be updated, including its origin host,
+  without a Worker redeploy; the existing pool is not torn down and can be restarted to force new connections.
+- **C10. A new publication needs no deploy.** The Worker's public-data cache keys every response by the manifest
+  hash and follows the manifest through a 60 s pointer. The public manifest route projects the contract keys
+  only.
 
 ## Goals
 
@@ -70,7 +82,7 @@ official sources (anonymous, paced)
    -> verify (digests, counts, replay = no-op)
    -> fork benchmark -> serving candidate (copy-on-write child)
    -> child: role defaults + migration 001 + differential verifier
-   -> child: materialize top-five MRT exits into block_details JSON (draft #432)
+   -> child: materialize top-five MRT exits into block_details JSON (prototyped in closed draft #432)
    -> child: verify derived JSON + manifest marker AFTER base digest proof
    -> acceptance through a temporary Worker + Hyperdrive
    -> Hyperdrive origin -> child                                --> OWNER approves flip
@@ -88,16 +100,21 @@ official sources (anonymous, paced)
 | Schema admission                       | `SCHEMA_CATALOG_SQL` pinned per snapshot                                | golden catalogs per schema version (R5)                      |
 | Mirror                                 | `source.sqlite` at the August baseline                                  | mirror reconstruction, digest proof, advance after publish   |
 | Promotion                              | the owner's COW candidate procedure                                     | scripted, rehearsed runbook with approval points             |
-| Budgets                                | `neon-usage`, `report-neon-refresh-budget`                              | check inside the apply gate                                  |
+| Budgets                                | `neon-usage`, `refresh-policy`                                          | check inside the apply gate                                  |
+
+The staged publisher, the stage builders and the schema pins in that table (`stage-artifacts`, `staged-plan`,
+`cache-only-context`, `staged-publisher`, `staged-validation`, `SCHEMA_CATALOG_SQL`) are not in the repository. They
+are parked with the rest of the benchmark and pilot harness at the tag `archive/neon-benchmark-harness`, under
+[`scripts/neon-benchmark/`](https://github.com/shenghaoc/hdb-resale-visualizer/tree/27d99fbab8a6872042ea4f5eccbd0c7ba5f5e797/scripts/neon-benchmark).
 
 ### Decisions
 
 - **Publisher target is the benchmark branch, serving is a child.** The benchmark
   keeps the publisher schema (version 0, no triggers); the serving child gets the
-  role defaults and the PostGIS migration after the fork. That removes F5 from
+  role defaults and the PostGIS migration after the fork. That removes C5 from
   the publisher path, keeps derived tables out of the publisher's reach (the
   PostGIS note already forbids granting it write access to them), and gives
-  rollback as a Hyperdrive origin change (F9) rather than a point-in-time
+  rollback as a Hyperdrive origin change (C9) rather than a point-in-time
   restore inside Neon's six-hour history window. Alternative considered: publish
   in place on the serving branch. That needs schema version 1 in the executor's
   admission and has no instant rollback; it remains possible once R5 exists.
@@ -110,11 +127,11 @@ official sources (anonymous, paced)
 - **Approval is a hash.** The owner reads the plan summary and passes its hash to
   the apply command. The apply command recomputes the plan and refuses on any
   difference, which also covers a source that changed in between.
-- **Guards come from evidence.** F6 and F7 show the recurring guard and the COPY
+- **Guards come from evidence.** C6 and C7 show the recurring guard and the COPY
   ceiling were calibrated for the one-time catch-up. The task list replays the
   last 24 months against a mirror to measure stage sizes and change counts, then
   proposes numbers for the owner.
-- **No Worker deploy for a routine refresh.** F10: the manifest hash moves the
+- **No Worker deploy for a routine refresh.** C10: the manifest hash moves the
   cache; the cache epoch changes only when a response contract changes.
 
 ## Operating procedure (draft runbook)
@@ -131,7 +148,7 @@ others are read-only or local.
 7. **approval:** apply to the benchmark; verify; replay must be a no-op.
 8. **approval:** fork the benchmark into the next serving child; apply role
    defaults and migration 001; run the differential verifier.
-8a. **child-only derived publication:** after the benchmark's nine-table digest equality proof, run `sql/neon/publish_block_detail_nearby_mrt_exits.sql` from draft #432 on the unserved child. It atomically stores each block's top-five MRT exits and updates a private manifest identity marker LAST; validate 9,730 differential answers, empty lists, total size growth and a replay no-op. The new manifest hash forces a new cache generation. Never include this JSON in the benchmark COPY stage.
+8a. **child-only derived publication:** after the benchmark's nine-table digest equality proof, run the child-only publish-time MRT-exit step (prototyped in closed draft #432; its SQL is not in the repository) on the unserved child. It atomically stores each block's top-five MRT exits and updates a private manifest identity marker LAST; validate 9,730 differential answers, empty lists, total size growth and a replay no-op. The new manifest hash forces a new cache generation. Never include this JSON in the benchmark COPY stage.
 9. **approval:** temporary Worker and Hyperdrive; run the acceptance set; delete
    both.
 10. **approval:** change the Hyperdrive origin to the child; restart the pool;
@@ -219,8 +236,8 @@ What the weekly cadence does **not** settle: the change guard holds on average
 (about 491 a week against 1,000) but the weekly distribution is unmeasured (R8.2);
 the first run after a month boundary shifts the 24-month window and rewrites
 thousands of block summaries, which is what pushes the stage towards the COPY
-ceiling (F7, decision 3); and cache-only coverage keeps losing new addresses
-(F8, decision 4).
+ceiling (C7, decision 3); and cache-only coverage keeps losing new addresses
+(C8, decision 4).
 
 ## Decisions
 
@@ -234,13 +251,13 @@ Recorded 2026-10-10:
 
 Still needed from the owner:
 
-3. COPY ceiling or a reviewed split rule (F7).
+3. COPY ceiling or a reviewed split rule (C7).
 4. Cache-only coverage, or a way to resolve new addresses.
 5. How many serving children to keep for rollback.
 
-## Child-only PostGIS MRT exit materialization (draft #432)
+## Child-only PostGIS MRT exit materialization (prototyped in closed draft #432)
 
-The existing UI only needs five exits per **known HDB block** and therefore must not depend on the disabled public arbitrary-coordinate endpoint. PR #432 provides `sql/neon/publish_block_detail_nearby_mrt_exits.sql`: after migration 001, it computes nearest-exit-per-source-STATION_NA over all candidates within 1,500 metres, using the API's snapped 0.0001-degree centres, spheroidal PostGIS distance and deterministic tie-breaking. It adds `nearbyMrtExits` to the **already published `block_details.json`** and writes `nearbyMrtExitsMaterialization` in the private manifest as the last statement of a single transaction.
+The existing UI only needs five exits per **known HDB block** and therefore must not depend on the disabled public arbitrary-coordinate endpoint. Draft #432, now closed, prototyped this step as a SQL file that is not in the repository. After migration 001 the step computes nearest-exit-per-source-STATION_NA over all candidates within 1,500 metres, using the API's snapped 0.0001-degree centres, spheroidal PostGIS distance and deterministic tie-breaking. It adds `nearbyMrtExits` to the **already published `block_details.json`** and writes `nearbyMrtExitsMaterialization` in the private manifest as the last statement of a single transaction.
 
 **Stage ordering is mandatory:** the benchmark publisher continues to own its original schema and guarded 89.76 MB COPY stage; child-only materialization runs **after** base digest equality has been proved on the fork but **before** promotion and temporary Worker acceptance. Since the manifest JSON changes in that child, do not demand equality to the benchmark's manifest after child-only derivation; instead independently verify the derived-field hash, manifest marker, block coverage, and that the remaining public source facts still match the benchmark. Any failure rejects the child and leaves the old serving branch unchanged. Replaying on an unchanged child must update zero rows and preserve the manifest identity. The change-count guard for upstream transactions is **not** bypassed or loosened; this is a separately bounded, derived-only child stage.
 

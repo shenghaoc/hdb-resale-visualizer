@@ -8,13 +8,14 @@
 
 - [x] **T0.1** Recover the publisher and its notes to a preserved branch.
   -> `feat/neon-refresh-publisher` at `b804464`, verbatim, with a provenance
-  README.
+  README; also held by the tag `archive/neon-refresh-publisher-original`.
 
 - [ ] **T0.2** Port the publisher onto `main` and split it for review.
-  -> Core publisher (#423) and benchmark harness (#424) as two stacked PRs; this
-  item closes when both merge.
+  -> Core publisher (#423). The benchmark and pilot harness is parked at the tag
+  `archive/neon-benchmark-harness` and #424 carries only a documentation change;
+  this item closes when #423 merges.
 
-- [x] **T0.3** Verify the facts this design rests on (F1 to F10).
+- [x] **T0.3** Verify the facts this design rests on (C1 to C10).
   -> Read-only: Cloudflare Hyperdrive and Worker listing, a catalog query on a
   disposable fork of the serving branch, counts on the owner's local snapshot.
   (R1.1, R5.1)
@@ -31,7 +32,8 @@
 > branch.
 
 - [ ] **T1.1** Build schema version 0 (the publisher schema,
-  `scripts/neon-benchmark/schema.sql`) in a local database, capture
+  [`scripts/neon-benchmark/schema.sql`](https://github.com/shenghaoc/hdb-resale-visualizer/blob/27d99fbab8a6872042ea4f5eccbd0c7ba5f5e797/scripts/neon-benchmark/schema.sql)
+  at the tag `archive/neon-benchmark-harness`) in a local database, capture
   `SCHEMA_CATALOG_SQL`, and store it as `golden-catalog-v0.json`.
   -> Reproducible with one documented command. (R5.1, R5.2)
 
@@ -86,8 +88,8 @@
   -> Deterministic; golden test on a fixture. (R1.3, R2.2)
 
 - [ ] **T3.4** Replay 24 historical months against a mirror to measure stage
-  sizes, change counts and statement counts; write the distribution to
-  `docs/evidence`.
+  sizes, change counts and statement counts; record the distribution in the
+  description of the pull request that implements this task.
   -> The weekly change-count distribution for decision 2 (R8.2) and the stage sizes
   for decision 3, with the method. (R8.2, R8.3)
 
@@ -109,7 +111,7 @@
   verifier, temporary Worker and Hyperdrive acceptance, teardown.
   -> Receipts; the verifier reports zero mismatches. (R6.1, R6.3)
 
-- [ ] **T5.1a** After the benchmark base digest proof, run PR #432's `sql/neon/publish_block_detail_nearby_mrt_exits.sql` on the unserved serving child (after PostGIS migration 001), with 9,730 SQL-differential checks, full coverage, no-op replay, manifest-version separation and measured JSON/WAL/storage growth. The child-only stage must not inflate the old COPY stage or alter upstream change-count guards.
+- [ ] **T5.1a** After the benchmark base digest proof, run the child-only publish-time MRT-exit step (prototyped in closed draft #432; its SQL is not in the repository) on the unserved serving child (after PostGIS migration 001), with 9,730 SQL-differential checks, full coverage, no-op replay, manifest-version separation and measured JSON/WAL/storage growth. The child-only stage must not inflate the old COPY stage or alter upstream change-count guards.
   -> Approve only if all checks pass and budgets have headroom. (R6.1a, R6.1b)
 
 - [ ] **T5.2** Rehearse the rollback: origin back to the previous child, pool
