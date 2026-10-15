@@ -1,6 +1,6 @@
 # Requirements: POI Source Integration
 
-Scope: integrate more than one source for the PostGIS `poi_locations` kinds `mrt_station`, `mrt_exit`, `school`, `supermarket`, `hawker_centre` and `park` without hiding uncertainty. The analysis of each source is in the description of PR #428; the mechanism is in `design.md`.
+Scope: integrate more than one source for the PostGIS `poi_locations` kinds `mrt_station`, `mrt_exit`, `school`, `supermarket`, `hawker_centre` and `park` without hiding uncertainty. The analysis of each source is in the evidence attached to PR #428; the mechanism is in `design.md`.
 
 Terms: a **publication** is one fetched, hashed copy of a source; an **observation** is one record of a publication with its provenance; an **entity** is a set of observations judged to describe one place; a **resolution class** is one of `verified`, `rule-supported`, `ambiguous`, `unmatched` (entity level) or `rejected` (pair level).
 
@@ -34,7 +34,7 @@ Terms: a **publication** is one fetched, hashed copy of a source; an **observati
 - **R4.2** WHEN a planar quantity is computed (blocking radius, DBSCAN `eps`, tolerance bands, polygon containment) THEN it SHALL be computed on SRID 3414 geometries in metres; WHEN a distance is shown to a user THEN it SHALL be a geodesic distance on `geography` and SHALL NOT be described as a walking distance.
 - **R4.3** WHEN a source carries SVY21 attributes (NEA `LANDXADDRESSPOINT` and `LANDYADDRESSPOINT`, NParks `X` and `Y`) THEN they SHALL be compared with the transformed geometry; a difference above 0.05 m SHALL set `COORD_ATTR_MISMATCH` with the metres, and a pair that matches the geometry only when its two numbers are swapped SHALL set `COORD_ATTR_SWAPPED`; the geometry SHALL win.
 - **R4.4** WHEN a point is validated THEN it SHALL be rejected if latitude lies outside the admission box, if longitude and latitude are swapped, if an SVY21 coordinate lies outside the SVY21 image of the admission box, or if two geometries of different SRIDs are combined (an error, never a silent mix).
-- **R4.5** The adversarial tests listed in `design.md` (longitude and latitude swapped, SRID relabelled, degrees passed as metres, offshore points, SVY21 round-trip tolerance, swapped SVY21 attributes) SHALL exist as automated tests before any source is loaded into a serving branch.
+- **R4.5** The adversarial tests (longitude and latitude swapped, SRID relabelled, degrees passed as metres, offshore points, SVY21 round-trip tolerance, swapped SVY21 attributes) SHALL exist as automated tests before any source is loaded into a serving branch.
 
 ## R5 - Candidate generation
 
@@ -111,7 +111,7 @@ Terms: a **publication** is one fetched, hashed copy of a source; an **observati
 ## Acceptance criteria
 
 1. The registry, publication and observation model exist with provenance on every row and no personal data.
-2. The coordinate-system contract is enforced by tests, including every adversarial case in `design.md`.
+2. The coordinate-system contract is enforced by tests, including every adversarial case of R4.5.
 3. Candidate generation equals the brute-force oracle and is order-independent.
 4. Every pair carries exactly one class with rule ids; ambiguous pairs are never merged; rejected pairs persist.
 5. Entity and observation ids are stable under shuffles; merges leave alias rows.

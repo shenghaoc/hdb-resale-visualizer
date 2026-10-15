@@ -26,9 +26,9 @@
 
 ## Phase 2 - Coordinate-system contract
 
-- [ ] **T2.1** Add `shared/poi/region.ts` (admission box: same longitude and southern bounds as the request box in `shared/nearby-places.ts`, a lower northern bound, see design 5.3) and `shared/poi/crs.ts` (swap detector, range checks, SVY21 attribute comparison returning the metres and a swapped flag, tolerance constants).
-  -> Unit tests cover every row of the adversarial table in design 5.4 on the TypeScript side, including the official vectors NEA 119477, NParks 120001 and the swapped NEA 119460 pair. (R4.3, R4.4, R4.5)
-- [ ] **T2.2** Add `sql/neon/verify_poi_crs.sql`: the PostGIS side of 5.4, including the mutants (`ST_SetSRID(..., 3414)`, `ST_DWithin` and DBSCAN on 4326 with metre values, mixed SRIDs) that must fail, the 1 mm round-trip check, and the `poi_assert_svy21` helper.
+- [ ] **T2.1** Add `shared/poi/region.ts` (admission box: same longitude and southern bounds as the request box in `shared/nearby-places.ts`, a lower northern bound, see design section 3) and `shared/poi/crs.ts` (swap detector, range checks, SVY21 attribute comparison returning the metres and a swapped flag, tolerance constants).
+  -> Unit tests cover the adversarial cases of R4.5 on the TypeScript side, including official-record vectors (NEA 119477, NParks 120001) and the swapped NEA 119460 attribute pair. (R4.3, R4.4, R4.5)
+- [ ] **T2.2** Add `sql/neon/verify_poi_crs.sql`: the PostGIS side of the R4.5 cases, including the mutants (`ST_SetSRID(..., 3414)`, `ST_DWithin` and DBSCAN on 4326 with metre values, mixed SRIDs) that must fail, the 1 mm round-trip check, and the `poi_assert_svy21` helper.
   -> On a disposable branch every case passes and every mutant fails. (R4.1, R4.2, R14.2)
 - [ ] **T2.3** Add a lint test that greps `sql/neon/` and `shared/poi/` for `ST_SetSRID(` with any SRID other than 4326 and for planar functions applied to columns not typed `3414`.
   -> The test fails on a seeded violation and passes on the tree. (R4.1)
@@ -49,7 +49,7 @@
 
 ## Phase 5 - Decision engine, identifiers, entities (pure TypeScript)
 
-- [ ] **T5.1** Add `shared/poi/decide.ts`: pair features in, class and rule ids out, implementing the tiers, exclusivity and the rule table of design 8.3, plus the intra-source policy and the two collapse forms; `rule_set_version` derived from the rule table's own hash.
+- [ ] **T5.1** Add `shared/poi/decide.ts`: pair features in, class and rule ids out, implementing the tiers, exclusivity and the rule table of design section 8, plus the intra-source policy and the two collapse forms; `rule_set_version` derived from the rule table's own hash.
   -> One test per rule id on constructed feature rows; precedence tests (first match wins); tests that an `EXACT` partner dominates `NEAR_*` competitors and that equal-strength competitors are `ambiguous`; a test that shuffling candidate order never changes any class. (R7.1, R7.2, R7.3, R7.4, R7.5)
 - [ ] **T5.2** Add `shared/poi/ids.ts` (observation and entity ids, alias rows, digest) and `shared/poi/entities.ts` (components, anchor, class, scope, position, caveats).
   -> The 100-shuffle property test yields one digest; a lower-ranked observation joining leaves ids unchanged; a higher-ranked one produces an alias row; hand-computed hash vectors are asserted. (R8.1, R8.2, R8.3, R8.4, R7.6)

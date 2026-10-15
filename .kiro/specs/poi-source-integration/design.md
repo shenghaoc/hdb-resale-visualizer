@@ -1,6 +1,6 @@
 # Design: POI Source Integration
 
-> Status: Proposed. This spec adds no code, migration or data. The source-by-source analysis (licences, coverage, quality and the admission recommendation) is in the description of PR #428, not in the repository. OpenStreetMap is excluded by the owner's decision of 2026-10-10. The SQL in this document is a sketch, not a migration.
+> Status: Proposed. This spec adds no code, migration or data. The source-by-source analysis (licences, coverage, quality and the admission recommendation) is in the evidence attached to PR #428, with its commands in the PR description, not in the repository. OpenStreetMap is excluded by the owner's decision of 2026-10-10. Section 10 is a key list, not DDL.
 
 ## Problem
 
@@ -16,11 +16,9 @@
 ## Goals
 
 - Record where every POI observation came from, before anything is aggregated (provenance before aggregation).
-- Resolve observations of the same place across independent sources with rules that are exact, deterministic, versioned and explainable per pair.
-- Say how sure we are on every result: five classes, a corroboration scope, position uncertainty and caveat codes, never a silent merge.
+- Resolve observations of the same place across independent sources with rules that are exact, deterministic, versioned and explainable per pair, and say how sure we are: five classes, a corroboration scope, position uncertainty and caveat codes, never a silent merge.
 - Fail closed per publication: a bad fetch is quarantined, never partially promoted, and never replaces good data.
-- Keep geometry honest: geodesic on `geography` for people, SVY21 metres only through `ST_Transform` for machines.
-- Be reproducible: identical inputs give identical ids and outputs in any order.
+- Keep geometry honest (geodesic on `geography` for people, SVY21 metres only through `ST_Transform` for machines) and results reproducible (identical inputs give identical ids and outputs in any order).
 - Keep evaluation honest: no accuracy figure without owner-approved labels.
 - Land in small, independently verifiable pull requests.
 
@@ -35,7 +33,7 @@
 
 ## Decisions
 
-Decided by the owner (2026-10-10) or fixed by the project's constraints. The analysis behind each is in the description of PR #428.
+Decided by the owner (2026-10-10) or fixed by the project's constraints. The analysis behind each is in the evidence attached to PR #428.
 
 | Decision | Reason |
 | --- | --- |
@@ -63,496 +61,113 @@ Open owner decisions. T0.1 records the answers here, with date and rationale.
 
 ### 1. Overview
 
-```
-build time (scripts/poi, owner-run)                    Neon (PostGIS)                       runtime (Worker, SELECT only)
-fetch -> publication(hash) -> validate -----+
-          |                                 v
-          +--> stage observations --> accept | quarantine
-                (admission gates, allow-lists, CRS checks)
-                     |
-                     v
-        intra-source collapse (footprints, registry aliases)
-                     |
-        candidate groups: SVY21 blocking, DBSCAN as partitioner only
-                     |
-        pair features (SQL: distances, trigram)  +  name channels (TS)
-                     |
-        decide: tiers + rule table (TS, versioned)  ->  poi_match
-                     |
-        entities: components, anchor, ids, class, scope, caveats  ->  poi_entity
-                     |                                                    |
-                     +----------------------------------------------> poi_serving_v1 -> nearby query -> API
-```
-
-| Concern | Where it lives | Why |
-| --- | --- | --- |
-| Normalisation lexicons, name channels, rule table, tier algorithm, id derivation, digest | `shared/poi/*.ts` (pure, no I/O) | One authoritative implementation, Vitest-testable without PostGIS, importable by scripts and tests (never by `src/`) |
-| Source adapters: fetch, parse, allow-list, publication writer, resolution runner, report | `scripts/poi/*.ts` | Build-time only, like `scripts/sync-data.ts`; the only code allowed to reach upstream hosts |
-| Schema | `sql/neon/00N_poi_*.sql` (new numbered files) | Neon-only, run by hand on a disposable branch first, like `001_postgis_nearby.sql` |
-| Candidate and feature queries, verifiers | `sql/neon/verify_poi_*.sql`, and the parameterised queries the runner issues | Set-based and index-backed; verifiers are read-only and compare against brute-force oracles |
-| Serving | `worker/nearby-spatial-query.ts`, `shared/nearby-places.ts`, `functions/api/nearby-places.ts` | Existing route; reads a view only |
-
-The decision logic is **not** duplicated in SQL. SQL computes features (distances, trigram similarity, containment); TypeScript decides. The parity risk the repo manages elsewhere (D1 against Neon) is avoided by having a single decider and verifying the SQL features against an oracle.
+Build time (`scripts/poi`, owner-run) fetches each source into a hashed publication, validates it, stages observations, collapses duplicates within a source, forms candidate groups in SVY21, computes pair features in SQL, decides in TypeScript with a versioned rule table, and builds entities that a serving view exposes to the existing nearby query. Pure logic lives in `shared/poi/*.ts` (no I/O, never imported by `src/`), adapters and the runner in `scripts/poi/*.ts`, schema in new numbered `sql/neon/00N_poi_*.sql` files and verifiers in `sql/neon/verify_poi_*.sql`. SQL computes features and TypeScript decides, so there is one decider, testable without PostGIS.
 
 ### 2. Source registry and independence
 
-`poi_source` holds one row per source, with the fields in R1.1. Rows are data, reviewed in a PR, never inferred from code.
-
-| Column | Meaning |
-| --- | --- |
-| `independence_group` | Two sources in one group never corroborate each other. Groups: `lta`, `ura-plan`, `moe`, `nea`, `nparks`, `sla-onemap`, `osm-volunteer`, `overture-places`, `wikidata-community` |
-| `anchor_rank` | Lower wins when an entity anchor is chosen (R8.2); official registers first |
-| `position_method` | `source-point`, `source-polygon`, `derived-centroid`, `geocoded-cache`, `none`; ranked in that order when an entity picks its position |
-| `licence_class` | `permissive`, `attribution`, `share-alike`; every observation inherits it, so a serving view can exclude a class |
-| `admission_status` | `candidate`, `admitted`, `suspended`, `rejected`; only `admitted` rows may be loaded |
-
-Initial rows (proposal; nothing is admitted by this spec):
-
-| `source_id` | Group | Licence class | Status | Notes |
-| --- | --- | --- | --- | --- |
-| `lta-mrt-exit-geojson` | `lta` | attribution | admitted (already served) | Exits are `source-point`; station observations are `derived-centroid` of their label's exits |
-| `ura-mp2019-rail-station-amendment` | `ura-plan` | attribution | candidate, admitted in Phase 7 | `source-polygon`; `lifecycle = unknown` |
-| `moe-general-information-of-schools` | `moe` | attribution | candidate | `none`; identity only |
-| `nea-sfa-list-of-supermarket-licences` | `nea` | attribution | candidate | `none`; stale since 2024-06-06 |
-| `geocode-cache-onemap` | `sla-onemap` | attribution | candidate, frozen | `geocoded-cache`; read from D1 `geocode_cache` by the existing sync tooling; never refreshed |
-| `nea-hawker-centres-geojson` | `nea` | attribution | candidate | `source-point`, status gate |
-| `nparks-parks-points` | `nparks` | attribution | candidate | `source-point`, class gate; the polygon layer is a geometry-quality input, not an independent source |
-| `overture-places` | `overture-places` | permissive | candidate, blocked on OD2 | |
-| `osm-overpass` | `osm-volunteer` | share-alike | **excluded** (OD1 decided 2026-10-10: not used); kept only so a future share-alike source has a precedent row | |
-| `lta-station-code-registry`, `wikidata-station-codes` | none | none | alias dictionaries, not observation sources | vendored as reviewed data with their licence noted; never contribute a position |
-
-Independence is a registry claim, and copies happen: a source in another group can still be an import of the one it is compared with. The resolution run therefore reports, per source pair, the share of mutual pairs whose points coincide within 0.5 m and whose names are equal (R1.6). The report is label-free and changes no class by itself; a high share is evidence for the owner to merge the two groups in the registry, which is a reviewed change that bumps `rule_set_version`.
+`poi_source` has one reviewed row per source: publisher, dataset, licence and its text URL, `licence_class` (`permissive`, `attribution`, `share-alike`), attribution string, `independence_group`, `anchor_rank` (official registers first), `position_method` (ranked `source-point`, `source-polygon`, `derived-centroid`, `geocoded-cache`, `none`), key specification and `admission_status` (only `admitted` loads). Today only the LTA exit file is admitted; URA outlines, MOE, NEA, NParks and the frozen geocode cache are candidates, Overture waits on OD2, OpenStreetMap is excluded, and the LTA code registry and Wikidata station codes are alias dictionaries that never give a position. Sources in one group never corroborate each other, and copies cross groups, so every resolution run reports, per source pair, the share of mutual pairs that coincide within 0.5 m with equal names (R1.6); the report changes no class, and a high share is evidence for the owner to merge two groups (a `rule_set_version` bump).
 
 ### 3. Publications, validation and quarantine
 
-A publication is the unit of acceptance. `publication_id = 'pub_' || first 32 hex of sha256(source_id || 0x1f || content_sha256)`; two fetches of identical content are one publication (`UNIQUE (source_id, content_sha256)`).
-
-States: `staged` -> `accepted` | `quarantined`; `accepted` -> `superseded` when a newer publication of the same source is promoted. A partial unique index allows one `accepted` publication per source.
-
-Hard checks (any failure quarantines the **whole** publication):
-
-| Id | Check |
-| --- | --- |
-| H1 | Every row parses against the source's Zod schema |
-| H2 | `source_record_key` is unique and non-empty. It is the source's own stable identifier (`OBJECTID` for LTA exits, whose `(label, exit code)` pair is not unique); uniqueness is checked, not assumed |
-| H3 | Geometry type equals the registry's (Point, or Polygon/MultiPolygon for outlines) |
-| H4 | Longitude and latitude finite and inside the admission box (R4.4) |
-| H5 | No swapped longitude/latitude: a pair whose latitude is inside the longitude range and vice versa. Singapore's longitude (about 103.8) is above 90, so a swapped pair is also an invalid latitude |
-| H6 | SVY21 attribute share: more than 10 % of rows with an attribute pair that disagrees with the transformed geometry by more than 0.05 m. A few disagreeing rows are row flags; a systematic offset fails the publication |
-| H7 | Record count within the band relative to the previous accepted publication (first publication: owner approval) |
-| H8 | Allow-listed fields present; no deny-listed (personal-data) column in the allow-list |
-| H9 | Encoding sanity: share of U+FFFD and stray trailing `?` below a limit |
-
-Deterministic admission gates (R2.3) are **not** validation failures; they mark observations `excluded` with a code (`STATUS_NOT_EXISTING`, `PARK_CLASS_PLAYGROUND`, `PARK_CLASS_OPEN_SPACE`, `PARK_CLASS_FITNESS_CORNER`, `PARK_CLASS_CAR_PARK`, `NO_USABLE_ADDRESS`, `NOT_ALLOW_LISTED_SUPERMARKET`, `LICENSEE_NOT_A_LEGAL_ENTITY`). The publication report lists counts per code, so a gate that suddenly excludes half a source is visible.
-
-Promotion is one transaction: supersede the old accepted publication, mark the new one `accepted` with its `rule_set_version`, rebuild affected entities, and write the digest. A quarantined publication leaves serving untouched: the previous accepted publication keeps serving and entities derived from it gain the caveat `STALE_SOURCE` once it is older than the source's staleness horizon (registry column, default 400 days).
-
-Relationship to the existing MRT trigger: `refresh_mrt_poi_locations_trigger` aborts the whole transaction that writes `mrt_geojson` when the MRT document is malformed. That is fail-closed in the strict sense and it stays. Quarantine is the additive, weaker-coupling mechanism for **new** publications: a bad school file never blocks anything else. Moving MRT itself onto publications would change a deliberate invariant from "the whole prepared publication may fail" to "this source is quarantined and the previous copy keeps serving"; that is a separate, owner-approved migration (R2.5).
+A publication (content SHA-256) is the unit of acceptance: `staged`, then `accepted` or `quarantined`, then `superseded`, one accepted per source. Hard checks quarantine the whole publication: rows that do not parse against the source's Zod schema; record keys that are not unique and non-empty (the source's own id, `OBJECTID` for LTA exits); a geometry type other than the registry's; coordinates that are not finite, are swapped or fall outside the admission box (lng 103.55 to 104.15, lat 1.15 to 1.47, sharing the nearby request box's longitude and southern bounds); more than 10 % of rows whose SVY21 attributes differ from the transformed geometry by over 0.05 m (fewer are row flags and the geometry wins); a record count outside a band of the previous publication; fields outside the allow-list or any personal data; encoding damage. Admission gates are not failures: they mark observations `excluded` with a code, counted per code in the report. Promotion is one transaction. A quarantined publication leaves serving untouched, and the older copy gains `STALE_SOURCE` past 400 days. The fail-closed MRT trigger stays; quarantine is additive, and moving MRT onto publications is a separate owner-approved migration (R2.5).
 
 ### 4. Observations and provenance
 
-| Field | Purpose | Notes |
-| --- | --- | --- |
-| `observation_id` | stable identity of the record | `obs_` + 32 hex of sha256(source id, 0x1f, kind, 0x1f, record key) (section 9) |
-| `source_id`, `publication_id` | which source and exact fetch | traceability (R3.3) |
-| `poi_kind`, `source_record_key` | what and how the source names it | key spec in the registry (`OBJECTID`, `STATION_NA:<label>`, `licence_num`, `<name>\|<postal6>`) |
-| `raw_name` | verbatim | never rewritten |
-| `name_norm`, `aliases`, `identity_keys`, `subtype`, `label_kind`, `name_style` | outputs of `shared/poi/normalize.ts` | persisted so SQL never re-implements them |
-| `lifecycle`, `status_raw` | `operational`, `planned`, `under_construction`, `interim`, `unknown` | mapped per source; LTA and URA are `unknown` because they have no status field |
-| `lng`, `lat` | WGS84, longitude first | nullable for registers |
-| `position_method`, `coord_checks` | how the point arose and what was checked | `{svy21_attr_diff_m, swapped, box_ok, ...}` |
-| `location`, `loc_svy21` | generated | `ST_SetSRID(ST_MakePoint(lng, lat), 4326)::geography` and `ST_Transform(..., 3414)` |
-| `footprint_svy21` | polygon outlines | transformed at load |
-| `admission`, `exclusion_code` | gate result | |
-| `source_properties` | allow-listed extras | no personal data |
-| `quality_flags` | caveat seeds | `COORD_ATTR_MISMATCH`, `COORD_ATTR_SWAPPED`, `ADDRESS_STYLE_NAME`, `CODE_NAMED_LABEL`, `NAME_UNUSABLE`, `KEY_COLLISION` |
+An observation keeps its source, publication, kind and record key; the verbatim name and the persisted outputs of normalisation (normalised name, aliases, identity keys, subtype); lifecycle and raw status; WGS84 longitude and latitude (or none) with position method and coordinate checks; generated `geography` and SVY21 points, and a footprint for outlines; its admission result and exclusion code; allow-listed properties only; and quality flags that seed caveats. Observations are inserted or superseded, never updated in place.
 
 ### 5. Coordinate-system contract
 
-#### 5.1 Which CRS each stage uses
-
-| Stage | Input | Works in | Output | Rule |
-| --- | --- | --- | --- | --- |
-| Fetch and parse | source files | none | raw values and any SVY21 attributes, as received | never reproject here |
-| Validate | WGS84 `[lng, lat]`, optional SVY21 `[x, y]` | WGS84 ranges; SVY21 only for the consistency check | flags | H4 to H6 |
-| Load | `lng`, `lat` | | columns plus generated `location geography(Point,4326)` and `loc_svy21 geometry(Point,3414)` | the only `ST_SetSRID` is `ST_MakePoint(lng, lat), 4326`; 3414 comes only from `ST_Transform` |
-| Block and cluster | `loc_svy21`, `footprint_svy21` | SVY21 metres | candidate pairs | `ST_DWithin`, `ST_ClusterDBSCAN`, `ST_Distance` on `*_svy21` only |
-| Features | both | SVY21 for bands; geography for the reported distance | `d_svy21_m`, `d_geodesic_m` | the two must agree within `0.1 m + 5e-4 * d` or the pair is flagged `CRS_DISTANCE_DISAGREE` |
-| Decide | features | none | classes | no coordinate is read here |
-| Entity | observations | geography | `poi_entity.location geography(Point,4326)` | position chosen by `position_method` rank, then `anchor_rank`, then id |
-| Serve | `location` | geography | metres | ellipsoidal straight line, never "walking" |
-
-Tolerances: the WGS84 to SVY21 to WGS84 round trip must come back within 1 mm; a source's own SVY21 attributes are compared with the transformed geometry at 0.05 m; planar and geodesic distances for a candidate pair must agree within `0.1 m + 5e-4 * d`. EPSG:3414 is `+proj=tmerc +lat_0=1.366666666666667 +lon_0=103.8333333333333 +k=1 +x_0=28001.642 +y_0=38744.572 +ellps=WGS84`, and `loc_svy21` is a stored generated column built with `ST_Transform`.
-
-#### 5.2 Rules
-
-1. Longitude is always the first element: `ST_MakePoint(lng, lat)`, GeoJSON `[lng, lat]`, `ST_X` is longitude in 4326 and easting in 3414.
-2. No `ST_SetSRID(x, 3414)` anywhere. A lint test greps `sql/neon/` and `shared/poi/` for it. 3414 values originate only in `ST_Transform`.
-3. Every planar function takes a column that is typed `geometry(..., 3414)`; the column type is the guard. Helpers that take a bare `geometry` assert the SRID with an exception function (`poi_assert_svy21`).
-4. Distances shown to users are `geography`; the response field stays `distanceMeters` and its documentation keeps saying "straight line, not walking".
-5. Mixed SRIDs are an error in PostGIS and stay one: no `ST_Transform` is added merely to make a call succeed.
-6. The geometry wins over SVY21 attributes whenever they disagree.
-
-#### 5.3 Guards
-
-| Guard | Where | Effect |
-| --- | --- | --- |
-| `CHECK (lng BETWEEN 103.0 AND 105.0 AND lat BETWEEN 1.0 AND 2.0)` | `poi_observation` | rejects swaps and foreign points at the table |
-| Admission box (lng 103.55 to 104.15, lat 1.15 to 1.47, constants in `shared/poi/region.ts`; it shares its longitude and southern bounds with the nearby route's request box, whose northern bound is 1.55) | validator H4 | hard failure |
-| SVY21 image of the box, computed with `ST_Transform` at load, not typed in | validator | catches relabelled values |
-| Swap detector | validator H5 | hard failure |
-| Attribute check | validator H6 | row flag, publication failure above 10 % |
-| `poi_assert_svy21(geometry)` | SQL helpers | exception on any other SRID |
-| Pair guard `CRS_DISTANCE_DISAGREE` | feature step | flag and quarantine of the group if any pair disagrees |
-
-The admission box is a **region** guard, not a land mask: the southern part of Johor Bahru lies inside it (a Woodlands-side point and a Johor point can differ by 2 km), so offshore and cross-border points are caught only when they fall outside the box. A land mask from an admitted polygon source is a later hardening task (T10.3), not assumed.
-
-#### 5.4 Adversarial tests and vectors
-
-All run in `tests/unit` (TypeScript guards) and `sql/neon/verify_poi_crs.sql` (PostGIS), and each has a mutant that must fail.
-
-| Case | Input | Expected |
-| --- | --- | --- |
-| Longitude and latitude swapped | `ST_MakePoint(1.3521, 103.8198)` as 4326 then 3414 | error, never a row |
-| SRID relabel | `ST_SetSRID(ST_MakePoint(103.8198, 1.3521), 3414)` | caught by the SVY21-image guard and the lint |
-| Degrees passed as metres | `ST_DWithin(a4326, b4326, 50)` on points 32,391 m apart; DBSCAN with `eps := 400` on 4326 geometry | the verifier fails the mutant |
-| Mixed SRIDs | `ST_Distance(a4326, b3414)` | error |
-| Offshore / foreign point | (lng 103.72, lat 1.17), open water off the southern islands by judgement (no land mask is used) and inside both boxes; a point at lat 1.60 | outside the admission box is rejected; inside-box offshore is **not** caught (documented limit) |
-| SVY21 round trip | WGS84 to 3414 to WGS84 | at most 1 mm |
-| Official vector 1 | NEA 119477: WGS84 (103.80036727142618, 1.3069001323584224) | SVY21 (24332.82477688, 32135.91866726) within 0.05 m |
-| Official vector 2 | NParks 120001: WGS84 (103.7842062105903, 1.3137632887404946) | SVY21 (22534.26299996, 32894.84093008) within 0.05 m |
-| Swapped SVY21 attributes | NEA 119460: attributes X 35883.10858126, Y 21533.66534254 | `COORD_ATTR_SWAPPED`; geometry used |
-| Centre-of-island vector | WGS84 (103.8198, 1.3521) | SVY21 (26495.534871, 37133.868476) within 1 mm |
+The contract (WGS84 longitude then latitude, geodesic on `geography` for anything a user sees, SVY21 only through `ST_Transform`, with its static guard and PostGIS verifier) is the one #427 adds to `docs/architecture/postgis-nearby.md`; this spec adds only the admission box and the SVY21-attribute check of section 3.
 
 ### 6. Candidate generation
 
-Per-kind block radius `RB` (provisional, section 8.1):
-
-| Kind | Block | Notes |
-| --- | --- | --- |
-| `mrt_station` | SVY21 radius 500 m (outline distance 300 m) | point is a centroid of exits, outlines are footprints |
-| `mrt_exit` | 100 m for intra-source collisions; membership against outlines 300 m | no cross-source exit pairs until a second exit source exists |
-| `school`, `supermarket` | registers without coordinates: normalised postal code equality, plus name-token inverted index; geometry only when both sides have it (600 m, 400 m) | postal code is zero-padded to six digits first |
-| `hawker_centre` | 400 m | |
-| `park` | 800 m, or footprint containment when a polygon exists | |
-
-Algorithm (all in SVY21):
-
-1. Partition included observations of one kind with `ST_ClusterDBSCAN(geom, eps := RB, minpoints := 1) OVER (PARTITION BY poi_kind)`. With `minpoints = 1` every point is a core point, so groups are the connected components of the "within RB" graph. Membership therefore does not depend on row order; the numeric labels do, and they are never stored or compared.
-2. Inside each group, pair observations of different sources with `ST_DWithin(a, b, RB)`.
-3. If a group exceeds `MAX_GROUP` (default 200), stop and report it (R5.4): chains through a corridor such as Orchard or the Marina Bay interchange are a data problem to look at, not to truncate.
-
-DBSCAN is a batching device. It never decides that two observations are the same place; `minpoints` larger than 1 or any density parameter would introduce border-point order dependence and is not allowed.
-
-`sql/neon/verify_poi_candidates.sql` compares the generator with a brute-force oracle (no index, no clustering, `ST_Distance` instead of `ST_DWithin`) for every kind: the pair sets must be equal, with one pair digest under at least six input orders.
+Blocking is spatial in SVY21 metres with a per-kind radius (stations 500 m, outlines 300 m, exits 100 m, hawker centres 400 m, parks 800 m or footprint containment); registers without coordinates (schools, supermarkets) block on the zero-padded postal code and a name-token index, and on geometry (600 m, 400 m) only when both sides have it. `ST_ClusterDBSCAN` with `minpoints := 1` only partitions candidates into order-independent connected components and never decides that two observations are one place. A group over the size cap (default 200) stops the run and is reported, not truncated, and the generator's pair set must equal a brute-force oracle's for every kind under shuffled input orders.
 
 ### 7. Name normalisation and similarity
 
-`shared/poi/normalize.ts` exposes `normalizeName(kind, raw, source) -> { core, subtype, subtypeAttr, aliases, labelKind, nameStyle, coreKey }`, driven by a versioned lexicon (`shared/poi/lexicon.ts`). Steps, in order:
-
-1. Unicode NFKC, strip diacritics, lower-case; remove apostrophes; `&` becomes `and`; other punctuation becomes a space; collapse spaces.
-2. Parenthetical aliases: text in parentheses becomes an alias; the text outside is the primary name. School level suffixes `(PRIMARY)`, `(SECONDARY)`, `(JUNIOR)`, `(MAIN)` are level words, not aliases.
-3. Address-style detection: a primary name made of a street name, `Blk` and a number with no alias gets `nameStyle = address` and the name channel is absent for it.
-4. Station labels: a label matching `^[A-Z]{2}[0-9]{1,2}$` gets `labelKind = code` (name channel absent). A trailing `MRT STATION` or `LRT STATION` becomes `subtypeAttr = MRT | LRT`; `INTERCHANGE`, `STATION` and `MRT` are ignored as name words for stations.
-5. Abbreviation dictionary, by kind (examples): parks `PK -> park`, `PG -> playground`, `OS -> open space`, `FC -> fitness corner`; addresses `JLN -> jalan`, `RD -> road`, `AVE -> avenue`; schools `ST. -> saint` only before a name and after `CHIJ`, `ST` at the end of an address is `street`.
-6. Stop words (`the`, `of`, `and`, `blk`, `block`, `singapore`) removed.
-7. Subtype lexicon extraction: words that distinguish entities are moved out of the core into `subtype` (hawker: `hawker`, `centre`, `food`, `market`, `village`, `complex`, `cooked`; park: `park`, `garden`, `nature`, `reserve`, `playground`; school levels stay in the core because they distinguish entities).
-8. `core` is the sorted token list; `coreKey` is the space-free concatenation (so `SENG KANG` equals `Sengkang`).
-
-Name channel (computed by the decider from two normalised records):
-
-| Channel | Definition |
-| --- | --- |
-| `EXACT` | `coreKey` equal and subtype sets equal or one empty |
-| `ALIAS` | `EXACT` between one record's alias and the other's primary name, or between aliases |
-| `NEAR_SPELL` | cores equal except one token within Damerau-Levenshtein distance 1, token length at least 3 |
-| `NEAR_EXT` | one core is a strict subset of the other, at most two extra tokens |
-| `NEAR_SUBTYPE` | cores equal, subtype sets differ and neither is empty |
-| `DIFF` | none of the above |
-| `NA` | code label, address-style name with no alias, null or placeholder (`<Null>`, `na`) |
-
-`pg_trgm` is used for two things only: a candidate filter for registers that have no geometry, and a feature `trgm` stored in `poi_match.features` for reviewers. It is never an input to a class above `ambiguous`. The decider's design assumption that no similarity threshold is safe is backed by the pairs in Problem point 1.
-
-Code-named labels resolve only through rules, never by rewriting the source. With only URA admitted (Wikidata is an alias dictionary), the LTA code registry covers two of the seven code labels, so the other five resolve by the weaker `R-RS-SPATIAL-ONLY` rule and stay `rule-supported` with `CODE_NAMED_LABEL`. Vendoring Wikidata station codes as a reviewed alias dictionary would let `R-RS-REGISTRY-CODE` back six of them with a name channel instead of two, and would turn a code that names a different station than the nearest outline into an `ambiguous` pair (`R-AMB-GEO-ONLY`) instead of a silent spatial match; the class stays `rule-supported`, because a dictionary-mediated key is a third party's assertion. `R-VER-KEY-CODE` is reserved for a code carried on the other source's own record. Whether to vendor the dictionary is a choice for the owner (it adds a CC0 data file and a maintenance duty).
+`shared/poi/normalize.ts` is a pure, versioned, per-kind function: Unicode and case folding, punctuation, parenthetical aliases, address-style and station-code detection (no name channel for either), an abbreviation dictionary, and distinguishing words (hawker, park, MRT versus LRT, school level) kept as subtype features. A pair's name channel is `EXACT`, `ALIAS`, `NEAR_SPELL`, `NEAR_EXT`, `NEAR_SUBTYPE`, `DIFF` or `NA`; `pg_trgm` is only a candidate filter and a stored feature, never a reason to leave `ambiguous`. With only URA admitted, the LTA code registry resolves two of the seven code labels; the other five resolve by the weaker spatial-only rule and stay `rule-supported` with `CODE_NAMED_LABEL`. Vendoring Wikidata station codes as a reviewed alias dictionary would back six of them (an owner choice: a CC0 data file and a maintenance duty).
 
 ### 8. Decision classes
 
-#### 8.1 Pair features and bands
+For a candidate pair from two admitted sources in different independence groups (after intra-source collapse) the decider computes `key` (`EQ`, `CONFLICT`, `NA`: zero-padded postal code or station code), `name` (the channel), `geo` (SVY21 distance mapped to `T1`, `T2`, `FAR`, `BEYOND` or `NA`) and `life` (`CONFLICT` when an operational record meets a planned, under-construction or interim one, or station or park subtypes differ). Tier A is `key = EQ` or an `EXACT`/`ALIAS` name, tier B a `NEAR_*` name, tier C geometry or registry only, processed in that order; per observation and other source the best positive candidate wins, only mutual pairs verify, equal-strength competitors make every pair among them `ambiguous`, and an observation taken in an earlier tier cannot be reused later. Band limits in metres (`t1` / `t2` / `rb`; placeholders chosen from point precision and footprint sizes, never fitted to unapproved labels, and any change bumps `rule_set_version`): station 150 / 300 / 500 (outline 50 / 150 / 300), exit 15 / 40 / 100, school 100 / 250 / 600, supermarket 75 / 200 / 400, hawker centre 60 / 150 / 400, park 150 / 500 / 800 (outline 0 / 100 / 300). The first matching rule decides:
 
-For a candidate pair `(a, b)` from two admitted sources of **different independence groups** and the same kind, after intra-source collapse (section 8.5):
+| Rule | Fires when | Class |
+| --- | --- | --- |
+| `R-REJ-LIFECYCLE` | `life = CONFLICT` | rejected |
+| `R-REJ-KEY-CONFLICT` | `key = CONFLICT` and the name is not `EXACT`/`ALIAS` | rejected |
+| `R-REJ-NAME-FAR` | name `DIFF`/`NA` and `geo` `FAR`/`BEYOND` | rejected |
+| `R-REJ-DOMINATED` | an endpoint is taken by an earlier tier and the name is `ALIAS`, `NEAR_SPELL`, `NEAR_SUBTYPE` or `DIFF` | rejected |
+| `R-AMB-MULTI` | two or more equal-strength candidates in the tier | ambiguous |
+| `R-AMB-EXTENSION` | name `NEAR_EXT` and an endpoint is taken by an earlier tier | ambiguous |
+| `R-AMB-CHANNEL-CONFLICT` | name `EXACT`/`ALIAS` but `geo` `FAR`/`BEYOND` or `key = CONFLICT` | ambiguous |
+| `R-VER-KEY-NAME` | mutual, `key = EQ`, name `EXACT`/`ALIAS`, `geo` `T1`/`T2`/`NA` | verified |
+| `R-VER-KEY-CODE` | mutual, a code label equal to the other record's own station code, `geo` `T1`/`T2` | verified |
+| `R-VER-NAME-GEO` | mutual, `key = NA`, name `EXACT`, `geo = T1` | verified |
+| `R-RS-REGISTRY-CODE` | mutual, a code label the registry maps to the other record's name, `geo` `T1`/`T2` | rule-supported |
+| `R-RS-ALIAS-GEO` | mutual, name `ALIAS`, `key = NA`, `geo` `T1`/`T2` | rule-supported |
+| `R-RS-EXACT-WIDE` | mutual, name `EXACT`, `key = NA`, `geo = T2` | rule-supported |
+| `R-RS-NEAR-GEO` | mutual, name `NEAR_*`, `geo` `T1`/`T2`, `key` not `CONFLICT` | rule-supported |
+| `R-RS-KEY-NEAR` | mutual, `key = EQ`, name `NEAR_*` | rule-supported |
+| `R-RS-REGISTER-EXACT` | school register only: mutual, name `EXACT`, `key = NA`, `geo = NA`, name unique in both | rule-supported |
+| `R-RS-SPATIAL-ONLY` | stations and exits only: mutual, name `NA`, `geo = T1`, the only candidate | rule-supported |
+| `R-AMB-GEO-ONLY` | name `DIFF`/`NA`, `geo` `T1`/`T2`, not matched above | ambiguous |
+| `R-AMB-INSUFFICIENT` | name `EXACT`/`ALIAS`/`NEAR_*`, `key = NA`, `geo = NA`, not matched by the register rule | ambiguous |
+| `R-UNM-NO-CANDIDATE` | observation level: no pair of the observation matched any rule | unmatched |
 
-- `key`: `EQ`, `CONFLICT` or `NA`. Postal code (six digits, zero padded) for registers and hawker centres; station codes for stations (a code label equal to the other record's code is `EQ`).
-- `name`: the channel in section 7.
-- `geo`: distance `d` in SVY21 metres (0 inside a footprint) mapped by the kind's bands: `T1` (`d <= t1`), `T2` (`t1 < d <= t2`), `FAR` (`t2 < d <= rb`), `BEYOND` (`d > rb`), `NA` when either side has no geometry.
-- `life`: `CONFLICT` when one record is `operational` and the other `planned`, `under_construction` or `interim`, when station subtypes differ (`MRT`, `LRT`, `monorail`, `railway`), or when park classes differ (park against playground); `unknown` is compatible with everything.
-
-Provisional bands in metres (placeholders: chosen from point precision and footprint sizes, **not** fitted to labels; replace only through approved labels):
-
-| Kind | `t1` | `t2` | `rb` | Outline `t1` / `t2` / `rb` |
-| --- | --- | --- | --- | --- |
-| `mrt_station` | 150 | 300 | 500 | 50 / 150 / 300 |
-| `mrt_exit` | 15 | 40 | 100 | 50 / 150 / 300 (membership) |
-| `school` | 100 | 250 | 600 | |
-| `supermarket` | 75 | 200 | 400 | |
-| `hawker_centre` | 60 | 150 | 400 | |
-| `park` | 150 | 500 | 800 | 0 / 100 / 300 |
-
-#### 8.2 Tiers and exclusivity
-
-A pair's **tier** is A when `key = EQ` or `name` is `EXACT` or `ALIAS`; B when `name` is a `NEAR_*`; C otherwise (geometry or registry only). Tiers are processed in order A, B, C. Within a tier a pair is **positive** when it is not rejected and its geometry is `T1`, `T2` or `NA` (tier C needs `T1`). Per observation and other source, the best positive candidate is the one of best name rank (`EXACT`, `ALIAS`, key only, then `NEAR_*`), then geometry, then distance. A pair is **mutual** when each side's best candidate is the other and no equally ranked competitor exists on either side. Mutual pairs of a tier get a verified or rule-supported class and their endpoints become **taken**; equal-strength competitors make every pair among them `ambiguous`. Observations taken in an earlier tier do not take part in later tiers: a later pair that involves one is `rejected` if its name is `ALIAS`, `NEAR_SPELL`, `NEAR_SUBTYPE` or `DIFF`, and `ambiguous` if it is `NEAR_EXT`. For `NEAR_EXT` pairs the competitor count uses the block radius, because sub-area records of a large place can sit far from the other source's point.
-
-This gives "exact dominates near" without a score, and makes every outcome a function of the pair set, not of iteration order.
-
-#### 8.3 Rule table
-
-First match wins in this order; ids are stored in `poi_match.rule_ids` with `rule_set_version`.
-
-| # | Id | Fires when | Class |
-| --- | --- | --- | --- |
-| 1 | `R-REJ-LIFECYCLE` | `life = CONFLICT` | rejected |
-| 2 | `R-REJ-KEY-CONFLICT` | `key = CONFLICT` and `name` is not `EXACT` or `ALIAS` | rejected |
-| 3 | `R-REJ-NAME-FAR` | `name` is `DIFF` or `NA` and `geo` is `FAR` or `BEYOND` | rejected |
-| 4 | `R-REJ-DOMINATED` | an endpoint is taken by an earlier-tier partner and `name` is `ALIAS`, `NEAR_SPELL`, `NEAR_SUBTYPE` or `DIFF` | rejected |
-| 5 | `R-AMB-MULTI` | at least two equal-strength candidates in the pair's tier | ambiguous |
-| 6 | `R-AMB-EXTENSION` | `name = NEAR_EXT` and an endpoint is taken by an earlier-tier partner | ambiguous |
-| 7 | `R-AMB-CHANNEL-CONFLICT` | `name` is `EXACT` or `ALIAS` and (`geo` is `FAR` or `BEYOND`, or `key = CONFLICT`) | ambiguous |
-| 8 | `R-VER-KEY-NAME` | mutual, `key = EQ`, `name` is `EXACT` or `ALIAS`, `geo` is `T1`, `T2` or `NA` | verified |
-| 9 | `R-VER-KEY-CODE` | mutual, the label is a code equal to the other record's station code, `geo` is `T1` or `T2` | verified |
-| 10 | `R-VER-NAME-GEO` | mutual, `key = NA`, `name = EXACT`, `geo = T1` | verified |
-| 11 | `R-RS-REGISTRY-CODE` | mutual, the label is a code, the registry maps it to a name equal to the other record's name, `geo` is `T1` or `T2` | rule-supported |
-| 12 | `R-RS-ALIAS-GEO` | mutual, `name = ALIAS`, `key = NA`, `geo` is `T1` or `T2` | rule-supported |
-| 13 | `R-RS-EXACT-WIDE` | mutual, `name = EXACT`, `key = NA`, `geo = T2` | rule-supported |
-| 14 | `R-RS-NEAR-GEO` | mutual, `name` is a `NEAR_*`, `geo` is `T1` or `T2`, `key` is not `CONFLICT` | rule-supported |
-| 15 | `R-RS-KEY-NEAR` | mutual, `key = EQ`, `name` is a `NEAR_*` | rule-supported |
-| 16 | `R-RS-REGISTER-EXACT` | school register only: mutual, `name = EXACT`, `key = NA`, `geo = NA`, name unique in both sources | rule-supported |
-| 17 | `R-RS-SPATIAL-ONLY` | stations and exits only: mutual, `name = NA`, `geo = T1`, the only candidate | rule-supported |
-| 18 | `R-AMB-GEO-ONLY` | `name` is `DIFF` or `NA` and `geo` is `T1` or `T2`, not matched by 17 | ambiguous |
-| 19 | `R-AMB-INSUFFICIENT` | `name` is `EXACT`, `ALIAS` or a `NEAR_*`, `key = NA`, `geo = NA`, not matched by 16 | ambiguous |
-| - | `R-UNM-NO-CANDIDATE` | observation level: no pair of this observation matched any rule | unmatched |
-
-Intra-source policy (never automatic merges): `R-AMB-INTRA-COLLISION` (equal identity key within `RB`, flagged `KEY_COLLISION`), `R-REJ-INTRA-DISTINCT-KEY` (different identity keys), `R-REJ-INTRA-FAR` (equal key beyond `RB`). Collapse is the only intra-source union and it has two named forms, `R-COLLAPSE-FOOTPRINT` (outlines of one source with the same core name and subtype within 150 m, as the three Dhoby Ghaut outlines) and `R-COLLAPSE-REGISTRY` (a code label and a name label that a registry row equates, centroids within `t2`).
-
-#### 8.4 Entities
-
-An entity is a connected component over observations joined by `verified` and `rule-supported` pairs and collapse edges.
-
-| Field | Rule |
-| --- | --- |
-| `resolution_class` | weakest class among its edges (`rule-supported` below `verified`); `ambiguous` for an observation with no positive edge and at least one ambiguous pair; else `unmatched` |
-| `corroboration_scope` | `multi-source` when the entity has two independent sources; `single-source-by-design` when the kind has only one admitted source; `single-source-uncorroborated` when a second source exists for the kind but did not match |
-| `canonical_name` | the name of the lowest `anchor_rank` member; aliases stay on observations |
-| `location`, `location_observation` | the member with the best `position_method` rank, then `anchor_rank`, then id |
-| `position_uncertainty_m` | maximum geodesic distance among position-bearing members from independent sources; `null` when there is one |
-| `lifecycle` | most specific known; `unknown` stays `unknown` |
-| `caveats` | `SINGLE_SOURCE`, `CODE_NAMED_LABEL`, `POSITION_GEOCODED_FROZEN`, `POSITION_SINGLE_SOURCE`, `POSITION_DISAGREEMENT`, `ADDRESS_STYLE_NAME`, `KEY_COLLISION`, `COORD_ATTR_MISMATCH`, `COORD_ATTR_SWAPPED`, `STALE_SOURCE`, `GRANULARITY_MISMATCH`, `LIFECYCLE_UNKNOWN` |
-| `ambiguous_with` | entity ids of the other side of each ambiguous pair |
-| `parent_entity_id` | for exits: the entity of the exit's station label observation |
-
-#### 8.5 Why thresholds are placeholders
-
-Every band and the 10 % attribute share are written down so they can be reviewed, versioned and replaced; none was tuned against labels, and none will be until the owner approves labels (R7.5, R12.1). Changing one bumps `rule_set_version`, recomputes everything and, once approved labels exist, re-reports the metrics.
+Intra-source pairs never merge automatically (equal key within `rb`: `R-AMB-INTRA-COLLISION` with flag `KEY_COLLISION`; different keys: `R-REJ-INTRA-DISTINCT-KEY`; equal key beyond `rb`: `R-REJ-INTRA-FAR`); the only intra-source unions are `R-COLLAPSE-FOOTPRINT` (outlines of one source with the same core name and subtype within 150 m) and `R-COLLAPSE-REGISTRY` (a code label and a name label that a registry row equates). An entity is a connected component over `verified`/`rule-supported` and collapse edges: its class is the weakest edge, `corroboration_scope` is `multi-source`, `single-source-by-design` or `single-source-uncorroborated`, its name is the lowest-`anchor_rank` member's, its position comes from the best `position_method` then `anchor_rank`, and `position_uncertainty_m` is the largest geodesic spread among independent members. Caveats are codes (`SINGLE_SOURCE`, `CODE_NAMED_LABEL`, `POSITION_GEOCODED_FROZEN`, `STALE_SOURCE`, `LIFECYCLE_UNKNOWN` and others); ambiguous pairs list each other, and an exit's `parent_entity_id` is its station label's entity.
 
 ### 9. Deterministic identifiers
 
-- `observation_id = 'obs_' || substr(encode(sha256(source_id || E'\x1f' || poi_kind || E'\x1f' || source_record_key), 'hex'), 1, 32)`. Only these three inputs, so reordering, re-fetching or loading sources in another order cannot change it.
-- `entity_id = 'poi_' || kind || '_' || substr(encode(sha256('anchor' || E'\x1f' || anchor_observation_id), 'hex'), 1, 26)`, where the anchor is the member with the lowest `(anchor_rank, observation_id COLLATE "C")`.
-- Anchors are a function of the current observation set. A new lower-ranked member never changes the id; a new higher-ranked member (for example an official register entering a cluster of community records) does. That event writes `poi_entity_alias(old, new, 'anchor-changed')`, as do merges and splits, so stored references (shortlists, links) can follow.
-- Digest: `sha256` over the sorted canonical JSON of `poi_match` and `poi_entity` rows for a rule-set version, stored with the publication. The property test shuffles observations, publications and source load order at least 100 times and requires one digest.
-- SQL uses `COLLATE "C"` for every ordering and tie-break, like `NEARBY_SPATIAL_SQL`, and no `ROW_NUMBER()` over an unordered set.
-
-| Event | Observation ids | Entity ids |
-| --- | --- | --- |
-| Rerun, identical inputs, any order | unchanged | unchanged |
-| New publication of a source, same record keys | unchanged | unchanged |
-| Record key changes upstream (renumbered `OBJECTID`) | new id for the changed record | the entity keeps its id if its anchor is unchanged; otherwise an alias row |
-| Lower-ranked observation joins | unchanged | unchanged |
-| Higher-ranked observation joins | unchanged | alias row, new id |
-| Entity splits | unchanged | alias rows for the parts |
-
-`OBJECTID` stability across releases is not guaranteed by the agencies (UNVERIFIED), so each adapter also stores `INC_CRC` and `FMEL_UPD_D` as drift evidence and reports records whose key persists with materially different content.
+An observation id is a hash of source, kind and record key only, so reordering or re-fetching cannot change it. An entity id is a hash of its anchor, the member with the lowest `(anchor_rank, observation_id)`: a lower-ranked member joining never changes it, a higher-ranked one does, and then (as for merges and splits) a `poi_entity_alias` row maps old to new so stored references follow. The resolution digest is a hash of the sorted canonical JSON of matches and entities for a rule-set version, and a property test shuffles observations, publications and load order at least 100 times and requires one digest. SQL orders and breaks ties with `COLLATE "C"`, never `ROW_NUMBER()` over an unordered set; agency `OBJECTID` stability is not guaranteed, so adapters store `INC_CRC` and `FMEL_UPD_D` and report records whose key persists with materially different content.
 
 ### 10. Storage
 
-New Neon-only tables (a sketch; constraint names and exact text will be finalised in Phase 1). None of the nine publisher-scanned tables changes, so `NeonPlanningStore.inspectSchema()` is unaffected.
+New Neon-only tables in numbered `sql/neon/00N_poi_*.sql` files; none of the nine publisher-scanned tables changes. The DDL and constraint names wait for the migration pull request.
 
-```sql
-CREATE TABLE poi_source (
-  source_id text PRIMARY KEY CHECK (source_id ~ '^[a-z0-9][a-z0-9-]{2,62}$'),
-  publisher text NOT NULL, dataset_ref text NOT NULL,
-  dataset_url text NOT NULL CHECK (dataset_url !~ '[?]'),         -- landing page, never a pre-signed URL
-  licence_id text NOT NULL, licence_url text NOT NULL,
-  licence_class text NOT NULL CHECK (licence_class IN ('permissive','attribution','share-alike')),
-  attribution_text text NOT NULL, independence_group text NOT NULL,
-  anchor_rank smallint NOT NULL CHECK (anchor_rank BETWEEN 1 AND 99),
-  position_method text NOT NULL CHECK (position_method IN
-    ('source-point','source-polygon','derived-centroid','geocoded-cache','none')),
-  declared_crs text NOT NULL, key_spec text NOT NULL,
-  admission_status text NOT NULL CHECK (admission_status IN ('candidate','admitted','suspended','rejected')),
-  admission_ref text NOT NULL
-);
+| Table | Key and constraints | Holds |
+| --- | --- | --- |
+| `poi_source` | PK `source_id`; checks on `licence_class`, `position_method` and `admission_status` | the registry of section 2 |
+| `poi_publication` | PK `publication_id`; unique `(source_id, content_sha256)`; at most one `accepted` per source | status, counts, validation report, `rule_set_version` |
+| `poi_observation` | PK `observation_id`; references publication and source; longitude/latitude range checks, both or neither; an excluded row needs a code; generated `location` (`geography`) and `loc_svy21` (`geometry(Point,3414)`); GiST on `loc_svy21` and the footprint, trigram index on the normalised name | the observations of section 4 |
+| `poi_match` | PK `(obs_a, obs_b)` with `obs_a < obs_b` in `"C"` order; `decision`, at least one rule id, `rule_set_version`, `features`, `decided_by` (`rules` or `owner-override`) | pair decisions, rejected ones included |
+| `poi_entity`, `poi_entity_member`, `poi_entity_alias`, `poi_rule_set` | PK `entity_id`; member rows link entities to observations; alias rows map old ids to new; rule sets record their hash | the entities of section 8, id history, rule-set versions |
+| view `poi_serving_v1` | operational or unknown-lifecycle entities none of whose observations is in a non-accepted publication | what the nearby query reads |
 
-CREATE TABLE poi_publication (
-  publication_id text PRIMARY KEY,
-  source_id text NOT NULL REFERENCES poi_source,
-  content_sha256 text NOT NULL CHECK (content_sha256 ~ '^[0-9a-f]{64}$'),
-  retrieved_at timestamptz NOT NULL, upstream_updated_at timestamptz,
-  record_count integer NOT NULL CHECK (record_count >= 0),
-  status text NOT NULL CHECK (status IN ('staged','accepted','quarantined','superseded')),
-  validation_report jsonb NOT NULL DEFAULT '{}'::jsonb, rule_set_version text,
-  UNIQUE (source_id, content_sha256)
-);
-CREATE UNIQUE INDEX poi_publication_one_accepted ON poi_publication (source_id) WHERE status = 'accepted';
-
-CREATE TABLE poi_observation (
-  observation_id text PRIMARY KEY,
-  publication_id text NOT NULL REFERENCES poi_publication,
-  source_id text NOT NULL REFERENCES poi_source,
-  poi_kind text NOT NULL CHECK (poi_kind IN
-    ('mrt_station','mrt_exit','school','supermarket','hawker_centre','park')),
-  source_record_key text NOT NULL CHECK (length(btrim(source_record_key)) > 0),
-  raw_name text, name_norm text, aliases text[] NOT NULL DEFAULT '{}',
-  identity_keys jsonb NOT NULL DEFAULT '{}'::jsonb, subtype text,
-  lifecycle text NOT NULL CHECK (lifecycle IN
-    ('operational','planned','under_construction','interim','unknown')),
-  status_raw text,
-  lng double precision CHECK (lng BETWEEN 103.0 AND 105.0),
-  lat double precision CHECK (lat BETWEEN 1.0 AND 2.0),
-  position_method text NOT NULL, coord_checks jsonb NOT NULL DEFAULT '{}'::jsonb,
-  location geography(Point,4326) GENERATED ALWAYS AS (
-    CASE WHEN lng IS NULL OR lat IS NULL THEN NULL
-         ELSE ST_SetSRID(ST_MakePoint(lng, lat), 4326)::geography END) STORED,
-  loc_svy21 geometry(Point,3414) GENERATED ALWAYS AS (
-    CASE WHEN lng IS NULL OR lat IS NULL THEN NULL
-         ELSE ST_Transform(ST_SetSRID(ST_MakePoint(lng, lat), 4326), 3414) END) STORED,
-  footprint_svy21 geometry(MultiPolygon,3414),
-  admission text NOT NULL CHECK (admission IN ('included','excluded')),
-  exclusion_code text, source_properties jsonb NOT NULL DEFAULT '{}'::jsonb,
-  quality_flags text[] NOT NULL DEFAULT '{}',
-  CHECK ((lng IS NULL) = (lat IS NULL)),
-  CHECK (admission = 'included' OR exclusion_code IS NOT NULL)
-);
-CREATE INDEX ON poi_observation USING gist (loc_svy21);
-CREATE INDEX ON poi_observation USING gist (footprint_svy21);
-CREATE INDEX ON poi_observation USING gin (name_norm gin_trgm_ops);
-
-CREATE TABLE poi_match (
-  obs_a text NOT NULL REFERENCES poi_observation, obs_b text NOT NULL REFERENCES poi_observation,
-  decision text NOT NULL CHECK (decision IN ('verified','rule-supported','ambiguous','rejected')),
-  rule_ids text[] NOT NULL CHECK (cardinality(rule_ids) >= 1),
-  rule_set_version text NOT NULL, features jsonb NOT NULL,
-  decided_by text NOT NULL CHECK (decided_by IN ('rules','owner-override')),
-  PRIMARY KEY (obs_a, obs_b),
-  CHECK (obs_a COLLATE "C" < obs_b COLLATE "C")
-);
--- poi_entity, poi_entity_member, poi_entity_alias, poi_rule_set: as in requirements R9.2
-```
-
-`poi_entity` carries `entity_id`, `poi_kind`, `anchor_observation`, `canonical_name`, `location geography(Point,4326)`, `location_observation`, `position_uncertainty_m`, `resolution_class` (`verified`, `rule-supported`, `ambiguous`, `unmatched`), `corroboration_scope`, `lifecycle`, `caveats text[]`, `ambiguous_with text[]`, `parent_entity_id` and `rule_set_version`.
-
-Serving view:
-
-```sql
-CREATE VIEW poi_serving_v1 AS
-SELECT e.entity_id AS id, e.poi_kind AS kind, e.canonical_name AS name,
-       ST_Y(e.location::geometry) AS lat, ST_X(e.location::geometry) AS lng, e.location,
-       e.resolution_class, e.corroboration_scope, e.position_uncertainty_m,
-       e.lifecycle, e.caveats, e.ambiguous_with, e.parent_entity_id
-FROM poi_entity e
-WHERE e.lifecycle IN ('operational','unknown')
-  AND NOT EXISTS (SELECT 1 FROM poi_entity_member m
-                  JOIN poi_observation o ON o.observation_id = m.observation_id
-                  JOIN poi_publication p ON p.publication_id = o.publication_id
-                  WHERE m.entity_id = e.entity_id AND p.status <> 'accepted');
-```
-
-Grants: the writer role (OD3) holds DML on the `poi_*` tables; the existing SELECT-only runtime role gets `SELECT` on `poi_serving_v1` and nothing else; no function in this design is `SECURITY DEFINER`. `poi_locations` keeps serving MRT until Phase 11; the four reserved kinds are never written to `poi_locations`, so there is no dual write path.
+The writer role (OD3) holds DML on `poi_*`; the SELECT-only runtime role gets `SELECT` on `poi_serving_v1` only; nothing is `SECURITY DEFINER`. `poi_locations` keeps serving MRT until Phase 11, and the four reserved kinds are never written to it, so there is no dual write path.
 
 ### 11. Exposure through the nearby API
 
-`NearbyPlace` gains an optional block (Zod and TypeScript together, R10.4):
-
-```ts
-type PoiResolution = {
-  class: "verified" | "rule-supported" | "ambiguous" | "unmatched";
-  scope: "multi-source" | "single-source-by-design" | "single-source-uncorroborated";
-  sources: { sourceId: string; attributionKey: string }[];
-  positionUncertaintyMetres: number | null;
-  lifecycle: "operational" | "planned" | "under_construction" | "interim" | "unknown";
-  caveats: PoiCaveatCode[];
-  ambiguousWith?: string[];
-};
-```
-
-Semantics:
-
-- No hidden uncertainty: `unmatched` entities are returned with `SINGLE_SOURCE`; `ambiguous` entities are returned as separate places that list each other; `rejected` pairs are never shown. Counts such as "N parks within 1 km" are entity counts with the class mix available, not a single number that hides the mix.
-- MRT exits are grouped by `parent_entity_id` when the parent station entity is `verified` or `rule-supported`; otherwise by the verbatim label, with `CODE_NAMED_LABEL`. The user guide's sentence "one entry per source-recorded station name, not per physical station" becomes true per class.
-- Distances stay ellipsoidal straight-line metres; nothing is described as walking.
-- `types` grows from three kinds to seven. The canonical cache key space grows with it (127 non-empty subsets instead of 7, about 18 times larger); Phase 8 either keeps `types` to a small fixed set of presets or restates the bound in `MAX_NEARBY_CACHE_KEYS` and its test.
-- A promotion changes results, so each one needs a new `NEON_PUBLIC_CACHE_EPOCH` (existing mechanism). The capability probe stays configuration-only.
-- With the flag off the route answers exactly as today.
+`NearbyPlace` gains an optional `PoiResolution` block (class, scope, sources with attribution keys, `positionUncertaintyMetres`, lifecycle, caveat codes, `ambiguousWith`), changed in Zod and TypeScript together. Nothing hides uncertainty: `unmatched` entities return with `SINGLE_SOURCE`, `ambiguous` entities return as separate places that list each other, `rejected` pairs are never shown, and counts are entity counts with the class mix available. Exits group by `parent_entity_id` when the parent is `verified` or `rule-supported`, otherwise by the verbatim label with `CODE_NAMED_LABEL`. Distances stay ellipsoidal straight-line metres. `types` grows from three kinds to seven, multiplying the canonical cache-key space by about 18, so Phase 8 either keeps `types` to a few presets or restates `MAX_NEARBY_CACHE_KEYS` and its test. Each promotion needs a new `NEON_PUBLIC_CACHE_EPOCH`; the capability probe stays configuration-only; with the flag off the route answers byte for byte as today.
 
 ### 12. Source-specific gates
 
-| Source | Gate | Exclusion code |
-| --- | --- | --- |
-| NEA hawker | `STATUS` must start with `Existing` | `STATUS_NOT_EXISTING` |
-| NEA hawker | SVY21 attributes checked against geometry (R4.3) | flag only |
-| NParks points | suffix class table decides `park` | `PARK_CLASS_*` |
-| MOE | pad postal codes (some lost a leading zero); keep two schools at one postal code separate; keep only allow-listed columns (the file carries personal data) | none |
-| NEA/SFA licences | company legal-entity check, supermarket allow-list (OD4), usable postal code | `LICENSEE_NOT_A_LEGAL_ENTITY`, `NOT_ALLOW_LISTED_SUPERMARKET`, `NO_USABLE_ADDRESS` |
-| URA outlines | `lifecycle = unknown`; null and `<Null>` names are `NA` | none |
-| LTA exits | code labels flagged; `(label, code)` is not a key | flag only |
-| Geocode cache | `position_method = geocoded-cache`, frozen, never refreshed | none |
+NEA hawker: `STATUS` must start with `Existing` (`STATUS_NOT_EXISTING`), and its SVY21 attributes are checked against the geometry (flag only). NParks points: a versioned suffix class table decides `park`, and playgrounds, open spaces, fitness corners and car parks are excluded (`PARK_CLASS_*`). MOE: postal codes are zero-padded, schools sharing a postal code stay separate, and only allow-listed columns are kept (the file carries personal data). NEA/SFA licences: a legal-entity check, a supermarket allow-list (OD4) and a usable postal code (`LICENSEE_NOT_A_LEGAL_ENTITY`, `NOT_ALLOW_LISTED_SUPERMARKET`, `NO_USABLE_ADDRESS`). URA outlines: `lifecycle = unknown`, and null and `<Null>` names are `NA`. LTA exits: code labels are flagged and `(label, code)` is not a key. Geocode cache: `position_method = geocoded-cache`, frozen, never refreshed.
 
 ## Labelling protocol
 
 Purpose: turn agent proposals into evidence the project can trust, and stop anyone reporting a number before that exists.
 
-1. **Who.** The project owner is the approver. A second reviewer is optional (decision OD7). The agent that proposed labels is never a reviewer, and its output is never evidence.
-2. **What is labelled.** Two things per pair, kept apart: `relationHolds` (`yes`, `no`, `part-of`, `undetermined`) and `classShouldBe` (the class the rule table should give from the evidence shown). A proposed label carries both.
-3. **Evidence required.** For each entry the reviewer records at least two independent public channels used, for example the agency's own listing page, a map or aerial view, and the two source records' fields and distance; the entry stores `evidenceUsed` and `reviewedOn`. Scraping brand sites and relying on the proposal text are not evidence.
-4. **Blinding.** For the random sample (below) the reviewer sees the two records, the distance and the sources but not the proposed or pipeline class. Curated entries may show the proposal.
-5. **Agreement rule.** One reviewer: the entry is `approved` when confirmed, `corrected` when changed (both the proposal and the correction are stored). Two reviewers: both must agree on both fields; otherwise the entry is `disputed` and excluded from every metric until the owner settles it in writing. There is no majority vote.
-6. **Two uses, never mixed.** Approved **curated** cases (the hand-picked entries) become `tests/fixtures/poi-ground-truth/<kind>.json` and serve as regression tests; they cannot estimate a rate because they were chosen, not sampled. **Metrics** come from a separate sample: for each `(kind, source pair, pipeline class)` stratum, sort candidate pairs by `sha256(rule_set_version || stratum || obs_a || obs_b)` and take the first `n`. With zero observed false merges in `n = 150` pairs the 95 % upper bound on the false-merge rate is about 2 % (rule of three), so 150 per stratum is the starting size; the owner may choose differently (OD7).
-7. **What is reported, and only then.** False-merge rate among `verified` and `rule-supported`; miss rate among `ambiguous` and `unmatched` where the label is `yes`; the share of `ambiguous`; each with a Wilson 95 % interval, per kind and source pair and rule id, together with the label-set hash and `rule_set_version`. Never pooled across kinds.
-8. **Storage and guard.** Approved files are named without the `PROPOSED-` prefix and carry `status: "APPROVED"`, the approver, the date and no `unapproved` entry. A guard test fails if any test imports a `PROPOSED-*` file or an approved file contains an unapproved entry.
-9. **Re-review.** A `rule_set_version` bump, a source schema change, or a publication that changes more than 5 % of a kind's entities re-opens the affected labels.
+1. The owner approves; a second reviewer is optional (OD7). The agent that proposed labels is never a reviewer, and its output is never evidence.
+2. Per pair, two things are labelled and kept apart: `relationHolds` (`yes`, `no`, `part-of`, `undetermined`) and `classShouldBe`. Each entry records at least two independent public channels (`evidenceUsed`, `reviewedOn`); scraping brand sites and the proposal text are not evidence. Reviews of the random sample are blinded to the proposed and pipeline class.
+3. One reviewer: `approved` or `corrected` (both stored). Two reviewers: both must agree on both fields, else the entry is `disputed` and excluded from every metric until the owner settles it in writing; there is no majority vote.
+4. Two uses, never mixed: approved curated cases become `tests/fixtures/poi-ground-truth/<kind>.json` regression tests (chosen, so they estimate no rate); metrics come from a separate sample per `(kind, source pair, pipeline class)` stratum, ordered by `sha256(rule_set_version || stratum || obs_a || obs_b)`, taking the first `n` (start at 150, about a 2 % upper bound on the false-merge rate at zero observed errors; OD7).
+5. Reported only then, per kind, source pair and rule id and never pooled across kinds: the false-merge rate among `verified`/`rule-supported`, the miss rate among `ambiguous`/`unmatched` where the label is `yes`, and the share of `ambiguous`, each with a Wilson 95 % interval, the label-set hash and `rule_set_version`.
+6. Approved files drop the `PROPOSED-` prefix and carry `status: "APPROVED"`, the approver and the date; a guard test fails if a test imports a `PROPOSED-*` file or an approved file holds an unapproved entry. A `rule_set_version` bump, a source schema change or a publication changing more than 5 % of a kind's entities re-opens the affected labels.
 
 ## Testing
 
-| Suite | What it proves | Phase |
-| --- | --- | --- |
-| `tests/unit/poi-normalize.test.ts` | normalisation steps, code labels, address style, aliases, level words kept, trigram never decisive (table-driven from the real strings above) | 3 |
-| `tests/unit/poi-decide.test.ts` | each rule fires on a constructed feature row; precedence; tiers and exclusivity; intra-source policy | 5 |
-| `tests/unit/poi-ids.test.ts` | formulas, alias rows, 100-shuffle digest equality | 5 |
-| `tests/unit/poi-adapters-*.test.ts` | allow-lists (no personal data), gates, zero padding, status mapping, using tiny typed fixtures cut from `tests/fixtures/public-data/`-style samples | 6 to 10 |
-| `tests/unit/poi-crs.test.ts` | the adversarial table in 5.4 on the TypeScript guards, plus the lint for `ST_SetSRID(..., 3414)` | 2 |
-| `sql/neon/verify_poi_crs.sql` | PostGIS side of 5.4 including mutants | 2 |
-| `sql/neon/verify_poi_candidates.sql` | generator equals the brute-force oracle for every kind; shuffle digests; the degrees-as-metres mutant fails | 4 |
-| `sql/neon/verify_poi_quarantine.sql` | a failing publication changes nothing served; promotion is atomic | 1 and 4 |
-| `tests/unit/poi-fixture-guard.test.ts` | no test imports `PROPOSED-*`; approved files are clean | 12 |
-| nearby route and Worker gate suites | flag off is byte-identical; flag on adds the block; Zod and types agree | 8 |
-
-Mutants that must fail the verifiers: a generator that clusters before projecting; `minpoints > 1`; `ST_SetSRID(..., 3414)` in place of `ST_Transform`; trigram-only acceptance; picking the farthest exit per station; dropping the status gate.
+Vitest suites for normalisation, the decider (one test per rule, precedence, tiers, intra-source policy), identifiers (hash vectors, alias rows, the 100-shuffle digest), the adapters (allow-lists with no personal data, gates, zero padding, status mapping, tiny typed fixtures) and the fixture guard; read-only SQL verifiers on a disposable Neon branch for candidate generation against its oracle and for quarantine and atomic promotion; the nearby route and Worker gate suites for flag-off byte-identity and the new block. Mutants that must fail: a generator that clusters before projecting, `minpoints > 1`, `ST_SetSRID(..., 3414)` instead of `ST_Transform`, trigram-only acceptance, the farthest exit per station, a dropped status gate.
 
 ## Risks and trade-offs
 
-- **Single-source honesty versus noise.** Five of six kinds show `SINGLE_SOURCE` everywhere at first. That is the truth; the UI copy and the response grouping must make it calm rather than alarming. Mitigation: caveats are codes, copy lives in one adapter like the existing caveat messages.
-- **Two languages, one decision.** SQL computes features and TypeScript decides. A drift would show as feature rows the decider cannot interpret; the verifiers run the SQL features against the oracle, and the decider's tests use feature rows, not databases.
-- **Placeholder thresholds.** Until approved labels exist the bands are guesses. Mitigation: they are named, versioned, never fitted to unapproved labels, and the classes degrade to `ambiguous`, not to a wrong merge, when evidence is weak.
-- **ODbL.** Excluded (OD1 = A, 2026-10-10). Were a share-alike source ever added, strict table separation and a public derivative release would be real engineering and legal work, which is why `licence_class` stays on every source and observation.
-- **Overture quality.** "High junk rate" is the publisher's own statement; the admission gate for it is a sample evaluation (OD2), not an assumption.
-- **Wikidata alias dictionary.** CC0 and useful, but vendored codes can go stale; each entry carries a retrieval date and a reviewer.
-- **Key stability.** Agency `OBJECTID`s may be renumbered; the id table and drift report make that visible rather than silent.
-- **Stale registers.** The supermarket register is more than two years old at the time of writing; `STALE_SOURCE` and the horizon make that visible.
-- **Cost on Neon.** Entity builds are set-based and index-backed; nothing is measured yet. A benchmark is a non-goal here.
-- **Cache keyspace.** Seven kinds multiply the bound by about 18; Phase 8 restates it.
-- **Rollback.** D1 holds no POI tables; rolling the Worker back to D1 simply has no nearby feature, as today.
+- Single-source honesty versus noise: most kinds show `SINGLE_SOURCE` at first; caveats are codes and the copy lives in one adapter.
+- Two languages, one decision: the verifiers run the SQL features against the oracle, and decider tests use feature rows.
+- Placeholder thresholds degrade to `ambiguous`, never to a wrong merge, until labels are approved.
+- ODbL is excluded; `licence_class` stays so that a share-alike source would need a new decision. Overture's quality ("high junk rate" is the publisher's own statement) is gated on a sample (OD2).
+- Key stability, stale registers (`STALE_SOURCE`), cost on Neon (set-based and index-backed, unmeasured; a benchmark is a non-goal) and the cache keyspace (about 18 times larger with seven kinds; Phase 8) are known. D1 holds no POI tables, so rolling back to D1 simply has no nearby feature, as today.
 
 ## Open questions
 
-- Which of the owner decisions OD2 to OD8 (see "Decisions") are settled, and in what order; OD1 is settled (OpenStreetMap is not used), so OD2 (the Overture sample) now gates the most value.
-- Whether the Wikidata station-code alias dictionary is worth vendoring (it lets the registry-code rule back six of seven code labels with a name channel instead of two, and turns a mismatching code into an `ambiguous` pair; the class stays `rule-supported`).
-- Whether `mrt_station` entities should show the LTA label or a canonical name once resolved, and in which language (the LTA registry also carries Chinese names).
-- Whether the nearby API should expose `ambiguous` entities by default or only on request.
+- Which of OD2 to OD8 are settled, and in what order; OD2 (the Overture sample) gates the most value.
+- Whether to vendor the Wikidata station-code alias dictionary.
+- Whether `mrt_station` entities show the LTA label or a canonical name once resolved, and in which language, and whether the API exposes `ambiguous` entities by default or on request.
