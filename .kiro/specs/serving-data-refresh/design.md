@@ -104,8 +104,8 @@ official sources (anonymous, paced)
 
 The staged publisher, the stage builders and the schema pins in that table (`stage-artifacts`, `staged-plan`,
 `cache-only-context`, `staged-publisher`, `staged-validation`, `SCHEMA_CATALOG_SQL`) are not in the repository. They
-are parked with the rest of the benchmark and pilot harness at the tag `archive/neon-benchmark-harness`, under
-[`scripts/neon-benchmark/`](https://github.com/shenghaoc/hdb-resale-visualizer/tree/27d99fbab8a6872042ea4f5eccbd0c7ba5f5e797/scripts/neon-benchmark).
+are in the byte-exact recovery snapshot (commit `b804464`, branch `feat/neon-refresh-publisher`) with the rest of the
+benchmark and pilot harness, under [`scripts/neon-benchmark/`](https://github.com/shenghaoc/hdb-resale-visualizer/tree/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/scripts/neon-benchmark).
 
 ### Decisions
 

@@ -8,12 +8,12 @@
 
 - [x] **T0.1** Recover the publisher and its notes to a preserved branch.
   -> `feat/neon-refresh-publisher` at `b804464`, verbatim, with a provenance
-  README; also held by the tag `archive/neon-refresh-publisher-original`.
+  README.
 
 - [ ] **T0.2** Port the publisher onto `main` and split it for review.
-  -> Core publisher (#423). The benchmark and pilot harness is parked at the tag
-  `archive/neon-benchmark-harness` and #424 carries only a documentation change;
-  this item closes when #423 merges.
+  -> Core publisher (#423). The benchmark and pilot harness stays in the recovery
+  snapshot (`b804464`) and #424 carries only a documentation change; this item
+  closes when #423 merges.
 
 - [x] **T0.3** Verify the facts this design rests on (C1 to C10).
   -> Read-only: Cloudflare Hyperdrive and Worker listing, a catalog query on a
@@ -32,8 +32,8 @@
 > branch.
 
 - [ ] **T1.1** Build schema version 0 (the publisher schema,
-  [`scripts/neon-benchmark/schema.sql`](https://github.com/shenghaoc/hdb-resale-visualizer/blob/27d99fbab8a6872042ea4f5eccbd0c7ba5f5e797/scripts/neon-benchmark/schema.sql)
-  at the tag `archive/neon-benchmark-harness`) in a local database, capture
+  [`scripts/neon-benchmark/schema.sql`](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/scripts/neon-benchmark/schema.sql)
+  in the recovery snapshot) in a local database, capture
   `SCHEMA_CATALOG_SQL`, and store it as `golden-catalog-v0.json`.
   -> Reproducible with one documented command. (R5.1, R5.2)
 
