@@ -21,9 +21,11 @@ The atomic labelled query returns a publication hash and places in one SQL snaps
 
 ## Isolated verification
 
-- `tests/deployed-path/local-rehearsal.mjs` runs a real workerd Worker against a **uniquely named scratch PostgreSQL/PostGIS database** and checks exact SQL results, 30-client-limit `429`, origin-limit `503`, cached answers and observed reader statement counts. The scratch helper refuses preexisting database names and drops only its own database, never with FORCE.
-- `tests/deployed-path/wrangler.deployed.template.jsonc` binds one disposable fork-scoped SELECT-only Hyperdrive config with unique limiter namespaces; it does not include a D1 database. Only the temporary Worker runs with the spatial gate enabled.
-- `tests/deployed-path/verify-client.mjs` checks functional, client-limit, origin-limit and latency phases. It never holds database credentials.
+The deployed-path harness is not in the repository. It is parked at the tag `archive/nearby-deployed-path-harness` (commit `c7b2f6b`), with its [runbook](https://github.com/shenghaoc/hdb-resale-visualizer/blob/c7b2f6b91be4e135d26757d999eb86cf09bb1e33/tests/deployed-path/README.md), and has three parts:
+
+- [`local-rehearsal.mjs`](https://github.com/shenghaoc/hdb-resale-visualizer/blob/c7b2f6b91be4e135d26757d999eb86cf09bb1e33/tests/deployed-path/local-rehearsal.mjs) runs a real workerd Worker against a **uniquely named scratch PostgreSQL/PostGIS database** and checks exact SQL results, the 30-request client limit (`429`), the origin limit (`503`), cached answers and the reader's statement counts. Its scratch helper refuses preexisting database names and drops only its own database, never with FORCE.
+- [`wrangler.deployed.template.jsonc`](https://github.com/shenghaoc/hdb-resale-visualizer/blob/c7b2f6b91be4e135d26757d999eb86cf09bb1e33/tests/deployed-path/wrangler.deployed.template.jsonc) binds one disposable fork-scoped SELECT-only Hyperdrive config with unique limiter namespaces and no D1 database. Only the temporary Worker runs with the spatial gate enabled.
+- [`verify-client.mjs`](https://github.com/shenghaoc/hdb-resale-visualizer/blob/c7b2f6b91be4e135d26757d999eb86cf09bb1e33/tests/deployed-path/verify-client.mjs) checks the functional, client-limit, origin-limit and latency phases. It never holds database credentials.
 
 Independent direct SQL remains `sql/neon/verify_nearby_spatial_sql.sql`. The deploy-path experiment is **not** approval for public activation. The production flag, serving branch, existing Hyperdrive config and D1 stay unchanged.
 
