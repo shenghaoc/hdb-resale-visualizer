@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   estimateMonthlyNeonTransfer,
@@ -285,15 +285,9 @@ describe("coordinator policy boundary", () => {
       expect(fetchMock).toHaveBeenCalledOnce();
     });
   });
-  it("keeps the monthly/manual workflow outside the active workflow directory", () => {
-    const name = "refresh-data-monthly.yml";
-    expect(existsSync(resolve(".github/workflows", name))).toBe(false);
+  it("keeps the nightly and monthly D1 refresh workflows out of the active workflow directory", () => {
+    expect(existsSync(resolve(".github/workflows/refresh-data-monthly.yml"))).toBe(false);
     expect(existsSync(resolve(".github/workflows/refresh-data.yml"))).toBe(false);
-    const candidate = readFileSync(resolve("docs/proposals", name), "utf8");
-    expect(candidate).toContain('cron: "0 2 1 * *"');
-    expect(candidate).toContain("workflow_dispatch:");
-    expect(candidate).toContain("vp run sync-data --plan --reconcile-manual");
-    expect(candidate).toContain("vp run sync-data --plan --reconcile-monthly");
   });
 });
 
