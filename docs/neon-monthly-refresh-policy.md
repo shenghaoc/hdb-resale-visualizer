@@ -1,30 +1,35 @@
-# Monthly reconciliation policy — local preparation
+# Neon refresh policy
 
-> **Provenance.** Links to files that are not part of this branch point at commit [b80446400](https://github.com/shenghaoc/hdb-resale-visualizer/tree/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6) of the recovery snapshot (branch `feat/neon-refresh-publisher`), which preserves provenance; generated evidence that was never recovered (`docs/evidence/*`) appears as plain paths.
-
-> **Integration note (main).** The invocation table below is unchanged for `--plan` and `--check-upstream`. The "production freeze" it mentions guards the incremental apply (`--apply-rehearsal`, loopback emulator only). A plain `vp run sync-data`, with or without `--force`, is main's marked full publication, and `--reconcile-monthly` / `--reconcile-manual` are rejected unless `--plan` or `--apply-rehearsal` is also given. The Neon publisher (`vp run sync-data:neon`) is manual only: `--plan` and `--apply` require `--reconcile-manual` (only `--check-upstream` does not), and `--reconcile-monthly` is refused.
-
-The adopted policy is **one explicit reconciliation per UTC calendar month plus explicit manual runs**. Upstream timestamps/content hints are observability only. Their changes and seven-day age no longer trigger expensive reconciliation. This replaces the old daily-hint/seven-day proposal; it does not change the exact reconciliation algorithm or activate a schedule.
-
-Prepared on October 4, 2026 in `feat/d1-free-incremental-refresh`, HEAD `482be1eba9ff2091c1580f5757d7b33e20b26515`. The uncommitted Neon prototype, D1 implementation and [benchmark evidence](https://github.com/shenghaoc/hdb-resale-visualizer/blob/b8044640004ffc3ff60c1c874c33ac3b2aa5ceb6/docs/neon-benchmark-2026-10-04.md) are preserved. No remote database queries/mutations, resource creation, production cutover, Worker secret changes, commits, push, PR or merge were performed for this policy preparation.
+The Neon publisher (`vp run sync-data:neon`) is **manual only**: one explicit, bounded invocation at a time, against the isolated benchmark branch. Upstream timestamps and content hints are observability only; a change in them, or the age of the last run, never starts an expensive reconciliation. The policy is one explicit reconciliation per UTC calendar month plus explicit manual runs. Monthly Neon scheduling is not enabled: `--reconcile-monthly` is refused.
 
 ## Invocation and state
 
-| Invocation                                    | Behavior                                                                              |
-| --------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `vp run sync-data --plan`                     | Read-only hint observation; no corpus reconciliation.                                 |
-| `vp run sync-data --check-upstream`           | Read-only hint observation, even with a manual/monthly flag.                          |
-| `vp run sync-data --plan --reconcile-monthly` | Read-only transaction preflight if no reconciliation was published in this UTC month. |
-| `vp run sync-data --plan --reconcile-manual`  | Explicit read-only transaction preflight even after a same-month publication.         |
-| `--force`                                     | Existing alias for manual intent; does not override production freeze.                |
+| Invocation                                    | Behavior                                                                                                                     |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `vp run sync-data --plan`                     | Read-only hint observation; no corpus reconciliation.                                                                        |
+| `vp run sync-data --check-upstream`           | Read-only hint observation, even with a manual or monthly flag.                                                              |
+| `vp run sync-data --plan --reconcile-monthly` | Read-only transaction preflight if no reconciliation was published in this UTC month.                                        |
+| `vp run sync-data --plan --reconcile-manual`  | Explicit read-only transaction preflight, even after a publication this month.                                               |
+| `--force`                                     | Alias for manual intent in the incremental modes; on a plain run it keeps its meaning of repeating the full publication.     |
+| `vp run sync-data:neon --plan` / `--apply`    | Require `--reconcile-manual`, `--branch` and `--usage-before`; `--report` writes the receipt. `--check-upstream` needs none. |
 
-Monthly/manual flags are mutually exclusive. Monthly checks compare UTC month **and year**, rather than a rolling 30-day interval. Missing, malformed or future `reconciledAt` is not accepted as proof of a completed monthly reconciliation; only explicit monthly/manual intent can proceed. Observation still skips with such state. A successful manual publication in that month satisfies the monthly state check too. Failed, rolled-back publications and read-only preflights never advance the manifest, so repeated preflights consume budget again. A lost client response after a successful server commit is reconciled against the authoritative committed manifest; it must not be treated as a rolled-back publication.
+- Monthly and manual intent are mutually exclusive. The monthly check compares the UTC month and year of `reconciledAt` with now, not a rolling 30 days. A missing, malformed or future `reconciledAt` is never taken as proof of a completed monthly reconciliation: explicit intent proceeds, plain observation still skips. A successful manual publication satisfies that month's check too.
+- A plain `vp run sync-data`, with or without `--force`, is the marked full publication to D1. `--reconcile-monthly` and `--reconcile-manual` are rejected unless `--plan` or `--apply-rehearsal` is also given, and `--apply-rehearsal` accepts only a loopback emulator.
+- Failed or rolled-back publications and read-only preflights never advance the manifest, so repeating them spends budget again. A client response lost after a successful commit is checked against the committed manifest and is never treated as rolled back.
+- A reviewed reconciliation (`--reconciliation-review`) also needs `--report` and `--source-capture-directory .neon-benchmark/<name>`. The gitignored `.neon-benchmark/` is created when it is missing, and the run folder must not exist yet: an earlier capture is refused, never reused or overwritten.
 
-The current coordinator remains D1-backed. Both coordinator and publisher production apply guards remain in place. The transaction multiset algorithm, stable identities and duplicate multiplicity, disappearance/correction guards, artifact dependency tracking, detail patches, staged caches and manifest-last atomic publication are unchanged. The policy is reusable for a future Neon ingestion port; none has been activated.
+## Manual workflow
 
-## Manual workflow: plan by default
+`.github/workflows/refresh-neon.yml` runs on `workflow_dispatch` only. It has no schedule, migration, deployment or automatic retry, and it holds read-only repository permission.
 
-`.github/workflows/refresh-neon.yml` is `workflow_dispatch` only. Its `mode` input defaults to **`plan`** (read and report, no write), so a dispatch that does not choose a mode cannot publish. `apply` has to be chosen on purpose, on top of the typed target confirmation and the captured usage baseline the workflow already requires. `tests/unit/neon-refresh.test.ts` pins the default and the option order.
+| Input                                           | Meaning                                                                                                           |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `confirm_target`                                | Must be `benchmark-d1-migration`; the job does not run otherwise.                                                 |
+| `mode`                                          | `plan` (the default) or `apply`. A dispatch that does not choose a mode cannot publish.                           |
+| `usage_baseline`                                | A captured Neon Console baseline; API zeros are refused (see "Unsettled usage receipts").                         |
+| `onemap_search_budget`, `onemap_routing_budget` | OneMap HTTP attempts this run may make, retries included. Both default to 0, which makes no request of that kind. |
+
+The job uses the environment `neon-benchmark-refresh` and the secret `NEON_BENCHMARK_REFRESH_DATABASE_URL`, plus `DATA_GOV_API_KEY` and the OneMap credentials when they are set. It runs on Node 24 with Vite+ in a concurrency group per branch that never cancels a run in progress, times out after 30 minutes and uploads the sanitized receipt as an artifact for 14 days. `tests/unit/neon-refresh.test.ts` pins the default and the option order of `mode`.
 
 ### What each mode touches
 
@@ -43,29 +48,30 @@ No network-bound work runs inside a PostgreSQL transaction. A run holds one sess
 2. **Preparation, with database access closed** (`NeonSessionGuard`): amenity downloads, budgeted OneMap attempts, a second read of the upstream inventory (it must equal the first, or the run stops), and the artifact build. Cache writes are staged in memory. Any query sent in this phase is refused before it reaches the server.
 3. **Planning snapshot** (read only): first requires the publication version to be unchanged, then reads the stored rows the planner compares against. With `--apply`, publication runs in its own transaction, re-checks the same version under `SELECT … FOR UPDATE`, writes the data, writes the manifest last and commits.
 
-The publication version is the manifest JSON **and** its `updated_at`. Every publication rewrites `updated_at` in the same transaction as its data, so an unchanged version proves that nothing was published between the two snapshots or before the write, including a republish that left the JSON identical. `idle_in_transaction_session_timeout` stays at 120 s; it now only covers the short snapshots and the publication.
+The publication version is the manifest JSON **and** its `updated_at`. Every publication rewrites `updated_at` in the same transaction as its data, so an unchanged version proves that nothing was published between the two snapshots or before the write, including a republish that left the JSON identical. `idle_in_transaction_session_timeout` stays at 120 s; it only covers the short snapshots and the publication.
 
 ### OneMap budgets
 
-OneMap geocoding and routing are optional enrichments with explicit per-run budgets: `--onemap-search-budget N` and `--onemap-routing-budget N` (workflow inputs `onemap_search_budget` and `onemap_routing_budget`). Both default to **0**, which makes no OneMap request of that kind. Running without OneMap credentials remains fully supported; no token is requested or provisioned.
+OneMap geocoding and routing are optional enrichments with explicit per-run budgets: `--onemap-search-budget N` and `--onemap-routing-budget N` (workflow inputs `onemap_search_budget` and `onemap_routing_budget`). Both default to **0**. Running without OneMap credentials remains fully supported; no token is requested or provisioned.
 
 Budgets are counted in **physical HTTP attempts**, not logical lookups. The shared fetch helper (`fetchWithRetry`) retries after a network error, HTTP 429 or 5xx, up to six attempts, and every one of those attempts is charged.
 
-- Search plus routing plus at most one token attempt may not exceed **600 HTTP attempts per run** (about ten minutes at the default pacing of one attempt per second, half the run deadline). Larger budgets are refused before any network or database activity.
+- Search plus routing plus at most one token attempt may not exceed **600 HTTP attempts per run**. Larger budgets are refused before any network or database activity.
 - Pacing and the budget are applied together immediately before every OneMap attempt, retries included (`fetchWithRetry`'s `beforeAttempt` hook calling `waitForUpstreamSlot`). An exhausted budget refuses the attempt before it is sent, so a retry the budget cannot cover is never made, and the lookup or route ends there. The check runs once per attempt, so nothing is paced or charged twice.
 - data.gov.sg and other consumers of the shared helper keep their existing behaviour: one pacing slot before the request, then the helper's own retries and backoff, with no OneMap budget.
-- A configured `ONEMAP_TOKEN` is used as is and costs nothing. Email and password get an allowance of exactly one token attempt per run, not one per lookup. A failed token attempt is therefore not retried; the run continues without OneMap for that run (`tokenStatus: "unavailable"`) and the refused retry is reported.
+- A configured `ONEMAP_TOKEN` is used as is and costs nothing. Email and password get an allowance of exactly one token attempt per run, not one per lookup. A failed token attempt is not retried; the run continues without OneMap (`tokenStatus: "unavailable"`) and the refused retry is reported.
 - Block addresses are geocoded before amenities, so a small search budget goes to blocks first.
-- Work beyond the remaining budget is deferred and reported, never started. An empty routing cache therefore costs the routing budget, not one request per block and exit (about 29,000 pairs for the full corpus). Because a retry spends budget, a run with transient OneMap errors completes fewer lookups than its budget; the difference is reported, not hidden.
-- The budget is one object installed at the single choke point every OneMap attempt passes. The run reads its remaining allowance to decide how much work to start, but only the choke point charges it, whichever helper sends the request.
+- Work beyond the remaining budget is deferred and reported, never started. An empty routing cache therefore costs the routing budget, not one request per block and exit. Because a retry spends budget, a run with transient OneMap errors completes fewer lookups than its budget; the difference is reported, not hidden.
+- The budget is one object installed at the single choke point every OneMap attempt passes. The run reads its remaining allowance to decide how much work to start, but only the choke point charges it.
+- The D1 sync (`runSyncData`, `runIncrementalSync`) has no budget but shares one OneMap session per run (`createOneMapSession`): a configured token costs nothing, otherwise the email and password login is made once however many lookups run at the same time, and block geocoding, amenity geocoding and routing all use it.
 
-The receipt's `oneMap` section separates three counts per category (`auth`, `search`, `routing`): `httpAttempts` (requests actually sent), `budgetRefusals` (attempts the budget prevented, which were never sent) and `successfulOperations` (a token obtained, a lookup answered with or without a match, a route returned). Per purpose it also reports candidates, items started, results, items with no match, failures, items ended by a budget refusal and items deferred or not attempted for lack of a token. `unresolved` reports block addresses and amenities left without coordinates, and walking pairs without a route. Unresolved block addresses are not published and count toward the existing geocode-failure guard exactly as failed lookups did. Pairs without a route keep the pipeline's existing straight-line walking-time estimate; the published data does not mark which times are estimates.
+The receipt's `oneMap` section separates three counts per category (`auth`, `search`, `routing`): `httpAttempts` (requests actually sent), `budgetRefusals` (attempts the budget prevented, which were never sent) and `successfulOperations` (a token obtained, a lookup answered with or without a match, a route returned). Per purpose it also reports candidates, items started, results, items with no match, failures, items ended by a budget refusal and items deferred or not attempted for lack of a token. `unresolved` reports block addresses and amenities left without coordinates, and walking pairs without a route. Unresolved block addresses are not published and count toward the existing geocode-failure guard exactly as failed lookups do. Pairs without a route keep the pipeline's existing straight-line walking-time estimate; the published data does not mark which times are estimates.
 
 ### Unsettled usage receipts
 
 A Console reading whose as-of time is unknown (`usageAsOf: "UNKNOWN"`) is accepted only with bounded evidence for every endpoint that could still be consuming:
 
-- `servingOrigin`: the origin of the Hyperdrive configuration that serves the site, as read from Cloudflare (`hyperdriveConfigId`, `host`, `observedAt`). Its id must be the `HDB_PUBLIC_NEON` Hyperdrive committed in `wrangler.jsonc`, and the serving endpoint is derived from its host. Today that is `ep-steep-water-b300tebo` on `production-candidate-20261005`, not the default `production` branch.
+- `servingOrigin`: the origin of the Hyperdrive configuration that serves the site, as read from Cloudflare (`hyperdriveConfigId`, `host`, `observedAt`). Its id must be the `HDB_PUBLIC_NEON` Hyperdrive committed in `wrangler.jsonc`, and the serving endpoint is derived from its host.
 - `knownActivity.endpointInventory: "complete"` with every compute endpoint in the project, including the benchmark endpoint at 1 CU and the serving endpoint.
 
 The check fails closed if:
@@ -77,84 +83,15 @@ The check fails closed if:
 
 It reserves the serving endpoint's maximum compute for the run window (20-minute deadline plus 5-minute suspend tail), because traffic can wake it at any time. The run cannot query Cloudflare itself, so the origin is operator-captured evidence checked against the repository's configuration. Settled (`REPORTED`) receipts are unchanged: their provider totals already cover every endpoint up to `settledThrough`.
 
-## Inactive workflow configuration
+## Limits the code enforces
 
-[`proposals/refresh-data-monthly.yml`](proposals/refresh-data-monthly.yml) is deliberately **outside `.github/workflows`**. The proposal has:
+| Limit                | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Where                                      |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Source completeness  | The resale, property and MRT sources are refused when empty or when normalization drops any row or feature (property and MRT before any database work). Amenity sources are refused when any row or feature no longer matches its schema; rows that only lack coordinates are published as unresolved and counted.                                                                                                                                                                                                         | `sync-neon.ts`, `sync-data.ts`             |
+| Changed transactions | At most 1,000 per publication. A reviewed reconciliation allows `min(1000, floor(active baseline × 0.005))` inserts, within 35 days of the last accepted checkpoint, at most 5 new and 5 outstanding absent occurrences, and no correction or removal. A review may carry one allowance pinned to exact hashes, counts and IDs (at most 5,000 inserts and 62 days).                                                                                                                                                        | `incremental.ts`, `neon-reconciliation.ts` |
+| Publication size     | 25,000 forecast index operations, 100 atomic statements (the plan plus the two manifest statements), 90,000,000 encoded bytes and 1,000,000 bytes per JSON parameter.                                                                                                                                                                                                                                                                                                                                                      | `statements.ts`, `neon.ts`                 |
+| Session              | 120 s statement timeout, 30 s connection timeout, 120 s idle-in-transaction timeout, a 20-minute run deadline after which the connection is closed, and one advisory lock (`pg_try_advisory_lock(724921, 1)`).                                                                                                                                                                                                                                                                                                             | `neon.ts`, `sync-neon.ts`                  |
+| OneMap               | 600 HTTP attempts per run.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `onemap-budget.ts`                         |
+| Transfer and compute | The reading plus one full reconciliation (reserved at its measured proxy of 493,707,924 B), a 1,000,000,000 B reserve and, when the as-of time is unknown, a further 1,000,000,000 B must fit in the 5,000,000,000 B monthly allowance. Compute (reading, 10 CU-hours when unknown, the serving endpoint's run window and 25 minutes at 1 CU) must stay within 100 CU-hours. A reading or serving-origin observation older than 20 minutes is refused, as is a settled reading older than 2 hours or an uncalibrated zero. | `refresh-policy.ts`, `neon-usage.ts`       |
 
-- one monthly cron: `0 2 1 * *` (first day at 02:00 UTC);
-- explicit `workflow_dispatch` selecting manual intent;
-- one concurrency group for monthly/manual runs, without cancelling an in-progress run;
-- read-only repository permissions, Node 24 and the repository's Vite+/pnpm installation flow;
-- existing Cloudflare/data.gov.sg secret references, without introducing or editing secrets;
-- a static transfer report followed by **read-only D1 transaction preflight**;
-- no migrations, data publication, application deployment or automatic retries.
-
-The [setup-vp action](https://github.com/voidzero-dev/setup-vp/blob/main/action.yml) supports the selected Node input and disabling its implicit install before the explicit `vp install` step. This file is a reviewable policy/preflight template, not a ready Neon production refresh workflow. Activation and a publisher cutover require separate direction and live budget checks. In particular, serialized concurrency does not prevent sequential retries or manual budget exhaustion.
-
-## Transfer budget
-
-Use the hard **5,000,000,000 B/month** allowance and a proposed **1,000,000,000 B reserve**. Existing measured proxies are **493,707,924 B per full reconciliation** and **12,997,301 B per cold bootstrap equivalent** (blocks + trends + dictionary together). These are not finalized Neon billing receipts, nor per-visitor costs. Cache entries are POP-local and endpoint/key-specific. No full remote reconciliation was rerun.
-
-One monthly reconciliation leaves **3,506,292,076 B** for runtime and other usage after the reserve. Manual runs share the same monthly project allowance; they do not receive a separate budget.
-
-| Planned workload/month                      | Estimated transfer B | Remaining after 1 GB reserve B | Fits reserve before other usage |
-| ------------------------------------------- | -------------------: | -----------------------------: | ------------------------------- |
-| 1 monthly reconciliation                    |          493,707,924 |                  3,506,292,076 | Yes                             |
-| 1 monthly + 100 cold bootstrap equivalents  |        1,793,438,024 |                  2,206,561,976 | Yes                             |
-| 1 monthly + 200 cold bootstrap equivalents  |        3,093,168,124 |                    906,831,876 | Yes                             |
-| 1 monthly + 1 manual + 200 cold equivalents |        3,586,876,048 |                    413,123,952 | Yes                             |
-| 1 monthly + 2 manual + 200 cold equivalents |        4,080,583,972 |                    -80,583,972 | No                              |
-
-Without other consumption, 269 cold bootstrap equivalents fit beside one reconciliation and the reserve; 270 do not. The practical allowance is smaller after detail/search/comparable/shortlist queries, other branches/projects sharing applicable allowance, control queries, failed attempts, repeats and traffic. A monthly run removes the previous potential 15.3 GB daily-hint reconciliation load, but does not certify runtime egress or compute. Existing measured storage headroom and cache-hit evidence remain unchanged. Compute active time, scale-to-zero tails and actual traffic still need a live budget before cutover.
-
-The UTC calendar-month state check is a scheduling policy, not a claim about Neon's billing reset boundary. Before future activation, align consumed/manual/runtime accounting with the account's actual allowance period and reset time; do not infer a fresh quota solely from the first day of a UTC month.
-
-Reproduce the local arithmetic without any credentials or network:
-
-```bash
-vp exec tsx scripts/report-neon-refresh-budget.ts
-```
-
-`estimateMonthlyNeonTransfer` validates nonnegative integral counts and overflow. Its result is an estimate, **not** a live quota guard or permission to refresh. Before any future activation/manual publication, account for already used transfer and pending runtime demand. If live usage is unavailable or budget is insufficient, defer the run rather than consume the reserve speculatively.
-
-The future server-side staging/multiset and changed-only artifact reductions remain report-only in the benchmark report. This task does not implement them. Monthly policy can be evaluated first without changing ingestion semantics.
-
-## Local verification and file impact
-
-The repository-prescribed `node_modules/.bin/vp run check` passed: formatting, lint, typecheck, **1,846 tests in 188 files**, production build, boundaries (49 reachable script modules; 181 frontend modules) and bundle budget. The focused policy/source/coordinator/incremental suites passed **27 tests**. Two pre-existing UI stringification warnings remain in unchanged files. An initial local `tsx` CLI report attempt was blocked by sandbox IPC permissions; the same module ran successfully via `node --import tsx`, without any network. The full prescribed gate ran with approved local IPC access.
-
-| Policy-task files                                                                               | Purpose                                                                                          |
-| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `scripts/lib/sync/refresh-policy.ts`                                                            | Explicit intent, UTC monthly check and validated transfer estimates.                             |
-| `scripts/lib/sync/source-version.ts`, `scripts/sync-data.ts`                                    | Separate observed hint changes from reconciliation intent; keep production guards.               |
-| `scripts/report-neon-refresh-budget.ts`, `evidence/neon-monthly-refresh-budget-2026-10-04.json` | Reproducible local budget scenarios; zero database activity.                                     |
-| `tests/unit/refresh-policy.test.ts`, `tests/unit/source-version.test.ts`                        | Policy/budget boundaries, observed changes without corpus reads, freeze and workflow inactivity. |
-| `proposals/refresh-data-monthly.yml`                                                            | Inactive read-only monthly/manual preflight configuration.                                       |
-| `../README.md`, `d1-free-sustainability.md`, this report                                        | Current command/policy contracts, correcting the obsolete manual remote-apply claim.             |
-
-All earlier uncommitted Neon setup/prototype files remain intact. No changes were made to `.github/workflows`, runtime `functions`/`worker`/`src`, migrations, `scripts/lib/sync/incremental.ts`, `scripts/lib/sync/store.ts`, or the Neon benchmark implementation. Future staged comparison remains documentation only. Exact policy-only diff (`docs/evidence/neon-monthly-refresh-policy-2026-10-04.patch`) and budget JSON (`docs/evidence/neon-monthly-refresh-budget-2026-10-04.json`) accompany this report.
-
-Final `git status --short` (includes the preserved prior Neon changes):
-
-```text
- M .gitignore
- M README.md
- M docs/d1-free-sustainability.md
- M package.json
- M pnpm-lock.yaml
- M scripts/lib/sync/source-version.ts
- M scripts/sync-data.ts
- M tests/unit/source-version.test.ts
-?? docs/evidence/neon-benchmark-2026-10-04.json
-?? docs/evidence/neon-monthly-refresh-budget-2026-10-04.json
-?? docs/evidence/neon-monthly-refresh-policy-2026-10-04.patch
-?? docs/neon-benchmark-2026-10-04.md
-?? docs/neon-monthly-refresh-policy.md
-?? docs/proposals/
-?? neon.ts
-?? scripts/lib/sync/refresh-policy.ts
-?? scripts/neon-benchmark/
-?? scripts/report-neon-refresh-budget.ts
-?? tests/neon-benchmark.test.ts
-?? tests/unit/refresh-policy.test.ts
-```
+These are limits, not forecasts: the usage gate is a conservative planning check against captured readings, not a live quota and not permission to refresh. If live usage is unavailable or the headroom is insufficient, defer the run rather than consume the reserve.
