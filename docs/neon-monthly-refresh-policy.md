@@ -33,14 +33,14 @@ The current coordinator remains D1-backed. Both coordinator and publisher produc
 | `plan`  | Two `REPEATABLE READ READ ONLY` snapshots; no publication or mutation | Metadata and dataset downloads (needed to plan at all) | None, unless a budget is given (default 0) |
 | `apply` | The same snapshots, then at most one publication transaction          | The same                                               | Only within the given budgets (default 0)  |
 
-OneMap requests made by `plan` are not kept: its staged cache writes are discarded with the plan.
+Results of OneMap attempts made by `plan` are not kept: its staged cache writes are discarded with the plan.
 
 ### Transaction boundaries
 
 No network-bound work runs inside a PostgreSQL transaction. A run holds one session (and its advisory lock) and uses it in three phases:
 
 1. **Baseline snapshot** (read only): the publication version, transaction facts, published artifacts and both caches, then `COMMIT`.
-2. **Preparation, with database access closed** (`NeonSessionGuard`): amenity downloads, budgeted OneMap requests, a second read of the upstream inventory (it must equal the first, or the run stops), and the artifact build. Cache writes are staged in memory. Any query sent in this phase is refused before it reaches the server.
+2. **Preparation, with database access closed** (`NeonSessionGuard`): amenity downloads, budgeted OneMap attempts, a second read of the upstream inventory (it must equal the first, or the run stops), and the artifact build. Cache writes are staged in memory. Any query sent in this phase is refused before it reaches the server.
 3. **Planning snapshot** (read only): first requires the publication version to be unchanged, then reads the stored rows the planner compares against. With `--apply`, publication runs in its own transaction, re-checks the same version under `SELECT … FOR UPDATE`, writes the data, writes the manifest last and commits.
 
 The publication version is the manifest JSON **and** its `updated_at`. Every publication rewrites `updated_at` in the same transaction as its data, so an unchanged version proves that nothing was published between the two snapshots or before the write, including a republish that left the JSON identical. `idle_in_transaction_session_timeout` stays at 120 s; it now only covers the short snapshots and the publication.
@@ -49,14 +49,17 @@ The publication version is the manifest JSON **and** its `updated_at`. Every pub
 
 OneMap geocoding and routing are optional enrichments with explicit per-run budgets: `--onemap-search-budget N` and `--onemap-routing-budget N` (workflow inputs `onemap_search_budget` and `onemap_routing_budget`). Both default to **0**, which makes no OneMap request of that kind. Running without OneMap credentials remains fully supported; no token is requested or provisioned.
 
-- Search plus routing plus at most one token request may not exceed **600 requests per run** (about ten minutes at the default pacing of one request per second, half the run deadline). Larger budgets are refused before any network or database activity.
-- A configured `ONEMAP_TOKEN` is used as is. Email and password cost one token request per run, not one per lookup.
-- Block addresses are geocoded before amenities, so a small search budget goes to blocks first.
-- Work beyond the budget is deferred and reported, never attempted. An empty routing cache therefore costs the routing budget, not one request per block and exit (about 29,000 pairs for the full corpus).
-- The run allocates its budget before each piece of work, and an independent ceiling with the same limits is installed where every OneMap request passes (`waitForUpstreamSlot`). The ceiling refuses anything beyond the limits, whichever helper sends it, and records the requests actually sent.
-- A request counts once; the shared fetch helper may retry it on HTTP 429 or 5xx (at most six attempts).
+Budgets are counted in **physical HTTP attempts**, not logical lookups. The shared fetch helper (`fetchWithRetry`) retries after a network error, HTTP 429 or 5xx, up to six attempts, and every one of those attempts is charged.
 
-The receipt's `oneMap` section reports, per purpose, candidates, attempts, results, failures and items deferred or not attempted for lack of a token. `unresolved` reports block addresses and amenities left without coordinates, and walking pairs without a route. Unresolved block addresses are not published and count toward the existing geocode-failure guard exactly as failed lookups did. Pairs without a route keep the pipeline's existing straight-line walking-time estimate; the published data does not mark which times are estimates.
+- Search plus routing plus at most one token attempt may not exceed **600 HTTP attempts per run** (about ten minutes at the default pacing of one attempt per second, half the run deadline). Larger budgets are refused before any network or database activity.
+- Pacing and the budget are applied together immediately before every OneMap attempt, retries included (`fetchWithRetry`'s `beforeAttempt` hook calling `waitForUpstreamSlot`). An exhausted budget refuses the attempt before it is sent, so a retry the budget cannot cover is never made, and the lookup or route ends there. The check runs once per attempt, so nothing is paced or charged twice.
+- data.gov.sg and other consumers of the shared helper keep their existing behaviour: one pacing slot before the request, then the helper's own retries and backoff, with no OneMap budget.
+- A configured `ONEMAP_TOKEN` is used as is and costs nothing. Email and password get an allowance of exactly one token attempt per run, not one per lookup. A failed token attempt is therefore not retried; the run continues without OneMap for that run (`tokenStatus: "unavailable"`) and the refused retry is reported.
+- Block addresses are geocoded before amenities, so a small search budget goes to blocks first.
+- Work beyond the remaining budget is deferred and reported, never started. An empty routing cache therefore costs the routing budget, not one request per block and exit (about 29,000 pairs for the full corpus). Because a retry spends budget, a run with transient OneMap errors completes fewer lookups than its budget; the difference is reported, not hidden.
+- The budget is one object installed at the single choke point every OneMap attempt passes. The run reads its remaining allowance to decide how much work to start, but only the choke point charges it, whichever helper sends the request.
+
+The receipt's `oneMap` section separates three counts per category (`auth`, `search`, `routing`): `httpAttempts` (requests actually sent), `budgetRefusals` (attempts the budget prevented, which were never sent) and `successfulOperations` (a token obtained, a lookup answered with or without a match, a route returned). Per purpose it also reports candidates, items started, results, items with no match, failures, items ended by a budget refusal and items deferred or not attempted for lack of a token. `unresolved` reports block addresses and amenities left without coordinates, and walking pairs without a route. Unresolved block addresses are not published and count toward the existing geocode-failure guard exactly as failed lookups did. Pairs without a route keep the pipeline's existing straight-line walking-time estimate; the published data does not mark which times are estimates.
 
 ### Unsettled usage receipts
 
