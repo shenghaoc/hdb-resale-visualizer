@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { translate } from "../scripts/lib/sync/neon-translate";
+import { translate } from "../../scripts/lib/sync/neon-translate";
 describe("isolated PostgreSQL publication adapter", () => {
   it("keeps duplicate-looking facts distinct through their integer identities", () => {
     const params = [
