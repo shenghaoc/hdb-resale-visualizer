@@ -256,7 +256,12 @@ export async function runSyncNeon(
   // Fetch genuine upstream source before waking compute. An upstream denial does not consume a corpus scan.
   const { metadata, hints } = await deps.fetchSourceInventory();
   const csvs: NeonSourceCheckpoint["csvs"] = [];
-  if (review) mkdirSync(options.sourceCaptureDirectory!, { mode: 0o700 });
+  if (review) {
+    // `.neon-benchmark/` is gitignored, so it is absent on a clean checkout and may be created. The run folder
+    // itself must be new (no `recursive`): an earlier capture is refused, never reused or overwritten.
+    mkdirSync(path.dirname(options.sourceCaptureDirectory!), { recursive: true, mode: 0o700 });
+    mkdirSync(options.sourceCaptureDirectory!, { mode: 0o700 });
+  }
   const transactions: ResaleTransaction[] = [];
   for (const id of metadata.childDatasets) {
     if (!/^d_[a-f0-9]{32}$/.test(id)) throw new Error("Unexpected official dataset identifier");
