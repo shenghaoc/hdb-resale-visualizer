@@ -2,7 +2,12 @@ import type { PublicData } from "../functions/_lib/public-data";
 import { parseSearchRequest, validateSearchRequest } from "../functions/_lib/search";
 import { parseSuggestRequest } from "../functions/_lib/suggest";
 import { parseNearbyPlacesRequest, canonicalNearbyPlacesParams } from "../shared/nearby-places";
-import { manifestVersion, readPublicationState } from "../shared/publication-state";
+import {
+  manifestVersion,
+  readPublicationState,
+  type PublicationLabel,
+  type PublicationState,
+} from "../shared/publication-state";
 /** Shared Cache API is per data center. The pointer intentionally bounds freshness to 60s. */
 const POINTER_TTL_SECONDS = 60;
 const DATA_TTL_SECONDS = 3600;
@@ -15,6 +20,19 @@ type SharedCache = {
 };
 /** The manifest's exact stored text labels the publication a response was computed from. */
 type ManifestSource = Pick<PublicData, "manifestJson">;
+
+/**
+ * A route whose answer comes from ONE database statement that also returns the identity of the publication it
+ * read (`publication`: version and in-progress state, from the same snapshot as the data). The cache layer then
+ * has nothing to verify around the handler: it spends no manifest reads before or after, so a miss costs that one
+ * statement instead of three (and moves no 10 KB manifest twice). `publication` is null when the database stores
+ * no manifest, and undefined when no statement produced a label (refused, invalid, failed): such a response is
+ * passed through, labelled `BYPASS-UNLABELLED`, and never stored.
+ */
+export type AtomicRead = () => Promise<{
+  response: Response;
+  publication?: PublicationLabel | null;
+}>;
 
 function responseWithStatus(response: Response, status: string): Response {
   const result = new Response(response.body, response);
@@ -50,6 +68,7 @@ export async function withPublicDataCache(
   data: ManifestSource,
   cache: SharedCache | null,
   respond: (version?: string) => Promise<Response>,
+  atomic?: AtomicRead,
 ): Promise<Response> {
   const url = new URL(request.url);
   if (
@@ -86,52 +105,31 @@ export async function withPublicDataCache(
     return new Request(key);
   };
   let fetched: Response | undefined;
-  try {
-    // Both cache lookups precede EVERY database read, including version discovery.
-    const pointer = await cache.match(pointerKey);
-    if (pointer) {
-      const version = await pointer.text();
-      if (/^[a-f0-9]{64}$/.test(version)) {
-        const hit = await cache.match(dataKey(version));
-        if (hit) return responseWithStatus(hit, "HIT");
-      }
-    }
-    const before = await data.manifestJson();
-    if (before === null) {
-      // Nothing to label a generation with (no manifest has ever been published, or the row was lost), so what
-      // the tables hold now cannot be stored or kept by anyone downstream.
-      warnThrottled("public data cache: there is no stored manifest, so nothing is cached");
-      fetched = await respond();
-      return responseWithStatus(fetched, "BYPASS-NO-MANIFEST");
-    }
-    const publication = readPublicationState(before);
-    if (publication.inProgress) {
-      // The publisher is replacing the generated tables under a manifest that still describes the previous
-      // generation, so nothing computed now may be labeled with a version. Store nothing, and keep serving the
-      // previous generation for as long as it stays cached: it is still one consistent generation.
-      const unreadable = publication.reason === "unreadable";
-      warnThrottled(
-        unreadable
-          ? "public data cache: the stored manifest is not a JSON object, so nothing is cached from it"
-          : "public data cache: a D1 publication is marked in progress, so nothing is cached until a sync-data run completes",
-      );
-      const previous = publication.baseVersion
-        ? await cache.match(dataKey(publication.baseVersion))
-        : undefined;
-      if (previous) return responseWithStatus(previous, "HIT-STALE");
-      fetched = await respond();
-      return responseWithStatus(fetched, unreadable ? "BYPASS-UNREADABLE" : "BYPASS");
-    }
-    const version = await manifestVersion(before);
-    // A stale pointer MISS must discover the CURRENT version before labeling new data.
-    const currentHit = await cache.match(dataKey(version));
-    const response = currentHit ?? (await respond(version));
-    fetched = response;
-    const after = currentHit ? before : await data.manifestJson();
+  let atomicStarted = false;
+  /** A publication is unfinished (or its manifest unreadable): nothing computed now may be labelled or stored. */
+  const whileUnfinished = async (
+    state: Extract<PublicationState, { inProgress: true }>,
+    compute: () => Promise<Response>,
+  ) => {
+    // Keep serving the previous generation for as long as it stays cached: it is still one consistent generation.
+    const unreadable = state.reason === "unreadable";
+    warnThrottled(
+      unreadable
+        ? "public data cache: the stored manifest is not a JSON object, so nothing is cached from it"
+        : "public data cache: a D1 publication is marked in progress, so nothing is cached until a sync-data run completes",
+    );
+    const previous = state.baseVersion ? await cache.match(dataKey(state.baseVersion)) : undefined;
+    if (previous) return responseWithStatus(previous, "HIT-STALE");
+    fetched = await compute();
+    return responseWithStatus(fetched, unreadable ? "BYPASS-UNREADABLE" : "BYPASS");
+  };
+  /** Stores a response that is provably one generation (when it is cacheable at all) and labels it. */
+  const settle = async (
+    version: string,
+    response: Response,
+    { stable, currentHit }: { stable: boolean; currentHit: boolean },
+  ) => {
     const cacheControl = response.headers.get("cache-control") ?? "";
-    // A manifest that changed while the handler ran means a publication started or finished mid-request, so the
-    // response may mix generations.
-    const stable = before === after;
     if (
       response.status === 200 &&
       !response.headers.has("set-cookie") &&
@@ -155,12 +153,65 @@ export async function withPublicDataCache(
       response,
       !stable ? "BYPASS-UNSTABLE" : currentHit ? "HIT-AFTER-VERSION-READ" : "MISS",
     );
+  };
+  try {
+    // Both cache lookups precede EVERY database read, including version discovery.
+    const pointer = await cache.match(pointerKey);
+    if (pointer) {
+      const version = await pointer.text();
+      if (/^[a-f0-9]{64}$/.test(version)) {
+        const hit = await cache.match(dataKey(version));
+        if (hit) return responseWithStatus(hit, "HIT");
+      }
+    }
+    if (atomic) {
+      // One statement answers and labels: nothing to read before or after it, and it must never be repeated.
+      atomicStarted = true;
+      const outcome = await atomic();
+      fetched = outcome.response;
+      const { publication } = outcome;
+      if (publication === undefined) return responseWithStatus(fetched, "BYPASS-UNLABELLED");
+      if (publication === null) {
+        warnThrottled("public data cache: there is no stored manifest, so nothing is cached");
+        return responseWithStatus(fetched, "BYPASS-NO-MANIFEST");
+      }
+      if (publication.state.inProgress) {
+        const answered = outcome.response;
+        return await whileUnfinished(publication.state, async () => answered);
+      }
+      return await settle(publication.version, fetched, { stable: true, currentHit: false });
+    }
+    const before = await data.manifestJson();
+    if (before === null) {
+      // Nothing to label a generation with (no manifest has ever been published, or the row was lost), so what
+      // the tables hold now cannot be stored or kept by anyone downstream.
+      warnThrottled("public data cache: there is no stored manifest, so nothing is cached");
+      fetched = await respond();
+      return responseWithStatus(fetched, "BYPASS-NO-MANIFEST");
+    }
+    const publication = readPublicationState(before);
+    if (publication.inProgress) {
+      // The publisher is replacing the generated tables under a manifest that still describes the previous
+      // generation, so nothing computed now may be labeled with a version.
+      return await whileUnfinished(publication, () => respond());
+    }
+    const version = await manifestVersion(before);
+    // A stale pointer MISS must discover the CURRENT version before labeling new data.
+    const currentHit = await cache.match(dataKey(version));
+    const response = currentHit ?? (await respond(version));
+    fetched = response;
+    const after = currentHit ? before : await data.manifestJson();
+    // A manifest that changed while the handler ran means a publication started or finished mid-request, so the
+    // response may mix generations.
+    return await settle(version, response, { stable: before === after, currentHit: !!currentHit });
   } catch (error) {
     // Cache failure cannot make data unavailable. Say that it happened (the error's name only: never requests,
     // headers or private state) and label the response, so it is not mistaken for exempt traffic.
     warnThrottled(
       `public data cache: falling back to the origin after ${error instanceof Error ? error.name : "an unknown error"}`,
     );
+    // The one statement of an atomic read may already have run (or be running): never repeat it.
+    if (atomicStarted && fetched === undefined) throw error;
     return responseWithStatus(fetched ?? (await respond()), "ERROR");
   }
 }
