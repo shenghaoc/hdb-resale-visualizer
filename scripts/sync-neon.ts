@@ -306,9 +306,16 @@ export async function runSyncNeon(
       { mode: 0o600 },
     );
   }
+  // Context sources fail closed like the resale rows: one that changed shape stops the run before any database
+  // work instead of being published as empty or partial property and station facts.
   const propertyRows = await deps.fetchCsvRows(PROPERTY_DATASET_ID);
-  const mrtGeoJson = await deps.fetchGeoJson(MRT_DATASET_ID),
-    mrtExits = normalizeMrtFeatures(mrtGeoJson);
+  const propertyInfo = normalizePropertyRows(propertyRows);
+  if (!propertyRows.length || propertyInfo.length !== propertyRows.length)
+    throw new Error("Partial or invalid property source rejected");
+  const mrtGeoJson = await deps.fetchGeoJson(MRT_DATASET_ID);
+  const mrtExits = normalizeMrtFeatures(mrtGeoJson);
+  if (!mrtGeoJson.features.length || mrtExits.length !== mrtGeoJson.features.length)
+    throw new Error("Partial or invalid MRT source rejected");
   // Upstream downloading can be slow; do not wake compute with an expired provider baseline.
   const budget = checkNeonPilotBudget(usageBefore, deps.now(), budgetOptions);
   const client = deps.createClient(url);
@@ -522,6 +529,12 @@ export async function runSyncNeon(
           geocodeAddressFn: run.geocodeAmenityAddress,
         });
         if (amenities.failedSources.length) throw new Error("Incomplete amenity source rejected");
+        // Rows that only lack coordinates stay counted as unresolved below; rows the schema no longer matches do not.
+        const unusable = Object.entries(amenities.invalidRows);
+        if (unusable.length)
+          throw new Error(
+            `Partial or invalid amenity source rejected (${unusable.map(([source, rows]) => `${source}: ${rows}`).join(", ")})`,
+          );
         await saveGeocodeCacheEntries(
           db,
           cache,
@@ -554,10 +567,7 @@ export async function runSyncNeon(
         const artifacts = canonicalNeonArtifacts(
           buildArtifacts({
             transactions: effectiveTransactions,
-            propertyInfo: rekeyPropertyInfo(
-              normalizePropertyRows(propertyRows),
-              effectiveTransactions,
-            ),
+            propertyInfo: rekeyPropertyInfo(propertyInfo, effectiveTransactions),
             mrtExits,
             geocodes: cache.entries,
             walkingTimes: walking.walkingTimes,

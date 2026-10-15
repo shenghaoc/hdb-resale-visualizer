@@ -148,6 +148,15 @@ export const MRT_UPSTREAM = {
   })),
 };
 
+/** Property information for the fixture blocks, in the shape of the official CSV. */
+export const PROPERTY_UPSTREAM: Record<string, string>[] = BLOCKS.map((block, index) => ({
+  blk_no: block.block,
+  street: block.street,
+  max_floor_lvl: String(12 + index),
+  year_completed: "1990",
+  total_dwelling_units: String(80 + index),
+}));
+
 const EMPTY_COLLECTION = { type: "FeatureCollection" as const, features: [] as unknown[] };
 
 export type Inventory = Awaited<ReturnType<typeof fetchNeonSourceInventory>>;
@@ -361,6 +370,11 @@ export function refreshDependencies(options: {
   realUpstreamDelayMs?: number;
   schoolRows?: Record<string, string>[];
   supermarketRows?: Record<string, string>[];
+  /** Defaults to `PROPERTY_UPSTREAM`; override to simulate a context dataset that changed shape. */
+  propertyRows?: Record<string, string>[];
+  mrtGeoJson?: unknown;
+  hawkerGeoJson?: unknown;
+  parksGeoJson?: unknown;
   idleInTransactionTimeoutMs?: number;
   onUpstream?: (datasetId: string) => Promise<void> | void;
 }): { deps: Partial<SyncNeonDependencies>; record: HarnessRecord; fetch: typeof fetch } {
@@ -378,16 +392,19 @@ export function refreshDependencies(options: {
   const csv = async (datasetId: string) => {
     await upstream(datasetId);
     if (datasetId === RESALE_DATASET_ID) return options.rows;
-    if (datasetId === PROPERTY_DATASET_ID) return [];
+    if (datasetId === PROPERTY_DATASET_ID)
+      return structuredClone(options.propertyRows ?? PROPERTY_UPSTREAM);
     if (datasetId === MOE_SCHOOL_DATASET_ID) return options.schoolRows ?? [];
     if (datasetId === SFA_SUPERMARKET_DATASET_ID) return options.supermarketRows ?? [];
     throw new Error(`Unexpected dataset ${datasetId}`);
   };
   const geoJson = async (datasetId: string) => {
     await upstream(datasetId);
-    if (datasetId === MRT_DATASET_ID) return structuredClone(MRT_UPSTREAM);
-    if (datasetId === NEA_HAWKER_DATASET_ID || datasetId === NPARKS_PARKS_DATASET_ID)
-      return structuredClone(EMPTY_COLLECTION);
+    if (datasetId === MRT_DATASET_ID) return structuredClone(options.mrtGeoJson ?? MRT_UPSTREAM);
+    if (datasetId === NEA_HAWKER_DATASET_ID)
+      return structuredClone(options.hawkerGeoJson ?? EMPTY_COLLECTION);
+    if (datasetId === NPARKS_PARKS_DATASET_ID)
+      return structuredClone(options.parksGeoJson ?? EMPTY_COLLECTION);
     throw new Error(`Unexpected dataset ${datasetId}`);
   };
   const oneMap = options.oneMap ?? {};

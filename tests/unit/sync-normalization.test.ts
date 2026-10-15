@@ -280,6 +280,7 @@ describe("school sync normalization", () => {
       schools: [{ name: "River Valley Primary", lat: 1.3, lng: 103.8, mainLevelCode: "PRIMARY" }],
       geocodedCount: 0,
       skippedNoCoords: 0,
+      invalidRows: 0,
     });
   });
 
@@ -372,6 +373,7 @@ describe("school sync normalization", () => {
       ],
       geocodedCount: 1,
       skippedNoCoords: 0,
+      invalidRows: 0,
     });
     expect(cache.entries["school:RIVER VALLEY PRIMARY:560101"]).toMatchObject({
       lat: 1.3521,
@@ -399,7 +401,12 @@ describe("school sync normalization", () => {
       { skipGeocoding: false, geocodeEndpoint: GEOCODE_ENDPOINT },
     );
 
-    expect(result).toEqual({ schools: [], geocodedCount: 0, skippedNoCoords: 1 });
+    expect(result).toEqual({
+      schools: [],
+      geocodedCount: 0,
+      skippedNoCoords: 1,
+      invalidRows: 0,
+    });
     expect(
       warnSpy.mock.calls.some(([message]) =>
         String(message).includes(
@@ -410,6 +417,27 @@ describe("school sync normalization", () => {
     expect(
       warnSpy.mock.calls.some(([message]) => String(message).includes("geocoding failed")),
     ).toBe(true);
+  });
+
+  it("counts rows that no longer match the schema apart from rows that only lack coordinates", async () => {
+    const result = await normalizeSchoolRows(
+      [
+        {
+          school_name: "Good Primary",
+          mainlevel_code: "PRIMARY",
+          latitude: "1.30",
+          longitude: "103.8",
+        },
+        { name: "Renamed name column", mainlevel_code: "PRIMARY" },
+        { mainlevel_code: "PRIMARY" },
+        { school_name: "Needs coordinates", mainlevel_code: "PRIMARY" },
+      ],
+      emptyGeocodeCache(),
+      schoolOptions,
+    );
+
+    expect(result.schools.map((school) => school.name)).toEqual(["Good Primary"]);
+    expect(result).toMatchObject({ geocodedCount: 0, skippedNoCoords: 1, invalidRows: 2 });
   });
 });
 
@@ -436,6 +464,7 @@ describe("supermarket sync normalization", () => {
       supermarkets: [{ name: "NTUC", lat: 1.3521, lng: 103.8198 }],
       geocodedCount: 0,
       skippedNoCoords: 0,
+      invalidRows: 0,
     });
   });
 
@@ -468,7 +497,27 @@ describe("supermarket sync normalization", () => {
       supermarkets: [{ name: "FairPrice", lat: 1.29, lng: 103.85 }],
       geocodedCount: 1,
       skippedNoCoords: 0,
+      invalidRows: 0,
     });
     expect(cache.entries["supermarket:560101"]?.searchValue).toBe("560101 SINGAPORE");
+  });
+
+  it("counts rows that no longer match the schema apart from rows that only lack coordinates", async () => {
+    const cache = emptyGeocodeCache();
+    cache.entries["supermarket:560101"] = geocodeHit("560101 SINGAPORE");
+
+    const result = await normalizeSupermarketRows(
+      [
+        { licensee_name: "Located", postal_code: "560101" },
+        { licensee: "Renamed licensee column", postal_code: "560101" },
+        { postal_code: "560101" },
+        { licensee_name: "Needs coordinates", postal_code: "999999" },
+      ],
+      cache,
+      { skipGeocoding: true, geocodeEndpoint: GEOCODE_ENDPOINT },
+    );
+
+    expect(result.supermarkets.map((supermarket) => supermarket.name)).toEqual(["Located"]);
+    expect(result).toMatchObject({ geocodedCount: 0, skippedNoCoords: 1, invalidRows: 2 });
   });
 });

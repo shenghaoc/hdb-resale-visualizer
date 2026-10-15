@@ -90,6 +90,7 @@ describe("amenity geocode failures", () => {
       ],
       geocodedCount: 1,
       skippedNoCoords: 1,
+      invalidRows: 0,
     });
     expect(cache.entries["school:FAIL PRIMARY:111111"]).toBeUndefined();
     expect(cache.entries["school:OK PRIMARY:222222"]).toMatchObject({
@@ -139,6 +140,7 @@ describe("amenity geocode failures", () => {
       supermarkets: [{ name: "Ok Mart", lat: 1.29, lng: 103.85 }],
       geocodedCount: 1,
       skippedNoCoords: 1,
+      invalidRows: 0,
     });
     expect(cache.entries["supermarket:333333"]).toBeUndefined();
     expect(cache.entries["supermarket:444444"]).toMatchObject({

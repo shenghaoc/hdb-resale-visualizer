@@ -121,6 +121,12 @@ export async function fetchAmenityData(
   // Amenities left without coordinates (not cached, and not resolved by geocoding in this run).
   let unlocatedCount = 0;
   const failedSources: string[] = [];
+  // Rows or features a source delivered that could not be used at all (the schema no longer matches), by source.
+  // This is not `unlocatedCount`: those rows were understood and only lack coordinates. Absent means none.
+  const invalidRows: Record<string, number> = {};
+  const noteInvalid = (source: string, count: number) => {
+    if (count > 0) invalidRows[source] = count;
+  };
 
   try {
     const schoolRows = await fetchCsvRowsFn(MOE_SCHOOL_DATASET_ID);
@@ -128,6 +134,7 @@ export async function fetchAmenityData(
     schools = schoolResult.schools;
     geocodedCount += schoolResult.geocodedCount;
     unlocatedCount += schoolResult.skippedNoCoords ?? 0;
+    noteInvalid("schools", schoolResult.invalidRows ?? 0);
     console.log(`Processed ${schools.length} primary schools.`);
   } catch (error) {
     failedSources.push("schools");
@@ -137,6 +144,7 @@ export async function fetchAmenityData(
   try {
     const hawkerGeoJson = await fetchGeoJsonFn(NEA_HAWKER_DATASET_ID);
     hawkers = normalizeAmenityGeoJsonFn(hawkerGeoJson);
+    noteInvalid("hawkers", hawkerGeoJson.features.length - hawkers.length);
     console.log(`Processed ${hawkers.length} hawker centres.`);
   } catch (error) {
     failedSources.push("hawkers");
@@ -153,6 +161,7 @@ export async function fetchAmenityData(
     supermarkets = supermarketResult.supermarkets;
     geocodedCount += supermarketResult.geocodedCount;
     unlocatedCount += supermarketResult.skippedNoCoords ?? 0;
+    noteInvalid("supermarkets", supermarketResult.invalidRows ?? 0);
     console.log(`Processed ${supermarkets.length} supermarkets.`);
   } catch (error) {
     failedSources.push("supermarkets");
@@ -162,6 +171,7 @@ export async function fetchAmenityData(
   try {
     const parksGeoJson = await fetchGeoJsonFn(NPARKS_PARKS_DATASET_ID);
     parks = normalizeAmenityGeoJsonFn(parksGeoJson);
+    noteInvalid("parks", parksGeoJson.features.length - parks.length);
     console.log(`Processed ${parks.length} parks.`);
   } catch (error) {
     failedSources.push("parks");
@@ -180,6 +190,7 @@ export async function fetchAmenityData(
     geocodedCount,
     unlocatedCount,
     failedSources,
+    invalidRows,
   };
 }
 
