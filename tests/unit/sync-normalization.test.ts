@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { GeocodeCacheFile, GeocodeEntry } from "../../scripts/lib/pipeline";
 import {
   normalizeAmenityGeoJson,
@@ -9,8 +9,11 @@ import {
   normalizeSupermarketRows,
   rekeyPropertyInfo,
 } from "../../scripts/lib/sync/normalization";
+import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
 
-const GEOCODE_ENDPOINT = new URL("https://example.test/api/common/elastic/search");
+// OneMap Search needs an access token, and credentials only ever go to the official endpoint
+// (scripts/lib/sync/geocode.ts), so these tests use it with a token and a mocked fetch.
+const GEOCODE_ENDPOINT = new URL("https://www.onemap.gov.sg/api/common/elastic/search");
 
 const resaleBase = {
   month: "2026-01",
@@ -59,9 +62,17 @@ function jsonFetch(body: unknown) {
   return { fetchMock, requestedUrls };
 }
 
+beforeEach(() => {
+  vi.stubEnv("ONEMAP_TOKEN", "fixture-token");
+  vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "1");
+  resetUpstreamThrottleForTests();
+});
+
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+  resetUpstreamThrottleForTests();
 });
 
 describe("resale sync normalization", () => {
@@ -268,6 +279,8 @@ describe("school sync normalization", () => {
     ).resolves.toEqual({
       schools: [{ name: "River Valley Primary", lat: 1.3, lng: 103.8, mainLevelCode: "PRIMARY" }],
       geocodedCount: 0,
+      skippedNoCoords: 0,
+      invalidRows: 0,
     });
   });
 
@@ -359,6 +372,8 @@ describe("school sync normalization", () => {
         { name: "River Valley Primary", lat: 1.3521, lng: 103.8198, mainLevelCode: "PRIMARY" },
       ],
       geocodedCount: 1,
+      skippedNoCoords: 0,
+      invalidRows: 0,
     });
     expect(cache.entries["school:RIVER VALLEY PRIMARY:560101"]).toMatchObject({
       lat: 1.3521,
@@ -386,7 +401,12 @@ describe("school sync normalization", () => {
       { skipGeocoding: false, geocodeEndpoint: GEOCODE_ENDPOINT },
     );
 
-    expect(result).toEqual({ schools: [], geocodedCount: 0 });
+    expect(result).toEqual({
+      schools: [],
+      geocodedCount: 0,
+      skippedNoCoords: 1,
+      invalidRows: 0,
+    });
     expect(
       warnSpy.mock.calls.some(([message]) =>
         String(message).includes(
@@ -397,6 +417,27 @@ describe("school sync normalization", () => {
     expect(
       warnSpy.mock.calls.some(([message]) => String(message).includes("geocoding failed")),
     ).toBe(true);
+  });
+
+  it("counts rows that no longer match the schema apart from rows that only lack coordinates", async () => {
+    const result = await normalizeSchoolRows(
+      [
+        {
+          school_name: "Good Primary",
+          mainlevel_code: "PRIMARY",
+          latitude: "1.30",
+          longitude: "103.8",
+        },
+        { name: "Renamed name column", mainlevel_code: "PRIMARY" },
+        { mainlevel_code: "PRIMARY" },
+        { school_name: "Needs coordinates", mainlevel_code: "PRIMARY" },
+      ],
+      emptyGeocodeCache(),
+      schoolOptions,
+    );
+
+    expect(result.schools.map((school) => school.name)).toEqual(["Good Primary"]);
+    expect(result).toMatchObject({ geocodedCount: 0, skippedNoCoords: 1, invalidRows: 2 });
   });
 });
 
@@ -422,6 +463,8 @@ describe("supermarket sync normalization", () => {
     expect(result).toEqual({
       supermarkets: [{ name: "NTUC", lat: 1.3521, lng: 103.8198 }],
       geocodedCount: 0,
+      skippedNoCoords: 0,
+      invalidRows: 0,
     });
   });
 
@@ -453,7 +496,28 @@ describe("supermarket sync normalization", () => {
     expect(result).toEqual({
       supermarkets: [{ name: "FairPrice", lat: 1.29, lng: 103.85 }],
       geocodedCount: 1,
+      skippedNoCoords: 0,
+      invalidRows: 0,
     });
     expect(cache.entries["supermarket:560101"]?.searchValue).toBe("560101 SINGAPORE");
+  });
+
+  it("counts rows that no longer match the schema apart from rows that only lack coordinates", async () => {
+    const cache = emptyGeocodeCache();
+    cache.entries["supermarket:560101"] = geocodeHit("560101 SINGAPORE");
+
+    const result = await normalizeSupermarketRows(
+      [
+        { licensee_name: "Located", postal_code: "560101" },
+        { licensee: "Renamed licensee column", postal_code: "560101" },
+        { postal_code: "560101" },
+        { licensee_name: "Needs coordinates", postal_code: "999999" },
+      ],
+      cache,
+      { skipGeocoding: true, geocodeEndpoint: GEOCODE_ENDPOINT },
+    );
+
+    expect(result.supermarkets.map((supermarket) => supermarket.name)).toEqual(["Located"]);
+    expect(result).toMatchObject({ geocodedCount: 0, skippedNoCoords: 1, invalidRows: 2 });
   });
 });

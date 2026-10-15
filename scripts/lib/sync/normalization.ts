@@ -132,18 +132,37 @@ export function normalizeAmenityGeoJson(
   });
 }
 
+/**
+ * How amenity rows without cached coordinates are geocoded. `geocodeAddressFn` defaults to `geocodeAddress`; the
+ * Neon publisher passes its budgeted lookup instead, so amenity geocoding shares that run's OneMap budget.
+ */
+export type AmenityGeocodeOptions = {
+  skipGeocoding: boolean;
+  geocodeEndpoint: URL;
+  geocodeAddressFn?: (
+    searchValue: string,
+    geocodeEndpoint: URL,
+  ) => Promise<GeocodeCacheFile["entries"][string] | null>;
+};
+
 export async function normalizeSchoolRows(
   rows: Record<string, string>[],
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+  options: AmenityGeocodeOptions,
 ) {
   const schools: SchoolLocation[] = [];
   let primaryCount = 0;
   let skippedNoCoords = 0;
   let geocodedCount = 0;
+  // Rows that do not match the schema at all, such as a renamed name column. They are not rows merely lacking
+  // coordinates (`skippedNoCoords`), and a caller that must not publish partial evidence can refuse on them.
+  let invalidRows = 0;
   for (const row of rows) {
     const parsed = schoolRowSchema.safeParse(row);
-    if (!parsed.success) continue;
+    if (!parsed.success) {
+      invalidRows += 1;
+      continue;
+    }
     const schoolName = parsed.data.school_name.trim();
     if (!schoolName) continue;
     const mainLevelCode = normalizeText(parsed.data.mainlevel_code ?? "");
@@ -176,7 +195,10 @@ export async function normalizeSchoolRows(
         ? `${address} SINGAPORE`
         : `${schoolName} SINGAPORE`;
     try {
-      const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
+      const geocode = await (options.geocodeAddressFn ?? geocodeAddress)(
+        searchValue,
+        options.geocodeEndpoint,
+      );
       if (!geocode) {
         console.warn(
           `School geocode returned no result for ${schoolName} (search: ${searchValue})`,
@@ -198,20 +220,24 @@ export async function normalizeSchoolRows(
     console.warn(
       `⚠ ${skippedNoCoords}/${primaryCount} primary schools skipped (no coordinates and ${options.skipGeocoding ? "geocoding disabled" : "geocoding failed"}). Run without --skip-geocoding to resolve.`,
     );
-  return { schools, geocodedCount };
+  return { schools, geocodedCount, skippedNoCoords, invalidRows };
 }
 
 export async function normalizeSupermarketRows(
   rows: Record<string, string>[],
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+  options: AmenityGeocodeOptions,
 ) {
   const supermarkets: Array<{ name: string; lat: number; lng: number }> = [];
   let skippedNoCoords = 0;
   let geocodedCount = 0;
+  let invalidRows = 0;
   for (const row of rows) {
     const parsed = supermarketRowSchema.safeParse(row);
-    if (!parsed.success) continue;
+    if (!parsed.success) {
+      invalidRows += 1;
+      continue;
+    }
     const name = parsed.data.licensee_name.trim();
     if (!name) continue;
     const postalCode =
@@ -237,7 +263,10 @@ export async function normalizeSupermarketRows(
         ? `${address} SINGAPORE`
         : `${name} SINGAPORE`;
     try {
-      const geocode = await geocodeAddress(searchValue, options.geocodeEndpoint);
+      const geocode = await (options.geocodeAddressFn ?? geocodeAddress)(
+        searchValue,
+        options.geocodeEndpoint,
+      );
       if (!geocode) {
         skippedNoCoords += 1;
         continue;
@@ -253,5 +282,5 @@ export async function normalizeSupermarketRows(
     console.warn(
       `⚠ ${skippedNoCoords}/${rows.length} supermarkets skipped (${options.skipGeocoding ? "geocoding disabled" : "geocoding failed"}).`,
     );
-  return { supermarkets, geocodedCount };
+  return { supermarkets, geocodedCount, skippedNoCoords, invalidRows };
 }

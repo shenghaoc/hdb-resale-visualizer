@@ -2,7 +2,7 @@
  * Cloudflare D1 HTTP client used by the sync-data pipeline.
  *
  * The sync runs in Node (GitHub Actions or developer machine) and writes
- * directly to the same D1 database that Pages Functions read from at runtime.
+ * directly to the same D1 database that the Worker reads from at runtime.
  *
  * D1 REST API reference:
  *   POST /accounts/{account_id}/d1/database/{database_id}/query
@@ -12,8 +12,20 @@
  * batch wrapper `{ batch: [{ sql, params }, ...] }`. Each statement has a
  * 100KB body cap, so we issue batched `INSERT ... VALUES (?,?),(?,?),...`
  * multi-row inserts in chunks.
+ *
+ * Two layers sit on top of that client:
+ *
+ * - Usage accounting (always on): every statement a request carries is recorded with the exact metadata
+ *   the response reported, and `usageReport()` sums it. A figure that was not reported, or a request whose
+ *   outcome is unknown, makes the aggregate `null`, never zero.
+ * - Write staging (`beginWriteStaging()`, opt-in): mutating statements are held back instead of sent, so a
+ *   caller can validate a whole plan first and publish it as one atomic batch. The remote REST `batch`
+ *   envelope is not assumed to be atomic or metered like a Worker binding batch, so the incremental
+ *   publisher applies staged batches to a loopback emulator only (`isLocalRehearsal`); production
+ *   publication replaces the tables under the marker protocol in `./store`.
  */
 import { fetchWithRetry } from "./fetchers";
+import { MAX_ATOMIC_BYTES, MAX_ATOMIC_STATEMENTS } from "./statements";
 
 export type D1Config = {
   accountId: string;
@@ -23,7 +35,17 @@ export type D1Config = {
   endpoint?: string;
 };
 
-type D1Statement = { sql: string; params?: unknown[] };
+export type D1ClientOptions = {
+  /**
+   * Retry transient failures (network errors, HTTP 429 and 5xx) with backoff, through `fetchWithRetry`.
+   * Off by default: a retry can apply a request twice, and the usage ledger counts one attempt per
+   * statement. `sync-data`'s marked full publication opts in, because its long multi-request run has
+   * always relied on it.
+   */
+  retry?: boolean;
+};
+
+export type D1Statement = { sql: string; params?: unknown[] };
 
 type D1QueryBody = D1Statement | { batch: D1Statement[] };
 
@@ -56,8 +78,69 @@ function buildQueryUrl(config: D1Config): string {
   return `${base}/client/v4/accounts/${config.accountId}/d1/database/${config.databaseId}/query`;
 }
 
+export type D1UsageRecord = {
+  phase: string;
+  table: string;
+  operation: string;
+  rowsRead: number | null;
+  rowsWritten: number | null;
+  durationMs: number | null;
+  changes: number | null;
+  success: boolean;
+};
+
 export class D1Client {
-  constructor(private readonly config: D1Config) {}
+  private staging = false;
+  private staged: D1Statement[] = [];
+  private usageIncomplete = false;
+  private phase = "unclassified";
+  readonly usage: D1UsageRecord[] = [];
+
+  constructor(
+    private readonly config: D1Config,
+    private readonly options: D1ClientOptions = {},
+  ) {}
+
+  beginWriteStaging(): void {
+    this.staging = true;
+  }
+  stagedWrites(): D1Statement[] {
+    return this.staged.slice();
+  }
+  async publishStagedBatch(statements: D1Statement[]): Promise<void> {
+    this.staging = false;
+    try {
+      await this.query(statements);
+      this.staged = [];
+    } finally {
+      this.staging = true;
+    }
+  }
+
+  setPhase(phase: string): void {
+    this.phase = phase;
+  }
+
+  get isLocalRehearsal(): boolean {
+    if (!this.config.endpoint) return false;
+    const url = new URL(this.config.endpoint);
+    return url.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+  }
+
+  usageReport() {
+    const sum = (key: "rowsRead" | "rowsWritten" | "durationMs") =>
+      this.usageIncomplete || this.usage.some((record) => record[key] === null)
+        ? null
+        : this.usage.reduce((total, record) => total + (record[key] ?? 0), 0);
+    return {
+      provenance: this.isLocalRehearsal ? "local-emulator" : "remote-d1-http",
+      statements: this.usage.length,
+      rowsRead: sum("rowsRead"),
+      rowsWritten: sum("rowsWritten"),
+      durationMs: sum("durationMs"),
+      records: this.usage,
+    };
+  }
 
   /**
    * Run one or more parametric statements. Returns the typed rows from the
@@ -66,14 +149,56 @@ export class D1Client {
   async query<TRow = Record<string, unknown>>(
     statement: D1Statement | D1Statement[],
   ): Promise<TRow[]> {
-    const response = await fetchWithRetry(buildQueryUrl(this.config), {
+    const queries = Array.isArray(statement) ? statement : [statement];
+    if (
+      this.staging &&
+      queries.some((query) => /^(?:INSERT|UPDATE|DELETE|REPLACE)\b/i.test(query.sql.trim()))
+    ) {
+      if (queries.some((query) => !/^(?:INSERT|UPDATE|DELETE|REPLACE)\b/i.test(query.sql.trim())))
+        throw new Error("Cannot stage mixed read/write batch");
+      this.staged.push(...queries);
+      if (
+        this.staged.length > MAX_ATOMIC_STATEMENTS ||
+        new TextEncoder().encode(JSON.stringify(this.staged)).byteLength > MAX_ATOMIC_BYTES
+      )
+        throw new Error("Staged cache write budget exceeded before any D1 write");
+      return [];
+    }
+    const usageBefore = this.usage.length;
+    try {
+      return await this.queryOnce<TRow>(statement);
+    } catch (error) {
+      if (this.usage.length === usageBefore) {
+        for (const query of queries) {
+          this.usage.push({
+            phase: this.phase,
+            table: query.sql.match(/\b(?:FROM|INTO|UPDATE)\s+([a-z_]+)/i)?.[1] ?? "unknown",
+            operation: query.sql.trim().split(/\s+/)[0].toUpperCase(),
+            rowsRead: null,
+            rowsWritten: null,
+            durationMs: null,
+            changes: null,
+            success: false,
+          });
+        }
+      }
+      throw error;
+    }
+  }
+
+  private async queryOnce<TRow>(statement: D1Statement | D1Statement[]): Promise<TRow[]> {
+    const url = buildQueryUrl(this.config);
+    const request: RequestInit = {
       method: "POST",
       headers: {
         authorization: `Bearer ${this.config.apiToken}`,
         "content-type": "application/json",
       },
       body: JSON.stringify(buildQueryBody(statement)),
-    });
+    };
+    const response = this.options.retry
+      ? await fetchWithRetry(url, request)
+      : await fetch(url, request);
     if (!response.ok && !response.headers.get("content-type")?.includes("application/json")) {
       // The response is not JSON — try to read the body as text for diagnostics.
       let bodyText = "";
@@ -99,7 +224,29 @@ export class D1Client {
       }
       throw new Error(`D1: invalid JSON response${bodyText ? ` — ${bodyText.slice(0, 500)}` : ""}`);
     }
-    if (!payload.success) {
+    const statements = Array.isArray(statement) ? statement : [statement];
+    if (payload.result?.length !== statements.length) this.usageIncomplete = true;
+    for (const [index, query] of statements.entries()) {
+      const result = payload.result?.[index];
+      const metric = (value: number | undefined) =>
+        typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : null;
+      this.usage.push({
+        phase: this.phase,
+        table: query.sql.match(/\b(?:FROM|INTO|UPDATE)\s+([a-z_]+)/i)?.[1] ?? "unknown",
+        operation: query.sql.trim().split(/\s+/)[0].toUpperCase(),
+        rowsRead: metric(result?.meta?.rows_read),
+        rowsWritten: metric(result?.meta?.rows_written),
+        durationMs: metric(result?.meta?.duration),
+        changes: metric(result?.meta?.changes),
+        success: response.ok && payload.success && !!result && result.success !== false,
+      });
+    }
+    if (
+      !response.ok ||
+      !payload.success ||
+      payload.result?.length !== statements.length ||
+      payload.result?.some((result) => result.success === false)
+    ) {
       const message = payload.errors?.map((e) => e.message).join("; ") || "D1 query failed";
       throw new Error(`D1: ${message}`);
     }

@@ -35,6 +35,7 @@
     "test:e2e:smoke": "playwright test tests/e2e/production-bootstrap.spec.ts tests/e2e/app.spec.ts tests/e2e/accessibility.spec.ts",
     "test:e2e:reuse": "E2E_REUSE_SERVER=1 playwright test",
     "sync-data": "tsx scripts/sync-data.ts",
+    "sync-data:neon": "tsx scripts/sync-neon.ts",
     "prepare": "vp config"
   },
   "dependencies": {

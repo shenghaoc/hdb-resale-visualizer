@@ -200,14 +200,14 @@ CLOUDFLARE_D1_DATABASE_ID=...
 The three Cloudflare variables are required for `vp run sync-data`; everything else above is optional:
 
 - `DATA_GOV_API_KEY` is recommended for production refresh jobs. Without it the sync still runs, but at the much lower anonymous data.gov.sg rate limits.
-- `ONEMAP_TOKEN`, or `ONEMAP_EMAIL` with `ONEMAP_PASSWORD`, enables OneMap walking routes. Without one of them the sync logs a warning and uses straight-line walking-time estimates for every pair.
+- `ONEMAP_TOKEN`, or `ONEMAP_EMAIL` with `ONEMAP_PASSWORD`, authenticates OneMap, which needs it for Search (geocoding) and for walking routes. Without one of them an address missing from `geocode_cache` is not geocoded, and the sync logs a warning and uses straight-line walking-time estimates for every pair. The Search and token requests are only ever made to OneMap's official endpoints, whatever `ONEMAP_SEARCH_ENDPOINT` or `ONEMAP_TOKEN_ENDPOINT` say.
 - `GEOCODE_CONCURRENCY` only tunes how many geocoding requests run at once.
 
 ## Deployment
 
 - **Application deploy**: Cloudflare Workers Builds deploys from the connected Git repository (`wrangler.jsonc` declares the D1 binding `DB` and runs `vp run build:deploy` via the `build.command`). GitHub Actions does not run `wrangler deploy`. PR previews share the production D1 binding — there is no per-PR sync.
 - **CI** (`.github/workflows/ci.yml`): `vp install` then `vp run check` (format check, typed lint, typecheck, unit/integration tests, production build) on every PR. E2E smoke (`.github/workflows/e2e.yml`) runs separately when UI-affecting paths change, staging fixtures to `public/api/` for preview only. No data artifact caching — runtime reads from D1.
-- **Data refresh**: disabled. The nightly `refresh-data.yml` workflow was removed because data.gov.sg rate-limited the sync and Cloudflare has announced strict D1 rate enforcement. The dataset in D1 is frozen at its last successful sync; `vp run sync-data` can still be run manually against remote D1 if a one-off refresh is ever needed.
+- **Data refresh**: disabled. The nightly `refresh-data.yml` workflow was removed because data.gov.sg rate-limited the sync and Cloudflare has announced strict D1 rate enforcement. The dataset in D1 is frozen at its last successful sync; `vp run sync-data` can still be run manually against remote D1 if a one-off refresh is ever needed. The manual Neon publisher (`vp run sync-data:neon`, `.github/workflows/refresh-neon.yml`) is `workflow_dispatch`-only and pinned to the isolated Neon benchmark branch; nothing schedules it and it does not change what the site serves (see [docs/neon-monthly-refresh-policy.md](docs/neon-monthly-refresh-policy.md)).
 
 ## Notes
 

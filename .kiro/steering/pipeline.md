@@ -4,21 +4,23 @@
 The application separates **build-time ingestion** (Node + GitHub Actions) from **runtime serving** (Cloudflare Worker + D1, with an optional Neon read backend selected by `PUBLIC_DATA_BACKEND`):
 - **Frontend**: React 19 SPA. Only talks to `/api/*` (same-origin Pages Functions).
 - **Runtime API**: `functions/api/*` route handlers. Public data routes read through the `PublicData` boundary (`functions/_lib/public-data.ts`), answered by D1 or, when `PUBLIC_DATA_BACKEND=neon`, by Neon through Hyperdrive; shortlists stay on D1. Production currently selects Neon, so `scripts/sync-data.ts` refreshing D1 does not change what the site serves until the selector is switched back. See `docs/architecture/public-read-backend.md`.
-- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required.
+- **Pipeline**: `scripts/sync-data.ts` is the single source of truth for ingestion and pushes directly into D1 via the Cloudflare D1 HTTP API. The scheduled `refresh-data.yml` workflow has been removed (data.gov.sg rate limits + upcoming strict D1 rate enforcement made nightly runs untenable for a hobby project), so the D1 dataset is frozen at its last successful sync. The script remains runnable manually if a one-off refresh is ever required. Its opt-in `--plan` / `--check-upstream` modes are read-only upstream probes and `--apply-rehearsal` applies an incremental plan to a loopback emulator only; none of them changes the full publication described below. See `docs/neon-monthly-refresh-policy.md`.
+- **Neon publisher (manual only)**: `scripts/sync-neon.ts` (`vp run sync-data:neon`, workflow `.github/workflows/refresh-neon.yml`, `workflow_dispatch` only, `mode` defaulting to `plan`) reconciles the official sources against the stored Neon publication and writes the changed rows in one PostgreSQL transaction. Downloads, OneMap requests and the artifact build run between two short read-only snapshots, never inside a transaction, and OneMap is used only within explicit per-run budgets that default to zero. Its connection URL is validated against the single isolated benchmark branch named in `scripts/lib/sync/neon.ts`; nothing schedules it, it writes no D1, and a new `NEON_PUBLIC_CACHE_EPOCH` stays a separate manual step. See `docs/neon-monthly-refresh-policy.md`.
 
 ## Data Pipeline Flow (`scripts/sync-data.ts`)
 1. **Ingestion**: Fetches raw data from official Singapore sources (data.gov.sg, LTA).
 2. **Normalization**: Sanitizes addresses, derives price/sqm + price/sqft, standardizes lease commencement years.
-3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are upserted back to D1 in batches of 250.
+3. **Geocoding (one-time)**: Loads existing coordinates from the `geocode_cache` table in D1; only addresses missing a row are sent to OneMap. New rows are upserted back to D1 in batches of 250 (the incremental modes stage them in memory until the plan has validated).
 4. **MRT walking times (one-time)**: Same pattern with the `walking_time_cache` table.
 5. **Artifact build**: `buildArtifacts()` produces the same logical shapes as before (block summaries, address details, comparisons, town × flat-type trends, MRT GeoJSON) — but they are now written to D1, not files.
 6. **D1 write**: `scripts/lib/sync/store.ts` stamps a `publicationInProgress` marker (owned by this run) into the stored manifest and reads it back, truncates and reinserts the generated tables in batched statements via the D1 HTTP API (every write is conditional on still owning the marker, inside the statement, so a superseded run changes nothing), and writes the manifest last with a statement that is conditional on that ownership and read back; that final write replaces the document and so removes the marker. While the marker is present the Worker's public-data cache stores nothing (see `docs/architecture/public-read-backend.md`). If a run aborts the marker stays, and the next `sync-data` run publishes again even when upstream is unchanged. Run one `sync-data` at a time.
+   The incremental planner (`readPublishedArtifacts` / `planArtifactWrites`, also used by the Neon publisher) instead compares source multisets and generated values with the stored rows, retains integer transaction rowids, and plans changed-only writes with the manifest last. It never builds on a manifest that carries the marker: half-replaced tables are not a generation, so a full publication has to complete first.
 
 ## D1 Tables
-**Generated (rebuilt every sync):**
+**Generated (rebuilt by every full sync; the incremental modes rewrite only changed rows):**
 - `manifest` — single-row metadata blob.
 - `blocks` — normalized columns + JSON blobs for `flat_types`, `nearby_mrts`, etc.
-- `block_details` — one JSON blob per address key (full transaction history + monthly trend).
+- `block_details` — one JSON blob per address key (capped recent transactions + full monthly trend).
 - `comparisons` — one JSON blob per address key (amenity counts + percentile ranks).
 - `town_flat_type_trends` — normalized trend points.
 - `mrt_geojson` — two rows (`stations`, `exits`).
@@ -45,7 +47,8 @@ The application separates **build-time ingestion** (Node + GitHub Actions) from 
 | `GET /api/search` | `blocks` | Coarse filters only; text/geographic search and affordability stay client-side. Cap 2000. |
 | `GET /api/suggest` | `blocks` | Typeahead (`q`, 2–256 chars). Groups: town, street, block, mrt, postal. |
 | `POST /api/comparable-transactions` | `transactions` | Listing Check evidence. `?adjust=time` applies trend-based time adjustment. |
-| `POST /api/shortlist` | `shortlists` | Opt-in create/replace. Only runtime D1 write path. 10 writes / IP / colo / 60s. |
+| `POST /api/shortlist` | `shortlists` | Opt-in create/replace. Only runtime D1 write path for user data. 10 writes / IP / colo / 60s. |
+| `GET /api/nearby-places` (cache miss) | None | Read-only PostGIS SELECT, still gated off; any public activation requires separately approved global cost control. |
 | `GET /api/shortlist/{syncCode}` | `shortlists` | Lookup by SHA-256 of the bearer code. 404 for unknown or malformed codes. |
 
 The Worker (`worker/index.ts`) also serves `/sitemap.xml`, `/robots.txt`, `/og/block/{addressKey}.png`, `/og/compare/{townA}/{townB}.png`, and HTML SEO rewrites. A daily cron (`0 3 * * *`) purges shortlist rows unused for 180 days. Full request contracts live in [docs/architecture/artifact-contracts.md](../../docs/architecture/artifact-contracts.md).
@@ -56,4 +59,4 @@ JSON shapes are validated by the Zod schemas in `src/shared/lib/dataSchemas.ts`.
 - **Mapping**: Consumes `/api/block-summaries` and `/api/mrt-exits` via MapLibre GL JS.
 - **Charts**: Consumes `/api/trends/*` and `/api/details/*` via Recharts (lazy-loaded where practical).
 - **Filtering**: Coarse filters can run on the server via `/api/search`; text/geographic search, CPF-based affordability, and sorting stay in the browser. Remaining-lease filters require a `FilterEvaluationContext` with an explicit `currentYear`.
-- **Persistence**: Shortlists and user notes are stored in `localStorage` by default. Optionally, a user can enable cloud sync with an anonymous sync code; the shortlist is then mirrored to the `shortlists` D1 table through `functions/api/shortlist/*` (the only runtime D1 write path). `localStorage` remains the offline baseline on each device.
+- **Persistence**: Shortlists and user notes are stored in `localStorage` by default. Optionally, a user can enable cloud sync with an anonymous sync code; the shortlist is then mirrored to the `shortlists` D1 table through `functions/api/shortlist/*` (the only runtime D1 write path for user data). `localStorage` remains the offline baseline on each device.

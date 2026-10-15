@@ -1,5 +1,8 @@
 import { fetchJson } from "./fetchers";
 import { oneMapResponseSchema } from "../schemas";
+import { resolveOneMapTokenEndpoint } from "../syncGuards";
+import { resolveOneMapToken } from "./routing";
+import { OneMapBudgetExhaustedError } from "./rate-limits";
 import type { GeocodeCacheFile } from "../pipeline";
 import type { D1Client } from "./d1";
 
@@ -76,15 +79,111 @@ export async function saveGeocodeCacheEntries(
   });
 }
 
+function assertOfficialSearchEndpoint(geocodeEndpoint: URL) {
+  // Credentials belong only on the official endpoint, never in an override URL or redirect.
+  if (
+    geocodeEndpoint.origin !== "https://www.onemap.gov.sg" ||
+    geocodeEndpoint.pathname !== "/api/common/elastic/search" ||
+    geocodeEndpoint.username ||
+    geocodeEndpoint.password ||
+    geocodeEndpoint.search ||
+    geocodeEndpoint.hash
+  ) {
+    throw new Error("Untrusted OneMap Search endpoint");
+  }
+}
+
+export type OneMapSession = {
+  /** The run's token: requested on first use and shared by every later and concurrent caller. `null` if none. */
+  resolveToken: () => Promise<string | null>;
+  geocodeAddress: (
+    searchValue: string,
+    geocodeEndpoint: URL,
+  ) => Promise<GeocodeCacheFile["entries"][string] | null>;
+};
+
+/**
+ * One OneMap identity for a whole sync run. A configured `ONEMAP_TOKEN` costs no request; otherwise the
+ * `ONEMAP_EMAIL`/`ONEMAP_PASSWORD` login is made once, however many lookups run at the same time, and search and
+ * routing share its result. A sync run makes hundreds of lookups, so it creates one session in its coordinator and
+ * passes `geocodeAddress` and `resolveToken` to every step that needs OneMap. Without credentials nothing is sent
+ * and every lookup is unresolved.
+ */
+export function createOneMapSession(env: NodeJS.ProcessEnv = process.env): OneMapSession {
+  let token: Promise<string | null> | undefined;
+  const resolveToken = () =>
+    (token ??= resolveOneMapToken({
+      email: env.ONEMAP_EMAIL,
+      password: env.ONEMAP_PASSWORD,
+      token: env.ONEMAP_TOKEN,
+      tokenEndpoint: resolveOneMapTokenEndpoint(),
+    }));
+  return {
+    resolveToken,
+    async geocodeAddress(searchValue, geocodeEndpoint) {
+      try {
+        assertOfficialSearchEndpoint(geocodeEndpoint);
+        const resolved = await resolveToken();
+        if (!resolved) return null;
+        return await requestOneMapSearch(searchValue, geocodeEndpoint, resolved);
+      } catch (error) {
+        throw sanitizedSearchError(error);
+      }
+    },
+  };
+}
+
+/**
+ * A single lookup that resolves its own token, so it costs a login on every call without a configured token.
+ * Anything that looks up many addresses must share a `createOneMapSession` instead.
+ */
 export async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
+  return createOneMapSession().geocodeAddress(searchValue, geocodeEndpoint);
+}
+
+/**
+ * Provider bodies, parse errors and transport messages may echo credentials, so the original error is deliberately
+ * not attached as `cause`. A budget refusal carries no credentials and keeps its type.
+ */
+function sanitizedSearchError(error: unknown): Error {
+  if (error instanceof OneMapBudgetExhaustedError) return error;
+  return new Error("OneMap Search lookup failed; response details omitted.");
+}
+
+/**
+ * One OneMap Search request with an already resolved token, so a run that resolves its token once pays for one
+ * token request rather than one per address. Failures carry no provider detail; a refusal by the run's OneMap
+ * budget is passed through as `OneMapBudgetExhaustedError` so it is never mistaken for an address result.
+ */
+export async function searchOneMapAddress(
+  searchValue: string,
+  geocodeEndpoint: URL,
+  token: string,
+): Promise<GeocodeCacheFile["entries"][string] | null> {
+  try {
+    assertOfficialSearchEndpoint(geocodeEndpoint);
+    return await requestOneMapSearch(searchValue, geocodeEndpoint, token);
+  } catch (error) {
+    throw sanitizedSearchError(error);
+  }
+}
+
+async function requestOneMapSearch(searchValue: string, geocodeEndpoint: URL, token: string) {
   const url = new URL(geocodeEndpoint);
   url.searchParams.set("searchVal", searchValue);
   url.searchParams.set("returnGeom", "Y");
   url.searchParams.set("getAddrDetails", "Y");
   url.searchParams.set("pageNum", "1");
 
-  const payload = await fetchJson<unknown>(url.toString());
-
+  const payload = await fetchJson<unknown>(url.toString(), {
+    // The Search API documents the raw access token in Authorization.
+    headers: { authorization: token },
+    redirect: "manual",
+  });
+  // Authentication failures can be HTTP 200 with empty results; they are not address evidence.
+  if (payload && typeof payload === "object" && "error" in payload) {
+    throw new Error("OneMap Search rejected the request");
+  }
   const parsed = oneMapResponseSchema.parse(payload);
   const match = parsed.results[0];
   if (!match) return null;
