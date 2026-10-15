@@ -55,7 +55,7 @@
 
 - [ ] **TG.3** Apply migration 001 to the serving branch.
   -> Row counts and verifier pass. Approval: owner. Risk: the staged executor
-  refuses a migrated branch (register item 20); sequence with `serving-data-refresh`.
+  refuses a migrated branch; sequence with `serving-data-refresh`.
 
 - [ ] **TG.4** Open `NEON_SPATIAL_ENABLED`.
   -> Approval: owner, after TG.2 and TG.3.
@@ -72,7 +72,8 @@
   proposals moved to their own PR (#429) for the owner's review before any metric
   uses them. Risk: licence obligations that conflict with storing derived rows.
 
-- [~] **T1.2** CRS contract tests (register item 26 and `design.md` 2.4) (#427, draft).
+- [~] **T1.2** CRS contract tests (the contract in `design.md` 1.4; the two haversine
+  implementations disagree with the geodesic by up to +0.56% and −0.11%) (#427, draft).
   -> Static CI guard plus a read-only PostGIS verifier (swap, relabel,
   degrees-as-metres, SVY21 round trip); passes locally and on a Neon fork.
 
@@ -112,7 +113,7 @@
 - [~] **T3.2** Exact versus KNN candidate strategy with its disagreement rate
   (#426: slower at 10k, 4.1x faster at 100k, 21x at 1M, no top-25 difference in
   2,000 centres per size); a grid strategy is not measured.
-  -> Extends the 500-block measurement in `design.md` 2.3.
+  -> Extends the 500-block KNN comparison recorded in the description of #425.
 
 ## Phase 4 — Planning hierarchy
 
@@ -129,12 +130,14 @@
 
 ## Phase D — Documentation reconciliation
 
-- [ ] **TD.1** Fix register items 1 to 17 in one scoped pull request after #423
+- [ ] **TD.1** Fix the seventeen documentation discrepancies listed as items 1 to 17
+  of the register in the description of #425, in one scoped pull request after #423
   merges (it edits the same files).
   -> Link and path check; a review against the code, line by line.
 
-- [ ] **TD.2** Document the data-licence attribution once the licence is read
-  (register item 25).
+- [ ] **TD.2** Document the data-licence attribution once the licence is read (the
+  app's credit names no licence and links none; register item 25 in the description
+  of #425).
   -> `docs/guide/` updated in the same PR (R8.3).
 
 ## Phase Z — Case study

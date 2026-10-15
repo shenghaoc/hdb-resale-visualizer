@@ -71,8 +71,8 @@ refresh that feeds them. Each feature spec cites these instead of restating them
   against labels the owner has approved. Agent-proposed labels are marked
   `unapproved` and produce no metric.
 - **R7.2** What was not verified is stated next to what was.
-- **R7.3** A discrepancy found between documents and behaviour is recorded in the
-  register (`design.md`) and fixed in a scoped pull request.
+- **R7.3** A discrepancy found between documents and behaviour is recorded as a task
+  in `tasks.md` and fixed in a scoped pull request.
 
 ## R8 — Maintainable delivery
 
