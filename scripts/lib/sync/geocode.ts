@@ -93,20 +93,52 @@ function assertOfficialSearchEndpoint(geocodeEndpoint: URL) {
   }
 }
 
-export async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
-  try {
-    assertOfficialSearchEndpoint(geocodeEndpoint);
-    const token = await resolveOneMapToken({
-      email: process.env.ONEMAP_EMAIL,
-      password: process.env.ONEMAP_PASSWORD,
-      token: process.env.ONEMAP_TOKEN,
+export type OneMapSession = {
+  /** The run's token: requested on first use and shared by every later and concurrent caller. `null` if none. */
+  resolveToken: () => Promise<string | null>;
+  geocodeAddress: (
+    searchValue: string,
+    geocodeEndpoint: URL,
+  ) => Promise<GeocodeCacheFile["entries"][string] | null>;
+};
+
+/**
+ * One OneMap identity for a whole sync run. A configured `ONEMAP_TOKEN` costs no request; otherwise the
+ * `ONEMAP_EMAIL`/`ONEMAP_PASSWORD` login is made once, however many lookups run at the same time, and search and
+ * routing share its result. A sync run makes hundreds of lookups, so it creates one session in its coordinator and
+ * passes `geocodeAddress` and `resolveToken` to every step that needs OneMap. Without credentials nothing is sent
+ * and every lookup is unresolved.
+ */
+export function createOneMapSession(env: NodeJS.ProcessEnv = process.env): OneMapSession {
+  let token: Promise<string | null> | undefined;
+  const resolveToken = () =>
+    (token ??= resolveOneMapToken({
+      email: env.ONEMAP_EMAIL,
+      password: env.ONEMAP_PASSWORD,
+      token: env.ONEMAP_TOKEN,
       tokenEndpoint: resolveOneMapTokenEndpoint(),
-    });
-    if (!token) return null;
-    return await requestOneMapSearch(searchValue, geocodeEndpoint, token);
-  } catch (error) {
-    throw sanitizedSearchError(error);
-  }
+    }));
+  return {
+    resolveToken,
+    async geocodeAddress(searchValue, geocodeEndpoint) {
+      try {
+        assertOfficialSearchEndpoint(geocodeEndpoint);
+        const resolved = await resolveToken();
+        if (!resolved) return null;
+        return await requestOneMapSearch(searchValue, geocodeEndpoint, resolved);
+      } catch (error) {
+        throw sanitizedSearchError(error);
+      }
+    },
+  };
+}
+
+/**
+ * A single lookup that resolves its own token, so it costs a login on every call without a configured token.
+ * Anything that looks up many addresses must share a `createOneMapSession` instead.
+ */
+export async function geocodeAddress(searchValue: string, geocodeEndpoint: URL) {
+  return createOneMapSession().geocodeAddress(searchValue, geocodeEndpoint);
 }
 
 /**

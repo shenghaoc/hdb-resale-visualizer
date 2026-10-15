@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { GeocodeCacheFile } from "../../scripts/lib/pipeline";
-import { geocodeAddress } from "../../scripts/lib/sync/geocode";
+import { createOneMapSession, geocodeAddress } from "../../scripts/lib/sync/geocode";
 import {
   normalizeSchoolRows,
   normalizeSupermarketRows,
 } from "../../scripts/lib/sync/normalization";
 import { resolveOneMapToken } from "../../scripts/lib/sync/routing";
-import { geocodeMissingAddresses } from "../../scripts/sync-data";
+import { computeWalkingTimes, geocodeMissingAddresses } from "../../scripts/sync-data";
 
 vi.mock("../../scripts/lib/sync/rate-limits", async (importOriginal) => ({
   ...(await importOriginal<typeof import("../../scripts/lib/sync/rate-limits")>()),
@@ -298,5 +298,143 @@ describe("geocoding cache and unresolved boundaries", () => {
     );
     expect(supermarkets.supermarkets).toHaveLength(1);
     expect(mockFetch).not.toHaveBeenCalled();
+  });
+});
+
+describe("one token request per sync run", () => {
+  const isTokenRequest = (input: RequestInfo | URL) => requestUrl(input) === TOKEN_ENDPOINT.href;
+  const tokenRequests = () =>
+    mockFetch.mock.calls.filter(([input]) => isTokenRequest(input)).length;
+  const searchRequests = () =>
+    mockFetch.mock.calls.filter(([input]) => requestUrl(input).startsWith(SEARCH_ENDPOINT.href))
+      .length;
+
+  beforeEach(() => {
+    mockFetch.mockImplementation(async (input) =>
+      isTokenRequest(input) ? json({ access_token: TOKEN }) : json({ found: 1, results: [match] }),
+    );
+  });
+
+  it("makes exactly one token request for any number of concurrent lookups", async () => {
+    vi.stubEnv("ONEMAP_EMAIL", EMAIL);
+    vi.stubEnv("ONEMAP_PASSWORD", PASSWORD);
+    const oneMap = createOneMapSession();
+
+    const results = await Promise.all(
+      Array.from({ length: 40 }, (_, index) =>
+        oneMap.geocodeAddress(`${index} EXAMPLE ROAD SINGAPORE`, SEARCH_ENDPOINT),
+      ),
+    );
+
+    expect(results.every((result) => result?.postalCode === "200640")).toBe(true);
+    expect(tokenRequests()).toBe(1);
+    expect(searchRequests()).toBe(40);
+    for (const [input, init] of mockFetch.mock.calls) {
+      if (!isTokenRequest(input))
+        expect(new Headers(init?.headers).get("authorization")).toBe(TOKEN);
+    }
+  });
+
+  it("makes no token request when a token is configured", async () => {
+    vi.stubEnv("ONEMAP_TOKEN", ` ${TOKEN} `);
+    vi.stubEnv("ONEMAP_EMAIL", EMAIL);
+    vi.stubEnv("ONEMAP_PASSWORD", PASSWORD);
+    const oneMap = createOneMapSession();
+
+    await Promise.all(
+      Array.from({ length: 10 }, (_, index) =>
+        oneMap.geocodeAddress(`${index} EXAMPLE ROAD SINGAPORE`, SEARCH_ENDPOINT),
+      ),
+    );
+
+    expect(tokenRequests()).toBe(0);
+    expect(searchRequests()).toBe(10);
+    await expect(oneMap.resolveToken()).resolves.toBe(TOKEN);
+  });
+
+  it("leaves every lookup unresolved without any request when no credentials are configured", async () => {
+    const oneMap = createOneMapSession();
+
+    const results = await Promise.all(
+      Array.from({ length: 5 }, (_, index) =>
+        oneMap.geocodeAddress(`${index} EXAMPLE ROAD SINGAPORE`, SEARCH_ENDPOINT),
+      ),
+    );
+
+    expect(results).toEqual([null, null, null, null, null]);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("does not authenticate when the run never looks anything up", () => {
+    vi.stubEnv("ONEMAP_EMAIL", EMAIL);
+    vi.stubEnv("ONEMAP_PASSWORD", PASSWORD);
+    createOneMapSession();
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it("shares one token across block geocoding, amenity geocoding and routing", async () => {
+    vi.stubEnv("ONEMAP_EMAIL", EMAIL);
+    vi.stubEnv("ONEMAP_PASSWORD", PASSWORD);
+    const oneMap = createOneMapSession();
+    const geocodeCache = cache();
+    const geocodeEndpoint = SEARCH_ENDPOINT;
+
+    await geocodeMissingAddresses(
+      {
+        missingAddresses: Array.from(
+          { length: 12 },
+          (_, index) => [`block-${index}`, `${index} EXAMPLE ROAD SINGAPORE`] as [string, string],
+        ),
+        geocodeCache,
+        geocodeEndpoint,
+        skipGeocoding: false,
+        concurrency: 10,
+        flushCacheFn: vi.fn(),
+      },
+      { geocodeAddressFn: oneMap.geocodeAddress },
+    );
+    const options = {
+      skipGeocoding: false,
+      geocodeEndpoint,
+      geocodeAddressFn: oneMap.geocodeAddress,
+    };
+    await normalizeSchoolRows(
+      Array.from({ length: 6 }, (_, index) => ({
+        school_name: `School ${index}`,
+        mainlevel_code: "PRIMARY",
+        postal_code: String(200000 + index),
+      })),
+      geocodeCache,
+      options,
+    );
+    await normalizeSupermarketRows(
+      Array.from({ length: 5 }, (_, index) => ({
+        licensee_name: `Market ${index}`,
+        postal_code: String(300000 + index),
+      })),
+      geocodeCache,
+      options,
+    );
+    const routeMissingPairsFn = vi
+      .fn()
+      .mockResolvedValue({ routedCount: 0, failedCount: 0, failureSamples: [] });
+    await computeWalkingTimes(
+      {
+        geocodes: geocodeCache.entries,
+        addressKeys: ["block-0", "block-1"],
+        mrtExits: [{ stationName: "ALPHA", lat: 1.3, lng: 103.8 }],
+        routingCache: { version: 1, updatedAt: "1970-01-01T00:00:00.000Z", entries: {} },
+        skipRouting: false,
+        routingEndpoint: new URL("https://www.onemap.gov.sg/api/public/routingsvc/route"),
+        tokenEndpoint: TOKEN_ENDPOINT,
+        concurrency: 4,
+        flushCacheFn: vi.fn(),
+      },
+      { resolveOneMapTokenFn: oneMap.resolveToken, routeMissingPairsFn },
+    );
+
+    expect(searchRequests()).toBe(12 + 6 + 5);
+    expect(tokenRequests()).toBe(1);
+    expect(routeMissingPairsFn).toHaveBeenCalledWith(expect.objectContaining({ token: TOKEN }));
   });
 });

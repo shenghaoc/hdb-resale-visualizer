@@ -14,7 +14,12 @@ import {
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
 import { fetchCsvRows, fetchGeoJson, fetchJson } from "./lib/sync/fetchers";
-import { geocodeAddress, loadGeocodeCache, saveGeocodeCacheEntries } from "./lib/sync/geocode";
+import {
+  createOneMapSession,
+  geocodeAddress,
+  loadGeocodeCache,
+  saveGeocodeCacheEntries,
+} from "./lib/sync/geocode";
 import {
   buildRoutingCacheKey,
   loadRoutingCache,
@@ -422,6 +427,8 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   const geocodeEndpoint = resolveOneMapSearchEndpoint();
   const routingEndpoint = resolveOneMapRoutingEndpoint();
   const tokenEndpoint = resolveOneMapTokenEndpoint();
+  // One OneMap login for the whole run, shared by block and amenity search and by routing.
+  const oneMap = createOneMapSession();
 
   // The publication is one long multi-request run that has always retried transient failures.
   const db = new D1Client(requireD1Config(), { retry: true });
@@ -467,6 +474,7 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
       skipGeocoding,
       geocodeEndpoint,
+      geocodeAddressFn: oneMap.geocodeAddress,
     });
     amenities = amenityData;
     if (geocodedCount > 0) {
@@ -486,16 +494,19 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
   );
   const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
-  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses({
-    missingAddresses,
-    geocodeCache,
-    geocodeEndpoint,
-    skipGeocoding,
-    concurrency,
-    flushCacheFn: async (newKeys) => {
-      await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses(
+    {
+      missingAddresses,
+      geocodeCache,
+      geocodeEndpoint,
+      skipGeocoding,
+      concurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+      },
     },
-  });
+    { geocodeAddressFn: oneMap.geocodeAddress },
+  );
 
   if (geocodeFailureCount > 0) {
     console.warn(
@@ -506,19 +517,22 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   const routingCache = await loadRoutingCache(db);
   console.log(`Loaded ${Object.keys(routingCache.entries).length} cached walking times from D1.`);
   const routingConcurrency = Math.max(1, Number(process.env.ROUTING_CONCURRENCY ?? "4"));
-  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes({
-    geocodes: geocodeCache.entries,
-    addressKeys: uniqueAddresses.keys(),
-    mrtExits,
-    routingCache,
-    skipRouting,
-    routingEndpoint,
-    tokenEndpoint,
-    concurrency: routingConcurrency,
-    flushCacheFn: async (newKeys) => {
-      await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes(
+    {
+      geocodes: geocodeCache.entries,
+      addressKeys: uniqueAddresses.keys(),
+      mrtExits,
+      routingCache,
+      skipRouting,
+      routingEndpoint,
+      tokenEndpoint,
+      concurrency: routingConcurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+      },
     },
-  });
+    { resolveOneMapTokenFn: oneMap.resolveToken },
+  );
   if (walkingFallbackCount > 0) {
     console.log(
       `Walking-time fallbacks used for ${walkingFallbackCount} block→station pairs (straight-line / 1.25 m/s).`,
@@ -569,6 +583,8 @@ async function runIncrementalSync(argv: string[], mode: { checkOnly: boolean; pl
   const geocodeEndpoint = resolveOneMapSearchEndpoint();
   const routingEndpoint = resolveOneMapRoutingEndpoint();
   const tokenEndpoint = resolveOneMapTokenEndpoint();
+  // One OneMap login for the whole run, shared by block and amenity search and by routing.
+  const oneMap = createOneMapSession();
 
   const db = new D1Client(requireD1Config());
   if (!planOnly && !db.isLocalRehearsal) {
@@ -699,6 +715,7 @@ async function runIncrementalSync(argv: string[], mode: { checkOnly: boolean; pl
     const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
       skipGeocoding,
       geocodeEndpoint,
+      geocodeAddressFn: oneMap.geocodeAddress,
     });
     if (amenityData.failedSources.length)
       throw new Error(`Incomplete amenity snapshot: ${amenityData.failedSources.join(", ")}`);
@@ -720,16 +737,19 @@ async function runIncrementalSync(argv: string[], mode: { checkOnly: boolean; pl
     ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
   );
   const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
-  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses({
-    missingAddresses,
-    geocodeCache,
-    geocodeEndpoint,
-    skipGeocoding,
-    concurrency,
-    flushCacheFn: async (newKeys) => {
-      await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses(
+    {
+      missingAddresses,
+      geocodeCache,
+      geocodeEndpoint,
+      skipGeocoding,
+      concurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+      },
     },
-  });
+    { geocodeAddressFn: oneMap.geocodeAddress },
+  );
 
   if (geocodeFailureCount > 0) {
     console.warn(
@@ -740,19 +760,22 @@ async function runIncrementalSync(argv: string[], mode: { checkOnly: boolean; pl
   const routingCache = await loadRoutingCache(db);
   console.log(`Loaded ${Object.keys(routingCache.entries).length} cached walking times from D1.`);
   const routingConcurrency = Math.max(1, Number(process.env.ROUTING_CONCURRENCY ?? "4"));
-  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes({
-    geocodes: geocodeCache.entries,
-    addressKeys: uniqueAddresses.keys(),
-    mrtExits,
-    routingCache,
-    skipRouting,
-    routingEndpoint,
-    tokenEndpoint,
-    concurrency: routingConcurrency,
-    flushCacheFn: async (newKeys) => {
-      await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes(
+    {
+      geocodes: geocodeCache.entries,
+      addressKeys: uniqueAddresses.keys(),
+      mrtExits,
+      routingCache,
+      skipRouting,
+      routingEndpoint,
+      tokenEndpoint,
+      concurrency: routingConcurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+      },
     },
-  });
+    { resolveOneMapTokenFn: oneMap.resolveToken },
+  );
   if (walkingFallbackCount > 0) {
     console.log(
       `Walking-time fallbacks used for ${walkingFallbackCount} block→station pairs (straight-line / 1.25 m/s).`,
