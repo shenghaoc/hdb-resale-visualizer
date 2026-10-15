@@ -75,15 +75,15 @@ The shared public-data cache (`worker/public-data-cache.ts`) labels every stored
 2. the handler's own query;
 3. read the manifest again: store the answer only if the two reads are identical.
 
-Two of the three statements move the whole manifest, **10,618 bytes** on the serving branch, to carry a 64-character identity. For the block panel's nearby answer (average 1,259 bytes, p95 3,446 bytes, measured below) the manifest is about 94% of the bytes a miss moves out of Neon, which also counts against its 5 GB a month transfer allowance. This is how every other route behaves today; it is measured, not assumed: the local rehearsal's control request (`/api/mrt-stations`: one miss and one hit) sends exactly three statements.
+Two of the three statements move the whole manifest, about 10 KB on the serving branch, to carry a 64-character identity. For a small nearby answer that is most of the bytes a miss moves out of Neon, which also counts against its monthly transfer allowance. This is how every other route behaves today.
 
 Nearby search is a single-statement route, so the label can be taken in the same statement. `NEARBY_LABELLED_SQL` (`worker/nearby-spatial-query.ts`) embeds the verified places query verbatim and adds a header row: `version` (the SHA-256 of `manifest.json::text`, computed in SQL so the manifest never leaves the database), the manifest's JSON type and its `publicationInProgress` marker. One SQL statement sees one snapshot, and the publisher stamps the marker before it touches any table, so the manifest as of that snapshot says whether the tables were mid-replacement; the before and after reads have nothing left to prove. The shared cache gets an additive `AtomicRead` mode for this and the multi-statement path every other route uses is unchanged (its tests pass unchanged). Result:
 
-| Request                             | Before                        | Now                           |
-| ----------------------------------- | ----------------------------- | ----------------------------- |
-| cache hit on a live 60 s pointer    | 0 statements                  | 0 statements                  |
-| cache hit after the pointer expired | 1 statement (manifest)        | 1 statement (the answer)      |
-| cache miss                          | **3** statements, about 22 KB | **1** statement, about 1.4 KB |
+| Request                             | Before                 | Now                      |
+| ----------------------------------- | ---------------------- | ------------------------ |
+| cache hit on a live 60 s pointer    | 0 statements           | 0 statements             |
+| cache hit after the pointer expired | 1 statement (manifest) | 1 statement (the answer) |
+| cache miss                          | **3** statements       | **1** statement          |
 
 The labelled statement must return the same places in the same order as the verified base query, plus exactly one header row, and its SQL-side `version` must equal the manifest's `manifestVersion`, including for a manifest that contains non-ASCII text. The parked deployed-path harness (see Verification) checks all three against a real database. `sql/neon/verify_nearby_spatial_sql.sql` still verifies the embedded base query against its brute-force oracle. A publication in progress is not cached and is labelled `BYPASS` (or the previous generation is served as `HIT-STALE`), exactly as for the other routes.
 
@@ -91,11 +91,7 @@ The labelled statement must return the same places in the same order as the veri
 
 The earlier D1 statement-budget proposal was removed. PR #431 (the Neon-counter alternative) was closed **without merging**. A refused PostgreSQL reservation itself spends a Hyperdrive statement, so that design cannot impose a hard account-wide statement cap. The remaining Workers Rate Limiting bindings are per Cloudflare location and approximate: 300 misses/minute/location is potentially 432,000 requests per location per day, well beyond the shared 100,000 Hyperdrive statements/day allowance. **The production `NEON_SPATIAL_ENABLED` flag must remain `"false"`; enabling public arbitrary-coordinate searches requires an independent global budget control first.**
 
-The fixed block-detail MRT-exit UI is moving to publish-time materialization in separate draft PR #432; this runtime route remains available only behind its disabled feature flag. A single-read-only-Hyperdrive deployed-path verification on a disposable Neon fork is independent of the future public-budget decision.
-
-### What a cache miss costs when the answer is a fixed fact about a block
-
-The only caller today asks the same fixed question for each of the 9,730 blocks. [nearby-exits-precompute-evaluation.md](./nearby-exits-precompute-evaluation.md) evaluates computing those lists once at publish time instead (41,172 rows, 802 ms to compute, about 10 MB as JSON) and recommends it for the block panel as part of the serving-refresh work. It is not built.
+The fixed block-detail MRT-exit UI is moving to publish-time materialization (prototyped in the closed draft PR #432, planned in the serving-refresh spec in PR #422); this runtime route remains available only behind its disabled feature flag. A single-read-only-Hyperdrive deployed-path verification on a disposable Neon fork is independent of the future public-budget decision.
 
 **Failure handling.** Both the per-client and the per-location limiter fail closed on missing bindings and thrown errors, responding with `503`, `Retry-After: 60` and `no-store`. A normal exceeded client limit answers `429`; the origin limit answers `503`. Invalid inputs do not consume origin-limit attempts. A previously cached answer may continue to be served when the origin limiter is down; it never opens a database connection.
 
