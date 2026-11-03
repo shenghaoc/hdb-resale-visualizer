@@ -17,6 +17,7 @@ import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
 import { ErrorBoundary } from "@/shared-ui/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
+import { DataAttribution } from "@/components/DataAttribution";
 import { MapLocaleControl } from "@/features/map-explorer/MapLocaleControl";
 import { SearchProfileWizard } from "@/features/search-profile/SearchProfileWizard";
 import {
@@ -647,14 +648,7 @@ function App() {
       >
         <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
-        <a
-          className="map-attribution-link"
-          href="https://www.onemap.gov.sg/home"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          © OneMap contributors
-        </a>
+        <DataAttribution />
 
         {showFloatingHeader ? (
           <AppHeader

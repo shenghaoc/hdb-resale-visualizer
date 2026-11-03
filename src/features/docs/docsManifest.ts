@@ -5,6 +5,7 @@ import priceComparisonsContent from "./content/understanding-price-comparisons.m
 import filtersAndMapContent from "./content/filters-and-map.md?raw";
 import shortlistingContent from "./content/shortlisting.md?raw";
 import faqContent from "./content/faq.md?raw";
+import dataSourcesContent from "./content/data-sources.md?raw";
 import troubleshootingContent from "./content/troubleshooting.md?raw";
 
 export type DocsSection = {
@@ -25,6 +26,7 @@ export const DOCS_SECTIONS: DocsSection[] = [
   { slug: "filters-and-map", title: "Filters & map", content: filtersAndMapContent },
   { slug: "shortlisting", title: "Shortlisting", content: shortlistingContent },
   { slug: "faq", title: "FAQ", content: faqContent },
+  { slug: "data-sources", title: "Data sources", content: dataSourcesContent },
   { slug: "troubleshooting", title: "Troubleshooting", content: troubleshootingContent },
 ];
 
