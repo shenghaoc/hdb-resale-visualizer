@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { NEARBY_SPATIAL_SQL } from "../../worker/nearby-spatial-query";
+import { NEARBY_LABELLED_SQL } from "../../worker/nearby-spatial-query";
 
 const spies = vi.hoisted(() => ({
   factory: vi.fn(),
@@ -26,7 +26,20 @@ const worker = (await import(workerEntry)).default as {
 };
 
 const manifest = JSON.stringify({ generatedAt: "2026-10-05", filterOptions: { towns: ["BEDOK"] } });
+const manifestVersionHex = async (text: string) =>
+  Array.from(
+    new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text))),
+    (byte) => byte.toString(16).padStart(2, "0"),
+  ).join("");
+/** What the labelled statement returns first: the publication that the places were read from. */
+const publicationHeader = async (marker: string | null = null) => ({
+  row_type: "publication",
+  version: await manifestVersionHex(manifest),
+  manifest_type: "object",
+  marker,
+});
 const exitRow = {
+  row_type: "place",
   kind: "mrt_exit",
   id: "mrt_geojson:mrt_exit:21266",
   name: "CHINATOWN MRT STATION (Exit F)",
@@ -39,13 +52,21 @@ const exitRow = {
 };
 const ctx = { waitUntil: () => {} } as unknown as ExecutionContext;
 
-/** The shipped `wrangler.jsonc` shape: Neon selected, Hyperdrive bound, spatial release gate off. */
+/** A stand-in for a Workers Rate Limiting binding that always answers `success`. */
+const limiter = (success: boolean) => ({
+  limit: vi.fn(async (_options: { key: string }) => ({ success })),
+});
+
+/**
+ * The shipped `wrangler.jsonc` shape: Neon selected, Hyperdrive bound, spatial release gate off. With the gate open
+ * the D1 binding is a trap: public nearby search must never read it.
+ */
 const deployedEnv = (overrides: Record<string, unknown> = {}) =>
   ({
     DB: {
       prepare: () => {
         spies.d1();
-        throw new Error("D1 must not be read by these routes");
+        throw new Error("D1 must not be read for public nearby search");
       },
     },
     PUBLIC_DATA_BACKEND: "neon",
@@ -53,9 +74,13 @@ const deployedEnv = (overrides: Record<string, unknown> = {}) =>
     NEON_SPATIAL_ENABLED: "false",
     HDB_PUBLIC_NEON: { connectionString: "test" },
     ASSETS: { fetch: async () => new Response("<html></html>") },
+    // Like the shipped wrangler.jsonc, the limiter bindings exist; individual tests replace them.
+    NEARBY_IP_LIMITER: limiter(true),
+    NEARBY_ORIGIN_LIMITER: limiter(true),
     ...overrides,
   }) as unknown as Env;
-const call = (env: Env, path: string) => worker.fetch(new Request(`https://test${path}`), env, ctx);
+const call = (env: Env, path: string, headers?: Record<string, string>) =>
+  worker.fetch(new Request(`https://test${path}`, { headers }), env, ctx);
 const nearbyPath = "/api/nearby-places?lat=1.35&lng=103.75&radius=1500&limit=25&types=mrt_exit";
 
 const inMemoryCache = () => {
@@ -71,22 +96,23 @@ const inMemoryCache = () => {
   return entries;
 };
 
-describe("spatial release gate in the Worker entry", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    spies.query.mockImplementation(async (sql: string) => {
-      if (sql.includes("FROM public.manifest")) return [{ json: manifest }];
-      if (sql === NEARBY_SPATIAL_SQL) return [exitRow];
-      return [];
-    });
-    spies.snapshot.mockImplementation(async (respond: () => Promise<unknown>) => respond());
-    spies.close.mockResolvedValue(undefined);
-    vi.stubGlobal("caches", undefined);
+beforeEach(async () => {
+  vi.clearAllMocks();
+  const header = await publicationHeader();
+  spies.query.mockImplementation(async (sql: string) => {
+    if (sql === NEARBY_LABELLED_SQL) return [header, exitRow];
+    if (sql.includes("FROM public.manifest")) return [{ json: manifest }];
+    return [];
   });
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
+  spies.snapshot.mockImplementation(async (respond: () => Promise<unknown>) => respond());
+  spies.close.mockResolvedValue(undefined);
+  vi.stubGlobal("caches", undefined);
+});
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
+describe("spatial release gate in the Worker entry", () => {
   it.each([["false"], [undefined], ["TRUE"], ["1"], [""]])(
     "NEON_SPATIAL_ENABLED=%j answers a no-store 503 before any Neon transport exists",
     async (flag) => {
@@ -127,9 +153,11 @@ describe("spatial release gate in the Worker entry", () => {
         },
       ],
     });
-    const nearbyCalls = spies.query.mock.calls.filter(([sql]) => sql === NEARBY_SPATIAL_SQL);
+    const nearbyCalls = spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL);
     expect(nearbyCalls).toHaveLength(1);
     expect(nearbyCalls[0][1]).toEqual([1.35, 103.75, 1500, ["mrt_exit"], 25]);
+    // The labelled statement is the only one: no separate manifest reads around it.
+    expect(spies.query).toHaveBeenCalledTimes(1);
     expect(spies.close).toHaveBeenCalledTimes(1);
   });
 
@@ -207,5 +235,280 @@ describe("spatial release gate in the Worker entry", () => {
     // "available" never means that the spatial migration has been applied.
     expect(spies.factory).not.toHaveBeenCalled();
     expect(spies.query).not.toHaveBeenCalled();
+  });
+});
+
+describe("nearby rate limiting in the Worker entry", () => {
+  const open = { NEON_SPATIAL_ENABLED: "true" };
+  const nearbySqlCalls = () =>
+    spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL).length;
+
+  it("never consults a limiter while the gate is closed", async () => {
+    const ip = limiter(true);
+    const origin = limiter(true);
+    const response = await call(
+      deployedEnv({ NEARBY_IP_LIMITER: ip, NEARBY_ORIGIN_LIMITER: origin }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(ip.limit).not.toHaveBeenCalled();
+    expect(origin.limit).not.toHaveBeenCalled();
+  });
+
+  it("answers 429 with Retry-After before the cache, a transport or the database is touched", async () => {
+    const entries = inMemoryCache();
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_IP_LIMITER: limiter(false) }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(429);
+    expect(response.headers.get("retry-after")).toBe("60");
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Too Many Requests" });
+    expect(spies.factory).not.toHaveBeenCalled();
+    expect(spies.query).not.toHaveBeenCalled();
+    expect(entries.size).toBe(0);
+  });
+
+  it("keys the client limit on the IPv4 address, or on the IPv6 /64 prefix", async () => {
+    const ip = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_IP_LIMITER: ip });
+    await call(env, nearbyPath, { "CF-Connecting-IP": "203.0.113.9" });
+    await call(env, nearbyPath, { "CF-Connecting-IP": "2001:db8:1:2:aaaa:bbbb:cccc:dddd" });
+    await call(env, nearbyPath, { "CF-Connecting-IP": "2001:db8:1:2::1" });
+    expect(ip.limit.mock.calls.map(([options]) => options.key)).toEqual([
+      "203.0.113.9",
+      "v6:2001:0db8:0001:0002",
+      "v6:2001:0db8:0001:0002",
+    ]);
+  });
+
+  it("fails closed with 503 when a limiter binding is missing while the gate is open", async () => {
+    const noClient = await call(deployedEnv({ ...open, NEARBY_IP_LIMITER: undefined }), nearbyPath);
+    expect(noClient.status).toBe(503);
+    expect(await noClient.json()).toEqual({ error: "Nearby search is not configured" });
+    expect(spies.factory).not.toHaveBeenCalled();
+
+    const noOrigin = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: undefined }),
+      nearbyPath,
+    );
+    expect(noOrigin.status).toBe(503);
+    expect(await noOrigin.json()).toEqual({ error: "Nearby search is not configured" });
+    expect(nearbySqlCalls()).toBe(0);
+  });
+
+  it("spends the origin budget on cache misses only, never on hits", async () => {
+    const entries = inMemoryCache();
+    const ip = limiter(true);
+    const origin = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_IP_LIMITER: ip, NEARBY_ORIGIN_LIMITER: origin });
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("MISS");
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("HIT");
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("HIT");
+    expect(ip.limit).toHaveBeenCalledTimes(3);
+    expect(origin.limit).toHaveBeenCalledTimes(1);
+    expect(origin.limit.mock.calls[0][0]).toEqual({ key: "nearby-origin" });
+    expect(nearbySqlCalls()).toBe(1);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(1);
+  });
+
+  it("answers 503 when the origin budget is spent, runs no spatial SQL and caches nothing", async () => {
+    const entries = inMemoryCache();
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: limiter(false) }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(response.headers.get("retry-after")).toBe("60");
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Nearby search is busy, try again shortly" });
+    expect(nearbySqlCalls()).toBe(0);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
+  });
+
+  const boom = () => ({ limit: vi.fn(async () => Promise.reject(new Error("limiter down"))) });
+
+  it("fails closed when the origin limiter throws: 503, no spatial SQL, nothing cached, logged", async () => {
+    const entries = inMemoryCache();
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: boom() }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Nearby search is temporarily unavailable" });
+    expect(nearbySqlCalls()).toBe(0);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
+    expect(log).toHaveBeenCalledOnce();
+    log.mockRestore();
+  });
+
+  it("keeps serving cached answers while the origin limiter is down, because hits never reach it", async () => {
+    inMemoryCache();
+    const origin = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin });
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("MISS");
+    origin.limit.mockImplementation(async () => Promise.reject(new Error("limiter down")));
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const hit = await call(env, nearbyPath);
+    expect(hit.status).toBe(200);
+    expect(hit.headers.get("x-data-cache")).toBe("HIT");
+    expect(origin.limit).toHaveBeenCalledTimes(1);
+    expect(log).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+
+  it("fails closed when the client limiter throws, without touching the database", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const response = await call(deployedEnv({ ...open, NEARBY_IP_LIMITER: boom() }), nearbyPath);
+    expect(response.status).toBe(503);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(nearbySqlCalls()).toBe(0);
+    expect(log).toHaveBeenCalledOnce();
+    log.mockRestore();
+  });
+});
+
+describe("one labelled SQL statement per cache miss without a counter", () => {
+  const open = { NEON_SPATIAL_ENABLED: "true" };
+  const labelled = () => spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL);
+  /** Statements that read the manifest on their own (the labelled statement reads it inside the same query). */
+  const manifestReads = () =>
+    spies.query.mock.calls.filter(
+      ([sql]) => sql !== NEARBY_LABELLED_SQL && String(sql).includes("FROM public.manifest"),
+    ).length;
+  const pointerKeys = (entries: Map<string, Response>) =>
+    [...entries.keys()].filter((key) => key.endsWith("/__public-data-cache/v1/pointer"));
+
+  it("a miss sends exactly one statement and no manifest read, and a repeat sends none", async () => {
+    const entries = inMemoryCache();
+    const env = deployedEnv(open);
+    const first = await call(env, nearbyPath);
+    expect(first.status).toBe(200);
+    expect(first.headers.get("x-data-cache")).toBe("MISS");
+    expect(spies.query).toHaveBeenCalledTimes(1);
+    expect(labelled()).toHaveLength(1);
+    expect(manifestReads()).toBe(0);
+
+    const second = await call(env, nearbyPath);
+    expect(second.headers.get("x-data-cache")).toBe("HIT");
+    expect(spies.query).toHaveBeenCalledTimes(1);
+    // The answer is stored under the version the statement itself reported, and the pointer names it.
+    const version = await manifestVersionHex(manifest);
+    expect(
+      [...entries.keys()].some((key) => key.includes(`/v1/${version}/api/nearby-places`)),
+    ).toBe(true);
+    expect(await entries.get(pointerKeys(entries)[0])?.text()).toBe(version);
+  });
+
+  it("after the pointer expires, the next request is one statement again, not a manifest read plus more", async () => {
+    const entries = inMemoryCache();
+    const env = deployedEnv(open);
+    await call(env, nearbyPath);
+    for (const key of pointerKeys(entries)) entries.delete(key); // the 60 s pointer lapsed
+    const response = await call(env, nearbyPath);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-data-cache")).toBe("MISS");
+    expect(spies.query).toHaveBeenCalledTimes(2);
+    expect(manifestReads()).toBe(0);
+  });
+
+  it("invalid requests and the D1 rollback backend spend no origin budget", async () => {
+    inMemoryCache();
+    const origin = limiter(true);
+    const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin });
+    for (const bad of [
+      "/api/nearby-places?lat=2&lng=103.8",
+      "/api/nearby-places?lat=1.35&lng=103.75&radius=9999",
+      "/api/nearby-places?lat=1.35&lng=103.75&limit=26",
+      "/api/nearby-places",
+    ]) {
+      expect((await call(env, bad)).status, bad).toBe(400);
+    }
+    expect(origin.limit).not.toHaveBeenCalled();
+    expect(spies.query).not.toHaveBeenCalled();
+    const rollback = deployedEnv({
+      ...open,
+      NEARBY_ORIGIN_LIMITER: origin,
+      PUBLIC_DATA_BACKEND: "d1",
+    });
+    expect((await call(rollback, nearbyPath)).status).toBe(503);
+    expect(origin.limit).not.toHaveBeenCalled();
+    expect(spies.d1).not.toHaveBeenCalled();
+  });
+
+  it("does not store, and labels, an answer read while a publication is in progress", async () => {
+    const entries = inMemoryCache();
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const marker = JSON.stringify({
+      baseVersion: null,
+      startedAt: "2026-10-10T01:00:00.000Z",
+      owner: "run",
+    });
+    const header = await publicationHeader(marker);
+    spies.query.mockImplementation(async (sql: string) =>
+      sql === NEARBY_LABELLED_SQL ? [header, exitRow] : [],
+    );
+    const env = deployedEnv(open);
+    const first = await call(env, nearbyPath);
+    expect(first.status).toBe(200);
+    expect(first.headers.get("x-data-cache")).toBe("BYPASS");
+    expect(first.headers.get("cache-control")).toBe("no-store");
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
+    expect(pointerKeys(entries)).toHaveLength(0);
+    await call(env, nearbyPath);
+    expect(labelled()).toHaveLength(2); // nothing was kept, so the second request asks again
+    warn.mockRestore();
+  });
+
+  it("serves the previous generation from the cache while a publication is in progress", async () => {
+    const entries = inMemoryCache();
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const env = deployedEnv(open);
+    await call(env, nearbyPath); // stored under the complete generation
+    const base = await manifestVersionHex(manifest);
+    for (const key of pointerKeys(entries)) entries.delete(key);
+    const marker = JSON.stringify({
+      baseVersion: base,
+      startedAt: "2026-10-10T01:00:00.000Z",
+      owner: "run",
+    });
+    const header = await publicationHeader(marker);
+    spies.query.mockImplementation(async (sql: string) =>
+      sql === NEARBY_LABELLED_SQL ? [header, { ...exitRow, name: "HALF PUBLISHED" }] : [],
+    );
+    const response = await call(env, nearbyPath);
+    expect(response.headers.get("x-data-cache")).toBe("HIT-STALE");
+    expect(JSON.stringify(await response.json())).not.toContain("HALF PUBLISHED");
+    warn.mockRestore();
+  });
+
+  it("labels an absent manifest and stores nothing", async () => {
+    const entries = inMemoryCache();
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    spies.query.mockImplementation(async (sql: string) =>
+      sql === NEARBY_LABELLED_SQL ? [exitRow] : [],
+    );
+    const response = await call(deployedEnv(open), nearbyPath);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("x-data-cache")).toBe("BYPASS-NO-MANIFEST");
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(entries.size).toBe(0);
+    warn.mockRestore();
+  });
+
+  it("never repeats the statement when the database fails, and stores nothing", async () => {
+    const entries = inMemoryCache();
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    spies.query.mockImplementation(async () => {
+      throw new Error("Public database read failed");
+    });
+    const response = await call(deployedEnv(open), nearbyPath);
+    expect(response.status).toBe(500);
+    expect(spies.query).toHaveBeenCalledTimes(1);
+    expect(entries.size).toBe(0);
+    log.mockRestore();
   });
 });

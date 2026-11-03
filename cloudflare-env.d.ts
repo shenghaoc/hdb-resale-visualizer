@@ -21,4 +21,11 @@ interface Env {
   ASSETS: Fetcher;
   /** Per-IP rate limit for POST /api/shortlist before any D1 write. */
   SHORTLIST_WRITE_LIMITER: RateLimit;
+  /**
+   * Per-client rate limit for GET /api/nearby-places (IPv4 address or IPv6 /64). Required once the
+   * spatial gate is open: a missing binding answers 503 instead of running unlimited.
+   */
+  NEARBY_IP_LIMITER?: RateLimit;
+  /** Per-location cap on cache-miss nearby queries. Required once the spatial gate is open. */
+  NEARBY_ORIGIN_LIMITER?: RateLimit;
 }
