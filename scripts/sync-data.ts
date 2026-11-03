@@ -2,6 +2,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   buildArtifacts,
+  excludedTransactionDigest,
+  toTransactionRow,
   buildMrtStationsGeoJson,
   pickNearestStations,
   walkingTimeLookupKey,
@@ -12,7 +14,12 @@ import {
 } from "./lib/pipeline";
 import { collectionMetadataSchema } from "./lib/schemas";
 import { fetchCsvRows, fetchGeoJson, fetchJson } from "./lib/sync/fetchers";
-import { geocodeAddress, loadGeocodeCache, saveGeocodeCacheEntries } from "./lib/sync/geocode";
+import {
+  createOneMapSession,
+  geocodeAddress,
+  loadGeocodeCache,
+  saveGeocodeCacheEntries,
+} from "./lib/sync/geocode";
 import {
   buildRoutingCacheKey,
   loadRoutingCache,
@@ -29,6 +36,7 @@ import {
   normalizeSchoolRows,
   normalizeSupermarketRows,
   rekeyPropertyInfo,
+  type AmenityGeocodeOptions,
 } from "./lib/sync/normalization";
 import {
   MOE_SCHOOL_DATASET_ID,
@@ -46,7 +54,24 @@ import {
   validateGeneratedArtifacts,
 } from "./lib/syncGuards";
 import { D1Client, resolveD1ConfigFromEnv } from "./lib/sync/d1";
-import { readManifestUpdatedAt, writeArtifactsToD1 } from "./lib/sync/store";
+import { fetchSourceVersionHints, sourceVersionHintsChanged } from "./lib/sync/source-version";
+import {
+  requiresSourceReconciliation,
+  resolveReconciliationTrigger,
+} from "./lib/sync/refresh-policy";
+import type { StoredManifest } from "../shared/data-types";
+import {
+  assertNoUnfinishedPublication,
+  readManifestUpdatedAt,
+  readPublishedArtifacts,
+  writeArtifactsToD1,
+  writeIncrementalArtifactsToLocalD1,
+} from "./lib/sync/store";
+import {
+  assignStableTransactionIds,
+  planTransactionDelta,
+  readTransactionSnapshot,
+} from "./lib/sync/incremental";
 
 type CollectionMetadata = { childDatasets: string[]; lastUpdatedAt: string };
 type TimestampFactory = () => string;
@@ -83,7 +108,7 @@ function warnAmenityStep(step: string, error: unknown) {
 
 export async function fetchAmenityData(
   geocodeCache: GeocodeCacheFile,
-  options: { skipGeocoding: boolean; geocodeEndpoint: URL },
+  options: AmenityGeocodeOptions,
   deps: AmenityFetchDependencies = {},
 ) {
   const fetchCsvRowsFn = deps.fetchCsvRowsFn ?? fetchCsvRows;
@@ -98,22 +123,36 @@ export async function fetchAmenityData(
   let supermarkets: AmenityLocation[] = [];
   let parks: AmenityLocation[] = [];
   let geocodedCount = 0;
+  // Amenities left without coordinates (not cached, and not resolved by geocoding in this run).
+  let unlocatedCount = 0;
+  const failedSources: string[] = [];
+  // Rows or features a source delivered that could not be used at all (the schema no longer matches), by source.
+  // This is not `unlocatedCount`: those rows were understood and only lack coordinates. Absent means none.
+  const invalidRows: Record<string, number> = {};
+  const noteInvalid = (source: string, count: number) => {
+    if (count > 0) invalidRows[source] = count;
+  };
 
   try {
     const schoolRows = await fetchCsvRowsFn(MOE_SCHOOL_DATASET_ID);
     const schoolResult = await normalizeSchoolRowsFn(schoolRows, geocodeCache, options);
     schools = schoolResult.schools;
     geocodedCount += schoolResult.geocodedCount;
+    unlocatedCount += schoolResult.skippedNoCoords ?? 0;
+    noteInvalid("schools", schoolResult.invalidRows ?? 0);
     console.log(`Processed ${schools.length} primary schools.`);
   } catch (error) {
+    failedSources.push("schools");
     warnAmenityStep("schools", error);
   }
 
   try {
     const hawkerGeoJson = await fetchGeoJsonFn(NEA_HAWKER_DATASET_ID);
     hawkers = normalizeAmenityGeoJsonFn(hawkerGeoJson);
+    noteInvalid("hawkers", hawkerGeoJson.features.length - hawkers.length);
     console.log(`Processed ${hawkers.length} hawker centres.`);
   } catch (error) {
+    failedSources.push("hawkers");
     warnAmenityStep("hawkers", error);
   }
 
@@ -126,16 +165,21 @@ export async function fetchAmenityData(
     );
     supermarkets = supermarketResult.supermarkets;
     geocodedCount += supermarketResult.geocodedCount;
+    unlocatedCount += supermarketResult.skippedNoCoords ?? 0;
+    noteInvalid("supermarkets", supermarketResult.invalidRows ?? 0);
     console.log(`Processed ${supermarkets.length} supermarkets.`);
   } catch (error) {
+    failedSources.push("supermarkets");
     warnAmenityStep("supermarkets", error);
   }
 
   try {
     const parksGeoJson = await fetchGeoJsonFn(NPARKS_PARKS_DATASET_ID);
     parks = normalizeAmenityGeoJsonFn(parksGeoJson);
+    noteInvalid("parks", parksGeoJson.features.length - parks.length);
     console.log(`Processed ${parks.length} parks.`);
   } catch (error) {
+    failedSources.push("parks");
     warnAmenityStep("parks", error);
   }
 
@@ -149,6 +193,9 @@ export async function fetchAmenityData(
     supermarkets,
     parks,
     geocodedCount,
+    unlocatedCount,
+    failedSources,
+    invalidRows,
   };
 }
 
@@ -335,7 +382,44 @@ export async function computeWalkingTimes(
   return { walkingTimes, fallbackCount, failureCount };
 }
 
+function requireD1Config() {
+  const d1Config = resolveD1ConfigFromEnv();
+  if (!d1Config) {
+    throw new Error(
+      "Missing D1 credentials. Set CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN, and CLOUDFLARE_D1_DATABASE_ID before running sync-data.",
+    );
+  }
+  return d1Config;
+}
+
+/**
+ * Entry point of `vp run sync-data`.
+ *
+ * A plain run (optionally `--force`) is the production publication: it rebuilds every artifact and replaces the
+ * D1 generated tables under the publication marker (`writeArtifactsToD1`). The incremental modes are opt-in and
+ * never take that path:
+ *
+ * - `--plan` / `--check-upstream`: read-only probes (source hints, and with `--reconcile-manual` /
+ *   `--reconcile-monthly` the exact transaction delta). Safe against a remote D1.
+ * - `--apply-rehearsal`: applies the incremental plan as one atomic batch to a loopback emulator only.
+ */
 export async function runSyncData(argv = process.argv.slice(2)) {
+  const checkOnly = argv.includes("--check-upstream");
+  const planOnly = argv.includes("--plan") || checkOnly;
+  const rehearsal = argv.includes("--apply-rehearsal");
+  if (planOnly && rehearsal)
+    throw new Error("Choose either --plan/--check-upstream or --apply-rehearsal, not both.");
+  if (planOnly || rehearsal) return runIncrementalSync(argv, { checkOnly, planOnly });
+  // Explicit reconciliation intent selects the incremental modes. It must never fall through to the
+  // production publication, which replaces every generated D1 table.
+  if (argv.includes("--reconcile-manual") || argv.includes("--reconcile-monthly")) {
+    throw new Error(
+      "--reconcile-manual and --reconcile-monthly select the incremental modes: add --plan (read-only) or " +
+        "--apply-rehearsal (loopback emulator). A plain run publishes the full replacement under the " +
+        "publication marker; use --force to repeat it when upstream is unchanged.",
+    );
+  }
+
   const force = argv.includes("--force");
   const skipGeocoding = argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
   const skipAmenities = argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
@@ -343,14 +427,11 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   const geocodeEndpoint = resolveOneMapSearchEndpoint();
   const routingEndpoint = resolveOneMapRoutingEndpoint();
   const tokenEndpoint = resolveOneMapTokenEndpoint();
+  // One OneMap login for the whole run, shared by block and amenity search and by routing.
+  const oneMap = createOneMapSession();
 
-  const d1Config = resolveD1ConfigFromEnv();
-  if (!d1Config) {
-    throw new Error(
-      "Missing D1 credentials. Set CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN, and CLOUDFLARE_D1_DATABASE_ID before running sync-data.",
-    );
-  }
-  const db = new D1Client(d1Config);
+  // The publication is one long multi-request run that has always retried transient failures.
+  const db = new D1Client(requireD1Config(), { retry: true });
 
   const resaleCollection = await fetchCollectionMetadata();
   if (!force) {
@@ -393,6 +474,7 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
       skipGeocoding,
       geocodeEndpoint,
+      geocodeAddressFn: oneMap.geocodeAddress,
     });
     amenities = amenityData;
     if (geocodedCount > 0) {
@@ -412,16 +494,19 @@ export async function runSyncData(argv = process.argv.slice(2)) {
     ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
   );
   const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
-  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses({
-    missingAddresses,
-    geocodeCache,
-    geocodeEndpoint,
-    skipGeocoding,
-    concurrency,
-    flushCacheFn: async (newKeys) => {
-      await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses(
+    {
+      missingAddresses,
+      geocodeCache,
+      geocodeEndpoint,
+      skipGeocoding,
+      concurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+      },
     },
-  });
+    { geocodeAddressFn: oneMap.geocodeAddress },
+  );
 
   if (geocodeFailureCount > 0) {
     console.warn(
@@ -432,19 +517,22 @@ export async function runSyncData(argv = process.argv.slice(2)) {
   const routingCache = await loadRoutingCache(db);
   console.log(`Loaded ${Object.keys(routingCache.entries).length} cached walking times from D1.`);
   const routingConcurrency = Math.max(1, Number(process.env.ROUTING_CONCURRENCY ?? "4"));
-  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes({
-    geocodes: geocodeCache.entries,
-    addressKeys: uniqueAddresses.keys(),
-    mrtExits,
-    routingCache,
-    skipRouting,
-    routingEndpoint,
-    tokenEndpoint,
-    concurrency: routingConcurrency,
-    flushCacheFn: async (newKeys) => {
-      await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes(
+    {
+      geocodes: geocodeCache.entries,
+      addressKeys: uniqueAddresses.keys(),
+      mrtExits,
+      routingCache,
+      skipRouting,
+      routingEndpoint,
+      tokenEndpoint,
+      concurrency: routingConcurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+      },
     },
-  });
+    { resolveOneMapTokenFn: oneMap.resolveToken },
+  );
   if (walkingFallbackCount > 0) {
     console.log(
       `Walking-time fallbacks used for ${walkingFallbackCount} block→station pairs (straight-line / 1.25 m/s).`,
@@ -479,6 +567,258 @@ export async function runSyncData(argv = process.argv.slice(2)) {
 
   const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
   await writeArtifactsToD1(db, artifacts, mrtGeoJson, stationsGeoJson, nowTimestamp());
+}
+
+/**
+ * The incremental modes: exact source reconciliation against the stored transactions, then (loopback emulator
+ * only) one atomic batch of the changed rows. Nothing here replaces whole tables, stamps the publication marker
+ * or writes a remote D1; those belong to the production publication in `runSyncData`.
+ */
+async function runIncrementalSync(argv: string[], mode: { checkOnly: boolean; planOnly: boolean }) {
+  const { checkOnly, planOnly } = mode;
+  const reconciliationTrigger = resolveReconciliationTrigger(argv);
+  const skipGeocoding = argv.includes("--skip-geocoding") || process.env.SKIP_GEOCODING === "1";
+  const skipAmenities = argv.includes("--skip-amenities") || process.env.SKIP_AMENITIES === "1";
+  const skipRouting = argv.includes("--skip-routing") || process.env.SKIP_ROUTING === "1";
+  const geocodeEndpoint = resolveOneMapSearchEndpoint();
+  const routingEndpoint = resolveOneMapRoutingEndpoint();
+  const tokenEndpoint = resolveOneMapTokenEndpoint();
+  // One OneMap login for the whole run, shared by block and amenity search and by routing.
+  const oneMap = createOneMapSession();
+
+  const db = new D1Client(requireD1Config());
+  if (!planOnly && !db.isLocalRehearsal) {
+    throw new Error(
+      "Remote apply disabled: --apply-rehearsal publishes one atomic batch and only runs against a loopback " +
+        "emulator (CLOUDFLARE_D1_ENDPOINT=http://localhost:<port>). A remote D1 is published by a plain run, " +
+        "the full replacement under the publication marker.",
+    );
+  }
+  db.setPhase("source-version-preflight");
+
+  const baselineRows = await db.query<{ json: string }>({
+    sql: "SELECT json FROM manifest WHERE id = 1",
+  });
+  const manifestJson = baselineRows[0]?.json ?? null;
+  const resaleCollection = await fetchCollectionMetadata();
+  const baselineManifest = manifestJson ? (JSON.parse(manifestJson) as StoredManifest) : undefined;
+  const sourceVersionHints = await fetchSourceVersionHints([
+    ...resaleCollection.childDatasets,
+    PROPERTY_DATASET_ID,
+    MRT_DATASET_ID,
+    ...(!skipAmenities
+      ? [
+          MOE_SCHOOL_DATASET_ID,
+          NEA_HAWKER_DATASET_ID,
+          SFA_SUPERMARKET_DATASET_ID,
+          NPARKS_PARKS_DATASET_ID,
+        ]
+      : []),
+  ]);
+  const reconciliationRequired = requiresSourceReconciliation({
+    trigger: reconciliationTrigger,
+    previousReconciledAt: baselineManifest?.syncBuildState?.reconciledAt,
+  });
+  if (checkOnly || !reconciliationRequired) {
+    console.log(
+      JSON.stringify({
+        mode: "read-only-source-probe",
+        reconciliationTrigger,
+        reconciliationRequired,
+        collectionHintChanged:
+          baselineManifest?.sources.lastUpdatedAt !== resaleCollection.lastUpdatedAt,
+        sourceHintsChanged: sourceVersionHintsChanged(
+          baselineManifest?.syncBuildState?.sourceVersionHints,
+          sourceVersionHints,
+        ),
+        sourceVersion: resaleCollection.lastUpdatedAt,
+        sourceVersionHints,
+        actual: db.usageReport(),
+        limitation:
+          "Hints are observability only; reconciliation requires explicit monthly or manual intent.",
+      }),
+    );
+    return;
+  }
+  // An unfinished full publication leaves the tables half replaced: they are no baseline to diff against.
+  if (manifestJson) assertNoUnfinishedPublication(manifestJson);
+
+  console.log(`Downloading ${resaleCollection.childDatasets.length} resale datasets...`);
+  const transactions: ResaleTransaction[] = [];
+  for (const [index, datasetId] of resaleCollection.childDatasets.entries()) {
+    const datasetRows = await fetchCsvRows(datasetId);
+    const normalized = normalizeResaleRows(datasetRows);
+    if (normalized.length !== datasetRows.length)
+      throw new Error(
+        `Invalid or partial source: dataset ${datasetId} had ${datasetRows.length - normalized.length} rejected rows`,
+      );
+    for (const transaction of normalized) transactions.push(transaction);
+    console.log(
+      `Processed resale dataset ${index + 1}/${resaleCollection.childDatasets.length}: ${normalized.length} transactions (${transactions.length} total).`,
+    );
+  }
+
+  // Validate the complete transaction multiset BEFORE geocode/routing cache writes.
+  const transactionRows = transactions.flatMap((row) => {
+    const fact = toTransactionRow(row);
+    return fact ? [fact] : [];
+  });
+  const excludedDigest = excludedTransactionDigest(transactions);
+  const previousExcludedDigest = baselineManifest?.syncBuildState?.excludedSourceDigest;
+  if (
+    (previousExcludedDigest && previousExcludedDigest !== excludedDigest) ||
+    (!previousExcludedDigest && transactions.length !== transactionRows.length)
+  )
+    throw new Error(
+      "Excluded storey-range facts require explicit manual reconciliation before publication",
+    );
+  const stored = await readTransactionSnapshot(db);
+  const delta = planTransactionDelta(stored, transactionRows);
+  assignStableTransactionIds(transactions, stored, delta, toTransactionRow);
+  if (planOnly) {
+    console.log(
+      JSON.stringify({
+        mode: "read-only-plan",
+        sourceVersion: resaleCollection.lastUpdatedAt,
+        sourceDatasets: resaleCollection.childDatasets,
+        sourceRows: transactionRows.length,
+        inserts: delta.inserts.length,
+        updates: delta.updates.length,
+        affectedBlocks: delta.affectedBlocks.size,
+        affectedTownTypes: delta.affectedTownTypes.size,
+        actual: db.usageReport(),
+        limitation:
+          "Transaction preflight only; derived write costs, account headroom and remote atomicity are not proven",
+      }),
+    );
+    return;
+  }
+
+  const previousArtifacts = await readPublishedArtifacts(db, manifestJson);
+  db.beginWriteStaging();
+  const propertyRows = await fetchCsvRows(PROPERTY_DATASET_ID);
+  const normalizedPropertyInfo = normalizePropertyRows(propertyRows);
+  console.log(`Processed ${normalizedPropertyInfo.length} property rows.`);
+
+  const mrtGeoJson = await fetchGeoJson(MRT_DATASET_ID);
+  const mrtExits = normalizeMrtFeatures(mrtGeoJson);
+  console.log(`Processed ${mrtExits.length} MRT exits.`);
+
+  const propertyInfo = rekeyPropertyInfo(normalizedPropertyInfo, transactions);
+  const geocodeCache = await loadGeocodeCache(db);
+  console.log(`Loaded ${Object.keys(geocodeCache.entries).length} cached geocodes from D1.`);
+
+  let amenities: Omit<Awaited<ReturnType<typeof fetchAmenityData>>, "geocodedCount"> | undefined;
+  const amenityGeocodeKeys: string[] = [];
+  if (!skipAmenities) {
+    const beforeAmenityKeys = new Set(Object.keys(geocodeCache.entries));
+    const { geocodedCount, ...amenityData } = await fetchAmenityData(geocodeCache, {
+      skipGeocoding,
+      geocodeEndpoint,
+      geocodeAddressFn: oneMap.geocodeAddress,
+    });
+    if (amenityData.failedSources.length)
+      throw new Error(`Incomplete amenity snapshot: ${amenityData.failedSources.join(", ")}`);
+    amenities = amenityData;
+    if (geocodedCount > 0) {
+      for (const key of Object.keys(geocodeCache.entries)) {
+        if (!beforeAmenityKeys.has(key)) {
+          amenityGeocodeKeys.push(key);
+        }
+      }
+      await saveGeocodeCacheEntries(db, geocodeCache, amenityGeocodeKeys, nowTimestamp());
+    }
+  }
+
+  const uniqueAddresses = new Map(
+    transactions.map((t) => [t.addressKey, `${t.block} ${t.streetName} SINGAPORE`]),
+  );
+  const missingAddresses = [...uniqueAddresses.entries()].filter(
+    ([addressKey]) => geocodeCache.entries[addressKey] === undefined,
+  );
+  const concurrency = Math.max(1, Number(process.env.GEOCODE_CONCURRENCY ?? "10"));
+  const { geocodeFailureCount, geocodeFailureSamples } = await geocodeMissingAddresses(
+    {
+      missingAddresses,
+      geocodeCache,
+      geocodeEndpoint,
+      skipGeocoding,
+      concurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveGeocodeCacheEntries(db, geocodeCache, newKeys, nowTimestamp());
+      },
+    },
+    { geocodeAddressFn: oneMap.geocodeAddress },
+  );
+
+  if (geocodeFailureCount > 0) {
+    console.warn(
+      `Geocoding failed for ${geocodeFailureCount} addresses. Sample: ${geocodeFailureSamples.join(" | ")}`,
+    );
+  }
+
+  const routingCache = await loadRoutingCache(db);
+  console.log(`Loaded ${Object.keys(routingCache.entries).length} cached walking times from D1.`);
+  const routingConcurrency = Math.max(1, Number(process.env.ROUTING_CONCURRENCY ?? "4"));
+  const { walkingTimes, fallbackCount: walkingFallbackCount } = await computeWalkingTimes(
+    {
+      geocodes: geocodeCache.entries,
+      addressKeys: uniqueAddresses.keys(),
+      mrtExits,
+      routingCache,
+      skipRouting,
+      routingEndpoint,
+      tokenEndpoint,
+      concurrency: routingConcurrency,
+      flushCacheFn: async (newKeys) => {
+        await saveRoutingCacheEntries(db, routingCache, newKeys, nowTimestamp());
+      },
+    },
+    { resolveOneMapTokenFn: oneMap.resolveToken },
+  );
+  if (walkingFallbackCount > 0) {
+    console.log(
+      `Walking-time fallbacks used for ${walkingFallbackCount} block→station pairs (straight-line / 1.25 m/s).`,
+    );
+  }
+
+  const artifacts = buildArtifacts({
+    transactions,
+    propertyInfo,
+    mrtExits,
+    geocodes: geocodeCache.entries,
+    walkingTimes,
+    ...amenities,
+    sourceVersionHints,
+    incremental: previousArtifacts ? { previous: previousArtifacts, delta } : undefined,
+    metadata: {
+      resaleCollectionId: RESALE_COLLECTION_ID,
+      resaleDatasetIds: resaleCollection.childDatasets,
+      propertyDatasetId: PROPERTY_DATASET_ID,
+      mrtDatasetId: MRT_DATASET_ID,
+      moeSchoolDatasetId: MOE_SCHOOL_DATASET_ID,
+      neaHawkerDatasetId: NEA_HAWKER_DATASET_ID,
+      sfaSupermarketDatasetId: SFA_SUPERMARKET_DATASET_ID,
+      nparksParksDatasetId: NPARKS_PARKS_DATASET_ID,
+      lastUpdatedAt: resaleCollection.lastUpdatedAt,
+    },
+  });
+
+  validateGeneratedArtifacts({
+    blockSummariesCount: artifacts.blockSummaries.length,
+    detailCount: Object.keys(artifacts.details).length,
+    geocodeFailureCount,
+  });
+
+  const stationsGeoJson = buildMrtStationsGeoJson(mrtExits);
+  await writeIncrementalArtifactsToLocalD1(
+    db,
+    artifacts,
+    mrtGeoJson,
+    stationsGeoJson,
+    nowTimestamp(),
+    { delta, manifestJson },
+  );
 }
 
 function isDirectExecution() {

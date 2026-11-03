@@ -3,17 +3,46 @@
  * old `writer.ts` which serialized the same shapes to JSON files under
  * `public/data/`.
  *
- * Generated artifacts are fully overwritten on each run (truncate + insert).
+ * Two publishers live here, for two different situations:
+ *
+ * - `writeArtifactsToD1` is the production publisher. Generated artifacts are fully overwritten on each
+ *   run (truncate + insert) through many separate D1 requests, under the publication marker protocol
+ *   described on `markPublicationInProgress`. It is the only publisher that may write a remote D1.
+ * - `readPublishedArtifacts` / `planArtifactWrites` compare a freshly built generation with the rows already
+ *   stored and plan only the changed rows. `writeIncrementalArtifactsToLocalD1` applies such a plan as one
+ *   atomic batch, but only to a loopback emulator, because a remote REST batch is not assumed to be atomic.
+ *   The Neon publisher uses the planner and compiles the same statements for PostgreSQL.
+ *
  * Persistent caches (geocode, walking time) are written via the dedicated
  * cache modules and are never truncated here.
  */
-import type { BlockSummary } from "../../../shared/data-types";
+import { createHash } from "node:crypto";
+import { rowToBlockSummary, type BlockRow } from "../../../shared/d1-block-row";
+import type {
+  BlockSummary,
+  StoredManifest,
+  TownFlatTypeTrendPoint,
+} from "../../../shared/data-types";
 import {
   PUBLICATION_OWNER_JSON_PATH,
   readPublicationState,
   stampPublicationMarker,
 } from "../../../shared/publication-state";
-import type { D1Client } from "./d1";
+import type { D1Client, D1Statement } from "./d1";
+import {
+  planTransactionDelta,
+  readTransactionSnapshot,
+  transactionStatements,
+  type TransactionDelta,
+} from "./incremental";
+import {
+  jsonDetailPatchStatements,
+  jsonInsertStatements,
+  jsonUpdateStatements,
+  MAX_ATOMIC_BYTES,
+  MAX_ATOMIC_STATEMENTS,
+  MAX_FORECAST_WRITES,
+} from "./statements";
 import type { GeneratedArtifacts, MrtStationFeatureCollection } from "../pipeline";
 import type { TransactionRow } from "../schemas";
 
@@ -26,7 +55,7 @@ function jsonOrNull(value: unknown): string | null {
   return JSON.stringify(value);
 }
 
-function mapBlockRow(block: BlockSummary): unknown[] {
+export function mapBlockRow(block: BlockSummary): unknown[] {
   return [
     block.addressKey,
     block.town,
@@ -55,7 +84,7 @@ function mapBlockRow(block: BlockSummary): unknown[] {
   ];
 }
 
-const BLOCK_COLUMNS = [
+export const BLOCK_COLUMNS = [
   "address_key",
   "town",
   "block",
@@ -469,4 +498,423 @@ export async function insertTransactions(
   }
 
   console.log("Transactions write complete.");
+}
+
+type ArtifactTable =
+  | "blocks"
+  | "block_details"
+  | "comparisons"
+  | "town_flat_type_trends"
+  | "mrt_geojson";
+type SnapshotRow = Record<string, unknown> & { _cursor: number };
+
+async function readArtifactRows(
+  db: D1Client,
+  table: ArtifactTable,
+  columns: string[],
+): Promise<SnapshotRow[]> {
+  db.setPhase(`artifact-preflight:${table}`);
+  const rows: SnapshotRow[] = [];
+  const writesBefore = db.usageReport().rowsWritten;
+  let cursor = 0;
+  while (true) {
+    const page = await db.query<SnapshotRow>({
+      sql: `SELECT rowid AS _cursor, ${columns.join(",")} FROM ${table} WHERE rowid > ? ORDER BY rowid LIMIT ?`,
+      params: [cursor, 1000],
+    });
+    rows.push(...page);
+    const usage = db.usageReport();
+    if (usage.rowsRead === null || usage.rowsWritten === null)
+      throw new Error("Missing exact D1 preflight metadata");
+    if (usage.rowsRead > 2_000_000 || usage.rowsWritten !== writesBefore)
+      throw new Error("Preflight read budget exceeded");
+    if (page.length < 1000) return rows;
+    cursor = page[page.length - 1]._cursor;
+  }
+}
+
+/**
+ * The incremental planner treats the stored tables as the previous generation and writes only what differs
+ * from it. A manifest that carries an unfinished publication marker (see `markPublicationInProgress`) says
+ * the tables may be half replaced and are not any generation, so nothing may be planned on top of them: a
+ * full publication (`writeArtifactsToD1`) has to complete and clear the marker first. This is the same rule
+ * `readManifestUpdatedAt` applies when it reports such a manifest as not synced.
+ */
+export function assertNoUnfinishedPublication(manifestJson: string): void {
+  const publication = readPublicationState(manifestJson);
+  if (!publication.inProgress) return;
+  throw new Error(
+    publication.reason === "marker"
+      ? `The stored manifest carries an unfinished publication marker (started ${publication.startedAt ?? "at an unknown time"}), so the stored tables may be half replaced and cannot be the baseline of an incremental plan. Run a full sync-data publication to completion first.`
+      : "The stored manifest is not a JSON object, so it cannot be the baseline of an incremental plan. Run a full sync-data publication to completion first.",
+  );
+}
+
+export async function readPublishedArtifacts(
+  db: D1Client,
+  manifestJson: string | null,
+): Promise<GeneratedArtifacts | undefined> {
+  if (!manifestJson) return undefined;
+  assertNoUnfinishedPublication(manifestJson);
+  const blocks = await readArtifactRows(db, "blocks", BLOCK_COLUMNS);
+  const details = await readArtifactRows(db, "block_details", ["address_key", "json"]);
+  const comparisons = await readArtifactRows(db, "comparisons", ["address_key", "json"]);
+  const trends = await readArtifactRows(db, "town_flat_type_trends", [
+    "town",
+    "flat_type",
+    "month",
+    "median_price",
+    "median_price_per_sqm",
+    "transaction_count",
+  ]);
+  return {
+    manifest: JSON.parse(manifestJson) as StoredManifest,
+    blockSummaries: blocks.map((row) => rowToBlockSummary(row as unknown as BlockRow)),
+    blocksByTown: {},
+    details: Object.fromEntries(
+      details.map((row) => [row.address_key, JSON.parse(row.json as string)]),
+    ),
+    comparisons: comparisons.length
+      ? Object.fromEntries(
+          comparisons.map((row) => [row.address_key, JSON.parse(row.json as string)]),
+        )
+      : undefined,
+    townFlatTypeTrend: trends.map((row) => ({
+      town: row.town,
+      flatType: row.flat_type,
+      month: row.month,
+      medianPrice: row.median_price,
+      medianPricePerSqm: row.median_price_per_sqm,
+      transactionCount: row.transaction_count,
+    })) as TownFlatTypeTrendPoint[],
+  };
+}
+
+export type ArtifactWritePlan = {
+  statements: D1Statement[];
+  changedRows: Record<string, number>;
+  forecastWriteUpperBound: number;
+};
+
+export async function planArtifactWrites(
+  db: D1Client,
+  artifacts: GeneratedArtifacts,
+  mrtExitsGeoJson: MrtExitsGeoJson,
+  mrtStationsGeoJson: MrtStationFeatureCollection,
+  updatedAt: string,
+  delta: TransactionDelta,
+  options: { enforceBudget?: boolean } = {},
+): Promise<ArtifactWritePlan> {
+  const statements = [...db.stagedWrites(), ...transactionStatements(delta)];
+  const changedRows: Record<string, number> = {
+    transactions: delta.inserts.length + delta.updates.length,
+  };
+  for (const statement of db.stagedWrites()) {
+    const table = statement.sql.match(/INTO\s+([a-z_]+)/i)?.[1];
+    if (!table || !["geocode_cache", "walking_time_cache"].includes(table))
+      throw new Error("Unexpected staged write target");
+    changedRows[table] = (changedRows[table] ?? 0) + (statement.sql.match(/\(\?/g) ?? []).length;
+  }
+  const mutations: { table: string; rows: number; inserted: boolean; columns: string[] }[] = [
+    { table: "transactions", rows: delta.inserts.length, inserted: true, columns: [] },
+    {
+      table: "transactions",
+      rows: delta.updates.length,
+      inserted: false,
+      columns: [
+        "town",
+        "block",
+        "flat_type",
+        "street_name",
+        "month",
+        "lease_commence_year",
+        "floor_area_sqm",
+      ],
+    },
+  ];
+  for (const [table, count] of Object.entries(changedRows))
+    if (table !== "transactions")
+      // INSERT OR REPLACE can remove an existing record and its indexes before inserting.
+      mutations.push({ table, rows: count * 2, inserted: true, columns: [] });
+  const tables: { table: ArtifactTable; columns: string[]; keys: string[]; rows: unknown[][] }[] = [
+    {
+      table: "blocks",
+      columns: BLOCK_COLUMNS,
+      keys: ["address_key"],
+      rows: artifacts.blockSummaries.map(mapBlockRow),
+    },
+    {
+      table: "block_details",
+      columns: ["address_key", "json"],
+      keys: ["address_key"],
+      rows: Object.entries(artifacts.details).map(([key, detail]) => [key, JSON.stringify(detail)]),
+    },
+    {
+      table: "comparisons",
+      columns: ["address_key", "json"],
+      keys: ["address_key"],
+      rows: Object.entries(artifacts.comparisons ?? {}).map(([key, comparison]) => [
+        key,
+        JSON.stringify(comparison),
+      ]),
+    },
+    {
+      table: "town_flat_type_trends",
+      columns: [
+        "town",
+        "flat_type",
+        "month",
+        "median_price",
+        "median_price_per_sqm",
+        "transaction_count",
+      ],
+      keys: ["town", "flat_type", "month"],
+      rows: artifacts.townFlatTypeTrend.map((point) => [
+        point.town,
+        point.flatType,
+        point.month,
+        point.medianPrice,
+        point.medianPricePerSqm,
+        point.transactionCount,
+      ]),
+    },
+    {
+      table: "mrt_geojson",
+      columns: ["kind", "json", "updated_at"],
+      keys: ["kind"],
+      rows: [
+        ["exits", JSON.stringify(mrtExitsGeoJson), updatedAt],
+        ["stations", JSON.stringify(mrtStationsGeoJson), updatedAt],
+      ],
+    },
+  ];
+  for (const { table, columns, keys, rows } of tables) {
+    const oldRows = await readArtifactRows(db, table, columns);
+    const keyIndexes = keys.map((key) => columns.indexOf(key));
+    const keyFor = (values: unknown[]) => JSON.stringify(keyIndexes.map((index) => values[index]));
+    const oldByKey = new Map(
+      oldRows.map((row) => [keyFor(columns.map((column) => row[column])), row]),
+    );
+    const changed: unknown[][] = [];
+    const inserted: unknown[][] = [];
+    const updates = new Map<
+      string,
+      { columns: string[]; rows: unknown[][]; jsonFields?: string[] }
+    >();
+    for (const values of rows) {
+      const key = keyFor(values);
+      const previous = oldByKey.get(key);
+      if (previous && table === "comparisons") {
+        const old = JSON.parse(previous.json as string) as Record<string, unknown>;
+        const next = JSON.parse(values[1] as string) as Record<string, unknown>;
+        // Preserve generatedAt when evidence is unchanged; time passing can still change percentile evidence.
+        next.generatedAt = old.generatedAt;
+        const withoutTimestampChange = JSON.stringify(next);
+        if (withoutTimestampChange === previous.json) values[1] = withoutTimestampChange;
+      }
+      if (table === "block_details") {
+        const next = JSON.parse(values[1] as string) as {
+          recentTransactions: Record<string, unknown>[];
+        };
+        const old = previous
+          ? (JSON.parse(previous.json as string) as {
+              recentTransactions: Record<string, unknown>[];
+            })
+          : { recentTransactions: [] };
+        if (
+          !Object.hasOwn(next, "summary") ||
+          !Array.isArray((next as Record<string, unknown>).monthlyTrend) ||
+          !Array.isArray(next.recentTransactions)
+        )
+          throw new Error("Invalid detail candidate: required JSON fields missing or invalid");
+        // Preserve forward-compatible stored fields which this builder does not own.
+        for (const [field, value] of Object.entries(old))
+          if (
+            !["summary", "monthlyTrend", "recentTransactions"].includes(field) &&
+            !Object.hasOwn(next, field)
+          )
+            (next as Record<string, unknown>)[field] = value;
+        const identity = (row: Record<string, unknown>) =>
+          JSON.stringify([
+            row.month,
+            row.flatType,
+            row.storeyRange,
+            row.floorAreaSqm,
+            row.leaseCommenceDate,
+            row.resalePrice,
+            row.flatModel,
+          ]);
+        const oldIds = new Map<string, unknown[]>();
+        for (const row of old.recentTransactions) {
+          const key = identity(row);
+          oldIds.set(key, [...(oldIds.get(key) ?? []), row.id]);
+        }
+        const occurrences = new Map<string, number>();
+        for (const row of next.recentTransactions) {
+          const key = identity(row);
+          const occurrence = occurrences.get(key) ?? 0;
+          occurrences.set(key, occurrence + 1);
+          const previousId = oldIds.get(key)?.shift();
+          row.id =
+            previousId ?? `source:${createHash("sha256").update(key).digest("hex")}:${occurrence}`;
+        }
+        values[1] = JSON.stringify(next);
+      }
+      if (previous && table === "mrt_geojson" && values[1] === previous.json)
+        values[2] = previous.updated_at;
+      const dirtyColumns = columns.filter(
+        (column, index) => previous && previous[column] !== values[index],
+      );
+      if (!previous) {
+        inserted.push(values);
+        changed.push(values);
+      } else if (dirtyColumns.length) {
+        if (table === "block_details") {
+          const old = JSON.parse(previous.json as string) as Record<string, unknown>;
+          const next = JSON.parse(values[1] as string) as Record<string, unknown>;
+          const fields = ["summary", "monthlyTrend", "recentTransactions"].filter(
+            (field) => JSON.stringify(old[field]) !== JSON.stringify(next[field]),
+          );
+          const supported =
+            Object.keys(next).every(
+              (field) =>
+                ["summary", "monthlyTrend", "recentTransactions"].includes(field) ||
+                JSON.stringify(next[field]) === JSON.stringify(old[field]),
+            ) && Object.keys(old).every((field) => field in next);
+          if (supported) {
+            if (fields.length) {
+              const groupKey = `detail:${JSON.stringify(fields)}`;
+              const group = updates.get(groupKey) ?? {
+                columns: ["json"],
+                rows: [],
+                jsonFields: fields,
+              };
+              group.rows.push([values[0], ...fields.map((field) => next[field])]);
+              updates.set(groupKey, group);
+              changed.push(values);
+            }
+            oldByKey.delete(key);
+            continue;
+          }
+        }
+        const updateColumns = dirtyColumns.filter((column) => !keys.includes(column));
+        const groupKey = JSON.stringify(updateColumns);
+        const group = updates.get(groupKey) ?? { columns: updateColumns, rows: [] };
+        group.rows.push([
+          ...keys.map((key) => values[columns.indexOf(key)]),
+          ...updateColumns.map((column) => values[columns.indexOf(column)]),
+        ]);
+        updates.set(groupKey, group);
+        changed.push(values);
+      }
+      oldByKey.delete(key);
+    }
+    if (oldByKey.size)
+      throw new Error(`Reconciliation required: ${table} would lose ${oldByKey.size} entities`);
+    changedRows[table] = changed.length;
+    statements.push(...jsonInsertStatements(table, columns, inserted));
+    mutations.push({ table, rows: inserted.length, inserted: true, columns: [] });
+    for (const group of updates.values()) {
+      statements.push(
+        ...(group.jsonFields
+          ? jsonDetailPatchStatements(group.jsonFields, group.rows)
+          : jsonUpdateStatements(table, keys, group.columns, group.rows)),
+      );
+      mutations.push({ table, rows: group.rows.length, inserted: false, columns: group.columns });
+    }
+  }
+  // Conservative index-aware bound for each inserted/updated row, including old/new index entries.
+  // No index is added or rebuilt. This is a forecast, never billable metadata or account headroom.
+  db.setPhase("index-budget-preflight");
+  const indexes = await db.query<{ tbl_name: string; sql: string | null }>({
+    sql: "SELECT tbl_name, sql FROM sqlite_master WHERE type='index' AND tbl_name IN ('transactions','blocks','block_details','comparisons','town_flat_type_trends','mrt_geojson','manifest','geocode_cache','walking_time_cache')",
+  });
+  const forecastWriteUpperBound = mutations.reduce((sum, mutation) => {
+    const affectedIndexes = indexes.filter(
+      (index) =>
+        index.tbl_name === mutation.table &&
+        (mutation.inserted ||
+          (index.sql !== null &&
+            mutation.columns.some((column) =>
+              new RegExp(`\\b${column}\\b`, "i").test(index.sql!),
+            ))),
+    ).length;
+    return sum + mutation.rows * (1 + (mutation.inserted ? 1 : 2) * affectedIndexes);
+  }, 1);
+  if (options.enforceBudget !== false && forecastWriteUpperBound > MAX_FORECAST_WRITES)
+    throw new Error("Index-aware write safety budget exceeded");
+  return { statements, changedRows, forecastWriteUpperBound };
+}
+
+export function buildPublicationBatch(
+  statements: D1Statement[],
+  manifest: StoredManifest,
+  updatedAt: string,
+  manifestJson: string | null,
+): D1Statement[] {
+  return [
+    // Force a statement error on a stale baseline; atomic adapters roll back the whole batch.
+    {
+      sql: "SELECT CASE WHEN (SELECT json FROM manifest WHERE id=1) IS ? THEN 1 ELSE json('stale sync snapshot') END",
+      params: [manifestJson],
+    },
+    ...statements,
+    {
+      sql: "INSERT INTO manifest (id,json,updated_at) VALUES (1,?,?) ON CONFLICT(id) DO UPDATE SET json=excluded.json,updated_at=excluded.updated_at",
+      params: [JSON.stringify(manifest), updatedAt],
+    },
+  ];
+}
+
+/**
+ * Applies an incremental plan to a LOOPBACK EMULATOR as one atomic batch: a stale-baseline check, the planned
+ * statements, then the manifest, which commits or rolls back together. It never runs against a remote D1, whose
+ * REST `batch` envelope is not assumed to be atomic; remote publication is `writeArtifactsToD1`, whose marker
+ * protocol covers the many-request window that a remote publication has and this one does not (so no marker is
+ * stamped here). The batch's final manifest write replaces the whole document, so it also clears any marker; the
+ * one thing it must not do is build on a marked baseline, which is refused before anything is read or planned.
+ */
+export async function writeIncrementalArtifactsToLocalD1(
+  db: D1Client,
+  artifacts: GeneratedArtifacts,
+  mrtExitsGeoJson: MrtExitsGeoJson,
+  mrtStationsGeoJson: MrtStationFeatureCollection,
+  updatedAt: string,
+  prepared?: { delta: TransactionDelta; manifestJson: string | null },
+): Promise<void> {
+  // Do not transfer binding batch atomicity to an unverified REST API envelope.
+  // The remote path stays on the marked full publication until authenticated isolated remote rehearsal
+  // establishes the batch contract and quota.
+  if (!db.isLocalRehearsal)
+    throw new Error(
+      "Remote apply disabled: exact D1 quota and REST atomicity rehearsal required. " +
+        "Remote D1 is published by writeArtifactsToD1, under the publication marker.",
+    );
+  const previousManifest = await db.query<{ json: string }>({
+    sql: "SELECT json FROM manifest WHERE id = 1",
+  });
+  const manifestJson = prepared ? prepared.manifestJson : (previousManifest[0]?.json ?? null);
+  if ((previousManifest[0]?.json ?? null) !== manifestJson)
+    throw new Error("Stale sync snapshot rejected before artifact preflight");
+  if (manifestJson !== null) assertNoUnfinishedPublication(manifestJson);
+  const delta =
+    prepared?.delta ??
+    planTransactionDelta(await readTransactionSnapshot(db), artifacts.transactions ?? []);
+  const plan = await planArtifactWrites(
+    db,
+    artifacts,
+    mrtExitsGeoJson,
+    mrtStationsGeoJson,
+    updatedAt,
+    delta,
+  );
+  const batch = buildPublicationBatch(plan.statements, artifacts.manifest, updatedAt, manifestJson);
+  if (
+    batch.length > MAX_ATOMIC_STATEMENTS ||
+    new TextEncoder().encode(JSON.stringify({ batch })).byteLength > MAX_ATOMIC_BYTES
+  )
+    throw new Error("Atomic rehearsal batch safety budget exceeded; no writes performed");
+  db.setPhase("atomic-local-publish");
+  await db.publishStagedBatch(batch);
+  console.log(JSON.stringify({ ...plan, statements: batch.length, actual: db.usageReport() }));
 }
