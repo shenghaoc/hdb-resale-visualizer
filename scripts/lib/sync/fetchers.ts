@@ -1,13 +1,24 @@
 import Papa from "papaparse";
-import { classifyUpstreamService, sleep, waitForUpstreamSlot } from "./rate-limits";
+import { createHash } from "node:crypto";
+import {
+  classifyUpstreamService,
+  isOneMapService,
+  sleep,
+  waitForUpstreamSlot,
+} from "./rate-limits";
 
 function getHeaders(): Record<string, string> {
   const apiKey = process.env.DATA_GOV_API_KEY;
   return apiKey ? { "x-api-key": apiKey } : {};
 }
 
-function getJsonHeaders(headers?: RequestInit["headers"]): Headers {
-  const nextHeaders = new Headers({ "content-type": "application/json", ...getHeaders() });
+function getJsonHeaders(url: string, headers?: RequestInit["headers"]): Headers {
+  const hostname = new URL(url).hostname;
+  const dataGov = hostname === "api-open.data.gov.sg" || hostname === "api-production.data.gov.sg";
+  const nextHeaders = new Headers({
+    "content-type": "application/json",
+    ...(dataGov ? getHeaders() : {}),
+  });
   new Headers(headers).forEach((value, key) => {
     nextHeaders.set(key, value);
   });
@@ -21,20 +32,31 @@ function shouldRetryStatus(status: number): boolean {
 type FetchRetryOptions = {
   attempts?: number;
   retryDelayMs?: number;
+  /**
+   * Runs immediately before every physical HTTP attempt, retries included. If it throws, that attempt is not
+   * sent and no further attempt is made: the error propagates as is. OneMap passes its pacing and budget here.
+   */
+  beforeAttempt?: () => Promise<void>;
 };
 
 export async function fetchWithRetry(
   url: string,
   init?: RequestInit,
-  { attempts = 6, retryDelayMs = 2200 }: FetchRetryOptions = {},
+  { attempts = 6, retryDelayMs = 2200, beforeAttempt }: FetchRetryOptions = {},
 ): Promise<Response> {
+  const safeUrl = (() => {
+    const parsed = new URL(url);
+    return `${parsed.origin}${parsed.pathname}`;
+  })();
   let lastError: Error | null = null;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
+    // Outside the try below: a refusal here ends the request instead of being retried.
+    if (beforeAttempt) await beforeAttempt();
     let response: Response;
     try {
       response = await fetch(url, init);
     } catch (error) {
-      lastError = error instanceof Error ? error : new Error(`Request failed for ${url}`);
+      lastError = error instanceof Error ? error : new Error(`Request failed for ${safeUrl}`);
       if (attempt < attempts - 1) {
         await sleep(retryDelayMs * (attempt + 1));
       }
@@ -51,27 +73,34 @@ export async function fetchWithRetry(
       } catch {
         /* ignore */
       }
-      throw new Error(`Request failed for ${url}: ${response.status}${detail}`);
+      throw new Error(`Request failed for ${safeUrl}: ${response.status}${detail}`);
     }
 
-    lastError = new Error(`Request failed for ${url}: ${response.status}`);
+    lastError = new Error(`Request failed for ${safeUrl}: ${response.status}`);
     if (attempt < attempts - 1) {
       await sleep(retryDelayMs * (attempt + 1));
     }
   }
 
-  throw lastError ?? new Error(`Request failed for ${url}`);
+  throw lastError ?? new Error(`Request failed for ${safeUrl}`);
 }
 
 export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   const upstreamService = classifyUpstreamService(url);
-  if (upstreamService) {
-    await waitForUpstreamSlot(upstreamService);
+  // OneMap is paced and budgeted per physical attempt, retries included; other upstreams keep one slot per
+  // request with the retry helper's own backoff, as before.
+  const perAttempt = upstreamService !== null && isOneMapService(upstreamService);
+  if (upstreamService && !perAttempt) {
+    await waitForUpstreamSlot(upstreamService, url);
   }
-  const response = await fetchWithRetry(url, {
-    ...init,
-    headers: getJsonHeaders(init?.headers),
-  });
+  const response = await fetchWithRetry(
+    url,
+    {
+      ...init,
+      headers: getJsonHeaders(url, init?.headers),
+    },
+    perAttempt ? { beforeAttempt: () => waitForUpstreamSlot(upstreamService, url) } : undefined,
+  );
   const ct = response.headers.get("content-type") ?? "";
   if (!ct.includes("application/json") && !ct.includes("text/plain")) {
     const preview = await response.text().catch(() => "");
@@ -84,21 +113,8 @@ export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> 
 
 async function getDatasetDownloadUrl(datasetId: string) {
   const base = `https://api-open.data.gov.sg/v1/public/api/datasets/${datasetId}`;
-  try {
-    await fetchJson(`${base}/initiate-download`, {
-      method: "POST",
-      body: JSON.stringify({}),
-    });
-  } catch (err) {
-    // Some datasets expose the file directly through poll-download without
-    // initiation.  Log non-404 errors so we can distinguish "expected skip"
-    // from genuine upstream failures.
-    if (err instanceof Error && !err.message.includes("404")) {
-      console.warn(
-        `initiate-download for ${datasetId} failed (attempting poll-download): ${err.message}`,
-      );
-    }
-  }
+  // Official download flow uses GET; access denial is terminal, not a poll fallback.
+  await fetchJson(`${base}/initiate-download`);
   for (let attempt = 0; attempt < 8; attempt += 1) {
     const payload = await fetchJson<{ code: number; data?: { url?: string } }>(
       `${base}/poll-download`,
@@ -109,13 +125,36 @@ async function getDatasetDownloadUrl(datasetId: string) {
   throw new Error(`Timed out waiting for dataset download URL: ${datasetId}`);
 }
 
-export async function fetchCsvRows(datasetId: string) {
+export type CsvCapture = {
+  datasetId: string;
+  bodySHA256: string;
+  bytes: number;
+  rows: number;
+  capturedAtUTC: string;
+};
+export async function fetchCsvRows(
+  datasetId: string,
+  capture?: (receipt: CsvCapture, body: Uint8Array) => void,
+) {
   const downloadUrl = await getDatasetDownloadUrl(datasetId);
   const response = await fetchWithRetry(downloadUrl);
-  const csv = await response.text();
+  // The existing D1 caller retains its text path. Optional Neon evidence captures raw delivered bytes.
+  const body = capture ? new Uint8Array(await response.arrayBuffer()) : undefined;
+  const csv = body ? new TextDecoder().decode(body) : await response.text();
   const parsed = Papa.parse<Record<string, string>>(csv, { header: true, skipEmptyLines: true });
   if (parsed.errors.length > 0)
     throw new Error(`CSV parse error for ${datasetId}: ${parsed.errors[0]?.message ?? "unknown"}`);
+  if (capture && body)
+    capture(
+      {
+        datasetId,
+        bodySHA256: createHash("sha256").update(body).digest("hex"),
+        bytes: body.byteLength,
+        rows: parsed.data.length,
+        capturedAtUTC: new Date().toISOString(),
+      },
+      body,
+    );
   return parsed.data;
 }
 

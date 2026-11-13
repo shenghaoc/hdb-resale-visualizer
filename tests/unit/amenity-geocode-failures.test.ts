@@ -1,11 +1,14 @@
-import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { GeocodeCacheFile } from "../../scripts/lib/pipeline";
 import {
   normalizeSchoolRows,
   normalizeSupermarketRows,
 } from "../../scripts/lib/sync/normalization";
+import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
 
-const GEOCODE_ENDPOINT = new URL("https://example.test/geocode");
+// OneMap Search needs an access token, and credentials only ever go to the official endpoint
+// (scripts/lib/sync/geocode.ts), so these tests use it with a token and a mocked fetch.
+const GEOCODE_ENDPOINT = new URL("https://www.onemap.gov.sg/api/common/elastic/search");
 
 function emptyGeocodeCache(): GeocodeCacheFile {
   return { version: 1, updatedAt: "1970-01-01T00:00:00.000Z", entries: {} };
@@ -19,9 +22,17 @@ function jsonResponse(body: unknown, status = 200, contentType = "application/js
 }
 
 describe("amenity geocode failures", () => {
+  beforeEach(() => {
+    vi.stubEnv("ONEMAP_TOKEN", "fixture-token");
+    vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "1");
+    resetUpstreamThrottleForTests();
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
     vi.unstubAllGlobals();
+    vi.unstubAllEnvs();
+    resetUpstreamThrottleForTests();
   });
 
   it("skips a school whose geocode throws and still keeps later schools", async () => {
@@ -78,6 +89,8 @@ describe("amenity geocode failures", () => {
         { name: "Ok Primary", lat: 1.3521, lng: 103.8198, mainLevelCode: "PRIMARY" },
       ],
       geocodedCount: 1,
+      skippedNoCoords: 1,
+      invalidRows: 0,
     });
     expect(cache.entries["school:FAIL PRIMARY:111111"]).toBeUndefined();
     expect(cache.entries["school:OK PRIMARY:222222"]).toMatchObject({
@@ -126,6 +139,8 @@ describe("amenity geocode failures", () => {
     expect(result).toEqual({
       supermarkets: [{ name: "Ok Mart", lat: 1.29, lng: 103.85 }],
       geocodedCount: 1,
+      skippedNoCoords: 1,
+      invalidRows: 0,
     });
     expect(cache.entries["supermarket:333333"]).toBeUndefined();
     expect(cache.entries["supermarket:444444"]).toMatchObject({
