@@ -21,6 +21,32 @@ function desktopNavButton(page: Page, label: string) {
   return page.locator(".desktop-tab-bar").getByRole("button", { name: label });
 }
 
+test("keeps the data credits on the map, linking to the licence and to the sources page", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const credit = page.getByTestId("map-attribution");
+  await expect(credit).toBeVisible({ timeout: 20_000 });
+  await expect(credit.getByRole("link", { name: "© OneMap contributors" })).toBeVisible();
+  await expect(credit).toContainText(
+    "Data from data.gov.sg under the Singapore Open Data Licence v1.0",
+  );
+  await expect(
+    credit.getByRole("link", { name: "Singapore Open Data Licence v1.0" }),
+  ).toHaveAttribute("href", "https://data.gov.sg/open-data-licence");
+
+  await credit.getByRole("link", { name: "Data sources" }).click();
+  await expect(page).toHaveURL(/\/docs\/data-sources/);
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Data sources and licence" }),
+  ).toBeVisible();
+  await expect(page.getByText("Contains information from the datasets listed below")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Singapore Open Data Licence version 1.0" }).first(),
+  ).toHaveAttribute("href", "https://data.gov.sg/open-data-licence");
+});
+
 test("keeps selection in results and only shows shortlisted blocks in saved", async ({ page }) => {
   await page.goto("/");
 
