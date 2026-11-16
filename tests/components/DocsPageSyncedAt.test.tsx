@@ -46,14 +46,17 @@ describe("Data sources page access date", () => {
     expect(document.body).not.toHaveTextContent(DOCS_SYNCED_AT_TOKEN);
   });
 
-  it("states the sync time formatted for zh-SG", () => {
+  it("gives a zh-SG reader the English sentence with the en-SG date, since the guide is English-only", () => {
     storedLocale.value = "zh-SG";
     renderSourcesPage(SYNCED_AT);
-    const date = formatDateTime(SYNCED_AT, "zh-SG");
-    expect(date).not.toBe(formatDateTime(SYNCED_AT, "en-SG"));
+    const date = formatDateTime(SYNCED_AT, "en-SG");
+    // The UI is in Chinese (the guide chrome proves it), but the English page gets no Chinese date or phrase.
+    expect(screen.getByRole("button", { name: "返回应用" })).toBeInTheDocument();
     expect(notice()).toHaveTextContent(
-      `accessed on ${date}（最近一次同步的日期）, from data.gov.sg`,
+      `accessed on ${date}, the date of the most recent sync, from data.gov.sg`,
     );
+    expect(notice()).not.toHaveTextContent(formatDateTime(SYNCED_AT, "zh-SG"));
+    expect(notice()).not.toHaveTextContent("最近一次同步");
     expect(document.body).not.toHaveTextContent(DOCS_SYNCED_AT_TOKEN);
   });
 
@@ -65,12 +68,14 @@ describe("Data sources page access date", () => {
     expect(document.body).not.toHaveTextContent(DOCS_SYNCED_AT_TOKEN);
   });
 
-  it("says the same in zh-SG when the copy has no sync time", () => {
+  it("gives a zh-SG reader the English fallback when the copy has no sync time", () => {
     storedLocale.value = "zh-SG";
     renderSourcesPage(null);
+    expect(screen.getByRole("button", { name: "返回应用" })).toBeInTheDocument();
     expect(notice()).toHaveTextContent(
-      "accessed on 最近一次同步的日期（此副本中不可用）, from data.gov.sg",
+      "accessed on the date of the most recent sync (not available in this copy), from data.gov.sg",
     );
+    expect(notice()).not.toHaveTextContent("最近一次同步");
     expect(document.body).not.toHaveTextContent(DOCS_SYNCED_AT_TOKEN);
   });
 });

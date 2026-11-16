@@ -3,8 +3,12 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
-import { formatDateTime } from "@/shared/lib/format";
-import { DOCS_SECTIONS, DOCS_SYNCED_AT_TOKEN, getDocsSection } from "./docsManifest";
+import {
+  DOCS_SECTIONS,
+  DOCS_SYNCED_AT_TOKEN,
+  formatDocsSyncedAt,
+  getDocsSection,
+} from "./docsManifest";
 import { DocsArticle } from "./DocsArticle";
 import { DocsNav } from "./DocsNav";
 import { DocsSearch } from "./DocsSearch";
@@ -20,19 +24,20 @@ type DocsPageProps = {
  * in the query string, so "Back to app" restores the previous view.
  *
  * `lastSyncedAt` is the manifest's sync time (the same value the header shows as "Synced"); pages that name a
- * dataset access date embed {@link DOCS_SYNCED_AT_TOKEN} and get it, formatted for the current locale, in its place.
+ * dataset access date embed {@link DOCS_SYNCED_AT_TOKEN} and get it in its place, in the page's language (English)
+ * rather than the UI locale.
  */
 export function DocsPage({ lastSyncedAt = null }: DocsPageProps) {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   // Applies the stored/system theme class when the guide is loaded directly.
   useTheme();
   const pathname = usePathname();
   const slug = slugFromPath(pathname);
   const section = getDocsSection(slug);
-  const syncedAtText = lastSyncedAt
-    ? t("docs.syncedAt", { date: formatDateTime(lastSyncedAt, locale) })
-    : t("docs.syncedAtUnknown");
-  const content = section.content.replaceAll(DOCS_SYNCED_AT_TOKEN, syncedAtText);
+  const content = section.content.replaceAll(
+    DOCS_SYNCED_AT_TOKEN,
+    formatDocsSyncedAt(lastSyncedAt),
+  );
 
   const pageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement>(null);

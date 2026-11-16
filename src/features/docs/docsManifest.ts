@@ -1,3 +1,4 @@
+import { formatDateTime } from "@/shared/lib/format";
 import { DOCS_INDEX_SLUG } from "./docsRouter";
 import indexContent from "./content/index.md?raw";
 import gettingStartedContent from "./content/getting-started.md?raw";
@@ -14,8 +15,20 @@ import troubleshootingContent from "./content/troubleshooting.md?raw";
  */
 export const DOCS_SYNCED_AT_TOKEN = "{{syncedAt}}";
 
-/** What search snippets show in place of {@link DOCS_SYNCED_AT_TOKEN}: the index is built once, without data. */
-const SEARCH_SYNCED_AT_TEXT = "the date of the most recent sync";
+/**
+ * The guide's markdown is English-only, so the text put in place of {@link DOCS_SYNCED_AT_TOKEN} follows the page's
+ * language, not the UI locale: an en-SG date and English phrases, for every reader.
+ */
+const DOCS_CONTENT_LOCALE = "en-SG";
+const SYNCED_AT_PHRASE = "the date of the most recent sync";
+const SYNCED_AT_UNKNOWN_SUFFIX = "(not available in this copy)";
+
+/** The English text that replaces {@link DOCS_SYNCED_AT_TOKEN}: the sync time, or a plain fallback without one. */
+export function formatDocsSyncedAt(lastSyncedAt: string | null): string {
+  return lastSyncedAt
+    ? `${formatDateTime(lastSyncedAt, DOCS_CONTENT_LOCALE)}, ${SYNCED_AT_PHRASE}`
+    : `${SYNCED_AT_PHRASE} ${SYNCED_AT_UNKNOWN_SUFFIX}`;
+}
 
 export type DocsSection = {
   slug: string;
@@ -68,9 +81,7 @@ export function buildDocsSearchEntries(sections: DocsSection[] = DOCS_SECTIONS):
 
   const entries: DocsSearchEntry[] = [];
   for (const section of sections) {
-    const lines = section.content
-      .replaceAll(DOCS_SYNCED_AT_TOKEN, SEARCH_SYNCED_AT_TEXT)
-      .split("\n");
+    const lines = section.content.replaceAll(DOCS_SYNCED_AT_TOKEN, SYNCED_AT_PHRASE).split("\n");
     let heading = section.title;
     let buffer: string[] = [];
 
