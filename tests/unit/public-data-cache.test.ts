@@ -310,9 +310,7 @@ describe("while a D1 publication is in progress", () => {
 
 describe("a route that answers and labels in one statement (AtomicRead)", () => {
   const request = () =>
-    new Request(
-      "https://example.com/api/nearby-places?lat=1.35&lng=103.75&radius=500&types=mrt_exit",
-    );
+    new Request("https://example.com/api/nearby-places?block=central-area-535-upp-cross-st");
   const POINTER = "https://example.com/__public-data-cache/v1/pointer";
   const VERSION = "ab".repeat(32);
   const published = { version: VERSION, state: { inProgress: false } } as const;
@@ -382,7 +380,7 @@ describe("a route that answers and labels in one statement (AtomicRead)", () => 
 
     const ctx = atomicSetup(unfinished(base));
     ctx.storage.set(
-      `https://example.com/__public-data-cache/v1/${base}/api/nearby-places?lat=1.35&lng=103.75&radius=500&types=mrt_exit`,
+      `https://example.com/__public-data-cache/v1/${base}/api/nearby-places?block=central-area-535-upp-cross-st`,
       new Response('{"places":["previous"]}'),
     );
     const stale = await run(ctx);

@@ -1,6 +1,6 @@
 import { badRequest, jsonResponse, privateJsonResponse, serverError } from "../_lib/d1";
 import type { PublicRouteContext, PublicRouteHandler } from "../_lib/public-data";
-import { parseNearbyPlacesRequest } from "../../shared/nearby-places";
+import { parseNearbyPlacesRequest, type NearbyPlacesRequest } from "../../shared/nearby-places";
 import type { PublicationLabel } from "../../shared/publication-state";
 
 /**
@@ -11,15 +11,16 @@ import type { PublicationLabel } from "../../shared/publication-state";
 export type NearbyPlacesRead = { response: Response; publication?: PublicationLabel | null };
 
 /**
- * Straight-line proximity only; never replaces existing walking-time evidence.
+ * Nearest MRT exits to one published HDB block. Straight-line proximity only; never replaces existing
+ * walking-time evidence.
  *
  * `admit` runs after the request is known to be valid and answerable, immediately before the one statement is sent,
- * and may refuse it with a response of its own. Requests that never reach the database (invalid input, a backend
- * without PostGIS) therefore never spend the rate-limit or statement allowance.
+ * and may refuse it with a response of its own (an unknown block, a rate limit, the daily budget). Requests that
+ * never reach the database (invalid input, a backend without PostGIS) therefore never spend any allowance.
  */
 export async function readNearbyPlaces(
   { request, publicData }: PublicRouteContext,
-  admit?: () => Promise<Response | null>,
+  admit?: (request: NearbyPlacesRequest) => Promise<Response | null>,
 ): Promise<NearbyPlacesRead> {
   const parsed = parseNearbyPlacesRequest(new URL(request.url));
   if (!parsed.ok) return { response: badRequest(parsed.error) };
@@ -32,13 +33,13 @@ export async function readNearbyPlaces(
         { status: 503 },
       ),
     };
-  const refused = await admit?.();
+  const refused = await admit?.(parsed.request);
   if (refused) return { response: refused };
   try {
     const { places, publication } = await publicData.nearbyPlaces(parsed.request);
     return {
       response: jsonResponse({
-        center: { lat: parsed.request.lat, lng: parsed.request.lng },
+        block: parsed.request.block,
         radiusMeters: parsed.request.radiusMeters,
         limit: parsed.request.limit,
         types: parsed.request.kinds,

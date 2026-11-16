@@ -43,15 +43,41 @@ import { createPublicReadScope, namespacePublicCache } from "./public-read-backe
 import { createNeonPublicTransport } from "./neon-transport";
 import type { PublicData, PublicRouteHandler } from "../functions/_lib/public-data";
 import { privateJsonResponse } from "../functions/_lib/d1";
-import { isNeonSpatialEnabled } from "../shared/nearby-places";
+import { parseNeonSpatialMode, type NearbyPlacesRequest } from "../shared/nearby-places";
 import {
   checkNearbyClientRateLimit,
   checkNearbyOriginRateLimit,
 } from "../functions/_lib/nearby-rate-limit";
+import { checkNearbyDailyBudget } from "./nearby-budget";
+import { isPublishedBlock } from "./nearby-block-index";
 
-/** Cache misses must pass this fail-closed limiter before a single PostGIS SELECT. */
-async function admitNearbyDatabaseRead(env: Env): Promise<Response | null> {
-  return checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER);
+export { NearbyDailyBudget } from "./nearby-budget";
+
+/**
+ * What a cache miss must pass before its single PostGIS SELECT, in this order. Each step fails closed.
+ * 1. The block is in the published block list (no statement is spent on a key that names no block).
+ * 2. The per-location origin limiter.
+ * 3. The global daily budget, last, so a request refused earlier never takes a statement from it.
+ */
+async function admitNearbyDatabaseRead(
+  env: Env,
+  nearby: NearbyPlacesRequest,
+  blocks: Parameters<typeof isPublishedBlock>[1],
+): Promise<Response | null> {
+  try {
+    if (!(await isPublishedBlock(nearby.block, blocks)))
+      return privateJsonResponse({ error: "Unknown HDB block" }, { status: 404 });
+  } catch (error) {
+    console.error("Published block list unavailable, refusing nearby request:", error);
+    return privateJsonResponse(
+      { error: "Nearby search is temporarily unavailable" },
+      { status: 503, headers: { "Retry-After": "60" } },
+    );
+  }
+  return (
+    (await checkNearbyOriginRateLimit(env.NEARBY_ORIGIN_LIMITER)) ??
+    (await checkNearbyDailyBudget(env.NEARBY_BUDGET, env.NEARBY_DAILY_MISS_BUDGET))
+  );
 }
 
 type ShortlistRouteId = "shortlist-create" | "shortlist-get";
@@ -205,12 +231,12 @@ export default {
           const { routeId } = apiMatch;
           // Feature availability is independent of database reads.
           if (routeId === "nearby-capabilities") {
-            return privateJsonResponse({
-              available:
-                capturedEnv.PUBLIC_DATA_BACKEND === "neon" &&
-                !!capturedEnv.HDB_PUBLIC_NEON &&
-                isNeonSpatialEnabled(capturedEnv.NEON_SPATIAL_ENABLED),
-            });
+            // The mode reported is the one in effect: a backend without PostGIS serves no nearby search.
+            const mode =
+              capturedEnv.PUBLIC_DATA_BACKEND === "neon" && !!capturedEnv.HDB_PUBLIC_NEON
+                ? parseNeonSpatialMode(capturedEnv.NEON_SPATIAL_MODE)
+                : "off";
+            return privateJsonResponse({ available: mode !== "off", mode });
           }
           if (routeId === "shortlist-create" || routeId === "shortlist-get") {
             const handler = shortlistHandlers[routeId];
@@ -224,7 +250,7 @@ export default {
           // approved spatial migration, publisher verification and rollout.
           if (
             routeId === "nearby-places" &&
-            !isNeonSpatialEnabled(capturedEnv.NEON_SPATIAL_ENABLED)
+            parseNeonSpatialMode(capturedEnv.NEON_SPATIAL_MODE) === "off"
           )
             return privateJsonResponse(
               { error: "Spatial search has not been enabled" },
@@ -255,7 +281,15 @@ export default {
           // invalid requests never consume a cache-miss rate-limit allowance.
           const atomic: AtomicRead | undefined =
             routeId === "nearby-places"
-              ? () => readNearbyPlaces(routeContext(), () => admitNearbyDatabaseRead(capturedEnv))
+              ? () =>
+                  readNearbyPlaces(routeContext(), (nearby) =>
+                    admitNearbyDatabaseRead(capturedEnv, nearby, {
+                      origin: url.origin,
+                      namespace: reads.namespace,
+                      data: reads.data,
+                      cache: publicCache,
+                    }),
+                  )
               : undefined;
           // The cache layer calls this only when the answer must come from the database.
           const dispatch = async () =>
