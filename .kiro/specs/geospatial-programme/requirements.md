@@ -63,8 +63,10 @@ refresh that feeds them. Each feature spec cites these instead of restating them
 
 - **R5.1** Nothing changes production Neon, D1, Hyperdrive, a Worker or a feature
   flag without the owner's explicit approval of that action.
-- **R5.2** `NEON_SPATIAL_ENABLED` stays `"false"` until the production gates in
-  `nearby-search-production-gates` pass and the owner approves.
+- **R5.2** `NEON_SPATIAL_MODE` is `off` or `blocks`. Block-only nearby search
+  may be on once the global daily miss budget of
+  `nearby-search-production-gates` R4 exists. Search around arbitrary
+  coordinates is not authorised in any mode.
 - **R5.3** D1 stays the rollback target; the public-read boundary is not widened.
 - **R5.4** Every cache and query is bounded; unbounded input is rejected, not
   truncated silently.

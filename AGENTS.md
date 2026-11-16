@@ -43,7 +43,7 @@ Specs are located in `.kiro/specs/` and follow the Kiro **Design → Requirement
 - [**POI Source Integration**](.kiro/specs/poi-source-integration/tasks.md) — Multi-source provenance, deterministic entity resolution with explicit uncertainty, an SVY21 coordinate contract and quarantine for the PostGIS nearby kinds (design only; no source is admitted). The source analysis is in the description of PR #428.
 - [**Shortlist Offer Board**](.kiro/specs/shortlist-offer-board/tasks.md) — Buyer decision board with negotiation fields, decision workflow, and side-by-side comparison.
 - [**Data Quality & Source Transparency**](.kiro/specs/data-quality-and-source-transparency/tasks.md) — Freshness, provenance, and caveat consistency across views.
-- [**Nearby Search Production Gates**](.kiro/specs/nearby-search-production-gates/tasks.md) — Both fail-closed limiters and one labelled PostGIS statement per miss; no counter, public activation needs global cost control, and the deployed Worker → Hyperdrive → PostGIS verification that must precede opening `NEON_SPATIAL_ENABLED`.
+- [**Nearby Search Production Gates**](.kiro/specs/nearby-search-production-gates/tasks.md) — Block-only nearby search (`NEON_SPATIAL_MODE`): both fail-closed limiters, a global daily miss budget in one Durable Object and one labelled PostGIS statement per miss; arbitrary coordinates are not authorised.
 
 **Completed:**
 
