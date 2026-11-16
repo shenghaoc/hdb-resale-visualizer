@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import type { GeocodeCacheFile, GeocodeEntry } from "../../scripts/lib/pipeline";
 import type { D1Client } from "../../scripts/lib/sync/d1";
 import {
@@ -6,8 +6,12 @@ import {
   loadGeocodeCache,
   saveGeocodeCacheEntries,
 } from "../../scripts/lib/sync/geocode";
+import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
 
-const ENDPOINT = new URL("https://example.test/api/common/elastic/search");
+// OneMap Search needs an access token, and credentials only ever go to the official endpoint
+// (scripts/lib/sync/geocode.ts), so these tests use it with a token and a mocked fetch.
+const ENDPOINT = new URL("https://www.onemap.gov.sg/api/common/elastic/search");
+const LOOKUP_FAILED = "OneMap Search lookup failed; response details omitted.";
 
 type SavedGeocodeRow = { key: string; entry: GeocodeEntry };
 
@@ -23,8 +27,16 @@ function cacheWith(entries: GeocodeCacheFile["entries"]): GeocodeCacheFile {
   return { version: 1, updatedAt: "1970-01-01T00:00:00.000Z", entries };
 }
 
+beforeEach(() => {
+  vi.stubEnv("ONEMAP_TOKEN", "fixture-token");
+  vi.stubEnv("ONEMAP_REQUEST_INTERVAL_MS", "1");
+  resetUpstreamThrottleForTests();
+});
+
 afterEach(() => {
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+  resetUpstreamThrottleForTests();
 });
 
 describe("geocode cache persistence", () => {
@@ -228,7 +240,8 @@ describe("geocodeAddress", () => {
       }),
     );
 
-    await expect(geocodeAddress("123 EXAMPLE ROAD", ENDPOINT)).rejects.toThrow(/Expected JSON/);
+    // Provider bodies and parse errors can echo credentials, so every lookup failure is this fixed message.
+    await expect(geocodeAddress("123 EXAMPLE ROAD", ENDPOINT)).rejects.toThrow(LOOKUP_FAILED);
   });
 
   it("rejects a hit that is missing coordinates", async () => {

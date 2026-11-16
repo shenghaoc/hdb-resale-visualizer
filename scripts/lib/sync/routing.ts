@@ -98,16 +98,25 @@ export async function resolveOneMapToken(options: OneMapTokenOptions): Promise<s
   }
 
   try {
+    if (
+      options.tokenEndpoint.origin !== "https://www.onemap.gov.sg" ||
+      options.tokenEndpoint.pathname !== "/api/auth/post/getToken" ||
+      options.tokenEndpoint.username ||
+      options.tokenEndpoint.password ||
+      options.tokenEndpoint.search ||
+      options.tokenEndpoint.hash
+    ) {
+      throw new Error("Untrusted OneMap token endpoint");
+    }
     const payload = await fetchJson<unknown>(options.tokenEndpoint.toString(), {
       method: "POST",
       body: JSON.stringify({ email: options.email, password: options.password }),
+      redirect: "manual",
     });
     const parsed = oneMapTokenResponseSchema.parse(payload);
     return parsed.access_token;
-  } catch (error) {
-    console.warn(
-      `Failed to resolve OneMap token: ${error instanceof Error ? error.message : "unknown error"}. Falling back to walking-time estimates.`,
-    );
+  } catch {
+    console.warn("Failed to resolve OneMap token. Authenticated OneMap requests are unavailable.");
     return null;
   }
 }
@@ -123,10 +132,12 @@ export async function fetchWalkingRoute(
   url.searchParams.set("end", `${end.lat},${end.lng}`);
   url.searchParams.set("routeType", "walk");
 
-  await waitForUpstreamSlot("onemap-routing");
-  const response = await fetchWithRetry(url.toString(), {
-    headers: { authorization: `Bearer ${token}` },
-  });
+  // Paced and budgeted before every physical attempt, retries included.
+  const response = await fetchWithRetry(
+    url.toString(),
+    { headers: { authorization: `Bearer ${token}` } },
+    { beforeAttempt: () => waitForUpstreamSlot("onemap-routing", url.toString()) },
+  );
   const payload = await response.json();
   const parsed = oneMapRoutingResponseSchema.parse(payload);
 

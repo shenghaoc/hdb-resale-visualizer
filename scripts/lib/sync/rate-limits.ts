@@ -102,7 +102,48 @@ export async function sleep(milliseconds: number): Promise<void> {
   await new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-export async function waitForUpstreamSlot(service: UpstreamService): Promise<void> {
+/** The three kinds of OneMap HTTP attempt a run can be budgeted for. */
+export type OneMapBudgetCategory = "auth" | "search" | "routing";
+
+/** An HTTP attempt refused (and not sent) because the run's OneMap budget for that kind is spent. No credentials. */
+export class OneMapBudgetExhaustedError extends Error {
+  constructor(readonly category: OneMapBudgetCategory) {
+    super(`OneMap ${category} HTTP attempt budget exhausted for this run`);
+    this.name = "OneMapBudgetExhaustedError";
+  }
+}
+
+/** Anything that can admit or refuse one OneMap HTTP attempt; `acquire` throws `OneMapBudgetExhaustedError`. */
+export type OneMapBudgetGate = { acquire(category: OneMapBudgetCategory): void };
+
+let oneMapBudgetGate: OneMapBudgetGate | null = null;
+
+/**
+ * Every physical OneMap HTTP attempt, retries included, passes `waitForUpstreamSlot` first, so a gate installed
+ * here bounds a whole run's actual requests, whichever helper sends them. Nothing is installed by default:
+ * `sync-data` keeps its existing behaviour.
+ */
+export function installOneMapRequestBudget(gate: OneMapBudgetGate | null): void {
+  oneMapBudgetGate = gate;
+}
+
+export function oneMapBudgetCategory(service: UpstreamService, url?: string): OneMapBudgetCategory {
+  if (service === "onemap-routing") return "routing";
+  return url && new URL(url).pathname.startsWith("/api/auth/") ? "auth" : "search";
+}
+
+export function isOneMapService(service: UpstreamService): boolean {
+  return service === "onemap-search" || service === "onemap-routing";
+}
+
+/**
+ * Reserves the next pacing slot for one physical HTTP attempt. OneMap callers run it before every attempt,
+ * retries included (`fetchWithRetry`'s `beforeAttempt`), so an installed budget counts and bounds actual HTTP
+ * requests. The budget is checked first: a refused attempt is never sent, neither waits nor delays others.
+ */
+export async function waitForUpstreamSlot(service: UpstreamService, url?: string): Promise<void> {
+  if (oneMapBudgetGate && isOneMapService(service))
+    oneMapBudgetGate.acquire(oneMapBudgetCategory(service, url));
   const intervalMs = upstreamIntervalMs(service);
   const now = Date.now();
   const last = lastRequestAt.get(service) ?? 0;
@@ -119,4 +160,5 @@ export async function waitForUpstreamSlot(service: UpstreamService): Promise<voi
 
 export function resetUpstreamThrottleForTests(): void {
   lastRequestAt.clear();
+  oneMapBudgetGate = null;
 }
