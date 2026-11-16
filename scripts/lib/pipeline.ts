@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import type { TransactionDelta } from "./sync/incremental";
 import type {
   AddressDetail,
   AddressDetailSummary,
@@ -6,6 +8,7 @@ import type {
   BlockSummary,
   ComparisonArtifact,
   Manifest,
+  StoredManifest,
   TownFlatTypeTrendPoint,
 } from "../../shared/data-types";
 import { buildFilterOptions, canonicalFlatType } from "../../shared/filter-options";
@@ -98,6 +101,8 @@ export type BuildArtifactsInput = {
    */
   walkingTimes?: Map<string, number>;
   metadata: Manifest["sources"];
+  sourceVersionHints?: Record<string, string>;
+  incremental?: { previous: GeneratedArtifacts; delta: TransactionDelta };
 };
 
 export type SchoolLocation = {
@@ -114,7 +119,14 @@ export type AmenityLocation = {
 };
 
 export type GeneratedArtifacts = {
-  manifest: Manifest;
+  computation?: {
+    blocks: number;
+    trendGroups: number;
+    comparisonBlocks: number;
+    contextChanged: boolean;
+    thresholdChanged: boolean;
+  };
+  manifest: StoredManifest;
   blockSummaries: BlockSummary[];
   blocksByTown: Record<string, BlockSummary[]>;
   details: Record<string, AddressDetail>;
@@ -568,6 +580,89 @@ export function buildMrtStationsGeoJson(mrtExits: MrtExit[]): MrtStationFeatureC
   };
 }
 
+export function toTransactionRow(tx: ResaleTransaction): TransactionRow | null {
+  if (parseStoreyMidpoint(tx.storeyRange) == null) return null;
+  return {
+    month: tx.month,
+    town: tx.town,
+    block: tx.block,
+    street_name: tx.streetName,
+    address_key: tx.addressKey,
+    flat_type: canonicalFlatType(tx.flatType),
+    storey_range: tx.storeyRange,
+    floor_area_sqm: tx.floorAreaSqm,
+    lease_commence_year: tx.leaseCommenceDate || null,
+    resale_price: tx.resalePrice,
+    flat_model: tx.flatModel,
+  };
+}
+
+function stableContextDigest(context: unknown): string {
+  const canonical = (value: unknown): unknown => {
+    if (Array.isArray(value))
+      return value
+        .map(canonical)
+        .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+    if (value && typeof value === "object")
+      return Object.fromEntries(
+        Object.entries(value)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([key, entry]) => [key, canonical(entry)]),
+      );
+    return value ?? null;
+  };
+  return createHash("sha256")
+    .update(JSON.stringify(canonical(context)))
+    .digest("hex");
+}
+
+function detailLeasePresentationMatches(
+  detail: AddressDetail,
+  source: ResaleTransaction[],
+): boolean {
+  const key = (row: {
+    month: string;
+    flatType: string;
+    storeyRange: string;
+    floorAreaSqm: number;
+    leaseCommenceDate: number;
+    resalePrice: number;
+    flatModel: string;
+    remainingLease: string;
+  }) =>
+    JSON.stringify([
+      row.month,
+      row.flatType,
+      row.storeyRange,
+      row.floorAreaSqm,
+      row.leaseCommenceDate,
+      row.resalePrice,
+      row.flatModel,
+      row.remainingLease,
+    ]);
+  const available = new Map<string, number>();
+  for (const row of source) {
+    const tuple = key(row);
+    available.set(tuple, (available.get(tuple) ?? 0) + 1);
+  }
+  for (const row of detail.recentTransactions) {
+    const tuple = key(row);
+    const count = available.get(tuple) ?? 0;
+    if (!count) return false;
+    available.set(tuple, count - 1);
+  }
+  return true;
+}
+
+/** Facts excluded by the existing comparable-storey parser still affect public aggregates. */
+export function excludedTransactionDigest(transactions: ResaleTransaction[]): string {
+  const facts = transactions
+    .filter((row) => !toTransactionRow(row))
+    .map(({ id: _id, ...row }) => JSON.stringify(row))
+    .sort();
+  return stableContextDigest(facts);
+}
+
 export function buildArtifacts({
   transactions,
   propertyInfo,
@@ -579,6 +674,8 @@ export function buildArtifacts({
   parks,
   walkingTimes,
   metadata,
+  sourceVersionHints,
+  incremental,
 }: BuildArtifactsInput): GeneratedArtifacts {
   const runTimestamp = new Date().toISOString();
   const grouped = new Map<string, ResaleTransaction[]>();
@@ -613,6 +710,47 @@ export function buildArtifacts({
     throw new Error(`Missing validated month index for "${maxMonth}"`);
   }
   const recentThreshold = sortedMonths[Math.max(0, sortedMonths.length - 24)] ?? maxMonth;
+  const contextDigest = stableContextDigest({
+    propertyInfo,
+    mrtExits,
+    geocodes,
+    schools,
+    hawkers,
+    supermarkets,
+    parks,
+    walkingTimes: [...(walkingTimes ?? [])],
+    leaseYear: new Date().getUTCFullYear(),
+  });
+  const excludedSourceDigest = excludedTransactionDigest(transactions);
+  const priorState = incremental?.previous.manifest.syncBuildState;
+  const excludedChanged = priorState?.excludedSourceDigest !== excludedSourceDigest;
+  const contextChanged =
+    !priorState || priorState.algorithmVersion !== 1 || priorState.contextDigest !== contextDigest;
+  const thresholdChanged = priorState?.recentThreshold !== recentThreshold;
+  const fullBlocks = contextChanged || thresholdChanged || excludedChanged;
+  const fullComparisons =
+    fullBlocks || incremental?.previous.manifest.dataWindow.maxMonth !== maxMonth;
+  const previousBlocks = new Map(
+    incremental?.previous.blockSummaries.map((block) => [block.addressKey, block]) ?? [],
+  );
+  const previousTrends = new Map(
+    incremental?.previous.townFlatTypeTrend.map((point) => [
+      JSON.stringify([point.town, point.flatType, point.month]),
+      point,
+    ]) ?? [],
+  );
+  const comparisonCohorts = new Set(incremental?.delta.affectedTownTypes ?? []);
+  for (const address of incremental?.delta.affectedBlocks ?? []) {
+    const old = incremental?.previous.comparisons?.[address];
+    if (old) comparisonCohorts.add(JSON.stringify([old.town, old.flatType]));
+  }
+  const computation = {
+    blocks: 0,
+    trendGroups: 0,
+    comparisonBlocks: 0,
+    contextChanged,
+    thresholdChanged,
+  };
   const blockSummaries: BlockSummary[] = [];
   const details: Record<string, AddressDetail> = {};
   const townFlatTypeGroups = new Map<string, ResaleTransaction[]>();
@@ -628,30 +766,26 @@ export function buildArtifacts({
   // Collect full transaction rows for the comparable engine v2 (all rows,
   // not capped). Rows with unparseable storey ranges are filtered out here;
   // storey_midpoint and price_per_sqm are derived at read time in the API.
-  const allTransactions: TransactionRow[] = [];
+  const allTransactions = transactions.flatMap((tx) => {
+    const row = toTransactionRow(tx);
+    return row ? [row] : [];
+  });
 
   for (const [addressKey, blockTransactions] of grouped.entries()) {
-    const sortedTransactions = sortTransactionsByLatest(blockTransactions);
-
-    // Map ALL sorted transactions (before the 20-row cap) to D1 rows.
-    // storey_midpoint and price_per_sqm are derived at read time in the API.
-    for (const tx of sortedTransactions) {
-      if (parseStoreyMidpoint(tx.storeyRange) == null) continue; // skip unparseable storey ranges
-      allTransactions.push({
-        month: tx.month,
-        town: tx.town,
-        block: tx.block,
-        street_name: tx.streetName,
-        address_key: tx.addressKey,
-        flat_type: canonicalFlatType(tx.flatType),
-        storey_range: tx.storeyRange,
-        floor_area_sqm: tx.floorAreaSqm,
-        lease_commence_year: tx.leaseCommenceDate || null,
-        resale_price: tx.resalePrice,
-        flat_model: tx.flatModel,
-      });
+    const previous = previousBlocks.get(addressKey);
+    if (
+      !fullBlocks &&
+      !incremental?.delta.affectedBlocks.has(addressKey) &&
+      previous &&
+      incremental?.previous.details[addressKey] &&
+      detailLeasePresentationMatches(incremental.previous.details[addressKey], blockTransactions)
+    ) {
+      blockSummaries.push(previous);
+      details[addressKey] = incremental.previous.details[addressKey];
+      continue;
     }
-
+    computation.blocks++;
+    const sortedTransactions = sortTransactionsByLatest(blockTransactions);
     const summaryWindow = sortedTransactions.filter(
       (transaction) => transaction.month >= recentThreshold,
     );
@@ -829,6 +963,15 @@ export function buildArtifacts({
   const townFlatTypeTrend: TownFlatTypeTrendPoint[] = [...townFlatTypeGroups.entries()]
     .map(([groupKey, groupTransactions]) => {
       const [town, flatType, month] = groupKey.split("__");
+      const prior = previousTrends.get(JSON.stringify([town, flatType, month]));
+      if (
+        incremental &&
+        !excludedChanged &&
+        !incremental.delta.affectedTownTypes.has(JSON.stringify([town, flatType])) &&
+        prior
+      )
+        return prior;
+      computation.trendGroups++;
       return {
         town,
         flatType,
@@ -873,7 +1016,9 @@ export function buildArtifacts({
   const filterOptions = buildFilterOptions(blockSummaries);
 
   // Generate comparison artifacts if amenity data is available
-  const comparisons: Record<string, ComparisonArtifact> = {};
+  const comparisons: Record<string, ComparisonArtifact> = fullComparisons
+    ? {}
+    : { ...incremental?.previous.comparisons };
   const schoolsData: SchoolLocation[] = schools ?? [];
   const hawkersData: AmenityLocation[] = hawkers ?? [];
   const supermarketsData: AmenityLocation[] = supermarkets ?? [];
@@ -888,6 +1033,15 @@ export function buildArtifacts({
     const blockMetrics: ComparisonBlockMetric[] = [];
 
     for (const [addressKey, blockTransactions] of grouped.entries()) {
+      // The newest cohort is determined without sorting untouched histories.
+      const newest = blockTransactions.reduce((best, row) =>
+        row.month > best.month || (row.month === best.month && row.flatType < best.flatType)
+          ? row
+          : best,
+      );
+      const cohortKey = JSON.stringify([newest.town, newest.flatType]);
+      if (!fullComparisons && !comparisonCohorts.has(cohortKey)) continue;
+      computation.comparisonBlocks++;
       const sortedTransactions = sortTransactionsByLatest(blockTransactions);
       const cohort = sortedTransactions[0];
       if (!cohort) {
@@ -1009,8 +1163,16 @@ export function buildArtifacts({
     }
   }
 
-  const manifest: Manifest = {
+  const manifest: StoredManifest = {
     schemaVersion: "2.0.0",
+    syncBuildState: {
+      contextDigest,
+      excludedSourceDigest,
+      recentThreshold,
+      algorithmVersion: 1,
+      sourceVersionHints,
+      reconciledAt: runTimestamp,
+    },
     generatedAt: runTimestamp,
     dataWindow: {
       minMonth: sortedMonths[0],
@@ -1028,6 +1190,7 @@ export function buildArtifacts({
   };
 
   return {
+    computation,
     manifest,
     blockSummaries,
     blocksByTown,

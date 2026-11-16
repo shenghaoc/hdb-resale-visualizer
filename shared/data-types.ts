@@ -87,6 +87,16 @@ export type FilterOptions = {
   flatModels: string[];
 };
 
+/** Publisher bookkeeping: what the incremental builder needs to know about the generation it is extending. */
+export type SyncBuildState = {
+  contextDigest: string;
+  excludedSourceDigest?: string;
+  recentThreshold: string;
+  algorithmVersion: 1;
+  sourceVersionHints?: Record<string, string>;
+  reconciledAt?: string;
+};
+
 export type Manifest = {
   schemaVersion: string;
   generatedAt?: string;
@@ -114,6 +124,13 @@ export type Manifest = {
     comparisons?: number;
   };
 };
+
+/**
+ * The manifest as the publishers store it: the public `Manifest` plus internal bookkeeping. `GET /api/manifest`
+ * projects the bookkeeping away (`shared/manifest-contract.ts`), so it never widens `Manifest` or the frontend
+ * `manifestSchema`, and `tests/unit/manifest-contract.test.ts` keeps those two equal to the public contract.
+ */
+export type StoredManifest = Manifest & { syncBuildState?: SyncBuildState };
 
 export type AffordabilityMode = "" | "comfortable" | "stretch";
 
