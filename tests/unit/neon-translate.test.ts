@@ -61,6 +61,18 @@ describe("isolated PostgreSQL publication adapter", () => {
       "INSERT INTO geocode_cache (cache_key,lat,lng) VALUES ($1,$2,$3) ON CONFLICT(cache_key) DO UPDATE SET lat=excluded.lat,lng=excluded.lng",
     );
   });
+  it("translates the one reviewed-removal shape and no other DELETE", () => {
+    expect(translate({ sql: "DELETE FROM transactions WHERE id = ?", params: [7] }, {})).toEqual({
+      sql: "DELETE FROM transactions WHERE id = $1",
+      params: [7],
+    });
+    for (const sql of [
+      "DELETE FROM transactions WHERE id > ?",
+      "DELETE FROM transactions WHERE id = ? OR 1=1",
+      "DELETE FROM blocks WHERE id = ?",
+    ])
+      expect(() => translate({ sql, params: [7] }, {})).toThrow("Unsupported publisher shape");
+  });
   it("rejects unrecognized SQL and uncalibrated columns", () => {
     expect(() => translate({ sql: "DELETE FROM transactions" }, {})).toThrow(
       "Unsupported publisher shape",

@@ -607,7 +607,7 @@ export async function planArtifactWrites(
 ): Promise<ArtifactWritePlan> {
   const statements = [...db.stagedWrites(), ...transactionStatements(delta)];
   const changedRows: Record<string, number> = {
-    transactions: delta.inserts.length + delta.updates.length,
+    transactions: delta.inserts.length + delta.updates.length + (delta.deletes?.length ?? 0),
   };
   for (const statement of db.stagedWrites()) {
     const table = statement.sql.match(/INTO\s+([a-z_]+)/i)?.[1];
@@ -617,6 +617,8 @@ export async function planArtifactWrites(
   }
   const mutations: { table: string; rows: number; inserted: boolean; columns: string[] }[] = [
     { table: "transactions", rows: delta.inserts.length, inserted: true, columns: [] },
+    // A removed row leaves every index of the table, like an inserted row enters every one.
+    { table: "transactions", rows: delta.deletes?.length ?? 0, inserted: true, columns: [] },
     {
       table: "transactions",
       rows: delta.updates.length,

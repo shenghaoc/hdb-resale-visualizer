@@ -1,10 +1,22 @@
-import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type { PGlite } from "@electric-sql/pglite";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { runSyncNeon } from "../../scripts/sync-neon";
-import { NEON_REFRESH_BRANCH, NeonSessionGuard, type PgQuery } from "../../scripts/lib/sync/neon";
+import {
+  NEON_REFRESH_BRANCH,
+  NEON_REFRESH_PROJECT,
+  NeonSessionGuard,
+  type PgQuery,
+} from "../../scripts/lib/sync/neon";
+import {
+  neonManifestSHA256,
+  sourceFactsSHA256,
+  type NeonManifest,
+} from "../../scripts/lib/sync/neon-reconciliation";
+import { normalizeResaleRows } from "../../scripts/lib/sync/normalization";
+import { toTransactionRow } from "../../scripts/lib/pipeline";
 import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limits";
 import {
   FakeClock,
@@ -603,5 +615,123 @@ describe("publication", () => {
     expect(delta.receipt.changedRows.transactions).toBe(1);
     expect((await tableCounts(db)).transactions).toBe(countsAfterFirst.transactions + 1);
     expect((await manifestState(db)).updated_at).not.toBe(manifestAfterFirst.updated_at);
+  });
+});
+
+describe("reviewed removal, end to end", () => {
+  const startingDirectory = process.cwd();
+  let workDirectory: string;
+  beforeEach(() => {
+    // `--source-capture-directory` is relative to the working directory, as it is for an operator.
+    workDirectory = mkdtempSync(path.join(tmpdir(), "neon-removal-"));
+    process.chdir(workDirectory);
+  });
+  afterEach(() => {
+    process.chdir(startingDirectory);
+    rmSync(workDirectory, { recursive: true, force: true });
+  });
+
+  it("deletes the reviewed row, rebuilds its block, records the removal and replays as a no-op", async () => {
+    const { run, db, rows } = await scenario();
+    expect((await run("--apply")).error).toBeUndefined();
+    const before = await tableCounts(db);
+
+    // Upstream no longer has one registration: the stored row with the lowest ID.
+    const stored = (
+      await db.query<Record<string, unknown>>(
+        "SELECT id::int AS id, month, town, block, street_name, address_key, flat_type, storey_range, floor_area_sqm, lease_commence_year, resale_price, flat_model FROM transactions ORDER BY id LIMIT 1",
+      )
+    ).rows;
+    const withdrawn = rows.find((row) => Number(row.resale_price) === stored[0].resale_price)!;
+    const remaining = rows.filter((row) => row !== withdrawn);
+    const { id, ...fact } = stored[0] as { id: number } & Record<string, unknown>;
+    const facts = normalizeResaleRows(remaining).flatMap((row) => {
+      const transaction = toTransactionRow(row);
+      return transaction ? [transaction] : [];
+    });
+    const review = path.join(workDirectory, "review.json");
+    writeFileSync(
+      review,
+      JSON.stringify({
+        version: 1,
+        projectId: NEON_REFRESH_PROJECT,
+        branchId: NEON_REFRESH_BRANCH,
+        reviewStatus: "approved",
+        decisionReference: "test-only removal decision",
+        initialSourceFactsSHA256: sourceFactsSHA256(facts),
+        initialBaselineManifestSHA256: neonManifestSHA256(
+          JSON.parse((await manifestState(db)).json) as NeonManifest,
+        ),
+        maxNewRetentions: 0,
+        maxOutstandingRetentions: 0,
+        maxCorrections: 0,
+        maxRemovals: 1,
+        retentions: [],
+        removals: [
+          { id, fact, disposition: "remove-absent-upstream", evidence: "withdrawn upstream" },
+        ],
+        growth: {
+          scopeDatasetId: "d_8b84c4ee58e3cfc0ece0d773c8ca6abc",
+          scopeMinMonth: "2017-01",
+          evidenceQuality: "uncalibrated-recurring-policy",
+          independentSnapshotIntervals: 0,
+          relativeCeiling: 0.005,
+          absoluteCeiling: 1000,
+          maxMonthlyElapsedDays: 35,
+          maxManualElapsedDays: 35,
+        },
+      }),
+    );
+    const reviewed = (name: string) => [
+      "--reconciliation-review",
+      review,
+      "--source-capture-directory",
+      `.neon-benchmark/${name}`,
+    ];
+
+    // Without the review the absence is refused, as before.
+    const unreviewed = await run("--apply", [], remaining);
+    expect(String(unreviewed.error)).toContain("existing facts absent");
+    expect(await tableCounts(db)).toEqual(before);
+
+    const removal = await run("--apply", reviewed("removal"), remaining);
+    expect(removal.error).toBeUndefined();
+    const receipt = removal.receipt as Report & {
+      delta: Counts;
+      reconciliation: { removedIds: number[]; retainedOccurrences: number };
+    };
+    expect(receipt.delta).toMatchObject({ inserts: 0, updates: 0, deletes: 1 });
+    expect(receipt.reconciliation).toMatchObject({ removedIds: [id], retainedOccurrences: 0 });
+    expect(receipt.changedRows.transactions).toBe(1);
+    expect(
+      removal.events.filter((event) => /^DELETE\b/.test(event.sql)).map((event) => event.sql),
+    ).toEqual(["DELETE FROM transactions WHERE id = $1"]);
+    const after = await tableCounts(db);
+    expect(after).toEqual({ ...before, transactions: before.transactions - 1 });
+    expect((await db.query("SELECT 1 FROM transactions WHERE id = $1", [id])).rows).toEqual([]);
+    // The block was rebuilt from the remaining rows: the withdrawn price is gone from its detail.
+    const detail = (
+      await db.query<{ json: string }>(
+        "SELECT json::text AS json FROM block_details WHERE address_key = $1",
+        [fact.address_key],
+      )
+    ).rows[0].json;
+    expect(detail).not.toContain(withdrawn.resale_price);
+    const manifest = JSON.parse((await manifestState(db)).json) as NeonManifest;
+    expect(manifest.neonReconciliation).toMatchObject({
+      entries: [],
+      removed: [{ id, previouslyRetained: false, decisionReference: "test-only removal decision" }],
+      acceptedSource: { sourceFactRows: 19, storedFactRows: 19, outstandingRetainedOccurrences: 0 },
+    });
+
+    // The same command again publishes nothing.
+    const replay = await run("--apply", reviewed("replay"), remaining);
+    expect(replay.error).toBeUndefined();
+    expect(replay.receipt.publication).toMatchObject({
+      outcome: "already-published-exact-data-replay",
+      statements: 0,
+    });
+    expect(replay.events.filter((event) => MUTATING_SQL.test(event.sql))).toEqual([]);
+    expect(await tableCounts(db)).toEqual(after);
   });
 });
