@@ -34,6 +34,24 @@
         "period": 60,
       },
     },
+    // GET /api/nearby-places (inert while NEON_SPATIAL_ENABLED is "false"). Values mirror
+    // shared/nearby-limits.ts; tests/unit/nearby-rate-limit.test.ts fails when they drift.
+    {
+      "name": "NEARBY_IP_LIMITER",
+      "namespace_id": "1003",
+      "simple": {
+        "limit": 30,
+        "period": 60,
+      },
+    },
+    {
+      "name": "NEARBY_ORIGIN_LIMITER",
+      "namespace_id": "1004",
+      "simple": {
+        "limit": 300,
+        "period": 60,
+      },
+    },
   ],
   // Public-read backend selector (worker/public-read-backend.ts). Public reads are served from Neon
   // through the Hyperdrive config below (direct endpoint, SELECT-only role, query cache disabled,

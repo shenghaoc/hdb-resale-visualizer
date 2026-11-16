@@ -84,6 +84,43 @@ export function readPublicationState(json: string): PublicationState {
 }
 
 /**
+ * What one database read learned about the publication it ran against, without carrying the manifest itself
+ * (about 10 KB on the serving branch, so reading it twice per miss dominated the bytes a miss moved).
+ */
+export type PublicationLabel = {
+  /** SHA-256 of the stored manifest text: the same identity `manifestVersion` computes from the full text. */
+  version: string;
+  state: PublicationState;
+};
+
+/**
+ * Builds a {@link PublicationLabel} from the three fields a labelled read returns beside its data:
+ * `version` (SHA-256 of the manifest text, taken in SQL), `manifestType` (`jsonb_typeof` of the manifest) and
+ * `marker` (the text of its `${PUBLICATION_MARKER_KEY}` entry, or null when that key is absent). The state is decided by
+ * {@link readPublicationState} on a document that holds only the marker, so "in progress", "unreadable" and the
+ * base version come from the same code that reads a full manifest.
+ */
+export function publicationLabel(
+  version: unknown,
+  manifestType: unknown,
+  marker: unknown,
+): PublicationLabel {
+  if (typeof version !== "string" || !VERSION_PATTERN.test(version)) {
+    throw new Error("Malformed publication label: version");
+  }
+  if (typeof manifestType !== "string" || (marker !== null && typeof marker !== "string")) {
+    throw new Error("Malformed publication label: shape");
+  }
+  const document =
+    manifestType !== "object"
+      ? "null"
+      : marker === null
+        ? "{}"
+        : `{"${PUBLICATION_MARKER_KEY}":${marker}}`;
+  return { version, state: readPublicationState(document) };
+}
+
+/**
  * The manifest text to store when a publication starts: the current manifest plus the marker. When there is
  * nothing readable to preserve (`json` is `null` for the first publication, or the stored text is not a JSON
  * object) the marker stands alone as a placeholder manifest with no previous generation to serve; the
