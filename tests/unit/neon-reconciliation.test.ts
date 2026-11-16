@@ -537,6 +537,63 @@ describe("scope-correct cadence and exact one-time exception", () => {
       }),
     ).toThrow("guard");
   });
+  it("accepts a later review's new allowance, but never the one already applied", () => {
+    const s = exception(),
+      p = first(s),
+      stored = [...s.previous, ...p.delta.inserts],
+      manifest: NeonManifest = { ...s.manifest, neonReconciliation: p.state };
+    // A second catch-up of six more rows, pinned to the new baseline and source.
+    const more = Array.from({ length: 6 }, (_, i) => ({
+        ...s.previous[5],
+        resale_price: 800000 + i,
+      })),
+      incoming = [...s.incoming, ...more],
+      body = "f".repeat(64),
+      csvs = [{ ...s.csvs[0], bodySHA256: body }],
+      scoped = stored.filter((row) => ![2, 3].includes(row.id));
+    const review: NeonReconciliationReview = {
+      ...s.review,
+      initialSourceFactsSHA256: sourceFactsSHA256(incoming),
+      initialBaselineManifestSHA256: neonManifestSHA256(manifest),
+      oneTimeAllowance: {
+        ...s.review.oneTimeAllowance!,
+        baselineScopedFactsSHA256: sourceFactsSHA256(scoped),
+        incomingScopedFactsSHA256: sourceFactsSHA256(incoming),
+        rawCSVBodySHA256: body,
+        positiveFactsSHA256: sourceFactsSHA256(more),
+        baselineScopedRows: scoped.length,
+        incomingScopedRows: incoming.length,
+      },
+    };
+    const second = planNeonReconciliation({
+      ...s,
+      previous: stored,
+      incoming,
+      manifest,
+      review,
+      csvs,
+      capturedAtUTC: "2026-10-05T00:00:00.000Z",
+    });
+    expect(second.growth.acceptance).toBe("exact-reviewed-one-time-allowance");
+    expect(second.delta.inserts).toHaveLength(6);
+    expect(second.state.appliedOneTimeAllowance).toEqual(review.oneTimeAllowance);
+    // The recorded allowance is refused even where every pinned value still matches.
+    const recorded: NeonManifest = {
+      ...s.manifest,
+      neonReconciliation: { ...p.state, appliedOneTimeAllowance: review.oneTimeAllowance },
+    };
+    expect(() =>
+      planNeonReconciliation({
+        ...s,
+        previous: stored,
+        incoming,
+        manifest: recorded,
+        review: { ...review, initialBaselineManifestSHA256: neonManifestSHA256(recorded) },
+        csvs,
+        capturedAtUTC: "2026-10-05T00:00:00.000Z",
+      }),
+    ).toThrow("guard");
+  });
   it("permits a longer gap only via the exact manual allowance, bounded to 62 days", () => {
     const s = exception(),
       start = Date.parse(s.manifest.generatedAt!);
@@ -552,6 +609,235 @@ describe("scope-correct cadence and exact one-time exception", () => {
         capturedAtUTC: new Date(start + 62 * 86400000 + 1).toISOString(),
       }),
     ).toThrow("checkpoint gap");
+  });
+});
+
+describe("reviewed removals", () => {
+  // The first publication retains rows 2 and 3; a later review removes them.
+  function retainedBaseline() {
+    const s = setup(),
+      p = first(s),
+      manifest: NeonManifest = { ...s.manifest, neonReconciliation: p.state };
+    return { ...s, manifest, retainedState: p.state };
+  }
+  function removalReview(
+    s: ReturnType<typeof retainedBaseline>,
+    ids: number[],
+    incoming = s.incoming,
+  ): NeonReconciliationReview {
+    return {
+      ...s.review,
+      decisionReference: "test-only removal decision",
+      initialSourceFactsSHA256: sourceFactsSHA256(incoming),
+      initialBaselineManifestSHA256: neonManifestSHA256(s.manifest),
+      maxNewRetentions: 0,
+      maxRemovals: ids.length,
+      retentions: [],
+      removals: s.previous
+        .filter((row) => ids.includes(row.id))
+        .map(({ id, ...fact }) => ({
+          id,
+          fact,
+          disposition: "remove-absent-upstream" as const,
+          evidence: "Absent from two consecutive source captures",
+        })),
+    };
+  }
+  const later = "2026-10-20T00:00:00.000Z";
+
+  it("deletes a retained occurrence that is still absent and keeps the other", () => {
+    const s = retainedBaseline(),
+      review = removalReview(s, [3]),
+      p = planNeonReconciliation({ ...s, review, capturedAtUTC: later });
+    expect(p.delta.deletes?.map((row) => row.id)).toEqual([3]);
+    expect(p.delta.inserts).toEqual([]);
+    expect(p.removedIds).toEqual([3]);
+    expect(p.missing.map((row) => row.id)).toEqual([2]);
+    expect(p.retainedOccurrences).toBe(1);
+    expect(p.storedFacts).toBe(999);
+    expect(p.state.acceptedSource.outstandingRetainedOccurrences).toBe(1);
+    expect(p.state.entries.map((entry) => [entry.id, entry.status])).toEqual([
+      [2, "unresolved-retained"],
+    ]);
+    expect(p.state.removed).toEqual([
+      expect.objectContaining({
+        id: 3,
+        previouslyRetained: true,
+        removedAt: later,
+        decisionReference: "test-only removal decision",
+        sourceFactsSHA256: sourceFactsSHA256(s.incoming),
+      }),
+    ]);
+    expect(p.delta.affectedBlocks.has(s.previous[2].address_key)).toBe(true);
+    expect(transactionStatements(p.delta)[0]).toEqual({
+      sql: "DELETE FROM transactions WHERE id = ?",
+      params: [3],
+    });
+    // The effective source no longer carries the removed occurrence.
+    const effective = includeRetainedSourceRows(s.incoming.map(presentation), p);
+    expect(effective).toHaveLength(999);
+    assignNeonTransactionIds(effective, s.previous, p, s.incoming.length);
+    expect(effective.map((row) => row.id)).not.toContain(`d1:${"3".padStart(16, "0")}`);
+  });
+
+  it("deletes an absent occurrence that was never retained, without retaining it first", () => {
+    const s = retainedBaseline(),
+      incoming = s.incoming.filter((row) => row.resale_price !== 500010),
+      review = removalReview(s, [2, 3, 11], incoming),
+      p = planNeonReconciliation({ ...s, incoming, review, capturedAtUTC: later });
+    expect(p.removedIds).toEqual([2, 3, 11]);
+    expect(p.newlyMissingIds).toEqual([]);
+    expect(p.state.entries).toEqual([]);
+    expect(p.state.removed?.map((record) => [record.id, record.previouslyRetained])).toEqual([
+      [2, true],
+      [3, true],
+      [11, false],
+    ]);
+    expect(p.storedFacts).toBe(997);
+    expect(p.sourceFacts).toBe(997);
+  });
+
+  it("is a no-op when the same review is replayed after publication", () => {
+    const s = retainedBaseline(),
+      review = removalReview(s, [2, 3]),
+      p = planNeonReconciliation({ ...s, review, capturedAtUTC: later });
+    const replay = planNeonReconciliation({
+      ...s,
+      review,
+      previous: s.previous.filter((row) => ![2, 3].includes(row.id)),
+      manifest: { ...s.manifest, neonReconciliation: p.state },
+      capturedAtUTC: "2026-10-20T01:00:00.000Z",
+    });
+    expect(replay.delta.deletes).toBeUndefined();
+    expect(replay.delta.inserts).toEqual([]);
+    expect(replay.removedIds).toEqual([]);
+    expect(replay.state).toEqual(p.state);
+  });
+
+  it("refuses a removal the source, the baseline or the stored rows do not support", () => {
+    const s = retainedBaseline(),
+      review = removalReview(s, [3]);
+    const plan = (overrides: Partial<Parameters<typeof planNeonReconciliation>[0]>) =>
+      planNeonReconciliation({ ...s, review, capturedAtUTC: later, ...overrides });
+    // One of the two identical absent occurrences is upstream again. Stored rows consume the source in ID
+    // order, so row 2 is present and must stay; only row 3 is still absent.
+    const reappearing = [...s.incoming, s.previous[2]];
+    expect(() =>
+      plan({ incoming: reappearing, review: removalReview(s, [2], reappearing) }),
+    ).toThrow("present in the source");
+    expect(
+      plan({ incoming: reappearing, review: removalReview(s, [3], reappearing) }).removedIds,
+    ).toEqual([3]);
+    // A present row that was never absent.
+    expect(() => plan({ review: removalReview(s, [10]) })).toThrow("present in the source");
+    // The tuple in the review is not the stored one.
+    expect(() =>
+      plan({
+        review: {
+          ...review,
+          removals: [{ ...review.removals![0], fact: { ...review.removals![0].fact, town: "X" } }],
+        },
+      }),
+    ).toThrow("exact tuple");
+    // An unknown row ID.
+    expect(() =>
+      plan({ review: { ...review, removals: [{ ...review.removals![0], id: 5000 }] } }),
+    ).toThrow("exact tuple");
+    // Another source, or another baseline, than the reviewed one.
+    expect(() => plan({ review: { ...review, initialSourceFactsSHA256: "0".repeat(64) } })).toThrow(
+      "source/baseline evidence",
+    );
+    expect(() =>
+      plan({ review: { ...review, initialBaselineManifestSHA256: "0".repeat(64) } }),
+    ).toThrow("source/baseline evidence");
+    // Nothing is deleted without a decision: the unreviewed absence of row 10 is still refused.
+    expect(() => plan({ incoming: s.incoming.filter((row) => row.id !== 10) })).toThrow(
+      NeonReconciliationPolicyError,
+    );
+  });
+
+  it("refuses to remove the newest stored row, whose ID a new row would take", () => {
+    const s = retainedBaseline(),
+      incoming = s.incoming.filter((row) => row.id !== 1000),
+      review = removalReview(s, [1000], incoming);
+    expect(() => planNeonReconciliation({ ...s, incoming, review, capturedAtUTC: later })).toThrow(
+      "ID be reused",
+    );
+  });
+
+  it("validates the review: bounds, duplicates and a row both retained and removed", () => {
+    const s = retainedBaseline(),
+      review = removalReview(s, [2, 3]);
+    expect(requireApprovedNeonReview(review).removals).toHaveLength(2);
+    expect(() => requireApprovedNeonReview({ ...review, maxRemovals: 1 })).toThrow("maxRemovals");
+    expect(() => requireApprovedNeonReview({ ...review, maxRemovals: 26 })).toThrow();
+    expect(() =>
+      requireApprovedNeonReview({
+        ...review,
+        removals: [review.removals![0], review.removals![0]],
+      }),
+    ).toThrow("Duplicate removal");
+    expect(() => requireApprovedNeonReview({ ...review, retentions: s.review.retentions })).toThrow(
+      "both retained and removed",
+    );
+    // Reviews written before removals existed stay valid.
+    expect(requireApprovedNeonReview(s.review).removals).toBeUndefined();
+  });
+
+  it("publishes the delete with its inserts and requires exactly one row per removal", async () => {
+    const s = retainedBaseline(),
+      incoming = [...s.incoming, { ...s.previous[0], resale_price: 900000 }],
+      review = removalReview(s, [3], incoming),
+      p = planNeonReconciliation({ ...s, incoming, review, capturedAtUTC: later });
+    const db = new DatabaseSync(":memory:");
+    try {
+      db.exec(readFileSync("migrations/0001_initial.sql", "utf8"));
+      db.exec(readFileSync("migrations/0009_transactions_normalize.sql", "utf8"));
+      const columns = ["id", ...TRANSACTION_COLUMNS];
+      const insert = db.prepare(
+        `INSERT INTO transactions (${columns.join(",")}) VALUES (${columns.map(() => "?").join(",")})`,
+      );
+      for (const row of s.previous)
+        insert.run(...columns.map((column) => row[column as keyof StoredTransaction]));
+      for (const statement of transactionStatements(p.delta))
+        db.prepare(statement.sql).run(...((statement.params ?? []) as SQLInputValue[]));
+      const ids = (
+        db.prepare("SELECT id FROM transactions ORDER BY id").all() as { id: number }[]
+      ).map((row) => row.id);
+      expect(ids).toHaveLength(1000);
+      expect(ids).not.toContain(3);
+      expect(ids.at(-1)).toBe(1001);
+    } finally {
+      db.close();
+    }
+    // On PostgreSQL the publisher requires each DELETE to affect exactly one row.
+    const next = { ...s.manifest, neonReconciliation: p.state };
+    const sent: string[] = [];
+    const query = vi.fn<PgQuery>().mockImplementation(async (sql) => {
+      sent.push(sql);
+      if (sql.startsWith("DELETE")) return { rows: [], rowCount: 0 };
+      return { rows: sql.includes("FOR UPDATE") ? [{ matches: true }] : [], rowCount: 1 };
+    });
+    await expect(
+      publishNeon(
+        query,
+        new NeonPlanningStore(query),
+        {
+          statements: transactionStatements({ ...p.delta, inserts: [] }),
+          changedRows: { transactions: 1 },
+          forecastWriteUpperBound: 1,
+        },
+        next,
+        JSON.stringify(s.manifest),
+        later,
+      ),
+    ).rejects.toThrow("Unexpected affected-row count: transactions");
+    expect(sent).toEqual([
+      "BEGIN",
+      expect.stringContaining("FOR UPDATE"),
+      "DELETE FROM transactions WHERE id = $1",
+      "ROLLBACK",
+    ]);
   });
 });
 
