@@ -10,24 +10,25 @@ import dataSourcesContent from "./content/data-sources.md?raw";
 import troubleshootingContent from "./content/troubleshooting.md?raw";
 
 /**
- * Placeholder in guide markdown that DocsPage replaces with the formatted time of the most recent data sync (or a
- * fallback when this copy has none), so a page can state the datasets' access date without relying on the header.
+ * Placeholder in guide markdown that DocsPage replaces with the datasets' access date: when this copy last downloaded
+ * them from data.gov.sg (the manifest's `generatedAt`, the run time of the last sync that fetched data), or a
+ * fallback when this copy has none. It is not the header's "Synced" value, which is the publisher's update time.
  */
-export const DOCS_SYNCED_AT_TOKEN = "{{syncedAt}}";
+export const DOCS_ACCESSED_AT_TOKEN = "{{accessedAt}}";
 
 /**
- * The guide's markdown is English-only, so the text put in place of {@link DOCS_SYNCED_AT_TOKEN} follows the page's
+ * The guide's markdown is English-only, so the text put in place of {@link DOCS_ACCESSED_AT_TOKEN} follows the page's
  * language, not the UI locale: an en-SG date and English phrases, for every reader.
  */
 const DOCS_CONTENT_LOCALE = "en-SG";
-const SYNCED_AT_PHRASE = "the date of the most recent sync";
-const SYNCED_AT_UNKNOWN_SUFFIX = "(not available in this copy)";
+const ACCESSED_AT_PHRASE = "the date this copy last downloaded the data";
+const ACCESSED_AT_UNKNOWN_SUFFIX = "(not available in this copy)";
 
-/** The English text that replaces {@link DOCS_SYNCED_AT_TOKEN}: the sync time, or a plain fallback without one. */
-export function formatDocsSyncedAt(lastSyncedAt: string | null): string {
-  return lastSyncedAt
-    ? `${formatDateTime(lastSyncedAt, DOCS_CONTENT_LOCALE)}, ${SYNCED_AT_PHRASE}`
-    : `${SYNCED_AT_PHRASE} ${SYNCED_AT_UNKNOWN_SUFFIX}`;
+/** The English text that replaces {@link DOCS_ACCESSED_AT_TOKEN}: the download time, or a plain fallback. */
+export function formatDocsAccessedAt(dataAccessedAt: string | null): string {
+  return dataAccessedAt
+    ? `${formatDateTime(dataAccessedAt, DOCS_CONTENT_LOCALE)}, ${ACCESSED_AT_PHRASE}`
+    : `${ACCESSED_AT_PHRASE} ${ACCESSED_AT_UNKNOWN_SUFFIX}`;
 }
 
 export type DocsSection = {
@@ -81,7 +82,9 @@ export function buildDocsSearchEntries(sections: DocsSection[] = DOCS_SECTIONS):
 
   const entries: DocsSearchEntry[] = [];
   for (const section of sections) {
-    const lines = section.content.replaceAll(DOCS_SYNCED_AT_TOKEN, SYNCED_AT_PHRASE).split("\n");
+    const lines = section.content
+      .replaceAll(DOCS_ACCESSED_AT_TOKEN, ACCESSED_AT_PHRASE)
+      .split("\n");
     let heading = section.title;
     let buffer: string[] = [];
 

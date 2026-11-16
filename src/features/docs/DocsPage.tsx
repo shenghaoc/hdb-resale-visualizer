@@ -5,8 +5,8 @@ import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
 import {
   DOCS_SECTIONS,
-  DOCS_SYNCED_AT_TOKEN,
-  formatDocsSyncedAt,
+  DOCS_ACCESSED_AT_TOKEN,
+  formatDocsAccessedAt,
   getDocsSection,
 } from "./docsManifest";
 import { DocsArticle } from "./DocsArticle";
@@ -15,7 +15,7 @@ import { DocsSearch } from "./DocsSearch";
 import { navigate, slugFromPath, usePathname } from "./docsRouter";
 
 type DocsPageProps = {
-  lastSyncedAt?: string | null;
+  dataAccessedAt?: string | null;
 };
 
 /**
@@ -23,11 +23,11 @@ type DocsPageProps = {
  * the map shell while the pathname is under /docs; the app's own state stays
  * in the query string, so "Back to app" restores the previous view.
  *
- * `lastSyncedAt` is the manifest's sync time (the same value the header shows as "Synced"); pages that name a
- * dataset access date embed {@link DOCS_SYNCED_AT_TOKEN} and get it in its place, in the page's language (English)
- * rather than the UI locale.
+ * `dataAccessedAt` is when this copy last downloaded the datasets (the manifest's `generatedAt`); pages that name a
+ * dataset access date embed {@link DOCS_ACCESSED_AT_TOKEN} and get it in its place, in the page's language
+ * (English) rather than the UI locale.
  */
-export function DocsPage({ lastSyncedAt = null }: DocsPageProps) {
+export function DocsPage({ dataAccessedAt = null }: DocsPageProps) {
   const { t } = useI18n();
   // Applies the stored/system theme class when the guide is loaded directly.
   useTheme();
@@ -35,8 +35,8 @@ export function DocsPage({ lastSyncedAt = null }: DocsPageProps) {
   const slug = slugFromPath(pathname);
   const section = getDocsSection(slug);
   const content = section.content.replaceAll(
-    DOCS_SYNCED_AT_TOKEN,
-    formatDocsSyncedAt(lastSyncedAt),
+    DOCS_ACCESSED_AT_TOKEN,
+    formatDocsAccessedAt(dataAccessedAt),
   );
 
   const pageRef = useRef<HTMLDivElement>(null);

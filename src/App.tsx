@@ -805,10 +805,11 @@ function AppWithErrorBoundary() {
   // string, so leaving the guide restores the previous view. Deployed refreshes
   // work via the Worker's single-page-application asset fallback.
   const pathname = usePathname();
-  // Loaded here rather than inside App so the guide can state the data's sync time (the Data sources page's access
-  // date) from the same single manifest request; App stays mounted, hidden, while the guide is open.
+  // Loaded here rather than inside App so the guide can state the datasets' access date from the same single manifest
+  // request; App stays mounted, hidden, while the guide is open. The access date is generatedAt (the run time of the
+  // last sync that downloaded the data), not lastSyncedAt, which is the publisher's own update time.
   const manifestData = useManifestData();
-  const lastSyncedAt = deriveDataQualityState(manifestData.manifest).lastSyncedAt;
+  const dataAccessedAt = deriveDataQualityState(manifestData.manifest).generatedAt;
 
   // Root boundary: a crash here means the whole app (including the I18nProvider)
   // is unusable, so recovery falls back to a full reload and the fallback uses
@@ -818,7 +819,7 @@ function AppWithErrorBoundary() {
     <ErrorBoundary fill className="min-h-screen">
       {isDocsPath(pathname) ? (
         <Suspense fallback={null}>
-          <DocsPage lastSyncedAt={lastSyncedAt} />
+          <DocsPage dataAccessedAt={dataAccessedAt} />
         </Suspense>
       ) : null}
       <div hidden={isDocsPath(pathname)}>

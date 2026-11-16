@@ -4,9 +4,9 @@ HDB Resale Explorer is built from official open data. This page names every data
 
 ## Notice
 
-Contains information from the datasets listed below, accessed on {{syncedAt}}, from [data.gov.sg](https://data.gov.sg), which is made available under the terms of the [Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence).
+Contains information from the datasets listed below, accessed on {{accessedAt}}, from [data.gov.sg](https://data.gov.sg), which is made available under the terms of the [Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence).
 
-Map tiles, addresses and walking times use [OneMap](https://www.onemap.gov.sg/home), © OneMap contributors, Singapore Land Authority.
+Map tiles and addresses use [OneMap](https://www.onemap.gov.sg/home), © OneMap contributors, Singapore Land Authority. MRT walking times use OneMap routing where a route is available; otherwise they are a straight-line estimate at a conservative walking pace (about 75 m per minute), which the data does not yet mark separately.
 
 ## Datasets
 
@@ -22,7 +22,7 @@ Map tiles, addresses and walking times use [OneMap](https://www.onemap.gov.sg/ho
 
 ## When the data was accessed
 
-The data in the app is a snapshot taken when it was last synced, not a live feed. The datasets above were accessed on {{syncedAt}}. On larger screens the header also shows that time as **Synced**, next to the latest transaction month.
+The data in the app is a snapshot, not a live feed. The datasets above were accessed on {{accessedAt}}: the time this copy last downloaded them from data.gov.sg. A sync that finds no new resale data downloads nothing, so it does not change this date.
 
 ## No official status
 

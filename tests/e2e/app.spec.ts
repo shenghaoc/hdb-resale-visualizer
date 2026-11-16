@@ -1,5 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
 import { mockComparisonArtifacts } from "./fixtures";
+
+// The manifest the e2e server serves (staged from this file by `vp run setup:fixtures`).
+const fixtureManifest = JSON.parse(
+  readFileSync(new URL("../fixtures/public-data/manifest.json", import.meta.url), "utf8"),
+) as { generatedAt: string; sources: { lastUpdatedAt: string } };
 
 test.describe.configure({
   timeout: 60_000,
@@ -41,14 +47,25 @@ test("keeps the data credits on the map, linking to the licence and to the sourc
   await expect(
     page.getByRole("heading", { level: 1, name: "Data sources and licence" }),
   ).toBeVisible();
-  // The access date is the manifest's sync time, printed on the page itself (the header hides it on small screens).
+  // The access date is when this copy downloaded the data (manifest.generatedAt), printed on the page itself; the
+  // fixture's publisher time (sources.lastUpdatedAt, the header's "Synced") differs, and must not appear instead.
+  // Both are formatted in the page so the browser's time zone is the one used.
+  const [downloadedAt, publisherUpdatedAt] = await page.evaluate(
+    ([generatedAt, lastUpdatedAt]) => {
+      const format = new Intl.DateTimeFormat("en-SG", { dateStyle: "medium", timeStyle: "short" });
+      return [format.format(new Date(generatedAt)), format.format(new Date(lastUpdatedAt))];
+    },
+    [fixtureManifest.generatedAt, fixtureManifest.sources.lastUpdatedAt] as const,
+  );
+  expect(downloadedAt).not.toBe(publisherUpdatedAt);
   const notice = page.getByText("Contains information from the datasets listed below");
   await expect(notice).toBeVisible();
   await expect(notice).toContainText(
-    /accessed on .*2026.*, the date of the most recent sync, from/,
+    `accessed on ${downloadedAt}, the date this copy last downloaded the data, from`,
   );
+  await expect(notice).not.toContainText(publisherUpdatedAt);
   await expect(notice).not.toContainText("not available in this copy");
-  await expect(notice).not.toContainText("{{syncedAt}}");
+  await expect(notice).not.toContainText("{{accessedAt}}");
   await expect(
     page.getByRole("link", { name: "Singapore Open Data Licence version 1.0" }).first(),
   ).toHaveAttribute("href", "https://data.gov.sg/open-data-licence");

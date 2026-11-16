@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   buildDocsSearchEntries,
-  DOCS_SYNCED_AT_TOKEN,
+  DOCS_ACCESSED_AT_TOKEN,
   getDocsSection,
 } from "@/features/docs/docsManifest";
 import * as syncConstants from "../../scripts/lib/sync/constants";
@@ -24,9 +24,9 @@ describe("Data sources and licence guide page", () => {
     expect(page).toContain(
       "[Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence)",
     );
-    // The access date is the sync time, put into the page itself when it renders (DocsPage), not left to the
-    // header, which hides it on small screens.
-    expect(page).toContain(`accessed on ${DOCS_SYNCED_AT_TOKEN}, from`);
+    // The access date is when this copy last downloaded the data (manifest.generatedAt), put into the page itself
+    // when it renders (DocsPage); not the header's "Synced", which is the publisher's update time.
+    expect(page).toContain(`accessed on ${DOCS_ACCESSED_AT_TOKEN}, from`);
   });
 
   it("keeps the access-date placeholder out of guide search snippets", () => {
@@ -36,7 +36,7 @@ describe("Data sources and licence guide page", () => {
       expect(entry.body).not.toContain("{{");
     }
     expect(sourceEntries.map((entry) => entry.body).join(" ")).toContain(
-      "accessed on the date of the most recent sync, from",
+      "accessed on the date this copy last downloaded the data, from",
     );
   });
 
@@ -64,5 +64,16 @@ describe("Data sources and licence guide page", () => {
 
   it("keeps the OneMap credit its terms ask for", () => {
     expect(page).toContain("© OneMap contributors, Singapore Land Authority");
+  });
+
+  it("does not credit every walking time to OneMap: it discloses the straight-line fallback", () => {
+    // scripts/lib/pipeline.ts falls back to haversine distance / 1.25 m/s when a OneMap route is missing.
+    expect(page).toContain("MRT walking times use OneMap routing where a route is available");
+    expect(page).toContain(
+      "straight-line estimate at a conservative walking pace (about 75 m per minute)",
+    );
+    // The old wording credited all of them to OneMap outright.
+    expect(page).not.toMatch(/addresses,? and walking times use/i);
+    expect(getDocsSection("faq").content).toContain("otherwise a straight-line estimate");
   });
 });
