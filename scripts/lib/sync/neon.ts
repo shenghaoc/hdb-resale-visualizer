@@ -1,6 +1,7 @@
 import pg from "pg";
 import { D1Client, type D1Statement } from "./d1";
 import { translate } from "./neon-translate";
+import { TRANSACTION_DELETE_SQL } from "./incremental";
 import { MAX_ATOMIC_BYTES, MAX_ATOMIC_STATEMENTS, MAX_FORECAST_WRITES } from "./statements";
 import type { ArtifactWritePlan } from "./store";
 import type { GeneratedArtifacts } from "../pipeline";
@@ -258,6 +259,8 @@ export function publicationRowCount(statement: D1Statement): number {
     return rows.length;
   }
   if (statement.sql.startsWith("UPDATE transactions ")) return 1;
+  // A reviewed removal must delete exactly its one row; a row that is already gone fails the publication.
+  if (statement.sql === TRANSACTION_DELETE_SQL) return 1;
   const columns = statement.sql
     .match(/^INSERT OR REPLACE INTO (?:geocode_cache|walking_time_cache) \(([^)]+)\) VALUES /)?.[1]
     .split(",");
@@ -373,7 +376,8 @@ export async function publishNeon(
   const statements = plan.statements.map((statement) => ({
     ...translate(statement, store.columnTypes),
     table:
-      statement.sql.match(/^(?:INSERT(?: OR REPLACE)? INTO|UPDATE) ([a-z_]+)/)?.[1] ?? "unknown",
+      statement.sql.match(/^(?:INSERT(?: OR REPLACE)? INTO|UPDATE|DELETE FROM) ([a-z_]+)/)?.[1] ??
+      "unknown",
     expectedRows: publicationRowCount(statement),
   }));
   const started = performance.now(),
