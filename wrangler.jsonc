@@ -34,7 +34,7 @@
         "period": 60,
       },
     },
-    // GET /api/nearby-places (inert while NEON_SPATIAL_ENABLED is "false"). Values mirror
+    // GET /api/nearby-places (inert while NEON_SPATIAL_MODE is "off"). Values mirror
     // shared/nearby-limits.ts; tests/unit/nearby-rate-limit.test.ts fails when they drift.
     {
       "name": "NEARBY_IP_LIMITER",
@@ -75,8 +75,18 @@
     "PUBLIC_DATA_BACKEND": "neon",
     "D1_PUBLIC_CACHE_EPOCH": "d1-cutover-v1",
     "NEON_PUBLIC_CACHE_EPOCH": "neon-20261007-2",
-    "NEON_SPATIAL_ENABLED": "false",
+    // Nearby search (docs/architecture/postgis-nearby.md): "off", or "blocks" for the nearest MRT exits to one
+    // published HDB block. No mode accepts coordinates.
+    "NEON_SPATIAL_MODE": "blocks",
+    // Database statements nearby search may send per UTC day, everywhere. Mirrors NEARBY_DAILY_MISS_BUDGET in
+    // shared/nearby-limits.ts; tests/unit/nearby-rate-limit.test.ts fails when they drift.
+    "NEARBY_DAILY_MISS_BUDGET": "20000",
   },
+  // One Durable Object counts that budget for every location (worker/nearby-budget.ts).
+  "durable_objects": {
+    "bindings": [{ "name": "NEARBY_BUDGET", "class_name": "NearbyDailyBudget" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["NearbyDailyBudget"] }],
   "triggers": {
     "crons": ["0 3 * * *"],
   },

@@ -64,14 +64,17 @@
   `sql/neon/verify_nearby_spatial_sql.sql` passes on a disposable fork of it.
   Approval: owner (the fork).
 
-- [ ] **TG.4** Open `NEON_SPATIAL_ENABLED`. **Not authorised.** All three must hold
-  first: TG.3 verified; a separately approved global cost control implemented
-  and verified (`nearby-search-production-gates` R4.1; no such proposal exists,
-  and the runtime statement counter was rejected); and a successful
-  deployed-path verification (TG.2, which the owner decided on 2026-10-15 not to
-  run). Until the owner changes those two decisions the flag stays `"false"`
-  (R5.2).
-  -> Approval: owner, only after all three.
+- [ ] **TG.4** Select `NEON_SPATIAL_MODE=blocks` (nearest MRT exits to one
+  published HDB block, asked by address key). **Allowed once the global daily
+  miss budget exists** (`nearby-search-production-gates` R4: 20,000 statements
+  per UTC day in one Durable Object, failing closed) and TG.3 is verified on
+  the serving branch. The owner decided this on 2026-11-16; it replaces the
+  earlier condition of a deployed-path verification (TG.2).
+  -> Approval: owner, by merging the pull request that sets the mode.
+
+- [ ] **TG.5** Search around arbitrary coordinates. **Not authorised.** It has no
+  mode and no code path. The daily budget bounds statements, not the request
+  space, so this needs its own cost analysis and the owner's approval.
 
 ## Phase 1 — Multi-source POI integration (`poi-source-integration`)
 

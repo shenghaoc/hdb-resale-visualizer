@@ -16,7 +16,7 @@ const json = (body: unknown, status = 200) =>
 const renderPanel = () =>
   render(
     <I18nProvider>
-      <NearbyMrtExits lat={1.35} lng={103.75} />
+      <NearbyMrtExits addressKey="bukit-batok-221-bt-batok-east-ave-3" />
     </I18nProvider>,
   );
 
@@ -99,11 +99,8 @@ describe("NearbyMrtExits opt-in spatial UI", () => {
     ).toBeInTheDocument();
     expect(mock).toHaveBeenCalledTimes(2);
     const request = String(mock.mock.calls[1][0]);
-    expect(request).toContain("lat=1.35");
-    expect(request).toContain("lng=103.75");
-    expect(request).toContain("types=mrt_exit");
-    expect(request).toContain("radius=1500");
-    expect(request).toContain("limit=25");
+    // The request names the block and nothing else: no coordinates leave the browser.
+    expect(request).toBe("/api/nearby-places?block=bukit-batok-221-bt-batok-east-ave-3");
   });
 
   it("uses source-native station and exit fields for an (E)-style exit", () => {

@@ -1,7 +1,11 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, it } from "vite-plus/test";
-import { NEARBY_SPATIAL_SQL, queryNearbyPlaces } from "../../worker/nearby-spatial-query";
+import {
+  NEARBY_BLOCK_SPATIAL_SQL,
+  NEARBY_SPATIAL_SQL,
+  queryNearbyPlaces,
+} from "../../worker/nearby-spatial-query";
 
 /**
  * Static guard for the coordinate-system contract (.kiro/specs/geospatial-programme, R1). It reads SQL text, so it is
@@ -129,6 +133,7 @@ describe("coordinate-system contract (static)", () => {
         .filter((f) => !f.endsWith("verify_crs_contract.sql"))
         .map((f): [string, string] => [relative(repoRoot, f), readFileSync(f, "utf8")]),
       ["worker/nearby-spatial-query.ts (NEARBY_SPATIAL_SQL)", NEARBY_SPATIAL_SQL],
+      ["worker/nearby-spatial-query.ts (NEARBY_BLOCK_SPATIAL_SQL)", NEARBY_BLOCK_SPATIAL_SQL],
     ];
     expect(subjects.length).toBeGreaterThan(3);
     expect([...declaredGeography]).toEqual(["location"]);
@@ -167,16 +172,29 @@ describe("coordinate-system contract (static)", () => {
     ).toBe(false);
   });
 
-  it("binds latitude first and longitude second, which is what the SQL's $1 and $2 assume", async () => {
+  it("sends no coordinate: the centre is the block's stored geography, and the verified text keeps (lng, lat)", async () => {
+    let sent = "";
     let params: readonly unknown[] = [];
     await queryNearbyPlaces(
-      async (_sql, bound) => {
+      async (sql, bound) => {
+        sent = sql;
         params = bound;
         return [];
       },
-      { lat: 1.3521, lng: 103.8198, radiusMeters: 500, limit: 25, kinds: ["mrt_exit"] },
+      {
+        block: "central-area-535-upp-cross-st",
+        radiusMeters: 1500,
+        limit: 25,
+        kinds: ["mrt_exit"],
+      },
     );
-    expect(params.slice(0, 2)).toEqual([1.3521, 103.8198]);
+    expect(params).toEqual(["central-area-535-upp-cross-st", 1500, ["mrt_exit"], 25]);
+    // The block statement constructs no point, so there is no axis order to get wrong in the Worker.
+    expect(sent).not.toMatch(/ST_MakePoint|ST_Point|ST_SetSRID/);
+    expect(sent).toContain(
+      "SELECT origin.location::geography AS point FROM public.block_locations AS origin",
+    );
+    // The coordinate-centred text is what the Neon verifier runs: longitude first, as PostGIS requires.
     expect(NEARBY_SPATIAL_SQL).toMatch(
       /ST_MakePoint\(\$2::double precision,\$1::double precision\)/,
     );

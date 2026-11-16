@@ -3,9 +3,6 @@
  * into SQL text. The separate derived PostGIS geography tables have matching GiST indexes.
  */
 import {
-  bucketNearbyRadius,
-  NEARBY_FIXED_LIMIT,
-  snapNearbyCenter,
   type LabelledNearbyPlaces,
   type NearbyPlacesRequest,
   type NearbyPlaceKind,
@@ -17,9 +14,11 @@ export type SpatialReadQuery = (
   params: readonly unknown[],
 ) => Promise<Record<string, unknown>[]>;
 
-export const NEARBY_SPATIAL_SQL = `
+type NearbySqlParameters = { center: string; radius: string; kinds: string; limit: string };
+/** One query text for both centres, so the block statement cannot drift from the verified one. */
+const nearbySpatialSql = ({ center, radius, kinds, limit }: NearbySqlParameters) => `
 WITH center AS (
-  SELECT ST_SetSRID(ST_MakePoint($2::double precision,$1::double precision),4326)::geography AS point
+${center}
 ), block_candidates AS (
   SELECT 'hdb_block'::text AS kind, b.address_key::text AS id,
     COALESCE(NULLIF(b.display_name,''), b.block || ' ' || b.street_name) AS name,
@@ -28,8 +27,8 @@ WITH center AS (
     ST_Distance(p.location, center.point) AS distance_meters
   FROM public.block_locations AS p
   JOIN public.blocks AS b ON b.address_key=p.address_key CROSS JOIN center
-  WHERE 'hdb_block' = ANY($4::text[])
-    AND ST_DWithin(p.location, center.point, $3::double precision)
+  WHERE 'hdb_block' = ANY(${kinds}::text[])
+    AND ST_DWithin(p.location, center.point, ${radius}::double precision)
 ), poi_candidates AS (
   SELECT p.source, p.poi_kind AS kind,
     (p.source || ':' || p.poi_kind || ':' || p.source_id) AS id,
@@ -40,8 +39,8 @@ WITH center AS (
       ELSE NULL END AS exit_code,
     ST_Distance(p.location, center.point) AS distance_meters
   FROM public.poi_locations AS p CROSS JOIN center
-  WHERE p.poi_kind = ANY($4::text[])
-    AND ST_DWithin(p.location, center.point, $3::double precision)
+  WHERE p.poi_kind = ANY(${kinds}::text[])
+    AND ST_DWithin(p.location, center.point, ${radius}::double precision)
 ), poi_ranked AS (
   SELECT *,
     ROW_NUMBER() OVER (
@@ -63,11 +62,38 @@ SELECT kind, id, name, lat, lng, address_key,
   ROUND(distance_meters::numeric,1)::double precision AS distance_meters
 FROM candidates
 ORDER BY distance_meters ASC, kind COLLATE "C" ASC, id COLLATE "C" ASC
-LIMIT $5
+LIMIT ${limit}
 `;
 
 /**
- * The statement the Worker actually sends: {@link NEARBY_SPATIAL_SQL} (embedded verbatim, same `$1..$5`) plus the
+ * The query around a coordinate pair (`$1` latitude, `$2` longitude, `$3` radius, `$4` kinds, `$5` limit). No route
+ * sends it: it is the text `sql/neon/verify_nearby_spatial_sql.sql` checks against a brute-force oracle, and
+ * {@link NEARBY_BLOCK_SPATIAL_SQL} is the same text with another centre.
+ */
+export const NEARBY_SPATIAL_SQL = nearbySpatialSql({
+  center:
+    "  SELECT ST_SetSRID(ST_MakePoint($2::double precision,$1::double precision),4326)::geography AS point",
+  radius: "$3",
+  kinds: "$4",
+  limit: "$5",
+});
+
+/**
+ * The same query centred on a published block (`$1` address key, `$2` radius, `$3` kinds, `$4` limit). The block's
+ * stored location is looked up inside the statement, so a caller never supplies coordinates. A key with no stored
+ * location yields no centre row and therefore no places. The `::geography` cast changes nothing (the column is
+ * `geography(Point,4326)`); it states the type where the coordinate-system contract test reads it.
+ */
+export const NEARBY_BLOCK_SPATIAL_SQL = nearbySpatialSql({
+  center:
+    "  SELECT origin.location::geography AS point FROM public.block_locations AS origin WHERE origin.address_key = $1::text",
+  radius: "$2",
+  kinds: "$3",
+  limit: "$4",
+});
+
+/**
+ * The statement the Worker actually sends: {@link NEARBY_BLOCK_SPATIAL_SQL} (embedded verbatim, same `$1..$4`) plus the
  * identity of the publication it ran against, in ONE statement. A single statement sees one snapshot, so the places
  * and the label cannot come from different generations, which is what the shared cache otherwise establishes by
  * reading the manifest before and after the handler (three statements, and the 10 KB manifest twice, per miss).
@@ -76,7 +102,7 @@ LIMIT $5
  * `version` is the SHA-256 of `manifest.json::text`, the same text `manifestJson()` returns and
  * `manifestVersion` hashes, so every route shares one identity per generation; `manifest_type` and `marker` let
  * `publicationLabel` decide "in progress" with the code that reads a full manifest. The remaining rows are the
- * places in exactly the order of {@link NEARBY_SPATIAL_SQL} (`row_type = 'place'`). The hash is computed in SQL so
+ * places in exactly the order of {@link NEARBY_BLOCK_SPATIAL_SQL} (`row_type = 'place'`). The hash is computed in SQL so
  * the manifest never leaves the database.
  */
 export const NEARBY_LABELLED_SQL = `
@@ -85,7 +111,7 @@ WITH publication AS (
     jsonb_typeof(json) AS manifest_type,
     (json -> '${PUBLICATION_MARKER_KEY}')::text AS marker
   FROM public.manifest WHERE id = 1
-), places AS (${NEARBY_SPATIAL_SQL})
+), places AS (${NEARBY_BLOCK_SPATIAL_SQL})
 SELECT * FROM (
   SELECT 'publication'::text AS row_type, publication.version, publication.manifest_type, publication.marker,
     NULL::text AS kind, NULL::text AS id, NULL::text AS name,
@@ -108,13 +134,11 @@ export async function queryNearbyPlaces(
   query: SpatialReadQuery,
   request: NearbyPlacesRequest,
 ): Promise<LabelledNearbyPlaces> {
-  const center = snapNearbyCenter(request.lat, request.lng);
   const rows = await query(NEARBY_LABELLED_SQL, [
-    center.lat,
-    center.lng,
-    bucketNearbyRadius(request.radiusMeters),
+    request.block,
+    request.radiusMeters,
     request.kinds,
-    NEARBY_FIXED_LIMIT,
+    request.limit,
   ]);
   const header = rows.find((r) => r.row_type === "publication");
   return {

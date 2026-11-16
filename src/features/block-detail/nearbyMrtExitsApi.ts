@@ -3,6 +3,7 @@
  * No direct database connections, geocoding, or upstream network traffic.
  */
 import { z } from "zod";
+import { NEARBY_BLOCK_RADIUS_METERS } from "@shared/nearby-places";
 
 const nearbyExitSchema = z.object({
   id: z.string().min(1),
@@ -26,8 +27,8 @@ export type NearbyMrtStation = {
   distanceMeters: number;
   exitId: string;
 };
-export const NEARBY_MRT_RADIUS_METERS = 1500;
-export const NEARBY_MRT_EXIT_REQUEST_LIMIT = 25;
+/** The radius the server searches for every block; shown in the empty state. */
+export const NEARBY_MRT_RADIUS_METERS = NEARBY_BLOCK_RADIUS_METERS;
 export const NEARBY_MRT_STATION_DISPLAY_LIMIT = 5;
 
 /**
@@ -77,18 +78,12 @@ export function resetNearbySpatialAvailableForTests(): void {
   capabilityPromise = null;
 }
 
+/** The server looks the block up itself: the request names it and carries no coordinates. */
 export async function fetchNearbyMrtExits(
-  lat: number,
-  lng: number,
+  addressKey: string,
   signal: AbortSignal,
 ): Promise<NearbyMrtExit[]> {
-  const params = new URLSearchParams({
-    lat: String(lat),
-    lng: String(lng),
-    radius: String(NEARBY_MRT_RADIUS_METERS),
-    limit: String(NEARBY_MRT_EXIT_REQUEST_LIMIT),
-    types: "mrt_exit",
-  });
+  const params = new URLSearchParams({ block: addressKey });
   const response = await fetch("/api/nearby-places?" + params.toString(), { signal });
   if (!response.ok) throw new Error("Nearby MRT lookup failed: " + response.status);
   return responseSchema.parse(await response.json()).places;

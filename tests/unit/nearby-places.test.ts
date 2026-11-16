@@ -3,14 +3,12 @@ import type { PublicData } from "../../functions/_lib/public-data";
 import { onRequestGet } from "../../functions/api/nearby-places";
 import {
   canonicalNearbyPlacesParams,
-  isNeonSpatialEnabled,
-  MAX_NEARBY_CENTER_KEYS,
-  MAX_NEARBY_CACHE_KEYS,
   parseNearbyPlacesRequest,
-  snapNearbyCenter,
+  parseNeonSpatialMode,
 } from "../../shared/nearby-places";
 import { createNeonPublicData } from "../../worker/public-data-neon";
 import {
+  NEARBY_BLOCK_SPATIAL_SQL,
   NEARBY_LABELLED_SQL,
   NEARBY_SPATIAL_SQL,
   queryNearbyPlaces,
@@ -18,7 +16,8 @@ import {
 import { matchApiRoute } from "../../worker/api-route-match";
 
 const url = (suffix: string) => new URL("https://example.com/api/nearby-places" + suffix);
-const valid = "?lat=1.35&lng=103.75&radius=800&limit=25&types=mrt_exit,mrt_station";
+const BLOCK = "central-area-535-upp-cross-st";
+const valid = `?block=${BLOCK}`;
 const fetchResult = (publicData: PublicData, suffix = valid) =>
   onRequestGet({
     publicData,
@@ -38,90 +37,75 @@ const header = (overrides: Record<string, unknown> = {}) => ({
 const place = (row: Record<string, unknown>) => ({ row_type: "place", ...row });
 
 describe("bounded PostGIS nearby endpoint", () => {
-  it("does not activate from an absent or false release flag", () => {
-    expect(isNeonSpatialEnabled(undefined)).toBe(false);
-    expect(isNeonSpatialEnabled("false")).toBe(false);
-    expect(isNeonSpatialEnabled("true")).toBe(true);
+  it.each([
+    [undefined, "off"],
+    ["off", "off"],
+    ["blocks", "blocks"],
+    ["", "off"],
+    ["true", "off"],
+    ["BLOCKS", "off"],
+    ["coordinates", "off"],
+    ["blocks ", "off"],
+  ])("NEON_SPATIAL_MODE=%j is the mode %s", (value, mode) => {
+    expect(parseNeonSpatialMode(value)).toBe(mode);
   });
-  it("parses and canonicalizes input independently of type ordering", () => {
+
+  it("accepts a block address key and fixes the radius, limit and kinds itself", () => {
     const parsed = parseNearbyPlacesRequest(url(valid));
-    expect(parsed.ok).toBe(true);
-    if (!parsed.ok) return;
-    expect(parsed.request).toEqual({
-      lat: 1.35,
-      lng: 103.75,
-      radiusMeters: 1000,
-      limit: 25,
-      kinds: ["mrt_station", "mrt_exit"],
+    expect(parsed).toEqual({
+      ok: true,
+      request: { block: BLOCK, radiusMeters: 1500, limit: 25, kinds: ["mrt_exit"] },
     });
-    expect(canonicalNearbyPlacesParams(parsed.request).toString()).toBe(
-      "lat=1.35&lng=103.75&radius=1000&types=mrt_station%2Cmrt_exit",
-    );
+    if (!parsed.ok) return;
+    expect(canonicalNearbyPlacesParams(parsed.request).toString()).toBe(`block=${BLOCK}`);
+    expect(parseNearbyPlacesRequest(url("?block=bedok-10d-bedok-sth-ave-2")).ok).toBe(true);
   });
 
-  it("snaps nearby raw coordinates to exactly the same SQL centre and cache key", () => {
-    const first = parseNearbyPlacesRequest(url("?lat=1.350001&lng=103.750001&radius=100"));
-    const second = parseNearbyPlacesRequest(url("?lat=1.350049&lng=103.750049&radius=100"));
-    expect(first.ok).toBe(true);
-    expect(second.ok).toBe(true);
-    if (!first.ok || !second.ok) return;
-    expect(first.request.lat).toBe(1.35);
-    expect(first.request.lng).toBe(103.75);
-    expect(second.request).toEqual(first.request);
-    expect(canonicalNearbyPlacesParams(first.request).toString()).toBe(
-      canonicalNearbyPlacesParams(second.request).toString(),
-    );
-    expect(snapNearbyCenter(1.350049, 103.750049)).toEqual({ lat: 1.35, lng: 103.75 });
-  });
-
-  it("has a finite documented upper bound for the canonical cache key space", () => {
-    expect(MAX_NEARBY_CENTER_KEYS).toBe(4_001 * 6_001);
-    expect(MAX_NEARBY_CACHE_KEYS).toBe(1_008_420_042);
-    expect(Number.isSafeInteger(MAX_NEARBY_CACHE_KEYS)).toBe(true);
-  });
-
-  it("buckets radii upward and collapses equivalent requests onto one SQL/cache key", () => {
-    const first = parseNearbyPlacesRequest(url("?lat=1.350001&lng=103.750001&radius=101"));
-    const second = parseNearbyPlacesRequest(
-      url("?lat=1.350049&lng=103.750049&radius=249&limit=25"),
-    );
-    expect(first.ok).toBe(true);
-    expect(second.ok).toBe(true);
-    if (!first.ok || !second.ok) return;
-    expect(first.request.radiusMeters).toBe(250);
-    expect(second.request).toEqual(first.request);
-    expect(canonicalNearbyPlacesParams(first.request).toString()).toBe(
-      canonicalNearbyPlacesParams(second.request).toString(),
-    );
-    expect(canonicalNearbyPlacesParams(first.request).get("limit")).toBeNull();
+  it.each([
+    "?lat=1.35&lng=103.75",
+    "?lat=1.35&lng=103.75&radius=1500&limit=25&types=mrt_exit",
+    `?block=${BLOCK}&lat=1.35&lng=103.75`,
+    `?block=${BLOCK}&lat=1.35`,
+    "?lng=103.75",
+  ])("refuses a request that carries coordinates: %s", (suffix) => {
+    const parsed = parseNearbyPlacesRequest(url(suffix));
+    expect(parsed).toEqual({
+      ok: false,
+      error: "Coordinate searches are not available; pass block=<address key>",
+    });
   });
 
   it.each([
     "",
-    "?lat=&lng=103.75",
-    "?lat=1.35&lng=103.75&radius=0",
-    "?lat=1.35&lng=103.75&radius=3000",
-    "?lat=1.35&lng=103.75&limit=26",
-    "?lat=1.35&lng=103.75&limit=5",
-    "?lat=1.35&lng=103.75&types=mrt_station,mrt_station",
-    "?lat=1.35&lng=103.75&types=school",
-    "?lat=1.35&lng=103.75&lat=1.36",
-    "?lat=1.35&lng=103.75&other=hello",
-    "?lat=1e309&lng=103.75",
-    "?lat=2.5&lng=103.75",
-  ])("rejects malformed or unbounded input: %s", (suffix) => {
+    "?block=",
+    `?block=${BLOCK}&block=bedok-1-x`,
+    `?block=${BLOCK}&radius=1500`,
+    `?block=${BLOCK}&limit=25`,
+    `?block=${BLOCK}&types=mrt_exit`,
+    `?block=${BLOCK}&other=hello`,
+    "?block=Central-Area-535",
+    "?block=central%20area",
+    "?block=central--area",
+    "?block=-central",
+    "?block=central_area",
+    "?block=%27%3B%20DROP%20TABLE%20blocks",
+    `?block=${"a".repeat(121)}`,
+    `?address_key=${BLOCK}`,
+  ])("rejects anything but exactly one well-formed block key: %s", (suffix) => {
     expect(parseNearbyPlacesRequest(url(suffix)).ok).toBe(false);
   });
 
-  it("allows the default MRT-only query and single-type block queries", () => {
-    expect(parseNearbyPlacesRequest(url("?lat=1.35&lng=103.75"))).toMatchObject({
-      ok: true,
-      request: { kinds: ["mrt_station", "mrt_exit"], limit: 25, radiusMeters: 1000 },
+  it("answers a coordinate request with 400 and sends nothing", async () => {
+    const query = vi.fn(async () => []);
+    const response = await fetchResult(
+      createNeonPublicData(query),
+      "?lat=1.35&lng=103.75&radius=1500&types=mrt_exit",
+    );
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({
+      error: "Coordinate searches are not available; pass block=<address key>",
     });
-    expect(parseNearbyPlacesRequest(url("?lat=1.35&lng=103.75&types=hdb_block"))).toMatchObject({
-      ok: true,
-      request: { kinds: ["hdb_block"] },
-    });
+    expect(query).not.toHaveBeenCalled();
   });
 
   it("returns a clear no-store error on D1 rollback, without faking an empty POI set", async () => {
@@ -148,7 +132,10 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body).toMatchObject({
-      radiusMeters: 1000,
+      block: BLOCK,
+      radiusMeters: 1500,
+      limit: 25,
+      types: ["mrt_exit"],
       distanceBasis: "straight-line",
       places: [{ kind: "mrt_station", distanceMeters: 151.2, addressKey: null }],
     });
@@ -159,8 +146,12 @@ describe("bounded PostGIS nearby endpoint", () => {
     expect(sql).toContain("public.poi_locations");
     expect(sql).toContain("public.blocks");
     expect(sql).toContain("ORDER BY distance_meters");
-    expect(params).toEqual([1.35, 103.75, 1000, ["mrt_station", "mrt_exit"], 25]);
-    expect(sql).not.toContain("103.75");
+    // The block's key is a bound parameter; its coordinates come from the statement's own lookup.
+    expect(params).toEqual([BLOCK, 1500, ["mrt_exit"], 25]);
+    expect(sql).not.toContain(BLOCK);
+    expect(sql).toContain(
+      "FROM public.block_locations AS origin WHERE origin.address_key = $1::text",
+    );
   });
 
   it("groups MRT exits in SQL by the official station name before LIMIT", async () => {
@@ -179,8 +170,7 @@ describe("bounded PostGIS nearby endpoint", () => {
       }),
     ]);
     const { places } = await queryNearbyPlaces(fakeQuery, {
-      lat: 1.3,
-      lng: 103.86,
+      block: BLOCK,
       radiusMeters: 1500,
       limit: 25,
       kinds: ["mrt_exit"],
@@ -209,8 +199,7 @@ describe("bounded PostGIS nearby endpoint", () => {
 
   describe("one labelled statement per cache miss", () => {
     const request = {
-      lat: 1.3,
-      lng: 103.86,
+      block: BLOCK,
       radiusMeters: 1500,
       limit: 25,
       kinds: ["mrt_exit"],
@@ -229,17 +218,34 @@ describe("bounded PostGIS nearby endpoint", () => {
     const read = (rows: Record<string, unknown>[]) =>
       queryNearbyPlaces(async () => rows, { ...request, kinds: [...request.kinds] });
 
-    it("embeds the verified places query verbatim and binds the same five parameters", () => {
-      expect(NEARBY_LABELLED_SQL).toContain(NEARBY_SPATIAL_SQL);
+    it("is the verified query with only its centre and parameter numbers changed", () => {
+      // sql/neon/verify_nearby_spatial_sql.sql checks NEARBY_SPATIAL_SQL against a brute-force oracle. The block
+      // statement must be that text with the centre taken from the block's stored location and nothing else.
+      const pointCentre =
+        "  SELECT ST_SetSRID(ST_MakePoint($2::double precision,$1::double precision),4326)::geography AS point";
+      const blockCentre =
+        "  SELECT origin.location::geography AS point FROM public.block_locations AS origin WHERE origin.address_key = $1::text";
+      expect(NEARBY_SPATIAL_SQL).toContain(pointCentre);
+      expect(NEARBY_BLOCK_SPATIAL_SQL).toContain(blockCentre);
+      const renumbered = NEARBY_SPATIAL_SQL.replace(pointCentre, blockCentre)
+        .replaceAll("$3::double precision", "$2::double precision")
+        .replaceAll("$4::text[]", "$3::text[]")
+        .replace("LIMIT $5", "LIMIT $4");
+      expect(NEARBY_BLOCK_SPATIAL_SQL).toBe(renumbered);
+    });
+
+    it("embeds the block query verbatim and binds exactly its four parameters", () => {
+      expect(NEARBY_LABELLED_SQL).toContain(NEARBY_BLOCK_SPATIAL_SQL);
       expect([...new Set(NEARBY_LABELLED_SQL.match(/\$\d+/g))].sort()).toEqual([
         "$1",
         "$2",
         "$3",
         "$4",
-        "$5",
       ]);
+      // No coordinate is ever bound or written into the statement the Worker sends.
+      expect(NEARBY_LABELLED_SQL).not.toContain("ST_MakePoint");
       // Read only, and the wrapper adds nothing but the manifest lookup and the ordering.
-      expect(NEARBY_LABELLED_SQL.replace(NEARBY_SPATIAL_SQL, "")).not.toMatch(
+      expect(NEARBY_LABELLED_SQL.replace(NEARBY_BLOCK_SPATIAL_SQL, "")).not.toMatch(
         /\b(INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|TRUNCATE|GRANT|COPY)\b/i,
       );
       expect(NEARBY_LABELLED_SQL).toContain("FROM public.manifest WHERE id = 1");
@@ -329,7 +335,7 @@ describe("bounded PostGIS nearby endpoint", () => {
         params: {},
       });
 
-      await readNearbyPlaces(context("?lat=2&lng=103.75", createNeonPublicData(query)), admit);
+      await readNearbyPlaces(context("?block=Not_A_Key", createNeonPublicData(query)), admit);
       await readNearbyPlaces(context(valid, {} as PublicData), admit); // a backend without PostGIS
       expect(admit).not.toHaveBeenCalled();
 
@@ -351,7 +357,7 @@ describe("bounded PostGIS nearby endpoint", () => {
       const { readNearbyPlaces } = await import("../../functions/api/nearby-places");
       const invalid = await readNearbyPlaces({
         publicData: {} as PublicData,
-        request: new Request(url("?lat=2&lng=103.75")),
+        request: new Request(url("?block=Not_A_Key")),
         params: {},
       });
       expect(invalid.response.status).toBe(400);
