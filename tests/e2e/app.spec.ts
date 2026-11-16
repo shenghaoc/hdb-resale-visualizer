@@ -273,3 +273,79 @@ test("shortlist items from prior sessions are visible without adding a new one",
     .click();
   await expect(page.getByTestId("shortlist-drawer")).toContainText("Prior session note");
 });
+
+test("the block drawer lists nearby MRT exits, asking by block and never by coordinates", async ({
+  page,
+}) => {
+  // Block-only nearby search is on: the Worker reports the mode, and answers for a block's address key.
+  await page.route("**/api/nearby-capabilities", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ available: true, mode: "blocks" }),
+    }),
+  );
+  const asked: URL[] = [];
+  await page.route("**/api/nearby-places**", async (route) => {
+    const url = new URL(route.request().url());
+    asked.push(url);
+    const exit = (id: number, stationName: string, exitCode: string, distanceMeters: number) => ({
+      id: `mrt_geojson:mrt_exit:${id}`,
+      kind: "mrt_exit",
+      name: `${stationName} (${exitCode})`,
+      lat: 1.324,
+      lng: 103.93,
+      distanceMeters,
+      addressKey: null,
+      stationName,
+      exitCode,
+    });
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        block: url.searchParams.get("block"),
+        radiusMeters: 1500,
+        limit: 25,
+        types: ["mrt_exit"],
+        distanceBasis: "straight-line",
+        places: [
+          exit(101, "BEDOK MRT STATION", "Exit A", 412.3),
+          exit(202, "TANAH MERAH MRT STATION", "Exit B", 1288.9),
+        ],
+      }),
+    });
+  });
+  await page.goto("/");
+
+  await page.getByTestId("header-search-input").fill("BEDOK");
+  await expect(page).toHaveURL(/search=BEDOK/);
+  await desktopNavButton(page, "Results").click();
+  await expect(page.getByTestId("results-pane")).toBeVisible();
+  const firstResult = firstResultCard(page);
+  const rowAddress = await resultCardAddressText(firstResult);
+  await firstResult.click();
+
+  const detailDrawer = page.getByTestId("detail-drawer");
+  await expect(detailDrawer).toContainText(rowAddress ?? "");
+  // Nothing is asked until the buyer opens the list.
+  const toggle = detailDrawer.getByRole("button", { name: "View nearby MRT exits" });
+  await expect(toggle).toBeVisible();
+  expect(asked).toHaveLength(0);
+  await toggle.click();
+
+  const exits = detailDrawer.getByTestId("nearby-mrt-exits");
+  await expect(exits.getByRole("listitem")).toHaveCount(2);
+  await expect(exits.getByRole("listitem").nth(0)).toContainText("BEDOK MRT STATION");
+  await expect(exits.getByRole("listitem").nth(0)).toContainText("Exit A");
+  await expect(exits.getByRole("listitem").nth(1)).toContainText("TANAH MERAH MRT STATION");
+  await expect(exits).toContainText(
+    "Straight-line distances; actual walking routes may be longer.",
+  );
+
+  expect(asked).toHaveLength(1);
+  expect([...asked[0].searchParams.keys()]).toEqual(["block"]);
+  expect(asked[0].searchParams.get("block")).toMatch(/^bedok-[a-z0-9-]+$/);
+  // The block named in the request is the one the drawer shows.
+  await expect(page).toHaveURL(new RegExp(asked[0].searchParams.get("block") ?? "missing"));
+});

@@ -785,8 +785,7 @@ export function DetailDrawer({
                       {currentSummary ? (
                         <NearbyMrtExits
                           key={currentSummary.addressKey}
-                          lat={currentSummary.coordinates.lat}
-                          lng={currentSummary.coordinates.lng}
+                          addressKey={currentSummary.addressKey}
                         />
                       ) : null}
                     </section>

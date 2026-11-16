@@ -21,7 +21,7 @@ type ResultState =
  * An opt-in supplement to the existing MRT walking-time panel.
  * Only the capability probe runs before a user opens the exit list.
  */
-export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
+export function NearbyMrtExits({ addressKey }: { addressKey: string }) {
   const { locale, t } = useI18n();
   const panelId = useId();
   const [available, setAvailable] = useState(false);
@@ -44,7 +44,7 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
     const controller = new AbortController();
     // eslint-disable-next-line react-hooks/set-state-in-effect -- pending indicator for the async fetch this effect performs
     setResult({ status: "loading" });
-    void fetchNearbyMrtExits(lat, lng, controller.signal)
+    void fetchNearbyMrtExits(addressKey, controller.signal)
       .then((places) => {
         if (!controller.signal.aborted)
           setResult({ status: "ready", places: toNearbyMrtStations(places) });
@@ -53,7 +53,7 @@ export function NearbyMrtExits({ lat, lng }: { lat: number; lng: number }) {
         if (!controller.signal.aborted) setResult({ status: "error" });
       });
     return () => controller.abort();
-  }, [expanded, lat, lng, retryToken]);
+  }, [expanded, addressKey, retryToken]);
 
   if (!available) return null;
 

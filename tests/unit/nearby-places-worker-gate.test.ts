@@ -1,5 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 import { NEARBY_LABELLED_SQL } from "../../worker/nearby-spatial-query";
+import {
+  primeNearbyBlockIndexForTests,
+  resetNearbyBlockIndexForTests,
+} from "../../worker/nearby-block-index";
 
 const spies = vi.hoisted(() => ({
   factory: vi.fn(),
@@ -52,13 +56,25 @@ const exitRow = {
 };
 const ctx = { waitUntil: () => {} } as unknown as ExecutionContext;
 
+const BLOCK = "central-area-535-upp-cross-st";
+const NAMESPACE = "neon-neon-test-epoch";
+const BLOCK_INDEX_SQL = "SELECT address_key, town FROM public.blocks";
+
+/** A stand-in for the budget Durable Object namespace whose one object answers `allowed`. */
+const budget = (allowed: boolean) => {
+  const fetch = vi.fn(async (_input: string, _init?: RequestInit) =>
+    Response.json({ allowed, day: "2026-11-16", used: allowed ? 1 : 20000, limit: 20000 }),
+  );
+  return { idFromName: vi.fn((name: string) => name), get: vi.fn(() => ({ fetch })), fetch };
+};
+
 /** A stand-in for a Workers Rate Limiting binding that always answers `success`. */
 const limiter = (success: boolean) => ({
   limit: vi.fn(async (_options: { key: string }) => ({ success })),
 });
 
 /**
- * The shipped `wrangler.jsonc` shape: Neon selected, Hyperdrive bound, spatial release gate off. With the gate open
+ * The `wrangler.jsonc` shape with the spatial mode off: Neon selected, Hyperdrive bound. With the mode on
  * the D1 binding is a trap: public nearby search must never read it.
  */
 const deployedEnv = (overrides: Record<string, unknown> = {}) =>
@@ -71,17 +87,19 @@ const deployedEnv = (overrides: Record<string, unknown> = {}) =>
     },
     PUBLIC_DATA_BACKEND: "neon",
     NEON_PUBLIC_CACHE_EPOCH: "neon-test-epoch",
-    NEON_SPATIAL_ENABLED: "false",
+    NEON_SPATIAL_MODE: "off",
     HDB_PUBLIC_NEON: { connectionString: "test" },
     ASSETS: { fetch: async () => new Response("<html></html>") },
     // Like the shipped wrangler.jsonc, the limiter bindings exist; individual tests replace them.
     NEARBY_IP_LIMITER: limiter(true),
     NEARBY_ORIGIN_LIMITER: limiter(true),
+    NEARBY_BUDGET: budget(true),
+    NEARBY_DAILY_MISS_BUDGET: "20000",
     ...overrides,
   }) as unknown as Env;
 const call = (env: Env, path: string, headers?: Record<string, string>) =>
   worker.fetch(new Request(`https://test${path}`, { headers }), env, ctx);
-const nearbyPath = "/api/nearby-places?lat=1.35&lng=103.75&radius=1500&limit=25&types=mrt_exit";
+const nearbyPath = `/api/nearby-places?block=${BLOCK}`;
 
 const inMemoryCache = () => {
   const entries = new Map<string, Response>();
@@ -102,21 +120,25 @@ beforeEach(async () => {
   spies.query.mockImplementation(async (sql: string) => {
     if (sql === NEARBY_LABELLED_SQL) return [header, exitRow];
     if (sql.includes("FROM public.manifest")) return [{ json: manifest }];
+    if (sql.startsWith(BLOCK_INDEX_SQL)) return [{ address_key: BLOCK, town: "CENTRAL AREA" }];
     return [];
   });
+  // Most tests are about something else: the isolate already knows the published block list.
+  primeNearbyBlockIndexForTests(NAMESPACE, [BLOCK]);
   spies.snapshot.mockImplementation(async (respond: () => Promise<unknown>) => respond());
   spies.close.mockResolvedValue(undefined);
   vi.stubGlobal("caches", undefined);
 });
 afterEach(() => {
   vi.unstubAllGlobals();
+  resetNearbyBlockIndexForTests();
 });
 
 describe("spatial release gate in the Worker entry", () => {
-  it.each([["false"], [undefined], ["TRUE"], ["1"], [""]])(
-    "NEON_SPATIAL_ENABLED=%j answers a no-store 503 before any Neon transport exists",
-    async (flag) => {
-      const response = await call(deployedEnv({ NEON_SPATIAL_ENABLED: flag }), nearbyPath);
+  it.each([["off"], [undefined], ["BLOCKS"], ["true"], ["coordinates"], [""]])(
+    "NEON_SPATIAL_MODE=%j answers a no-store 503 before any Neon transport exists",
+    async (mode) => {
+      const response = await call(deployedEnv({ NEON_SPATIAL_MODE: mode }), nearbyPath);
       expect(response.status).toBe(503);
       expect(response.headers.get("cache-control")).toBe("no-store");
       expect(await response.json()).toEqual({ error: "Spatial search has not been enabled" });
@@ -134,10 +156,10 @@ describe("spatial release gate in the Worker entry", () => {
   });
 
   it("with the gate open, runs the shipped SQL once with bound parameters", async () => {
-    const response = await call(deployedEnv({ NEON_SPATIAL_ENABLED: "true" }), nearbyPath);
+    const response = await call(deployedEnv({ NEON_SPATIAL_MODE: "blocks" }), nearbyPath);
     expect(response.status).toBe(200);
     expect(await response.json()).toMatchObject({
-      center: { lat: 1.35, lng: 103.75 },
+      block: BLOCK,
       radiusMeters: 1500,
       limit: 25,
       types: ["mrt_exit"],
@@ -155,14 +177,14 @@ describe("spatial release gate in the Worker entry", () => {
     });
     const nearbyCalls = spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL);
     expect(nearbyCalls).toHaveLength(1);
-    expect(nearbyCalls[0][1]).toEqual([1.35, 103.75, 1500, ["mrt_exit"], 25]);
+    expect(nearbyCalls[0][1]).toEqual([BLOCK, 1500, ["mrt_exit"], 25]);
     // The labelled statement is the only one: no separate manifest reads around it.
     expect(spies.query).toHaveBeenCalledTimes(1);
     expect(spies.close).toHaveBeenCalledTimes(1);
   });
 
   it("with the gate open on the D1 rollback backend, says so instead of returning an empty list", async () => {
-    const env = deployedEnv({ NEON_SPATIAL_ENABLED: "true", PUBLIC_DATA_BACKEND: "d1" });
+    const env = deployedEnv({ NEON_SPATIAL_MODE: "blocks", PUBLIC_DATA_BACKEND: "d1" });
     const response = await call(env, nearbyPath);
     expect(response.status).toBe(503);
     expect(response.headers.get("cache-control")).toBe("no-store");
@@ -172,27 +194,19 @@ describe("spatial release gate in the Worker entry", () => {
     expect(spies.factory).not.toHaveBeenCalled();
   });
 
-  it("collapses equivalent raw queries onto one canonical key shaped like every public route", async () => {
+  it("keeps one entry per block under a canonical key shaped like every public route", async () => {
     const entries = inMemoryCache();
-    const env = deployedEnv({ NEON_SPATIAL_ENABLED: "true" });
-    const first = await call(
-      env,
-      "/api/nearby-places?types=mrt_exit,mrt_station&lat=1.350001&lng=103.750001&radius=1001",
-    );
+    const env = deployedEnv({ NEON_SPATIAL_MODE: "blocks" });
+    const first = await call(env, nearbyPath);
     expect(first.headers.get("x-data-cache")).toBe("MISS");
     spies.query.mockClear();
-    const second = await call(
-      env,
-      "/api/nearby-places?lat=1.350049&lng=103.750049&radius=1400&limit=25&types=mrt_station,mrt_exit",
-    );
+    const second = await call(env, nearbyPath);
     expect(second.headers.get("x-data-cache")).toBe("HIT");
     expect(spies.query).not.toHaveBeenCalled();
 
     const nearbyKeys = [...entries.keys()].filter((key) => key.includes("/api/nearby-places"));
     expect(nearbyKeys).toHaveLength(1);
-    expect(nearbyKeys[0]).toMatch(
-      /\/api\/nearby-places\?lat=1\.35&lng=103\.75&radius=1500&types=mrt_station%2Cmrt_exit$/,
-    );
+    expect(nearbyKeys[0]).toMatch(/\/api\/nearby-places\?block=central-area-535-upp-cross-st$/);
 
     // The backend/epoch/version prefix is the one every existing route uses.
     await call(env, "/api/manifest");
@@ -208,7 +222,7 @@ describe("spatial release gate in the Worker entry", () => {
     const response = await call(deployedEnv(), "/api/nearby-capabilities");
     expect(response.status).toBe(200);
     expect(response.headers.get("cache-control")).toBe("no-store");
-    expect(await response.json()).toEqual({ available: false });
+    expect(await response.json()).toEqual({ available: false, mode: "off" });
     expect(spies.factory).not.toHaveBeenCalled();
     expect(spies.query).not.toHaveBeenCalled();
     expect(spies.d1).not.toHaveBeenCalled();
@@ -226,11 +240,17 @@ describe("spatial release gate in the Worker entry", () => {
       overrides: { HDB_PUBLIC_NEON: undefined },
       available: false,
     },
-    { label: "gate closed", overrides: { NEON_SPATIAL_ENABLED: "false" }, available: false },
+    { label: "gate closed", overrides: { NEON_SPATIAL_MODE: "off" }, available: false },
+    {
+      label: "an unknown mode",
+      overrides: { NEON_SPATIAL_MODE: "coordinates" },
+      available: false,
+    },
   ])("capability, $label: available is $available", async ({ overrides, available }) => {
-    const env = deployedEnv({ NEON_SPATIAL_ENABLED: "true", ...overrides });
+    const env = deployedEnv({ NEON_SPATIAL_MODE: "blocks", ...overrides });
     const response = await call(env, "/api/nearby-capabilities");
-    expect(await response.json()).toEqual({ available });
+    // The mode reported is the one in effect, so a client never asks a backend that cannot answer.
+    expect(await response.json()).toEqual({ available, mode: available ? "blocks" : "off" });
     // Flag, backend and binding only: no transport is opened and no table is read, so
     // "available" never means that the spatial migration has been applied.
     expect(spies.factory).not.toHaveBeenCalled();
@@ -239,7 +259,7 @@ describe("spatial release gate in the Worker entry", () => {
 });
 
 describe("nearby rate limiting in the Worker entry", () => {
-  const open = { NEON_SPATIAL_ENABLED: "true" };
+  const open = { NEON_SPATIAL_MODE: "blocks" };
   const nearbySqlCalls = () =>
     spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL).length;
 
@@ -372,7 +392,7 @@ describe("nearby rate limiting in the Worker entry", () => {
 });
 
 describe("one labelled SQL statement per cache miss without a counter", () => {
-  const open = { NEON_SPATIAL_ENABLED: "true" };
+  const open = { NEON_SPATIAL_MODE: "blocks" };
   const labelled = () => spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL);
   /** Statements that read the manifest on their own (the labelled statement reads it inside the same query). */
   const manifestReads = () =>
@@ -420,9 +440,10 @@ describe("one labelled SQL statement per cache miss without a counter", () => {
     const origin = limiter(true);
     const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin });
     for (const bad of [
-      "/api/nearby-places?lat=2&lng=103.8",
-      "/api/nearby-places?lat=1.35&lng=103.75&radius=9999",
-      "/api/nearby-places?lat=1.35&lng=103.75&limit=26",
+      "/api/nearby-places?lat=1.35&lng=103.75",
+      "/api/nearby-places?lat=1.35&lng=103.75&radius=1500&limit=25&types=mrt_exit",
+      `/api/nearby-places?block=${BLOCK}&radius=2500`,
+      "/api/nearby-places?block=Not_A_Key",
       "/api/nearby-places",
     ]) {
       expect((await call(env, bad)).status, bad).toBe(400);
@@ -510,5 +531,202 @@ describe("one labelled SQL statement per cache miss without a counter", () => {
     expect(spies.query).toHaveBeenCalledTimes(1);
     expect(entries.size).toBe(0);
     log.mockRestore();
+  });
+});
+
+describe("block-only mode: no coordinates, and no statement for an unknown block", () => {
+  const open = { NEON_SPATIAL_MODE: "blocks" };
+  const nearbySql = () => spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL);
+  const blockIndexSql = () =>
+    spies.query.mock.calls.filter(([sql]) => String(sql).startsWith(BLOCK_INDEX_SQL));
+
+  it("answers a coordinate request with 400 before the cache, a limiter beyond the client one, or the database", async () => {
+    const entries = inMemoryCache();
+    const origin = limiter(true);
+    const counter = budget(true);
+    const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin, NEARBY_BUDGET: counter });
+    const response = await call(
+      env,
+      "/api/nearby-places?lat=1.2842&lng=103.8454&radius=1500&limit=25&types=mrt_exit",
+    );
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({
+      error: "Coordinate searches are not available; pass block=<address key>",
+    });
+    expect(spies.query).not.toHaveBeenCalled();
+    expect(origin.limit).not.toHaveBeenCalled();
+    expect(counter.fetch).not.toHaveBeenCalled();
+    expect(entries.size).toBe(0);
+  });
+
+  it("answers 404 for a well-formed key that names no published block, sending no nearby statement", async () => {
+    inMemoryCache();
+    const origin = limiter(true);
+    const counter = budget(true);
+    const env = deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin, NEARBY_BUDGET: counter });
+    for (const unknown of ["bedok-999-nowhere-st", "central-area-535-upp-cross-st-2", "x"]) {
+      const response = await call(env, `/api/nearby-places?block=${unknown}`);
+      expect(response.status, unknown).toBe(404);
+      expect(response.headers.get("cache-control")).toBe("no-store");
+      expect(await response.json()).toEqual({ error: "Unknown HDB block" });
+    }
+    // Nothing reached the database, and no allowance was spent on keys that name nothing.
+    expect(spies.query).not.toHaveBeenCalled();
+    expect(origin.limit).not.toHaveBeenCalled();
+    expect(counter.fetch).not.toHaveBeenCalled();
+  });
+
+  it("reads the published block list once, keeps it in the shared cache, and asks nothing for later unknown keys", async () => {
+    const entries = inMemoryCache();
+    resetNearbyBlockIndexForTests();
+    const env = deployedEnv(open);
+    expect((await call(env, "/api/nearby-places?block=bedok-999-nowhere-st")).status).toBe(404);
+    // One read of the list, labelled like every public answer (manifest before and after), and no nearby statement.
+    expect(blockIndexSql()).toHaveLength(1);
+    expect(nearbySql()).toHaveLength(0);
+    expect([...entries.keys()].filter((key) => key.endsWith("/api/block-index"))).toHaveLength(1);
+
+    spies.query.mockClear();
+    for (let attempt = 0; attempt < 50; attempt++)
+      expect((await call(env, `/api/nearby-places?block=unknown-${attempt}`)).status).toBe(404);
+    expect(spies.query).not.toHaveBeenCalled();
+
+    // Another isolate in the same location finds the list in the cache: still no statement.
+    resetNearbyBlockIndexForTests();
+    expect((await call(env, "/api/nearby-places?block=another-unknown-key")).status).toBe(404);
+    expect(blockIndexSql()).toHaveLength(0);
+    expect(nearbySql()).toHaveLength(0);
+    // A published block is still answered.
+    expect((await call(env, nearbyPath)).status).toBe(200);
+    expect(nearbySql()).toHaveLength(1);
+  });
+
+  it("does not route the internal block list", async () => {
+    const response = await call(deployedEnv(open), "/api/block-index");
+    expect(spies.query).not.toHaveBeenCalled();
+    expect(response.headers.get("content-type") ?? "").not.toContain("application/json");
+  });
+
+  it("fails closed when the block list cannot be read: 503, no nearby statement, no allowance spent", async () => {
+    resetNearbyBlockIndexForTests();
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    const origin = limiter(true);
+    const counter = budget(true);
+    spies.query.mockImplementation(async (sql: string) => {
+      if (String(sql).startsWith(BLOCK_INDEX_SQL)) throw new Error("Public database read failed");
+      return [];
+    });
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: origin, NEARBY_BUDGET: counter }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(nearbySql()).toHaveLength(0);
+    expect(origin.limit).not.toHaveBeenCalled();
+    expect(counter.fetch).not.toHaveBeenCalled();
+    log.mockRestore();
+  });
+});
+
+describe("global daily miss budget in the Worker entry", () => {
+  const open = { NEON_SPATIAL_MODE: "blocks" };
+  const nearbySqlCalls = () =>
+    spies.query.mock.calls.filter(([sql]) => sql === NEARBY_LABELLED_SQL).length;
+
+  it("asks the one global object once per cache miss, and a cache hit never touches it", async () => {
+    inMemoryCache();
+    const counter = budget(true);
+    const env = deployedEnv({ ...open, NEARBY_BUDGET: counter });
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("MISS");
+    expect(counter.fetch).toHaveBeenCalledTimes(1);
+    expect(counter.idFromName).toHaveBeenCalledWith("global");
+    const [target, init] = counter.fetch.mock.calls[0];
+    expect(target).toBe("https://nearby-budget/consume?limit=20000");
+    expect(init).toMatchObject({ method: "POST" });
+
+    for (let hit = 0; hit < 5; hit++)
+      expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("HIT");
+    expect(counter.fetch).toHaveBeenCalledTimes(1);
+    expect(counter.get).toHaveBeenCalledTimes(1);
+    expect(nearbySqlCalls()).toBe(1);
+  });
+
+  it("is never consulted while the mode is off", async () => {
+    const counter = budget(true);
+    await call(deployedEnv({ NEARBY_BUDGET: counter }), nearbyPath);
+    expect(counter.get).not.toHaveBeenCalled();
+  });
+
+  it("refuses with a no-store 503 until the next UTC day once the budget is spent", async () => {
+    const entries = inMemoryCache();
+    const response = await call(deployedEnv({ ...open, NEARBY_BUDGET: budget(false) }), nearbyPath);
+    expect(response.status).toBe(503);
+    expect(response.headers.get("cache-control")).toBe("no-store");
+    expect(await response.json()).toEqual({ error: "Nearby search has reached its daily limit" });
+    const retryAfter = Number(response.headers.get("retry-after"));
+    expect(retryAfter).toBeGreaterThanOrEqual(1);
+    expect(retryAfter).toBeLessThanOrEqual(86_400);
+    expect(nearbySqlCalls()).toBe(0);
+    expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(0);
+  });
+
+  it.each([
+    ["throws", async () => Promise.reject(new Error("object unavailable"))],
+    ["answers an error status", async () => new Response("overloaded", { status: 500 })],
+    ["answers something else", async () => Response.json({ ok: true })],
+    ["answers a non-boolean", async () => Response.json({ allowed: "yes" })],
+  ])(
+    "fails closed when the object %s: 503, no nearby statement, nothing cached",
+    async (_label, answer) => {
+      const entries = inMemoryCache();
+      const log = vi.spyOn(console, "error").mockImplementation(() => {});
+      const counter = budget(true);
+      counter.fetch.mockImplementation(answer as never);
+      const response = await call(deployedEnv({ ...open, NEARBY_BUDGET: counter }), nearbyPath);
+      expect(response.status).toBe(503);
+      expect(response.headers.get("cache-control")).toBe("no-store");
+      expect(await response.json()).toEqual({ error: "Nearby search is temporarily unavailable" });
+      expect(nearbySqlCalls()).toBe(0);
+      expect([...entries.keys()].filter((key) => key.includes("/api/nearby-places"))).toHaveLength(
+        0,
+      );
+      expect(log).toHaveBeenCalledOnce();
+      log.mockRestore();
+    },
+  );
+
+  it.each([
+    ["the binding is missing", { NEARBY_BUDGET: undefined }],
+    ["the budget is not configured", { NEARBY_DAILY_MISS_BUDGET: undefined }],
+    ["the budget is not a number", { NEARBY_DAILY_MISS_BUDGET: "many" }],
+    ["the budget is zero", { NEARBY_DAILY_MISS_BUDGET: "0" }],
+    ["the budget is above the code's ceiling", { NEARBY_DAILY_MISS_BUDGET: "20001" }],
+  ])("fails closed with 503 when %s", async (_label, overrides) => {
+    const response = await call(deployedEnv({ ...open, ...overrides }), nearbyPath);
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({ error: "Nearby search is not configured" });
+    expect(nearbySqlCalls()).toBe(0);
+  });
+
+  it("is asked last: a request the origin limiter refuses takes nothing from the day's budget", async () => {
+    const counter = budget(true);
+    const response = await call(
+      deployedEnv({ ...open, NEARBY_ORIGIN_LIMITER: limiter(false), NEARBY_BUDGET: counter }),
+      nearbyPath,
+    );
+    expect(response.status).toBe(503);
+    expect(counter.fetch).not.toHaveBeenCalled();
+  });
+
+  it("keeps serving cached answers while the object is down", async () => {
+    inMemoryCache();
+    const counter = budget(true);
+    const env = deployedEnv({ ...open, NEARBY_BUDGET: counter });
+    expect((await call(env, nearbyPath)).headers.get("x-data-cache")).toBe("MISS");
+    counter.fetch.mockImplementation(async () => Promise.reject(new Error("object unavailable")));
+    const hit = await call(env, nearbyPath);
+    expect(hit.status).toBe(200);
+    expect(hit.headers.get("x-data-cache")).toBe("HIT");
   });
 });

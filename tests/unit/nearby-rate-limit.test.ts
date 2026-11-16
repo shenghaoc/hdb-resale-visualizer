@@ -9,10 +9,18 @@ import {
 } from "../../functions/_lib/nearby-rate-limit";
 import {
   NEARBY_CLIENT_RATE_LIMIT,
+  NEARBY_DAILY_MISS_BUDGET,
   NEARBY_ORIGIN_RATE_LIMIT,
   NEARBY_ORIGIN_RATE_LIMIT_KEY,
   NEARBY_RATE_LIMIT_PERIOD_SEC,
 } from "../../shared/nearby-limits";
+import { NEON_SPATIAL_MODES, parseNeonSpatialMode } from "../../shared/nearby-places";
+import {
+  NearbyDailyBudget,
+  checkNearbyDailyBudget,
+  consumeDailyBudget,
+  parseDailyBudget,
+} from "../../worker/nearby-budget";
 
 const requestFrom = (ip?: string) =>
   new Request("https://example.com/api/nearby-places", {
@@ -183,9 +191,190 @@ describe("wrangler.jsonc rate limit bindings", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
-  it("keeps the spatial release gate closed", () => {
-    // Opening the gate is a separate, approved rollout (docs/architecture/postgis-nearby.md).
-    const vars = (config as unknown as { vars: Record<string, string> }).vars;
-    expect(vars.NEON_SPATIAL_ENABLED).toBe("false");
+  type Deployed = {
+    vars: Record<string, string>;
+    durable_objects: { bindings: { name: string; class_name: string }[] };
+    migrations: { tag: string; new_sqlite_classes?: string[] }[];
+  };
+  const deployed = config as unknown as Deployed;
+
+  it("selects the block-only mode, the only one besides off", () => {
+    expect(NEON_SPATIAL_MODES).toEqual(["off", "blocks"]);
+    expect(deployed.vars.NEON_SPATIAL_MODE).toBe("blocks");
+    expect(parseNeonSpatialMode(deployed.vars.NEON_SPATIAL_MODE)).toBe("blocks");
+    // The flag this mode replaced must not linger: nothing reads it any more.
+    expect(deployed.vars).not.toHaveProperty("NEON_SPATIAL_ENABLED");
+  });
+
+  it("mirrors the global daily miss budget exactly", () => {
+    expect(NEARBY_DAILY_MISS_BUDGET).toBe(20_000);
+    expect(deployed.vars.NEARBY_DAILY_MISS_BUDGET).toBe(String(NEARBY_DAILY_MISS_BUDGET));
+    expect(parseDailyBudget(deployed.vars.NEARBY_DAILY_MISS_BUDGET)).toBe(NEARBY_DAILY_MISS_BUDGET);
+  });
+
+  it("binds the budget to one SQLite-backed Durable Object class that the Worker exports", async () => {
+    expect(deployed.durable_objects.bindings).toEqual([
+      { name: "NEARBY_BUDGET", class_name: NearbyDailyBudget.name },
+    ]);
+    // SQLite-backed classes are the kind every Workers plan can create.
+    expect(deployed.migrations).toEqual([
+      { tag: "v1", new_sqlite_classes: [NearbyDailyBudget.name] },
+    ]);
+    const entry = readFileSync(join(process.cwd(), "worker/index.ts"), "utf8");
+    expect(entry).toContain('export { NearbyDailyBudget } from "./nearby-budget";');
+  });
+});
+
+describe("global daily miss budget (the Durable Object's counter)", () => {
+  const DAY = Date.parse("2026-11-16T00:00:00Z");
+  const memory = (initial?: unknown) => {
+    const values = new Map<string, unknown>(initial === undefined ? [] : [["day", initial]]);
+    return {
+      values,
+      get: vi.fn(async (key: string) => values.get(key)),
+      put: vi.fn(async (key: string, value: unknown) => {
+        values.set(key, value);
+      }),
+    };
+  };
+
+  it("grants statements up to the limit and refuses every one after it", async () => {
+    const storage = memory();
+    for (let used = 1; used <= 3; used++)
+      expect(await consumeDailyBudget(storage, 3, DAY + used)).toEqual({
+        allowed: true,
+        day: "2026-11-16",
+        used,
+        limit: 3,
+      });
+    for (let extra = 0; extra < 5; extra++)
+      expect(await consumeDailyBudget(storage, 3, DAY + 10 + extra)).toMatchObject({
+        allowed: false,
+        used: 3,
+      });
+    // A refusal writes nothing: the stored count never passes the limit.
+    expect(storage.put).toHaveBeenCalledTimes(3);
+    expect(storage.values.get("day")).toEqual({ day: "2026-11-16", used: 3 });
+  });
+
+  it("starts again from zero at UTC midnight, not 24 hours after the first statement", async () => {
+    const storage = memory();
+    const lastSecond = Date.parse("2026-11-16T23:59:59.999Z");
+    expect((await consumeDailyBudget(storage, 1, lastSecond)).allowed).toBe(true);
+    expect((await consumeDailyBudget(storage, 1, lastSecond)).allowed).toBe(false);
+    expect(await consumeDailyBudget(storage, 1, lastSecond + 1)).toEqual({
+      allowed: true,
+      day: "2026-11-17",
+      used: 1,
+      limit: 1,
+    });
+    // 08:00 in Singapore is the same UTC day as 00:00 UTC: no second reset.
+    expect(
+      (await consumeDailyBudget(storage, 1, Date.parse("2026-11-17T08:00:00+08:00"))).allowed,
+    ).toBe(false);
+  });
+
+  it("records the statement before granting it, so a failed write grants nothing", async () => {
+    const storage = memory();
+    storage.put.mockRejectedValueOnce(new Error("storage unavailable"));
+    await expect(consumeDailyBudget(storage, 5, DAY)).rejects.toThrow("storage unavailable");
+    expect(storage.values.has("day")).toBe(false);
+  });
+
+  it.each([
+    [null],
+    ["2026-11-16"],
+    [{ day: "2026-11-16" }],
+    [{ day: 20261116, used: 1 }],
+    [{ day: "2026-11-16", used: -1 }],
+    [{ day: "2026-11-16", used: 1.5 }],
+  ])(
+    "treats a stored value it does not understand (%j) as a spent day, never as zero",
+    async (stored) => {
+      const storage = memory(stored);
+      expect(await consumeDailyBudget(storage, 5, DAY)).toMatchObject({ allowed: false });
+      expect(storage.put).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each([
+    ["20000", 20_000],
+    ["1", 1],
+    [undefined, null],
+    ["", null],
+    ["0", null],
+    ["-5", null],
+    ["2e4", null],
+    ["20000.0", null],
+    [" 20000", null],
+    ["20001", null],
+    ["9999999999", null],
+  ])("parses the configured budget %j as %j", (value, expected) => {
+    expect(parseDailyBudget(value)).toBe(expected);
+  });
+
+  it("the object answers POST /consume and nothing else", async () => {
+    const storage = memory();
+    const object = new NearbyDailyBudget({ storage });
+    const consume = (limit: string, method = "POST", path = "/consume") =>
+      object.fetch(new Request(`https://nearby-budget${path}?limit=${limit}`, { method }));
+    const granted = await consume("2");
+    expect(granted.status).toBe(200);
+    expect(await granted.json()).toMatchObject({ allowed: true, used: 1, limit: 2 });
+    expect((await consume("2", "GET")).status).toBe(400);
+    expect((await consume("2", "POST", "/reset")).status).toBe(400);
+    expect((await consume("0")).status).toBe(400);
+    expect((await consume("20001")).status).toBe(400);
+    // None of the refused calls counted.
+    expect(storage.values.get("day")).toMatchObject({ used: 1 });
+  });
+});
+
+describe("checkNearbyDailyBudget", () => {
+  const namespace = (fetch: (input: string, init?: RequestInit) => Promise<Response>) => ({
+    idFromName: vi.fn((name: string) => name),
+    get: vi.fn(() => ({ fetch })),
+  });
+  const decision = (allowed: unknown) => async () => Response.json({ allowed });
+
+  it("admits a granted statement and refuses a spent day until the next UTC midnight", async () => {
+    expect(await checkNearbyDailyBudget(namespace(decision(true)), "20000")).toBeNull();
+    const now = Date.parse("2026-11-16T23:00:00Z");
+    const refused = await checkNearbyDailyBudget(namespace(decision(false)), "20000", now);
+    expect(refused?.status).toBe(503);
+    expect(refused?.headers.get("retry-after")).toBe("3600");
+    expect(refused?.headers.get("cache-control")).toBe("no-store");
+  });
+
+  it("fails closed, logged, when the object cannot answer", async () => {
+    const log = vi.spyOn(console, "error").mockImplementation(() => {});
+    for (const fetch of [
+      async () => Promise.reject(new Error("object unavailable")),
+      async () => new Response("no", { status: 503 }),
+      async () => new Response("not json"),
+      decision("true"),
+      decision(undefined),
+    ]) {
+      const refused = await checkNearbyDailyBudget(namespace(fetch as never), "20000");
+      expect(refused?.status).toBe(503);
+      expect(refused?.headers.get("cache-control")).toBe("no-store");
+    }
+    expect(log).toHaveBeenCalledTimes(5);
+    log.mockRestore();
+  });
+
+  it("refuses without asking when the binding or the budget is missing or invalid", async () => {
+    const asked = namespace(decision(true));
+    for (const [binding, limit] of [
+      [undefined, "20000"],
+      [asked, undefined],
+      [asked, "0"],
+      [asked, "20001"],
+    ] as const) {
+      const refused = await checkNearbyDailyBudget(binding, limit);
+      expect(refused?.status).toBe(503);
+      expect(await refused?.json()).toEqual({ error: "Nearby search is not configured" });
+    }
+    expect(asked.get).not.toHaveBeenCalled();
   });
 });

@@ -11,8 +11,9 @@ import {
 /** Shared Cache API is per data center. The pointer intentionally bounds freshness to 60s. */
 const POINTER_TTL_SECONDS = 60;
 const DATA_TTL_SECONDS = 3600;
+// `block-index` is internal (worker/nearby-block-index.ts): cached here, routed nowhere.
 const PUBLIC_PATH =
-  /^\/api\/(?:manifest|block-summaries|blocks\/[^/]+|details\/[^/]+|comparisons\/[^/]+|trends\/town-flat-type|mrt-stations|mrt-exits|search|suggest|nearby-places)\/?$/;
+  /^\/api\/(?:manifest|block-summaries|blocks\/[^/]+|details\/[^/]+|comparisons\/[^/]+|trends\/town-flat-type|mrt-stations|mrt-exits|search|suggest|nearby-places|block-index)\/?$/;
 
 type SharedCache = {
   match: (request: Request) => Promise<Response | undefined>;
