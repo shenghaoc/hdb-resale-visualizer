@@ -10,6 +10,7 @@ import { useI18n } from "@/shared/lib/i18n";
  */
 export function DataAttribution() {
   const { t } = useI18n();
+  const licenceSuffix = t("attribution.licenceSuffix");
 
   return (
     <div className="map-attribution-link" data-testid="map-attribution">
@@ -22,6 +23,8 @@ export function DataAttribution() {
         <a href={SINGAPORE_OPEN_DATA_LICENCE_URL} rel="noopener noreferrer" target="_blank">
           {t("attribution.licence")}
         </a>
+        {/* Some locales close the sentence after the licence name (zh-SG: "依据 … 提供"); English has no suffix. */}
+        {licenceSuffix ? ` ${licenceSuffix}` : null}
       </span>
       <span aria-hidden="true"> · </span>
       <DocsLink slug="data-sources" className="font-normal text-inherit">

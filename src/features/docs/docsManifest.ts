@@ -8,6 +8,15 @@ import faqContent from "./content/faq.md?raw";
 import dataSourcesContent from "./content/data-sources.md?raw";
 import troubleshootingContent from "./content/troubleshooting.md?raw";
 
+/**
+ * Placeholder in guide markdown that DocsPage replaces with the formatted time of the most recent data sync (or a
+ * fallback when this copy has none), so a page can state the datasets' access date without relying on the header.
+ */
+export const DOCS_SYNCED_AT_TOKEN = "{{syncedAt}}";
+
+/** What search snippets show in place of {@link DOCS_SYNCED_AT_TOKEN}: the index is built once, without data. */
+const SEARCH_SYNCED_AT_TEXT = "the date of the most recent sync";
+
 export type DocsSection = {
   slug: string;
   /** Short label used in the navigation sidebar and search results. */
@@ -59,7 +68,9 @@ export function buildDocsSearchEntries(sections: DocsSection[] = DOCS_SECTIONS):
 
   const entries: DocsSearchEntry[] = [];
   for (const section of sections) {
-    const lines = section.content.split("\n");
+    const lines = section.content
+      .replaceAll(DOCS_SYNCED_AT_TOKEN, SEARCH_SYNCED_AT_TEXT)
+      .split("\n");
     let heading = section.title;
     let buffer: string[] = [];
 

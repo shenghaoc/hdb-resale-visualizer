@@ -62,7 +62,9 @@ describe("map credit", () => {
     storedLocale.value = "zh-SG";
     renderCredit();
     const credit = screen.getByTestId("map-attribution");
-    expect(credit).toHaveTextContent("数据来自 data.gov.sg，适用 Singapore Open Data Licence v1.0");
+    expect(credit).toHaveTextContent(
+      "数据来自 data.gov.sg，依据 Singapore Open Data Licence v1.0 提供",
+    );
     expect(within(credit).getByRole("link", { name: "数据来源" })).toHaveAttribute(
       "href",
       "/docs/data-sources",

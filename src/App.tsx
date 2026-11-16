@@ -15,6 +15,7 @@ import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
+import { deriveDataQualityState } from "@/shared/lib/dataQuality";
 import { ErrorBoundary } from "@/shared-ui/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
 import { DataAttribution } from "@/components/DataAttribution";
@@ -72,10 +73,14 @@ const ListingCheckPanel = lazy(() =>
   })),
 );
 
-function App() {
+type AppProps = {
+  manifestData: ReturnType<typeof useManifestData>;
+};
+
+function App({ manifestData }: AppProps) {
   const { locale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const { manifest, error, retry: retryManifest } = useManifestData();
+  const { manifest, error, retry: retryManifest } = manifestData;
   const shortlist = useShortlist();
   const {
     pendingRemoval: pendingShortlistRemoval,
@@ -800,6 +805,10 @@ function AppWithErrorBoundary() {
   // string, so leaving the guide restores the previous view. Deployed refreshes
   // work via the Worker's single-page-application asset fallback.
   const pathname = usePathname();
+  // Loaded here rather than inside App so the guide can state the data's sync time (the Data sources page's access
+  // date) from the same single manifest request; App stays mounted, hidden, while the guide is open.
+  const manifestData = useManifestData();
+  const lastSyncedAt = deriveDataQualityState(manifestData.manifest).lastSyncedAt;
 
   // Root boundary: a crash here means the whole app (including the I18nProvider)
   // is unusable, so recovery falls back to a full reload and the fallback uses
@@ -809,11 +818,11 @@ function AppWithErrorBoundary() {
     <ErrorBoundary fill className="min-h-screen">
       {isDocsPath(pathname) ? (
         <Suspense fallback={null}>
-          <DocsPage />
+          <DocsPage lastSyncedAt={lastSyncedAt} />
         </Suspense>
       ) : null}
       <div hidden={isDocsPath(pathname)}>
-        <App />
+        <App manifestData={manifestData} />
       </div>
     </ErrorBoundary>
   );

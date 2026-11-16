@@ -3,24 +3,36 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
-import { DOCS_SECTIONS, getDocsSection } from "./docsManifest";
+import { formatDateTime } from "@/shared/lib/format";
+import { DOCS_SECTIONS, DOCS_SYNCED_AT_TOKEN, getDocsSection } from "./docsManifest";
 import { DocsArticle } from "./DocsArticle";
 import { DocsNav } from "./DocsNav";
 import { DocsSearch } from "./DocsSearch";
 import { navigate, slugFromPath, usePathname } from "./docsRouter";
 
+type DocsPageProps = {
+  lastSyncedAt?: string | null;
+};
+
 /**
  * In-app user guide, served at /docs and /docs/<section>. Rendered instead of
  * the map shell while the pathname is under /docs; the app's own state stays
  * in the query string, so "Back to app" restores the previous view.
+ *
+ * `lastSyncedAt` is the manifest's sync time (the same value the header shows as "Synced"); pages that name a
+ * dataset access date embed {@link DOCS_SYNCED_AT_TOKEN} and get it, formatted for the current locale, in its place.
  */
-export function DocsPage() {
-  const { t } = useI18n();
+export function DocsPage({ lastSyncedAt = null }: DocsPageProps) {
+  const { locale, t } = useI18n();
   // Applies the stored/system theme class when the guide is loaded directly.
   useTheme();
   const pathname = usePathname();
   const slug = slugFromPath(pathname);
   const section = getDocsSection(slug);
+  const syncedAtText = lastSyncedAt
+    ? t("docs.syncedAt", { date: formatDateTime(lastSyncedAt, locale) })
+    : t("docs.syncedAtUnknown");
+  const content = section.content.replaceAll(DOCS_SYNCED_AT_TOKEN, syncedAtText);
 
   const pageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement>(null);
@@ -77,7 +89,7 @@ export function DocsPage() {
           tabIndex={-1}
           className="min-w-0 flex-1 pb-16 focus:outline-none"
         >
-          <DocsArticle content={section.content} />
+          <DocsArticle content={content} />
         </main>
       </div>
     </div>

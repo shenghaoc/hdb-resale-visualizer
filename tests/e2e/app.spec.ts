@@ -41,7 +41,14 @@ test("keeps the data credits on the map, linking to the licence and to the sourc
   await expect(
     page.getByRole("heading", { level: 1, name: "Data sources and licence" }),
   ).toBeVisible();
-  await expect(page.getByText("Contains information from the datasets listed below")).toBeVisible();
+  // The access date is the manifest's sync time, printed on the page itself (the header hides it on small screens).
+  const notice = page.getByText("Contains information from the datasets listed below");
+  await expect(notice).toBeVisible();
+  await expect(notice).toContainText(
+    /accessed on .*2026.*, the date of the most recent sync, from/,
+  );
+  await expect(notice).not.toContainText("not available in this copy");
+  await expect(notice).not.toContainText("{{syncedAt}}");
   await expect(
     page.getByRole("link", { name: "Singapore Open Data Licence version 1.0" }).first(),
   ).toHaveAttribute("href", "https://data.gov.sg/open-data-licence");
