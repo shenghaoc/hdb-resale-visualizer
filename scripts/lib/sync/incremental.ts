@@ -17,9 +17,12 @@ export const TRANSACTION_COLUMNS = [
   "flat_model",
 ] as const;
 export type StoredTransaction = TransactionRow & { id: number };
+export const TRANSACTION_DELETE_SQL = "DELETE FROM transactions WHERE id = ?";
 export type TransactionDelta = {
   inserts: StoredTransaction[];
   updates: StoredTransaction[];
+  /** Only the reviewed Neon reconciliation sets this; the exact D1 planner never deletes a fact. */
+  deletes?: StoredTransaction[];
   affectedBlocks: Set<string>;
   affectedTownTypes: Set<string>;
 };
@@ -124,6 +127,9 @@ export async function readTransactionSnapshot(db: D1Client): Promise<StoredTrans
 export function transactionStatements(delta: TransactionDelta): D1Statement[] {
   const statements: D1Statement[] = [];
   const columns = ["id", ...TRANSACTION_COLUMNS];
+  // One statement per reviewed removal, so publication can require exactly one affected row each.
+  for (const row of delta.deletes ?? [])
+    statements.push({ sql: TRANSACTION_DELETE_SQL, params: [row.id] });
   statements.push(
     ...jsonInsertStatements(
       "transactions",

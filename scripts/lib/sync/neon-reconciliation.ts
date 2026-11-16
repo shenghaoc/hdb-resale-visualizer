@@ -41,6 +41,17 @@ const retentionSchema = z
     possibleReplacementTuples: z.array(factSchema).max(10),
   })
   .strict();
+/** Most stored occurrences one review may delete, and most absent IDs an allowance may pin. */
+export const MAX_REVIEWED_REMOVALS = 25;
+// A removal deletes one stored occurrence that is absent from the reviewed source.
+const removalSchema = z
+  .object({
+    id: z.number().int().positive().safe(),
+    fact: factSchema,
+    disposition: z.literal("remove-absent-upstream"),
+    evidence: z.string().min(1),
+  })
+  .strict();
 const growthSchema = z
   .object({
     scopeDatasetId: z.literal("d_8b84c4ee58e3cfc0ece0d773c8ca6abc"),
@@ -62,7 +73,7 @@ const oneTimeAllowanceSchema = z
     baselineScopedRows: z.number().int().positive().safe(),
     incomingScopedRows: z.number().int().positive().safe(),
     exactInserts: z.number().int().positive().max(5000),
-    exactMissingIds: z.array(z.number().int().positive().safe()).max(5),
+    exactMissingIds: z.array(z.number().int().positive().safe()).max(5 + MAX_REVIEWED_REMOVALS),
     maxElapsedDays: z.number().positive().max(62),
     rationale: z.string().min(1),
   })
@@ -79,8 +90,9 @@ export const neonReconciliationReviewSchema = z
     maxNewRetentions: z.number().int().min(0).max(5),
     maxOutstandingRetentions: z.number().int().min(0).max(5),
     maxCorrections: z.literal(0),
-    maxRemovals: z.literal(0),
+    maxRemovals: z.number().int().min(0).max(MAX_REVIEWED_REMOVALS),
     retentions: z.array(retentionSchema).max(5),
+    removals: z.array(removalSchema).max(MAX_REVIEWED_REMOVALS).optional(),
     growth: growthSchema,
     oneTimeAllowance: oneTimeAllowanceSchema.optional(),
   })
@@ -94,6 +106,13 @@ export function requireApprovedNeonReview(value: unknown): NeonReconciliationRev
     );
   if (new Set(review.retentions.map((entry) => entry.id)).size !== review.retentions.length)
     throw new Error("Duplicate retention review row IDs");
+  const removalIds = (review.removals ?? []).map((entry) => entry.id);
+  if (new Set(removalIds).size !== removalIds.length)
+    throw new Error("Duplicate removal review row IDs");
+  if (removalIds.length > review.maxRemovals)
+    throw new Error("Reviewed removals exceed the review's own maxRemovals");
+  if (review.retentions.some((entry) => removalIds.includes(entry.id)))
+    throw new Error("A row ID cannot be both retained and removed by one review");
   return review;
 }
 
@@ -132,10 +151,20 @@ const sourceCheckpointSchema = z
     scopedSourceFactsSHA256: digestSchema,
   })
   .strict();
+// The record of a deleted occurrence. Its row is gone, so nothing later rewrites it.
+const removedRecordSchema = removalSchema
+  .extend({
+    removedAt: z.iso.datetime(),
+    decisionReference: z.string().min(1),
+    sourceFactsSHA256: digestSchema,
+    previouslyRetained: z.boolean(),
+  })
+  .strict();
 export const neonReconciliationStateSchema = z
   .object({
     version: z.literal(1),
     entries: z.array(ledgerEntrySchema),
+    removed: z.array(removedRecordSchema).max(500).optional(),
     acceptedSource: sourceCheckpointSchema,
     appliedOneTimeAllowance: oneTimeAllowanceSchema.optional(),
   })
@@ -220,7 +249,9 @@ export function checkCadenceGrowth(input: {
  * Retention adds only the approved absent occurrences to the effective source.
  * Every stored occurrence, including previously retained ones, consumes real incoming
  * multiplicity FIRST. Reappearance cannot insert a second copy of a retained row.
- * No corrections or removals are inferred or executable through this policy.
+ * No correction is inferred or executable through this policy, and no removal is inferred: a row is deleted
+ * only when the review names it with its exact tuple, it is absent from the source, and the source and the
+ * baseline are exactly the reviewed ones.
  */
 export function planNeonReconciliation(input: {
   previous: StoredTransaction[];
@@ -246,6 +277,12 @@ export function planNeonReconciliation(input: {
   const ledgerById = new Map(prior?.entries.map((entry) => [entry.id, entry]) ?? []);
   if (ledgerById.size !== (prior?.entries.length ?? 0))
     throw new Error("Duplicate durable ledger row IDs");
+  const removedBefore = new Map(prior?.removed?.map((record) => [record.id, record]) ?? []);
+  if (removedBefore.size !== (prior?.removed?.length ?? 0))
+    throw new Error("Duplicate durable removal record IDs");
+  for (const id of removedBefore.keys())
+    if (rowsById.has(id) || ledgerById.has(id))
+      throw new Error("A removed occurrence's integer row ID is stored or retained again");
   for (const entry of ledgerById.values()) {
     const stored = rowsById.get(entry.id);
     if (!stored || transactionTuple(stored) !== transactionTuple(entry.fact))
@@ -272,6 +309,7 @@ export function planNeonReconciliation(input: {
     if (count) counts.set(key, count - 1);
     else missing.push(row);
   }
+  const missingIds = new Set(missing.map((row) => row.id));
   const newlyMissing = missing.filter((row) => !ledgerById.has(row.id));
   const reject = (message: string): never => {
     throw new NeonReconciliationPolicyError(message, {
@@ -280,13 +318,48 @@ export function planNeonReconciliation(input: {
       newlyMissingIds: newlyMissing.map((row) => row.id),
     });
   };
+  // Reviewed removals. A row qualifies only while it is stored with the exact reviewed tuple and absent from the
+  // source, so a fact that is present upstream is never deleted.
+  const removalDecisions = new Map<
+    number,
+    NonNullable<NeonReconciliationReview["removals"]>[number]
+  >();
+  for (const decision of review.removals ?? []) {
+    const done = removedBefore.get(decision.id);
+    if (done) {
+      // Applied by an earlier publication; replaying the same review changes nothing.
+      if (transactionTuple(done.fact) !== transactionTuple(decision.fact))
+        reject("Reviewed removal names a row ID that was removed with a different tuple");
+      continue;
+    }
+    const row = rowsById.get(decision.id);
+    if (!row || transactionTuple(row) !== transactionTuple(decision.fact))
+      reject("Reviewed removal lacks a stored occurrence with the exact tuple");
+    if (!missingIds.has(decision.id))
+      reject("Reviewed removal refused: the occurrence is present in the source");
+    if (
+      digest !== review.initialSourceFactsSHA256 ||
+      neonManifestSHA256(manifest) !== review.initialBaselineManifestSHA256
+    )
+      reject("Reviewed removal lacks exact reviewed source/baseline evidence");
+    removalDecisions.set(decision.id, decision);
+  }
+  if (removalDecisions.size > review.maxRemovals) reject("Reviewed removal guard exceeded");
+  const removed = missing.filter((row) => removalDecisions.has(row.id));
+  const retained = missing.filter((row) => !removalDecisions.has(row.id));
+  const kept = removed.length ? previous.filter((row) => !removalDecisions.has(row.id)) : previous;
+  // New rows take IDs above the highest kept one, so a removed ID below it is never bound to another fact.
+  const highestKeptId = kept.reduce((max, row) => Math.max(max, row.id), 0);
+  if (removed.some((row) => row.id > highestKeptId))
+    reject("Reviewed removal of the newest stored row would let its ID be reused");
+  const newlyRetained = newlyMissing.filter((row) => !removalDecisions.has(row.id));
   if (
-    newlyMissing.length > review.maxNewRetentions ||
-    missing.length > review.maxOutstandingRetentions
+    newlyRetained.length > review.maxNewRetentions ||
+    retained.length > review.maxOutstandingRetentions
   )
     reject("Independent disappearance/retention guard exceeded; no deletion or widening allowed");
   const decisions = new Map(review.retentions.map((entry) => [entry.id, entry]));
-  for (const row of newlyMissing) {
+  for (const row of newlyRetained) {
     const decision = decisions.get(row.id);
     if (
       !decision ||
@@ -306,7 +379,16 @@ export function planNeonReconciliation(input: {
       possibleReplacementRowIds: [],
     });
   }
-  const missingIds = new Set(missing.map((row) => row.id));
+  const removedRecords = removed.map((row) => {
+    const decision = removalDecisions.get(row.id)!;
+    return {
+      ...decision,
+      removedAt: capturedAtUTC,
+      decisionReference: review.decisionReference,
+      sourceFactsSHA256: digest,
+      previouslyRetained: ledgerById.delete(row.id),
+    };
+  });
   const reappeared = Array.from(ledgerById.values())
     .filter((entry) => entry.status === "unresolved-retained" && !missingIds.has(entry.id))
     .map((entry) => entry.id);
@@ -379,7 +461,10 @@ export function planNeonReconciliation(input: {
     const elapsedDays = (Date.parse(capturedAtUTC) - Date.parse(baselineCapturedAtUTC)) / DAY_MS;
     if (
       !allowance ||
-      prior?.appliedOneTimeAllowance ||
+      // Each allowance is pinned to one exact baseline and source, so it can be applied once. A later review may
+      // carry a new one; the allowance already recorded is never accepted again.
+      (prior?.appliedOneTimeAllowance &&
+        canonicalJson(prior.appliedOneTimeAllowance) === canonicalJson(allowance)) ||
       input.intent !== "manual" ||
       !Number.isFinite(elapsedDays) ||
       elapsedDays < 0 ||
@@ -413,17 +498,25 @@ export function planNeonReconciliation(input: {
     };
     appliedAllowance = allowance;
   }
-  // Missing facts are preserved at their existing row IDs, never transaction inserts.
-  const delta = planTransactionDelta(previous, [...incoming, ...missing], {
+  // Retained facts are preserved at their existing row IDs, never transaction inserts. Removed rows leave the
+  // baseline before planning, so they are neither matched nor re-inserted.
+  const delta = planTransactionDelta(kept, [...incoming, ...retained], {
     maxChangedRows: growth.allowedInsertions,
   });
   if (delta.updates.length)
     throw new Error("Independent correction guard permits zero inferred updates");
+  if (removed.length) {
+    delta.deletes = removed;
+    for (const row of removed) {
+      delta.affectedBlocks.add(row.address_key);
+      delta.affectedTownTypes.add(JSON.stringify([row.town, row.flat_type]));
+    }
+  }
   const wantedCandidates = new Set(
     entries.flatMap((entry) => entry.possibleReplacementTuples.map(transactionTuple)),
   );
   const candidatesByTuple = new Map<string, number[]>();
-  for (const collection of [previous, delta.inserts])
+  for (const collection of [kept, delta.inserts])
     for (const row of collection) {
       const tuple = transactionTuple(row),
         ids = candidatesByTuple.get(tuple) ?? [];
@@ -445,18 +538,22 @@ export function planNeonReconciliation(input: {
       factsSHA256: digest,
       sourceFactRows: incoming.length,
       sourceNormalizedRows: input.sourceNormalizedRows ?? incoming.length,
-      storedFactRows: previous.length + delta.inserts.length,
-      outstandingRetainedOccurrences: missing.length,
+      storedFactRows: kept.length + delta.inserts.length,
+      outstandingRetainedOccurrences: retained.length,
       csvs: input.csvs ?? [],
       scopedSourceRows: incomingScopedRows.length,
       scopedSourceFactsSHA256: sourceFactsSHA256(incomingScopedRows),
     },
+    ...(prior?.removed || removedRecords.length
+      ? { removed: [...(prior?.removed ?? []), ...removedRecords] }
+      : {}),
     ...(appliedAllowance ? { appliedOneTimeAllowance: appliedAllowance } : {}),
   };
   // Exact replay preserves ledger/checkpoint bytes; bookkeeping never fabricates another observation.
   if (
     prior?.acceptedSource.factsSHA256 === digest &&
     !delta.inserts.length &&
+    !removed.length &&
     canonicalJson(prior.entries) === canonicalJson(finalEntries) &&
     canonicalJson(prior.acceptedSource.csvs) === canonicalJson(state.acceptedSource.csvs) &&
     prior.acceptedSource.sourceNormalizedRows === state.acceptedSource.sourceNormalizedRows &&
@@ -470,14 +567,16 @@ export function planNeonReconciliation(input: {
     throw new Error("Durable discrepancy state exceeds bounded manifest value");
   return {
     delta,
-    missing,
-    newlyMissingIds: newlyMissing.map((row) => row.id),
+    /** Absent occurrences kept in the effective source; reviewed removals are not among them. */
+    missing: retained,
+    newlyMissingIds: newlyRetained.map((row) => row.id),
     reappearedIds: reappeared,
+    removedIds: removed.map((row) => row.id),
     state,
     growth,
     sourceFacts: incoming.length,
     storedFacts: state.acceptedSource.storedFactRows,
-    retainedOccurrences: missing.length,
+    retainedOccurrences: retained.length,
   };
 }
 
@@ -488,7 +587,13 @@ export function assignNeonTransactionIds(
   plan: ReturnType<typeof planNeonReconciliation>,
   sourceLength: number,
 ): void {
-  assignStableTransactionIds(effective, stored, plan.delta, toTransactionRow);
+  const removedIds = new Set(plan.delta.deletes?.map((row) => row.id));
+  assignStableTransactionIds(
+    effective,
+    removedIds.size ? stored.filter((row) => !removedIds.has(row.id)) : stored,
+    plan.delta,
+    toTransactionRow,
+  );
   if (effective.length !== sourceLength + plan.missing.length)
     throw new Error("Retained source occurrence boundary mismatch");
   const retained = effective.slice(sourceLength);
