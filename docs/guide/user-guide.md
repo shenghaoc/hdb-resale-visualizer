@@ -2,7 +2,7 @@
 
 HDB Resale Explorer is a free, buyer-first HDB due-diligence tool for Singapore resale transactions. It pulls official data from data.gov.sg and presents it on an interactive map so you can compare blocks, evaluate asking prices, and shortlist properties — all without creating an account.
 
-> **In-app user guide:** this guide also ships inside the app. On mobile, tap the **?** button in the header; on desktop, use **User guide** in the primary tab bar. You can also open `/docs` directly to browse the same material with section navigation and local search — no need to leave the app. Sections live at `/docs/getting-started`, `/docs/understanding-price-comparisons`, `/docs/filters-and-map`, `/docs/shortlisting`, `/docs/faq`, and `/docs/troubleshooting` (content source: `src/features/docs/content/`).
+> **In-app user guide:** this guide also ships inside the app. On mobile, tap the **?** button in the header; on desktop, use **User guide** in the primary tab bar. You can also open `/docs` directly to browse the same material with section navigation and local search — no need to leave the app. Sections live at `/docs/getting-started`, `/docs/understanding-price-comparisons`, `/docs/filters-and-map`, `/docs/shortlisting`, `/docs/faq`, `/docs/data-sources`, and `/docs/troubleshooting` (content source: `src/features/docs/content/`).
 
 ## Getting started
 
@@ -99,7 +99,7 @@ Click a block dot on the map (or a row in the Results list) to open the **detail
 
 Use **View nearby MRT exits** inside the block detail's **Connectivity** section when the optional spatial database feature has been explicitly enabled and the block has MRT connectivity information. The control is hidden when the backend does not support this feature; the existing walking-time evidence remains visible. Open the control to look for exits within a **1.5 km straight-line radius**. PostgreSQL considers **all matching exits**, keeps the nearest exit for each station name recorded in the official source data, and only then applies the fixed **25-entry result limit**. The app displays up to **five closest entries**, each with its exit code and distance. Each source-recorded station name appears once, but the list is **not guaranteed to be one entry per physical station**: a few official records label a station by its station code (for example `DT18`) instead of its name, so such a station can appear under both its code and its name, and a few stations appear only under a code.
 
-These PostGIS distances are measured along the Earth's surface from an approximately **0.0001°-snapped** search centre and are **not walking distances or walking times**. Road/path routing, station access and building entrances can make a walking journey longer. The existing nearest-MRT walking-time estimate is a separate cached routing result and has not been replaced. If no exits match, the control explains that; a temporary lookup failure offers a retry instead of claiming there are no exits.
+These PostGIS distances are measured along the Earth's surface from an approximately **0.0001°-snapped** search centre and are **not walking distances or walking times**. Road/path routing, station access and building entrances can make a walking journey longer. The existing nearest-MRT walking time is a separate value and has not been replaced: a cached OneMap route where one is available, otherwise a straight-line estimate at a conservative walking pace (about 75 m per minute). If no exits match, the control explains that; a temporary lookup failure offers a retry instead of claiming there are no exits.
 
 Use the **bookmark icon** to save the block. Saved comparisons are block-level, so their prices are explicitly labelled as block-wide medians rather than inheriting a temporary flat-type filter.
 
@@ -252,7 +252,8 @@ The profile never acts as a second hidden visibility filter, and personal financ
 
 ## Data and privacy
 
-- All transaction data comes from [data.gov.sg](https://data.gov.sg). The header shows the latest month in this copy; the live dataset is not refreshed on a nightly schedule. HDB publication can also lag the actual sale by weeks.
+- All transaction data comes from [data.gov.sg](https://data.gov.sg), made available under the [Singapore Open Data Licence version 1.0](https://data.gov.sg/open-data-licence). The header shows the latest month in this copy; the live dataset is not refreshed on a nightly schedule. HDB publication can also lag the actual sale by weeks.
+- **Credit and licence.** Whenever the map is on screen, a short credit at its lower right shows "© OneMap contributors", "Data from data.gov.sg under the Singapore Open Data Licence v1.0" (a link to the licence) and a **Data sources** link. That link opens the guide page [Data sources and licence](../../src/features/docs/content/data-sources.md) (in the app: `/docs/data-sources`), which lists every dataset the app uses, who publishes it, and the full notice with the access date (when this copy last downloaded the data from data.gov.sg). The app is an independent tool: none of the agencies endorses it.
 - Map tiles and geocoding use [OneMap](https://www.onemap.gov.sg).
 - No account is required. Your filters, theme preference, buyer profile, and shortlist are stored in your browser's local storage.
 - Cloud sync (optional) uses an anonymous code — no account, email, or password. It uploads the saved board, including any notes you entered, so treat the code like a private link. Local buyer-profile finance inputs are not synced.
