@@ -162,3 +162,7 @@ public/api/
 data/cache/
 .impeccable/
 .vitest/
+
+# Neon publisher scratch state: role credentials and private benchmark inputs live here. Never commit.
+.neon-benchmark/
+.neon
