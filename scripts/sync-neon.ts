@@ -244,9 +244,9 @@ export async function runSyncNeon(
     throw new Error(
       "Authoritative captured Console usage receipt required before the expensive Neon run",
     );
-  const usageBefore: unknown = JSON.parse(readFileSync(options.usageBefore, "utf8"));
+  const usageReceiptAtStart: unknown = JSON.parse(readFileSync(options.usageBefore, "utf8"));
   const budgetOptions = { servingHyperdriveId: deps.servingHyperdriveId };
-  checkNeonPilotBudget(usageBefore, deps.now(), budgetOptions);
+  const initialBudget = checkNeonPilotBudget(usageReceiptAtStart, deps.now(), budgetOptions);
   const url = validateNeonRefreshUrl(
     options.connectionFile
       ? readFileSync(options.connectionFile, "utf8").trim()
@@ -316,8 +316,19 @@ export async function runSyncNeon(
   const mrtExits = normalizeMrtFeatures(mrtGeoJson);
   if (!mrtGeoJson.features.length || mrtExits.length !== mrtGeoJson.features.length)
     throw new Error("Partial or invalid MRT source rejected");
-  // Upstream downloading can be slow; do not wake compute with an expired provider baseline.
-  const budget = checkNeonPilotBudget(usageBefore, deps.now(), budgetOptions);
+  // Upstream downloading can be slow. Reopen the operator's receipt file before waking compute.
+  const usageReceiptBeforeConnect: unknown = JSON.parse(readFileSync(options.usageBefore, "utf8"));
+  const budget = checkNeonPilotBudget(usageReceiptBeforeConnect, deps.now(), budgetOptions);
+  if (
+    budget.usage.projectId !== initialBudget.usage.projectId ||
+    Date.parse(budget.usage.periodStart) !== Date.parse(initialBudget.usage.periodStart)
+  )
+    throw new Error("Neon replacement usage receipt changes the project or allowance period");
+  if (
+    budget.usage.networkTransferBytes < initialBudget.usage.networkTransferBytes ||
+    budget.usage.computeCUHours < initialBudget.usage.computeCUHours
+  )
+    throw new Error("Neon replacement usage receipt lowers a provider meter");
   const client = deps.createClient(url);
   const connected = performance.now();
   await client.connect();
@@ -377,6 +388,8 @@ export async function runSyncNeon(
     mode: options.mode,
     dataProvenance: "fresh official upstream; full exact multiset reconciliation",
     connectionMs,
+    usageReceiptAtStart,
+    usageReceiptBeforeConnect,
     budgetBefore: budget,
     sideEffects: {
       database:
