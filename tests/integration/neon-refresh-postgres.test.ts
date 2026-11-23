@@ -98,10 +98,14 @@ describe.skipIf(!LOCAL)("refresh on a real PostgreSQL server", { timeout: 120_00
     const dir = mkdtempSync(path.join(tmpdir(), "neon-refresh-pg-"));
     writeFileSync(path.join(dir, "usage.json"), JSON.stringify(settledReceipt(clock)));
     const events: SqlEvent[] = [];
-    const client = new pg.Client({ connectionString: url, keepAlive: true });
-    sessions.push(client);
+    // One client per session of the run: the refresh disconnects for preparation and connects again to plan.
+    const open = () => {
+      const client = new pg.Client({ connectionString: url, keepAlive: true });
+      sessions.push(client);
+      return client;
+    };
     const harness = refreshDependencies({
-      client: pgSession(client, events, clock, hooks),
+      client: pgSession(open, events, clock, hooks),
       clock,
       rows,
       oneMap: { token: "fixture-token", realDelayMs: SLOW_MS },
