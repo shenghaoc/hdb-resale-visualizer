@@ -51,7 +51,13 @@ afterEach(() => {
     rmSync(directory, { recursive: true, force: true });
 });
 
-async function attempt(sources: Sources = {}, mode: "--plan" | "--apply" = "--apply") {
+type Receipt = ReturnType<typeof settledReceipt>;
+
+async function attempt(
+  sources: Sources = {},
+  mode: "--plan" | "--apply" = "--apply",
+  duringCapture?: (clock: FakeClock, original: Receipt) => Receipt | undefined,
+) {
   const db = await createRefreshDatabase();
   const rows = resaleRows(20);
   await seedBaseline(db, addressKeys(rows));
@@ -60,7 +66,8 @@ async function attempt(sources: Sources = {}, mode: "--plan" | "--apply" = "--ap
   directories.push(directory);
   const usage = path.join(directory, "usage.json");
   const report = path.join(directory, "report.json");
-  writeFileSync(usage, JSON.stringify(settledReceipt(clock)));
+  const original = settledReceipt(clock);
+  writeFileSync(usage, JSON.stringify(original));
   const events: SqlEvent[] = [];
   const harness = refreshDependencies({
     client: pgliteSession(db, clock, events),
@@ -69,6 +76,18 @@ async function attempt(sources: Sources = {}, mode: "--plan" | "--apply" = "--ap
     ...sources,
   });
   const createClient = vi.fn(harness.deps.createClient!);
+  const fetchCsvRows = harness.deps.fetchCsvRows!;
+  let replacement: Receipt | undefined;
+  let capturing = true;
+  harness.deps.fetchCsvRows = async (...args) => {
+    const rows = await fetchCsvRows(...args);
+    if (capturing && duringCapture) {
+      capturing = false;
+      replacement = duringCapture(clock, original);
+      if (replacement) writeFileSync(usage, JSON.stringify(replacement));
+    }
+    return rows;
+  };
   vi.stubGlobal("fetch", harness.fetch);
   const before = { counts: await tableCounts(db), manifest: await manifestState(db) };
   let error: unknown;
@@ -95,8 +114,12 @@ async function attempt(sources: Sources = {}, mode: "--plan" | "--apply" = "--ap
     expect(await manifestState(db)).toEqual(before.manifest);
   };
   const receipt = () =>
-    JSON.parse(readFileSync(report, "utf8")) as { unresolved: Record<string, number> };
-  return { error, events, createClient, untouched, receipt };
+    JSON.parse(readFileSync(report, "utf8")) as {
+      unresolved: Record<string, number>;
+      usageReceiptAtStart: Receipt;
+      usageReceiptBeforeConnect: Receipt;
+    };
+  return { error, events, createClient, untouched, receipt, original, replacement };
 }
 
 const message = (error: unknown) => (error instanceof Error ? error.message : String(error));
@@ -244,4 +267,44 @@ describe("amenity datasets", () => {
     expect(result.error).toBeUndefined();
     expect(result.receipt().unresolved.amenitiesWithoutCoordinates).toBe(3);
   });
+});
+
+describe("usage receipt after source capture", () => {
+  it("accepts a fresh replacement after the original expires and reports both receipts", async () => {
+    const result = await attempt({}, "--plan", (clock, original) => {
+      clock.advance(21 * 60 * 1000);
+      return {
+        ...settledReceipt(clock),
+        networkTransferBytes: original.networkTransferBytes + 1,
+        computeCUHours: original.computeCUHours + 1,
+      };
+    });
+    expect(result.error).toBeUndefined();
+    expect(result.receipt().usageReceiptAtStart).toEqual(result.original);
+    expect(result.receipt().usageReceiptBeforeConnect).toEqual(result.replacement);
+    await result.untouched();
+  });
+
+  it("rejects an unchanged receipt past 20 minutes before opening a database connection", async () => {
+    const result = await attempt({}, "--plan", (clock) => {
+      clock.advance(21 * 60 * 1000);
+      return undefined;
+    });
+    expect(message(result.error)).toBe(
+      "Neon baseline usage is stale, unsettled or outside the allowance period",
+    );
+    expect(result.createClient).not.toHaveBeenCalled();
+  });
+
+  it.each(["networkTransferBytes", "computeCUHours"] as const)(
+    "rejects a fresh replacement with lower %s before opening a database connection",
+    async (meter) => {
+      const result = await attempt({}, "--plan", (clock, original) => {
+        clock.advance(60 * 1000);
+        return { ...settledReceipt(clock), [meter]: original[meter] - 1 };
+      });
+      expect(message(result.error)).toBe("Neon replacement usage receipt lowers a provider meter");
+      expect(result.createClient).not.toHaveBeenCalled();
+    },
+  );
 });
