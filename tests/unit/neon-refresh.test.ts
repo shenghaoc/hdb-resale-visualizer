@@ -417,9 +417,9 @@ describe("provider baseline gate", () => {
     expect(checkNeonPilotBudget(unknown, now)).toMatchObject({
       pendingTransferReserve: 1_000_000_000,
       pendingComputeReserve: 10,
-      remainingAfterPilotAndReserve: 1_896_292_076,
+      remainingAfterPilotAndReserve: 908_876_228,
       servingEndpointId: "ep-steep-water-b300tebo",
-      servingRunWindowComputeReserve: 25 / 60,
+      servingRunWindowComputeReserve: 3 * (25 / 60),
     });
     expect(() => checkNeonPilotBudget({ ...unknown, knownActivity: undefined }, now)).toThrow();
     expect(() =>
