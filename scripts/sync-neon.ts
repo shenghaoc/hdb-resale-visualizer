@@ -487,6 +487,7 @@ export async function runSyncNeon(
         retainedOccurrences: reconciled.retainedOccurrences,
         newlyMissingIds: reconciled.newlyMissingIds,
         reappearedIds: reconciled.reappearedIds,
+        removedIds: reconciled.removedIds,
         growth: reconciled.growth,
         ledger: reconciled.state,
       };
@@ -629,7 +630,7 @@ export async function runSyncNeon(
     evidence.delta = {
       inserts: delta.inserts.length,
       updates: delta.updates.length,
-      deletes: 0,
+      deletes: delta.deletes?.length ?? 0,
       affectedBlocks: delta.affectedBlocks.size,
       affectedTownTypes: delta.affectedTownTypes.size,
     };

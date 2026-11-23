@@ -1,8 +1,11 @@
 // Thin benchmark adapter for the existing artifact compiler's finite SQL forms.
 // It rejects unknown shapes; it is not a replacement runtime or general SQL translator.
 import type { D1Statement } from "./d1";
+import { TRANSACTION_DELETE_SQL } from "./incremental";
 export function translate(statement: D1Statement, types: Record<string, string>): D1Statement {
   const sql = statement.sql;
+  if (sql === TRANSACTION_DELETE_SQL)
+    return { sql: "DELETE FROM transactions WHERE id = $1", params: statement.params };
   const table = sql.match(/^(?:INSERT(?: OR REPLACE)? INTO|UPDATE) ([a-z_]+)/)?.[1];
   const cast = (column: string, expression: string) =>
     `${expression}::${
