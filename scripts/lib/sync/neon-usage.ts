@@ -10,6 +10,9 @@ import { neonEndpointIdFromHost, readServingHyperdriveId } from "./serving-confi
 // Reserved, not claimed consumed. Covers meter lag and small unrelated/control activity.
 export const UNKNOWN_USAGE_TRANSFER_RESERVE_BYTES = 1_000_000_000;
 export const UNKNOWN_USAGE_COMPUTE_RESERVE_CU_HOURS = 10;
+/** Plan, apply, and one verification/replay run. */
+const UNKNOWN_USAGE_RECONCILIATION_RUNS = 3;
+const NEON_MONTHLY_COMPUTE_LIMIT_CU_HOURS = 100;
 /** The bounded run window: the 20-minute run deadline plus Neon's 5-minute suspend tail. */
 export const RUN_WINDOW_HOURS = 25 / 60;
 /** Receipts and the serving origin must be observed within this long before the run checks them. */
@@ -44,7 +47,7 @@ const servingOriginSchema = z
 export const neonUsageReceiptSchema = z
   .object({
     projectId: z.literal(NEON_REFRESH_PROJECT),
-    source: z.literal("neon-console"),
+    source: z.enum(["neon-console", "neon-api"]),
     networkScope: z.enum(["public-only", "all-network-upper-bounds-public"]),
     periodStart: z.iso.datetime(),
     periodEnd: z.iso.datetime(),
@@ -59,7 +62,7 @@ export const neonUsageReceiptSchema = z
     knownActivity: z
       .object({
         observedAt: z.iso.datetime(),
-        priorMeasuredReceivedBytes: z.number().positive().safe(),
+        priorMeasuredReceivedBytes: z.number().nonnegative().safe().optional(),
         /** The operator lists every compute endpoint in the project, not a chosen subset. */
         endpointInventory: z.literal("complete"),
         endpoints: z.array(endpointActivitySchema).min(2),
@@ -69,7 +72,13 @@ export const neonUsageReceiptSchema = z
     additionalKnownTransferUpperBytes: z.number().nonnegative().safe().default(0),
     additionalKnownComputeUpperCUHours: z.number().nonnegative().default(0),
   })
-  .strict();
+  .strict()
+  .refine(
+    (usage) =>
+      usage.source === "neon-console" ||
+      (usage.usageAsOf === "UNKNOWN" && usage.settledThrough === null),
+    { message: "Neon API usage requires explicit UNKNOWN as-of and null settledThrough" },
+  );
 
 type NeonUsageReceipt = z.infer<typeof neonUsageReceiptSchema>;
 
@@ -79,7 +88,7 @@ function isFreshObservation(observedAt: string, now: number): boolean {
 }
 
 /**
- * Unsettled ("UNKNOWN as-of") Console totals are only usable with bounded evidence for every endpoint that could
+ * Unsettled ("UNKNOWN as-of") usage totals are only usable with bounded evidence for every endpoint that could
  * still be consuming. Returns the serving endpoint and the compute it may add during this run's window.
  */
 function checkUnsettledActivity(
@@ -88,16 +97,13 @@ function checkUnsettledActivity(
   servingHyperdriveId: string,
 ): { servingEndpointId: string; servingRunWindowComputeCUHours: number } {
   const activity = usage.knownActivity;
+  if (usage.settledThrough !== null || !activity || !isFreshObservation(activity.observedAt, now))
+    throw new Error("Unknown usage as-of requires bounded known lifecycle evidence");
   if (
-    usage.settledThrough !== null ||
-    !activity ||
-    !isFreshObservation(activity.observedAt, now) ||
-    activity.priorMeasuredReceivedBytes < ESTIMATED_RECONCILIATION_BYTES ||
-    usage.networkTransferBytes + usage.transferResolutionBytes < activity.priorMeasuredReceivedBytes
+    usage.networkTransferBytes + usage.transferResolutionBytes <
+    (activity.priorMeasuredReceivedBytes ?? 0)
   )
-    throw new Error(
-      "Unknown usage as-of requires calibrated Console totals and bounded known lifecycle evidence",
-    );
+    throw new Error("Neon usage and resolution do not cover the measured prior-run transfer");
   const origin = usage.servingOrigin;
   if (!origin)
     throw new Error(
@@ -191,10 +197,12 @@ export function checkNeonPilotBudget(
     usage.networkTransferBytes === 0 ||
     (usage.computeCUHours === 0 && usage.computeResolutionCUHours === 0)
   )
-    throw new Error("Uncalibrated zero Neon usage; authoritative Console readings required");
+    throw new Error("Uncalibrated zero Neon usage; authoritative nonzero readings required");
   const pendingTransferReserve = unknownAsOf ? UNKNOWN_USAGE_TRANSFER_RESERVE_BYTES : 0;
   const pendingComputeReserve = unknownAsOf ? UNKNOWN_USAGE_COMPUTE_RESERVE_CU_HOURS : 0;
-  const servingRunWindowComputeReserve = serving?.servingRunWindowComputeCUHours ?? 0;
+  const reconciliationRuns = unknownAsOf ? UNKNOWN_USAGE_RECONCILIATION_RUNS : 1;
+  const servingRunWindowComputeReserve =
+    (serving?.servingRunWindowComputeCUHours ?? 0) * reconciliationRuns;
   const transferUpper =
     usage.networkTransferBytes +
     usage.transferResolutionBytes +
@@ -202,18 +210,18 @@ export function checkNeonPilotBudget(
   const remainingAfterPilotAndReserve =
     NEON_MONTHLY_TRANSFER_LIMIT_BYTES -
     transferUpper -
-    ESTIMATED_RECONCILIATION_BYTES -
+    ESTIMATED_RECONCILIATION_BYTES * reconciliationRuns -
     pendingTransferReserve -
     PROPOSED_TRANSFER_RESERVE_BYTES;
-  // The bounded pilot permits at most 20 minutes + 5-minute idle tail at endpoint max 1 CU.
+  // Each run permits at most 20 minutes plus a 5-minute idle tail at benchmark max 1 CU.
   const computeUpper =
     usage.computeCUHours +
     usage.computeResolutionCUHours +
     usage.additionalKnownComputeUpperCUHours +
     pendingComputeReserve +
     servingRunWindowComputeReserve +
-    RUN_WINDOW_HOURS;
-  if (remainingAfterPilotAndReserve < 0 || computeUpper > 100)
+    RUN_WINDOW_HOURS * reconciliationRuns;
+  if (remainingAfterPilotAndReserve < 0 || computeUpper > NEON_MONTHLY_COMPUTE_LIMIT_CU_HOURS)
     throw new Error("Insufficient measured Free headroom for the bounded Neon pilot");
   return {
     usage,
@@ -225,6 +233,6 @@ export function checkNeonPilotBudget(
     totalComputeUpperAfterPilot: computeUpper,
     maxPilotComputeCUHours: RUN_WINDOW_HOURS,
     limitation:
-      "Unknown Console as-of is preserved; pending reserves are planning allowances, not measured consumption or a guaranteed lag bound. The serving endpoint is resolved from the Hyperdrive origin captured with the receipt and checked against wrangler.jsonc; the run cannot query Cloudflare itself. Known isolated activity and one bounded pilot only; no monthly/runtime certification.",
+      "Unknown usage as-of is preserved; pending reserves are planning allowances, not measured consumption or a guaranteed lag bound. The serving endpoint is resolved from the Hyperdrive origin captured with the receipt and checked against wrangler.jsonc; the run cannot query Cloudflare itself. Known isolated activity with a bounded reconciliation envelope only; no monthly/runtime certification.",
   };
 }
