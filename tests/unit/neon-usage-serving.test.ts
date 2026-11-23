@@ -85,14 +85,88 @@ function unsettled(overrides: Record<string, unknown> = {}, endpoints: unknown[]
 }
 
 describe("serving endpoint in unsettled usage", () => {
+  it("allows a fresh month without prior-run calibration", () => {
+    const next = "2026-11-01T00:05:00Z";
+    const receipt = unsettled();
+    const fresh = {
+      ...receipt,
+      periodStart: "2026-11-01T00:00:00Z",
+      periodEnd: "2026-12-01T00:00:00Z",
+      observedAt: next,
+      networkTransferBytes: 170_101_247,
+      computeCUHours: 2_130 / 3600,
+      servingOrigin: { ...receipt.servingOrigin, observedAt: next },
+      knownActivity: { ...receipt.knownActivity, observedAt: next, priorMeasuredReceivedBytes: 0 },
+    };
+    expect(
+      checkNeonPilotBudget(fresh, Date.parse(next)).remainingAfterPilotAndReserve,
+    ).toBeGreaterThan(0);
+  });
+
   it("resolves the serving endpoint from the Hyperdrive bound in wrangler.jsonc and reserves its run window", () => {
     expect(readServingHyperdriveId()).toBe(COMMITTED_HYPERDRIVE_ID);
     const result = checkNeonPilotBudget(unsettled(), now);
     expect(result.servingEndpointId).toBe("ep-steep-water-b300tebo");
-    expect(result.servingRunWindowComputeReserve).toBeCloseTo(serving.maxCU * RUN_WINDOW_HOURS);
+    expect(result.servingRunWindowComputeReserve).toBeCloseTo(3 * serving.maxCU * RUN_WINDOW_HOURS);
     expect(result.totalComputeUpperAfterPilot).toBeCloseTo(
-      40 + 0.01 + 10 + serving.maxCU * RUN_WINDOW_HOURS + RUN_WINDOW_HOURS,
+      40 + 0.01 + 10 + 3 * (serving.maxCU * RUN_WINDOW_HOURS + RUN_WINDOW_HOURS),
     );
+  });
+
+  it("checks exact transfer and compute ceilings with three run windows", () => {
+    const receipt = unsettled({
+      networkTransferBytes: 1_508_876_228,
+      transferResolutionBytes: 10_000_000,
+      computeCUHours: 87.5,
+      computeResolutionCUHours: 0,
+    });
+    expect(checkNeonPilotBudget(receipt, now)).toMatchObject({
+      remainingAfterPilotAndReserve: 0,
+      totalComputeUpperAfterPilot: 100,
+    });
+    expect(() =>
+      checkNeonPilotBudget(
+        { ...receipt, networkTransferBytes: receipt.networkTransferBytes + 1 },
+        now,
+      ),
+    ).toThrow("Insufficient measured Free headroom");
+    expect(() => checkNeonPilotBudget({ ...receipt, computeCUHours: 87.500001 }, now)).toThrow(
+      "Insufficient measured Free headroom",
+    );
+  });
+
+  it("allows omitted prior transfer, but requires the meter plus resolution to cover a measured prior", () => {
+    const receipt = unsettled({ networkTransferBytes: 170_101_247, transferResolutionBytes: 0 });
+    const withPrior = (priorMeasuredReceivedBytes?: number) => ({
+      ...receipt,
+      knownActivity: { ...receipt.knownActivity, priorMeasuredReceivedBytes },
+    });
+    expect(checkNeonPilotBudget(withPrior(), now).remainingAfterPilotAndReserve).toBeGreaterThan(0);
+    expect(
+      checkNeonPilotBudget(withPrior(170_101_247), now).remainingAfterPilotAndReserve,
+    ).toBeGreaterThan(0);
+    expect(() => checkNeonPilotBudget(withPrior(170_101_248), now)).toThrow(
+      "measured prior-run transfer",
+    );
+    expect(() => checkNeonPilotBudget(withPrior(-1), now)).toThrow();
+  });
+
+  it("allows API readings only as explicitly UNKNOWN with no settlement timestamp", () => {
+    const receipt = { ...unsettled(), source: "neon-api" };
+    expect(checkNeonPilotBudget(receipt, now).usage.source).toBe("neon-api");
+    for (const mismatch of [
+      { usageAsOf: undefined },
+      { usageAsOf: "REPORTED" },
+      { settledThrough: observedAt },
+    ])
+      expect(() => checkNeonPilotBudget({ ...receipt, ...mismatch }, now)).toThrow(
+        "explicit UNKNOWN",
+      );
+    for (const zero of [
+      { networkTransferBytes: 0 },
+      { computeCUHours: 0, computeResolutionCUHours: 0 },
+    ])
+      expect(() => checkNeonPilotBudget({ ...receipt, ...zero }, now)).toThrow();
   });
 
   it("regression: refuses the old inventory that listed only the benchmark and the default production branch", () => {
@@ -172,9 +246,9 @@ describe("serving endpoint in unsettled usage", () => {
   });
 
   it("the serving reserve is counted: compute that fitted without it no longer fits", () => {
-    // 89.3 + 0.01 + 10 + pilot window fits under 100 CU-hours; the serving window on top does not.
-    expect(89.3 + 0.01 + 10 + RUN_WINDOW_HOURS).toBeLessThan(100);
-    expect(() => checkNeonPilotBudget(unsettled({ computeCUHours: 89.3 }), now)).toThrow(
+    // 88 + resolution + lag reserve + three benchmark windows fits, but adding serving does not.
+    expect(88 + 0.01 + 10 + 3 * RUN_WINDOW_HOURS).toBeLessThan(100);
+    expect(() => checkNeonPilotBudget(unsettled({ computeCUHours: 88 }), now)).toThrow(
       "Insufficient measured Free headroom",
     );
   });
