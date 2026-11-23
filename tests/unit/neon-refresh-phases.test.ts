@@ -21,6 +21,7 @@ import { resetUpstreamThrottleForTests } from "../../scripts/lib/sync/rate-limit
 import {
   FakeClock,
   MUTATING_SQL,
+  SERVER_TERMINATION,
   addressKeys,
   createRefreshDatabase,
   inventory,
@@ -74,6 +75,10 @@ type Report = {
   transactionBoundaries: Record<string, unknown>;
   phasesMs: Counts;
   sideEffects: { database: string };
+  sessions?: { phase: string; receivedBytes: number | null; sentBytes: number | null }[];
+  sessionTermination?: string;
+  wireReceivedProxyBytes?: number | null;
+  error?: string;
   unresolved: Counts;
   oneMap: {
     limits: Counts;
@@ -97,6 +102,7 @@ async function scenario(
     hooks?: SessionHooks;
     onUpstream?: (db: PGlite, datasetId: string) => Promise<void> | void;
     schoolRows?: Record<string, string>[];
+    runDeadlineMs?: number;
   } = {},
 ) {
   const db = await createRefreshDatabase();
@@ -137,7 +143,10 @@ async function scenario(
     const firstEvent = events.length;
     let error: unknown;
     try {
-      await runSyncNeon(argv, harness.deps);
+      await runSyncNeon(argv, {
+        ...harness.deps,
+        ...(options.runDeadlineMs ? { runDeadlineMs: options.runDeadlineMs } : {}),
+      });
     } catch (caught) {
       error = caught;
     }
@@ -256,6 +265,140 @@ describe("transaction boundaries", () => {
     await failing.query("BEGIN");
     await expect(failing.query("COMMIT")).rejects.toThrow("connection lost");
     expect(failing.inTransaction).toBe(false);
+  });
+});
+
+describe("sessions and Neon's idle suspend", () => {
+  // Neon's Free plan suspends a compute five minutes after its last statement and ends the sessions on it.
+  const SUSPEND_AFTER_MS = 5 * MINUTE;
+  const ADVISORY_LOCK = "SELECT pg_try_advisory_lock(724921, 1) AS acquired";
+  const budgets = ["--onemap-search-budget", "5", "--onemap-routing-budget", "4"];
+
+  it("completes when preparation outlasts the suspend: it disconnects first and plans on a new session", async () => {
+    const { run, clock, db } = await scenario({
+      geocoded: (all) => all.slice(0, 3),
+      upstreamMs: 121_000,
+      oneMap: { token: "fixture-token", requestMs: 121_000 },
+      hooks: { suspendIdleMs: SUSPEND_AFTER_MS },
+    });
+    const started = clock.now;
+    const result = await run("--apply", budgets);
+    expect(result.error).toBeUndefined();
+    // Preparation alone ran far longer than the suspend timeout ...
+    expect(clock.now - started).toBeGreaterThan(4 * SUSPEND_AFTER_MS);
+    // ... and no session was open for the server to end: the run connected twice instead of holding one.
+    expect(result.client.serverTerminated()).toBe(false);
+    expect(result.client.connects()).toBe(2);
+    expect(result.receipt.success).toBe(true);
+    expect(result.receipt.sessions?.map((session) => session.phase)).toEqual([
+      "baselineSnapshot",
+      "planningAndPublication",
+    ]);
+    // Each session takes the advisory lock for itself and gives it back.
+    expect(result.events.filter((event) => event.sql === ADVISORY_LOCK)).toHaveLength(2);
+    expect(
+      result.events.filter((event) => event.sql === "SELECT pg_advisory_unlock(724921, 1)"),
+    ).toHaveLength(2);
+    // The second session's first statement after its lock is the snapshot that checks the publication version.
+    const second = result.events.slice(
+      result.events.map((event) => event.sql).lastIndexOf(ADVISORY_LOCK) + 1,
+    );
+    expect(second[0].sql).toBe("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");
+    expect(second[1].sql).toContain("json=$1::jsonb AND updated_at=$2::timestamptz");
+    // The publication ran on the second session and committed.
+    const before = await manifestState(db);
+    expect(transactions(result.events).at(-1)).toMatchObject({ begin: "BEGIN", end: "COMMIT" });
+    expect(result.receipt.changedRows.transactions).toBeGreaterThan(0);
+    expect(before.json).toContain("generatedAt");
+    // The measured transfer is the sum over both sessions.
+    const received = result.receipt.sessions!.map((session) => session.receivedBytes ?? 0);
+    expect(received.every((bytes) => bytes > 0)).toBe(true);
+    expect(result.receipt.wireReceivedProxyBytes).toBe(received[0] + received[1]);
+  });
+
+  it("refuses a publication that changed between the two sessions, on the new session", async () => {
+    let wrote = false;
+    const { run, db } = await scenario({
+      upstreamMs: 121_000,
+      hooks: { suspendIdleMs: SUSPEND_AFTER_MS },
+      onUpstream: async (handle, datasetId) => {
+        // Another writer publishes while this run is disconnected (it holds no lock then).
+        if (datasetId.startsWith("d_688b") && !wrote) {
+          wrote = true;
+          await handle.query("UPDATE manifest SET updated_at = updated_at + interval '1 second'");
+        }
+      },
+    });
+    const countsBefore = await tableCounts(db);
+    const result = await run("--apply");
+    expect(wrote).toBe(true);
+    expect(result.client.connects()).toBe(2);
+    expect(String(result.error)).toMatch("stored publication changed during preparation");
+    expect(result.receipt.outcome).toBe("stale-preparation-nothing-written");
+    expect(result.receipt.sessions).toHaveLength(2);
+    expect(result.events.filter((event) => MUTATING_SQL.test(event.sql))).toEqual([]);
+    expect(await tableCounts(db)).toEqual(countsBefore);
+  });
+
+  it("refuses to use a connection that was still opening when the run deadline passed", async () => {
+    // The run's deadline timer is captured instead of scheduled, and fired while the second connection opens.
+    const RUN_DEADLINE_MS = 1_234_567;
+    const deadline: { fire?: () => void } = {};
+    const realSetTimeout = globalThis.setTimeout;
+    vi.spyOn(globalThis, "setTimeout").mockImplementation(((
+      callback: () => void,
+      ms?: number,
+      ...rest: unknown[]
+    ) => {
+      if (ms !== RUN_DEADLINE_MS) return realSetTimeout(callback, ms, ...rest);
+      deadline.fire = callback;
+      return realSetTimeout(() => {}, 0);
+    }) as typeof setTimeout);
+    let firedDuringConnect = false;
+    const { run, db } = await scenario({
+      runDeadlineMs: RUN_DEADLINE_MS,
+      hooks: {
+        duringConnect: (connection) => {
+          if (connection !== 2) return;
+          deadline.fire!();
+          firedDuringConnect = true;
+        },
+      },
+    });
+    const countsBefore = await tableCounts(db);
+    const result = await run("--apply");
+    expect(firedDuringConnect).toBe(true);
+    expect(String(result.error)).toMatch("Run deadline passed while a Neon connection was opening");
+    expect(result.receipt.success).toBe(false);
+    // The connection was closed before it carried a statement: the only lock taken is the first session's.
+    expect(result.events.filter((event) => event.sql === ADVISORY_LOCK)).toHaveLength(1);
+    await expect(result.client.query("SELECT 1")).rejects.toThrow("Connection terminated");
+    expect(result.events.filter((event) => MUTATING_SQL.test(event.sql))).toEqual([]);
+    expect(await tableCounts(db)).toEqual(countsBefore);
+  });
+
+  it("writes a failure report with the bytes it measured when the server ends the session mid-snapshot", async () => {
+    let pages = 0;
+    const { run, db } = await scenario({
+      // The server ends the session before the first page of stored transactions is read.
+      hooks: { terminateBefore: (sql) => sql.startsWith("SELECT id, month") && pages++ === 0 },
+    });
+    const countsBefore = await tableCounts(db);
+    const result = await run("--apply");
+    expect(pages).toBeGreaterThan(0);
+    expect(String(result.error)).toMatch("Connection terminated");
+    expect(result.client.serverTerminated()).toBe(true);
+    expect(result.client.connects()).toBe(1);
+    // The termination reached the run as an event it handles, and the report says what the server said.
+    expect(result.receipt.success).toBe(false);
+    expect(result.receipt.outcome).toBe("failed-no-success-marker");
+    expect(result.receipt.error).toBe("Connection terminated");
+    expect(result.receipt.sessionTermination).toBe(SERVER_TERMINATION);
+    expect(result.receipt.sessions).toHaveLength(1);
+    expect(result.receipt.wireReceivedProxyBytes).toBeGreaterThan(0);
+    expect(result.receipt.wireReceivedProxyBytes).toBe(result.receipt.sessions![0].receivedBytes);
+    expect(result.events.filter((event) => MUTATING_SQL.test(event.sql))).toEqual([]);
+    expect(await tableCounts(db)).toEqual(countsBefore);
   });
 });
 

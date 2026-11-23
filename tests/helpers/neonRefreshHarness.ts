@@ -190,35 +190,94 @@ export type SqlEvent = { sql: string; inTransaction: boolean; at: number };
 export type SessionHooks = {
   /** Runs before a statement is sent; may write through the database's own handle or throw to inject a fault. */
   beforeQuery?: (sql: string, params: unknown[] | undefined) => Promise<void> | void;
+  /**
+   * Neon's scale-to-zero: a connected session that sent nothing for longer than this (on the run's clock) has been
+   * ended by the server, as a compute suspend does. Reported like node-postgres reports it: an `error` event on the
+   * client, then a rejected query.
+   */
+  suspendIdleMs?: number;
+  /** Runs while a connection is being opened, before it is usable; receives the number of this connection. */
+  duringConnect?: (connection: number) => Promise<void> | void;
+  /** The server ends the session just before a statement for which this returns true. */
+  terminateBefore?: (sql: string) => boolean;
 };
+
+/** What PostgreSQL sends when a compute suspend or an administrator ends a session (SQLSTATE 57P01). */
+export const SERVER_TERMINATION = "terminating connection due to administrator command";
 
 /**
  * A node-postgres-shaped client over one PGlite session. PGlite does not run the server's timers, so this enforces
  * `idle_in_transaction_session_timeout` against the run's clock the way PostgreSQL does: a statement arriving after
  * the transaction sat idle past the timeout terminates the session, and the open transaction is rolled back.
+ *
+ * `connect` starts a new session on the same database (session settings are gone, as on a real reconnect), so one
+ * object serves a run that connects more than once. `connects` counts them. The socket counters are a stand-in:
+ * statement text sent and result JSON received.
  */
 export function pgliteSession(
   db: PGlite,
   clock: FakeClock,
   events: SqlEvent[],
   hooks: SessionHooks = {},
-): NeonRefreshClient & { idleTimedOut: () => boolean } {
+): NeonRefreshClient & {
+  idleTimedOut: () => boolean;
+  connects: () => number;
+  serverTerminated: () => boolean;
+} {
   let inTransaction = false;
   let lastActivity = clock.now;
   let idleTimeoutMs = 0;
   let ended = false;
   let idleTimedOut = false;
+  let connects = 0;
+  let serverTerminated = false;
+  const listeners: ((error: Error) => void)[] = [];
+  const stream = { bytesRead: 0, bytesWritten: 0 };
+  /** The server ends the session. An `error` event nobody listens for is thrown, as an EventEmitter does. */
+  const terminate = async () => {
+    serverTerminated = true;
+    ended = true;
+    if (inTransaction) await db.query("ROLLBACK");
+    inTransaction = false;
+    // The session's advisory locks go with it.
+    await db.query("SELECT pg_advisory_unlock_all()");
+    const error = new Error(SERVER_TERMINATION);
+    if (!listeners.length) throw new Error(`Unhandled 'error' event: ${error.message}`);
+    for (const listener of listeners) listener(error);
+  };
   return {
     /** True only if the session was terminated for idling in a transaction (not for a normal `end`). */
     idleTimedOut: () => idleTimedOut,
-    connect: async () => undefined,
+    connects: () => connects,
+    /** True once the server ended a session of this client (a simulated suspend or termination). */
+    serverTerminated: () => serverTerminated,
+    on: (_event, listener) => {
+      listeners.push(listener);
+    },
+    connection: { stream },
+    connect: async () => {
+      connects += 1;
+      await hooks.duringConnect?.(connects);
+      ended = false;
+      inTransaction = false;
+      idleTimeoutMs = 0;
+      lastActivity = clock.now;
+    },
     end: async () => {
+      if (ended) return;
       if (inTransaction) await db.query("ROLLBACK");
       inTransaction = false;
       ended = true;
     },
     async query(sql, params) {
       if (ended || idleTimedOut) throw new Error("Connection terminated");
+      if (
+        (hooks.suspendIdleMs !== undefined && clock.now - lastActivity > hooks.suspendIdleMs) ||
+        hooks.terminateBefore?.(sql)
+      ) {
+        await terminate();
+        throw new Error("Connection terminated");
+      }
       if (inTransaction && idleTimeoutMs > 0 && clock.now - lastActivity > idleTimeoutMs) {
         idleTimedOut = true;
         inTransaction = false;
@@ -230,7 +289,9 @@ export function pgliteSession(
       const timeout = /^SET idle_in_transaction_session_timeout=(\d+)$/.exec(sql);
       if (timeout) idleTimeoutMs = Number(timeout[1]);
       try {
+        stream.bytesWritten += sql.length;
         const result = await db.query<Record<string, unknown>>(sql, params as unknown[]);
+        stream.bytesRead += JSON.stringify(result.rows).length;
         if (/^\s*BEGIN\b/i.test(sql)) inTransaction = true;
         if (/^\s*(COMMIT|ROLLBACK)\b/i.test(sql)) inTransaction = false;
         return { rows: result.rows, rowCount: result.affectedRows ?? result.rows.length };
@@ -241,19 +302,35 @@ export function pgliteSession(
   };
 }
 
-/** The same recording and hooks around a real node-postgres client (a local PostgreSQL server). */
+/**
+ * The same recording and hooks around real node-postgres clients (a local PostgreSQL server). A node-postgres
+ * client connects once, and the refresh connects once per session, so every `connect` opens a client from `open`.
+ */
 export function pgSession(
-  client: pg.Client,
+  open: () => pg.Client,
   events: SqlEvent[],
   clock: FakeClock,
   hooks: SessionHooks = {},
 ): NeonRefreshClient {
-  // A server-side termination arrives as an 'error' event as well as a rejected query; the query is what counts.
-  client.on("error", () => {});
+  let client: pg.Client | null = null;
+  const listeners: ((error: Error) => void)[] = [];
   return {
-    connect: () => client.connect(),
-    end: () => client.end(),
+    on: (_event, listener) => {
+      listeners.push(listener);
+    },
+    connect: async () => {
+      client = open();
+      // A server-side termination arrives as an 'error' event as well as a rejected query.
+      client.on("error", (error) => {
+        for (const listener of listeners) listener(error);
+      });
+      await client.connect();
+    },
+    end: async () => {
+      await client?.end();
+    },
     async query(sql, params) {
+      if (!client) throw new Error("Not connected");
       await hooks.beforeQuery?.(sql, params);
       events.push({ sql, inTransaction: false, at: clock.now });
       const result = await client.query(sql, params as unknown[]);
