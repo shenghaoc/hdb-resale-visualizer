@@ -133,6 +133,45 @@ describe("addressDetailSchema", () => {
     expect(addressDetailSchema.safeParse(payload).success).toBe(false);
   });
 
+  it("accepts published nearby MRT exits: populated, empty, or absent (an older or D1 document)", () => {
+    const exit = {
+      stationName: "ANG MO KIO MRT STATION",
+      exitLabel: "E",
+      distanceMeters: 412.3,
+      exitId: "mrt_geojson:mrt_exit:21001",
+    };
+    const populated = addressDetailSchema.parse({
+      ...validAddressDetail(),
+      nearbyMrtExits: [exit],
+    });
+    expect(populated.nearbyMrtExits).toEqual([exit]);
+    expect(
+      addressDetailSchema.parse({ ...validAddressDetail(), nearbyMrtExits: [] }).nearbyMrtExits,
+    ).toEqual([]);
+    const absent = addressDetailSchema.parse(validAddressDetail());
+    expect("nearbyMrtExits" in absent).toBe(false);
+  });
+
+  it("rejects nearby MRT exits that the publication could not have written", () => {
+    const exit = {
+      stationName: "ANG MO KIO MRT STATION",
+      exitLabel: "Exit A",
+      distanceMeters: 412.3,
+      exitId: "mrt_geojson:mrt_exit:21001",
+    };
+    const reject = (nearbyMrtExits: unknown) =>
+      expect(
+        addressDetailSchema.safeParse({ ...validAddressDetail(), nearbyMrtExits }).success,
+      ).toBe(false);
+    reject(Array.from({ length: 6 }, () => exit));
+    reject([{ ...exit, exitLabel: "" }]);
+    reject([{ ...exit, stationName: undefined }]);
+    reject([{ ...exit, distanceMeters: -1 }]);
+    reject([{ ...exit, distanceMeters: "412.3" }]);
+    reject(null);
+    reject({});
+  });
+
   it("rejects a missing recentTransactions array", () => {
     const { recentTransactions: _dropped, ...rest } = validAddressDetail();
     expect(addressDetailSchema.safeParse(rest).success).toBe(false);

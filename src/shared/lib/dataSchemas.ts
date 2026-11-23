@@ -92,10 +92,18 @@ const addressTrendPointSchema = z.object({
   medianPricePerSqm: z.number().positive(),
 });
 
+const precomputedMrtExitSchema = z.object({
+  stationName: z.string().min(1),
+  exitLabel: z.string().min(1),
+  distanceMeters: z.number().finite().nonnegative(),
+  exitId: z.string().min(1),
+});
+
 export const addressDetailSchema = z.object({
   summary: addressDetailSummarySchema,
   recentTransactions: z.array(addressDetailTransactionSchema),
   monthlyTrend: z.array(addressTrendPointSchema),
+  nearbyMrtExits: z.array(precomputedMrtExitSchema).max(5).optional(),
 });
 
 export const townFlatTypeTrendPointSchema = z.object({
