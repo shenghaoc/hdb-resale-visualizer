@@ -150,6 +150,11 @@ export type NeonRefreshClient = {
     params?: unknown[],
   ): Promise<{ rows: Record<string, unknown>[]; rowCount: number | null }>;
   end(): Promise<unknown>;
+  /**
+   * node-postgres reports a session the server ended (a compute suspend, an administrator command) as an
+   * `error` event on an otherwise idle client. With no listener that event is thrown and ends the process.
+   */
+  on?(event: "error", listener: (error: Error) => void): unknown;
   connection?: { stream?: Pick<Socket, "bytesRead" | "bytesWritten"> };
 };
 
@@ -166,7 +171,7 @@ export type SyncNeonDependencies = {
   servingHyperdriveId: () => string;
   /** Applies only to the two short read snapshots and the publication transaction. */
   idleInTransactionTimeoutMs: number;
-  /** After this, the connection is closed; nothing can commit afterwards. */
+  /** After this, the connection is closed and none is opened again; nothing can commit afterwards. */
   runDeadlineMs: number;
 };
 
@@ -189,16 +194,20 @@ function defaultDependencies(): SyncNeonDependencies {
 /**
  * One manual run; no source snapshot substitution, synthetic additions, migration or automatic retry.
  *
- * Database work happens in three short phases on one session, and nothing network-bound runs inside a transaction:
- * 1. A REPEATABLE READ READ ONLY snapshot reads the publication version (manifest JSON + `updated_at`), the
- *    transaction facts, the published artifacts and both caches, then commits.
- * 2. With database access closed, the run downloads amenity sources, makes its budgeted OneMap requests, checks
- *    that the upstream inventory did not change, and builds artifacts. Cache writes are staged in memory.
- * 3. A second READ ONLY snapshot first requires the publication version to be unchanged, then reads the stored
- *    rows the planner compares against. With `--apply`, publication re-checks the same version under
- *    `SELECT ... FOR UPDATE` and writes data then the manifest in one transaction.
+ * Database work happens in three short phases, and nothing network-bound runs inside a transaction or while a
+ * connection is open:
+ * 1. First session. A REPEATABLE READ READ ONLY snapshot reads the publication version (manifest JSON +
+ *    `updated_at`), the transaction facts, the published artifacts and both caches, then commits. The session
+ *    releases its advisory lock and disconnects.
+ * 2. With no connection, the run downloads amenity sources, makes its budgeted OneMap requests, checks that the
+ *    upstream inventory did not change, and builds artifacts. Cache writes are staged in memory. Neon suspends
+ *    an idle compute after five minutes and ends its sessions, so a session held open here would not survive.
+ * 3. Second session, which takes the advisory lock again. A READ ONLY snapshot first requires the publication
+ *    version to be unchanged, then reads the stored rows the planner compares against. With `--apply`,
+ *    publication re-checks the same version under `SELECT ... FOR UPDATE` and writes data then the manifest in
+ *    one transaction.
  * Every publication rewrites `updated_at` with its data, so an unchanged version proves the rows read in phases 1
- * and 3 are one generation and that nothing was published in between.
+ * and 3 are one generation and that nothing was published in between, by this run's lock holder or any other.
  */
 export async function runSyncNeon(
   argv = process.argv.slice(2),
@@ -329,13 +338,27 @@ export async function runSyncNeon(
     budget.usage.computeCUHours < initialBudget.usage.computeCUHours
   )
     throw new Error("Neon replacement usage receipt lowers a provider meter");
-  const client = deps.createClient(url);
-  const connected = performance.now();
-  await client.connect();
-  const connectionMs = performance.now() - connected;
-  const stream = client.connection?.stream;
-  const receivedBefore = stream?.bytesRead ?? 0,
-    sentBefore = stream?.bytesWritten ?? 0;
+  type OpenSession = {
+    phase: string;
+    client: NeonRefreshClient;
+    connectionMs: number;
+    stream: Pick<Socket, "bytesRead" | "bytesWritten"> | undefined;
+    receivedBefore: number;
+    sentBefore: number;
+    lock: boolean;
+  };
+  let current: OpenSession | null = null;
+  // A client whose `connect()` has not returned yet. The deadline must be able to end it too.
+  let opening: NeonRefreshClient | null = null;
+  const closedSessions: {
+    phase: string;
+    connectionMs: number;
+    receivedBytes: number | null;
+    sentBytes: number | null;
+  }[] = [];
+  // The first termination the server reported outside a query's own rejection (see `NeonRefreshClient.on`).
+  const terminated: { error?: Error } = {};
+  let deadlinePassed = false;
   const queryAwait: {
     sql: string;
     elapsedMs: number;
@@ -344,6 +367,8 @@ export async function runSyncNeon(
     success: boolean;
   }[] = [];
   const instrumented: PgQuery = async (sql, params) => {
+    if (!current) throw new Error("No Neon session is open; no query was sent");
+    const { client } = current;
     const t = performance.now();
     try {
       const result = await client.query(sql, params);
@@ -377,7 +402,74 @@ export async function runSyncNeon(
     deps.env.DATA_GOV_API_KEY ?? "",
   ];
   const db = new NeonPlanningStore(query);
-  let lock = false;
+  /** Connects, applies the session settings and takes the advisory lock. Refused once the run deadline passed. */
+  const openSession = async (phase: string) => {
+    if (deadlinePassed)
+      throw new Error(
+        "Run deadline passed; no further Neon connection is opened and nothing is written",
+      );
+    const client = deps.createClient(url);
+    client.on?.("error", (error) => {
+      terminated.error ??= error;
+    });
+    const connecting = performance.now();
+    opening = client;
+    try {
+      await client.connect();
+    } catch (error) {
+      // The deadline ends a client that is still connecting; report that, not the socket error it causes.
+      if (!deadlinePassed) throw error;
+    } finally {
+      opening = null;
+    }
+    const stream = client.connection?.stream;
+    const opened: OpenSession = {
+      phase,
+      client,
+      connectionMs: performance.now() - connecting,
+      stream,
+      receivedBefore: stream?.bytesRead ?? 0,
+      sentBefore: stream?.bytesWritten ?? 0,
+      lock: false,
+    };
+    // The deadline can pass while `connect()` is pending. The connection is then closed before it carries a
+    // statement, so nothing is read, locked or written after the deadline.
+    if (deadlinePassed) {
+      await client.end().catch(() => {});
+      closedSessions.push({
+        phase,
+        connectionMs: opened.connectionMs,
+        receivedBytes: stream ? stream.bytesRead - opened.receivedBefore : null,
+        sentBytes: stream ? stream.bytesWritten - opened.sentBefore : null,
+      });
+      throw new Error(
+        "Run deadline passed while a Neon connection was opening; it was closed before any query",
+      );
+    }
+    current = opened;
+    await query("SET lock_timeout='5s'");
+    await query(`SET idle_in_transaction_session_timeout=${deps.idleInTransactionTimeoutMs}`);
+    const acquired = await query("SELECT pg_try_advisory_lock(724921, 1) AS acquired");
+    if (acquired.rows[0].acquired !== true)
+      throw new Error("Another Neon ingestion is in progress");
+    opened.lock = true;
+  };
+  /** Ends the open session, if any, and records what it measured. Safe on a session the server already ended. */
+  const closeSession = async () => {
+    const closing = current;
+    if (!closing) return;
+    if (session.inTransaction) await query("ROLLBACK").catch(() => {});
+    if (closing.lock) await query("SELECT pg_advisory_unlock(724921, 1)").catch(() => {});
+    current = null;
+    await closing.client.end().catch(() => {});
+    const { stream } = closing;
+    closedSessions.push({
+      phase: closing.phase,
+      connectionMs: closing.connectionMs,
+      receivedBytes: stream ? stream.bytesRead - closing.receivedBefore : null,
+      sentBytes: stream ? stream.bytesWritten - closing.sentBefore : null,
+    });
+  };
   const started: { oneMap?: OneMapRun } = {};
   const phases: Record<string, number> = {};
   const evidence: Record<string, unknown> = {
@@ -387,7 +479,6 @@ export async function runSyncNeon(
     invocation: "manual-process",
     mode: options.mode,
     dataProvenance: "fresh official upstream; full exact multiset reconciliation",
-    connectionMs,
     usageReceiptAtStart,
     usageReceiptBeforeConnect,
     budgetBefore: budget,
@@ -404,12 +495,15 @@ export async function runSyncNeon(
     transactionBoundaries: {
       snapshots: "REPEATABLE READ READ ONLY, reads only",
       preparationOutsideTransaction: true,
+      preparationWithoutConnection: true,
       idleInTransactionTimeoutMs: deps.idleInTransactionTimeoutMs,
     },
     publication: null,
   };
   const deadline = setTimeout(() => {
-    void client.end();
+    deadlinePassed = true;
+    void current?.client.end().catch(() => {});
+    void opening?.end().catch(() => {});
   }, deps.runDeadlineMs);
   const phase = async <T>(name: string, work: () => Promise<T>): Promise<T> => {
     const t = performance.now();
@@ -420,12 +514,7 @@ export async function runSyncNeon(
     }
   };
   try {
-    await query("SET lock_timeout='5s'");
-    await query(`SET idle_in_transaction_session_timeout=${deps.idleInTransactionTimeoutMs}`);
-    const acquired = await query("SELECT pg_try_advisory_lock(724921, 1) AS acquired");
-    if (acquired.rows[0].acquired !== true)
-      throw new Error("Another Neon ingestion is in progress");
-    lock = true;
+    await openSession("baselineSnapshot");
     await db.inspectSchema();
     const sqlBefore = await readNeonSqlTime(query);
 
@@ -462,6 +551,8 @@ export async function runSyncNeon(
       return { manifestJson, version, manifest, stored, previous, cache, routing };
     });
     const { manifestJson, version, manifest, stored, previous, cache, routing } = snapshot;
+    // Nothing is read or written until planning: disconnect, so a compute suspend has no session to end.
+    await closeSession();
 
     const factRows = transactions.flatMap((row) => {
       const fact = toTransactionRow(row);
@@ -623,7 +714,8 @@ export async function runSyncNeon(
     );
     const { artifacts, stations } = prepared;
 
-    // Phase 3: plan against the same generation, or stop.
+    // Phase 3: a new session, the lock again, then plan against the same generation, or stop.
+    await openSession("planningAndPublication");
     const plan = await phase("planningSnapshot", async () => {
       await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY");
       await assertNeonPublicationUnchanged(query, version);
@@ -716,13 +808,20 @@ export async function runSyncNeon(
     clearTimeout(deadline);
     // Removes the run's OneMap budget from the shared request choke point, even if preparation failed early.
     installOneMapRequestBudget(null);
-    if (session.inTransaction) await query("ROLLBACK").catch(() => {});
-    if (lock) await query("SELECT pg_advisory_unlock(724921, 1)").catch(() => {});
+    await closeSession();
     evidence.finishedAt = new Date().toISOString();
     evidence.phasesMs = phases;
     evidence.oneMap = started.oneMap?.report() ?? oneMapNotStarted(oneMapBudget);
-    evidence.wireReceivedProxyBytes = stream ? stream.bytesRead - receivedBefore : null;
-    evidence.wireSentProxyBytes = stream ? stream.bytesWritten - sentBefore : null;
+    // Totals over every session of the run; null only when no session exposed its socket counters.
+    const total = (pick: (closed: (typeof closedSessions)[number]) => number | null) =>
+      closedSessions.some((closed) => pick(closed) !== null)
+        ? closedSessions.reduce((sum, closed) => sum + (pick(closed) ?? 0), 0)
+        : null;
+    evidence.connectionMs = closedSessions[0]?.connectionMs ?? null;
+    evidence.sessions = closedSessions;
+    evidence.wireReceivedProxyBytes = total((closed) => closed.receivedBytes);
+    evidence.wireSentProxyBytes = total((closed) => closed.sentBytes);
+    if (terminated.error) evidence.sessionTermination = safeNeonError(terminated.error, sensitive);
     evidence.queryCount = queryAwait.length;
     evidence.queryAwait = queryAwait;
     evidence.planning = db.usageReport();
@@ -733,7 +832,6 @@ export async function runSyncNeon(
       "Wire/client timings are proxies; append settled provider readings before assessing scheduling. Not a GitHub Actions run.";
     if (options.report)
       writeFileSync(options.report, JSON.stringify(evidence, null, 2), { mode: 0o600 });
-    await client.end().catch(() => {});
     console.log(JSON.stringify({ ...evidence, queryAwait: undefined, planning: undefined }));
   }
 }

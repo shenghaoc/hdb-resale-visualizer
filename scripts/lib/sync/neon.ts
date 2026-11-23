@@ -431,7 +431,7 @@ export function createNeonRefreshClient(url: string) {
     application_name: "hdb-neon-refresh",
     statement_timeout: 120_000,
     connectionTimeoutMillis: 30_000,
-    // The session stays connected (holding its advisory lock) while preparation runs without a transaction.
+    // TCP keepalive, so a peer that vanished is noticed. The run disconnects for preparation (sync-neon.ts).
     keepAlive: true,
   });
 }
