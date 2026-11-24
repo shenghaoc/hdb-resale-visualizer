@@ -208,11 +208,31 @@ const trends: Row[] = TOWNS.flatMap(({ town }, t) =>
   ),
 ).reverse();
 
+/**
+ * `nearbyMrtExits` is written by the Neon serving child's publication step. Both backends must return whatever
+ * the stored document holds: a populated list, an empty list, or no field (every D1 document today).
+ */
+const nearbyMrtExitsFor = (i: number) =>
+  i % 3 === 0
+    ? {
+        nearbyMrtExits: [
+          {
+            stationName: "FIXTURE MRT STATION",
+            exitLabel: i % 2 ? "Exit A" : "E",
+            distanceMeters: 100.5 + i,
+            exitId: `mrt_geojson:mrt_exit:${i}`,
+          },
+        ],
+      }
+    : i % 3 === 1
+      ? { nearbyMrtExits: [] }
+      : {};
 const documents = (row: Row, i: number) => ({
   detail: JSON.stringify({
     transactions: [{ month: row.latest_month, resalePrice: row.median_price }],
     addressKey: row.address_key,
     monthlyTrend: [{ month: "2026-09", medianPrice: row.median_price }],
+    ...nearbyMrtExitsFor(i),
   }),
   comparison:
     i % 4 === 1
@@ -425,6 +445,32 @@ describe("every public route answers the same on D1 and Neon", () => {
       if (fromD1.status === 404) missingComparisons++;
     }
     expect(missingComparisons).toBe(blocks.length - 13 + 1);
+  });
+
+  it("published nearby MRT exits: a populated list, an empty list and a missing field, each unchanged", async () => {
+    const seen = { populated: 0, empty: 0, missing: 0 };
+    for (const [i, row] of blocks.entries()) {
+      const addressKey = String(row.address_key);
+      const { fromD1, fromNeon } = await sameOnBoth(
+        detailRoute,
+        get(`/api/details/${addressKey}`),
+        {
+          addressKey,
+        },
+      );
+      const expected = nearbyMrtExitsFor(i);
+      for (const body of [fromD1.body, fromNeon.body]) {
+        const detail = JSON.parse(body) as Record<string, unknown>;
+        if ("nearbyMrtExits" in expected)
+          expect(detail.nearbyMrtExits).toEqual(expected.nearbyMrtExits);
+        else expect("nearbyMrtExits" in detail).toBe(false);
+      }
+      if (!("nearbyMrtExits" in expected)) seen.missing++;
+      else if (expected.nearbyMrtExits?.length) seen.populated++;
+      else seen.empty++;
+    }
+    // The fixture really holds all three kinds.
+    expect(Object.values(seen).every((count) => count > 0)).toBe(true);
   });
 
   it("MRT GeoJSON and trends; trends byte for byte", async () => {

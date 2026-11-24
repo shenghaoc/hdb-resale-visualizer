@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test"
 import { DetailDrawer } from "@/features/block-detail/DetailDrawer";
 import { DEFAULT_FILTERS } from "@/shared/lib/constants";
 import { I18nProvider } from "@/shared/lib/i18n";
-import type { BlockSummary, ComparisonArtifact } from "@/types/data";
+import type { AddressDetail, BlockSummary, ComparisonArtifact } from "@/types/data";
 
 const mockBlock: BlockSummary = {
   addressKey: "test-block",
@@ -197,6 +197,91 @@ describe("DetailDrawer", () => {
     expect(screen.getByText("11 min walk")).toBeInTheDocument();
     expect(screen.getByText("BEDOK SOUTH MRT STATION")).toBeInTheDocument();
     expect(screen.getByText("16 min walk")).toBeInTheDocument();
+  });
+
+  describe("published nearby MRT exits", () => {
+    const detailWith = (nearbyMrtExits?: AddressDetail["nearbyMrtExits"]): AddressDetail => ({
+      summary: { ...mockBlock, priceIqr: [500000, 600000], pricePerSqftMedian: 550 },
+      recentTransactions: [],
+      monthlyTrend: [],
+      ...(nearbyMrtExits === undefined ? {} : { nearbyMrtExits }),
+    });
+    const renderWith = (detail: AddressDetail) => {
+      const fetchSpy = vi.spyOn(globalThis, "fetch");
+      render(
+        <I18nProvider>
+          <DetailDrawer
+            selectedBlock={mockBlock}
+            detail={detail}
+            comparison={mockComparison}
+            isLoading={false}
+            isComparisonLoading={false}
+            isSaved={false}
+            remainingLeaseMin={null}
+            onClose={() => {}}
+            onToggleShortlist={() => {}}
+            allBlocks={[]}
+            onSelectBlock={() => {}}
+          />
+        </I18nProvider>,
+      );
+      return fetchSpy;
+    };
+    /** Neither the capability probe nor the spatial endpoint: the drawer reads the detail it already has. */
+    const expectNoNearbyRequest = (fetchSpy: ReturnType<typeof renderWith>) => {
+      const urls = fetchSpy.mock.calls.map(([input]) =>
+        String(input instanceof Request ? input.url : input),
+      );
+      expect(urls.filter((url) => /nearby-(capabilities|places)/.test(url))).toEqual([]);
+    };
+
+    it("renders the published exits of a detail that carries them, with no nearby request", () => {
+      const fetchSpy = renderWith(
+        detailWith([
+          {
+            stationName: "BEDOK NORTH MRT STATION",
+            exitLabel: "E",
+            distanceMeters: 212.4,
+            exitId: "mrt_geojson:mrt_exit:21001",
+          },
+          {
+            stationName: "BEDOK RESERVOIR MRT STATION",
+            exitLabel: "Exit B",
+            distanceMeters: 905,
+            exitId: "mrt_geojson:mrt_exit:21002",
+          },
+        ]),
+      );
+      fireEvent.click(screen.getByRole("button", { name: "View nearby MRT exits" }));
+      const items = screen.getByTestId("nearby-mrt-exits").querySelectorAll("li");
+      expect([...items].map((item) => item.textContent)).toEqual([
+        expect.stringMatching(/BEDOK NORTH MRT STATION.*E · 212/),
+        expect.stringMatching(/BEDOK RESERVOIR MRT STATION.*Exit B · 905/),
+      ]);
+      expectNoNearbyRequest(fetchSpy);
+    });
+
+    it("renders “none within range” for a published empty list, with no nearby request", () => {
+      const fetchSpy = renderWith(detailWith([]));
+      fireEvent.click(screen.getByRole("button", { name: "View nearby MRT exits" }));
+      expect(screen.getByText("No station exits found within 1.5 km.")).toBeInTheDocument();
+      expectNoNearbyRequest(fetchSpy);
+    });
+
+    it("hides the section for a detail without the field, with no nearby request", async () => {
+      const fetchSpy = renderWith(detailWith());
+      // Give any effect a chance to run: none may probe or fetch.
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(1000);
+      });
+      expect(screen.queryByTestId("nearby-mrt-exits")).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole("button", { name: "View nearby MRT exits" }),
+      ).not.toBeInTheDocument();
+      // The existing walking-time evidence is still shown.
+      expect(screen.getByText("BEDOK NORTH MRT STATION")).toBeInTheDocument();
+      expectNoNearbyRequest(fetchSpy);
+    });
   });
 
   it("shows the shared weak-data label for low-sample blocks", () => {
