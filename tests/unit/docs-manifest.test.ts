@@ -35,6 +35,7 @@ describe("docs manifest", () => {
       "filters-and-map",
       "shortlisting",
       "faq",
+      "data-sources",
       "troubleshooting",
     ]);
   });

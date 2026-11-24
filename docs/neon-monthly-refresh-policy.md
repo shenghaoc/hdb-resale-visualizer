@@ -1,0 +1,114 @@
+# Neon refresh policy
+
+The Neon publisher (`vp run sync-data:neon`) is **manual only**: one explicit, bounded invocation at a time, against the isolated benchmark branch. Upstream timestamps and content hints are observability only; a change in them, or the age of the last run, never starts an expensive reconciliation. The policy is one explicit reconciliation per UTC calendar month plus explicit manual runs. Monthly Neon scheduling is not enabled: `--reconcile-monthly` is refused.
+
+## Invocation and state
+
+| Invocation                                    | Behavior                                                                                                                     |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `vp run sync-data --plan`                     | Read-only hint observation; no corpus reconciliation.                                                                        |
+| `vp run sync-data --check-upstream`           | Read-only hint observation, even with a manual or monthly flag.                                                              |
+| `vp run sync-data --plan --reconcile-monthly` | Read-only transaction preflight if no reconciliation was published in this UTC month.                                        |
+| `vp run sync-data --plan --reconcile-manual`  | Explicit read-only transaction preflight, even after a publication this month.                                               |
+| `--force`                                     | Alias for manual intent in the incremental modes; on a plain run it keeps its meaning of repeating the full publication.     |
+| `vp run sync-data:neon --plan` / `--apply`    | Require `--reconcile-manual`, `--branch` and `--usage-before`; `--report` writes the receipt. `--check-upstream` needs none. |
+
+- Monthly and manual intent are mutually exclusive. The monthly check compares the UTC month and year of `reconciledAt` with now, not a rolling 30 days. A missing, malformed or future `reconciledAt` is never taken as proof of a completed monthly reconciliation: explicit intent proceeds, plain observation still skips. A successful manual publication satisfies that month's check too.
+- A plain `vp run sync-data`, with or without `--force`, is the marked full publication to D1. `--reconcile-monthly` and `--reconcile-manual` are rejected unless `--plan` or `--apply-rehearsal` is also given, and `--apply-rehearsal` accepts only a loopback emulator.
+- Failed or rolled-back publications and read-only preflights never advance the manifest, so repeating them spends budget again. A client response lost after a successful commit is checked against the committed manifest and is never treated as rolled back.
+- A reviewed reconciliation (`--reconciliation-review`) also needs `--report` and `--source-capture-directory .neon-benchmark/<name>`. The gitignored `.neon-benchmark/` is created when it is missing, and the run folder must not exist yet: an earlier capture is refused, never reused or overwritten.
+
+## Manual workflow
+
+`.github/workflows/refresh-neon.yml` runs on `workflow_dispatch` only. It has no schedule, migration, deployment or automatic retry, and it holds read-only repository permission.
+
+| Input                                           | Meaning                                                                                                           |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `confirm_target`                                | Must be `benchmark-d1-migration`; the job does not run otherwise.                                                 |
+| `mode`                                          | `plan` (the default) or `apply`. A dispatch that does not choose a mode cannot publish.                           |
+| `usage_baseline`                                | A captured provider baseline; uncalibrated zero readings are refused (see "Unsettled usage receipts").            |
+| `onemap_search_budget`, `onemap_routing_budget` | OneMap HTTP attempts this run may make, retries included. Both default to 0, which makes no request of that kind. |
+
+The job uses the environment `neon-benchmark-refresh` and the secret `NEON_BENCHMARK_REFRESH_DATABASE_URL`, plus `DATA_GOV_API_KEY` and the OneMap credentials when they are set. It runs on Node 24 with Vite+ in a concurrency group per branch that never cancels a run in progress, times out after 30 minutes and uploads the sanitized receipt as an artifact for 14 days. `tests/unit/neon-refresh.test.ts` pins the default and the option order of `mode`.
+
+### What each mode touches
+
+| Mode    | Benchmark database                                                    | data.gov.sg                                            | OneMap                                     |
+| ------- | --------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------ |
+| `plan`  | Two `REPEATABLE READ READ ONLY` snapshots; no publication or mutation | Metadata and dataset downloads (needed to plan at all) | None, unless a budget is given (default 0) |
+| `apply` | The same snapshots, then at most one publication transaction          | The same                                               | Only within the given budgets (default 0)  |
+
+Results of OneMap attempts made by `plan` are not kept: its staged cache writes are discarded with the plan.
+
+### Transaction boundaries
+
+No network-bound work runs inside a PostgreSQL transaction or while a connection is open. A run uses two sessions, one before preparation and one after it, and each takes the advisory lock for itself:
+
+1. **Baseline snapshot** (first session, read only): the publication version, transaction facts, published artifacts and both caches, then `COMMIT`. The session releases its advisory lock and disconnects.
+2. **Preparation, with no connection** (`NeonSessionGuard`): amenity downloads, budgeted OneMap attempts, a second read of the upstream inventory (it must equal the first, or the run stops), and the artifact build. Cache writes are staged in memory. Any query sent in this phase is refused before it reaches the server.
+3. **Planning snapshot** (second session, read only): takes the advisory lock again, first requires the publication version to be unchanged, then reads the stored rows the planner compares against. With `--apply`, publication runs in its own transaction on the same session, re-checks the same version under `SELECT … FOR UPDATE`, writes the data, writes the manifest last and commits.
+
+The run disconnects for preparation because Neon suspends an idle compute after five minutes and ends its sessions (SQLSTATE 57P01, "terminating connection due to administrator command"). With OneMap budgets, preparation lasts longer than that, so a session held open through it does not reach the planning snapshot. No lock is held while the run is disconnected. Another run can then publish; the version check in phase 3 refuses this run if one did.
+
+A session that the server ends at any other time fails the run. The receipt is still written: it records the failure, the server's message (`sessionTermination`) and the bytes measured on every session (`sessions`, `wireReceivedProxyBytes`).
+
+The publication version is the manifest JSON **and** its `updated_at`. Every publication rewrites `updated_at` in the same transaction as its data, so an unchanged version proves that nothing was published between the two snapshots or before the write, including a republish that left the JSON identical. `idle_in_transaction_session_timeout` stays at 120 s; it only covers the short snapshots and the publication.
+
+### OneMap budgets
+
+OneMap geocoding and routing are optional enrichments with explicit per-run budgets: `--onemap-search-budget N` and `--onemap-routing-budget N` (workflow inputs `onemap_search_budget` and `onemap_routing_budget`). Both default to **0**. Running without OneMap credentials remains fully supported; no token is requested or provisioned.
+
+Budgets are counted in **physical HTTP attempts**, not logical lookups. The shared fetch helper (`fetchWithRetry`) retries after a network error, HTTP 429 or 5xx, up to six attempts, and every one of those attempts is charged.
+
+- Search plus routing plus at most one token attempt may not exceed **600 HTTP attempts per run**. Larger budgets are refused before any network or database activity.
+- Pacing and the budget are applied together immediately before every OneMap attempt, retries included (`fetchWithRetry`'s `beforeAttempt` hook calling `waitForUpstreamSlot`). An exhausted budget refuses the attempt before it is sent, so a retry the budget cannot cover is never made, and the lookup or route ends there. The check runs once per attempt, so nothing is paced or charged twice.
+- data.gov.sg and other consumers of the shared helper keep their existing behaviour: one pacing slot before the request, then the helper's own retries and backoff, with no OneMap budget.
+- A configured `ONEMAP_TOKEN` is used as is and costs nothing. Email and password get an allowance of exactly one token attempt per run, not one per lookup. A failed token attempt is not retried; the run continues without OneMap (`tokenStatus: "unavailable"`) and the refused retry is reported.
+- Block addresses are geocoded before amenities, so a small search budget goes to blocks first.
+- Work beyond the remaining budget is deferred and reported, never started. An empty routing cache therefore costs the routing budget, not one request per block and exit. Because a retry spends budget, a run with transient OneMap errors completes fewer lookups than its budget; the difference is reported, not hidden.
+- The budget is one object installed at the single choke point every OneMap attempt passes. The run reads its remaining allowance to decide how much work to start, but only the choke point charges it.
+- The D1 sync (`runSyncData`, `runIncrementalSync`) has no budget but shares one OneMap session per run (`createOneMapSession`): a configured token costs nothing, otherwise the email and password login is made once however many lookups run at the same time, and block geocoding, amenity geocoding and routing all use it.
+
+The receipt's `oneMap` section separates three counts per category (`auth`, `search`, `routing`): `httpAttempts` (requests actually sent), `budgetRefusals` (attempts the budget prevented, which were never sent) and `successfulOperations` (a token obtained, a lookup answered with or without a match, a route returned). Per purpose it also reports candidates, items started, results, items with no match, failures, items ended by a budget refusal and items deferred or not attempted for lack of a token. `unresolved` reports block addresses and amenities left without coordinates, and walking pairs without a route. Unresolved block addresses are not published and count toward the existing geocode-failure guard exactly as failed lookups do. Pairs without a route keep the pipeline's existing straight-line walking-time estimate; the published data does not mark which times are estimates.
+
+### Unsettled usage receipts
+
+The Free plan exposes current usage totals without a settlement timestamp, so those readings use the unsettled path. An unsettled reading requires explicit `usageAsOf: "UNKNOWN"` and `settledThrough: null`. For this path only, `source` can be `"neon-api"` or `"neon-console"`. The observation time is when the reading was captured, not a claimed provider settlement time. If using the API, convert weighted `compute_time_seconds` to CU-hours by dividing by 3,600. Every endpoint that could still be consuming needs bounded evidence:
+
+- `servingOrigin`: the origin of the Hyperdrive configuration that serves the site, as read from Cloudflare (`hyperdriveConfigId`, `host`, `observedAt`). Its id must be the `HDB_PUBLIC_NEON` Hyperdrive committed in `wrangler.jsonc`, and the serving endpoint is derived from its host.
+- `knownActivity.endpointInventory: "complete"` with every compute endpoint in the project, including the benchmark endpoint at 1 CU and the serving endpoint.
+
+The optional `knownActivity.priorMeasuredReceivedBytes` is the measured transfer of an earlier run in the same allowance period. Omit it or set it to zero if no prior run was measured. A positive value must not exceed the provider reading plus its resolution; there is no minimum prior-run transfer. Nonzero meter and freshness requirements still apply.
+
+The check fails closed if:
+
+- the serving origin is missing, stale, not a direct endpoint host, or from another Hyperdrive;
+- the serving endpoint is the refresh write target or sits on the benchmark branch;
+- the inventory omits the serving endpoint or repeats one;
+- any other endpoint is still active.
+
+The unsettled path reserves three complete reconciliations (plan, apply and verification), each at 493,707,924 B. It also reserves three 25-minute compute windows for both the 1-CU benchmark and the serving endpoint at its observed maximum, plus 10 CU-hours for meter lag. The 25 minutes cover the 20-minute deadline and 5-minute suspend tail; traffic can wake the serving endpoint in any window. Transfer also reserves 1 GB for meter lag and the existing 1 GB operational reserve. The run cannot query Cloudflare itself, so the origin is operator-captured evidence checked against the repository's configuration. Settled (`REPORTED`) receipts are unchanged: their provider totals already cover every endpoint up to `settledThrough`.
+
+### Reviewed removals
+
+The publisher never infers a deletion. A stored transaction is deleted only when the review file lists it under `removals` with `disposition: "remove-absent-upstream"`, its row ID and its exact tuple, and all of the following hold:
+
+- the row is stored with that tuple and is absent from the downloaded source (a row that is present again is refused, and stays);
+- the source and the stored manifest are exactly the reviewed ones (`initialSourceFactsSHA256`, `initialBaselineManifestSHA256`);
+- the review's `maxRemovals` (at most 25) covers the list;
+- the row is not the newest stored row, so its ID can never be given to another fact.
+
+Each removal is one `DELETE FROM transactions WHERE id = $1` in the publication transaction and must affect exactly one row. The affected block, its comparisons and its town trend are rebuilt from the remaining rows, and the run still refuses if a block or a trend point would disappear. When the removed row was the block's newest sale and a sale of another flat type is now its newest, the comparisons of both cohorts are rebuilt: the one the block leaves and the one it joins. The manifest's `neonReconciliation.removed` keeps a record of every removed row (tuple, time, decision and source hash); a row that an earlier publication retained leaves the retention ledger when it is removed. The record holds at most 500 removals. A removal that would pass that number is refused before publication, because the next run could not read the manifest it would leave. Replaying the same review after publication changes nothing. Absent rows that the review neither retains nor removes are refused as before.
+
+## Limits the code enforces
+
+| Limit                | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Where                                      |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Source completeness  | The resale, property and MRT sources are refused when empty or when normalization drops any row or feature (property and MRT before any database work). Amenity sources are refused when any row or feature no longer matches its schema; rows that only lack coordinates are published as unresolved and counted.                                                                                                                                                                           | `sync-neon.ts`, `sync-data.ts`             |
+| Changed transactions | At most 1,000 per publication. A reviewed reconciliation allows `min(1000, floor(active baseline × 0.005))` inserts, within 35 days of the last accepted checkpoint, at most 5 new and 5 outstanding retained absent occurrences, and no correction. A review may name up to 25 removals (see "Reviewed removals"). A review may carry one allowance pinned to exact hashes, counts and IDs (at most 5,000 inserts and 62 days); an allowance that has been applied is never accepted again. | `incremental.ts`, `neon-reconciliation.ts` |
+| Publication size     | 25,000 forecast index operations, 100 atomic statements (the plan plus the two manifest statements), 90,000,000 encoded bytes and 1,000,000 bytes per JSON parameter.                                                                                                                                                                                                                                                                                                                        | `statements.ts`, `neon.ts`                 |
+| Session              | 120 s statement timeout, 30 s connection timeout, 120 s idle-in-transaction timeout, a 20-minute run deadline after which the connection is closed and none is opened again (a connection still opening when the deadline passes is closed before it carries a statement), and one advisory lock (`pg_try_advisory_lock(724921, 1)`) taken by each of the run's two sessions.                                                                                                                | `neon.ts`, `sync-neon.ts`                  |
+| OneMap               | 600 HTTP attempts per run.                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | `onemap-budget.ts`                         |
+| Transfer and compute | Reported readings reserve one reconciliation plus the existing 1 GB transfer reserve and one benchmark compute window. Unsettled readings reserve three reconciliations, the same operational reserve, and additional lag and serving compute reserves as described above. Totals including resolution must fit 5 GB and 100 CU-hours. Reading and serving-origin observations expire after 20 minutes; reported settlement expires after two hours. Uncalibrated zero readings are refused. | `refresh-policy.ts`, `neon-usage.ts`       |
+
+These are limits, not forecasts: the usage gate is a conservative planning check against captured readings, not a live quota and not permission to refresh. If live usage is unavailable or the headroom is insufficient, defer the run rather than consume the reserve.

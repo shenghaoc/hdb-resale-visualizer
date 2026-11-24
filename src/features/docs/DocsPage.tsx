@@ -3,24 +3,41 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/shared/lib/i18n";
 import { useTheme } from "@/hooks/useTheme";
-import { DOCS_SECTIONS, getDocsSection } from "./docsManifest";
+import {
+  DOCS_SECTIONS,
+  DOCS_ACCESSED_AT_TOKEN,
+  formatDocsAccessedAt,
+  getDocsSection,
+} from "./docsManifest";
 import { DocsArticle } from "./DocsArticle";
 import { DocsNav } from "./DocsNav";
 import { DocsSearch } from "./DocsSearch";
 import { navigate, slugFromPath, usePathname } from "./docsRouter";
 
+type DocsPageProps = {
+  dataAccessedAt?: string | null;
+};
+
 /**
  * In-app user guide, served at /docs and /docs/<section>. Rendered instead of
  * the map shell while the pathname is under /docs; the app's own state stays
  * in the query string, so "Back to app" restores the previous view.
+ *
+ * `dataAccessedAt` is when this copy last downloaded the datasets (the manifest's `generatedAt`); pages that name a
+ * dataset access date embed {@link DOCS_ACCESSED_AT_TOKEN} and get it in its place, in the page's language
+ * (English) rather than the UI locale.
  */
-export function DocsPage() {
+export function DocsPage({ dataAccessedAt = null }: DocsPageProps) {
   const { t } = useI18n();
   // Applies the stored/system theme class when the guide is loaded directly.
   useTheme();
   const pathname = usePathname();
   const slug = slugFromPath(pathname);
   const section = getDocsSection(slug);
+  const content = section.content.replaceAll(
+    DOCS_ACCESSED_AT_TOKEN,
+    formatDocsAccessedAt(dataAccessedAt),
+  );
 
   const pageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLElement>(null);
@@ -77,7 +94,7 @@ export function DocsPage() {
           tabIndex={-1}
           className="min-w-0 flex-1 pb-16 focus:outline-none"
         >
-          <DocsArticle content={section.content} />
+          <DocsArticle content={content} />
         </main>
       </div>
     </div>

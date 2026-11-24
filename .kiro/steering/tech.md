@@ -21,7 +21,7 @@ inclusion: always
 ## Runtime Architecture
 
 - The browser reads application data from same-origin `/api/*` endpoints. It must not fetch upstream official datasets directly.
-- Public data routes read through `PublicData` (`functions/_lib/public-data.ts`), implemented for D1 (`worker/public-data-d1.ts`, the default) and for Neon (`worker/public-data-neon.ts`, when `PUBLIC_DATA_BACKEND=neon`); they never see `env`. The only runtime database write path is opt-in shortlist sync under `functions/api/shortlist/*`, which always uses D1.
+- Public data routes read through `PublicData` (`functions/_lib/public-data.ts`), implemented for D1 (`worker/public-data-d1.ts`, the default) and for Neon (`worker/public-data-neon.ts`, when `PUBLIC_DATA_BACKEND=neon`); they never see `env`. The only runtime database write path for user data is opt-in shortlist sync under `functions/api/shortlist/*`, which always uses D1.
 - `worker/index.ts` owns Worker routing, static asset fallback, API dispatch, SEO rewrites, sitemap, OG images, and background cleanup via `ctx.waitUntil`.
 - `scripts/sync-data.ts` is the build-time ingestion entry point. It fetches official datasets and OneMap data, normalizes artifacts, and writes D1 through the Cloudflare API.
 - Persistent geocode and walking-time caches live in D1 tables and are upserted by the sync pipeline. Browsers and runtime API handlers never geocode or compute new OneMap routes.
@@ -48,7 +48,8 @@ inclusion: always
 - `vp run build:deploy`: Cloudflare deployment build path.
 - `vp run build:full`: maintainer-only path that includes remote data sync.
 - `vp run db:migrate:local` / `vp run db:migrate:remote`: D1 migrations.
-- `vp run sync-data`: official dataset refresh into remote D1, requiring Cloudflare and upstream credentials.
+- `vp run sync-data`: official dataset refresh into remote D1, requiring Cloudflare and upstream credentials. OneMap Search and routing need `ONEMAP_TOKEN` (or `ONEMAP_EMAIL` with `ONEMAP_PASSWORD`).
+- `vp run sync-data:neon`: manual-only Neon refresh (`scripts/sync-neon.ts`, `.github/workflows/refresh-neon.yml`), pinned to the isolated benchmark branch; it needs a captured Neon usage receipt and is never scheduled.
 
 ## CI Reality
 

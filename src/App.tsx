@@ -15,8 +15,10 @@ import { useFilterPipeline } from "@/hooks/useFilterPipeline";
 import { useAppShellController } from "@/hooks/useAppShellController";
 import { useDeepLinkPanelInit } from "@/hooks/useDeepLinkPanelInit";
 import { getActiveFilterChipDescriptors } from "@/shared/lib/filterChips";
+import { deriveDataQualityState } from "@/shared/lib/dataQuality";
 import { ErrorBoundary } from "@/shared-ui/ErrorBoundary";
 import { AppHeader } from "@/components/AppHeader";
+import { DataAttribution } from "@/components/DataAttribution";
 import { MapLocaleControl } from "@/features/map-explorer/MapLocaleControl";
 import { SearchProfileWizard } from "@/features/search-profile/SearchProfileWizard";
 import {
@@ -71,10 +73,14 @@ const ListingCheckPanel = lazy(() =>
   })),
 );
 
-function App() {
+type AppProps = {
+  manifestData: ReturnType<typeof useManifestData>;
+};
+
+function App({ manifestData }: AppProps) {
   const { locale, t } = useI18n();
   const { theme, toggleTheme } = useTheme();
-  const { manifest, error, retry: retryManifest } = useManifestData();
+  const { manifest, error, retry: retryManifest } = manifestData;
   const shortlist = useShortlist();
   const {
     pendingRemoval: pendingShortlistRemoval,
@@ -647,14 +653,7 @@ function App() {
       >
         <h1 className="sr-only">{t("app.title")}</h1>
         <div className="absolute inset-0">{mapContent}</div>
-        <a
-          className="map-attribution-link"
-          href="https://www.onemap.gov.sg/home"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          © OneMap contributors
-        </a>
+        <DataAttribution />
 
         {showFloatingHeader ? (
           <AppHeader
@@ -806,6 +805,11 @@ function AppWithErrorBoundary() {
   // string, so leaving the guide restores the previous view. Deployed refreshes
   // work via the Worker's single-page-application asset fallback.
   const pathname = usePathname();
+  // Loaded here rather than inside App so the guide can state the datasets' access date from the same single manifest
+  // request; App stays mounted, hidden, while the guide is open. The access date is generatedAt (the run time of the
+  // last sync that downloaded the data), not lastSyncedAt, which is the publisher's own update time.
+  const manifestData = useManifestData();
+  const dataAccessedAt = deriveDataQualityState(manifestData.manifest).generatedAt;
 
   // Root boundary: a crash here means the whole app (including the I18nProvider)
   // is unusable, so recovery falls back to a full reload and the fallback uses
@@ -815,11 +819,11 @@ function AppWithErrorBoundary() {
     <ErrorBoundary fill className="min-h-screen">
       {isDocsPath(pathname) ? (
         <Suspense fallback={null}>
-          <DocsPage />
+          <DocsPage dataAccessedAt={dataAccessedAt} />
         </Suspense>
       ) : null}
       <div hidden={isDocsPath(pathname)}>
-        <App />
+        <App manifestData={manifestData} />
       </div>
     </ErrorBoundary>
   );
